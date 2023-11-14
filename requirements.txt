@@ -5,6 +5,7 @@ mkdocs-glightbox
 mkdocs-google-translate
 mkdocs-minify-plugin
 git+https://github.com/sondregronas/mkdocs-roamlinks-plugin@replace-spaces-in-links
+git+https://github.com/sondregronas/mdx-breakless-lists@master
 mkdocs-awesome-pages-plugin
 mkdocs-exclude
 mkdocs-footermatter
