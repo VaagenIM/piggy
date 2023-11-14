@@ -49,7 +49,7 @@ jobs:
 
     - name: Build site
       run: |
-        echo 'piggy.iktim.no' > ./docs/CNAME
+        echo 'piggy.iktim.no' > ./piggy/CNAME
         mkdocs build --clean
 
     - name: Upload artifact
