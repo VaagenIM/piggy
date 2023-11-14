@@ -1,0 +1,10 @@
+mkdocs
+mkdocs-material
+mkdocs-callouts
+mkdocs-glightbox
+mkdocs-google-translate
+mkdocs-minify-plugin
+git+https://github.com/sondregronas/mkdocs-roamlinks-plugin@replace-spaces-in-links
+mkdocs-awesome-pages-plugin
+mkdocs-exclude
+mkdocs-footermatter

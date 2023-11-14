@@ -1,0 +1,10 @@
+.slide{
+	border: none;
+    width: 100%;
+    height: 400px;
+}
+
+.slide + p{
+    margin-top: -35px;
+    margin-left: 5px;
+}
