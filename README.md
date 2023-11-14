@@ -21,8 +21,9 @@ oppgaver/
 ```
 ---
 title: "Tittel på oppgaven" (Valgfritt)
-author: "Forfatter" (Valgfritt)
-tags: (Påkrevd)
+authors:
+    -  "Forfatter" (Valgfritt)
+tags:
     - "<Emne>" (Påkrevd), f.eks. "Programmering", "Nettverk", "Sikkerhet", "Digital kompetanse"
     - "<Emne>" (Valgfritt) f.eks. "HTML", "Python", osv.
 github_template: <link til github repo> (Valgfritt) (Ikke implementert)
