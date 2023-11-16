@@ -131,6 +131,7 @@ plugins:
         locale: 'nb_NO'
         author_map:                 # Name in frontmatter | path RELATIVE TO: resources/assets/authors or URL | website
           - Sondre Grønås | https://www.gravatar.com/avatar/4e0476393c848aef61ed66d404da0d14?s=250 | https://github.com/sondregronas
+          - Sindre Hvidsten | https://avatars.githubusercontent.com/u/35257831?v=4 | https://github.com/svHvidsten
     - exclude:                      # Exclude pattern from site
         glob:
           - .obsidian/*
