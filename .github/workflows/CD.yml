@@ -6,12 +6,6 @@ on:
     branches: [ main ]
     paths-ignore:
       - 'README.md'
-  schedule:
-    - cron:  '0 0 * * *'
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
 
 jobs:
   build:
