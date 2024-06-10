@@ -1,10 +1,12 @@
-site/
 .obsidian/
 .vault-stats
 .trash/
 *.DS_Store
 .DS_Store?
 .cache
+
+turtleconvert/
+
 .idea/
 venv/
-turtleconvert/
+__pycache__/

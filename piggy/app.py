@@ -61,6 +61,5 @@ def create_app():
                                    content=mdfile_to_sections(file))
 
         app.add_url_rule(f'/{class_name}/<path:path>', f'{class_name}_route',
-                         lambda path, subject=class_name: class_route(class_name, path))
-
+                         lambda path, _class_name=class_name: class_route(class_name, path))
     return app
