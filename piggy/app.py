@@ -70,8 +70,11 @@ def create_app():
     @lru_cache()
     def topic(year, class_name, subject, topic):
         html = f'<h1>{topic}</h1>'
-        for assignment in PIGGYMAP[year]['item'][class_name]['item'][subject]['item'][topic]['item'].values():
-            html += f'\n<a href="/{ASSIGNMENT_URL_PREFIX}/{year}/{class_name}/{subject}/{topic}/{assignment["slug"]}"><button>{assignment["heading"]}</button></a>'
+        for key, assignment in PIGGYMAP[year]['item'][class_name]['item'][subject]['item'][topic]['item'].items():
+            html += f'\n<a href="/{ASSIGNMENT_URL_PREFIX}/{year}/{class_name}/{subject}/{topic}/{key}"><button>{assignment["heading"]}</button></a>'
+            html += f'\n<p>Assignment name: {assignment["assignment_name"]}</p>'
+            html += f'\n<p>Level: {assignment["level"]}</p>'
+            html += f'\n<p>Level name: {assignment["level_name"]}</p>'
             for meta, val in assignment['meta'].items():
                 html += f'\n<p>{meta}: {val}</p>'
         return html
