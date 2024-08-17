@@ -27,8 +27,6 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
     """
     piggymap = dict()
 
-    # TODO: If a folder contains a 'meta.json' file, we should add that as metadata to the folder
-
     # We only want to go 5 levels deep, and we only want to include directories (or the assignment files)
     if not os.path.isdir(path) or _current_level == max_levels:
         return None
@@ -41,8 +39,8 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
                 # If the folder contains a 'meta.json' file, we should add that as metadata to the folder
                 piggymap[item]['meta'] = load_meta_json(Path(f'{path}/{item}/meta.json'))
             continue
+            
         # If the item is a file, we want to check if it's a valid assignment file
-
         if not ASSIGNMENT_FILENAME_REGEX.match(item):
             continue
         assignment_path = Path(f'{path}/{item}')
