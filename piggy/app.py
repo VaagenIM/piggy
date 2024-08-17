@@ -1,65 +1,103 @@
 import os
-from glob import glob
+from functools import lru_cache
 from pathlib import Path
 
-from flask import Flask, render_template, send_file
-from turtleconverter import mdfile_to_sections, generate_static_files
+from flask import Flask, send_file, request, render_template
+from turtleconverter import generate_static_files, mdfile_to_sections, ConversionError
+
+from piggy.piggybank import generate_piggymap
 
 # Change working directory to the directory of this file so that we can use relative paths
 os.chdir(os.path.dirname(__file__))
 
-ASSIGNMENTS_FOLDER = '../assignments/'
-MEDIA_FORMATS = ['png', 'jpg', 'jpeg', 'gif']
-CLASSES = [subject for subject in os.listdir(ASSIGNMENTS_FOLDER)]
+PIGGYBANK_FOLDER = Path('../piggybank')
+PIGGYMAP = generate_piggymap(PIGGYBANK_FOLDER)
 
-
-def get_assignments_by_subject(class_name: str):
-    # TODO: make this more sensible!
-    assignments = []
-    for md_file in glob(f'{ASSIGNMENTS_FOLDER}/{class_name}/*/*.md'):
-        path, filename = os.path.split(md_file[len(ASSIGNMENTS_FOLDER):])
-        assignments.append({
-            'path': Path(path[1:]).as_posix(),
-            'subject': Path(md_file).parent.name,
-            'name': filename.replace('.md', '')
-        })
-
-    return assignments
-
-
-def is_media_format(path: Path):
-    return path.suffix[1:].lower() in MEDIA_FORMATS
+print(PIGGYMAP)
 
 
 def create_app():
     app = Flask(__name__, static_folder='static')
     generate_static_files()
 
+    ASSIGNMENT_URL_PREFIX = 'oink'
+
+    # TODO: None of this is sensible.
+    # TODO: KeyError handler wrapper
     @app.route('/')
+    @lru_cache()
     def index():
-        # TODO: make this readable!
-        html = '<h1>Assignments</h1>'
-        html += ''.join([''.join([
-            f'{class_name} | {assignment["subject"]} - <a href="/{assignment["path"]}/{assignment["name"]}">{assignment["name"]}</a><br>'
-            for assignment in get_assignments_by_subject(class_name)])
-            for class_name in CLASSES])
+        html = '<h1>Velkommen til Piggy!</h1>'
+        html += f'\n<a href="/{ASSIGNMENT_URL_PREFIX}"><button>Oppgaver</button></a>'
         return html
 
-    # Construct routes for each class/subject
-    for class_name in CLASSES:
-        def class_route(class_name, path):
-            # TODO: Put this in a wrapper?
-            file = Path(f'{ASSIGNMENTS_FOLDER}/{class_name}/{path}')
-            if not file.suffix:
-                file = Path(f'{file}.md')
-            if not file.exists():
-                return 'File not found', 404
-            if is_media_format(file):
-                return send_file(file)
+    @app.route(f'/{ASSIGNMENT_URL_PREFIX}')
+    @lru_cache()
+    def assignments():
+        html = '<h1>Oppgaver</h1>'
+        for year in PIGGYMAP:
+            html += f'\n<a href="/{ASSIGNMENT_URL_PREFIX}/{year}"><button>{year}</button></a>'
+        return html
 
-            return render_template('oppgave.html',
-                                   content=mdfile_to_sections(file))
+    @app.route(f'/{ASSIGNMENT_URL_PREFIX}/<year>')
+    @lru_cache()
+    def year(year):
+        html = f'<h1>{year}</h1>'
+        for class_name in PIGGYMAP[year]['item']:
+            html += f'\n<a href="/{ASSIGNMENT_URL_PREFIX}/{year}/{class_name}"><button>{class_name}</button></a>'
+            for meta, val in PIGGYMAP[year]['item'][class_name]['meta'].items():  # Just a test
+                html += f'\n<p>{meta}: {val}</p>'
 
-        app.add_url_rule(f'/{class_name}/<path:path>', f'{class_name}_route',
-                         lambda path, _class_name=class_name: class_route(class_name, path))
+        return html
+
+    @app.route(f'/{ASSIGNMENT_URL_PREFIX}/<year>/<class_name>')
+    @lru_cache()
+    def class_name(year, class_name):
+        html = f'<h1>{class_name}</h1>'
+        for subject in PIGGYMAP[year]['item'][class_name]['item']:
+            html += f'\n<a href="/{ASSIGNMENT_URL_PREFIX}/{year}/{class_name}/{subject}"><button>{subject}</button></a>'
+        return html
+
+    @app.route(f'/{ASSIGNMENT_URL_PREFIX}/<year>/<class_name>/<subject>')
+    @lru_cache()
+    def subject(year, class_name, subject):
+        html = f'<h1>{subject}</h1>'
+        for topic in PIGGYMAP[year]['item'][class_name]['item'][subject]['item']:
+            html += f'\n<a href="/{ASSIGNMENT_URL_PREFIX}/{year}/{class_name}/{subject}/{topic}"><button>{topic}</button></a>'
+        return html
+
+    @app.route(f'/{ASSIGNMENT_URL_PREFIX}/<year>/<class_name>/<subject>/<topic>')
+    @lru_cache()
+    def topic(year, class_name, subject, topic):
+        html = f'<h1>{topic}</h1>'
+        for assignment in PIGGYMAP[year]['item'][class_name]['item'][subject]['item'][topic]['item'].values():
+            html += f'\n<a href="/{ASSIGNMENT_URL_PREFIX}/{year}/{class_name}/{subject}/{topic}/{assignment["slug"]}"><button>{assignment["heading"]}</button></a>'
+            for meta, val in assignment['meta'].items():
+                html += f'\n<p>{meta}: {val}</p>'
+        return html
+
+    @app.route(f'/{ASSIGNMENT_URL_PREFIX}/<year>/<class_name>/<subject>/<topic>/<assignment>')
+    @lru_cache()
+    def assignment(year, class_name, subject, topic, assignment):
+        lang = request.args.get('lang', '')
+        if lang:
+            assignment = f'translations/{lang}/{assignment}'
+
+        path = Path(f'{PIGGYBANK_FOLDER}/{year}/{class_name}/{subject}/{topic}/{assignment}.md')
+
+        try:
+            sections = mdfile_to_sections(path)
+        except ConversionError:
+            return 'Assignment not found', 404
+
+        return render_template('oppgave.html', content=sections)
+
+    @app.route(f'/{ASSIGNMENT_URL_PREFIX}/<year>/<class_name>/<subject>/<topic>/attachments/<attachment>')
+    def attachments(year, class_name, subject, topic, attachment):
+        try:
+            path = Path(f'{PIGGYBANK_FOLDER}/{year}/{class_name}/{subject}/{topic}/attachments/{attachment}')
+            return send_file(path)
+        except FileNotFoundError:
+            return 'Attachment not found', 404
+
     return app

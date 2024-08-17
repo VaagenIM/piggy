@@ -1,0 +1,4 @@
+[submodule "piggybank"]
+	path = piggybank
+	url = https://github.com/VaagenIM/piggybank
+	branch = output
