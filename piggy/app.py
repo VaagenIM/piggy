@@ -7,10 +7,10 @@ from turtleconverter import generate_static_files, mdfile_to_sections, Conversio
 
 from piggy.piggybank import generate_piggymap
 
-# Change working directory to the directory of this file so that we can use relative paths
-os.chdir(os.path.dirname(__file__))
+# Ensure the working directory is the root of the project
+os.chdir(os.path.dirname(Path(__file__).parent))
 
-PIGGYBANK_FOLDER = Path('../piggybank')
+PIGGYBANK_FOLDER = Path('piggybank')
 PIGGYMAP = generate_piggymap(PIGGYBANK_FOLDER)
 
 SUPPORTED_LANGUAGES = {
