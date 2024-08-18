@@ -1,5 +1,5 @@
-{% set media_prefix = "/" ~ MEDIA_URL_PREFIX ~ "/" ~ uri %}
-{% set assignment_prefix = "/" ~ ASSIGNMENT_URL_PREFIX ~ "/" ~ uri %}
+{% set media_prefix = "/" ~ MEDIA_URL_PREFIX ~ "/" ~ path %}
+{% set assignment_prefix = "/" ~ ASSIGNMENT_URL_PREFIX ~ "/" ~ path %}
 
 <h1>{{ meta.name }}</h1>
 <img src="{{ media_prefix }}/media/header.png" alt="Header image for {{ meta.name }}"/>
