@@ -2,7 +2,10 @@
     {{ content.head | safe }}
 
     <style>
-        a { color: cyan; }
+        a {
+            color: cyan;
+        }
+
         header {
             background-color: #333;
             color: white;
@@ -12,19 +15,26 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1>{{ content.heading }}</h1>
-        {% if content.meta.difficulty %}
-            {% if content.meta.difficulty > 50 %}
-                Difficulty: UMULIG!!!
-            {% else %}
-                <p>Difficulty: {{'⭐' * content.meta.difficulty}}</p>
-            {% endif %}
+<header>
+    <h1>{{ content.heading }}</h1>
+    {% if content.meta.difficulty %}
+        {% if content.meta.difficulty > 50 %}
+            Difficulty: UMULIG!!!
+        {% else %}
+            <p>Difficulty: {{ '⭐' * content.meta.difficulty }}</p>
         {% endif %}
+    {% endif %}
 
-        <a href="/">Home</a>
-    </header>
-    <main>
-        {{content.body | safe}}
-    </main>
+    <div>
+        <div>Current language: {{ current_language }}</div>
+        {% for lang, val in supported_languages.items() %}
+            <a onclick="document.cookie = 'lang={{ lang }}'; location.reload();">{{ val.name }}</a>
+        {% endfor %}
+    </div>
+
+    <a href="/">Home</a>
+</header>
+<main>
+    {{ content.body | safe }}
+</main>
 </body>
