@@ -62,6 +62,10 @@ def create_app():
     app = Flask(__name__, static_folder='static')
     generate_static_files()
 
+    @app.context_processor
+    def inject_url_prefixes():
+        return {'ASSIGNMENT_URL_PREFIX': ASSIGNMENT_URL_PREFIX, 'MEDIA_URL_PREFIX': MEDIA_URL_PREFIX}
+
     @app.route('/')
     @lru_cache
     def index():
@@ -84,21 +88,11 @@ def create_app():
         template_type = get_directory_name_from_uri(uri)
         metadata, segment = get_piggymap_segment_from_uri(uri)
 
-        # We can use the data to display the content on the webpage in the correct context
-        # We can use piggymap to generate different kinds of content based on the URI
-        # TODO:
-        # return render_template(f'{template_type}.html', meta=metadata, segment=segment, piggymap=PIGGYMAP)
-
-        html = f'<h1>{template_type}</h1>'
-        for key, val in metadata.items():
-            html += f'\n<p>{key}: {val}</p>'
-        for key, val in segment.items():
-            img_url = f'/{MEDIA_URL_PREFIX}/{uri}/{key}/media/header.png'
-            html += f'<img src="{img_url}">'
-            html += f'\n<a href="/{ASSIGNMENT_URL_PREFIX}/{uri}/{key}"><button>{key}</button></a>'
-            for meta_key, meta_val in val.get('meta', {}).items():
-                html += f'\n<p>{meta_key}: {meta_val}</p>'
-        return html
+        return render_template(f'{template_type}.html',
+                               meta=metadata,
+                               segment=segment,
+                               uri=uri,
+                               piggymap=PIGGYMAP)
 
     assignment_cache = {}
 

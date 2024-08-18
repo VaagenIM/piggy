@@ -1,0 +1,20 @@
+{% set media_prefix = "/" ~ MEDIA_URL_PREFIX ~ "/" ~ uri %}
+{% set assignment_prefix = "/" ~ ASSIGNMENT_URL_PREFIX ~ "/" ~ uri %}
+
+<h1>{{ meta.name }}</h1>
+<img src="{{ media_prefix }}/media/header.png" alt="Header image for {{ meta.name }}"/>
+<pre>{{ media_prefix }}/media/header.png</pre>
+<p>{{ meta.description or 'No description provided' }}</p>
+
+{% for key, val in segment.items() %}
+    <h2>{{ key }}</h2>
+    <img src="{{ media_prefix }}/{{ key }}/media/header.png" alt="Header image for {{ key }}"/>
+    <pre>{{ media_prefix }}/{{ key }}/media/header.png</pre>
+    <br>
+    <a href="{{ assignment_prefix }}/{{ key }}">View {{ key }}</a>
+    <br>
+    {% for meta_key, meta_val in val.get('meta', {}).items() %}
+        <strong>{{ meta_key }}</strong>: {{ meta_val }}
+        <br>
+    {% endfor %}
+{% endfor %}
