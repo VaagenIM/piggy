@@ -11,9 +11,12 @@ ASSIGNMENT_FILENAME_REGEX = re.compile(r"^(.+) Level (\d+) \- (.+).md$")
 def load_meta_json(path: Path):
     try:
         with open(path, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            data = json.load(f)
     except FileNotFoundError:
-        return {}
+        data = {}
+    if 'name' not in data:
+        data['name'] = path.parent.name
+    return data
 
 
 def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):

@@ -19,17 +19,29 @@ SUPPORTED_LANGUAGES = {
     'ukr': {'name': 'Українська'},
 }
 
+# A prefix for the assignment URLs, to avoid conflicts with other routes
+ASSIGNMENT_URL_PREFIX = 'main'
+# We can't have the media files have the same URL prefix as the assignments, as it would conflict
+# with the wildcard route for the media files.
+MEDIA_URL_PREFIX = 'img'
 
-def get_piggymap_segment_from_uri(uri: str) -> dict or None:
-    """Get the piggymap from a URI."""
-    piggymap = dict(PIGGYMAP)
+
+# TODO: Logging
+
+
+def get_piggymap_segment_from_uri(uri: str) -> tuple[dict, dict]:
+    """Get the metadata and segment from a URI."""
+    segment = dict(PIGGYMAP.copy())
+    meta = segment.get('meta', {})
     for path in uri.split('/'):
         if not path:
             continue
-        if path not in piggymap:
-            return None
-        piggymap = piggymap.get(path, {}).get('data', {})
-    return piggymap
+        if path not in segment:
+            return {}, {}
+        meta = segment.get(path, {}).get('meta', {})
+        segment = segment.get(path, {}).get('data', {})
+
+    return meta, segment
 
 
 def get_directory_name_from_uri(uri: str) -> str:
@@ -50,12 +62,6 @@ def create_app():
     app = Flask(__name__, static_folder='static')
     generate_static_files()
 
-    # A prefix for the assignment URLs, to avoid conflicts with other routes
-    ASSIGNMENT_URL_PREFIX = 'main'
-    # We can't have the media files have the same URL prefix as the assignments, as it would conflict
-    # with the wildcard route for the media files.
-    MEDIA_URL_PREFIX = 'img'
-
     @app.route('/')
     @lru_cache
     def index():
@@ -65,7 +71,7 @@ def create_app():
 
     @app.route(f'/{ASSIGNMENT_URL_PREFIX}/<path:uri>')
     @app.route(f'/{ASSIGNMENT_URL_PREFIX}/')
-    @lru_cache
+    # @lru_cache
     def render_assignment_directories(uri=''):
         """
         Render the webpage for a given URI.
@@ -76,17 +82,17 @@ def create_app():
         uri = uri.strip('/')
 
         template_type = get_directory_name_from_uri(uri)
+        metadata, segment = get_piggymap_segment_from_uri(uri)
 
         # We can use the data to display the content on the webpage in the correct context
         # We can use piggymap to generate different kinds of content based on the URI
         # TODO:
-        # return render_template(f'{template_type}.html', data=get_piggymap_segment_from_uri(uri), piggymap=PIGGYMAP)
+        # return render_template(f'{template_type}.html', meta=metadata, segment=segment, piggymap=PIGGYMAP)
 
         html = f'<h1>{template_type}</h1>'
-        for key, val in get_piggymap_segment_from_uri(uri).items():
-            print('key:', key)
-            print('val:', val)
-
+        for key, val in metadata.items():
+            html += f'\n<p>{key}: {val}</p>'
+        for key, val in segment.items():
             img_url = f'/{MEDIA_URL_PREFIX}/{uri}/{key}/media/header.png'
             html += f'<img src="{img_url}">'
             html += f'\n<a href="/{ASSIGNMENT_URL_PREFIX}/{uri}/{key}"><button>{key}</button></a>'
@@ -98,11 +104,10 @@ def create_app():
 
     @app.route(f'/{ASSIGNMENT_URL_PREFIX}/<year>/<class_name>/<subject>/<topic>/<assignment>')
     # Uses its own cache
-    def render_assignment(year, class_name, subject, topic, assignment):
+    def render_assignment(year, class_name, subject, topic, assignment, lang=''):
         """
         Render an assignment from the piggymap. Takes precedence over the wildcard route due to specificity.
         """
-        lang = ''
         if request:
             lang = request.cookies.get('lang')
         if lang:
@@ -135,14 +140,17 @@ def create_app():
         """Reduces load time by caching all assignments on startup."""
         with app.app_context():
             for year, year_data in PIGGYMAP.items():
-                for class_name, cls, in year_data.get('data', {}).items():
-                    for subject, subject_data in cls.get('data', {}).items():
+                render_assignment_directories(year)
+                for class_name, classes, in year_data.get('data', {}).items():
+                    render_assignment_directories(f'{year}/{class_name}')
+                    for subject, subject_data in classes.get('data', {}).items():
+                        render_assignment_directories(f'{year}/{class_name}/{subject}')
                         for topic, topic_data in subject_data.get('data', {}).items():
+                            render_assignment_directories(f'{year}/{class_name}/{subject}/{topic}')
                             for assignment, assignment_data in topic_data.get('data', {}).items():
                                 render_assignment(year, class_name, subject, topic, assignment)
-                                for lang in SUPPORTED_LANGUAGES.keys():
-                                    render_assignment(year, class_name, subject, topic,
-                                                      f'translations/{lang}/{assignment}')
+                                [render_assignment(year, class_name, subject, topic, assignment, lang=lang)
+                                 for lang in SUPPORTED_LANGUAGES.keys()]
 
     @app.route(f'/{MEDIA_URL_PREFIX}/<path:wildcard>/media/<filename>')
     @app.route(f'/{ASSIGNMENT_URL_PREFIX}/<path:wildcard>/attachments/<filename>')
@@ -161,6 +169,7 @@ def create_app():
         except FileNotFoundError:
             return send_file('static/img/placeholders/100x100.png')
 
-    cache_all_assignments()
+    if not app.debug:
+        cache_all_assignments()
 
     return app
