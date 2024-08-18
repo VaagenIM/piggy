@@ -6,6 +6,8 @@
 <pre>{{ media_prefix }}/media/header.png</pre>
 <p>{{ meta.description or 'No description provided' }}</p>
 
+<hr>
+
 {% for key, val in segment.items() %}
     <h2>{{ key }}</h2>
     <img src="{{ media_prefix }}/{{ key }}/media/header.png" alt="Header image for {{ key }}"/>
