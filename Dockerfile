@@ -18,7 +18,7 @@ RUN pip install -U pip && pip install setuptools wheel && pip install -q -r requ
 
 RUN pip install gunicorn
 
-RUN git clone -b main https://github.com/VaagenIM/piggy /piggy
+# RUN git clone -b main https://github.com/VaagenIM/piggy /piggy
 
 RUN echo  "cd /piggy && \
           git pull && \
