@@ -8,6 +8,7 @@ Følgende verdier gjelder for _alle_ templates:
 - `MEDIA_URL_PREFIX`: Prefix for media routes (`media`), brukes av bilder i `media` mappene i piggybank.
 - `piggymap`: En kopi av `piggymap`-objektet, som inneholder hele strukturen til piggybank.
   - `piggymap` sin struktur er `filsti['data']` eller `filsti['meta']`, hvor `data` inneholder en nestet struktur av mapper og filer, og `meta` inneholder metadata om disse filene. (f.eks. `piggymap['VG2'].data['Naturfag'].data`)
+- `img_fmt`: Bildeformat (automatisk konvertert/komprimert) (`webp`)
 
 ## Assignment context variabler
 

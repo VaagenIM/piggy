@@ -28,7 +28,8 @@ def create_app():
         """Context variables for all templates in the app."""
         return {'ASSIGNMENT_URL_PREFIX': ASSIGNMENT_ROUTE,
                 'MEDIA_URL_PREFIX': MEDIA_ROUTE,
-                'piggymap': PIGGYMAP, }
+                'piggymap': PIGGYMAP,
+                'img_fmt': 'webp'}
 
     @app.route('/')
     @lru_cache_wrapper
