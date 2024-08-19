@@ -40,9 +40,9 @@ Følgende verdier er tilgjengelige i disse templatesene:
 
 - `value`: verdien til segmentet har ekstra verdier:
   - `path`: Relativ filsti til oppgaven på disk
-  - `assignment_name`: Navnet på oppgaven (**Eksempel Oppgave** Level 1 - Tittel på oppgave)
-  - `level`: Nivået til oppgaven (Eksempel Oppgave Level **1** - Tittel på oppgave)
-  - `level_name`: Navnet på nivået til oppgaven (Eksempel Oppgave Level 1 - **Tittel på oppgave**)
+  - `assignment_name`: Navnet på oppgaven (**--Eksempel Oppgave--** Level 1 - Tittel på oppgave)
+  - `level`: Nivået til oppgaven (Eksempel Oppgave Level **--1--** - Tittel på oppgave)
+  - `level_name`: Navnet på nivået til oppgaven (Eksempel Oppgave Level 1 - **--Tittel på oppgave--**)
   - `heading`: Overskrift for oppgaven (definert av markdown-filen)
   - `meta`: Metadata for oppgaven (frontmatter)
   - `data`: Verdiene til selve oppgavene
