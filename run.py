@@ -9,4 +9,5 @@ if __name__ == '__main__':
     app = create_app()
     app.run()
 else:
+    os.system('git submodule update --remote --recursive')
     app = create_app()
