@@ -7,7 +7,7 @@ if __name__ == '__main__':
     # Disable LRU cache for development
     os.environ['USE_CACHE'] = '0'
     app = create_app()
-    app.run()
+    app.run(port=5001)
 else:
     os.system('git submodule update --remote --recursive')
     app = create_app()
