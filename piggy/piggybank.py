@@ -1,11 +1,10 @@
 import json
 import os
-import re
 from pathlib import Path
 
 from turtleconverter import mdfile_to_sections
 
-ASSIGNMENT_FILENAME_REGEX = re.compile(r"^(.+) Level (\d+) \- (.+).md$")
+from piggy.util import ASSIGNMENT_FILENAME_REGEX
 
 
 def load_meta_json(path: Path):

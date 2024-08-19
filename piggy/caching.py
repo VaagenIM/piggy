@@ -7,6 +7,7 @@ from flask import Response, render_template
 from turtleconverter import mdfile_to_sections, ConversionError
 
 from piggy import SUPPORTED_LANGUAGES, ASSIGNMENT_ROUTE, MEDIA_ROUTE, PIGGYBANK_FOLDER
+from piggy.util import ASSIGNMENT_FILENAME_REGEX
 
 
 def lru_cache_wrapper(func):
@@ -47,11 +48,22 @@ def _render_assignment(p: Path) -> Response:
     except ConversionError:
         # TODO: Raise a custom error
         return Response('Error: Could not render assignment', status=500)
+
+    lang = ''
+    if p.parents[1].name == 'translations':
+        lang = p.parent.name
+    current_language = SUPPORTED_LANGUAGES.get(lang, '')['name']
+
+    match = ASSIGNMENT_FILENAME_REGEX.match(p.name)
+
     render = render_template('assignments/5-assignment.html',
                              content=sections,
-                             current_language=SUPPORTED_LANGUAGES.get('name', 'Unknown'),
+                             current_language=current_language,
                              supported_languages=SUPPORTED_LANGUAGES,
                              path=p,
+                             assignment_name=match.group(1).strip(),
+                             level=match.group(2).strip(),
+                             level_name=match.group(3).strip(),
                              media_abspath=f'/{MEDIA_ROUTE}/{p.parent}',
                              abspath=f'/{ASSIGNMENT_ROUTE}/{p}')
     return Response(render, mimetype='text/html', status=200)
