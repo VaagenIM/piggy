@@ -73,7 +73,7 @@ For å linke til neste nivå, bruk følgende format:
 ```html
 {# Link til neste nivå #}
 {% for segment, data in segment.value.data.items() %}
-  <a href="{{ abspath }}/{{ segment.key }}">Link til {{ data.meta.name }}</a>
+  <a href="{{ abspath }}/{{ segment }}">Link til {{ data.meta.name }}</a>
 {% endfor %}
 ```
 
