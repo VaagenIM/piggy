@@ -1,10 +1,8 @@
 <h1>Oppgavebanken</h1>
 
 {% for item, data in segment.items() %}
-    {% set meta = data.get('meta', {}) %}
-
     {# Name metadata for child item #}
-    <h2>{{ meta.title }}</h2>
+    <h2>{{ data.meta.title }}</h2>
 
 
     {# Header media for child item #}
@@ -13,7 +11,7 @@
 
     <br>
     {# Link to item, display name #}
-    <a href="{{ abspath }}/{{ item }}">View {{ meta.title }}</a>
+    <a href="{{ abspath }}/{{ item }}">View {{ data.meta.title }}</a>
     <br>
 
     <h3>All metadata (kun for assignment segmentet)</h3>
@@ -26,7 +24,7 @@
     <li>Heading (title i frontmatter): {{ data.heading }}</li>
 
     <h4>Meta variables (Frontmatter)</h4>
-    {% for meta_key, meta_val in meta.items() %}
+    {% for meta_key, meta_val in data.meta.items() %}
         <li>{{ meta_key }}: {{ meta_val }}</li>
     {% endfor %}
 {% endfor %}

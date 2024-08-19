@@ -52,6 +52,6 @@ def _render_assignment(p: Path) -> Response:
                              current_language=SUPPORTED_LANGUAGES.get('name', 'Unknown'),
                              supported_languages=SUPPORTED_LANGUAGES,
                              path=p,
-                             media_abspath=f'/{MEDIA_ROUTE}/{p.parent}/media',
+                             media_abspath=f'/{MEDIA_ROUTE}/{p.parent}',
                              abspath=f'/{ASSIGNMENT_ROUTE}/{p}')
     return Response(render, mimetype='text/html', status=200)
