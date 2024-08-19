@@ -14,7 +14,7 @@ Følgende verdier gjelder for _alle_ templates:
 Felles for alt i `assignments`-mappen.
 
 - `path`: Filsti relativ til prefix (`assignments/VG2/Naturfag` -> `VG2/Naturfag`).
-- `media_abspath`: Absolutt filsti til `media`-routes. (`/assignments/VG2/Naturfag` -> `/media/assignments/VG2/Naturfag`).
+- `media_abspath`: Absolutt filsti til `media`-routes. (`/assignments/VG2/Naturfag` -> `/media/VG2/Naturfag`).
 - `abspath`: Absolutt filsti til `assignments`-routes. (`/assignments/VG2/Naturfag` -> `/assignments/VG2/Naturfag`).
 
 ## Level 0-3
