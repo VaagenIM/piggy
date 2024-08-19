@@ -18,8 +18,8 @@ os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
 def create_app():
     app = Flask(__name__, static_folder='static')
 
-    assignment_route = Blueprint(ASSIGNMENT_ROUTE, __name__, url_prefix=f'/{ASSIGNMENT_ROUTE}')
-    media_route = Blueprint(MEDIA_ROUTE, __name__, url_prefix=f'/{MEDIA_ROUTE}')
+    assignment_routes = Blueprint(ASSIGNMENT_ROUTE, __name__, url_prefix=f'/{ASSIGNMENT_ROUTE}')
+    media_routes = Blueprint(MEDIA_ROUTE, __name__, url_prefix=f'/{MEDIA_ROUTE}')
 
     generate_static_files_wrapper()
 
@@ -37,8 +37,8 @@ def create_app():
         html += f'\n<a href="/{ASSIGNMENT_ROUTE}"><button>Oppgaver</button></a>'
         return html
 
-    @assignment_route.route(f'/<path:path>')
-    @assignment_route.route(f'/')
+    @assignment_routes.route(f'/<path:path>')
+    @assignment_routes.route(f'/')
     @lru_cache_wrapper
     def get_assignment_directory(path=''):
         """
@@ -62,7 +62,7 @@ def create_app():
                                media_abspath=media_abspath,
                                abspath=abspath)
 
-    @assignment_route.route(f'/<year_level>/<class_name>/<subject>/<topic>/<assignment>')
+    @assignment_routes.route(f'/<year_level>/<class_name>/<subject>/<topic>/<assignment>')
     def get_assignment(year_level, class_name, subject, topic, assignment, lang=''):
         """
         Render an assignment from the piggymap. Takes precedence over the wildcard route due to specificity.
@@ -76,8 +76,8 @@ def create_app():
 
         return _render_assignment(Path(f'{path}/{assignment}.md'))
 
-    @media_route.route(f'/<path:wildcard>/media/<filename>')
-    @assignment_route.route(f'<path:wildcard>/attachments/<filename>')
+    @media_routes.route(f'/<path:wildcard>/media/<filename>')
+    @assignment_routes.route(f'/<path:wildcard>/attachments/<filename>')
     def get_assignment_media_wildcard(wildcard, filename):
         """
         Get a media file from either the media or attachments folder.
@@ -98,7 +98,7 @@ def create_app():
         with app.app_context():
             cache_directory(PIGGYMAP, directory_fn=get_assignment_directory, assignment_fn=_render_assignment)
 
-    app.register_blueprint(assignment_route)
-    app.register_blueprint(media_route)
+    app.register_blueprint(assignment_routes)
+    app.register_blueprint(media_routes)
 
     return app
