@@ -1,0 +1,54 @@
+# Upload to ghcr.io (:edge if on develop branch, :latest if on main branch)
+
+name: CD
+
+on:
+  # TODO: On test pass vs on push
+  push:
+    branches:
+      - main
+      - develop
+
+env:
+  IMAGE_NAME: ghcr.io/vaagenim/piggy
+  IMAGE_TAG: ${{ github.ref == 'refs/heads/main' && 'latest' || 'edge' }}
+  PLATFORMS: linux/amd64,linux/arm64/v8
+
+jobs:
+  build:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    # TODO: Ensure tests pass before building
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          driver-opts: network=host
+          driver: docker-container
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: ${{ env.PLATFORMS }}
+          push: true
+          tags: ghcr.io/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          cache-from: type=gha
+          cache-to: type=gha

@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    # image: ghcr.io/vaagenim/piggy:latest
+    container_name: piggy
+    ports:
+      - "5000:5000"
+    environment:
+      - AUTO_UPDATE=False #"True"  # Piggy needs to be public first
+
+      - FLASK_DEBUG="0"
+      - USE_CACHE="1"
+      - WEB_CONCURRENCY=4
+
+      - TZ=Europe/Oslo
+    restart: unless-stopped
