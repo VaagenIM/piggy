@@ -64,3 +64,30 @@ Følgende verdier er tilgjengelige i disse templatesene:
   - `assignment_name`: Navnet på oppgaven (**Eksempel Oppgave** Level 1 - Tittel på oppgave)
   - `level`: Nivået til oppgaven (Eksempel Oppgave Level **1** - Tittel på oppgave)
   - `level_name`: Navnet på nivået til oppgaven (Eksempel Oppgave Level 1 - **Tittel på oppgave**)
+
+
+## Linke til neste nivå
+
+For å linke til neste nivå, bruk følgende format:
+
+```html
+{# Link til neste nivå #}
+{% for segment, data in segment.value.data.items() %}
+  <a href="{{ abspath }}/{{ segment.key }}">Link til {{ data.meta.name }}</a>
+{% endfor %}
+```
+
+
+## Linke til bilder
+
+For å linke til bilder i `media`-mappene, bruk følgende format:
+
+```html
+{# Bilde i media-mappen for nåværende mappe #}
+<img src="{{ media_abspath }}/bilde.png" alt="Bilde fra nåværende media mappe">
+
+{# Bilde i media-mappen for en underseksjon #}
+{% for segment, data in segment.value.data.items() %}
+  <img src="{{ media_abspath }}/{{ segment }}/media/bilde.png" alt="Bilde fra segmentets media mappe">
+{% endfor %}
+```
