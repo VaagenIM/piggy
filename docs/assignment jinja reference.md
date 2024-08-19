@@ -34,7 +34,7 @@ Følgende verdier er tilgjengelige i disse templatesene:
 - `meta`: Metadata fra `meta.json`-filen i samme mappe.
   - `name`: Alltid tilgjengelig, navnet på mappen om det ikke er definert i `meta.json`.
 
-## Level 4
+## Level 4 (`4-topic.html`)
 
 `4-topic.html`-templaten er unik pga. den har oppgaver som segment, som har ekstra metadata (i tillegg til metadataen som er tilgjengelig i 0-3).
 
@@ -52,7 +52,7 @@ Følgende verdier er tilgjengelige i disse templatesene:
 4-topic.html
 ```
 
-## Level 5 (`assignment.html`)
+## Level 5 (`5-assignment.html`)
 
   - `content`: `turtleconverter` seksjoner.
     - `heading`: Overskrift for oppgaven.
