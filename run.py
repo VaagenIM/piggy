@@ -15,6 +15,7 @@ subprocess.Popen(TAILWIND_RUN_CMD, shell=True)
 
 
 def checkout_branch(branch):
+    os.system("git submodule update --init --recursive")
     os.system(f"cd piggybank && git checkout {branch} && cd .. && git submodule update --remote --recursive")
 
 
