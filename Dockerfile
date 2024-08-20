@@ -12,7 +12,10 @@ ENV USE_CACHE="1"
 
 WORKDIR /app
 
-COPY . /app
+COPY pyproject.toml /app
+COPY package.json /app
+
+RUN pip install -U pip && pip install . && npm install --omit=dev
 
 # RUN git clone -b main https://github.com/VaagenIM/piggy /piggy
 
@@ -24,7 +27,7 @@ RUN echo  "cd /piggy && \
           cp /piggy/run.py /app/run.py && \
           cp /piggy/entrypoint.sh /app/entrypoint.sh" > /usr/local/bin/auto-update.sh
 
-RUN pip install -U pip && pip install . && npm install --omit=dev
+COPY . /app
 
 EXPOSE 5000/tcp
 CMD ["/bin/bash", "entrypoint.sh"]
