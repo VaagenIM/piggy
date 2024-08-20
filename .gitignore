@@ -4,6 +4,7 @@
 *.DS_Store
 .DS_Store?
 .cache
+*.egg-info
 
 tailwind.css
 
@@ -12,3 +13,7 @@ turtleconvert/
 .idea/
 venv/
 __pycache__/
+
+
+node_modules/
+package-lock.json

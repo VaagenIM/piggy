@@ -1,40 +1,40 @@
 <head>
-    {{ content.head | safe }}
+  {{ content.head | safe }}
 
-    <style>
-        a {
-            color: cyan;
-        }
+  <style>
+    a {
+      color: cyan;
+    }
 
-        header {
-            background-color: #333;
-            color: white;
-            padding: 1em;
-            text-align: center;
-        }
-    </style>
+    header {
+      background-color: #333;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-<header>
+  <header>
     <h1>{{ content.heading }}</h1>
     {% if content.meta.difficulty %}
-        {% if content.meta.difficulty > 50 %}
-            Difficulty: UMULIG!!!
-        {% else %}
-            <p>Difficulty: {{ '⭐' * content.meta.difficulty }}</p>
-        {% endif %}
+      {% if content.meta.difficulty > 50 %}
+        Difficulty: UMULIG!!!
+      {% else %}
+        <p>Difficulty: {{ '⭐' * content.meta.difficulty }}</p>
+      {% endif %}
     {% endif %}
 
     <div>
-        <div>Current language: {{ current_language }}</div>
-        {% for lang, val in supported_languages.items() %}
-            <a onclick="document.cookie = 'lang={{ lang }}'; location.reload();">{{ val.name }}</a>
-        {% endfor %}
+      <div>Current language: {{ current_language }}</div>
+      {% for lang, val in supported_languages.items() %}
+        <a onclick="document.cookie = 'lang={{ lang }}'; location.reload();"
+          >{{ val.name }}</a
+        >
+      {% endfor %}
     </div>
 
     <a href="/">Home</a>
-</header>
-<main>
-    {{ content.body | safe }}
-</main>
+  </header>
+  <main>{{ content.body | safe }}</main>
 </body>

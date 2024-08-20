@@ -14,7 +14,7 @@ WORKDIR /app
 
 COPY requirements.txt /app
 
-RUN pip install -U pip && pip install setuptools wheel && pip install -q -r requirements.txt
+RUN pip install -U pip && pip install .
 
 RUN pip install gunicorn
 

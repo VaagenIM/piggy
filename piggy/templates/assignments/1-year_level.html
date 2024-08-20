@@ -1,36 +1,45 @@
 {% extends "layout.html" %}
 
 {% block content %}
+  <h1 class="text-5xl font-extrabold text-center my-6">{{ meta.name }}</h1>
 
-<h1 class="text-5xl font-extrabold text-center my-6">{{ meta.name }}</h1>
-
-<div class="container mx-auto p-4">
-    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-        <!-- TODO: extract the "card" into it's own template -->
-        {% for item, data in segment.items() %}
+  <div class="container mx-auto p-4">
+    <div
+      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
+    >
+      <!-- TODO: extract the "card" into it's own template -->
+      {% for item, data in segment.items() %}
         <!-- Card Container -->
-        <a href="{{ abspath }}/{{ item }}" class="card-container block p-3 rounded-2xl border border-slate-500">
-            <!-- Card Title -->
-            <div class="text-2xl font-extrabold text-center pb-2">{{ data.meta.name }}</div>
-            
-            <!-- Card Thumbnail -->
-            <div class="thumbnail-container">
-                <img class="w-full h-36 object-cover rounded-xl shadow-lg" src="{{ media_abspath }}/{{ item }}/media/header.{{ img_fmt }}" alt="Header image for {{ item }}">
-                
-                <!-- TEMP
+        <a
+          href="{{ abspath }}/{{ item }}"
+          class="card-container block p-3 rounded-2xl border border-slate-500"
+        >
+          <!-- Card Title -->
+          <div class="text-2xl font-extrabold text-center pb-2">
+            {{ data.meta.name }}
+          </div>
+
+          <!-- Card Thumbnail -->
+          <div class="thumbnail-container">
+            <img
+              class="w-full h-36 object-cover rounded-xl shadow-lg"
+              src="{{ media_abspath }}/{{ item }}/media/header.{{ img_fmt }}"
+              alt="Header image for {{ item }}"
+            />
+
+            <!-- TEMP
                 <div class="thumbnail-text-overlay">
                     {{ data.meta.description }}
                 </div>
                 -->
-            </div>
-            
-            <!-- Card Description -->
-            <div class="mt-4 description-container, font-semibold">
-                {{ data.meta.description }}
-            </div>
-        </a>
-        {% endfor %}
-    </div>
-</div>
+          </div>
 
+          <!-- Card Description -->
+          <div class="mt-4 description-container, font-semibold">
+            {{ data.meta.description }}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

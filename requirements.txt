@@ -1,2 +1,0 @@
-flask
-git+https://github.com/sondregronas/turtleconverter@main

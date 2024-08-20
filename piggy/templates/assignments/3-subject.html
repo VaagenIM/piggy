@@ -1,27 +1,30 @@
 {% extends "layout.html" %}
 
 {% block content %}
+  <h1>{{ meta.name }}</h1>
+  <img
+    src="{{ media_abspath }}/header.png"
+    alt="Header image for {{ meta.name }}"
+  />
+  <pre>{{ media_abspath }}/header.png</pre>
+  <p>{{ meta.description or 'No description provided' }}</p>
 
-<h1>{{ meta.name }}</h1>
-<img src="{{ media_abspath }}/header.png" alt="Header image for {{ meta.name }}"/>
-<pre>{{ media_abspath }}/header.png</pre>
-<p>{{ meta.description or 'No description provided' }}</p>
+  <hr />
 
-<hr>
-
-{% for key, val in segment.items() %}
+  {% for key, val in segment.items() %}
     <h2>{{ key }} {{ val.meta.title }}</h2>
-    <img src="{{ media_abspath }}/{{ key }}/media/header.png" alt="Header image for {{ key }}"/>
+    <img
+      src="{{ media_abspath }}/{{ key }}/media/header.png"
+      alt="Header image for {{ key }}"
+    />
     <pre>{{ media_abspath }}/{{ key }}/media/header.png</pre>
-    <br>
+    <br />
     <a href="{{ abspath }}/{{ key }}">View {{ key }}</a>
-    <br>
+    <br />
     {% for meta_key, meta_val in val.get('meta', {}).items() %}
-        <strong>{{ meta_key }}</strong>: {{ meta_val }}
-        <br>
+      <strong>{{ meta_key }}</strong>: {{ meta_val }}
+      <br />
     {% endfor %}
-
     HELLO THIS IS A TEST FOR TOPICS
-{% endfor %}
-
+  {% endfor %}
 {% endblock %}
