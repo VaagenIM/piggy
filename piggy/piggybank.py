@@ -1,11 +1,10 @@
 import json
 import os
-import re
 from pathlib import Path
 
 from turtleconverter import mdfile_to_sections
 
-ASSIGNMENT_FILENAME_REGEX = re.compile(r"^(.+) Level (\d+) \- (.+).md$")
+from piggy.util import ASSIGNMENT_FILENAME_REGEX
 
 
 def load_meta_json(path: Path):
@@ -17,6 +16,35 @@ def load_meta_json(path: Path):
     if 'name' not in data:
         data['name'] = path.parent.name
     return data
+
+
+def get_piggymap_segment_from_path(path: str, piggymap: dict) -> tuple[dict, dict]:
+    """Get the metadata and segment from a path."""
+    segment = dict(piggymap.copy())
+    meta = segment.get('meta', {})
+    for path in path.split('/'):
+        if not path:
+            continue
+        if path not in segment:
+            return {}, {}
+        meta = segment.get(path, {}).get('meta', {})
+        segment = segment.get(path, {}).get('data', {})
+
+    return meta, segment
+
+
+def get_template_from_path(path: str) -> str:
+    """Get the directory name from a path."""
+    # TODO: Use an enum?
+    nest_level_dirname = {
+        0: 'assignments/0-assignments_root',
+        1: 'assignments/1-year_level',
+        2: 'assignments/2-class_name',
+        3: 'assignments/3-subject',
+        4: 'assignments/4-topic',
+    }
+    path = path.split('/')
+    return nest_level_dirname.get(len([x for x in path if x]), 'unknown') + '.html'
 
 
 def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):

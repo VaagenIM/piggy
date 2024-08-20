@@ -1,117 +1,47 @@
 import os
-from functools import lru_cache
 from pathlib import Path
 
-from flask import Flask, send_file, request, render_template, Response, Blueprint
-from turtleconverter import generate_static_files, mdfile_to_sections, ConversionError
+from flask import Flask, send_file, request, render_template, Blueprint
 
-from piggy.piggybank import generate_piggymap
+from piggy import PIGGYMAP, PIGGYBANK_FOLDER, ASSIGNMENT_ROUTE, MEDIA_ROUTE
+from piggy.caching import lru_cache_wrapper, _render_assignment, cache_directory
+from piggy.piggybank import get_piggymap_segment_from_path, get_template_from_path
+from piggy.util import generate_static_files_wrapper
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
 
-PIGGYBANK_FOLDER = Path('piggybank')
-PIGGYMAP = generate_piggymap(PIGGYBANK_FOLDER)
-
-SUPPORTED_LANGUAGES = {
-    '': {'name': 'Norsk'},
-    'eng': {'name': 'English'},
-    'ukr': {'name': 'Українська'},
-}
-
-# A prefix for the assignment URLs, to avoid conflicts with other routes
-ASSIGNMENT_ROUTE = 'main'
-# We can't have the media files have the same URL prefix as the assignments, as it would conflict
-# with the wildcard route for the media files.
-MEDIA_ROUTE = 'img'
-
 
 # TODO: Logging
-# TODO: Split up certain functions in this file into separate files
-
-def get_piggymap_segment_from_path(path: str) -> tuple[dict, dict]:
-    """Get the metadata and segment from a path."""
-    segment = dict(PIGGYMAP.copy())
-    meta = segment.get('meta', {})
-    for path in path.split('/'):
-        if not path:
-            continue
-        if path not in segment:
-            return {}, {}
-        meta = segment.get(path, {}).get('meta', {})
-        segment = segment.get(path, {}).get('data', {})
-
-    return meta, segment
-
-
-def get_directory_name_from_path(path: str) -> str:
-    """Get the directory name from a path."""
-    # TODO: Use an enum?
-    nest_level_dirname = {
-        0: 'assignments_root',
-        1: 'year_level',
-        2: 'class_name',
-        3: 'subject',
-        4: 'topic',
-    }
-    path = path.split('/')
-    return nest_level_dirname.get(len([x for x in path if x]), 'unknown')
-
-
-@lru_cache
-def _render_assignment(p: Path) -> Response:
-    """Render an assignment from a Path object."""
-    if not p.exists():
-        # TODO: Raise a custom error
-        return Response('Error: Assignment not found', status=404)
-    try:
-        sections = mdfile_to_sections(p)
-        print('Rendering:', p)
-    except ConversionError:
-        # TODO: Raise a custom error
-        return Response('Error: Could not render assignment', status=500)
-    render = render_template('assignment.html',
-                             content=sections,
-                             current_language=SUPPORTED_LANGUAGES.get('name', 'Unknown'),
-                             supported_languages=SUPPORTED_LANGUAGES,
-                             path=p,
-                             media_abspath=f'/{MEDIA_ROUTE}/{p.parent}/media',
-                             abspath=f'/{ASSIGNMENT_ROUTE}/{p}')
-    return Response(render, mimetype='text/html', status=200)
-
-
-def generate_static_files_wrapper():
-    cwd = os.getcwd()
-    os.chdir(os.path.dirname(Path(__file__).absolute()))
-    generate_static_files()
-    os.chdir(cwd)
 
 
 def create_app():
     app = Flask(__name__, static_folder='static')
 
-    assignment_route = Blueprint(ASSIGNMENT_ROUTE, __name__, url_prefix=f'/{ASSIGNMENT_ROUTE}')
-    media_route = Blueprint(MEDIA_ROUTE, __name__, url_prefix=f'/{MEDIA_ROUTE}')
+    assignment_routes = Blueprint(ASSIGNMENT_ROUTE, __name__, url_prefix=f'/{ASSIGNMENT_ROUTE}')
+    media_routes = Blueprint(MEDIA_ROUTE, __name__, url_prefix=f'/{MEDIA_ROUTE}')
 
     generate_static_files_wrapper()
 
     @app.context_processor
     def context_processor():
+        """Context variables for all templates in the app."""
         return {'ASSIGNMENT_URL_PREFIX': ASSIGNMENT_ROUTE,
                 'MEDIA_URL_PREFIX': MEDIA_ROUTE,
-                'piggymap': PIGGYMAP, }
+                'piggymap': PIGGYMAP,
+                'img_fmt': 'webp'}
 
     @app.route('/')
-    @lru_cache
+    @lru_cache_wrapper
     def index():
         html = '<h1>Velkommen til Piggy!</h1>'
         html += f'\n<a href="/{ASSIGNMENT_ROUTE}"><button>Oppgaver</button></a>'
         return html
 
-    @assignment_route.route(f'/<path:path>')
-    @assignment_route.route(f'/')
-    @lru_cache
-    def render_assignment_directories(path=''):
+    @assignment_routes.route(f'/<path:path>')
+    @assignment_routes.route(f'/')
+    @lru_cache_wrapper
+    def get_assignment_directory(path=''):
         """
         Render the webpage for a given path.
 
@@ -120,18 +50,21 @@ def create_app():
         """
         path = path.strip('/')
 
-        template_type = get_directory_name_from_path(path)
-        metadata, segment = get_piggymap_segment_from_path(path)
+        template_type = get_template_from_path(path)
+        metadata, segment = get_piggymap_segment_from_path(path, PIGGYMAP)
 
-        return render_template(f'{template_type}.html',
+        media_abspath = f'/{MEDIA_ROUTE}/{path}' if path else f'/{MEDIA_ROUTE}'
+        abspath = f'/{ASSIGNMENT_ROUTE}/{path}' if path else f'/{ASSIGNMENT_ROUTE}'
+
+        return render_template(template_type,
                                meta=metadata,
                                segment=segment,
                                path=path,
-                               media_abspath=f'/{MEDIA_ROUTE}/{path}/media',
-                               abspath=f'/{ASSIGNMENT_ROUTE}/{path}')
+                               media_abspath=media_abspath,
+                               abspath=abspath)
 
-    @assignment_route.route(f'/<year_level>/<class_name>/<subject>/<topic>/<assignment>')
-    def render_assignment(year_level, class_name, subject, topic, assignment, lang=''):
+    @assignment_routes.route(f'/<year_level>/<class_name>/<subject>/<topic>/<assignment>')
+    def get_assignment(year_level, class_name, subject, topic, assignment, lang=''):
         """
         Render an assignment from the piggymap. Takes precedence over the wildcard route due to specificity.
         """
@@ -144,29 +77,9 @@ def create_app():
 
         return _render_assignment(Path(f'{path}/{assignment}.md'))
 
-    def cache_all_assignment_directories():
-        def cache_directory(segment: dict, path: str = ''):
-            for key, value in segment.items():
-                print(f'Caching: {path}/{key}')
-                render_assignment_directories(f'{path}/{key}'.strip('/'))
-                if path.count('/') == 3:
-                    for assignment, assignment_data in value.get('data', {}).items():
-                        assignment_path = f'{path}/{key}/{assignment}'.strip('/')
-                        assignment_path = Path(f'{PIGGYBANK_FOLDER}/{assignment_path}.md')
-                        _render_assignment(assignment_path)
-                        [_render_assignment(Path(f'{assignment_path.parent}/translations/{lang}/{assignment}.md'))
-                         for lang in SUPPORTED_LANGUAGES.keys()]
-                elif path.count('/') > 3:
-                    return
-                else:
-                    cache_directory(value.get('data', {}), f'{path}/{key}')
-
-        with app.app_context():
-            cache_directory(PIGGYMAP)
-
-    @media_route.route(f'/<path:wildcard>/media/<filename>')
-    @assignment_route.route(f'<path:wildcard>/attachments/<filename>')
-    def get_media_wildcard(wildcard, filename):
+    @media_routes.route(f'/<path:wildcard>/media/<filename>')
+    @assignment_routes.route(f'/<path:wildcard>/attachments/<filename>')
+    def get_assignment_media_wildcard(wildcard, filename):
         """
         Get a media file from either the media or attachments folder.
         (only in MEDIA_URL_PREFIX or ASSIGNMENT_URL_PREFIX)
@@ -182,9 +95,11 @@ def create_app():
             return send_file('static/img/placeholders/100x100.png')
 
     if not app.debug:
-        cache_all_assignment_directories()
+        # Generate a cache of all assignment related pages
+        with app.app_context():
+            cache_directory(PIGGYMAP, directory_fn=get_assignment_directory, assignment_fn=_render_assignment)
 
-    app.register_blueprint(assignment_route)
-    app.register_blueprint(media_route)
+    app.register_blueprint(assignment_routes)
+    app.register_blueprint(media_routes)
 
     return app
