@@ -5,6 +5,8 @@
 .DS_Store?
 .cache
 
+tailwind.css
+
 turtleconvert/
 
 .idea/
