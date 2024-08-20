@@ -20,7 +20,7 @@ def checkout_branch(branch):
 
 
 if __name__ == "__main__":
-    # checkout_branch('test-data')
+    # checkout_branch('test-output')
     os.environ["FLASK_DEBUG"] = "1"
     os.environ["USE_CACHE"] = "0"
     app = create_app()
