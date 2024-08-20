@@ -3,7 +3,7 @@ FROM python:3.12
 ARG DEBIAN_FRONTEND=noninteractive
 
 ENV TZ='Europe/Oslo'
-RUN apt-get update && apt-get install -y tzdata git && \
+RUN apt-get update && apt-get install -y tzdata git nodejs npm && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV AUTO_UPDATE="True"
@@ -24,7 +24,7 @@ RUN echo  "cd /piggy && \
           cp /piggy/run.py /app/run.py && \
           cp /piggy/entrypoint.sh /app/entrypoint.sh" > /usr/local/bin/auto-update.sh
 
-RUN pip install -U pip && pip install .
+RUN pip install -U pip && pip install . && npm install --omit=dev
 
 EXPOSE 5000/tcp
 CMD ["/bin/bash", "entrypoint.sh"]

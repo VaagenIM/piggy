@@ -2,7 +2,7 @@
 
 [![GitHub Pages](https://badgen.net/badge/visit/github%20pages/?icon=chrome)](https://piggy.iktim.no)
 
-Install `pip install .`
+Install `pip install .` + `npm install --omit=dev`
 
 Install dev `pip install .[dev]` + `npm install`
 

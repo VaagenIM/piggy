@@ -1,6 +1,7 @@
 *
 !run.py
-!requirements.txt
+!pyproject.toml
+!package.json
 !entrypoint.sh
 !piggy/
 !piggybank/
