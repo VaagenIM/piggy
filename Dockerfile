@@ -12,9 +12,7 @@ ENV USE_CACHE="1"
 
 WORKDIR /app
 
-COPY pyproject.toml /app
-
-RUN pip install -U pip && pip install .
+COPY . /app
 
 # RUN git clone -b main https://github.com/VaagenIM/piggy /piggy
 
@@ -26,7 +24,7 @@ RUN echo  "cd /piggy && \
           cp /piggy/run.py /app/run.py && \
           cp /piggy/entrypoint.sh /app/entrypoint.sh" > /usr/local/bin/auto-update.sh
 
-COPY . /app
+RUN pip install -U pip && pip install .
 
 EXPOSE 5000/tcp
 CMD ["/bin/bash", "entrypoint.sh"]
