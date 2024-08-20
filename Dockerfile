@@ -12,11 +12,9 @@ ENV USE_CACHE="1"
 
 WORKDIR /app
 
-COPY requirements.txt /app
+COPY pyproject.toml /app
 
 RUN pip install -U pip && pip install .
-
-RUN pip install gunicorn
 
 # RUN git clone -b main https://github.com/VaagenIM/piggy /piggy
 
