@@ -18,7 +18,7 @@ COPY . /app
 
 RUN echo  "cd /piggy && \
           git pull && \
-          pip install -q -r requirements.txt && \
+          pip install . && \
           rm -rf /app/* && \
           cp -r /piggy/piggy/* /app/piggy && \
           cp /piggy/run.py /app/run.py && \
