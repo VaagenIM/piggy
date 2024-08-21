@@ -6,8 +6,15 @@ from typing import Callable
 from flask import Response, render_template
 from turtleconverter import mdfile_to_sections, ConversionError
 
-from piggy import SUPPORTED_LANGUAGES, ASSIGNMENT_ROUTE, MEDIA_ROUTE, PIGGYBANK_FOLDER
-from piggy.piggybank import get_all_meta_from_path
+from piggy import (
+    SUPPORTED_LANGUAGES,
+    ASSIGNMENT_ROUTE,
+    MEDIA_ROUTE,
+    PIGGYBANK_FOLDER,
+    AssignmentTemplate,
+)
+from piggy.exceptions import PiggyHTTPException
+from piggy.piggybank import get_all_meta_from_path, PIGGYMAP, get_template_from_path, get_piggymap_segment_from_path
 from piggy.util import ASSIGNMENT_FILENAME_REGEX
 
 
@@ -18,12 +25,13 @@ def lru_cache_wrapper(func):
 
 
 def cache_directory(
-    segment: dict, directory_fn: Callable[[str], str], assignment_fn: Callable[[Path], Response], _path: str = ""
+    segment: dict, directory_fn: Callable[[str], Response], assignment_fn: Callable[[Path], Response], _path: str = ""
 ):
     for key, value in segment.items():
         print(f"Caching: {_path}/{key}")
         directory_fn(f"{_path}/{key}".strip("/"))
-        if _path.count("/") == 3:
+        # If we are just above the assignment level, its children will be the assignments
+        if len(_path.split("/")) == AssignmentTemplate.ASSIGNMENT.index - 1:
             for assignment, assignment_data in value.get("data", {}).items():
                 assignment_path = f"{_path}/{key}/{assignment}".strip("/")
                 assignment_path = Path(f"{PIGGYBANK_FOLDER}/{assignment_path}.md")
@@ -31,25 +39,27 @@ def cache_directory(
                 [
                     assignment_fn(Path(f"{assignment_path.parent}/translations/{lang}/{assignment}.md"))
                     for lang in SUPPORTED_LANGUAGES.keys()
+                    if lang
                 ]
-        elif _path.count("/") > 3:
+        # If we are at the assignment level, we are done
+        elif len(_path.split("/")) > AssignmentTemplate.ASSIGNMENT.index - 1:
             return
         else:
-            cache_directory(value.get("data", {}), f"{_path}/{key}")
+            cache_directory(
+                value.get("data", {}), directory_fn=directory_fn, assignment_fn=assignment_fn, _path=f"{_path}/{key}"
+            )
 
 
 @lru_cache_wrapper
-def _render_assignment(p: Path, piggymap: dict) -> Response:
+def _render_assignment(p: Path) -> Response:
     """Render an assignment from a Path object."""
     if not p.exists():
-        # TODO: Raise a custom error
-        return Response("Error: Assignment not found", status=404)
+        raise PiggyHTTPException("Assignment not found", status_code=404)
     try:
         sections = mdfile_to_sections(p)
         print("Rendering:", p)
     except ConversionError:
-        # TODO: Raise a custom error
-        return Response("Error: Could not render assignment", status=500)
+        raise PiggyHTTPException("Error: Could not render assignment", status_code=500)
 
     lang = ""
     if p.parents[1].name == "translations":
@@ -59,10 +69,10 @@ def _render_assignment(p: Path, piggymap: dict) -> Response:
     match = ASSIGNMENT_FILENAME_REGEX.match(p.name)
 
     meta = sections.get("meta", {})
-    meta = {**meta, **get_all_meta_from_path(str(p.parent), piggymap)}
+    meta = {**meta, **get_all_meta_from_path(str(p.parent), PIGGYMAP)}
 
     render = render_template(
-        "assignments/5-assignment.html",
+        AssignmentTemplate.ASSIGNMENT.template,
         content=sections,
         meta=meta,
         current_language=current_language,
@@ -75,3 +85,34 @@ def _render_assignment(p: Path, piggymap: dict) -> Response:
         abspath=f"/{ASSIGNMENT_ROUTE}/{p}",
     )
     return Response(render, mimetype="text/html", status=200)
+
+
+@lru_cache_wrapper
+def _render_assignment_wildcard(path="", lang="") -> Response:
+    """
+    Render the webpage for a given path.
+
+    Keeps track of template_type (assignments_root, year_level, class_name, subject, topic) based on the path.
+    Gets the relevant piggymap from the path. (key = child content, value = dict with relevant child data + meta)
+    """
+    template_type = get_template_from_path(path)
+    metadata, segment = get_piggymap_segment_from_path(path, PIGGYMAP)
+    metadata = {**metadata, **get_all_meta_from_path(path, PIGGYMAP)}
+
+    media_abspath = f"/{MEDIA_ROUTE}/{path}" if path else f"/{MEDIA_ROUTE}"
+    abspath = f"/{ASSIGNMENT_ROUTE}/{path}" if path else f"/{ASSIGNMENT_ROUTE}"
+
+    # If we are at the final level (assignment), render the assignment
+    if len(path.split("/")) == AssignmentTemplate.ASSIGNMENT.index:
+        path, assignment = path.rsplit("/", 1)
+        if lang:
+            assignment = f"translations/{lang}/{assignment}"
+        return _render_assignment(Path(f"{PIGGYBANK_FOLDER}/{path}/{assignment}.md"))
+
+    # Render the appropriate template
+    return Response(
+        render_template(
+            template_type, meta=metadata, segment=segment, path=path, media_abspath=media_abspath, abspath=abspath
+        ),
+        200,
+    )

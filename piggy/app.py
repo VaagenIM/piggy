@@ -1,12 +1,13 @@
 import os
 from pathlib import Path
 
-from flask import Flask, send_file, request, render_template, Blueprint
+from flask import Flask, send_file, request, Blueprint, render_template
 
-from piggy import PIGGYMAP, PIGGYBANK_FOLDER, ASSIGNMENT_ROUTE, MEDIA_ROUTE
-from piggy.caching import lru_cache_wrapper, _render_assignment, cache_directory
-from piggy.piggybank import get_piggymap_segment_from_path, get_template_from_path, get_all_meta_from_path
+from piggy import PIGGYBANK_FOLDER, ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate
+from piggy.caching import lru_cache_wrapper, _render_assignment, cache_directory, _render_assignment_wildcard
+from piggy.piggybank import PIGGYMAP
 from piggy.util import generate_static_files_wrapper
+from piggy.exceptions import PiggyHTTPException
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
@@ -36,46 +37,23 @@ def create_app():
     @app.route("/")
     @lru_cache_wrapper
     def index():
-        html = "<h1>Velkommen til Piggy!</h1>"
-        html += f'\n<a href="/{ASSIGNMENT_ROUTE}"><button>Oppgaver</button></a>'
-        return html
+        return render_template("index.html")
 
     @assignment_routes.route("/<path:path>")
     @assignment_routes.route("/")
-    @lru_cache_wrapper
-    def get_assignment_directory(path=""):
-        """
-        Render the webpage for a given path.
-
-        Keeps track of template_type (assignments_root, year_level, class_name, subject, topic) based on the path.
-        Gets the relevant piggymap from the path. (key = child content, value = dict with relevant child data + meta)
-        """
+    def get_assignment_wildcard(path="", lang=""):
         path = path.strip("/")
 
-        template_type = get_template_from_path(path)
-        metadata, segment = get_piggymap_segment_from_path(path, PIGGYMAP)
-        metadata = {**metadata, **get_all_meta_from_path(path, PIGGYMAP)}
+        # If we are over the final level (assignment), raise a 404
+        if len(path.split("/")) > AssignmentTemplate.ASSIGNMENT.index:
+            raise PiggyHTTPException("Assignment not found", status_code=404)
 
-        media_abspath = f"/{MEDIA_ROUTE}/{path}" if path else f"/{MEDIA_ROUTE}"
-        abspath = f"/{ASSIGNMENT_ROUTE}/{path}" if path else f"/{ASSIGNMENT_ROUTE}"
+        # If we are at the final level (assignment), get lang from the cookies (valid requests only)
+        if len(path.split("/")) == AssignmentTemplate.ASSIGNMENT.index and request:
+            lang = request.cookies.get("lang", "")  # "" = default language (Norwegian
 
-        return render_template(
-            template_type, meta=metadata, segment=segment, path=path, media_abspath=media_abspath, abspath=abspath
-        )
-
-    @assignment_routes.route("/<year_level>/<class_name>/<subject>/<topic>/<assignment>")
-    def get_assignment(year_level, class_name, subject, topic, assignment, lang=""):
-        """
-        Render an assignment from the piggymap. Takes precedence over the wildcard route due to specificity.
-        """
-        # TODO: Simplify path handling (less parameters)?
-        if request:  # Caching doesn't work with request context
-            lang = request.cookies.get("lang", lang)
-        if lang:
-            assignment = f"translations/{lang}/{assignment}"
-        path = f"{PIGGYBANK_FOLDER}/{year_level}/{class_name}/{subject}/{topic}"
-
-        return _render_assignment(Path(f"{path}/{assignment}.md"), piggymap=PIGGYMAP)
+        # Render the appropriate template for the current level
+        return _render_assignment_wildcard(path, lang=lang)
 
     @media_routes.route("/<path:wildcard>/media/<filename>")
     @assignment_routes.route("/<path:wildcard>/attachments/<filename>")
@@ -94,10 +72,10 @@ def create_app():
         except FileNotFoundError:
             return send_file("static/img/placeholders/100x100.png")
 
+    # Cache all assignment related pages if not in debug mode
     if not app.debug:
-        # Generate a cache of all assignment related pages
-        with app.app_context():
-            cache_directory(PIGGYMAP, directory_fn=get_assignment_directory, assignment_fn=_render_assignment)
+        with app.app_context(), app.test_request_context():
+            cache_directory(PIGGYMAP, directory_fn=_render_assignment_wildcard, assignment_fn=_render_assignment)
 
     app.register_blueprint(assignment_routes)
     app.register_blueprint(media_routes)
