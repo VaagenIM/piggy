@@ -1,0 +1,30 @@
+{# Card Container #}
+<a
+href="{{ abspath }}/{{ item }}"
+class="card-container block p-3 rounded-xl border border-slate-500"
+>
+{# Card Title #}
+<div class="text-2xl font-extrabold text-center pb-2">
+  {{ data.meta.name }}
+</div>
+
+{# Card Thumbnail #}
+<div class="thumbnail-container">
+  <img
+    class="w-full h-36 object-cover rounded-xl shadow-lg"
+    src="{{ media_abspath }}/{{ item }}/media/header.{{ img_fmt }}"
+    alt="Header image for {{ item }}"
+  />
+
+  {# TEMP
+      <div class="thumbnail-text-overlay">
+          {{ data.meta.description }}
+      </div>
+      #}
+</div>
+
+{# Card Description #}
+<div class="mt-4 description-container, font-semibold">
+  {{ data.meta.description }}
+</div>
+</a>

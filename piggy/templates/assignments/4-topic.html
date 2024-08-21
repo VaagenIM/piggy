@@ -1,10 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h1 class="text-5xl font-extrabold text-center my-6">{{ meta.name }}</h1>
+
+  <div class="container mx-auto p-4">
+    <div
+      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
+    >
+      {% for item, data in segment.items() %}
+        {% include 'objects/card-assignment.html' %}
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
+
+{#
 <h1>Oppgavebanken</h1>
 
 {% for item, data in segment.items() %}
-  {# Name metadata for child item #}
   <h2>{{ data.meta.title }}</h2>
-
-  {# Header media for child item #}
   <img
     src="{{ media_abspath }}/{{ item }}/media/header.{{ img_fmt }}"
     alt="Header image for {{ item }}"
@@ -12,7 +26,6 @@
   <pre>{{ media_abspath }}/{{ item }}/media/header.png</pre>
 
   <br />
-  {# Link to item, display name #}
   <a href="{{ abspath }}/{{ item }}">View {{ data.meta.title }}</a>
   <br />
 
@@ -30,3 +43,4 @@
     <li>{{ meta_key }}: {{ meta_val }}</li>
   {% endfor %}
 {% endfor %}
+#}
