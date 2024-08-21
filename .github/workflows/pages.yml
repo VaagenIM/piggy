@@ -34,7 +34,7 @@ jobs:
           python-version: '3.12'
 
       - name: Spin up containers
-        run: docker-compose up -d -f docker-compose.pages.yml
+        run: docker compose up -d -f docker-compose.pages.yml
 
       - name: Run web scraper to build static site
         run: python .github/workflows/web_scraper.py
@@ -43,7 +43,7 @@ jobs:
         run: cp -r piggy/static .github/workflows/demo
 
       - name: Tear down containers
-        run: docker-compose down
+        run: docker compose down -f docker-compose.pages.yml
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
