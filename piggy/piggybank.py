@@ -33,6 +33,32 @@ def get_piggymap_segment_from_path(path: str, piggymap: dict) -> tuple[dict, dic
     return meta, segment
 
 
+def get_all_meta_from_path(path: str, piggymap: dict) -> dict:
+    """Get all metadata from a path."""
+    meta_map = {
+        "year_level": 1,
+        "class_name": 2,
+        "subject": 3,
+        "topic": 4,
+    }
+
+    metadata = dict()
+
+    data = piggymap.get(path.split("/")[0], {})
+    for i, p in enumerate(path.split("/")):
+        meta = data.get("meta", {})
+        key = [k for k, v in meta_map.items() if v == i]
+        match i:
+            case 0:
+                continue
+            case 1 | 2 | 3 | 4:
+                metadata[key[0]] = meta
+            case _:
+                break
+        data = data.get("data", {}).get(p, {})
+    return metadata
+
+
 def get_template_from_path(path: str) -> str:
     """Get the directory name from a path."""
     # TODO: Use an enum?

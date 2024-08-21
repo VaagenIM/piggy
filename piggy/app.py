@@ -5,7 +5,7 @@ from flask import Flask, send_file, request, render_template, Blueprint
 
 from piggy import PIGGYMAP, PIGGYBANK_FOLDER, ASSIGNMENT_ROUTE, MEDIA_ROUTE
 from piggy.caching import lru_cache_wrapper, _render_assignment, cache_directory
-from piggy.piggybank import get_piggymap_segment_from_path, get_template_from_path
+from piggy.piggybank import get_piggymap_segment_from_path, get_template_from_path, get_all_meta_from_path
 from piggy.util import generate_static_files_wrapper
 
 # Ensure the working directory is the root of the project
@@ -54,6 +54,7 @@ def create_app():
 
         template_type = get_template_from_path(path)
         metadata, segment = get_piggymap_segment_from_path(path, PIGGYMAP)
+        metadata = {**metadata, **get_all_meta_from_path(path, PIGGYMAP)}
 
         media_abspath = f"/{MEDIA_ROUTE}/{path}" if path else f"/{MEDIA_ROUTE}"
         abspath = f"/{ASSIGNMENT_ROUTE}/{path}" if path else f"/{ASSIGNMENT_ROUTE}"
@@ -74,7 +75,7 @@ def create_app():
             assignment = f"translations/{lang}/{assignment}"
         path = f"{PIGGYBANK_FOLDER}/{year_level}/{class_name}/{subject}/{topic}"
 
-        return _render_assignment(Path(f"{path}/{assignment}.md"))
+        return _render_assignment(Path(f"{path}/{assignment}.md"), piggymap=PIGGYMAP)
 
     @media_routes.route("/<path:wildcard>/media/<filename>")
     @assignment_routes.route("/<path:wildcard>/attachments/<filename>")

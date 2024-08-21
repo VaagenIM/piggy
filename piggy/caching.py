@@ -7,6 +7,7 @@ from flask import Response, render_template
 from turtleconverter import mdfile_to_sections, ConversionError
 
 from piggy import SUPPORTED_LANGUAGES, ASSIGNMENT_ROUTE, MEDIA_ROUTE, PIGGYBANK_FOLDER
+from piggy.piggybank import get_all_meta_from_path
 from piggy.util import ASSIGNMENT_FILENAME_REGEX
 
 
@@ -38,7 +39,7 @@ def cache_directory(
 
 
 @lru_cache_wrapper
-def _render_assignment(p: Path) -> Response:
+def _render_assignment(p: Path, piggymap: dict) -> Response:
     """Render an assignment from a Path object."""
     if not p.exists():
         # TODO: Raise a custom error
@@ -57,9 +58,13 @@ def _render_assignment(p: Path) -> Response:
 
     match = ASSIGNMENT_FILENAME_REGEX.match(p.name)
 
+    meta = sections.get("meta", {})
+    meta = {**meta, **get_all_meta_from_path(str(p.parent), piggymap)}
+
     render = render_template(
         "assignments/5-assignment.html",
         content=sections,
+        meta=meta,
         current_language=current_language,
         supported_languages=SUPPORTED_LANGUAGES,
         path=p,
