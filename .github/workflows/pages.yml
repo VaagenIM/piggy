@@ -27,6 +27,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -37,7 +39,9 @@ jobs:
         run: docker compose -f docker-compose.pages.yml up -d
 
       - name: Run web scraper to build static site
-        run: python .github/workflows/web_scraper.py
+        run: |
+          pip install requests
+          python .github/workflows/web_scraper.py
 
       - name: Copy static into .github/workflows/demo
         run: cp -r piggy/static .github/workflows/demo
