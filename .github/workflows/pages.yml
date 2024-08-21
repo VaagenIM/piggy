@@ -35,6 +35,9 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Get piggybank
+        run: git clone --branch output https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/VaagenIM/piggybank piggybank-demo
+
       - name: Spin up containers
         run: docker compose -f docker-compose.pages.yml up -d
 

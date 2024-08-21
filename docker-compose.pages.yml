@@ -13,3 +13,5 @@ services:
       - WEB_CONCURRENCY=1
 
       - TZ=Europe/Oslo
+    volumes:
+      - ./piggybank-demo:/app/piggybank
