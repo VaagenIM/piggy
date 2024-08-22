@@ -11,6 +11,7 @@ visited = []  # A list of links we have visited
 media_links = []
 url = "http://localhost:5000"  # The URL of the website we are scraping
 
+cwd = os.getcwd()
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -67,3 +68,4 @@ def download_site():
 
 
 download_site()
+os.chdir(cwd)
