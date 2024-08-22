@@ -43,7 +43,7 @@ jobs:
 
       - name: Run web scraper to build static site
         run: |
-          pip install requests
+          pip install requests git+https://github.com/sondregronas/turtleconverter@main
           python .github/workflows/web_scraper.py
 
       - name: Tear down containers
