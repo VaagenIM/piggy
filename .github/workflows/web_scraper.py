@@ -6,7 +6,6 @@ import shutil
 import requests
 import re
 import os
-from turtleconverter import generate_static_files
 from pathlib import Path
 
 links = ["/"]  # A list of links we need to visit and download (including files that are related to the website)
@@ -70,5 +69,4 @@ def download_site():
 
 
 shutil.copytree(Path(__file__).parents[2] / "piggy/static", Path("demo/static"))
-generate_static_files(static_folder=Path("demo/static").absolute())
 download_site()
