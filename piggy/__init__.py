@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 from enum import Enum
@@ -16,6 +17,7 @@ ASSIGNMENT_ROUTE = "main"
 MEDIA_ROUTE = "img"
 
 ASSIGNMENTS_TEMPLATE_FOLDER = "assignments"
+ASSIGNMENT_FILENAME_REGEX = re.compile(r"^(.+) Level (\d+) \- (.+).md$")
 
 
 class AssignmentTemplate(Enum):
