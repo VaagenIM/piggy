@@ -38,7 +38,7 @@ def get_html(link):
 
 def get_links(html):
     links = re.compile(r'href="(\/[^"]*)"').findall(html)
-    return list(set([x for x in links if not re.match(r"/static/.*", x)]))
+    return list(set([x for x in links if not re.match(r"/static/.*", x) or re.match(r"\btailwind\.css\b", x)]))
 
 
 def get_media_links(html):
