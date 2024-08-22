@@ -1,0 +1,63 @@
+# A static version of the site is built and deployed using a web scraper
+
+name: Pages
+
+on:
+  push:
+      branches:
+      - main
+  repository_dispatch:
+   types: [fill_piggybank]
+  workflow_dispatch:
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Get piggybank
+        run: git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank-demo
+
+      - name: Spin up containers
+        run: docker compose -f docker-compose.pages.yml up -d
+
+      - name: Run web scraper to build static site
+        run: |
+          pip install requests
+          python .github/workflows/web_scraper.py
+
+      - name: Copy static into .github/workflows/demo
+        run: cp -r piggy/static .github/workflows/demo
+
+      - name: Tear down containers
+        run: docker compose -f docker-compose.pages.yml down
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          name: github-pages
+          path: ./.github/workflows/demo
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1

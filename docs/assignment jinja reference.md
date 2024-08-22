@@ -7,7 +7,8 @@ Følgende verdier gjelder for _alle_ templates:
 - `ASSIGNMENT_URL_PREFIX`: Prefix for assignment routes (`assignments`).
 - `MEDIA_URL_PREFIX`: Prefix for media routes (`media`), brukes av bilder i `media` mappene i piggybank.
 - `piggymap`: En kopi av `piggymap`-objektet, som inneholder hele strukturen til piggybank.
-  - `piggymap` sin struktur er `filsti['data']` eller `filsti['meta']`, hvor `data` inneholder en nestet struktur av mapper og filer, og `meta` inneholder metadata om disse filene. (f.eks. `piggymap['VG2'].data['Naturfag'].data`)
+    - `piggymap` sin struktur er `filsti['data']` eller `filsti['meta']`, hvor `data` inneholder en nestet struktur av
+      mapper og filer, og `meta` inneholder metadata om disse filene. (f.eks. `piggymap['VG2'].data['Naturfag'].data`)
 - `img_fmt`: Bildeformat (automatisk konvertert/komprimert) (`webp`)
 
 ## Assignment context variabler
@@ -29,25 +30,32 @@ Følgende verdier er tilgjengelige i disse templatesene:
 3-subject.html
 ```
 
-- `segment`: Segmentet (`dict[str, dict]` key-value pair) fra `piggymap`-objektet for den gitte filen. (En side på `1-year_level.html` vil ha alle underelementer til det året. `VG1` vil derfor ha segment `IM`, `MK` for eksempel).
-  - `key`: Nøkkelen til segmentet (f.eks. `VG1`).
-  - `value`: Verdiene til segmentet (f.eks. `IM`, `MK`), data (`value['data']`) + metadata til segmentet (`value['meta']`).
+- `segment`: Segmentet (`dict[str, dict]` key-value pair) fra `piggymap`-objektet for den gitte filen. (En side
+  på `1-year_level.html` vil ha alle underelementer til det året. `VG1` vil derfor ha segment `IM`, `MK` for eksempel).
+    - `key`: Nøkkelen til segmentet (f.eks. `VG1`).
+    - `value`: Verdiene til segmentet (f.eks. `IM`, `MK`), data (`value['data']`) + metadata til
+      segmentet (`value['meta']`).
 - `meta`: Metadata fra `meta.json`-filen i samme mappe.
-  - `name`: Alltid tilgjengelig, navnet på mappen om det ikke er definert i `meta.json`.
+    - `name`: Alltid tilgjengelig, navnet på mappen om det ikke er definert i `meta.json`.
+    - `year_level`: `year_level` sin metadata (hvis i en template under `1-year_level.html`).
+    - `class_name`: `class_name` sin metadata (hvis i en template under `2-class_name.html`).
+    - `subject`: `subject` sin metadata (hvis i en template under `3-subject.html`).
+    - `topic`: `topic` sin metadata (hvis i en template under `4-topic.html`).
 
 ## Level 4 (`4-topic.html`)
 
-`4-topic.html`-templaten er unik pga. den har oppgaver som segment, som har ekstra metadata (i tillegg til metadataen som er tilgjengelig i 0-3).
+`4-topic.html`-templaten er unik pga. den har oppgaver som segment, som har ekstra metadata (i tillegg til metadataen
+som er tilgjengelig i 0-3).
 
 - `value`: verdien til segmentet har ekstra verdier:
-  - `path`: Relativ filsti til oppgaven på disk
-  - `assignment_name`: Navnet på oppgaven (**--Eksempel Oppgave--** Level 1 - Tittel på oppgave)
-  - `level`: Nivået til oppgaven (Eksempel Oppgave Level **--1--** - Tittel på oppgave)
-  - `level_name`: Navnet på nivået til oppgaven (Eksempel Oppgave Level 1 - **--Tittel på oppgave--**)
-  - `heading`: Overskrift for oppgaven (definert av markdown-filen)
-  - `meta`: Metadata for oppgaven (frontmatter)
-  - `data`: Verdiene til selve oppgavene
-    - Se Level 5 for hva som er tilgjengelig i `data`.
+    - `path`: Relativ filsti til oppgaven på disk
+    - `assignment_name`: Navnet på oppgaven (**--Eksempel Oppgave--** Level 1 - Tittel på oppgave)
+    - `level`: Nivået til oppgaven (Eksempel Oppgave Level **--1--** - Tittel på oppgave)
+    - `level_name`: Navnet på nivået til oppgaven (Eksempel Oppgave Level 1 - **--Tittel på oppgave--**)
+    - `heading`: Overskrift for oppgaven (definert av markdown-filen)
+    - `meta`: Metadata for oppgaven (frontmatter)
+    - `data`: Verdiene til selve oppgavene
+        - Se Level 5 for hva som er tilgjengelig i `data`.
 
 ```bash
 4-topic.html
@@ -55,17 +63,16 @@ Følgende verdier er tilgjengelige i disse templatesene:
 
 ## Level 5 (`5-assignment.html`)
 
-  - `content`: `turtleconverter` seksjoner.
+- `content`: `turtleconverter` seksjoner.
     - `heading`: Overskrift for oppgaven.
     - `head`: Det som er i `<head>`-taggen fra generert HTML.
     - `body`: Det som er i `<body>`-taggen fra generert HTML.
     - `meta`: Metadata for oppgaven (frontmatter).
-  - `current_language`: Nåværende språk
-  - `supported_languages`: Støttede språk for oppgaven
-  - `assignment_name`: Navnet på oppgaven (**Eksempel Oppgave** Level 1 - Tittel på oppgave)
-  - `level`: Nivået til oppgaven (Eksempel Oppgave Level **1** - Tittel på oppgave)
-  - `level_name`: Navnet på nivået til oppgaven (Eksempel Oppgave Level 1 - **Tittel på oppgave**)
-
+- `current_language`: Nåværende språk
+- `supported_languages`: Støttede språk for oppgaven
+- `assignment_name`: Navnet på oppgaven (**Eksempel Oppgave** Level 1 - Tittel på oppgave)
+- `level`: Nivået til oppgaven (Eksempel Oppgave Level **1** - Tittel på oppgave)
+- `level_name`: Navnet på nivået til oppgaven (Eksempel Oppgave Level 1 - **Tittel på oppgave**)
 
 ## Linke til neste nivå
 
@@ -74,10 +81,9 @@ For å linke til neste nivå, bruk følgende format:
 ```html
 {# Link til neste nivå #}
 {% for segment, data in segment.value.data.items() %}
-  <a href="{{ abspath }}/{{ segment }}">Link til {{ data.meta.name }}</a>
+<a href="{{ abspath }}/{{ segment }}">Link til {{ data.meta.name }}</a>
 {% endfor %}
 ```
-
 
 ## Linke til bilder
 
@@ -89,6 +95,6 @@ For å linke til bilder i `media`-mappene, bruk følgende format:
 
 {# Bilde i media-mappen for en underseksjon #}
 {% for segment, data in segment.value.data.items() %}
-  <img src="{{ media_abspath }}/{{ segment }}/media/bilde.png" alt="Bilde fra segmentets media mappe">
+<img src="{{ media_abspath }}/{{ segment }}/media/bilde.png" alt="Bilde fra segmentets media mappe">
 {% endfor %}
 ```

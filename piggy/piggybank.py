@@ -5,6 +5,7 @@ from pathlib import Path
 from turtleconverter import mdfile_to_sections
 
 from piggy.util import ASSIGNMENT_FILENAME_REGEX
+from piggy import AssignmentTemplate, PIGGYBANK_FOLDER
 
 
 def load_meta_json(path: Path):
@@ -33,18 +34,31 @@ def get_piggymap_segment_from_path(path: str, piggymap: dict) -> tuple[dict, dic
     return meta, segment
 
 
+def get_all_meta_from_path(path: str, piggymap: dict) -> dict:
+    """Get all metadata from a path."""
+    metadata = dict()
+
+    data = piggymap.get(path.split("/")[0], {})
+    for i, p in enumerate(path.split("/")):
+        meta = data.get("meta", {})
+        key = [k for k, v in AssignmentTemplate.get_dictmap().items() if v == i]
+        match i:
+            case 0:
+                continue
+            case 1 | 2 | 3 | 4:
+                metadata[key[0]] = meta
+            case _:
+                break
+        data = data.get("data", {}).get(p, {})
+    return metadata
+
+
 def get_template_from_path(path: str) -> str:
     """Get the directory name from a path."""
-    # TODO: Use an enum?
-    nest_level_dirname = {
-        0: "assignments/0-assignments_root",
-        1: "assignments/1-year_level",
-        2: "assignments/2-class_name",
-        3: "assignments/3-subject",
-        4: "assignments/4-topic",
-    }
-    path = path.split("/")
-    return nest_level_dirname.get(len([x for x in path if x]), "unknown") + ".html"
+    t = AssignmentTemplate.get_template_from_index(len([x for x in path.split("/") if x]))
+    if not t:
+        return AssignmentTemplate.ASSIGNMENT.template
+    return t
 
 
 def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
@@ -92,3 +106,6 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
             "meta": sections["meta"],
         }
     return piggymap
+
+
+PIGGYMAP = generate_piggymap(PIGGYBANK_FOLDER)
