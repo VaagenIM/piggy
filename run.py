@@ -1,5 +1,6 @@
 import os
 import subprocess
+
 from piggy.app import create_app
 
 
@@ -22,9 +23,8 @@ def checkout_branch(branch):
 
 if __name__ == "__main__":
     # checkout_branch("test-output")
-    os.environ["FLASK_DEBUG"] = "1"
-    os.environ["USE_CACHE"] = "0"
-    os.environ["SERVER_NAME"] = "localhost:5001"
+    os.environ["FLASK_DEBUG"] = "0"
+    os.environ["USE_CACHE"] = "1"
     app = create_app()
     app.config["TEMPLATES_AUTO_RELOAD"] = True
     run_tailwind(reload=True)
