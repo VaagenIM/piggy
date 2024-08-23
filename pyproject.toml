@@ -19,7 +19,6 @@ py-modules = []
 [project.optional-dependencies]
 dev = [
     "ruff",
-    "livereload",
 ]
 
 [tool.ruff]

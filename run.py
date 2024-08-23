@@ -22,7 +22,6 @@ def checkout_branch(branch):
 
 
 if __name__ == "__main__":
-    from livereload import Server
     from piggy.devtools import inject_devtools
 
     # checkout_branch("test-output")
@@ -30,23 +29,14 @@ if __name__ == "__main__":
     os.environ["USE_CACHE"] = "0"
 
     app = create_app()
+    inject_devtools(app)
 
-    if not os.environ.get("injected", False):
-        inject_devtools(app)
-
-    os.environ["injected"] = "1"
-
+    # Run node processes as subprocesses
     run_tailwind(reload=True)
-
-    """
-    server = Server(app)
-    server.watch("piggy/**/*", ignore=lambda *_: False)
-    server.watch("piggybank/*", ignore=lambda *_: False)
-    server.serve(host="127.0.0.1", port=5001, debug=False)
-    """
+    subprocess.Popen('npx livereload "piggy/, piggybank/"', shell=True)
 
     app.run(port=5001)
 else:
     checkout_branch("output")
-    run_tailwind()
+    run_tailwind()  # Runs once to generate the CSS file
     app = create_app()

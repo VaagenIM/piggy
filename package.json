@@ -3,6 +3,7 @@
     "tailwindcss": "^3.4.10"
   },
   "devDependencies": {
+    "livereload": "^0.9.3",
     "prettier": "^3.3.3",
     "prettier-plugin-jinja-template": "^1.4.1"
   },
