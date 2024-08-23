@@ -12,10 +12,10 @@ from piggy import (
     MEDIA_ROUTE,
     PIGGYBANK_FOLDER,
     AssignmentTemplate,
+    ASSIGNMENT_FILENAME_REGEX,
 )
 from piggy.exceptions import PiggyHTTPException
 from piggy.piggybank import get_all_meta_from_path, PIGGYMAP, get_template_from_path, get_piggymap_segment_from_path
-from piggy.util import ASSIGNMENT_FILENAME_REGEX
 
 
 def lru_cache_wrapper(func):

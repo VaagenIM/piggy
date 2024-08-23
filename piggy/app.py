@@ -2,11 +2,11 @@ import os
 from pathlib import Path
 
 from flask import Flask, send_file, request, Blueprint, render_template
+from turtleconverter import generate_static_files
 
 from piggy import PIGGYBANK_FOLDER, ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate
 from piggy.caching import lru_cache_wrapper, _render_assignment, cache_directory, _render_assignment_wildcard
 from piggy.piggybank import PIGGYMAP
-from piggy.util import generate_static_files_wrapper
 from piggy.exceptions import PiggyHTTPException
 
 # Ensure the working directory is the root of the project
@@ -22,7 +22,7 @@ def create_app():
     assignment_routes = Blueprint(ASSIGNMENT_ROUTE, __name__, url_prefix=f"/{ASSIGNMENT_ROUTE}")
     media_routes = Blueprint(MEDIA_ROUTE, __name__, url_prefix=f"/{MEDIA_ROUTE}")
 
-    generate_static_files_wrapper()
+    generate_static_files(static_folder=os.path.dirname(Path(__file__).absolute()) + "/static")
 
     @app.context_processor
     def context_processor():

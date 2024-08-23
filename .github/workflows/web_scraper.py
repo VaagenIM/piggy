@@ -2,9 +2,12 @@
 A hacky script that scrapes a website and downloads all the pages and media files.
 """
 
+import shutil
 import requests
 import re
 import os
+from turtleconverter import generate_static_files
+from pathlib import Path
 
 links = ["/"]  # A list of links we need to visit and download (including files that are related to the website)
 visited = []  # A list of links we have visited
@@ -35,7 +38,7 @@ def get_html(link):
 
 def get_links(html):
     links = re.compile(r'href="(\/[^"]*)"').findall(html)
-    return list(set([x for x in links if not re.match(r"/static/.*", x)]))
+    return list(set([x for x in links]))
 
 
 def get_media_links(html):
@@ -66,4 +69,6 @@ def download_site():
             f.write(r.content)
 
 
+shutil.copytree(Path(__file__).parents[2] / "piggy/static", Path("demo/static"))
+generate_static_files(static_folder=Path("demo/static").absolute())
 download_site()

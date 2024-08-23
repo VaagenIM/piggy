@@ -4,8 +4,7 @@ from pathlib import Path
 
 from turtleconverter import mdfile_to_sections
 
-from piggy.util import ASSIGNMENT_FILENAME_REGEX
-from piggy import AssignmentTemplate, PIGGYBANK_FOLDER
+from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX
 
 
 def load_meta_json(path: Path):
