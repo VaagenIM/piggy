@@ -25,7 +25,7 @@ def get_html(link):
     html = bs(r.text, "html.parser").prettify()
 
     new_links = get_links(html, path=link.strip("/"))
-    new_media_links = get_media_links(html)
+    new_media_links = get_media_links(html, path=link.strip("/"))
 
     for l in new_links:
         if l not in links:
@@ -50,9 +50,15 @@ def get_links(html, path=""):
     return list(set([x for x in filtered_links]))
 
 
-def get_media_links(html):
+def get_media_links(html, path=""):
     links = re.compile(r'src="((?!#|https?://)[^"]*)"').findall(html)
-    return list(set([x for x in links if not re.match(r"/static/.*", x)]))
+    filtered_links = list()
+    for link in links:
+        if not link.startswith("/") and path:
+            filtered_links.append(f"{path.rsplit('/', 1)[0]}/{link}")
+            continue
+        filtered_links.append(link)
+    return list(set([x for x in filtered_links if not re.match(r"/static/.*", x)]))
 
 
 def download_site():
@@ -68,8 +74,8 @@ def download_site():
                         path += ".html"
                 print(f"Writing {link}")
                 os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
-                with open(f"demo/{path}", "w+", encoding="utf-8") as f:
-                    f.write(html)
+                with open(f"demo/{path}", "wb+") as f:
+                    f.write(html.encode())
     for link in media_links:
         print(f"Downloading {link}")
         path = link.strip("/")
