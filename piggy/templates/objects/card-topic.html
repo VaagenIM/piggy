@@ -31,17 +31,17 @@ class="card-container block p-3 rounded-xl border border-slate-500"
 {# Card Tags #}
 <div class="mt-2 tags-container">
   {% for tag in data.meta.tags %}
-    <span class="inline-block text-xs px-2 py-1 rounded-full font-light tag-box" 
+    <span class="inline-block text-xs px-2 py-1 rounded-full font-semibold tag-box"
       style="border: 1px solid;" data-tag="{{ tag }}">
       {{ tag }}
     </span>
   {% endfor %}
 </div>
 
-<div class="see-more text-s" id="see-more-{{ loop_index }}" onclick="toggleTags(this)">Se flere</div>
+{# <div class="see-more text-s" id="see-more-{{ loop_index }}" onclick="toggleTags(this)">Se flere</div> #}
 
 {# Card Description #}
-<div class="mt-4 description-container font-semibold">
+<div class="mt-4 description-container font-extrabold">
   {{ data.meta.description }}
 </div>
 </a>
@@ -94,7 +94,7 @@ class="card-container block p-3 rounded-xl border border-slate-500"
         tag.style.borderColor = stringToColor(tagText);
       });
 
-      checkTagsVisibility();
-      window.addEventListener('resize', checkTagsVisibility);
+      // checkTagsVisibility();
+      // window.addEventListener('resize', checkTagsVisibility);
   });
 </script>

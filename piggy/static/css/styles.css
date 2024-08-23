@@ -62,7 +62,7 @@
 }
 
 .tags-container {
-  max-height: 4.5rem;
+  /* max-height: 4.5rem; */
   overflow: hidden;
   position: relative;
   display: flex;
@@ -79,7 +79,7 @@
   height: 2rem;
   /* This does not quite work, why isn't there a way to infer the color from a constant ;_; */
   /* use sass or something for this in the actual piggy */
-  background: linear-gradient(to bottom, #261f2100, #261f21ff);
+  background: linear-gradient(to bottom, #b7bcc200, #b7bcc2ff);
   pointer-events: none;
 }
 
