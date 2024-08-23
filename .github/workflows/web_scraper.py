@@ -44,7 +44,7 @@ def get_links(html, path=""):
     filtered_links = list()
     for link in links:
         if not link.startswith("/") and path:
-            filtered_links.append(f"{path}/{link}")
+            filtered_links.append(f"{path.rsplit('/', 1)[0]}/{link}")
             continue
         filtered_links.append(link)
     return list(set([x for x in filtered_links]))
