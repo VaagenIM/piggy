@@ -8,6 +8,7 @@ import re
 import os
 from turtleconverter import generate_static_files
 from pathlib import Path
+from bs4 import BeautifulSoup as bs
 
 links = ["/"]  # A list of links we need to visit and download (including files that are related to the website)
 visited = []  # A list of links we have visited
@@ -19,9 +20,11 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 def get_html(link):
     """Get the html from the given url, and append the new links to the links list."""
+    print(f"Visiting {url}/{link.strip("/")}")
     r = requests.get(f'{url}/{link.strip("/")}', allow_redirects=True)
-    html = r.text
-    new_links = get_links(html)
+    html = bs(r.text, "html.parser").prettify()
+
+    new_links = get_links(html, path=link.strip("/"))
     new_media_links = get_media_links(html)
 
     for l in new_links:
@@ -36,13 +39,19 @@ def get_html(link):
     return html
 
 
-def get_links(html):
-    links = re.compile(r'href="(\/[^"]*)"').findall(html)
-    return list(set([x for x in links]))
+def get_links(html, path=""):
+    links = re.compile(r'href="((?!#|https?://)[^"]*)"').findall(html)
+    filtered_links = list()
+    for link in links:
+        if not link.startswith("/") and path:
+            filtered_links.append(f"{path}/{link}")
+            continue
+        filtered_links.append(link)
+    return list(set([x for x in filtered_links]))
 
 
 def get_media_links(html):
-    links = re.compile(r'src="((?!https?://)[^"]*)"').findall(html)
+    links = re.compile(r'src="((?!#|https?://)[^"]*)"').findall(html)
     return list(set([x for x in links if not re.match(r"/static/.*", x)]))
 
 
@@ -57,18 +66,21 @@ def download_site():
                     path = link.strip("/")
                     if "." not in path:
                         path += ".html"
-
+                print(f"Writing {link}")
                 os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
                 with open(f"demo/{path}", "w+", encoding="utf-8") as f:
                     f.write(html)
     for link in media_links:
+        print(f"Downloading {link}")
         path = link.strip("/")
         r = requests.get(f"{url}/{path}", allow_redirects=True)
         os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
-        with open(f"demo/{path}", "wb") as f:
+        if not path:
+            continue
+        with open(f"demo/{path}", "wb+") as f:
             f.write(r.content)
 
 
-shutil.copytree(Path(__file__).parents[2] / "piggy/static", Path("demo/static"))
+shutil.copytree(Path(__file__).parents[2] / "piggy/static", Path("demo/static"), dirs_exist_ok=True)
 generate_static_files(static_folder=Path("demo/static").absolute())
 download_site()
