@@ -22,7 +22,12 @@ def get_html(link):
     """Get the html from the given url, and append the new links to the links list."""
     print(f"Visiting {url}/{link.strip("/")}")
     r = requests.get(f'{url}/{link.strip("/")}', allow_redirects=True)
-    html = bs(r.text, "html.parser").prettify()
+
+    # Only prettify if mimetype is text/html
+    if "text/html" in r.headers.get("Content-Type"):
+        html = bs(r.text, "html.parser").prettify()
+    else:
+        html = r.text
 
     new_links = get_links(html, path=link.strip("/"))
     new_media_links = get_media_links(html, path=link.strip("/"))
