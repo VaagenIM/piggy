@@ -28,7 +28,12 @@
     <div>
       <div>Current language: {{ current_language }}</div>
       {% for lang, val in supported_languages.items() %}
-        <a onclick="document.cookie = 'lang={{ lang }}'; location.reload();"
+        <a
+          {% if github_pages %}
+            href="{{ request.path.split('/lang/')[0] }}{{ '/lang/' + lang if lang else '' }}"
+          {% else %}
+            onclick="document.cookie = 'lang={{ lang }}'; location.reload();"
+          {% endif %}
           >{{ val.name }}</a
         >
       {% endfor %}

@@ -24,6 +24,8 @@ def create_app():
 
     generate_static_files(static_folder=os.path.dirname(Path(__file__).absolute()) + "/static")
 
+    use_github_pages = os.environ.get("GITHUB_PAGES", False)
+
     @app.context_processor
     def context_processor():
         """Context variables for all templates in the app."""
@@ -32,6 +34,7 @@ def create_app():
             "MEDIA_URL_PREFIX": MEDIA_ROUTE,
             "piggymap": PIGGYMAP,
             "img_fmt": "webp",
+            "github_pages": use_github_pages,  # Used to determine if we should use lang in URL
         }
 
     @app.route("/")
@@ -55,6 +58,12 @@ def create_app():
         # Render the appropriate template for the current level
         return _render_assignment_wildcard(path, lang=lang)
 
+    @assignment_routes.route("/<path:path>/lang/<lang>")
+    @assignment_routes.route("/<path:path>/lang/")
+    def get_assignment_wildcard_lang(path, lang=""):
+        """Only used when GitHub Pages is used to host the site."""
+        return get_assignment_wildcard(path, lang)
+
     @media_routes.route("/<path:wildcard>/media/<filename>")
     @assignment_routes.route("/<path:wildcard>/attachments/<filename>")
     def get_assignment_media_wildcard(wildcard, filename):
@@ -62,6 +71,10 @@ def create_app():
         Get a media file from either the media or attachments folder.
         (only in MEDIA_URL_PREFIX or ASSIGNMENT_URL_PREFIX)
         """
+        if use_github_pages and ["lang", "attachments"] == request.path.split("/")[-3:-1]:
+            # If a language is specified, remove it from the wildcard (+ the assignment name)
+            # This only happens when the language is specified in the URL and not via cookies
+            wildcard = wildcard.rsplit("/", 2)[0]
         if request.path.split("/")[1] == MEDIA_ROUTE:
             wildcard = wildcard.replace(MEDIA_ROUTE, "", 1).strip("/")
             folder = "media"
