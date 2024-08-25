@@ -108,3 +108,9 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
 
 
 PIGGYMAP = generate_piggymap(PIGGYBANK_FOLDER)
+
+# Sort everything in the piggymap alphabetically
+for key, value in PIGGYMAP.items():
+    if isinstance(value, dict):
+        PIGGYMAP[key] = dict(sorted(value.items()))
+PIGGYMAP = dict(sorted(PIGGYMAP.items()))
