@@ -71,7 +71,7 @@ def create_app():
         Get a media file from either the media or attachments folder.
         (only in MEDIA_URL_PREFIX or ASSIGNMENT_URL_PREFIX)
         """
-        if use_github_pages and ["lang", "attachments"] == request.path.split("/")[-3:-1]:
+        if ["lang", "attachments"] == request.path.split("/")[-3:-1]:
             # If a language is specified, remove it from the wildcard (+ the assignment name)
             # This only happens when the language is specified in the URL and not via cookies
             wildcard = wildcard.rsplit("/", 2)[0]
