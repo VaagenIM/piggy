@@ -52,7 +52,7 @@ def create_app():
             raise PiggyHTTPException("Assignment not found", status_code=404)
 
         # If we are at the final level (assignment), get lang from the cookies (valid requests only)
-        if len(path.split("/")) == AssignmentTemplate.ASSIGNMENT.index and request:
+        if len(path.split("/")) == AssignmentTemplate.ASSIGNMENT.index and request and not lang:
             lang = request.cookies.get("lang", "")  # "" = default language (Norwegian
 
         # Render the appropriate template for the current level
