@@ -23,7 +23,7 @@ def checkout_branch(branch):
 
 if __name__ == "__main__":
     from piggy.devtools import inject_devtools
-
+    # TODO: Re-enable
     # checkout_branch("test-output")
     os.environ["FLASK_DEBUG"] = "1"
     os.environ["USE_CACHE"] = "0"
@@ -37,6 +37,7 @@ if __name__ == "__main__":
 
     app.run(port=5001)
 else:
-    checkout_branch("output")
+    # TODO: Re-enable
+    # checkout_branch("output")
     run_tailwind()  # Runs once to generate the CSS file
     app = create_app()
