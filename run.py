@@ -24,7 +24,7 @@ def checkout_branch(branch):
 if __name__ == "__main__":
     from piggy.devtools import inject_devtools
     # TODO: Re-enable
-    # checkout_branch("test-output")
+    checkout_branch("test-output")
     os.environ["FLASK_DEBUG"] = "1"
     os.environ["USE_CACHE"] = "0"
 
