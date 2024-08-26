@@ -20,7 +20,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 def get_html(link):
     """Get the html from the given url, and append the new links to the links list."""
-    print(f"Visiting {url}/{link.strip("/")}")
+    print(f"Visiting {url}/{link.strip('/')}")
     r = requests.get(f'{url}/{link.strip("/")}', allow_redirects=True)
 
     # Only prettify if mimetype is text/html
