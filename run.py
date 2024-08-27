@@ -23,6 +23,8 @@ def checkout_branch(branch):
 
 if __name__ == "__main__":
     from piggy.devtools import inject_devtools
+    from piggy.piggybank import __update_piggymap
+
     # TODO: Re-enable
     checkout_branch("test-output")
     os.environ["FLASK_DEBUG"] = "1"
@@ -34,6 +36,8 @@ if __name__ == "__main__":
     # Run node processes as subprocesses
     run_tailwind(reload=True)
     subprocess.Popen('npx livereload "piggy/, piggybank/"', shell=True)
+
+    __update_piggymap()
 
     app.run(port=5001)
 else:

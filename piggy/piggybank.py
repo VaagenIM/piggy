@@ -115,3 +115,11 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
 
 
 PIGGYMAP = generate_piggymap(PIGGYBANK_FOLDER)
+
+
+# DEVTOOL
+def __update_piggymap():
+    global PIGGYMAP
+    print("Rebuilding piggymap")
+    PIGGYMAP = generate_piggymap(PIGGYBANK_FOLDER)
+    print("Piggymap rebuilt")
