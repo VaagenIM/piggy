@@ -18,7 +18,7 @@ def run_tailwind(reload=False):
 
 def checkout_branch(branch):
     os.system("git submodule update --init --recursive")
-    os.system(f"cd piggybank && git checkout {branch} && cd .. && git submodule update --remote --recursive")
+    os.system(f"cd piggybank && git checkout {branch} && cd ..")
 
 
 if __name__ == "__main__":
