@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from piggy.caching import lru_cache_wrapper
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
@@ -9,6 +9,7 @@ import textwrap
 # TODO: this is a mess.
 
 
+@lru_cache_wrapper
 def create_thumbnail(
     title: str, bg_color: str = "111111", text_color: str = "fefefe", size: tuple[int, int] = (700, 300)
 ) -> PIL.Image:
