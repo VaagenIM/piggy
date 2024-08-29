@@ -7,7 +7,6 @@ from flask import Response, render_template
 from turtleconverter import mdfile_to_sections, ConversionError
 
 from piggy import (
-    SUPPORTED_LANGUAGES,
     ASSIGNMENT_ROUTE,
     MEDIA_ROUTE,
     PIGGYBANK_FOLDER,
@@ -16,6 +15,8 @@ from piggy import (
 )
 from piggy.exceptions import PiggyHTTPException
 from piggy.piggybank import get_all_meta_from_path, PIGGYMAP, get_template_from_path, get_piggymap_segment_from_path
+from piggy.models import LANGUAGES
+from piggy.utils import get_supported_languages
 
 
 def lru_cache_wrapper(func):
@@ -38,8 +39,8 @@ def cache_directory(
                 assignment_fn(assignment_path)
                 [
                     assignment_fn(Path(f"{assignment_path.parent}/translations/{lang}/{assignment}.md"))
-                    for lang in SUPPORTED_LANGUAGES.keys()
-                    if lang
+                    for lang in LANGUAGES.keys()
+                    if Path(f"{assignment_path.parent}/translations/{lang}/{assignment}.md").exists()
                 ]
         # If we are at the assignment level, we are done
         elif len(_path.split("/")) > AssignmentTemplate.ASSIGNMENT.index - 1:
@@ -62,10 +63,12 @@ def _render_assignment(p: Path) -> Response:
         raise PiggyHTTPException("Error: Could not render assignment", status_code=500)
 
     lang = ""
+    assignment_path = p
     if p.parents[1].name == "translations":
         lang = p.parent.name
-    current_language = SUPPORTED_LANGUAGES.get(lang, "")["name"]
+        assignment_path = p.parents[2] / p.name
 
+    current_language = LANGUAGES.get(lang, "")["name"]
     match = ASSIGNMENT_FILENAME_REGEX.match(p.name)
 
     meta = sections.get("meta", {})
@@ -76,7 +79,7 @@ def _render_assignment(p: Path) -> Response:
         content=sections,
         meta=meta,
         current_language=current_language,
-        supported_languages=SUPPORTED_LANGUAGES,
+        supported_languages=get_supported_languages(assignment_path=assignment_path),
         path=p,
         assignment_name=match.group(1).strip(),
         level=match.group(2).strip(),

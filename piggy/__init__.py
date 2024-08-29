@@ -5,13 +5,6 @@ from enum import Enum
 
 PIGGYBANK_FOLDER = Path("piggybank")
 
-SUPPORTED_LANGUAGES = {
-    "": {"name": "Norsk"},  # Default language
-    "eng": {"name": "English"},
-    "ukr": {"name": "Українська"},
-    "pol": {"name": "Polski"},
-}
-
 # A prefix for the assignment URLs, to avoid conflicts with other routes
 ASSIGNMENT_ROUTE = "main"
 # Media is on a different prefix to not compete with the assignment routes
