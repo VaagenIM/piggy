@@ -9,6 +9,7 @@ import os
 from turtleconverter import generate_static_files
 from pathlib import Path
 from bs4 import BeautifulSoup as bs
+from urllib.parse import unquote
 
 links = ["/"]  # A list of links we need to visit and download (including files that are related to the website)
 visited = []  # A list of links we have visited
@@ -90,7 +91,7 @@ def download_site():
         path = link.strip("/")
         r = requests.get(f"{url}/{path}", allow_redirects=True)
         os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
-
+        path = unquote(path)
         # TODO: this is a hack. hopefully temporary.
         if "/api/generate_thumbnail/" in link:
             path = path.rsplit("?")[0] + ".webp"
