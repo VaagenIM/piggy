@@ -100,7 +100,7 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
             "path": assignment_path,
             "assignment_name": match.group(1).strip(),
             "level": match.group(2).strip(),
-            "level_name": match.group(3).strip(),
+            "level_name": sections["heading"],  # match.group(3).strip(),
             "heading": sections["heading"],
             "meta": sections["meta"],
         }
