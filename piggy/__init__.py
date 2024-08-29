@@ -9,6 +9,7 @@ SUPPORTED_LANGUAGES = {
     "": {"name": "Norsk"},  # Default language
     "eng": {"name": "English"},
     "ukr": {"name": "Українська"},
+    "pol": {"name": "Polski"},
 }
 
 # A prefix for the assignment URLs, to avoid conflicts with other routes
