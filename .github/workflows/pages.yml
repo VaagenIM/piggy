@@ -49,16 +49,12 @@ jobs:
       - name: Tear down containers
         run: docker compose -f docker-compose.pages.yml down
 
-      - name: Generate artifact
-        run: |
-          tar -czf ./.github/workflows/demo.tar.gz -C ./.github/workflows/demo .
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: ./.github/workflows/demo.tar.gz
+          path: ./.github/workflows/demo
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4
