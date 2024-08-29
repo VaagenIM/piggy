@@ -17,7 +17,8 @@ def create_thumbnail(
     box = (0, 0, size[0], size[1])
     draw = PIL.ImageDraw.Draw(im)
 
-    margin = 40
+    x_margin = 20
+    y_margin = 70
 
     # Plays better with the text overlay
     y_offset = 10
@@ -31,7 +32,9 @@ def create_thumbnail(
     font = PIL.ImageFont.truetype(font_path.as_posix(), font_size)
     recursions = 0
     while (
-        (size is None or size[2] > box[2] - margin or size[3] > box[3] - margin) and font_size > 0 and recursions < 50
+        (size is None or size[2] > box[2] - x_margin or size[3] > box[3] - y_margin)
+        and font_size > 0
+        and recursions < 50
     ):
         font = font.font_variant(size=font_size)
         size = draw.multiline_textbbox((0, 0), text, font=font, align="center")
