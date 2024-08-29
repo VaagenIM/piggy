@@ -5,10 +5,10 @@ from flask import Flask, send_file, request, Blueprint, render_template
 from turtleconverter import generate_static_files
 
 from piggy import PIGGYBANK_FOLDER, ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate
-from piggy.caching import lru_cache_wrapper, _render_assignment, cache_directory, _render_assignment_wildcard
-from piggy.piggybank import PIGGYMAP
-from piggy.exceptions import PiggyHTTPException
 from piggy.api import api_routes
+from piggy.caching import lru_cache_wrapper, _render_assignment, cache_directory, _render_assignment_wildcard
+from piggy.exceptions import PiggyHTTPException
+from piggy.piggybank import PIGGYMAP
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
@@ -86,13 +86,13 @@ def create_app():
         except FileNotFoundError:
             return send_file("static/img/placeholders/100x100.png")
 
+    app.register_blueprint(assignment_routes)
+    app.register_blueprint(media_routes)
+    app.register_blueprint(api_routes)
+
     # Cache all assignment related pages if not in debug mode
     if not app.debug:
         with app.app_context(), app.test_request_context():
             cache_directory(PIGGYMAP, directory_fn=_render_assignment_wildcard, assignment_fn=_render_assignment)
-
-    app.register_blueprint(assignment_routes)
-    app.register_blueprint(media_routes)
-    app.register_blueprint(api_routes)
 
     return app
