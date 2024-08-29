@@ -6,6 +6,7 @@ from turtleconverter import generate_static_files
 
 from piggy import PIGGYBANK_FOLDER, ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate
 from piggy.api import api_routes
+from piggy.api import generate_thumbnail
 from piggy.caching import lru_cache_wrapper, _render_assignment, cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException
 from piggy.piggybank import PIGGYMAP
@@ -84,6 +85,12 @@ def create_app():
         try:
             return send_file(Path(f"{PIGGYBANK_FOLDER}/{wildcard}/{folder}/{filename}").absolute())
         except FileNotFoundError:
+            # TODO: This is a long method. Refactor to a separate function
+            if folder == "media":
+                # if there is no /, we are at the root folder and should repeat the name
+                _, name = wildcard.rsplit("/", 1) if "/" in wildcard else (wildcard, wildcard)
+                query_params = {"c": name, "width": 1024, "height": 512}
+                return generate_thumbnail(name, request=request.from_values(query_string=query_params))
             return send_file("static/img/placeholders/100x100.png")
 
     app.register_blueprint(assignment_routes)
