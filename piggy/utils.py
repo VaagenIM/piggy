@@ -14,8 +14,9 @@ def serve_pil_image(pil_img):
 
 
 def get_supported_languages(assignment_path: Path):
-    return {
+    languages = {
         iso_code: lang
         for iso_code, lang in LANGUAGES.items()
         if (assignment_path.parent / "translations" / iso_code / assignment_path.name).exists()
     }
+    return {"": LANGUAGES[""], **languages}
