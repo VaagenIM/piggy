@@ -8,6 +8,7 @@ from piggy import PIGGYBANK_FOLDER, ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTem
 from piggy.caching import lru_cache_wrapper, _render_assignment, cache_directory, _render_assignment_wildcard
 from piggy.piggybank import PIGGYMAP
 from piggy.exceptions import PiggyHTTPException
+from piggy.api import api_routes
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
@@ -92,5 +93,6 @@ def create_app():
 
     app.register_blueprint(assignment_routes)
     app.register_blueprint(media_routes)
+    app.register_blueprint(api_routes)
 
     return app
