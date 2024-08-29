@@ -41,6 +41,10 @@ def get_html(link):
             media_links.append(l)
 
     visited.append(link)
+
+    # TODO: this is a hack. hopefully temporary.
+    html = re.sub(r"""/api/generate_thumbnail/([^?]*)(\?[^"]*)""", r"/api/generate_thumbnail/\1.webp", html)
+
     return html
 
 
@@ -86,6 +90,11 @@ def download_site():
         path = link.strip("/")
         r = requests.get(f"{url}/{path}", allow_redirects=True)
         os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
+
+        # TODO: this is a hack. hopefully temporary.
+        if "/api/generate_thumbnail/" in link:
+            path = path.rsplit("?")[0] + ".webp"
+
         if not path:
             continue
         with open(f"demo/{path}", "wb+") as f:
