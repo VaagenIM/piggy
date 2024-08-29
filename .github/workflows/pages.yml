@@ -51,8 +51,7 @@ jobs:
 
       - name: Generate artifact
         run: |
-          echo Converting demo folder to a gzip archive with a single tar file (./.github/workflows/demo)
-          tar -czf ./.github/workflows/demo.tar.gz ./.github/workflows/demo
+          tar -czf ./.github/workflows/demo.tar.gz -C ./.github/workflows/demo .
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
