@@ -2,19 +2,21 @@
 A hacky script that scrapes a website and downloads all the pages and media files.
 """
 
-import shutil
-import requests
-import re
 import os
-from turtleconverter import generate_static_files
+import re
+import shutil
 from pathlib import Path
-from bs4 import BeautifulSoup as bs
 from urllib.parse import unquote
+
+import requests
+from bs4 import BeautifulSoup as bs
+from turtleconverter import generate_static_files
 
 links = ["/"]  # A list of links we need to visit and download (including files that are related to the website)
 visited = []  # A list of links we have visited
 media_links = []
 url = "http://localhost:5000"  # The URL of the website we are scraping
+cname = "https://piggy.iktim.no"  # The CNAME of the website we will push the demo to
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -45,6 +47,9 @@ def get_html(link):
 
     # TODO: this is a hack. hopefully temporary.
     html = re.sub(r"""/api/generate_thumbnail/([^?]*)(\?[^"]*)""", r"/api/generate_thumbnail/\1.webp", html)
+
+    # Replace all content (og) links with the cname
+    html = re.sub(rf"content=\"({url})([^\"/]*)", rf'content="{cname}\2', html)
 
     return html
 
