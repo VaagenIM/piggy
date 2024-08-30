@@ -4,6 +4,8 @@ from pathlib import Path
 from enum import Enum
 
 PIGGYBANK_FOLDER = Path("piggybank")
+# Included folders will have all their .md files included in the piggymap, even if they do not match the regex
+INCLUDED_FOLDERS = ["extra"]
 
 # A prefix for the assignment URLs, to avoid conflicts with other routes
 ASSIGNMENT_ROUTE = "main"

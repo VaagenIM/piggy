@@ -4,7 +4,7 @@ from pathlib import Path
 
 from turtleconverter import mdfile_to_sections
 
-from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX
+from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX, INCLUDED_FOLDERS
 
 
 def load_meta_json(path: Path):
@@ -80,6 +80,7 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
     if not os.path.isdir(path) or _current_level == max_levels:
         return None
     for item in os.listdir(path):
+        # TODO: Decouple into separate functions
         # If the item is a directory, we want to go deeper
         if os.path.isdir(f"{path}/{item}"):
             new_item = generate_piggymap(Path(f"{path}/{item}"), _current_level=_current_level + 1)
@@ -87,6 +88,11 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
                 piggymap[item] = {"data": new_item}
                 # If the folder contains a 'meta.json' file, we should add that as metadata to the folder
                 piggymap[item]["meta"] = load_meta_json(Path(f"{path}/{item}/meta.json"))
+            continue
+
+        if str(path).split("/")[-1].split("\\")[-1] in INCLUDED_FOLDERS and str(item).endswith(".md"):
+            # TODO
+            print(f"Included folders are not yet supported, {item=} {path=}")
             continue
 
         # If the item is a file, we want to check if it's a valid assignment file
