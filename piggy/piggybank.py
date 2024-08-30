@@ -88,6 +88,8 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
                 piggymap[item] = {"data": new_item}
                 # If the folder contains a 'meta.json' file, we should add that as metadata to the folder
                 piggymap[item]["meta"] = load_meta_json(Path(f"{path}/{item}/meta.json"))
+                if item in INCLUDED_FOLDERS:
+                    piggymap[item]["meta"]["type"] = item
             continue
 
         # TODO: Clean up this mess
@@ -97,8 +99,7 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
             piggymap[item] = {
                 "path": Path(f"{path}/{item}"),
                 "heading": sections["heading"],
-                "meta": sections["meta"],
-                "type": folder,
+                "meta": {**sections["meta"], "type": folder},
             }
             continue
 
@@ -115,8 +116,7 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
             "level": match.group(2).strip(),
             "level_name": sections["heading"],  # match.group(3).strip(),
             "heading": sections["heading"],
-            "meta": sections["meta"],
-            "type": "assignment",
+            "meta": {**sections["meta"], "type": "assignment"},
         }
 
     def recursive_sort(data):
