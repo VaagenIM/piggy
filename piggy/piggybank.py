@@ -90,9 +90,14 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
                 piggymap[item]["meta"] = load_meta_json(Path(f"{path}/{item}/meta.json"))
             continue
 
+        # TODO: Clean up this mess
         if str(path).split("/")[-1].split("\\")[-1] in INCLUDED_FOLDERS and str(item).endswith(".md"):
-            # TODO
-            print(f"Included folders are not yet supported, {item=} {path=}")
+            sections = mdfile_to_sections(Path(f"{path}/{item}"))
+            piggymap[item] = {
+                "path": Path(f"{path}/{item}"),
+                "heading": sections["heading"],
+                "meta": sections["meta"],
+            }
             continue
 
         # If the item is a file, we want to check if it's a valid assignment file
