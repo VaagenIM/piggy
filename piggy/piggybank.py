@@ -91,12 +91,14 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
             continue
 
         # TODO: Clean up this mess
-        if str(path).split("/")[-1].split("\\")[-1] in INCLUDED_FOLDERS and str(item).endswith(".md"):
+        folder = str(path).split("/")[-1].split("\\")[-1]
+        if folder in INCLUDED_FOLDERS and item.endswith(".md"):
             sections = mdfile_to_sections(Path(f"{path}/{item}"))
             piggymap[item] = {
                 "path": Path(f"{path}/{item}"),
                 "heading": sections["heading"],
                 "meta": sections["meta"],
+                "type": folder,
             }
             continue
 
@@ -114,6 +116,7 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
             "level_name": sections["heading"],  # match.group(3).strip(),
             "heading": sections["heading"],
             "meta": sections["meta"],
+            "type": "assignment",
         }
 
     def recursive_sort(data):
