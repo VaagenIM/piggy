@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block title %}{{ meta.name }}{% endblock %}
+
+{% set ns = namespace(extra_content = false) %}
+
 {% block content %}
   <h1 class="text-5xl font-extrabold text-center my-6">{{ meta.name }}</h1>
 
@@ -7,9 +11,26 @@
     <div
       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
     >
-      {% for item, data in segment.items() %}
+    {% for item, data in segment.items() %}
+      {% if data.meta.type != "extra" %}
         {% include 'objects/card-topic.html' %}
-      {% endfor %}
+      {% else %}
+        {% set ns.extra_content = true %}
+      {% endif %}
+    {% endfor %}
     </div>
+    {% if ns.extra_content %}
+      <br>
+      <h3 class="extra-title text-2xl text-extrabold">Ekstra:</h3>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
+      >
+      {% for item, data in segment.items() %}
+        {% if data.meta.type == "extra" %}
+          {% include 'objects/card-topic.html' %}
+        {% endif %}
+      {% endfor %}
+      </div>
+    {% endif %}
   </div>
 {% endblock %}

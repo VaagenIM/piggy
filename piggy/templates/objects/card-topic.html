@@ -1,7 +1,7 @@
 {# Card Container #}
 <a
 href="{{ abspath }}/{{ item }}"
-class="card-container block p-3 rounded-xl border border-slate-500"
+class="card-container block p-3 rounded-xl border border-slate-500 {{ 'extra-card' if data.meta.type == 'extra' else '' }}"
 >
 {# Card Title #}
 <div class="text-2xl font-extrabold text-center pb-2">
@@ -17,14 +17,16 @@ class="card-container block p-3 rounded-xl border border-slate-500"
   />
 
   {% if data.meta.difficulty %}
-  <div class="thumbnail-text-overlay">
-    {% if data.meta.difficulty > 7 %}
-        <!-- Hardcoded color here, change this-->
-        <span>Difficulty: <span style="color:#dd2256;">⭐ × {{ data.meta.difficulty }}</span></span>
-    {% else %}
-        <span>Difficulty: {{ data.meta.difficulty * '⭐' }}</span>
+    {% if data.meta.difficulty > 0 %}
+    <div class="thumbnail-text-overlay">
+      {% if data.meta.difficulty > 7 %}
+          <!-- Hardcoded color here, change this-->
+          <span>Difficulty: <span style="color:#dd2256;">⭐ × {{ data.meta.difficulty }}</span></span>
+      {% else %}
+          <span>Difficulty: {{ data.meta.difficulty * '⭐' }}</span>
+      {% endif %}
+    </div>
     {% endif %}
-  </div>
   {% endif %}
 </div>
 

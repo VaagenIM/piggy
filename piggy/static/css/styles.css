@@ -1,7 +1,9 @@
 :root {
   /* Temporary piggy colors */
-  --snout-main: #e5ebf1;
-  --snout-card: #b7bcc2;
+  --snout-main: #ece4ec;
+  --snout-card: #d6c8d5;
+  --snout-extra-card: #bfd1e0;
+  --snout-resource-card: #e0cfbf;
 
   /* Not used for now */
   --snout-button: #5b434b;
@@ -18,6 +20,14 @@
   transition:
     transform 0.1s ease,
     box-shadow 0.1s ease;
+}
+
+.extra-card {
+  background-color: var(--snout-extra-card);
+}
+
+.resource-card {
+  background-color: var(--snout-resource-card);
 }
 
 .card-container:hover {
