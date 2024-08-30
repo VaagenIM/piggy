@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from piggy.thumbnails import create_thumbnail
 from piggy.utils import serve_pil_image
+from hashlib import md5
 
 api_routes = Blueprint("api", __name__, url_prefix="/api")
 
@@ -30,7 +31,7 @@ def generate_thumbnail(text: str, request=request):
 
     if gibberish and not bg_color and not text_color:
         # use a simple hashing function to get a color combination from the gibberish
-        text_color, bg_color = color_palettes[hash(gibberish) % len(color_palettes)]
+        text_color, bg_color = color_palettes[int(md5(gibberish.encode()).hexdigest(), 16) % len(color_palettes)]
 
     if not bg_color:
         bg_color = "111111"
