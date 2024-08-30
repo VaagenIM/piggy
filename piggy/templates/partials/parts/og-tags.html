@@ -14,8 +14,8 @@
 
 {% if meta.name %}
   {% set ns.og_name = meta.name %}
-{% elif meta.title %}
-  {% set ns.og_name = meta.title %}
+{% elif meta.title and level %}
+  {% set ns.og_name = "Level " + level + ": " + meta.title %}
 {% endif %}
 
 {% if meta.summary %}
