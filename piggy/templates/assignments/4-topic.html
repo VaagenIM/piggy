@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% block title %}{{ meta.name }}{% endblock %}
+
 {% block content %}
   <h1 class="text-5xl font-extrabold text-center my-6">{{ meta.name }}</h1>
 
@@ -13,34 +15,3 @@
     </div>
   </div>
 {% endblock %}
-
-{#
-<h1>Oppgavebanken</h1>
-
-{% for item, data in segment.items() %}
-  <h2>{{ data.meta.title }}</h2>
-  <img
-    src="{{ media_abspath }}/{{ item }}/media/header.{{ img_fmt }}"
-    alt="Header image for {{ item }}"
-  />
-  <pre>{{ media_abspath }}/{{ item }}/media/header.png</pre>
-
-  <br />
-  <a href="{{ abspath }}/{{ item }}">View {{ data.meta.title }}</a>
-  <br />
-
-  <h3>All metadata (kun for assignment segmentet)</h3>
-
-  <h4>Data variables</h4>
-  <li>Path: {{ data.path }}</li>
-  <li>Assignment name: {{ data.assignment_name }}</li>
-  <li>Level: {{ data.level }}</li>
-  <li>Level Name: {{ data.level_name }}</li>
-  <li>Heading (title i frontmatter): {{ data.heading }}</li>
-
-  <h4>Meta variables (Frontmatter)</h4>
-  {% for meta_key, meta_val in data.meta.items() %}
-    <li>{{ meta_key }}: {{ meta_val }}</li>
-  {% endfor %}
-{% endfor %}
-#}
