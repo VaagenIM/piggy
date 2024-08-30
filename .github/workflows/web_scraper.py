@@ -102,6 +102,6 @@ def download_site():
             f.write(r.content)
 
 
-shutil.copytree(Path(__file__).parents[2] / "piggy/static", Path("demo/static"), dirs_exist_ok=True)
 generate_static_files(static_folder=Path("demo/static").absolute())
 download_site()
+shutil.copytree(Path(__file__).parents[2] / "piggy/static", Path("demo/static"), dirs_exist_ok=True)
