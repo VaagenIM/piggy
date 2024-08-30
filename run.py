@@ -2,8 +2,6 @@ import os
 import subprocess
 
 from piggy.app import create_app
-from piggy.devtools import inject_devtools
-from piggy.piggybank import __update_piggymap
 
 
 def run_tailwind(reload=False):
@@ -23,6 +21,9 @@ def checkout_branch(branch):
 
 
 if __name__ == "__main__":
+    from piggy.devtools import inject_devtools
+    from piggy.piggybank import __update_piggymap
+
     os.environ["FLASK_DEBUG"] = "1"
     os.environ["USE_CACHE"] = "0"
     app = create_app()
