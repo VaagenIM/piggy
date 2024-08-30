@@ -1,4 +1,6 @@
 <head>
+  {% include "partials/common_head.html" %}
+
   {{ content.head | safe }}
 
   <style>
@@ -13,8 +15,6 @@
       text-align: center;
     }
   </style>
-
-  {% block title %}{{ content.heading }}{% endblock %}
 </head>
 <body>
   <header>
