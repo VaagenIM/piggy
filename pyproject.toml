@@ -9,6 +9,7 @@ dependencies = [
     "turtleconverter@git+https://github.com/sondregronas/turtleconverter@main",
     "gunicorn~=23.0.0",
     "pillow~=10.4.0",
+    "beautifulsoup4~=4.12.3",
 ]
 
 [build-system]

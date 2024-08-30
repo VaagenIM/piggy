@@ -1,5 +1,3 @@
-import os
-from functools import lru_cache
 from pathlib import Path
 from typing import Callable
 
@@ -11,18 +9,22 @@ from piggy import (
     MEDIA_ROUTE,
     PIGGYBANK_FOLDER,
     AssignmentTemplate,
-    ASSIGNMENT_FILENAME_REGEX,
 )
 from piggy.exceptions import PiggyHTTPException
 from piggy.models import LANGUAGES
-from piggy.piggybank import get_all_meta_from_path, PIGGYMAP, get_template_from_path, get_piggymap_segment_from_path
-from piggy.utils import get_supported_languages, normalize_path_to_str
-
-
-def lru_cache_wrapper(func):
-    if os.environ.get("USE_CACHE", "1") == "1":
-        return lru_cache()(func)
-    return func
+from piggy.piggybank import (
+    get_all_meta_from_path,
+    PIGGYMAP,
+    get_template_from_path,
+    get_piggymap_segment_from_path,
+    get_assignment_data_from_path,
+)
+from piggy.utils import (
+    get_supported_languages,
+    normalize_path_to_str,
+    generate_summary_from_mkdocs_html,
+    lru_cache_wrapper,
+)
 
 
 def cache_directory(
@@ -69,23 +71,23 @@ def _render_assignment(p: Path) -> Response:
         assignment_path = p.parents[2] / p.name
 
     current_language = LANGUAGES.get(lang, "")["name"]
-    match = ASSIGNMENT_FILENAME_REGEX.match(p.name)
 
-    meta = sections.get("meta", {})
-    meta = {**meta, **get_all_meta_from_path(str(p.parent), PIGGYMAP)}
+    # Get the assignment data
+    assignment_data = get_assignment_data_from_path(assignment_path, PIGGYMAP).copy()
+    meta = assignment_data.get("meta", {}).copy()
+    if "summary" not in meta:
+        meta["summary"] = generate_summary_from_mkdocs_html(sections["body"])
+    assignment_data.pop("meta")
 
     render = render_template(
         AssignmentTemplate.ASSIGNMENT.template,
         content=sections,
-        meta=meta,
+        meta={**meta, **get_all_meta_from_path(str(p.parent), PIGGYMAP)},
         current_language=current_language,
         supported_languages=get_supported_languages(assignment_path=assignment_path),
-        path=p,
-        assignment_name=match.group(1).strip(),
-        level=match.group(2).strip(),
-        level_name=match.group(3).strip(),
         media_abspath=f"/{MEDIA_ROUTE}/{p.parent}",
         abspath=f"/{ASSIGNMENT_ROUTE}/{p}",
+        **assignment_data,  # Unpack the remainding assignment data from piggymap
     )
     return Response(render, mimetype="text/html", status=200)
 

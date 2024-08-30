@@ -17,7 +17,7 @@ def run_tailwind(reload=False):
 
 
 def checkout_branch(branch):
-    os.system(f"cd piggybank && git fetch && git checkout {branch} && git pull && cd ..")
+    os.system(f"cd piggybank && git stash && git fetch && git checkout {branch} && git pull && cd ..")
 
 
 if __name__ == "__main__":

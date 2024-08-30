@@ -18,8 +18,8 @@
   {% set ns.og_name = meta.title %}
 {% endif %}
 
-{% if summary %}
-  {% set ns.description = summary %}
+{% if meta.summary %}
+  {% set ns.description = meta.summary %}
 {% elif meta.description %}
   {% set ns.description = meta.description %}
 {% endif %}
