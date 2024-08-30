@@ -10,6 +10,7 @@ from piggy.api import generate_thumbnail
 from piggy.caching import lru_cache_wrapper, _render_assignment, cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException
 from piggy.piggybank import PIGGYMAP
+from piggy.utils import normalize_path_to_str
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
@@ -48,6 +49,7 @@ def create_app():
     @assignment_routes.route("/")
     def get_assignment_wildcard(path="", lang=""):
         path = path.strip("/")
+        path = normalize_path_to_str(path, replace_spaces=True)
 
         # If we are over the final level (assignment), raise a 404
         if len(path.split("/")) > AssignmentTemplate.ASSIGNMENT.index:

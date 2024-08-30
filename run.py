@@ -17,27 +17,23 @@ def run_tailwind(reload=False):
 
 
 def checkout_branch(branch):
-    os.system("git submodule update --init --recursive")
-    os.system(f"cd piggybank && git checkout {branch} && cd ..")
+    os.system(f"cd piggybank && git fetch && git checkout {branch} && git pull && cd ..")
 
 
 if __name__ == "__main__":
     from piggy.devtools import inject_devtools
     from piggy.piggybank import __update_piggymap
 
-    # TODO: Re-enable
-    checkout_branch("test-output")
     os.environ["FLASK_DEBUG"] = "1"
     os.environ["USE_CACHE"] = "0"
-
     app = create_app()
     inject_devtools(app)
-
-    # Run node processes as subprocesses
-    run_tailwind(reload=True)
-    subprocess.Popen('npx livereload "piggy/, piggybank/"', shell=True)
-
     __update_piggymap()
+    if os.environ.get("WERKZEUG_RUN_MAIN") != "true":
+        # This code will run only once, not in the reloaded processes
+        checkout_branch("test-output")
+        run_tailwind(reload=True)
+        subprocess.Popen('npx livereload "piggy/, piggybank/"', shell=True)
 
     app.run(port=5001)
 else:

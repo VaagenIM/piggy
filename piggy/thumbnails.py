@@ -18,7 +18,7 @@ def create_thumbnail(
     box = (0, 0, size[0], size[1])
     draw = PIL.ImageDraw.Draw(im)
 
-    x_margin = 20
+    x_margin = 40
     y_margin = 70
 
     # Plays better with the text overlay
