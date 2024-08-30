@@ -5,7 +5,7 @@ from pathlib import Path
 from turtleconverter import mdfile_to_sections
 
 from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX
-from piggy.utils import normalize_path_to_str
+from piggy.utils import normalize_path_to_str, lru_cache_wrapper
 
 
 def load_meta_json(path: Path):
@@ -19,7 +19,9 @@ def load_meta_json(path: Path):
     return data
 
 
-def get_piggymap_segment_from_path(path: str, piggymap: dict) -> tuple[dict, dict]:
+# TODO: these could probably be combined into one function
+@lru_cache_wrapper
+def get_piggymap_segment_from_path(path: str or Path, piggymap: dict) -> tuple[dict, dict]:
     """Get the metadata and segment from a path."""
     path = normalize_path_to_str(path, replace_spaces=True)
     segment = dict(piggymap.copy())
@@ -36,7 +38,9 @@ def get_piggymap_segment_from_path(path: str, piggymap: dict) -> tuple[dict, dic
     return meta, segment
 
 
-def get_all_meta_from_path(path: str, piggymap: dict) -> dict:
+# TODO: these could probably be combined into one function
+@lru_cache_wrapper
+def get_all_meta_from_path(path: str or Path, piggymap: dict) -> dict:
     """Get all metadata from a path."""
     metadata = dict()
 
@@ -57,6 +61,23 @@ def get_all_meta_from_path(path: str, piggymap: dict) -> dict:
     return metadata
 
 
+# TODO: these could probably be combined into one function
+@lru_cache_wrapper
+def get_assignment_data_from_path(path: str or Path, piggymap: dict) -> dict:
+    """Get the assignment data from a path."""
+    path = normalize_path_to_str(path, replace_spaces=True).rsplit(".md", 1)[0]
+    segment = piggymap.copy()
+    for i, p in enumerate(path.split("/")):
+        if i == 0:
+            continue
+        if i == len(path.split("/")) - 1:
+            segment = segment.get(p, {})
+            break
+        segment = segment.get(p, {}).get("data", {})
+    return segment
+
+
+@lru_cache_wrapper
 def get_template_from_path(path: str) -> str:
     """Get the directory name from a path."""
     t = AssignmentTemplate.get_template_from_index(len([x for x in path.split("/") if x]))
@@ -94,6 +115,7 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
                 piggymap[i] = {"data": new_item}
                 # If the folder contains a 'meta.json' file, we should add that as metadata to the folder
                 piggymap[i]["meta"] = load_meta_json(Path(f"{path}/{item}/meta.json"))
+                piggymap[i]["meta"]["system_path"] = Path(f"{path}/{item}")
             continue
 
         # If the item is a file, we want to check if it's a valid assignment file
@@ -101,13 +123,15 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
         if not match:
             continue
         assignment_path = Path(f"{path}/{item}")
+
+        # NOTE: This is run both for piggymap generation, and for individual assignment rendering
         sections = mdfile_to_sections(assignment_path)
 
         piggymap[i.replace(".md", "")] = {
             "path": assignment_path,
             "assignment_name": match.group(1).strip(),
             "level": match.group(2).strip(),
-            "level_name": sections["heading"],  # match.group(3).strip(),
+            "level_name": sections["heading"],
             "heading": sections["heading"],
             "meta": sections["meta"],
         }

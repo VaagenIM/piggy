@@ -4,12 +4,12 @@ from pathlib import Path
 from flask import Flask, send_file, request, Blueprint, render_template
 from turtleconverter import generate_static_files
 
-from piggy import PIGGYBANK_FOLDER, ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate
+from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate
 from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import lru_cache_wrapper, _render_assignment, cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException
-from piggy.piggybank import PIGGYMAP
+from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
 from piggy.utils import normalize_path_to_str
 
 # Ensure the working directory is the root of the project
@@ -79,15 +79,15 @@ def create_app():
             # If a language is specified, remove it from the wildcard (+ the assignment name)
             # This only happens when the language is specified in the URL and not via cookies
             wildcard = wildcard.rsplit("/", 2)[0]
+        system_path = get_piggymap_segment_from_path(wildcard, PIGGYMAP)[0].get("system_path", Path())
         if request.path.split("/")[1] == MEDIA_ROUTE:
             wildcard = wildcard.replace(MEDIA_ROUTE, "", 1).strip("/")
             folder = "media"
         else:
             folder = "attachments"
         try:
-            return send_file(Path(f"{PIGGYBANK_FOLDER}/{wildcard}/{folder}/{filename}").absolute())
+            return send_file(Path(system_path / folder / filename).absolute())
         except FileNotFoundError:
-            # TODO: This is a long method. Refactor to a separate function
             if folder == "media":
                 # if there is no /, we are at the root folder and should repeat the name
                 _, name = wildcard.rsplit("/", 1) if "/" in wildcard else (wildcard, wildcard)
