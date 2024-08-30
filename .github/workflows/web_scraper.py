@@ -26,7 +26,7 @@ def get_html(link):
 
     # Only prettify if mimetype is text/html
     if "text/html" in r.headers.get("Content-Type"):
-        html = bs(r.text, "html.parser").prettify()
+        html = str(bs(r.text, "html.parser"))
     else:
         html = r.text
 
