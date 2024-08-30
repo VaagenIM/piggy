@@ -4,7 +4,7 @@ from pathlib import Path
 
 from turtleconverter import mdfile_to_sections
 
-from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX, INCLUDED_FOLDERS
+from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX
 
 
 def load_meta_json(path: Path):
@@ -90,18 +90,6 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
                 piggymap[item]["meta"] = load_meta_json(Path(f"{path}/{item}/meta.json"))
             continue
 
-        # TODO: Clean up this mess
-        folder = str(path).split("/")[-1].split("\\")[-1]
-        if folder in INCLUDED_FOLDERS and item.endswith(".md"):
-            sections = mdfile_to_sections(Path(f"{path}/{item}"))
-            piggymap[item] = {
-                "path": Path(f"{path}/{item}"),
-                "heading": sections["heading"],
-                "meta": sections["meta"],
-                "type": folder,
-            }
-            continue
-
         # If the item is a file, we want to check if it's a valid assignment file
         match = ASSIGNMENT_FILENAME_REGEX.match(item)
         if not match:
@@ -116,7 +104,6 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
             "level_name": sections["heading"],  # match.group(3).strip(),
             "heading": sections["heading"],
             "meta": sections["meta"],
-            "type": "assignment",
         }
 
     def recursive_sort(data):
