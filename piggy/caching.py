@@ -14,9 +14,9 @@ from piggy import (
     ASSIGNMENT_FILENAME_REGEX,
 )
 from piggy.exceptions import PiggyHTTPException
-from piggy.piggybank import get_all_meta_from_path, PIGGYMAP, get_template_from_path, get_piggymap_segment_from_path
 from piggy.models import LANGUAGES
-from piggy.utils import get_supported_languages
+from piggy.piggybank import get_all_meta_from_path, PIGGYMAP, get_template_from_path, get_piggymap_segment_from_path
+from piggy.utils import get_supported_languages, normalize_path_to_str
 
 
 def lru_cache_wrapper(func):
@@ -107,10 +107,11 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
 
     # If we are at the final level (assignment), render the assignment
     if len(path.split("/")) == AssignmentTemplate.ASSIGNMENT.index:
-        path, assignment = path.rsplit("/", 1)
+        path_from_segment = normalize_path_to_str(segment.get("path", ""), replace_spaces=False)
+        path, assignment = str(path_from_segment).rsplit("/", 1)
         if lang:
             assignment = f"translations/{lang}/{assignment}"
-        return _render_assignment(Path(f"{PIGGYBANK_FOLDER}/{path}/{assignment}.md"))
+        return _render_assignment(Path(f"{path}/{assignment}"))
 
     # Render the appropriate template
     return Response(

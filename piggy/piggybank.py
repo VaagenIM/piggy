@@ -5,6 +5,7 @@ from pathlib import Path
 from turtleconverter import mdfile_to_sections
 
 from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX
+from piggy.utils import normalize_path_to_str
 
 
 def load_meta_json(path: Path):
@@ -14,12 +15,13 @@ def load_meta_json(path: Path):
     except FileNotFoundError:
         data = {}
     if "name" not in data:
-        data["name"] = path.parent.name
+        data["name"] = path.parent.name.replace("_", " ")
     return data
 
 
 def get_piggymap_segment_from_path(path: str, piggymap: dict) -> tuple[dict, dict]:
     """Get the metadata and segment from a path."""
+    path = normalize_path_to_str(path, replace_spaces=True)
     segment = dict(piggymap.copy())
     meta = segment.get("meta", {})
     for path in path.split("/"):
@@ -28,14 +30,17 @@ def get_piggymap_segment_from_path(path: str, piggymap: dict) -> tuple[dict, dic
         if path not in segment:
             return {}, {}
         meta = segment.get(path, {}).get("meta", {})
-        segment = segment.get(path, {}).get("data", {})
-
+        segment = segment.get(path, {})
+        # Get the data if it exists, if not get segment minus the meta
+        segment = segment.get("data", {k: v for k, v in segment.items() if k != "meta"})
     return meta, segment
 
 
 def get_all_meta_from_path(path: str, piggymap: dict) -> dict:
     """Get all metadata from a path."""
     metadata = dict()
+
+    path = normalize_path_to_str(path, replace_spaces=True)
 
     data = piggymap.get(path.split("/")[0], {})
     for i, p in enumerate(path.split("/")):
@@ -81,23 +86,24 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
         return None
     for item in os.listdir(path):
         # TODO: Decouple into separate functions
+        i = item.replace(" ", "_")  # We don't want spaces in the keys for pretty URLs
         # If the item is a directory, we want to go deeper
         if os.path.isdir(f"{path}/{item}"):
             new_item = generate_piggymap(Path(f"{path}/{item}"), _current_level=_current_level + 1)
             if new_item:
-                piggymap[item] = {"data": new_item}
+                piggymap[i] = {"data": new_item}
                 # If the folder contains a 'meta.json' file, we should add that as metadata to the folder
-                piggymap[item]["meta"] = load_meta_json(Path(f"{path}/{item}/meta.json"))
+                piggymap[i]["meta"] = load_meta_json(Path(f"{path}/{item}/meta.json"))
             continue
 
         # If the item is a file, we want to check if it's a valid assignment file
-        match = ASSIGNMENT_FILENAME_REGEX.match(item)
+        match = ASSIGNMENT_FILENAME_REGEX.match(i)
         if not match:
             continue
         assignment_path = Path(f"{path}/{item}")
         sections = mdfile_to_sections(assignment_path)
 
-        piggymap[item.replace(".md", "")] = {
+        piggymap[i.replace(".md", "")] = {
             "path": assignment_path,
             "assignment_name": match.group(1).strip(),
             "level": match.group(2).strip(),

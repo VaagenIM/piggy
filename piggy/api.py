@@ -10,6 +10,7 @@ api_routes = Blueprint("api", __name__, url_prefix="/api")
 def generate_thumbnail(text: str, request=request):
     """Generate a thumbnail image with the given text and query parameters."""
     # get query parameters from the request
+    text = text.replace("_", " ")
     bg_color = request.args.get("bg_color", "")
     text_color = request.args.get("text_color", "")
     width = request.args.get("width", 500)

@@ -1,7 +1,6 @@
 import re
-from pathlib import Path
-
 from enum import Enum
+from pathlib import Path
 
 PIGGYBANK_FOLDER = Path("piggybank")
 
@@ -11,7 +10,7 @@ ASSIGNMENT_ROUTE = "main"
 MEDIA_ROUTE = "img"
 
 ASSIGNMENTS_TEMPLATE_FOLDER = "assignments"
-ASSIGNMENT_FILENAME_REGEX = re.compile(r"^(.+) Level (\d+) \- (.+).md$")
+ASSIGNMENT_FILENAME_REGEX = re.compile(r"^(.+)[ _]Level[ _](\d+)[ _]-[ _](.+).md$")
 
 
 class AssignmentTemplate(Enum):
