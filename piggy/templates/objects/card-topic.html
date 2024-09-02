@@ -1,7 +1,7 @@
 {# Card Container #}
 <a
 href="{{ abspath }}/{{ item }}"
-class="card-container block p-3 rounded-xl border border-slate-500 {{ 'extra-card' if data.meta.type == 'extra' else '' }}"
+class="card-container block p-3 rounded-lg border border-slate-400 {{ 'extra-card' if data.meta.type == 'extra' else '' }}"
 >
 {# Card Title #}
 <div class="text-2xl font-extrabold text-center pb-2">
@@ -11,7 +11,7 @@ class="card-container block p-3 rounded-xl border border-slate-500 {{ 'extra-car
 {# Card Thumbnail #}
 <div class="thumbnail-container">
   <img
-    class="w-full h-36 object-cover rounded-xl shadow-lg"
+    class="w-full object-cover rounded-lg shadow-lg thumbnail-image"
     src="{{ media_abspath }}/{{ item }}/media/header.{{ img_fmt }}"
     alt="Header image for {{ item }}"
   />
