@@ -68,8 +68,8 @@ def create_app():
         """Only used when GitHub Pages is used to host the site."""
         return get_assignment_wildcard(path, lang)
 
-    @media_routes.route("/<path:wildcard>/media/<filename>")
-    @assignment_routes.route("/<path:wildcard>/attachments/<filename>")
+    @media_routes.route("/<path:wildcard>/media/<path:filename>")
+    @assignment_routes.route("/<path:wildcard>/attachments/<path:filename>")
     def get_assignment_media_wildcard(wildcard, filename):
         """
         Get a media file from either the media or attachments folder.
