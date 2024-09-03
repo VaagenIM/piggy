@@ -5,7 +5,7 @@ from pathlib import Path
 from turtleconverter import mdfile_to_sections
 
 from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX
-from piggy.utils import normalize_path_to_str, lru_cache_wrapper, normalize_str
+from piggy.utils import normalize_path_to_str, lru_cache_wrapper
 
 
 def load_meta_json(path: Path):
@@ -47,14 +47,17 @@ def get_all_meta_from_path(path: str or Path, piggymap: dict) -> dict:
     path = normalize_path_to_str(path, replace_spaces=True)
 
     data = piggymap.get(path.split("/")[0], {})
-    for i, p in enumerate(path.split("/")):
+    for i, p in enumerate(path.split("/"), 1):
         meta = data.get("meta", {})
         key = [k for k, v in AssignmentTemplate.get_dictmap().items() if v == i]
         match i:
-            case 0:
-                continue
-            case 1 | 2 | 3 | 4:
+            case 1:
                 metadata[key[0]] = meta
+                continue
+            case 2 | 3 | 4:
+                metadata[key[0]] = meta
+            case 5:
+                metadata[key[0]] = data
             case _:
                 break
         data = data.get("data", {}).get(p, {})
@@ -65,7 +68,7 @@ def get_all_meta_from_path(path: str or Path, piggymap: dict) -> dict:
 @lru_cache_wrapper
 def get_assignment_data_from_path(path: str or Path, piggymap: dict) -> dict:
     """Get the assignment data from a path."""
-    path = normalize_path_to_str(path, replace_spaces=True).rsplit(".md", 1)[0]
+    path = normalize_path_to_str(path, replace_spaces=True, normalize_url=True, remove_ext=True)
     segment = piggymap.copy()
     for i, p in enumerate(path.split("/")):
         if i == 0:
@@ -127,7 +130,7 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
         # NOTE: This is run both for piggymap generation, and for individual assignment rendering
         sections = mdfile_to_sections(assignment_path)
 
-        assignment_key = normalize_str(i.replace(".md", ""))
+        assignment_key = normalize_path_to_str(i, replace_spaces=True, normalize_url=True, remove_ext=True)
         piggymap[assignment_key] = {
             "path": assignment_path,
             "assignment_name": match.group(1).strip(),

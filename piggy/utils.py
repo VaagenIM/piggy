@@ -1,9 +1,9 @@
 import os
 import re
-
 from functools import lru_cache
 from io import BytesIO
 from pathlib import Path
+
 from bs4 import BeautifulSoup as bs
 from flask import send_file
 
@@ -35,11 +35,16 @@ def get_supported_languages(assignment_path: Path):
 
 
 @lru_cache_wrapper
-def normalize_path_to_str(path: Path or str, replace_spaces=False) -> str:
+def normalize_path_to_str(path: Path or str, replace_spaces=False, normalize_url=False, remove_ext=False) -> str:
     """Normalize a path to use forward slashes and replace spaces with underscores."""
+    path = str(path).replace("\\", "/")
     if replace_spaces:
-        path = str(path).replace(" ", "_")
-    return str(path).replace("\\", "/")
+        path = path.replace(" ", "_")
+    if normalize_url:
+        path = normalize_url_str(path)
+    if remove_ext:
+        path = re.sub(r"\.\w+$", "", path)
+    return path
 
 
 @lru_cache_wrapper
@@ -53,7 +58,7 @@ def generate_summary_from_mkdocs_html(html_content: str) -> str:
 
 
 @lru_cache_wrapper
-def normalize_str(text: str) -> str:
+def normalize_url_str(text: str) -> str:
     """Removes all special characters from the provided str using the ALLOWED_URL_CHARS_REGEX regex"""
     new_text = "".join(c.group() for c in ALLOWED_URL_CHARS_REGEX.finditer(text))
     return re.sub("_+", "_", new_text)

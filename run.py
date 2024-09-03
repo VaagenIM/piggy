@@ -23,7 +23,10 @@ def checkout_branch(branch):
 if __name__ == "__main__":
     from piggy.devtools import inject_devtools
     from piggy.piggybank import __update_piggymap
+    import logging
 
+    log = logging.getLogger("werkzeug")
+    log.setLevel(logging.ERROR)
     os.environ["FLASK_DEBUG"] = "1"
     os.environ["USE_CACHE"] = "0"
     app = create_app()
