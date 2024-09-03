@@ -49,10 +49,9 @@ def get_all_meta_from_path(path: str or Path, piggymap: dict) -> dict:
     data = piggymap.get(path.split("/")[0], {})
     for i, p in enumerate(path.split("/"), 1):
         meta = data.get("meta", {})
-        key = [k for k, v in AssignmentTemplate.get_dictmap().items() if v == i]
+        key = [k for k, v in AssignmentTemplate.get_dictmap().items() if v == i - 1]
         match i:
             case 1:
-                metadata[key[0]] = meta
                 continue
             case 2 | 3 | 4:
                 metadata[key[0]] = meta
@@ -62,7 +61,8 @@ def get_all_meta_from_path(path: str or Path, piggymap: dict) -> dict:
             case _:
                 break
         data = data.get("data", {}).get(p, {})
-    metadata[AssignmentTemplate.LEVELS_DATA.name] = data
+    if len(path.split("/")) == AssignmentTemplate.ASSIGNMENT.index:
+        metadata[AssignmentTemplate.LEVELS_DATA.name] = data
     return metadata
 
 
@@ -135,7 +135,7 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
         assignment_key = normalize_path_to_str(i, replace_spaces=True, normalize_url=True, remove_ext=True)
         piggymap[assignment_key] = {
             "path": assignment_path,
-            "assignment_name": match.group(1).strip(),
+            # "assignment_name": match.group(1).strip(),  # unnecessary
             "level": match.group(2).strip(),
             "level_name": sections["heading"],
             "heading": sections["heading"],

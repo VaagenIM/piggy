@@ -39,13 +39,14 @@ def create_app():
             "img_fmt": "webp",
             "github_pages": use_github_pages,  # Used to determine if we should use lang in URL
             "AssignmentTemplate": AssignmentTemplate,
+            "debug": app.debug,
         }
 
     @app.template_global()
     def get_template_name_from_index(i: int):
         """Return the template path for the index."""
         # Used to get the name of the template from the index via a path (breadcrumbs)
-        return AssignmentTemplate.get_template_name_from_index(i)
+        return AssignmentTemplate.get_template_name_from_index(i - 1)
 
     @app.route("/")
     @lru_cache_wrapper

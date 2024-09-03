@@ -122,7 +122,7 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
             assignment = f"translations/{lang}/{assignment}"
         return _render_assignment(Path(f"{path}/{assignment}"), extra_metadata=metadata)
 
-    # Render the appropriate template
+    # Render the appropriate template (if it is not the final level)
     return Response(
         render_template(
             template_type, meta=metadata, segment=segment, path=path, media_abspath=media_abspath, abspath=abspath
