@@ -1,30 +1,57 @@
-{# Card Container #}
-<a
-href="{{ abspath }}/{{ item }}"
-class="card-container block p-3 rounded-lg border border-slate-400"
->
-{# Card Title #}
-<div class="text-2xl font-extrabold text-center pb-2">
-  {{ data.meta.name }}
-</div>
+{% macro card(
+    overlay_text, 
+    difficulty, 
+    tags,
+    extra_classes='',
+    abspath='', 
+    item='', 
+    title='title', 
+    description='description', 
+    thumbnail='', 
+    thumbnail_alt='thumbnail alt'
+) %}
 
-{# Card Thumbnail #}
-<div class="thumbnail-container">
-  <img
-    class="w-full object-cover rounded-lg shadow-lg thumbnail-image"
-    src="{{ media_abspath }}/{{ item }}/media/header.{{ img_fmt }}"
-    alt="Header image for {{ item }}"
-  />
-
-  {# TEMP
-    <div class="thumbnail-text-overlay">
-        {{ data.meta.description }}
+<a href="{{ abspath }}/{{ item }}" class="card-container block p-3 rounded-lg border border-slate-400 {{extra_classes}}">
+    <div class="card-title text-2xl font-extrabold text-center pb-2">
+        {{ title }}
     </div>
-  #}
-</div>
+    <div class="thumbnail-container">
+        <img class="thumbnail-image w-full object-cover rounded-lg shadow-lg"
+        src="{{ thumbnail }}" alt="{{ thumbnail_alt }}" />
 
-{# Card Description #}
-<div class="mt-4 description-container font-semibold">
-  {{ data.meta.description }}
-</div>
+        {% if difficulty %}
+            {% if difficulty > 0 %}
+            <div class="thumbnail-text-overlay">
+            {% if difficulty > 7 %}
+                <!-- Hardcoded color here, change this-->
+                <span>Difficulty: <span style="color:#dd2256;">⭐ × {{ difficulty }}</span></span>
+            {% else %}
+                <span>Difficulty: {{ difficulty * '⭐' }}</span>
+            {% endif %}
+            </div>
+            {% endif %}
+        {% else %}
+            {% if overlay_text %}
+                <div class="thumbnail-text-overlay">{{ overlay_text }}</div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    {# Card Tags #}
+    {% if tags %}
+        <div class="tags-container">
+            {% for tag in tags %}
+            <span class="tag-box"
+                style="border: 1px solid;" data-tag="{{ tag }}">
+                {{ tag }}
+            </span>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="description-container mt-4 font-semibold">
+        {{ description }}
+    </div>
 </a>
+
+{% endmacro %}

@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block content %}
+{% block base %}
   <h1 class="text-5xl font-extrabold text-center my-6">{{ meta.name }}</h1>
 
   <div class="container mx-auto p-4">
@@ -8,7 +8,7 @@
       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
     >
       {% for item, data in segment.items() %}
-        {% include 'objects/card.html' %}
+        {% include 'objects/card-basic.html' %}
       {% endfor %}
     </div>
   </div>

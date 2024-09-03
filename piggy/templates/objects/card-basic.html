@@ -1,0 +1,10 @@
+{% from 'objects/card.html' import card %}
+
+{{ card(
+  abspath = abspath,
+  item = item,
+  title = data.meta.name,
+  thumbnail = media_abspath + "/" + item + "/media/header." + img_fmt,
+  thumbnail_alt = "Header image for " + item,
+  description = data.meta.description
+) }}
