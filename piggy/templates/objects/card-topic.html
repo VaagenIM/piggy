@@ -1,7 +1,7 @@
 {# Card Container #}
 <a
 href="{{ abspath }}/{{ item }}"
-class="card-container block p-3 rounded-xl border border-slate-500"
+class="card-container block p-3 rounded-lg border border-slate-400 {{ 'extra-card' if data.meta.type == 'extra' else '' }}"
 >
 {# Card Title #}
 <div class="text-2xl font-extrabold text-center pb-2">
@@ -11,37 +11,39 @@ class="card-container block p-3 rounded-xl border border-slate-500"
 {# Card Thumbnail #}
 <div class="thumbnail-container">
   <img
-    class="w-full h-36 object-cover rounded-xl shadow-lg"
+    class="w-full object-cover rounded-lg shadow-lg thumbnail-image"
     src="{{ media_abspath }}/{{ item }}/media/header.{{ img_fmt }}"
     alt="Header image for {{ item }}"
   />
 
   {% if data.meta.difficulty %}
-  <div class="thumbnail-text-overlay">
-    {% if data.meta.difficulty > 7 %}
-        <!-- Hardcoded color here, change this-->
-        <span>Difficulty: <span style="color:#dd2256;">⭐ × {{ data.meta.difficulty }}</span></span>
-    {% else %}
-        <span>Difficulty: {{ data.meta.difficulty * '⭐' }}</span>
+    {% if data.meta.difficulty > 0 %}
+    <div class="thumbnail-text-overlay">
+      {% if data.meta.difficulty > 7 %}
+          <!-- Hardcoded color here, change this-->
+          <span>Difficulty: <span style="color:#dd2256;">⭐ × {{ data.meta.difficulty }}</span></span>
+      {% else %}
+          <span>Difficulty: {{ data.meta.difficulty * '⭐' }}</span>
+      {% endif %}
+    </div>
     {% endif %}
-  </div>
   {% endif %}
 </div>
 
 {# Card Tags #}
 <div class="mt-2 tags-container">
   {% for tag in data.meta.tags %}
-    <span class="inline-block text-xs px-2 py-1 rounded-full font-light tag-box" 
+    <span class="inline-block text-xs px-2 py-1 rounded-full font-semibold tag-box"
       style="border: 1px solid;" data-tag="{{ tag }}">
       {{ tag }}
     </span>
   {% endfor %}
 </div>
 
-<div class="see-more text-s" id="see-more-{{ loop_index }}" onclick="toggleTags(this)">Se flere</div>
+{# <div class="see-more text-s" id="see-more-{{ loop_index }}" onclick="toggleTags(this)">Se flere</div> #}
 
 {# Card Description #}
-<div class="mt-4 description-container font-semibold">
+<div class="mt-4 description-container font-extrabold">
   {{ data.meta.description }}
 </div>
 </a>
@@ -94,7 +96,7 @@ class="card-container block p-3 rounded-xl border border-slate-500"
         tag.style.borderColor = stringToColor(tagText);
       });
 
-      checkTagsVisibility();
-      window.addEventListener('resize', checkTagsVisibility);
+      // checkTagsVisibility();
+      // window.addEventListener('resize', checkTagsVisibility);
   });
 </script>

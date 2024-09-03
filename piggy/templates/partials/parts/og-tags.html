@@ -1,0 +1,53 @@
+{% set ns = namespace(og_name="Piggy", description=None, image=None, meta_exists=True) %}
+
+{% if not meta %}
+  {# Standard og-meta #}
+  {%
+    set meta = {
+        "name": "Piggy",
+        "description": "Piggy er en åpen oppgavebank for Vågen VGS laget av IT-lærerne.",
+        "thumbnail": url_for('static', filename='img/icons/piggy_icon.png', _external=True)
+    }
+  %}
+  {% set ns.meta_exists = False %}
+{% endif %}
+
+{% if meta.name %}
+  {% set ns.og_name = meta.name %}
+{% elif meta.title and level %}
+  {% set ns.og_name = "Level " + level + ": " + meta.title %}
+{% endif %}
+
+{% if meta.summary %}
+  {% set ns.description = meta.summary %}
+{% elif meta.description %}
+  {% set ns.description = meta.description %}
+{% endif %}
+
+{% if meta.thumbnail %}
+  {% set ns.image = meta.thumbnail %}
+{% elif level_name and assignment_name %}
+  {% set ns.image = url_for('api.generate_thumbnail', text=level_name, _external=True)+'?c='+assignment_name %}
+{% elif ns.meta_exists %}
+  {% set ns.image = request.host_url.rstrip('/') + media_abspath + '/media/header.' + img_fmt %}
+{% else %}
+  {% set ns.image = url_for('static', filename='img/icons/piggy_icon.png', _external=True) %}
+{% endif %}
+
+<meta property="og:title" content="{{ ns.og_name }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ request.url }}" />
+<meta property="og:image" content="{{ ns.image }}" />
+<meta property="og:site_name" content="Piggy" />
+
+<meta name="twitter:title" content="{{ ns.og_name }}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:domain" content="{{ request.host }}" />
+<meta property="twitter:url" content="{{ request.url }}" />
+<meta name="twitter:image" content="{{ ns.image }}" />
+
+{% if ns.description %}
+  <meta name="description" content="{{ ns.description }}" />
+  <meta property="og:description" content="{{ ns.description }}" />
+  <meta name="twitter:description" content="{{ ns.description }}" />
+{% endif %}

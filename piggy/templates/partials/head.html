@@ -1,0 +1,7 @@
+{# common_head can safely be used by _all_ pages #}
+{% include "partials/common_head.html" %}
+
+{# this is just used within layout #}
+{% block styles %}
+  {% include "partials/parts/styles.html" %}
+{% endblock %}
