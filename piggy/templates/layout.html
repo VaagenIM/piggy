@@ -8,11 +8,18 @@
     {% endblock %}
   </head>
   <body class="main-container">
-    {% block header %}
-    {% endblock %}
-    {% block base %}
-    {% endblock %}
-    {% block footer %}
-    {% endblock %}
+    <header>
+      {% include "partials/parts/breadcrumbs.html" %}
+      {% block header %}
+      {% endblock %}
+    </header>
+    <main>
+      {% block base %}
+      {% endblock %}
+    </main>
+    <footer>
+      {% block footer %}
+      {% endblock %}
+    </footer>
   </body>
 </html>
