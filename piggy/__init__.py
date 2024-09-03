@@ -21,6 +21,7 @@ class AssignmentTemplate(Enum):
     SUBJECT = {"index": 3, "name": "subject"}
     TOPIC = {"index": 4, "name": "topic"}
     ASSIGNMENT = {"index": 5, "name": "assignment"}
+    LEVELS_DATA = {"index": 6, "name": "levels_data"}
 
     @property
     def template(self):
@@ -38,6 +39,14 @@ class AssignmentTemplate(Enum):
         for v in AssignmentTemplate:
             if v.value["index"] == index:
                 return v.template
+        return None
+
+    @staticmethod
+    def get_template_name_from_index(index: int):
+        """Return the template name for the index."""
+        for v in AssignmentTemplate:
+            if v.value["index"] == index:
+                return v.value["name"]
         return None
 
     @staticmethod

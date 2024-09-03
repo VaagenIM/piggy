@@ -38,7 +38,14 @@ def create_app():
             "piggymap": PIGGYMAP,
             "img_fmt": "webp",
             "github_pages": use_github_pages,  # Used to determine if we should use lang in URL
+            "AssignmentTemplate": AssignmentTemplate,
         }
+
+    @app.template_global()
+    def get_template_name_from_index(i: int):
+        """Return the template path for the index."""
+        # Used to get the name of the template from the index via a path (breadcrumbs)
+        return AssignmentTemplate.get_template_name_from_index(i)
 
     @app.route("/")
     @lru_cache_wrapper

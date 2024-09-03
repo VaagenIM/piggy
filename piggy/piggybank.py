@@ -57,10 +57,12 @@ def get_all_meta_from_path(path: str or Path, piggymap: dict) -> dict:
             case 2 | 3 | 4:
                 metadata[key[0]] = meta
             case 5:
-                metadata[key[0]] = data
+                metadata[key[0]] = meta
+                break
             case _:
                 break
         data = data.get("data", {}).get(p, {})
+    metadata[AssignmentTemplate.LEVELS_DATA.name] = data
     return metadata
 
 
