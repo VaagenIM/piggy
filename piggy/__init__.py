@@ -11,6 +11,7 @@ MEDIA_ROUTE = "img"
 
 ASSIGNMENTS_TEMPLATE_FOLDER = "assignments"
 ASSIGNMENT_FILENAME_REGEX = re.compile(r"^(.+)[ _]Level[ _](\d+)[ _]-[ _](.+).md$")
+ALLOWED_URL_CHARS_REGEX = re.compile(r"[a-zA-Z0-9\.\-\_æøåÆØÅ]")
 
 
 class AssignmentTemplate(Enum):
