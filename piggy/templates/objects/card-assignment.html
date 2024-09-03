@@ -4,14 +4,14 @@
   class="card-container block p-3 rounded-lg border border-slate-400"
 >
   {# Card Title #}
-  <div class="text-2xl font-extrabold text-center pb-2">
+  <div class="card-title text-2xl font-extrabold text-center pb-2">
     {{ data.meta.name }}
   </div>
 
   {# Card Thumbnail #}
   <div class="thumbnail-container">
     <img
-      class="w-full object-cover rounded-lg shadow-lg thumbnail-image"
+      class="thumbnail-image w-full object-cover rounded-lg shadow-lg"
       {% if data.meta.thumbnail %}
         src="{{ abspath }}/{{ item }}/{{ data.meta.thumbnail }}"
       {% else %}
@@ -26,7 +26,7 @@
   </div>
 
   {# Card Description #}
-  <div class="mt-4 description-container font-semibold">
+  <div class="description-container mt-4 font-semibold">
     {{ data.meta.description }}
   </div>
 </a>
