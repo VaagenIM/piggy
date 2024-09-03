@@ -60,7 +60,10 @@ def create_app():
             lang = request.cookies.get("lang", "")  # "" = default language (Norwegian
 
         # Render the appropriate template for the current level
-        return _render_assignment_wildcard(path, lang=lang)
+        try:
+            return _render_assignment_wildcard(path, lang=lang)
+        except PiggyHTTPException:
+            return _render_assignment_wildcard(path, lang="")
 
     @assignment_routes.route("/<path:path>/lang/<lang>")
     @assignment_routes.route("/<path:path>/lang/")
