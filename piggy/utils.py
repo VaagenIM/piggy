@@ -1,4 +1,5 @@
 import os
+import re
 
 from functools import lru_cache
 from io import BytesIO
@@ -6,6 +7,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup as bs
 from flask import send_file
 
+from piggy import ALLOWED_URL_CHARS_REGEX
 from piggy.models import LANGUAGES
 
 
@@ -48,3 +50,10 @@ def generate_summary_from_mkdocs_html(html_content: str) -> str:
     soup = bs(html_content, "html.parser").find("article", class_="md-content__inner")
     summary = soup.text[:197].strip() + "..." if soup else ""
     return summary
+
+
+@lru_cache_wrapper
+def normalize_str(text: str) -> str:
+    """Removes all special characters from the provided str using the ALLOWED_URL_CHARS_REGEX regex"""
+    new_text = "".join(c.group() for c in ALLOWED_URL_CHARS_REGEX.finditer(text))
+    return re.sub("_+", "_", new_text)

@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Callable
 
-from flask import Response, render_template
+from flask import Response, render_template, abort
 from turtleconverter import mdfile_to_sections, ConversionError
 
 from piggy import (
@@ -77,7 +77,8 @@ def _render_assignment(p: Path) -> Response:
     meta = assignment_data.get("meta", {}).copy()
     if "summary" not in meta:
         meta["summary"] = generate_summary_from_mkdocs_html(sections["body"])
-    assignment_data.pop("meta")
+    if "meta" in assignment_data:
+        assignment_data.pop("meta")
 
     render = render_template(
         AssignmentTemplate.ASSIGNMENT.template,
@@ -110,6 +111,8 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
     # If we are at the final level (assignment), render the assignment
     if len(path.split("/")) == AssignmentTemplate.ASSIGNMENT.index:
         path_from_segment = normalize_path_to_str(segment.get("path", ""), replace_spaces=False)
+        if not path_from_segment:
+            abort(404)
         path, assignment = str(path_from_segment).rsplit("/", 1)
         if lang:
             assignment = f"translations/{lang}/{assignment}"
