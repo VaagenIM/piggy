@@ -27,6 +27,17 @@
       {% endif %}
     {% endif %}
 
+    <div id="level-select">
+      Level select:
+      {% for link, assignment in meta.assignment.data.items() %}
+        {% if assignment.level | int == level | int %}
+          {{ assignment.level }}
+        {% else %}
+          <a href="{{ link }}">{{ assignment.level }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+
     <div>
       <div>Current language: {{ current_language }}</div>
       {% for lang, val in supported_languages.items() %}
