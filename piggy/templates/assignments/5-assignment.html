@@ -94,4 +94,8 @@
     <a href="/">Home</a>
   </header>
   <main>{{ content.body | safe }}</main>
+
+  {% if debug %}
+    {% include "partials/devtools/_devtools.html" %}
+  {% endif %}
 </body>

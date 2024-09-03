@@ -22,4 +22,8 @@
       {% endblock %}
     </footer>
   </body>
+
+  {% if debug %}
+    {% include "partials/devtools/_devtools.html" %}
+  {% endif %}
 </html>
