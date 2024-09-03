@@ -55,8 +55,12 @@ def get_html(link):
 
     # A hack to fix media links
     if "/lang/" in link:
+        lang = link.split("/lang/")[1].split("/")[0]
         html = re.sub(r'href="attachments/', 'href="../../attachments/', html)
         html = re.sub(r'src="attachments/', 'src="../../attachments/', html)
+        html = re.sub(
+            rf"""href=\"({link.split('Level')[0].split("/")[-1]}[^/]+)\"""", rf'href="../../\1/lang/{lang}"', html
+        )
 
     return html
 
