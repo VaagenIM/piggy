@@ -5,7 +5,7 @@ from pathlib import Path
 from turtleconverter import mdfile_to_sections
 
 from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX
-from piggy.utils import normalize_path_to_str, lru_cache_wrapper
+from piggy.utils import normalize_path_to_str, lru_cache_wrapper, normalize_str
 
 
 def load_meta_json(path: Path):
@@ -127,7 +127,8 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
         # NOTE: This is run both for piggymap generation, and for individual assignment rendering
         sections = mdfile_to_sections(assignment_path)
 
-        piggymap[i.replace(".md", "")] = {
+        assignment_key = normalize_str(i.replace(".md", ""))
+        piggymap[assignment_key] = {
             "path": assignment_path,
             "assignment_name": match.group(1).strip(),
             "level": match.group(2).strip(),
