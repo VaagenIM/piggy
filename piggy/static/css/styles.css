@@ -16,7 +16,7 @@
 
 .card-container {
   background-color: var(--snout-card);
-  box-shadow: inset 0px 0px 10px 0 #58585855;
+  box-shadow: inset 0px 0px 5px 0 rgb(151, 151, 151);
   transition:
     transform 0.1s ease,
     box-shadow 0.1s ease;
@@ -38,6 +38,11 @@
 
 .thumbnail-container {
   position: relative;
+}
+
+.thumbnail-image {
+  aspect-ratio: 16 / 5;
+  width: 100%;
 }
 
 .thumbnail-text-overlay {
