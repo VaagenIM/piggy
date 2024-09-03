@@ -1,32 +1,12 @@
-{# Card Container #}
-<a
-  href="{{ abspath }}/{{ item }}"
-  class="card-container block p-3 rounded-lg border border-slate-400"
->
-  {# Card Title #}
-  <div class="card-title text-2xl font-extrabold text-center pb-2">
-    {{ data.meta.name }}
-  </div>
+{% from 'objects/card.html' import card %}
 
-  {# Card Thumbnail #}
-  <div class="thumbnail-container">
-    <img
-      class="thumbnail-image w-full object-cover rounded-lg shadow-lg"
-      {% if data.meta.thumbnail %}
-        src="{{ abspath }}/{{ item }}/{{ data.meta.thumbnail }}"
-      {% else %}
-        src="{{ url_for('api.generate_thumbnail', text=data.level_name) }}?c={{ data.assignment_name }}"
-      {% endif %}
-      alt="Header image for {{ item }}"
-    />
-
-    <div class="thumbnail-text-overlay">
-      Level {{ data.level }} - {{ data.level_name }}
-    </div>
-  </div>
-
-  {# Card Description #}
-  <div class="description-container mt-4 font-semibold">
-    {{ data.meta.description }}
-  </div>
-</a>
+{{ card(
+  abspath = abspath,
+  item = item,
+  title = data.meta.name,
+  description = data.meta.description,
+  thumbnail = data.meta.thumbnail if data.meta.thumbnail else url_for('api.generate_thumbnail', text = data.level_name) ~ '?c=' ~ data.assignment_name,
+  thumbnail_alt = 'Header image for ' ~ item,
+  extra_classes = 'block p-3 rounded-lg border border-slate-400' if 'special_condition' in data else '',
+  overlay_text = 'Level ' ~ data.level ~ ' - ' ~ data.level_name if data.level else ''
+) }}

@@ -1,102 +1,15 @@
-{# Card Container #}
-<a
-href="{{ abspath }}/{{ item }}"
-class="card-container block p-3 rounded-lg border border-slate-400 {{ 'extra-card' if data.meta.type == 'extra' else '' }}"
->
-{# Card Title #}
-<div class="card-title text-2xl font-extrabold text-center pb-2">
-  {{ data.meta.name }}
-</div>
+{% from 'objects/card.html' import card %}
 
-{# Card Thumbnail #}
-<div class="thumbnail-container">
-  <img
-    class="thumbnail-image w-full object-cover rounded-lg shadow-lg"
-    src="{{ media_abspath }}/{{ item }}/media/header.{{ img_fmt }}"
-    alt="Header image for {{ item }}"
-  />
+{{ card(
+  abspath = abspath,
+  item = item,
+  title = data.meta.name,
+  description = data.meta.description,
+  thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." + img_fmt,
+  thumbnail_alt = "Header image for " ~ item,
+  extra_classes = 'extra-card' if data.meta.type == 'extra' else '',
+  difficulty = data.meta.difficulty,
+  tags = data.meta.tags
+) }}
 
-  {% if data.meta.difficulty %}
-    {% if data.meta.difficulty > 0 %}
-    <div class="thumbnail-text-overlay">
-      {% if data.meta.difficulty > 7 %}
-          <!-- Hardcoded color here, change this-->
-          <span>Difficulty: <span style="color:#dd2256;">⭐ × {{ data.meta.difficulty }}</span></span>
-      {% else %}
-          <span>Difficulty: {{ data.meta.difficulty * '⭐' }}</span>
-      {% endif %}
-    </div>
-    {% endif %}
-  {% endif %}
-</div>
-
-{# Card Tags #}
-<div class="tags-container mt-2">
-  {% for tag in data.meta.tags %}
-    <span class="tag-box inline-block text-xs px-2 py-1 rounded-full font-semibold"
-      style="border: 1px solid;" data-tag="{{ tag }}">
-      {{ tag }}
-    </span>
-  {% endfor %}
-</div>
-
-{# <div class="see-more text-s" id="see-more-{{ loop_index }}" onclick="toggleTags(this)">Se flere</div> #}
-
-{# Card Description #}
-<div class="description-container mt-4 font-extrabold">
-  {{ data.meta.description }}
-</div>
-</a>
-
-<script>
-  function checkTagsVisibility() {
-      const tagsContainers = document.querySelectorAll('.tags-container');
-      tagsContainers.forEach(container => {
-          const seeMoreButton = container.nextElementSibling;
-          if (container.scrollHeight > container.clientHeight) {
-              seeMoreButton.style.display = 'block';
-              container.classList.add('fade');
-          } else {
-              seeMoreButton.style.display = 'none';
-              container.classList.remove('fade');
-          }
-      });
-  }
-  
-  function toggleTags(button) {
-    const tagsContainer = button.previousElementSibling;
-    tagsContainer.classList.toggle('expanded');
-    button.textContent = tagsContainer.classList.contains('expanded') ? 'Se færre' : 'Se flere';
-  }
-  
-  // Function to generate a color from a string (tag text)
-  function stringToColor(str, transparency = 'FF') {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      hash = str.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    let color = '#';
-    for (let i = 0; i < 3; i++) {
-      let value = (hash >> (i * 8)) & 0xFF;
-      color += ('00' + value.toString(16)).substr(-2);
-    }
-
-    color += transparency;
-
-    return color;
-  }
-
-  // fix all the post-load stuff
-  document.addEventListener('DOMContentLoaded', function () {
-      const tags = document.querySelectorAll('.tag-box');
-
-      tags.forEach(tag => {
-        const tagText = tag.getAttribute('data-tag');
-        tag.style.backgroundColor = stringToColor(tagText, '44');
-        tag.style.borderColor = stringToColor(tagText);
-      });
-
-      // checkTagsVisibility();
-      // window.addEventListener('resize', checkTagsVisibility);
-  });
-</script>
+<script src="{{ url_for('static', filename='js/card_script.js') }}"></script>
