@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Callable
 
-from flask import Response, render_template, abort
+from flask import Response, render_template
 from turtleconverter import mdfile_to_sections, ConversionError
 
 from piggy import (
@@ -21,9 +21,9 @@ from piggy.piggybank import (
 )
 from piggy.utils import (
     get_supported_languages,
-    normalize_path_to_str,
     generate_summary_from_mkdocs_html,
     lru_cache_wrapper,
+    normalize_path_to_str,
 )
 
 
@@ -54,7 +54,7 @@ def cache_directory(
 
 
 @lru_cache_wrapper
-def _render_assignment(p: Path) -> Response:
+def _render_assignment(p: Path, extra_metadata: dict = dict) -> Response:
     """Render an assignment from a Path object."""
     if not p.exists():
         raise PiggyHTTPException("Assignment not found", status_code=404)
@@ -77,13 +77,12 @@ def _render_assignment(p: Path) -> Response:
     meta = assignment_data.get("meta", {}).copy()
     if "summary" not in meta:
         meta["summary"] = generate_summary_from_mkdocs_html(sections["body"])
-    if "meta" in assignment_data:
-        assignment_data.pop("meta")
+    assignment_data.pop("meta")
 
     render = render_template(
         AssignmentTemplate.ASSIGNMENT.template,
         content=sections,
-        meta={**meta, **get_all_meta_from_path(str(p.parent), PIGGYMAP)},
+        meta={**meta, **get_all_meta_from_path(str(p.parent), PIGGYMAP), **extra_metadata},
         current_language=current_language,
         supported_languages=get_supported_languages(assignment_path=assignment_path),
         media_abspath=f"/{MEDIA_ROUTE}/{p.parent}",
@@ -110,13 +109,18 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
 
     # If we are at the final level (assignment), render the assignment
     if len(path.split("/")) == AssignmentTemplate.ASSIGNMENT.index:
-        path_from_segment = normalize_path_to_str(segment.get("path", ""), replace_spaces=False)
+        # Get the path name with forward slashes
+        path_from_segment = normalize_path_to_str(segment.get("path", ""))
+
+        # If the assignment is not found, raise a 404
         if not path_from_segment:
-            abort(404)
+            raise PiggyHTTPException("Assignment not found", status_code=404)
         path, assignment = str(path_from_segment).rsplit("/", 1)
+
+        # If a language is specified, set the assignment path to the translation
         if lang:
             assignment = f"translations/{lang}/{assignment}"
-        return _render_assignment(Path(f"{path}/{assignment}"))
+        return _render_assignment(Path(f"{path}/{assignment}"), extra_metadata=metadata)
 
     # Render the appropriate template
     return Response(
