@@ -7,10 +7,10 @@ from turtleconverter import generate_static_files
 from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate
 from piggy.api import api_routes
 from piggy.api import generate_thumbnail
-from piggy.caching import lru_cache_wrapper, _render_assignment, cache_directory, _render_assignment_wildcard
+from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
-from piggy.utils import normalize_path_to_str
+from piggy.utils import normalize_path_to_str, lru_cache_wrapper
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
@@ -55,6 +55,7 @@ def create_app():
 
     @assignment_routes.route("/<path:path>")
     @assignment_routes.route("/")
+    @lru_cache_wrapper
     def get_assignment_wildcard(path="", lang=""):
         path = path.strip("/")
         path = normalize_path_to_str(path, replace_spaces=True)
@@ -75,6 +76,7 @@ def create_app():
 
     @assignment_routes.route("/<path:path>/lang/<lang>")
     @assignment_routes.route("/<path:path>/lang/")
+    @lru_cache_wrapper
     def get_assignment_wildcard_lang(path, lang=""):
         """Only used when GitHub Pages is used to host the site."""
         return get_assignment_wildcard(path, lang)
@@ -113,6 +115,8 @@ def create_app():
     # Cache all assignment related pages if not in debug mode
     if not app.debug:
         with app.app_context(), app.test_request_context():
-            cache_directory(PIGGYMAP, directory_fn=_render_assignment_wildcard, assignment_fn=_render_assignment)
+            cache_directory(
+                PIGGYMAP, directory_fn=_render_assignment_wildcard, assignment_fn=_render_assignment_wildcard
+            )
 
     return app

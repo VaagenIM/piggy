@@ -27,8 +27,8 @@ if __name__ == "__main__":
 
     log = logging.getLogger("werkzeug")
     log.setLevel(logging.ERROR)
-    os.environ["FLASK_DEBUG"] = "1"
-    os.environ["USE_CACHE"] = "0"
+    os.environ["FLASK_DEBUG"] = "0"
+    os.environ["USE_CACHE"] = "1"
     app = create_app()
     inject_devtools(app)
     __update_piggymap()

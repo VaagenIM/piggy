@@ -2,12 +2,12 @@ from pathlib import Path
 from typing import Callable
 
 from flask import Response, render_template
+from frozendict import frozendict, deepfreeze
 from turtleconverter import mdfile_to_sections, ConversionError
 
 from piggy import (
     ASSIGNMENT_ROUTE,
     MEDIA_ROUTE,
-    PIGGYBANK_FOLDER,
     AssignmentTemplate,
 )
 from piggy.exceptions import PiggyHTTPException
@@ -22,22 +22,28 @@ from piggy.piggybank import (
 from piggy.utils import (
     get_supported_languages,
     generate_summary_from_mkdocs_html,
-    lru_cache_wrapper,
     normalize_path_to_str,
+    lru_cache_wrapper,
 )
 
 
 def cache_directory(
     segment: dict, directory_fn: Callable[[str], Response], assignment_fn: Callable[[Path], Response], _path: str = ""
 ):
+    """Cache the directory of assignments."""
     for key, value in segment.items():
         print(f"Caching: {_path}/{key}")
         directory_fn(f"{_path}/{key}".strip("/"))
         # If we are just above the assignment level, its children will be the assignments
         if len(_path.split("/")) == AssignmentTemplate.ASSIGNMENT.index - 1:
             for assignment, assignment_data in value.get("data", {}).items():
-                assignment_path = f"{_path}/{key}/{assignment}".strip("/")
-                assignment_path = Path(f"{PIGGYBANK_FOLDER}/{assignment_path}.md")
+                assignment_path_obj = segment.get(key, {}).get("data", {}).get(assignment, {}).get("path", Path(""))
+                # assignment_path = str(assignment_path).lstrip(f"{PIGGYBANK_FOLDER}/")
+                assignment_path = str(f"{_path}/{key}/{assignment}")
+                print(f"Caching: {assignment_path}")
+                if not assignment_path_obj.exists():
+                    print(f"Error: No path found for {assignment}")
+                    continue
                 assignment_fn(assignment_path)
                 [
                     assignment_fn(Path(f"{assignment_path.parent}/translations/{lang}/{assignment}.md"))
@@ -54,7 +60,7 @@ def cache_directory(
 
 
 @lru_cache_wrapper
-def _render_assignment(p: Path, extra_metadata: dict = dict) -> Response:
+def _render_assignment(p: Path, extra_metadata: frozendict = frozendict({})) -> Response:
     """Render an assignment from a Path object."""
     if not p.exists():
         raise PiggyHTTPException("Assignment not found", status_code=404)
@@ -82,7 +88,7 @@ def _render_assignment(p: Path, extra_metadata: dict = dict) -> Response:
     render = render_template(
         AssignmentTemplate.ASSIGNMENT.template,
         content=sections,
-        meta={**meta, **get_all_meta_from_path(str(p.parent), PIGGYMAP), **extra_metadata},
+        meta={**meta, **get_all_meta_from_path(str(p.parent), PIGGYMAP)},
         current_language=current_language,
         supported_languages=get_supported_languages(assignment_path=assignment_path),
         media_abspath=f"/{MEDIA_ROUTE}/{p.parent}",
@@ -120,7 +126,10 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
         # If a language is specified, set the assignment path to the translation
         if lang:
             assignment = f"translations/{lang}/{assignment}"
-        return _render_assignment(Path(f"{path}/{assignment}"), extra_metadata=metadata)
+
+        # Frozen metadata
+        hashed_metadata = deepfreeze(metadata)
+        return _render_assignment(Path(f"{path}/{assignment}"), extra_metadata=hashed_metadata)
 
     # Render the appropriate template (if it is not the final level)
     return Response(

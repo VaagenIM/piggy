@@ -20,7 +20,6 @@ def load_meta_json(path: Path):
 
 
 # TODO: these could probably be combined into one function
-@lru_cache_wrapper
 def get_piggymap_segment_from_path(path: str or Path, piggymap: dict) -> tuple[dict, dict]:
     """Get the metadata and segment from a path."""
     path = normalize_path_to_str(path, replace_spaces=True)
@@ -39,7 +38,6 @@ def get_piggymap_segment_from_path(path: str or Path, piggymap: dict) -> tuple[d
 
 
 # TODO: these could probably be combined into one function
-@lru_cache_wrapper
 def get_all_meta_from_path(path: str or Path, piggymap: dict) -> dict:
     """Get all metadata from a path."""
     metadata = dict()
@@ -67,7 +65,6 @@ def get_all_meta_from_path(path: str or Path, piggymap: dict) -> dict:
 
 
 # TODO: these could probably be combined into one function
-@lru_cache_wrapper
 def get_assignment_data_from_path(path: str or Path, piggymap: dict) -> dict:
     """Get the assignment data from a path."""
     path = normalize_path_to_str(path, replace_spaces=True, normalize_url=True, remove_ext=True)
