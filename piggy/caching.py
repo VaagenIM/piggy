@@ -1,8 +1,8 @@
 from pathlib import Path
-from typing import Callable
+from typing import Callable, Optional
 
 from flask import Response, render_template
-from frozendict import frozendict, deepfreeze
+from frozendict import deepfreeze
 from turtleconverter import mdfile_to_sections, ConversionError
 
 from piggy import (
@@ -10,7 +10,7 @@ from piggy import (
     MEDIA_ROUTE,
     AssignmentTemplate,
 )
-from piggy.exceptions import PiggyHTTPException
+from piggy.exceptions import PiggyHTTPException, PiggyErrorException
 from piggy.models import LANGUAGES
 from piggy.piggybank import (
     get_all_meta_from_path,
@@ -28,40 +28,46 @@ from piggy.utils import (
 
 
 def cache_directory(
-    segment: dict, directory_fn: Callable[[str], Response], assignment_fn: Callable[[Path], Response], _path: str = ""
+    segment: dict,
+    fn: Callable[[str, Optional[str]], Response],
+    _path: str = "",
 ):
     """Cache the directory of assignments."""
     for key, value in segment.items():
         print(f"Caching: {_path}/{key}")
-        directory_fn(f"{_path}/{key}".strip("/"))
+        fn(f"{_path}/{key}".strip("/"))
+
         # If we are just above the assignment level, its children will be the assignments
         if len(_path.split("/")) == AssignmentTemplate.ASSIGNMENT.index - 1:
             for assignment, assignment_data in value.get("data", {}).items():
+                # Get the path of the assignment (Path object
                 assignment_path_obj = segment.get(key, {}).get("data", {}).get(assignment, {}).get("path", Path(""))
-                # assignment_path = str(assignment_path).lstrip(f"{PIGGYBANK_FOLDER}/")
+
+                # Set the assignment path to a string with the right url format
                 assignment_path = str(f"{_path}/{key}/{assignment}")
-                print(f"Caching: {assignment_path}")
+
                 if not assignment_path_obj.exists():
-                    print(f"Error: No path found for {assignment}")
-                    continue
-                assignment_fn(assignment_path)
+                    raise PiggyErrorException(f"Assignment not found: {assignment_path}")
+
+                fn(assignment_path, "")
                 [
-                    assignment_fn(Path(f"{assignment_path.parent}/translations/{lang}/{assignment}.md"))
+                    fn(f"{assignment_path}", lang)
                     for lang in LANGUAGES.keys()
-                    if Path(f"{assignment_path.parent}/translations/{lang}/{assignment}.md").exists()
+                    if Path(f"{assignment_path_obj.parent}/translations/{lang}/{assignment}.md").exists()
                 ]
         # If we are at the assignment level, we are done
         elif len(_path.split("/")) > AssignmentTemplate.ASSIGNMENT.index - 1:
             return
         else:
-            cache_directory(
-                value.get("data", {}), directory_fn=directory_fn, assignment_fn=assignment_fn, _path=f"{_path}/{key}"
-            )
+            cache_directory(value.get("data", {}), fn=fn, _path=f"{_path}/{key}")
 
 
 @lru_cache_wrapper
-def _render_assignment(p: Path, extra_metadata: frozendict = frozendict({})) -> Response:
+def _render_assignment(p: Path, extra_metadata=None) -> Response:
     """Render an assignment from a Path object."""
+
+    extra_metadata = dict(extra_metadata)
+
     if not p.exists():
         raise PiggyHTTPException("Assignment not found", status_code=404)
     try:
@@ -79,8 +85,8 @@ def _render_assignment(p: Path, extra_metadata: frozendict = frozendict({})) -> 
     current_language = LANGUAGES.get(lang, "")["name"]
 
     # Get the assignment data
-    assignment_data = get_assignment_data_from_path(assignment_path, PIGGYMAP).copy()
-    meta = assignment_data.get("meta", {}).copy()
+    assignment_data = dict(get_assignment_data_from_path(assignment_path, PIGGYMAP).copy())
+    meta = dict(assignment_data.get("meta", {}).copy())
     if "summary" not in meta:
         meta["summary"] = generate_summary_from_mkdocs_html(sections["body"])
     assignment_data.pop("meta")
@@ -88,7 +94,7 @@ def _render_assignment(p: Path, extra_metadata: frozendict = frozendict({})) -> 
     render = render_template(
         AssignmentTemplate.ASSIGNMENT.template,
         content=sections,
-        meta={**meta, **get_all_meta_from_path(str(p.parent), PIGGYMAP)},
+        meta={**meta, **get_all_meta_from_path(str(p.parent), PIGGYMAP), **extra_metadata},
         current_language=current_language,
         supported_languages=get_supported_languages(assignment_path=assignment_path),
         media_abspath=f"/{MEDIA_ROUTE}/{p.parent}",
@@ -108,6 +114,11 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
     """
     template_type = get_template_from_path(path)
     metadata, segment = get_piggymap_segment_from_path(path, PIGGYMAP)
+
+    # If a piggymap segment is not found, raise a 404
+    if not segment:
+        raise PiggyHTTPException("Page not found", status_code=404)
+
     metadata = {**metadata, **get_all_meta_from_path(path, PIGGYMAP)}
 
     media_abspath = f"/{MEDIA_ROUTE}/{path}" if path else f"/{MEDIA_ROUTE}"
@@ -127,9 +138,8 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
         if lang:
             assignment = f"translations/{lang}/{assignment}"
 
-        # Frozen metadata
-        hashed_metadata = deepfreeze(metadata)
-        return _render_assignment(Path(f"{path}/{assignment}"), extra_metadata=hashed_metadata)
+        # Render the assignment with the metadata (must be deepfrozen to be hashable)
+        return _render_assignment(Path(f"{path}/{assignment}"), extra_metadata=deepfreeze(metadata))
 
     # Render the appropriate template (if it is not the final level)
     return Response(

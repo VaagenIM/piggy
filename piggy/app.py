@@ -19,8 +19,10 @@ os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
 # TODO: Logging
 
 
-def create_app():
+def create_app(debug: bool = False) -> Flask:
     app = Flask(__name__, static_folder="static")
+
+    app.debug = debug
 
     assignment_routes = Blueprint(ASSIGNMENT_ROUTE, __name__, url_prefix=f"/{ASSIGNMENT_ROUTE}")
     media_routes = Blueprint(MEDIA_ROUTE, __name__, url_prefix=f"/{MEDIA_ROUTE}")
@@ -43,6 +45,7 @@ def create_app():
         }
 
     @app.template_global()
+    @lru_cache_wrapper
     def get_template_name_from_index(i: int):
         """Return the template path for the index."""
         # Used to get the name of the template from the index via a path (breadcrumbs)
@@ -88,6 +91,10 @@ def create_app():
         Get a media file from either the media or attachments folder.
         (only in MEDIA_URL_PREFIX or ASSIGNMENT_URL_PREFIX)
         """
+
+        # TODO: This might be slower than necessary, but the demanding fns are cached in the LRU cache
+        #       (This fn cannot be cached as it handles files)
+
         if ["lang", "attachments"] == request.path.split("/")[-3:-1]:
             # If a language is specified, remove it from the wildcard (+ the assignment name)
             # This only happens when the language is specified in the URL and not via cookies
@@ -113,10 +120,8 @@ def create_app():
     app.register_blueprint(api_routes)
 
     # Cache all assignment related pages if not in debug mode
-    if not app.debug:
+    if os.environ.get("USE_CACHE", "1") == "1":
         with app.app_context(), app.test_request_context():
-            cache_directory(
-                PIGGYMAP, directory_fn=_render_assignment_wildcard, assignment_fn=_render_assignment_wildcard
-            )
+            cache_directory(PIGGYMAP, fn=get_assignment_wildcard)
 
     return app
