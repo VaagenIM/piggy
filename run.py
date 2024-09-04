@@ -5,11 +5,11 @@ import subprocess
 def run_tailwind(reload=False):
     cmd = (
         "cd piggy && "
-        f"npx tailwindcss {'--watch' if reload else ''}"
+        "npx tailwindcss "
         "-c tailwind.config.js "
         "-i static/css/tailwind.input.css "
-        "-o static/css/tailwind.css && "
-        "cd .."
+        "-o static/css/tailwind.css "
+        f"{'--watch' if reload else ''} "
     )
     subprocess.Popen(cmd, shell=True)
 
