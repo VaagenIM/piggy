@@ -7,10 +7,10 @@ from turtleconverter import generate_static_files
 from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate
 from piggy.api import api_routes
 from piggy.api import generate_thumbnail
-from piggy.caching import lru_cache_wrapper, _render_assignment, cache_directory, _render_assignment_wildcard
+from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
-from piggy.utils import normalize_path_to_str
+from piggy.utils import normalize_path_to_str, lru_cache_wrapper
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
@@ -19,8 +19,10 @@ os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
 # TODO: Logging
 
 
-def create_app():
+def create_app(debug: bool = False) -> Flask:
     app = Flask(__name__, static_folder="static")
+
+    app.debug = debug
 
     assignment_routes = Blueprint(ASSIGNMENT_ROUTE, __name__, url_prefix=f"/{ASSIGNMENT_ROUTE}")
     media_routes = Blueprint(MEDIA_ROUTE, __name__, url_prefix=f"/{MEDIA_ROUTE}")
@@ -43,6 +45,7 @@ def create_app():
         }
 
     @app.template_global()
+    @lru_cache_wrapper
     def get_template_name_from_index(i: int):
         """Return the template path for the index."""
         # Used to get the name of the template from the index via a path (breadcrumbs)
@@ -55,6 +58,7 @@ def create_app():
 
     @assignment_routes.route("/<path:path>")
     @assignment_routes.route("/")
+    @lru_cache_wrapper
     def get_assignment_wildcard(path="", lang=""):
         path = path.strip("/")
         path = normalize_path_to_str(path, replace_spaces=True)
@@ -75,6 +79,7 @@ def create_app():
 
     @assignment_routes.route("/<path:path>/lang/<lang>")
     @assignment_routes.route("/<path:path>/lang/")
+    @lru_cache_wrapper
     def get_assignment_wildcard_lang(path, lang=""):
         """Only used when GitHub Pages is used to host the site."""
         return get_assignment_wildcard(path, lang)
@@ -86,6 +91,10 @@ def create_app():
         Get a media file from either the media or attachments folder.
         (only in MEDIA_URL_PREFIX or ASSIGNMENT_URL_PREFIX)
         """
+
+        # TODO: This might be slower than necessary, but the demanding fns are cached in the LRU cache
+        #       (This fn cannot be cached as it handles files)
+
         if ["lang", "attachments"] == request.path.split("/")[-3:-1]:
             # If a language is specified, remove it from the wildcard (+ the assignment name)
             # This only happens when the language is specified in the URL and not via cookies
@@ -111,8 +120,8 @@ def create_app():
     app.register_blueprint(api_routes)
 
     # Cache all assignment related pages if not in debug mode
-    if not app.debug:
+    if os.environ.get("USE_CACHE", "1") == "1":
         with app.app_context(), app.test_request_context():
-            cache_directory(PIGGYMAP, directory_fn=_render_assignment_wildcard, assignment_fn=_render_assignment)
+            cache_directory(PIGGYMAP, fn=get_assignment_wildcard)
 
     return app

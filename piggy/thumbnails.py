@@ -1,9 +1,11 @@
+import textwrap
 from pathlib import Path
-from piggy.caching import lru_cache_wrapper
+
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
-import textwrap
+
+from piggy.utils import lru_cache_wrapper
 
 
 # TODO: this is a mess.
