@@ -2,6 +2,7 @@ import json
 import os
 from pathlib import Path
 
+from frozendict.cool import deepfreeze
 from turtleconverter import mdfile_to_sections
 
 from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX
@@ -24,7 +25,7 @@ def load_meta_json(path: Path):
 def get_piggymap_segment_from_path(path: str or Path, piggymap: dict) -> tuple[dict, dict]:
     """Get the metadata and segment from a path."""
     path = normalize_path_to_str(path, replace_spaces=True)
-    segment = dict(piggymap.copy())
+    segment = piggymap.copy()
     meta = segment.get("meta", {})
     for path in path.split("/"):
         if not path:
@@ -39,7 +40,6 @@ def get_piggymap_segment_from_path(path: str or Path, piggymap: dict) -> tuple[d
 
 
 # TODO: these could probably be combined into one function
-@lru_cache_wrapper
 def get_all_meta_from_path(path: str or Path, piggymap: dict) -> dict:
     """Get all metadata from a path."""
     metadata = dict()
@@ -67,7 +67,6 @@ def get_all_meta_from_path(path: str or Path, piggymap: dict) -> dict:
 
 
 # TODO: these could probably be combined into one function
-@lru_cache_wrapper
 def get_assignment_data_from_path(path: str or Path, piggymap: dict) -> dict:
     """Get the assignment data from a path."""
     path = normalize_path_to_str(path, replace_spaces=True, normalize_url=True, remove_ext=True)
@@ -151,12 +150,13 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
     return recursive_sort(piggymap)
 
 
-PIGGYMAP = generate_piggymap(PIGGYBANK_FOLDER)
+# Piggymap must be hashable for sooper dooper speed
+PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
 
 
 # DEVTOOL
 def __update_piggymap():
     global PIGGYMAP
     print("Rebuilding piggymap")
-    PIGGYMAP = generate_piggymap(PIGGYBANK_FOLDER)
+    PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
     print("Piggymap rebuilt")
