@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     tags.forEach(tag => {
         const tagText = tag.getAttribute('data-tag');
-        tag.style.backgroundColor = stringToColor(tagText, '44');
+        tag.style.backgroundColor = stringToColor(tagText, '55');
         tag.style.borderColor = stringToColor(tagText);
     });
 
