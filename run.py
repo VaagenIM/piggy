@@ -1,6 +1,8 @@
 import os
 import subprocess
 
+subprocesses = []
+
 
 def run_tailwind(reload=False):
     cmd = (
@@ -11,7 +13,7 @@ def run_tailwind(reload=False):
         "-o static/css/tailwind.css "
         f"{'--watch' if reload else ''} "
     )
-    subprocess.Popen(cmd, shell=True)
+    subprocesses.append(subprocess.Popen(cmd, shell=True))
 
 
 def checkout_branch(branch):
@@ -35,7 +37,7 @@ if __name__ == "__main__":
         # This code will run only once, not in the reloaded processes
         checkout_branch("test-output")
         run_tailwind(reload=True)  # TODO: This does not keep watching for changes
-        subprocess.Popen('npx livereload "piggy/, piggybank/"', shell=True)
+        subprocesses.append(subprocess.Popen('npx livereload "piggy/, piggybank/"', shell=True))
         print("Houston, we have lift-off! (http://localhost:5001)")
 
     # Import after setting the environment variables for testing
@@ -48,11 +50,16 @@ if __name__ == "__main__":
     __update_piggymap()  # Run on every reload
 
     app.run(port=5001)
+    # Close all subprocesses when the server is stopped
+    for process in subprocesses:
+        process.terminate()
+        process.wait()
 else:
     # Production
     from piggy.app import create_app
 
     # TODO: Re-enable (requires branch to be published) (or a env to pass the branch with a PAT)
     # checkout_branch("output")
-    run_tailwind()  # Runs once to generate the CSS file
+    run_tailwind()  # Run once to generate the CSS file
     app = create_app(debug=os.environ.get("FLASK_DEBUG", False) == "1")
+    # We do not need to close the subprocesses in production since they should not be running continuously
