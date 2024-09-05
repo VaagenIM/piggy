@@ -15,7 +15,7 @@ from turtleconverter import generate_static_files
 links = ["/"]  # A list of links we need to visit and download (including files that are related to the website)
 visited = []  # A list of links we have visited
 media_links = []
-url = "http://localhost:5000"  # The URL of the website we are scraping
+url = "http://127.0.0.1:5000"  # The URL of the website we are scraping
 cname = "https://piggy.iktim.no"  # The CNAME of the website we will push the demo to
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
