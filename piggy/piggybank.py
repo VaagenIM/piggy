@@ -134,8 +134,7 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
         assignment_key = normalize_path_to_str(i, replace_spaces=True, normalize_url=True, remove_ext=True)
         piggymap[assignment_key] = {
             "path": assignment_path,
-            # "assignment_name": match.group(1).strip(),  # unnecessary
-            "level": match.group(2).strip(),
+            "level": match.group(1).strip(),
             "level_name": sections["heading"],
             "heading": sections["heading"],
             "meta": sections["meta"],
