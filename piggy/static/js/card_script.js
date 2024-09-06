@@ -35,16 +35,11 @@ function stringToColor(str, transparency = 'FF') {
     return color;
 }
 
-// fix all the post-load stuff
-document.addEventListener('DOMContentLoaded', function () {
-    const tags = document.querySelectorAll('.tag-box');
+const tags = document.querySelectorAll('.tag-box');
 
-    tags.forEach(tag => {
-        const tagText = tag.getAttribute('data-tag');
-        tag.style.backgroundColor = stringToColor(tagText, '44');
-        tag.style.borderColor = stringToColor(tagText);
-    });
-
-    // checkTagsVisibility();
-    // window.addEventListener('resize', checkTagsVisibility);
+tags.forEach(tag => {
+    const tagText = tag.getAttribute('data-tag');
+    tag.style.backgroundColor = stringToColor(tagText, '88');
+    tag.style.borderColor = stringToColor(tagText);
 });
+
