@@ -1,7 +1,16 @@
+import atexit
 import os
 import subprocess
 
 subprocesses = []
+
+
+@atexit.register
+def cleanup():
+    print("\nSo long and thanks for all the fish!")
+    for p in subprocesses:
+        p.terminate()
+        p.wait()
 
 
 def run_tailwind(reload=False):
@@ -50,10 +59,6 @@ if __name__ == "__main__":
     __update_piggymap()  # Run on every reload
 
     app.run(port=5001)
-    # Close all subprocesses when the server is stopped
-    for process in subprocesses:
-        process.terminate()
-        process.wait()
 else:
     # Production
     from piggy.app import create_app
@@ -62,4 +67,3 @@ else:
     # checkout_branch("output")
     run_tailwind()  # Run once to generate the CSS file
     app = create_app(debug=os.environ.get("FLASK_DEBUG", False) == "1")
-    # We do not need to close the subprocesses in production since they should not be running continuously
