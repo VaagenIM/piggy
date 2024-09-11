@@ -1,7 +1,10 @@
+from hashlib import md5
+from html import unescape
+
 from flask import Blueprint, request
+
 from piggy.thumbnails import create_thumbnail
 from piggy.utils import serve_pil_image
-from hashlib import md5
 
 api_routes = Blueprint("api", __name__, url_prefix="/api")
 
@@ -9,8 +12,7 @@ api_routes = Blueprint("api", __name__, url_prefix="/api")
 @api_routes.route("/generate_thumbnail/<string:text>")
 def generate_thumbnail(text: str, request=request):
     """Generate a thumbnail image with the given text and query parameters."""
-    # get query parameters from the request
-    text = text.replace("_", " ")
+    text = unescape(text)
     bg_color = request.args.get("bg_color", "")
     text_color = request.args.get("text_color", "")
     width = request.args.get("width", 500)
