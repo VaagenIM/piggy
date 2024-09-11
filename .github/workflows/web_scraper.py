@@ -21,10 +21,21 @@ cname = "https://piggy.iktim.no"  # The CNAME of the website we will push the de
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
+def unquote_path(path):
+    new_path = unquote(path)
+    new_path = new_path.replace("&amp;", "&")
+    return new_path
+
+
 def get_html(link):
     """Get the html from the given url, and append the new links to the links list."""
     print(f"Visiting {url}/{link.strip('/')}")
     r = requests.get(f'{url}/{link.strip("/")}', allow_redirects=True)
+
+    visited.append(link)
+
+    if not r.ok:
+        return
 
     # Only prettify if mimetype is text/html
     if "text/html" in r.headers.get("Content-Type"):
@@ -44,8 +55,6 @@ def get_html(link):
         for l in new_media_links:
             if l not in media_links:
                 media_links.append(l)
-
-    visited.append(link)
 
     # TODO: this is a hack. hopefully temporary.
     html = re.sub(r"""/api/generate_thumbnail/([^?]*)(\?[^"]*)""", r"/api/generate_thumbnail/\1.webp", html)
@@ -92,6 +101,8 @@ def download_site():
         for link in links:
             if link not in visited:
                 html = get_html(link)
+                if not html:
+                    continue
                 if link == "/":
                     path = "index.html"
                 else:
@@ -107,12 +118,12 @@ def download_site():
         path = link.strip("/")
         r = requests.get(f"{url}/{path}", allow_redirects=True)
         os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
-        path = unquote(path)
+        path = unquote_path(path)
         # TODO: this is a hack. hopefully temporary.
         if "/api/generate_thumbnail/" in link:
             path = path.rsplit("?")[0] + ".webp"
 
-        if not path:
+        if not path or not r.ok:
             continue
         with open(f"demo/{path}", "wb+") as f:
             f.write(r.content)
