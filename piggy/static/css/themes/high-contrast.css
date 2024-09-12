@@ -82,3 +82,14 @@ description: High contrast theme for maximum visibility.
 [data-theme="high-contrast" ] .piggy-button {
   border-width: var(--piggy-card-border-width);
 }
+
+[data-theme="high-contrast"] .level-count-container {
+  border-radius: 0px;
+  border-width: 4px;
+  border-color: #ffff00;
+  margin-bottom: 5px;
+  color: #fff;
+  background-color: #000;
+  top: 7px;
+  left: 12px;
+}

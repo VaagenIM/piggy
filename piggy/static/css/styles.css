@@ -10,6 +10,7 @@
 }
 
 .card-container {
+  position: relative;
   background: linear-gradient(45deg, var(--piggy-card-start) 0%, var(--piggy-card-end) 100%);
   color: var(--piggy-text-card);
   transition:
@@ -169,6 +170,15 @@
   bottom: 0;
   border-top: 2px solid var(--piggy-text-description);
   padding-top: 10px;
+}
+
+.level-count-container {
+  position: absolute;
+  color: var(--piggy-light);
+  background-color: var(--piggy-main);
+  width: max-content;
+  padding: 5px 10px 5px 10px;
+  border-radius: 2rem;
 }
 
 .piggy-navbar {

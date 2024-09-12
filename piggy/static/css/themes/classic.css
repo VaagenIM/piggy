@@ -50,3 +50,8 @@ description: The classic look of piggy!
   --piggy-text-breadcrumb: var(--piggy-dark);
   --piggy-text-breadcrumb-hover: var(--piggy-dark);
 }
+
+[data-theme="classic"] .level-count-container {
+  color: var(--piggy-dark);
+  background-color: var(--piggy-main);
+}
