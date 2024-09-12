@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link 
-  href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" 
+  href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap"
   rel="stylesheet"
 />
 
@@ -34,12 +34,33 @@
   rel="stylesheet"
 />
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link 
+  href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" 
+  rel="stylesheet"
+>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link 
+  href="https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100..800&display=swap" 
+  rel="stylesheet"
+>
+
 <!-- Styles -->
 
 <link
   href="{{ url_for('static', filename='css/styles.css') }}"
   rel="stylesheet"
 />
+
+{% for theme_file in themes %}
+<link
+  href="{{ url_for('static', filename='css/themes/' + theme_file.path + '.css') }}"
+  rel="stylesheet"
+/>
+{% endfor %}
 
 <style>
   body {

@@ -1,0 +1,13 @@
+<button id="theme-modal-btn">Theme</button>
+
+<div id="theme-modal" class="modal inline">
+  <div class="modal-content grid-cols-1">
+    <h3 class="theme-title">Select a Theme</h3>
+    {% for theme in themes %}
+      <div class="theme-tooltip">
+        <button class="theme-option" data-theme="{{ theme.path }}">{{ theme.name }}</button>
+        <span class="theme-tooltiptext">{{ theme.description }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</div>

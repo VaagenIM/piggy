@@ -62,3 +62,63 @@ def normalize_url_str(text: str) -> str:
     """Removes all special characters from the provided str using the ALLOWED_URL_CHARS_REGEX regex"""
     new_text = "".join(c.group() for c in ALLOWED_URL_CHARS_REGEX.finditer(text))
     return re.sub("_+", "_", new_text)
+
+
+THEME_PATH = "piggy/static/css/themes"
+
+@lru_cache_wrapper
+def get_themes():
+    themes = os.listdir(THEME_PATH)
+
+    theme_output = []
+
+    for theme in themes:
+        theme_data = get_css_metadata(THEME_PATH + f"/{theme}")
+
+        if theme_data is None:
+            continue
+
+        theme_output.append(theme_data)
+    
+    return sorted(theme_output, key=lambda d: d['id'])
+
+
+# quick and dirty state_machine to read CSS metadata
+class ParserState():
+    INIT = 1
+    READ = 2
+
+CSS_META_IDENTIFIER = "/* METADATA"
+
+@lru_cache_wrapper
+def get_css_metadata(path: str):
+    css_metadata = {}
+    css_path = Path(path)
+
+    if css_path.suffix != '.css':
+        return None
+
+    valid = True
+    state = ParserState.INIT
+
+    with css_path.open() as file:
+        while valid:
+            line = file.readline()
+
+            match state:
+                case ParserState.INIT:
+                    if str(line).startswith(CSS_META_IDENTIFIER):
+                        state = ParserState.READ
+                    else:
+                        valid = False
+                case ParserState.READ:
+                    meta_item = line.split(':', 1)
+
+                    if len(meta_item) < 2:
+                        valid = False
+                    else:
+                        css_metadata[meta_item[0].strip()] = meta_item[1].strip()
+
+    css_metadata["path"] = css_path.stem
+
+    return css_metadata

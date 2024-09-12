@@ -1,0 +1,95 @@
+/* METADATA
+id: 4
+name: High Contrast
+description: High contrast theme for maximum visibility.
+*/
+[data-theme="high-contrast"] {
+  --piggy-main: #000000; /* Pure black background */
+  --piggy-light: #ffffff; /* Pure white for high contrast text */
+  --piggy-dark: #ffffff; /* White text for maximum contrast */
+  
+  --piggy-text-main: var(--piggy-light); /* White text for readability */
+  --piggy-shadow-text: rgba(255, 255, 255, 0.1); /* Soft white shadow for text */
+  
+  /* High-contrast card colors with colorful borders */
+  --piggy-card-start: #111; /* Dark gray card background for subtle contrast */
+  --piggy-card-end: #111;
+  --piggy-card-border: #ff00ff; /* Magenta border */
+  --piggy-text-card: #ffffff; /* White text in cards for visibility */
+  
+  --piggy-extra-card-start: #111111; /* Slightly lighter than black for extra cards */
+  --piggy-extra-card-end: #111111;
+  --piggy-extra-card-border: #00ffff; /* Cyan border */
+  --piggy-text-extra-card: #ffffff; /* White text for high contrast */
+  
+  --piggy-resource-card-start: #444444; /* Medium dark gray for resource cards */
+  --piggy-resource-card-end: #444444;
+  --piggy-resource-card-border: #ffff00; /* Yellow border for resource cards */
+  --piggy-text-resource-card: #ffffff; /* White text for clarity */
+
+  --piggy-card-border-width: 4px;
+  
+  /* Navbar and buttons */
+  --piggy-navbar-start: #000000; /* Black navbar */
+  --piggy-navbar-end: #000000; /* Slight gradient for depth */
+  --piggy-text-navbar: #ffffff; /* White navbar text */
+  
+  --piggy-button: #000; /* Bright red-orange button */
+  --piggy-button-hover: #999; /* Brighter hover */
+  --piggy-text-button: #fff; /* White text */
+  
+  --piggy-thumbnail-overlay: rgba(0, 0, 0, 1); /* Light overlay */
+  --piggy-text-thumbnail: var(--piggy-light); /* White text for thumbnails */
+  
+  --piggy-text-tag: #ffffff; /* White text for tags */
+  --piggy-text-description: var(--piggy-light); /* White text for descriptions */
+  --piggy-text-title: var(--piggy-light); /* White text for titles */
+  --piggy-text-breadcrumb: var(--piggy-light); /* White text for breadcrumbs */
+  --piggy-text-breadcrumb-hover: #ffff00; /* Yellow hover for breadcrumb links */
+}
+
+[data-theme="high-contrast" ] .card-container {
+  border-radius: 0px;
+  margin: 5px;
+}
+
+[data-theme="high-contrast" ] .thumbnail-image {
+  border-radius: 0px;
+  border-width: var(--piggy-card-border-width);
+  border-color: #ff0000;
+  background-color: #000;
+  padding: 5px;
+}
+
+[data-theme="high-contrast" ] .thumbnail-text-overlay {
+  border-radius: 0px;
+  border-width: var(--piggy-card-border-width);
+  border-color: #00ff00;
+  position: relative;
+  margin-top: 5px;
+}
+
+[data-theme="high-contrast" ] .tag-box {
+  border-radius: 0px;
+  border-width: var(--piggy-card-border-width);
+  margin-top: 5px;
+}
+
+[data-theme="high-contrast" ] .piggy-navbar {
+  border-bottom: var(--piggy-card-border-width) solid white;
+}
+
+[data-theme="high-contrast" ] .piggy-button {
+  border-width: var(--piggy-card-border-width);
+}
+
+[data-theme="high-contrast"] .level-count-container {
+  border-radius: 0px;
+  border-width: 4px;
+  border-color: #ffff00;
+  margin-bottom: 5px;
+  color: #fff;
+  background-color: #000;
+  top: 7px;
+  left: 12px;
+}
