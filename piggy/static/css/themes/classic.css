@@ -1,0 +1,51 @@
+/* METADATA
+Name: Classic
+Description: The classic look of piggy before front-end update
+*/
+
+[data-theme="classic"] {
+    --piggy-main: #ece4ec; 
+    --piggy-light: #ffffff;
+    --piggy-dark: #000000;
+  
+    --piggy-text-main: var(--piggy-dark);
+    --piggy-shadow-text: rgba(0, 0, 0, 0.1);
+    --piggy-shadow-box: #00000022;
+    --piggy-shadow-glow: rgba(255, 255, 255, 20%);
+    
+    /* More contrast for cards */
+    --piggy-card-start: #d6c8d5;
+    --piggy-card-end: #d6c8d5;
+    --piggy-card-border: #afa7af;
+    --piggy-text-card: #333333;
+    
+    --piggy-extra-card-start: #bfd1e0;
+    --piggy-extra-card-end: #bfd1e0;
+    --piggy-extra-card-border: #afa7af;
+    --piggy-text-extra-card: #333333;
+    
+    --piggy-resource-card-start: #f9fafb;
+    --piggy-resource-card-end: #e9ebed;
+    --piggy-resource-card-border: #afa7af;
+    --piggy-text-resource-card: #333333;
+  
+    --piggy-card-border-width: 1px;
+    
+    /* Navbar and buttons */
+    --piggy-navbar-start: var(--piggy-main);
+    --piggy-navbar-end: #d6c8d5;
+    --piggy-text-navbar: var(--piggy-dark);
+    
+    --piggy-button: #5b434b;
+    --piggy-button-hover: #835f6d;
+    --piggy-text-button: var(--piggy-light);
+    
+    --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7);
+    --piggy-text-thumbnail: var(--piggy-dark);
+  
+    --piggy-text-tag: var(--piggy-dark);
+    --piggy-text-description: var(--piggy-dark);
+    --piggy-text-title: var(--piggy-dark);
+    --piggy-text-breadcrumb: var(--piggy-dark);
+    --piggy-text-breadcrumb-hover: var(--piggy-dark);
+  }

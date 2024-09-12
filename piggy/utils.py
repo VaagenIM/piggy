@@ -62,3 +62,15 @@ def normalize_url_str(text: str) -> str:
     """Removes all special characters from the provided str using the ALLOWED_URL_CHARS_REGEX regex"""
     new_text = "".join(c.group() for c in ALLOWED_URL_CHARS_REGEX.finditer(text))
     return re.sub("_+", "_", new_text)
+
+
+def get_themes():
+    return os.listdir("piggy/static/css/themes")
+
+
+def get_theme_metadata(path: str):
+    theme_data = {}
+
+    return
+    # with theme_path.open() as file:
+    #     return None

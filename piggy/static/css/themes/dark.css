@@ -1,0 +1,55 @@
+/* METADATA
+Name: Dark
+Description: The default dark theme.
+*/
+
+[data-theme="dark"] {
+    /* piggy colors */
+    --piggy-main: rgb(34, 41, 47); /* A darker, more muted tone */
+    --piggy-light: #f0f4f8; /* A soft off-white */
+    --piggy-dark: rgb(51, 61, 71); /* Darker tone with reduced contrast */
+  
+    --piggy-text-main: var(--piggy-light);
+    --piggy-text-light: var(--piggy-light);
+    --piggy-text-dark: var(--piggy-dark);
+    
+    --piggy-shadow-text: #00000029; /* Softer shadows */
+    --piggy-shadow-box: #00000022;
+    --piggy-shadow-glow: rgba(255, 255, 255, 20%);
+  
+    /* piggy card colors */
+    --piggy-card-start: rgba(130, 174, 197, 0.3); /* Soft gradient start */
+    --piggy-card-end: rgba(48, 73, 90, 0.3); /* Softer end gradient */
+    --piggy-card-border: var(--piggy-card-end);
+    --piggy-text-card: var(--piggy-text-light);
+    
+    --piggy-extra-card-start: rgba(27, 82, 153, 0.3); /* Gentle blues */
+    --piggy-extra-card-end: rgba(159, 190, 223, 0.3);
+    --piggy-extra-card-border: var(--piggy-extra-card-start);
+    --piggy-text-extra-card: #ffffff;
+    
+    --piggy-resource-card-start: rgba(212, 195, 98, 0.3); /* Gentle blues */
+    --piggy-resource-card-end: rgba(228, 213, 128, 0.3);
+    --piggy-resource-card-border: var(--piggy-resource-card-start);
+    --piggy-text-resource-card: #4f4f4f; /* A gentle gray for contrast */
+  
+    --piggy-card-border-width: 1px;
+  
+    /* piggy elements */
+    --piggy-navbar-start: rgb(51, 61, 71); /* Calmer, less harsh */
+    --piggy-navbar-end: rgb(51, 61, 71); /* Muted blue-gray tones */
+    --piggy-text-navbar: var(--piggy-light);
+  
+    --piggy-button: #4a6783; /* Muted blue */
+    --piggy-button-hover: #647a95; /* Slightly brighter hover */
+    --piggy-text-button: #ffffff;
+  
+    --piggy-thumbnail-overlay: #00000077; /* Lighter overlay */
+    --piggy-text-thumbnail: var(--piggy-light);
+  
+    --piggy-text-tag: #ffffff;
+    --piggy-text-description: var(--piggy-light);
+    --piggy-text-title: var(--piggy-light);
+    --piggy-text-breadcrumb: var(--piggy-light);
+    --piggy-text-breadcrumb-hover: #a6aaad;
+  }

@@ -1,0 +1,51 @@
+/* METADATA
+Name: Piggy
+Description: Relaxing pastel pink theme.
+*/
+
+[data-theme="piggy"] {
+    --piggy-main: #ffe6e9; /* Soft pink background */
+    --piggy-light: #ffffff; /* White for highlights */
+    --piggy-dark: #4d4d4d; /* Dark gray for text contrast */
+    
+    --piggy-text-main: var(--piggy-dark); /* Dark text for readability */
+    --piggy-shadow-text: rgba(0, 0, 0, 0.1); /* Soft shadow for text */
+    --piggy-shadow-box: #00000011;
+    --piggy-shadow-glow: rgba(0, 0, 0, 0.2);
+    
+    /* Card colors with pink tones */
+    --piggy-card-start: rgba(255, 220, 229, 1); /* Light pink card background */
+    --piggy-card-end: rgba(255, 205, 218, 1); /* Slight gradient to a darker pink */
+    --piggy-card-border: #ff99ac; /* Medium pink border */
+    --piggy-text-card: #4d4d4d; /* Dark text in cards for contrast */
+    
+    --piggy-extra-card-start: #ffccd5; /* A little darker pink for extra cards */
+    --piggy-extra-card-end: #ffb3c1; /* Slight gradient for depth */
+    --piggy-extra-card-border: var(--piggy-extra-card-start);
+    --piggy-text-extra-card: #333333; /* Dark text */
+    
+    --piggy-resource-card-start: #ffe0e6; /* Lighter pink for resource cards */
+    --piggy-resource-card-end: #ffc1cc; /* Soft gradient */
+    --piggy-resource-card-border: var(--piggy-resource-card-start);
+    --piggy-text-resource-card: #333333; /* Dark text */
+  
+    --piggy-card-border-width: 1px;
+    
+    /* Navbar and buttons */
+    --piggy-navbar-start: #ffccd5; /* Soft pink for navbar */
+    --piggy-navbar-end: #ff99ac; /* Slightly darker pink gradient */
+    --piggy-text-navbar: #ffffff; /* White text for contrast */
+    
+    --piggy-button: #ff99ac; /* Pink button */
+    --piggy-button-hover: #ff7381; /* Darker pink on hover */
+    --piggy-text-button: #ffffff; /* White button text */
+    
+    --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7); /* Light overlay */
+    --piggy-text-thumbnail: var(--piggy-dark);
+    
+    --piggy-text-tag: #000000; /* Darker pink for tags */
+    --piggy-text-description: var(--piggy-dark);
+    --piggy-text-title: var(--piggy-dark);
+    --piggy-text-breadcrumb: var(--piggy-dark);
+    --piggy-text-breadcrumb-hover: var(--piggy-dark);
+  }
