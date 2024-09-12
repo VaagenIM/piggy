@@ -66,6 +66,7 @@ def normalize_url_str(text: str) -> str:
 
 THEME_PATH = "piggy/static/css/themes"
 
+@lru_cache_wrapper
 def get_themes():
     themes = os.listdir(THEME_PATH)
 
@@ -89,6 +90,7 @@ class ParserState():
 
 CSS_META_IDENTIFIER = "/* METADATA"
 
+@lru_cache_wrapper
 def get_css_metadata(path: str):
     css_metadata = {}
     css_path = Path(path)
