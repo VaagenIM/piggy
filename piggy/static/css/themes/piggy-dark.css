@@ -51,3 +51,7 @@ description: A dark pink theme.
   --piggy-text-breadcrumb: var(--piggy-dark);
   --piggy-text-breadcrumb-hover: #f0e1e4; /* Hover effect for breadcrumb */
 }
+
+[data-theme="piggy-dark"] body {
+  font-family: "Playpen Sans", sans-serif;
+}

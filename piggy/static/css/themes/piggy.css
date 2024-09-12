@@ -50,3 +50,7 @@ description: Relaxing pastel pink theme.
   --piggy-text-breadcrumb: var(--piggy-dark);
   --piggy-text-breadcrumb-hover: var(--piggy-dark);
 }
+
+[data-theme="piggy"] body {
+  font-family: "Playpen Sans", sans-serif;
+}

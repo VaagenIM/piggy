@@ -31,7 +31,7 @@ description: High contrast theme for maximum visibility.
   
   /* Navbar and buttons */
   --piggy-navbar-start: #000000; /* Black navbar */
-  --piggy-navbar-end: #111111; /* Slight gradient for depth */
+  --piggy-navbar-end: #000000; /* Slight gradient for depth */
   --piggy-text-navbar: #ffffff; /* White navbar text */
   
   --piggy-button: #000; /* Bright red-orange button */
@@ -46,4 +46,39 @@ description: High contrast theme for maximum visibility.
   --piggy-text-title: var(--piggy-light); /* White text for titles */
   --piggy-text-breadcrumb: var(--piggy-light); /* White text for breadcrumbs */
   --piggy-text-breadcrumb-hover: #ffff00; /* Yellow hover for breadcrumb links */
+}
+
+[data-theme="high-contrast" ] .card-container {
+  border-radius: 0px;
+  margin: 5px;
+}
+
+[data-theme="high-contrast" ] .thumbnail-image {
+  border-radius: 0px;
+  border-width: var(--piggy-card-border-width);
+  border-color: #ff0000;
+  background-color: #000;
+  padding: 5px;
+}
+
+[data-theme="high-contrast" ] .thumbnail-text-overlay {
+  border-radius: 0px;
+  border-width: var(--piggy-card-border-width);
+  border-color: #00ff00;
+  position: relative;
+  margin-top: 5px;
+}
+
+[data-theme="high-contrast" ] .tag-box {
+  border-radius: 0px;
+  border-width: var(--piggy-card-border-width);
+  margin-top: 5px;
+}
+
+[data-theme="high-contrast" ] .piggy-navbar {
+  border-bottom: var(--piggy-card-border-width) solid white;
+}
+
+[data-theme="high-contrast" ] .piggy-button {
+  border-width: var(--piggy-card-border-width);
 }
