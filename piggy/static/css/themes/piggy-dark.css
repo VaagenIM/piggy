@@ -1,0 +1,53 @@
+/* METADATA
+id: 3
+name: Piggy (Dark)
+description: A dark pink theme.
+*/
+
+[data-theme="piggy-dark"] {
+  /* Dark theme piggy colors */
+  --piggy-main: #2e1f24; /* Dark reddish-brown background */
+  --piggy-light: #3d2a30; /* Slightly lighter for contrast */
+  --piggy-dark: #f0e1e4; /* Light pink for text contrast */
+
+  --piggy-text-main: var(--piggy-dark); /* Light text for readability */
+  --piggy-shadow-text: rgba(255, 255, 255, 0.1); /* Soft shadow for light text */
+  --piggy-shadow-box: #ffffff11;
+  --piggy-shadow-glow: rgba(255, 255, 255, 0.2);
+
+  /* Card colors with darker pink tones */
+  --piggy-card-start: rgba(74, 53, 61, 1); /* Dark pink card background */
+  --piggy-card-end: rgba(60, 40, 47, 1); /* Gradient to darker pink */
+  --piggy-card-border: #a06672; /* Medium pink border */
+  --piggy-text-card: var(--piggy-dark); /* Light text in cards for contrast */
+
+  --piggy-extra-card-start: #5e3e47; /* Darker pink for extra cards */
+  --piggy-extra-card-end: #4b3039; /* Slight gradient for depth */
+  --piggy-extra-card-border: var(--piggy-extra-card-start);
+  --piggy-text-extra-card: #f0e1e4; /* Light pink text */
+
+  --piggy-resource-card-start: #5c424b; /* Deep pinkish-red for resource cards */
+  --piggy-resource-card-end: #402e35; /* Dark gradient */
+  --piggy-resource-card-border: var(--piggy-resource-card-start);
+  --piggy-text-resource-card: #f0e1e4; /* Light pink text */
+
+  --piggy-card-border-width: 1px;
+
+  /* Navbar and buttons */
+  --piggy-navbar-start: #4b3039; /* Dark pink for navbar */
+  --piggy-navbar-end: #3d2a30; /* Slightly lighter gradient */
+  --piggy-text-navbar: #ffffff; /* White text for contrast */
+
+  --piggy-button: #a06672; /* Dark pink button */
+  --piggy-button-hover: #c0858e; /* Lighter pink on hover */
+  --piggy-text-button: #ffffff; /* White button text */
+
+  --piggy-thumbnail-overlay: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  --piggy-text-thumbnail: var(--piggy-dark); /* Light pink text */
+
+  --piggy-text-tag: #f0e1e4; /* Light pink for tags */
+  --piggy-text-description: var(--piggy-dark);
+  --piggy-text-title: var(--piggy-dark);
+  --piggy-text-breadcrumb: var(--piggy-dark);
+  --piggy-text-breadcrumb-hover: #f0e1e4; /* Hover effect for breadcrumb */
+}

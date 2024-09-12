@@ -1,48 +1,49 @@
 /* METADATA
-Name: High Contrast
-Description: High contrast theme for the best possible visibility.
+id: 4
+name: High Contrast
+description: High contrast theme for maximum visibility.
 */
 [data-theme="high-contrast"] {
-    --piggy-main: #000000; /* Pure black background */
-    --piggy-light: #ffffff; /* Pure white for high contrast text */
-    --piggy-dark: #ffffff; /* White text for maximum contrast */
-    
-    --piggy-text-main: var(--piggy-light); /* White text for readability */
-    --piggy-shadow-text: rgba(255, 255, 255, 0.1); /* Soft white shadow for text */
-    
-    /* High-contrast card colors with colorful borders */
-    --piggy-card-start: #222222; /* Dark gray card background for subtle contrast */
-    --piggy-card-end: #222222;
-    --piggy-card-border: #ff00ff; /* Magenta border */
-    --piggy-text-card: #ffffff; /* White text in cards for visibility */
-    
-    --piggy-extra-card-start: #111111; /* Slightly lighter than black for extra cards */
-    --piggy-extra-card-end: #111111;
-    --piggy-extra-card-border: #00ffff; /* Cyan border */
-    --piggy-text-extra-card: #ffffff; /* White text for high contrast */
-    
-    --piggy-resource-card-start: #444444; /* Medium dark gray for resource cards */
-    --piggy-resource-card-end: #444444;
-    --piggy-resource-card-border: #ffcc00; /* Yellow border for resource cards */
-    --piggy-text-resource-card: #ffffff; /* White text for clarity */
+  --piggy-main: #000000; /* Pure black background */
+  --piggy-light: #ffffff; /* Pure white for high contrast text */
+  --piggy-dark: #ffffff; /* White text for maximum contrast */
   
-    --piggy-card-border-width: 3px;
-    
-    /* Navbar and buttons */
-    --piggy-navbar-start: #000000; /* Black navbar */
-    --piggy-navbar-end: #111111; /* Slight gradient for depth */
-    --piggy-text-navbar: #ffffff; /* White navbar text */
-    
-    --piggy-button: #ff3300; /* Bright red-orange button */
-    --piggy-button-hover: #ff6600; /* Brighter hover */
-    --piggy-text-button: #ffffff; /* White text */
-    
-    --piggy-thumbnail-overlay: rgba(0, 0, 0, 1); /* Light overlay */
-    --piggy-text-thumbnail: var(--piggy-light); /* White text for thumbnails */
-    
-    --piggy-text-tag: #ffffff; /* White text for tags */
-    --piggy-text-description: var(--piggy-light); /* White text for descriptions */
-    --piggy-text-title: var(--piggy-light); /* White text for titles */
-    --piggy-text-breadcrumb: var(--piggy-light); /* White text for breadcrumbs */
-    --piggy-text-breadcrumb-hover: #ffcc00; /* Yellow hover for breadcrumb links */
-  }
+  --piggy-text-main: var(--piggy-light); /* White text for readability */
+  --piggy-shadow-text: rgba(255, 255, 255, 0.1); /* Soft white shadow for text */
+  
+  /* High-contrast card colors with colorful borders */
+  --piggy-card-start: #111; /* Dark gray card background for subtle contrast */
+  --piggy-card-end: #111;
+  --piggy-card-border: #ff00ff; /* Magenta border */
+  --piggy-text-card: #ffffff; /* White text in cards for visibility */
+  
+  --piggy-extra-card-start: #111111; /* Slightly lighter than black for extra cards */
+  --piggy-extra-card-end: #111111;
+  --piggy-extra-card-border: #00ffff; /* Cyan border */
+  --piggy-text-extra-card: #ffffff; /* White text for high contrast */
+  
+  --piggy-resource-card-start: #444444; /* Medium dark gray for resource cards */
+  --piggy-resource-card-end: #444444;
+  --piggy-resource-card-border: #ffff00; /* Yellow border for resource cards */
+  --piggy-text-resource-card: #ffffff; /* White text for clarity */
+
+  --piggy-card-border-width: 4px;
+  
+  /* Navbar and buttons */
+  --piggy-navbar-start: #000000; /* Black navbar */
+  --piggy-navbar-end: #111111; /* Slight gradient for depth */
+  --piggy-text-navbar: #ffffff; /* White navbar text */
+  
+  --piggy-button: #000; /* Bright red-orange button */
+  --piggy-button-hover: #999; /* Brighter hover */
+  --piggy-text-button: #fff; /* White text */
+  
+  --piggy-thumbnail-overlay: rgba(0, 0, 0, 1); /* Light overlay */
+  --piggy-text-thumbnail: var(--piggy-light); /* White text for thumbnails */
+  
+  --piggy-text-tag: #ffffff; /* White text for tags */
+  --piggy-text-description: var(--piggy-light); /* White text for descriptions */
+  --piggy-text-title: var(--piggy-light); /* White text for titles */
+  --piggy-text-breadcrumb: var(--piggy-light); /* White text for breadcrumbs */
+  --piggy-text-breadcrumb-hover: #ffff00; /* Yellow hover for breadcrumb links */
+}

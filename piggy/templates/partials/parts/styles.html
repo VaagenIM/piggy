@@ -43,7 +43,7 @@
 
 {% for theme_file in themes %}
 <link
-  href="{{ url_for('static', filename='css/themes/' + theme_file) }}"
+  href="{{ url_for('static', filename='css/themes/' + theme_file.path + '.css') }}"
   rel="stylesheet"
 />
 {% endfor %}

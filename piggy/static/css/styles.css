@@ -235,9 +235,40 @@
   cursor: pointer;
   border-radius: 5px;
   width: max-content;
+  border: -1px solid black;
+}
+
+.theme-option:hover {
+  background-color: var(--piggy-button-hover);
 }
 
 .theme-title {
   color: #000000;
   font-weight: bold;
+}
+
+.theme-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.theme-tooltip .theme-tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border: 2px solid white;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 0%;
+}
+
+.theme-tooltip:hover .theme-tooltiptext {
+  visibility: visible;
 }
