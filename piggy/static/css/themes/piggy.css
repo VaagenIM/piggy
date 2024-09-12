@@ -41,7 +41,7 @@ description: Relaxing pastel pink theme.
   --piggy-button-hover: #ff7381; /* Darker pink on hover */
   --piggy-text-button: #ffffff; /* White button text */
   
-  --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7); /* Light overlay */
+  --piggy-thumbnail-overlay: rgba(255, 226, 232, 0.7); /* Light overlay */
   --piggy-text-thumbnail: var(--piggy-dark);
   
   --piggy-text-tag: #000000; /* Darker pink for tags */
