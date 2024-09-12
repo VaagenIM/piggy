@@ -10,11 +10,10 @@ from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
-from piggy.utils import normalize_path_to_str, lru_cache_wrapper
+from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes
 
 # Ensure the working directory is the root of the project
-os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
-
+ROOT_PATH = os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
 
 # TODO: Logging
 
@@ -41,6 +40,7 @@ def create_app(debug: bool = False) -> Flask:
             "img_fmt": "webp",
             "github_pages": use_github_pages,  # Used to determine if we should use lang in URL
             "AssignmentTemplate": AssignmentTemplate,
+            "themes": get_themes(),
             "debug": app.debug,
         }
 

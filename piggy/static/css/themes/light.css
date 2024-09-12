@@ -1,0 +1,58 @@
+/* METADATA
+id: 1
+name: Light
+description: The default light theme.
+*/
+
+[data-theme="light"] {
+  /* Softer light mode theme with more contrast */
+  --piggy-main: rgb(225, 225, 225); /* Slightly darker gray for the main background */
+  --piggy-light: #fefefe; /* Almost white, but still soft for highlights */
+  --piggy-dark: rgb(60, 60, 60); /* Darker text for better contrast */
+
+  --piggy-text-main: var(--piggy-dark); /* Darker text for readability */
+  --piggy-shadow-text: rgba(0, 0, 0, 0.1); /* Slightly darker shadow for better separation */
+  --piggy-shadow-box: #00000011;
+  --piggy-shadow-glow: rgba(0, 0, 0, 0.2);
+  
+  /* More contrast for cards */
+  --piggy-card-start: rgba(255, 255, 255, 1); /* Pure white for card background */
+  --piggy-card-end: rgba(245, 245, 245, 1); /* Slight gradient for card background */
+  --piggy-card-border: #999999; /* Light gray border */
+  --piggy-text-card: #333333; /* Darker text in the cards for readability */
+  
+  --piggy-extra-card-start: #cbdbec; /* Pure white for extra cards */
+  --piggy-extra-card-end: #cbdbec; /* Slightly darker gradient to give depth */
+  --piggy-extra-card-border: #999999;
+  --piggy-text-extra-card: #333333;
+  
+  --piggy-resource-card-start: #f9fafb; /* Light but slightly off-white for resource cards */
+  --piggy-resource-card-end: #e9ebed; /* A subtle gray gradient */
+  --piggy-resource-card-border: #999999;
+  --piggy-text-resource-card: #333333; /* Darker gray text for readability */
+  
+  --piggy-card-border-width: 1px;
+
+  /* Navbar and buttons */
+  --piggy-navbar-start: rgb(210, 210, 210); /* Darker light gray navbar */
+  --piggy-navbar-end: rgb(190, 190, 190); /* Slightly darker gradient for more contrast */
+  --piggy-text-navbar: #333333;
+  
+  --piggy-button: #d0d4e8; /* Soft pastel blue button */
+  --piggy-button-hover: #b2b8d4; /* Slightly darker hover */
+  --piggy-text-button: #333333;
+  
+  --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7); /* Softer overlay */
+  --piggy-text-thumbnail: var(--piggy-dark);
+
+  --piggy-text-tag: #4a4a4a;
+  --piggy-text-description: var(--piggy-dark);
+  --piggy-text-title: var(--piggy-dark);
+  --piggy-text-breadcrumb: var(--piggy-dark);
+  --piggy-text-breadcrumb-hover: var(--piggy-dark);
+}
+
+[data-theme="light"] .level-count-container {
+  color: var(--piggy-dark);
+  background-color: var(--piggy-main);
+}

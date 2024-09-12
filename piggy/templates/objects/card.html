@@ -3,6 +3,7 @@
       overlay_text,
       difficulty,
       tags,
+      level_count,
       extra_classes='',
       abspath='',
       item='',
@@ -13,9 +14,12 @@
   )
 %}
   <a
-    href="{{ abspath }}/{{ item }}"
-    class="card-container grid-cols-2 p-3 block {{ extra_classes }}"
+  href="{{ abspath }}/{{ item }}"
+  class="card-container grid-cols-2 p-3 block {{ extra_classes }}"
   >
+  {% if level_count %}
+    <div class="level-count-container text-sm">{{ level_count }} Level{{ 's' if level_count != 1 }}</div>
+  {% endif %}
 
   {% if title %}
     <div class="card-title text-2xl font-extrabold text-center pb-2">
@@ -29,7 +33,7 @@
       src="{{ thumbnail }}"
       alt="{{ thumbnail_alt }}"
     />
-    
+
     {% if difficulty %}
       {% if difficulty > 0 %}
         <div class="thumbnail-text-overlay">

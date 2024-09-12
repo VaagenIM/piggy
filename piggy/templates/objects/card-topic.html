@@ -5,6 +5,7 @@
     abspath = abspath,
     item = item,
     title = data.meta.name,
+    level_count = data.data|length,
     description = data.meta.description,
     thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." + img_fmt,
     thumbnail_alt = "Header image for " ~ item,
