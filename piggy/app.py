@@ -13,7 +13,8 @@ from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes
 
 # Ensure the working directory is the root of the project
-ROOT_PATH = os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
+os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
+
 
 # TODO: Logging
 
