@@ -2,7 +2,10 @@ import os
 from pathlib import Path
 
 from flask import Flask, send_file, request, Blueprint, render_template
+from flask_compress import Compress
+from flask_minify import Minify
 from turtleconverter import generate_static_files
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate
 from piggy.api import api_routes
@@ -24,10 +27,13 @@ def create_app(debug: bool = False) -> Flask:
 
     app.debug = debug
 
+    # The following is necessary for the app to work behind a reverse proxy
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
     assignment_routes = Blueprint(ASSIGNMENT_ROUTE, __name__, url_prefix=f"/{ASSIGNMENT_ROUTE}")
     media_routes = Blueprint(MEDIA_ROUTE, __name__, url_prefix=f"/{MEDIA_ROUTE}")
 
-    generate_static_files(static_folder=os.path.dirname(Path(__file__).absolute()) + "/static")
+    generate_static_files(static_folder=Path(os.path.dirname(Path(__file__).absolute())) / "static")
 
     use_github_pages = os.environ.get("GITHUB_PAGES", False)
 
@@ -124,5 +130,10 @@ def create_app(debug: bool = False) -> Flask:
     if os.environ.get("USE_CACHE", "1") == "1":
         with app.app_context(), app.test_request_context():
             cache_directory(PIGGYMAP, fn=get_assignment_wildcard)
+
+    # Compress and minify the app
+    app.config["COMPRESS_MIMETYPES"] = ["text/css", "application/json", "application/javascript"]
+    Compress(app)
+    Minify(app, go=False)
 
     return app
