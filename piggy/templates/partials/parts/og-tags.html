@@ -26,8 +26,8 @@
 
 {% if meta.thumbnail %}
   {% set ns.image = meta.thumbnail %}
-{% elif level_name and assignment_name %}
-  {% set ns.image = url_for('api.generate_thumbnail', text=level_name, _external=True)+'?c='+assignment_name %}
+{% elif level_name %}
+  {% set ns.image = url_for('api.generate_thumbnail', text=level_name, _external=True)+'?c=' + meta.topic.name %}
 {% elif ns.meta_exists %}
   {% set ns.image = request.host_url.rstrip('/') + media_abspath + '/media/header.' + img_fmt %}
 {% else %}
