@@ -108,6 +108,11 @@ description: High contrast theme for maximum visibility.
   border-radius: 0px;
 }
 
+[data-theme="high-contrast"] .theme-select {
+  border-width: 3px;
+  border-radius: 0px;
+}
+
 [data-theme="high-contrast"] #settings-btn {
   border-radius: 0;
   border-width: 3px;

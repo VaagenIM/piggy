@@ -255,58 +255,6 @@
   padding: 60px 20px 20px 20px; /* Top padding to push content below the close button */
 }
 
-/* Custom Select Container */
-.custom-select-container {
-  position: relative;
-  user-select: none;
-}
-
-/* Selected Item */
-.select-selected {
-  background-color: var(--piggy-button);
-  color: var(--piggy-text-button);
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  position: relative;
-}
-
-/* Arrow Indicator */
-.select-selected:after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  border: 6px solid transparent;
-  border-color: var(--piggy-text-button) transparent transparent transparent;
-  transform: translateY(-50%);
-}
-
-/* Active State */
-.select-selected.select-arrow-active:after {
-  border-color: transparent transparent var(--piggy-text-button) transparent;
-  top: 55%;
-}
-
-/* Items (Options) */
-.select-items {
-  position: absolute;
-  background-color: var(--piggy-light);
-  top: 100%;
-  left: 0;
-  right: 0;
-  border: 1px solid var(--piggy-dark);
-  border-radius: 5px;
-  z-index: 99;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-/* Hide Items */
-.select-hide {
-  display: none;
-}
-
 /* Theme Select */
 .theme-select {
   width: 100%; /* Occupies full width of its container */
@@ -325,6 +273,10 @@
   color: var(--piggy-dark);
 }
 
+.theme-select:hover {
+  background-color: var(--piggy-button-hover);
+}
+
 /* Option Item */
 .theme-option {
   padding: 10px;
@@ -336,22 +288,6 @@
 /* Option Hover */
 .theme-option:hover {
   background-color: var(--piggy-button-hover);
-}
-
-/* Tooltip */
-.theme-option .theme-tooltiptext {
-  visibility: hidden;
-  width: 200px;
-  background-color: var(--piggy-dark);
-  color: var(--piggy-text-button);
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  left: 110%;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1;
 }
 
 /* Show Tooltip on Hover */
