@@ -1,6 +1,10 @@
 :root {
   font-size: 15px;
   transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 .main-container {
@@ -197,7 +201,8 @@
   color: var(--piggy-text-breadcrumb);
 }
 
-#theme-modal-btn {
+/* Settings Button */
+#settings-btn {
   background-color: var(--piggy-button);
   color: var(--piggy-text-button);
   border: 1px solid var(--piggy-dark);
@@ -211,74 +216,145 @@
   margin-left: auto;
 }
 
-#theme-modal-btn:hover {
+#settings-btn:hover {
   background-color: var(--piggy-button-hover);
 }
 
-
-/* MODAL */
-.modal {
-  display: none;
+/* Settings Menu */
+.settings-menu {
   position: fixed;
-  left: 0;
   top: 0;
-  width: 100%;
+  right: 0;
+  width: 0; /* Start closed */
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
-  justify-content: center;
-  align-items: center;
+  background-color: var(--piggy-menu);
+  color: var(--piggy-menu-text);
+  overflow-x: hidden; /* Hide horizontal overflow */
+  transition: width 0.5s;
   z-index: 10000;
+  border-left: 1px solid var(--piggy-button);
 }
 
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  text-align: center;
+/* Open State */
+.settings-menu.open {
+  width: 300px; /* Adjust the width as needed */
 }
 
-.theme-option {
-  margin: 5px;
+/* Close Button */
+.settings-menu .closebtn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 36px;
+  text-decoration: none;
+}
+
+/* Settings Content */
+.settings-content {
+  width: 300px;
+  padding: 60px 20px 20px 20px; /* Top padding to push content below the close button */
+}
+
+/* Custom Select Container */
+.custom-select-container {
+  position: relative;
+  user-select: none;
+}
+
+/* Selected Item */
+.select-selected {
+  background-color: var(--piggy-button);
+  color: var(--piggy-text-button);
   padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Arrow Indicator */
+.select-selected:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  border: 6px solid transparent;
+  border-color: var(--piggy-text-button) transparent transparent transparent;
+  transform: translateY(-50%);
+}
+
+/* Active State */
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent var(--piggy-text-button) transparent;
+  top: 55%;
+}
+
+/* Items (Options) */
+.select-items {
+  position: absolute;
+  background-color: var(--piggy-light);
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 1px solid var(--piggy-dark);
+  border-radius: 5px;
+  z-index: 99;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Hide Items */
+.select-hide {
+  display: none;
+}
+
+/* Theme Select */
+.theme-select {
+  width: 100%; /* Occupies full width of its container */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--piggy-dark);
   background-color: var(--piggy-button);
   color: var(--piggy-text-button);
   cursor: pointer;
-  border-radius: 5px;
-  width: max-content;
-  border: -1px solid black;
+  appearance: none; /* Removes default styles for consistent appearance */
 }
 
+/* Optional: Style the select options */
+.theme-select option {
+  background-color: var(--piggy-light);
+  color: var(--piggy-dark);
+}
+
+/* Option Item */
+.theme-option {
+  padding: 10px;
+  cursor: pointer;
+  color: var(--piggy-dark);
+  position: relative;
+}
+
+/* Option Hover */
 .theme-option:hover {
   background-color: var(--piggy-button-hover);
 }
 
-.theme-title {
-  color: #000000;
-  font-weight: bold;
-}
-
-.theme-tooltip {
-  position: relative;
-  display: inline-block;
-}
-
-.theme-tooltip .theme-tooltiptext {
+/* Tooltip */
+.theme-option .theme-tooltiptext {
   visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
+  width: 200px;
+  background-color: var(--piggy-dark);
+  color: var(--piggy-text-button);
   text-align: center;
-  border: 2px solid white;
   border-radius: 6px;
-  padding: 5px 0;
-
-  /* Position the tooltip */
+  padding: 5px;
   position: absolute;
+  left: 110%;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 1;
-  top: 100%;
-  left: 0%;
 }
 
-.theme-tooltip:hover .theme-tooltiptext {
+/* Show Tooltip on Hover */
+.theme-option:hover .theme-tooltiptext {
   visibility: visible;
 }

@@ -1,31 +1,46 @@
-const modal = document.getElementById('theme-modal');
-const currentTheme = localStorage.getItem('theme') || 'dark'; // Default to dark mode
+// Get elements
+const settingsMenu = document.getElementById('settings-menu');
+const settingsBtn = document.getElementById('settings-btn');
+const closeBtn = document.querySelector('.settings-menu .closebtn');
+const themeSelect = document.getElementById('theme-select');
+const currentTheme = localStorage.getItem('theme') || 'dark';
 
-// Function to close the modal
-const closeModal = () => {
-    modal.style.display = 'none';
-};
+// Function to open the settings menu
+function openSettingsMenu() {
+    settingsMenu.classList.add('open');
+}
+
+// Function to close the settings menu
+function closeSettingsMenu() {
+    settingsMenu.classList.remove('open');
+}
 
 // Set the current theme on page load
 document.documentElement.setAttribute('data-theme', currentTheme);
 
-document.getElementById('theme-modal-btn').addEventListener('click', function() {
-    document.getElementById('theme-modal').style.display = 'block'; // Show the modal
+// Set the selected option based on the current theme
+themeSelect.value = currentTheme;
+
+// Event listener for the Settings button
+settingsBtn.addEventListener('click', openSettingsMenu);
+
+// Event listener for the Close button inside the menu
+closeBtn.addEventListener('click', closeSettingsMenu);
+
+// Event listener for theme selection change
+themeSelect.addEventListener('change', function() {
+    const selectedTheme = themeSelect.value;
+    document.documentElement.setAttribute('data-theme', selectedTheme);
+    localStorage.setItem('theme', selectedTheme); // Save theme to localStorage
 });
 
-// Optional: Close modal if user clicks outside the modal content
+// Close settings menu when clicking outside of it
 window.addEventListener('click', function(event) {
-    if (event.target === modal) {
-        closeModal();
+    if (
+        settingsMenu.classList.contains('open') && // Only if the menu is open
+        !settingsMenu.contains(event.target) && // Click is outside the menu
+        event.target !== settingsBtn // Click is not on the settings button
+    ) {
+        closeSettingsMenu();
     }
-});
-
-const themeButtons = document.querySelectorAll('.theme-option');
-themeButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        const selectedTheme = button.getAttribute('data-theme');
-        document.documentElement.setAttribute('data-theme', selectedTheme);
-        localStorage.setItem('theme', selectedTheme); // Save theme to localStorage
-        document.getElementById('theme-modal').style.display = 'none'; // Hide modal
-    });
 });

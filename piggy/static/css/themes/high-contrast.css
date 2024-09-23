@@ -93,3 +93,22 @@ description: High contrast theme for maximum visibility.
   top: 7px;
   left: 12px;
 }
+
+[data-theme="high-contrast"] .settings-menu {
+  background-color: black;
+  border-left: 4px solid white;
+}
+
+[data-theme="high-contrast"] .theme-select option {
+  background-color: black;
+}
+
+[data-theme="high-contrast"] .theme-select {
+  border-width: 3px;
+  border-radius: 0px;
+}
+
+[data-theme="high-contrast"] #settings-btn {
+  border-radius: 0;
+  border-width: 3px;
+}

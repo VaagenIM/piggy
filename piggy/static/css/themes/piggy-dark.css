@@ -50,6 +50,9 @@ description: A dark pink theme.
   --piggy-text-title: var(--piggy-dark);
   --piggy-text-breadcrumb: var(--piggy-dark);
   --piggy-text-breadcrumb-hover: #f0e1e4; /* Hover effect for breadcrumb */
+
+  --piggy-menu: var(--piggy-light);
+  --piggy-menu-text: var(--piggy-dark);
 }
 
 [data-theme="piggy-dark"] body {

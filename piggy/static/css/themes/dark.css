@@ -53,4 +53,7 @@ description: The default dark theme.
     --piggy-text-title: var(--piggy-light);
     --piggy-text-breadcrumb: var(--piggy-light);
     --piggy-text-breadcrumb-hover: #a6aaad;
+
+    --piggy-menu: var(--piggy-dark);
+    --piggy-menu-text: var(--piggy-light);
   }
