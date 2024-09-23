@@ -49,10 +49,11 @@ description: Relaxing pastel pink theme.
   --piggy-text-title: var(--piggy-dark);
   --piggy-text-breadcrumb: var(--piggy-dark);
   --piggy-text-breadcrumb-hover: var(--piggy-dark);
-}
 
-[data-theme="piggy"] body {
-  font-family: "Playpen Sans", sans-serif;
+  --piggy-font: var("Playpen Sans", sans-serif);
+
+  --piggy-menu: rgb(255, 204, 213);
+  --piggy-menu-text: var(--piggy-dark);
 }
 
 [data-theme="piggy"] .level-count-container {
