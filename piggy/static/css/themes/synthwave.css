@@ -58,7 +58,7 @@ description: Fancy sunset, purple, neon, gradients!
   --piggy-menu-text: var(--piggy-light);
 }
 
-[data-theme="synthwave"] .theme-select {
+[data-theme="synthwave"] .settings-option {
   color: var(--piggy-light);
 }
 

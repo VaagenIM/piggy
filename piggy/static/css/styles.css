@@ -1,10 +1,63 @@
 :root {
   font-size: 15px;
-  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
 
   font-family: "Quicksand", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+}
+
+/* Regular */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('/static/fonts/OpenDyslexic-Regular.woff2') format('woff2'),
+       url('/static/fonts/OpenDyslexic-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: -10px;
+}
+
+/* Italic */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('/static/fonts/OpenDyslexic-Italic.woff2') format('woff2'),
+  url('/static/fonts/OpenDyslexic-Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -10px;
+}
+
+/* Bold */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('/static/fonts/OpenDyslexic-Bold.woff2') format('woff2'),
+       url('/static/fonts/OpenDyslexic-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: -10px;
+}
+
+/* Bold Italic */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('/static/fonts/OpenDyslexic-BoldItalic.woff2') format('woff2'),
+       url('/static/fonts/OpenDyslexic-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -10px;
+}
+
+[data-font-theme="dyslexia"] * {
+  font-family: "Lexend", sans-serif;
+  letter-spacing: 1px;
+  font-weight: 400 !important;
+}
+
+[data-font-theme="default"] * {
+  letter-spacing: 0px;
+}
+
+.transition {
+  transition: 0.4s ease;
 }
 
 .main-container {
@@ -256,9 +309,10 @@
 }
 
 /* Theme Select */
-.theme-select {
+.settings-option {
   width: 100%; /* Occupies full width of its container */
   padding: 10px;
+  margin-bottom: 10px;
   border-radius: 5px;
   border: 1px solid var(--piggy-dark);
   background-color: var(--piggy-button);
@@ -267,14 +321,13 @@
   appearance: none; /* Removes default styles for consistent appearance */
 }
 
-/* Optional: Style the select options */
+.settings-option:hover {
+  background-color: var(--piggy-button-hover);
+}
+
 .theme-select option {
   background-color: var(--piggy-light);
   color: var(--piggy-dark);
-}
-
-.theme-select:hover {
-  background-color: var(--piggy-button-hover);
 }
 
 /* Option Item */

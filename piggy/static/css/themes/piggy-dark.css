@@ -55,10 +55,6 @@ description: A dark pink theme.
   --piggy-menu-text: var(--piggy-dark);
 }
 
-[data-theme="piggy-dark"] body {
-  font-family: "Playpen Sans", sans-serif;
-}
-
 [data-theme="piggy-dark"] .level-count-container {
   color: var(--piggy-light);
   background-color: var(--piggy-dark);

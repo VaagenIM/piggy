@@ -1,6 +1,6 @@
-<h3 class="settings-title">Select a Theme</h3>
+<h3 class="settings-title">Theme:</h3>
 <div class="select-container">
-    <select id="theme-select" class="theme-select">
+    <select id="theme-select" class="settings-option theme-select">
         {% for theme in themes %}
         <option class="select-option" value="{{ theme.path }}">{{ theme.name }}</option>
         {% endfor %}

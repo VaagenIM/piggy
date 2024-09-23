@@ -91,7 +91,7 @@ description: High contrast theme for maximum visibility.
   color: #fff;
   background-color: #000;
   top: 7px;
-  left: 12px;
+  left: 11px;
 }
 
 [data-theme="high-contrast"] .settings-menu {
@@ -103,17 +103,18 @@ description: High contrast theme for maximum visibility.
   background-color: black;
 }
 
-[data-theme="high-contrast"] .theme-select {
-  border-width: 3px;
-  border-radius: 0px;
-}
-
-[data-theme="high-contrast"] .theme-select {
+[data-theme="high-contrast"] .settings-option {
   border-width: 3px;
   border-radius: 0px;
 }
 
 [data-theme="high-contrast"] #settings-btn {
   border-radius: 0;
+  border-width: 3px;
+}
+
+[data-theme="high-contrast"] .tag-box {
+  background-color: transparent !important;
+  border-color: white !important;
   border-width: 3px;
 }
