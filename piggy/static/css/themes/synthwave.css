@@ -53,4 +53,15 @@ description: Fancy sunset, purple, neon, gradients!
   --piggy-text-title: #ffcc66; /* Golden for titles */
   --piggy-text-breadcrumb: var(--piggy-text-main);
   --piggy-text-breadcrumb-hover: #ffd27f; /* Soft golden yellow for hover */
+
+  --piggy-menu: var(--piggy-dark);
+  --piggy-menu-text: var(--piggy-light);
+}
+
+[data-theme="synthwave"] .settings-option {
+  color: var(--piggy-light);
+}
+
+[data-theme="synthwave"] #settings-btn {
+  color: var(--piggy-light);
 }

@@ -49,6 +49,11 @@ description: The classic look of piggy!
   --piggy-text-title: var(--piggy-dark);
   --piggy-text-breadcrumb: var(--piggy-dark);
   --piggy-text-breadcrumb-hover: var(--piggy-dark);
+
+  --piggy-menu: var(--piggy-light);
+  --piggy-menu-text: var(--piggy-dark);
+
+  transition: 1s ease;
 }
 
 [data-theme="classic"] .level-count-container {

@@ -50,9 +50,16 @@ description: The default light theme.
   --piggy-text-title: var(--piggy-dark);
   --piggy-text-breadcrumb: var(--piggy-dark);
   --piggy-text-breadcrumb-hover: var(--piggy-dark);
+
+  --piggy-menu: var(--piggy-light);
+  --piggy-menu-text: var(--piggy-dark);
 }
 
 [data-theme="light"] .level-count-container {
   color: var(--piggy-dark);
   background-color: var(--piggy-main);
+}
+
+[data-theme="light"] .settings-option {
+  color: var(--piggy-dark);
 }

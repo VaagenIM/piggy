@@ -1,6 +1,63 @@
 :root {
   font-size: 15px;
-  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+/* Regular */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('/static/fonts/OpenDyslexic-Regular.woff2') format('woff2'),
+       url('/static/fonts/OpenDyslexic-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: -10px;
+}
+
+/* Italic */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('/static/fonts/OpenDyslexic-Italic.woff2') format('woff2'),
+  url('/static/fonts/OpenDyslexic-Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -10px;
+}
+
+/* Bold */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('/static/fonts/OpenDyslexic-Bold.woff2') format('woff2'),
+       url('/static/fonts/OpenDyslexic-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: -10px;
+}
+
+/* Bold Italic */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('/static/fonts/OpenDyslexic-BoldItalic.woff2') format('woff2'),
+       url('/static/fonts/OpenDyslexic-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -10px;
+}
+
+[data-font-theme="dyslexia"] * {
+  font-family: "Lexend", sans-serif;
+  letter-spacing: 1px;
+  font-weight: 400 !important;
+}
+
+[data-font-theme="default"] * {
+  letter-spacing: 0px;
+}
+
+.transition {
+  transition: 0.4s ease;
 }
 
 .main-container {
@@ -197,7 +254,8 @@
   color: var(--piggy-text-breadcrumb);
 }
 
-#theme-modal-btn {
+/* Settings Button */
+#settings-btn {
   background-color: var(--piggy-button);
   color: var(--piggy-text-button);
   border: 1px solid var(--piggy-dark);
@@ -211,74 +269,81 @@
   margin-left: auto;
 }
 
-#theme-modal-btn:hover {
+#settings-btn:hover {
   background-color: var(--piggy-button-hover);
 }
 
-
-/* MODAL */
-.modal {
-  display: none;
+/* Settings Menu */
+.settings-menu {
   position: fixed;
-  left: 0;
   top: 0;
-  width: 100%;
+  right: 0;
+  width: 0; /* Start closed */
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
-  justify-content: center;
-  align-items: center;
+  background-color: var(--piggy-menu);
+  color: var(--piggy-menu-text);
+  overflow-x: hidden; /* Hide horizontal overflow */
+  transition: width 0.5s;
   z-index: 10000;
+  border-left: 1px solid var(--piggy-button);
 }
 
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  text-align: center;
+/* Open State */
+.settings-menu.open {
+  width: 300px; /* Adjust the width as needed */
 }
 
-.theme-option {
-  margin: 5px;
+/* Close Button */
+.settings-menu .closebtn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 36px;
+  text-decoration: none;
+}
+
+/* Settings Content */
+.settings-content {
+  width: 300px;
+  padding: 60px 20px 20px 20px; /* Top padding to push content below the close button */
+}
+
+/* Theme Select */
+.settings-option {
+  width: 100%; /* Occupies full width of its container */
   padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--piggy-dark);
   background-color: var(--piggy-button);
   color: var(--piggy-text-button);
   cursor: pointer;
-  border-radius: 5px;
-  width: max-content;
-  border: -1px solid black;
+  appearance: none; /* Removes default styles for consistent appearance */
 }
 
+.settings-option:hover {
+  background-color: var(--piggy-button-hover);
+}
+
+.theme-select option {
+  background-color: var(--piggy-light);
+  color: var(--piggy-dark);
+}
+
+/* Option Item */
+.theme-option {
+  padding: 10px;
+  cursor: pointer;
+  color: var(--piggy-dark);
+  position: relative;
+}
+
+/* Option Hover */
 .theme-option:hover {
   background-color: var(--piggy-button-hover);
 }
 
-.theme-title {
-  color: #000000;
-  font-weight: bold;
-}
-
-.theme-tooltip {
-  position: relative;
-  display: inline-block;
-}
-
-.theme-tooltip .theme-tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border: 2px solid white;
-  border-radius: 6px;
-  padding: 5px 0;
-
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  top: 100%;
-  left: 0%;
-}
-
-.theme-tooltip:hover .theme-tooltiptext {
+/* Show Tooltip on Hover */
+.theme-option:hover .theme-tooltiptext {
   visibility: visible;
 }
