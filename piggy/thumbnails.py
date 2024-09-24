@@ -31,7 +31,7 @@ def create_thumbnail(
     size = None
 
     # Get the font path relative to this file
-    font_path = Path(__file__).parent / "resources/fonts/Lato-Bold.ttf"
+    font_path = Path(__file__).parent / "static/fonts/Lato-Bold.ttf"
     font = PIL.ImageFont.truetype(font_path.as_posix(), font_size)
     recursions = 0
     while (
