@@ -1,10 +1,17 @@
 :root {
-  font-size: 15px;
+  --piggy-font-size: var(15px);
+  --piggy-text-hyperlink: #FF5733;
+
+  font-size: var(--piggy-font-size);
 
   font-family: "Quicksand", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+/************************\
+|*     FONT IMPORTS     *|
+\************************/
 
 /* Regular */
 @font-face {
@@ -60,13 +67,21 @@
   font-style: normal;
 }
 
-[data-font-theme="dyslexia"] * {
+[data-font-theme="dyslexia"] *:not(code *, code) {
   font-family: "Lexia", "Comic Sans MS", sans-serif;
   letter-spacing: 0.5px;
 }
 
 [data-font-theme="default"] * {
   letter-spacing: 0px;
+}
+
+/*****************************\
+|*     ELEMENT OVERRIDES     *|
+\*****************************/
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--piggy-text-main) !important;
 }
 
 .transition {
@@ -77,6 +92,7 @@
   background-color: var(--piggy-main);
   color: var(--piggy-text-main);
   text-shadow: var(--piggy-shadow-text) 3px 3px 5px;
+  font-size: var(--piggy-font-size);
 }
 
 .card-container {
@@ -257,15 +273,18 @@
 
 .piggy-breadcrumb {
   color: var(--piggy-text-breadcrumb);
+  font-size: var(--piggy-font-size);
 }
 
 .piggy-breadcrumb:hover {
   color: var(--piggy-text-breadcrumb-hover);
   transition: color 0.2s ease;
+  font-size: var(--piggy-font-size);
 }
 
 .piggy-breadcrumb-no-hover {
   color: var(--piggy-text-breadcrumb);
+  font-size: var(--piggy-font-size);
 }
 
 /* Settings Button */
@@ -357,4 +376,12 @@
 /* Show Tooltip on Hover */
 .theme-option:hover .theme-tooltiptext {
   visibility: visible;
+}
+
+/****************************\
+|*     MARKDOWN STYLING     *|
+\****************************/
+
+.md-container a {
+  color: var(--piggy-text-hyperlink) !important;
 }

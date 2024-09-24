@@ -118,3 +118,8 @@ description: High contrast theme for maximum visibility.
   border-color: white !important;
   border-width: 3px;
 }
+
+[data-theme="high-contrast"] .md-container details {
+  border-radius: 0;
+  border-width: 3px;
+}

@@ -1,17 +1,15 @@
-<head>
-  {% include "partials/common_head.html" %}
+{% extends "layout.html" %}
 
+{% block head %}
+  {{ super() }}
   {{ content.head | safe }}
-
   <style>
     a {
       color: cyan;
     }
 
-    header {
-      background-color: #333;
-      color: white;
-      padding: 1em;
+    .assignment-heading {
+      margin-top: 1em;
       text-align: center;
     }
 
@@ -47,55 +45,17 @@
       margin: 1.6em 0 -0.5em;
       margin-block-end: initial;
     }
+
+    .md-content {
+      font-size: 1rem !important;
+    }
   </style>
-</head>
-<body>
-  <header>
-    <h1 class="text-2xl">{{ content.heading }}</h1>
-    {% if content.meta.difficulty %}
-      {% if content.meta.difficulty > 50 %}
-        Difficulty: UMULIG!!!
-      {% else %}
-        <p>Difficulty: {{ '⭐' * content.meta.difficulty }}</p>
-      {% endif %}
-    {% endif %}
+{% endblock %}
 
-    {# Breadcrumbs #}
-    {# TODO: Requires custom styling to not interfere with tailwind(?) #}
-    {# {% include "partials/parts/breadcrumbs.html" %} #}
+{% block header %}
+  <h1 class="text-2xl assignment-heading">{{ content.heading }}</h1>
+{% endblock %}
 
-    {# Level select #}
-    <div id="level-select">
-      Level select:
-      {% for link, assignment in meta.get(AssignmentTemplate.LEVELS_DATA.name).data.items() %}
-        {% if assignment.level | int == level | int %}
-          {{ assignment.level }}
-        {% else %}
-          <a href="{{ link }}">{{ assignment.level }}</a>
-        {% endif %}
-      {% endfor %}
-    </div>
-
-    <div>
-      {# Language select #}
-      <div>Current language: {{ current_language }}</div>
-      {% for lang, val in supported_languages.items() %}
-        <a
-          {% if github_pages %}
-            href="{{ request.path.split('/lang/')[0] }}{{ '/lang/' + lang if lang else '' }}"
-          {% else %}
-            onclick="document.cookie = 'lang={{ lang }}'; location.reload();"
-          {% endif %}
-          >{{ val.name }}</a
-        >
-      {% endfor %}
-    </div>
-
-    <a href="/">Home</a>
-  </header>
-  <main>{{ content.body | safe }}</main>
-
-  {% if debug %}
-    {% include "partials/devtools/_devtools.html" %}
-  {% endif %}
-</body>
+{% block base %}
+  {{ content.body | safe }}
+{% endblock %}
