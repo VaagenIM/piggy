@@ -46,10 +46,23 @@
   letter-spacing: -10px;
 }
 
+@font-face {
+  font-family: 'Lexia';
+  src: url('/static/fonts/LEXIA___.ttf') format('TrueType');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lexia';
+  src: url('/static/fonts/LEXIB___.ttf') format('TrueType');
+  font-weight: 700;
+  font-style: normal;
+}
+
 [data-font-theme="dyslexia"] * {
-  font-family: "Lexend", sans-serif;
-  letter-spacing: 1px;
-  font-weight: 400 !important;
+  font-family: "Lexia", "Comic Sans MS", sans-serif;
+  letter-spacing: 0.5px;
 }
 
 [data-font-theme="default"] * {
@@ -248,6 +261,7 @@
 
 .piggy-breadcrumb:hover {
   color: var(--piggy-text-breadcrumb-hover);
+  transition: color 0.2s ease;
 }
 
 .piggy-breadcrumb-no-hover {
@@ -263,10 +277,7 @@
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-  position: relative;
-  display: block;
-  margin-right: 0;
-  margin-left: auto;
+  flex-shrink: 0;
 }
 
 #settings-btn:hover {
