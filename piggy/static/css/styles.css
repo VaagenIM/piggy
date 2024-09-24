@@ -261,6 +261,7 @@
 
 .piggy-breadcrumb:hover {
   color: var(--piggy-text-breadcrumb-hover);
+  transition: color 0.2s ease;
 }
 
 .piggy-breadcrumb-no-hover {
@@ -276,10 +277,7 @@
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-  position: relative;
-  display: block;
-  margin-right: 0;
-  margin-left: auto;
+  flex-shrink: 0;
 }
 
 #settings-btn:hover {
