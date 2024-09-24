@@ -46,10 +46,23 @@
   letter-spacing: -10px;
 }
 
+@font-face {
+  font-family: 'Lexia';
+  src: url('/static/fonts/LEXIA___.ttf') format('TrueType');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lexia';
+  src: url('/static/fonts/LEXIB___.ttf') format('TrueType');
+  font-weight: 700;
+  font-style: normal;
+}
+
 [data-font-theme="dyslexia"] * {
-  font-family: "Lexend", sans-serif;
-  letter-spacing: 1px;
-  font-weight: 400 !important;
+  font-family: "Lexia", "Comic Sans MS", sans-serif;
+  letter-spacing: 0.5px;
 }
 
 [data-font-theme="default"] * {
