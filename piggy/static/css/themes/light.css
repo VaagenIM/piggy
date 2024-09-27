@@ -11,7 +11,7 @@ description: The default light theme.
   --piggy-dark: rgb(60, 60, 60); /* Darker text for better contrast */
 
   --piggy-text-main: var(--piggy-dark); /* Darker text for readability */
-  --piggy-shadow-text: rgba(0, 0, 0, 0.1); /* Slightly darker shadow for better separation */
+  --piggy-shadow-text: rgba(0, 0, 0, 0.0); /* No text shadow */
   --piggy-shadow-box: #00000011;
   --piggy-shadow-glow: rgba(0, 0, 0, 0.2);
   
@@ -53,6 +53,9 @@ description: The default light theme.
 
   --piggy-menu: var(--piggy-light);
   --piggy-menu-text: var(--piggy-dark);
+
+  --piggy-text-hyperlink: #316997;
+  --piggy-text-hyperlink-hover: #316997;
 }
 
 [data-theme="light"] .level-count-container {
@@ -61,5 +64,44 @@ description: The default light theme.
 }
 
 [data-theme="light"] .settings-option {
+  color: var(--piggy-dark);
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+[data-theme="light"] .md-content .admonition-title {
+  font-size: 0.8rem !important;
+}
+
+[data-theme="light"] .md-content code:not(.md-code__content) {
+  background-color: #c7c7c7;
+  color: #333;
+}
+
+[data-theme="light"] .md-content .md-code__content {
+  filter: invert() hue-rotate(230deg) contrast(1.45);
+}
+
+[data-theme="light"] .md-content table {
+  border: 1px solid #555 !important;
+}
+
+[data-theme="light"] .md-content th {
+  background-color: #9fbfda;
+}
+
+[data-theme="light"] .md-content tr:nth-child(odd) td {
+  background-color: #e9e9e9;
+}
+
+[data-theme="light"] .md-content tr:nth-child(even) td {
+  background-color: #dadada;
+}
+
+[data-theme="light"] .md-content details,
+[data-theme="light"] .md-content .tip,
+[data-theme="light"] .md-content .admonition {
+  background-color: #e0e0e0;
   color: var(--piggy-dark);
 }

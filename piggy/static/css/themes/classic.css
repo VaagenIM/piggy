@@ -53,7 +53,7 @@ description: The classic look of piggy!
   --piggy-menu: var(--piggy-light);
   --piggy-menu-text: var(--piggy-dark);
 
-  transition: 1s ease;
+  --piggy-text-hyperlink: #316997;
 }
 
 [data-theme="classic"] .level-count-container {

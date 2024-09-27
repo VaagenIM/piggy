@@ -10,7 +10,7 @@ description: Relaxing pastel pink theme.
   --piggy-dark: #4d4d4d; /* Dark gray for text contrast */
   
   --piggy-text-main: var(--piggy-dark); /* Dark text for readability */
-  --piggy-shadow-text: rgba(0, 0, 0, 0.1); /* Soft shadow for text */
+  --piggy-shadow-text: rgba(0, 0, 0, 0.0); /* No text shadow */
   --piggy-shadow-box: #00000011;
   --piggy-shadow-glow: rgba(0, 0, 0, 0.2);
   
@@ -54,9 +54,50 @@ description: Relaxing pastel pink theme.
 
   --piggy-menu: rgb(255, 204, 213);
   --piggy-menu-text: var(--piggy-dark);
+
+  --piggy-text-hyperlink: #316997;
 }
 
 [data-theme="piggy"] .level-count-container {
   color: var(--piggy-dark);
   background-color: var(--piggy-button);
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+[data-theme="piggy"] .md-content .admonition-title {
+  font-size: 0.8rem !important;
+}
+
+[data-theme="piggy"] .md-content code:not(.md-code__content) {
+  background-color: #c7c7c7;
+  color: #333;
+}
+
+[data-theme="piggy"] .md-content .md-code__content {
+  filter: invert() contrast(1.2) hue-rotate(275deg);
+}
+
+[data-theme="piggy"] .md-content table {
+  border: 1px solid #555 !important;
+}
+
+[data-theme="piggy"] .md-content th {
+  background-color: #ffafdb;
+}
+
+[data-theme="piggy"] .md-content tr:nth-child(odd) td {
+  background-color: #ffddf0;
+}
+
+[data-theme="piggy"] .md-content tr:nth-child(even) td {
+  background-color: #ffcce8;
+}
+
+[data-theme="piggy"] .md-content details,
+[data-theme="piggy"] .md-content .tip,
+[data-theme="piggy"] .md-content .admonition {
+  background-color: #e0e0e0;
+  color: var(--piggy-dark);
 }

@@ -3,53 +3,6 @@
 {% block head %}
   {{ super() }}
   {{ content.head | safe }}
-  <style>
-    a {
-      color: cyan;
-    }
-
-    .assignment-heading {
-      margin-top: 1em;
-      text-align: center;
-    }
-
-    .admonition p:nth-child(2),
-    details p:nth-child(2) {
-      margin-top: 0.6rem;
-    }
-
-    .admonition p:nth-child(2),
-    details p:nth-child(2) {
-      margin-bottom: 0.6rem;
-    }
-
-    .md-container blockquote,
-    .md-container dl,
-    .md-container dd,
-    .md-container h1,
-    .md-container h2,
-    .md-container h3,
-    .md-container h4,
-    .md-container h5,
-    .md-container h6,
-    .md-container hr,
-    .md-container figure,
-    .md-container p,
-    .md-container pre {
-      /* Set to standard value */
-      margin: initial;
-      padding: initial;
-    }
-
-    .md-content h3 {
-      margin: 1.6em 0 -0.5em;
-      margin-block-end: initial;
-    }
-
-    .md-content {
-      font-size: 1rem !important;
-    }
-  </style>
 {% endblock %}
 
 {% block header %}

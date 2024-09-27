@@ -1,6 +1,5 @@
 :root {
   --piggy-font-size: var(15px);
-  --piggy-text-hyperlink: #FF5733;
 
   font-size: var(--piggy-font-size);
 
@@ -69,7 +68,7 @@
 
 [data-font-theme="dyslexia"] *:not(code *, code) {
   font-family: "Lexia", "Comic Sans MS", sans-serif;
-  letter-spacing: 0.5px;
+  letter-spacing: 0px;
 }
 
 [data-font-theme="default"] * {
@@ -384,4 +383,69 @@ h1, h2, h3, h4, h5, h6 {
 
 .md-container a {
   color: var(--piggy-text-hyperlink) !important;
+}
+
+.md-container a:hover {
+  color: var(--piggy-text-hyperlink-hover) !important;
+  text-decoration: underline;
+  transition: 0.2s;
+}
+
+.assignment-heading {
+  margin-top: 1em;
+  text-align: center;
+}
+
+.admonition p:nth-child(2),
+details p:nth-child(2) {
+  margin-top: 0.6rem;
+}
+
+.admonition p:nth-child(2),
+details p:nth-child(2) {
+  margin-bottom: 0.6rem;
+}
+
+.md-container blockquote,
+.md-container dl,
+.md-container dd,
+.md-container h1,
+.md-container h2,
+.md-container h3,
+.md-container h4,
+.md-container h5,
+.md-container h6,
+.md-container hr,
+.md-container figure,
+.md-container p,
+.md-container pre {
+  /* Set to standard value */
+  margin: initial;
+  padding: initial;
+}
+
+.md-content h3 {
+  margin: 1.6em 0 -0.5em;
+  margin-block-end: initial;
+}
+
+.md-content p {
+  font-size: 1rem !important;
+  margin-bottom: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.md-content ul {
+  font-size: 1rem !important;
+}
+
+.md-content code,
+.md-content summary,
+.md-content table {
+  font-size: 0.8rem !important;
+  line-height: 1rem;
+}
+
+.md-content code {
+  border-radius: 5px !important;
 }

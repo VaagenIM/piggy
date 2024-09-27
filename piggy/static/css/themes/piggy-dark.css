@@ -11,7 +11,7 @@ description: A dark pink theme.
   --piggy-dark: #f0e1e4; /* Light pink for text contrast */
 
   --piggy-text-main: var(--piggy-dark); /* Light text for readability */
-  --piggy-shadow-text: rgba(255, 255, 255, 0.1); /* Soft shadow for light text */
+  --piggy-shadow-text: rgba(255, 255, 255, 0.025); /* Soft shadow for light text */
   --piggy-shadow-box: #ffffff11;
   --piggy-shadow-glow: rgba(255, 255, 255, 0.2);
 
@@ -53,6 +53,8 @@ description: A dark pink theme.
 
   --piggy-menu: var(--piggy-light);
   --piggy-menu-text: var(--piggy-dark);
+
+  --piggy-text-hyperlink: #407eb1;
 }
 
 [data-theme="piggy-dark"] .level-count-container {
