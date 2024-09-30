@@ -82,14 +82,26 @@ description: High contrast theme for maximum visibility.
   margin-top: 5px;
 }
 
-[data-theme="high-contrast"] .piggy-navbar, 
-[data-theme="high-contrast"] #level-container {
+[data-theme="high-contrast"] .piggy-navbar {
   border-bottom: var(--piggy-card-border-width) solid white;
 }
 
-[data-theme="high-contrast"] .piggy-button,
-[data-theme="high-contrast"] .assignment-level {
+[data-theme="high-contrast"] #meta-container {
+  border-bottom: var(--piggy-card-border-width) solid white;
+}
+
+[data-theme="high-contrast"] .piggy-button {
   border-width: var(--piggy-card-border-width);
+  border-radius: 0px !important;
+}
+
+[data-theme="high-contrast"] .assignment-level {
+  border-width: 2px;
+  border-radius: 0px !important;
+}
+
+[data-theme="high-contrast"] .dropbtn {
+  border-width: 3px !important;
   border-radius: 0px !important;
 }
 
@@ -97,7 +109,6 @@ description: High contrast theme for maximum visibility.
   border-radius: 0px !important;
   border-width: 0px;
 }
-
 
 [data-theme="high-contrast"] .level-count-container {
   border-radius: 0px;
@@ -133,6 +144,45 @@ description: High contrast theme for maximum visibility.
   background-color: transparent !important;
   border-color: white !important;
   border-width: 3px;
+}
+
+/* Tooltip Text */
+[data-theme="high-contrast"] #level-container .nav-tooltip {
+  border-radius: 0px;
+  border-color: white;
+  border-width: 1px;
+}
+
+/* Tooltip Text */
+[data-theme="high-contrast"] #level-container .nav-tooltip::after {
+  border-width: 0;
+}
+
+[data-theme="high-contrast"] #language-container .dropbtn {
+  border-radius: 0px;
+  border-width: 1px;
+  background-color: black;
+}
+
+[data-theme="high-contrast"] #language-container .language-dropdown {
+  border-radius: 0px;
+  border-width: 1px;
+  background-color: black;
+}
+
+[data-theme="high-contrast"] #language-container .language-dropdown a {
+  border-bottom: 1px solid white;
+}
+
+[data-theme="high-contrast"] #language-container .language-dropdown a:last-child {
+  border-bottom: none;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+[data-theme="high-contrast"] #language-container .language-dropdown a:first-child {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
 }
 
 /******************************\
