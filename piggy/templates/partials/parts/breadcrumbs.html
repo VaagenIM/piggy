@@ -1,6 +1,8 @@
 <nav class="piggy-navbar flex items-center justify-between px-3 py-2">
   {# Breadcrumbs elements #}
-  <ol class="flex flex-wrap items-center space-x-1 md:space-x-2 flex-1 overflow-x-auto">
+  <ol
+    class="flex flex-wrap items-center space-x-1 md:space-x-2 flex-1 overflow-x-auto"
+  >
     {# Home element #}
     <li class="inline-flex items-center">
       <a
@@ -22,11 +24,14 @@
         Hjem
       </a>
     </li>
-    
+
     {# if we are not at home #}
     {% if request.path.strip('/') %}
       {# Go through the path and figure out where we are #}
       {% set path_segments = request.path.strip('/').split('/') %}
+      {% if "lang" == path_segments[-2] %}
+        {% set path_segments = path_segments[:-2] %}
+      {% endif %}
 
       {% for p in path_segments %}
         {% set url = "/" + request.base_url.split(p)[0].split(request.host_url)[1] + p %}
@@ -57,18 +62,18 @@
           </svg>
           {# Check if we need to create a link #}
           {% if not loop.last %}
-              <a 
-                href="{{ url }}" 
-                class="piggy-breadcrumb ms-1 text-sm font-medium md:text-base break-words"
-              >
-                {{ p }}
-              </a>
+            <a
+              href="{{ url }}"
+              class="piggy-breadcrumb ms-1 text-sm font-medium md:text-base break-words"
+            >
+              {{ p }}
+            </a>
           {% else %}
-              <span
-                class="piggy-breadcrumb-no-hover ms-1 text-sm font-medium md:text-base break-words"
-              >
-                {{ p }}
-              </span>
+            <span
+              class="piggy-breadcrumb-no-hover ms-1 text-sm font-medium md:text-base break-words"
+            >
+              {{ p }}
+            </span>
           {% endif %}
         </li>
       {% endfor %}
