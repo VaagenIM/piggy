@@ -39,6 +39,7 @@ description: The classic look of piggy!
   
   --piggy-button: #c099a8;
   --piggy-button-hover: #ddb2c2;
+  --piggy-button-active: rgb(241, 127, 138); /* Slightly more colored active color */
   --piggy-text-button: var(--piggy-dark);
   
   --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7);
@@ -53,10 +54,58 @@ description: The classic look of piggy!
   --piggy-menu: var(--piggy-light);
   --piggy-menu-text: var(--piggy-dark);
 
-  transition: 1s ease;
+  --piggy-tooltip: #000000;
+  --piggy-tooltip-text: #ffffff;
+
+  --piggy-text-hyperlink: #458bc4;
+  --piggy-text-hyperlink-hover: rgb(62, 86, 107);
 }
 
 [data-theme="classic"] .level-count-container {
   color: var(--piggy-dark);
   background-color: var(--piggy-main);
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+[data-theme="classic"] .md-content .admonition-title {
+  font-size: 0.8rem !important;
+}
+
+[data-theme="classic"] .md-content code:not(.md-code__content) {
+  background-color: #d1d1d1;
+  color: var(--piggy-dark);
+}
+
+[data-theme="classic"] .md-content table code:not(.md-code__content) {
+  background-color: #cf9eb1;
+}
+
+[data-theme="classic"] .md-content .md-code__content {
+  filter: invert() contrast(1.25) hue-rotate(270deg);
+  border: 1px solid #676a74;
+}
+
+[data-theme="classic"] .md-content table {
+  border: 1px solid #555 !important;
+}
+
+[data-theme="classic"] .md-content th {
+  background-color: #e0b1c3;
+}
+
+[data-theme="classic"] .md-content tr:nth-child(odd) td {
+  background-color: #f0d3dd;
+}
+
+[data-theme="classic"] .md-content tr:nth-child(even) td {
+  background-color: #e9c3d1;
+}
+
+[data-theme="classic"] .md-content details,
+[data-theme="classic"] .md-content .tip,
+[data-theme="classic"] .md-content .admonition {
+  background-color: #e0e0e0;
+  color: var(--piggy-dark);
 }

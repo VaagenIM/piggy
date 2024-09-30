@@ -1,10 +1,27 @@
+/* 
+  SOMEWHAT TEMP 30.09.2024
+  
+  TODO:
+  - Fix spaghetti with classes.
+    - A lot of the buttons have their own styling instead of having the same class, 
+      which there already is one: .piggy-button
+    - I am sure there are some redundant styling classes, but at this point, there
+      is so much spaghetti I can't even bother.
+*/
+
 :root {
-  font-size: 15px;
+  --piggy-font-size: var(15px);
+
+  font-size: var(--piggy-font-size);
 
   font-family: "Quicksand", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+/************************\
+|*     FONT IMPORTS     *|
+\************************/
 
 /* Regular */
 @font-face {
@@ -60,13 +77,21 @@
   font-style: normal;
 }
 
-[data-font-theme="dyslexia"] * {
+[data-font-theme="dyslexia"] *:not(code *, code) {
   font-family: "Lexia", "Comic Sans MS", sans-serif;
-  letter-spacing: 0.5px;
+  letter-spacing: 0px;
 }
 
 [data-font-theme="default"] * {
   letter-spacing: 0px;
+}
+
+/*****************************\
+|*     ELEMENT OVERRIDES     *|
+\*****************************/
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--piggy-text-main) !important;
 }
 
 .transition {
@@ -77,6 +102,7 @@
   background-color: var(--piggy-main);
   color: var(--piggy-text-main);
   text-shadow: var(--piggy-shadow-text) 3px 3px 5px;
+  font-size: var(--piggy-font-size);
 }
 
 .card-container {
@@ -189,13 +215,13 @@
 }
 
 .piggy-button {
-  padding: 15px;
+  padding: 5px 15px 5px 15px;
   background-color: var(--piggy-button);
   color: var(--piggy-text-button);
   border-radius: 5px;
 }
 
-.piggy-button:hover {
+.piggy-button:not(.no-hover):hover {
   background-color: var(--piggy-button-hover);
 }
 
@@ -251,24 +277,32 @@
   border-radius: 2rem;
 }
 
+/***************************\
+|*     NAVIGATION MENU     *|
+\***************************/
 .piggy-navbar {
   background: linear-gradient(90deg, var(--piggy-navbar-start) 0%, var(--piggy-navbar-end) 100%);
 }
 
 .piggy-breadcrumb {
   color: var(--piggy-text-breadcrumb);
+  font-size: var(--piggy-font-size);
 }
 
 .piggy-breadcrumb:hover {
   color: var(--piggy-text-breadcrumb-hover);
   transition: color 0.2s ease;
+  font-size: var(--piggy-font-size);
 }
 
 .piggy-breadcrumb-no-hover {
   color: var(--piggy-text-breadcrumb);
+  font-size: var(--piggy-font-size);
 }
 
-/* Settings Button */
+/*************************\
+|*     SETTINGS MENU     *|
+\*************************/
 #settings-btn {
   background-color: var(--piggy-button);
   color: var(--piggy-text-button);
@@ -354,7 +388,288 @@
   background-color: var(--piggy-button-hover);
 }
 
+/************************\
+|*     LEVEL SELECT     *|
+\************************/
+#meta-container {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, var(--piggy-navbar-start) 0%, var(--piggy-navbar-end) 100%);
+  border-top: 2px solid var(--piggy-card-start);
+}
+
+#level-container {
+  padding: 10px;
+  gap: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Level Buttons */
+#level-container .level-button {
+  position: relative;
+  border-radius: 5px;
+  border: 1px solid var(--piggy-dark);
+}
+
+/* Assignment Level Links and Spans */
+#level-container .assignment-level {
+  color: var(--piggy-text-navbar);
+  text-decoration: none;
+  padding: 5px 12px;
+  border-radius: 5px;
+  background-color: var(--piggy-button);
+  transition: background-color 0.3s;
+  font-weight: bold;
+  display: inline-block;
+}
+
+/* Hover Effect for Links */
+#level-container .assignment-level:hover {
+  background-color: var(--piggy-button-hover);
+}
+
+/* Current Level Styling */
+#level-container .active-level-button .assignment-level {
+  background-color: var(--piggy-button-active);
+  cursor: default;
+}
+
+/* Tooltip Text */
+#level-container .nav-tooltip {
+  visibility: hidden;
+  width: max-content;
+  max-width: 200px;
+  background-color: var(--piggy-tooltip);
+  color: var(--piggy-tooltip-text);
+  text-align: center;
+  padding: 5px 10px 5px 10px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+/* Tooltip Arrow */
+#level-container .nav-tooltip::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent var(--piggy-tooltip) transparent;
+}
+
 /* Show Tooltip on Hover */
-.theme-option:hover .theme-tooltiptext {
+#level-container .level-button:hover .nav-tooltip {
   visibility: visible;
+  opacity: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  #level-container {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  #level-container .nav-tooltip {
+    bottom: -60px;
+  }
+}
+
+/***************************\
+|*     LANGUAGE BUTTON     *|
+\***************************/
+#language-container {
+  position: relative;
+  margin: 10px 25px 10px 10px; /* Optional margin */
+  z-index: 1000; /* Ensure it stays above other content */
+}
+
+#language-container .dropbtn {
+  background-color: var(--piggy-button);
+  color: var(--piggy-text-navbar);
+  padding: 5px 12px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid var(--piggy-dark);
+}
+
+/* Hover Effect for Links */
+#language-container .dropbtn:hover {
+  background-color: var(--piggy-button-hover);
+}
+
+#language-container .language-dropdown {
+  width: 100%;
+  display: none;
+  position: absolute;
+  background-color: var(--piggy-menu);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px var(--piggy-shadow-box);
+  border-radius: 5px;
+  top: 100%; /* Position the dropdown below the button */
+  left: 0;
+  z-index: 1000;
+}
+
+#language-container .language-dropdown a {
+  color: var(--piggy-menu-text);
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 0px;
+  display: block;
+  border-bottom: 1px solid var(--piggy-main);
+  cursor: pointer;
+}
+
+#language-container .language-dropdown a:last-child {
+  border-bottom: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#language-container .language-dropdown a:first-child {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+#language-container .language-dropdown a:hover {
+  background-color: var(--piggy-button-hover);
+  color: var(--piggy-text-button);
+}
+
+#language-container:hover .language-dropdown {
+  display: block;
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+
+.md-container a {
+  color: var(--piggy-text-hyperlink) !important;
+}
+
+.md-container a:hover {
+  color: var(--piggy-text-hyperlink-hover) !important;
+  text-decoration: underline;
+  transition: 0.2s;
+}
+
+.assignment-heading {
+  margin-top: 1em;
+  text-align: center;
+}
+
+.admonition p:nth-child(2),
+details p:nth-child(2) {
+  margin-top: 0.6rem;
+}
+
+.admonition p:nth-child(2),
+details p:nth-child(2) {
+  margin-bottom: 0.6rem;
+}
+
+.md-container blockquote,
+.md-container dl,
+.md-container dd,
+.md-container h1,
+.md-container h2,
+.md-container h3,
+.md-container h4,
+.md-container h5,
+.md-container h6,
+.md-container hr,
+.md-container figure,
+.md-container p,
+.md-container pre {
+  /* Set to standard value */
+  margin: initial;
+  padding: initial;
+}
+
+.md-content h1, 
+.md-content h2, 
+.md-content h3, 
+.md-content h4, 
+.md-content h5, 
+.md-content h6 {
+  font-weight: bold !important;
+  margin-top: 1.35rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.md-content h1 {
+  font-size: 2rem !important;
+}
+
+.md-content h2 {
+  font-size: 1.5rem !important;
+}
+.md-content h3 {
+  font-size: 1.25rem !important;
+}
+
+.md-content h4 {
+  font-size: 1.15rem !important;
+}
+
+.md-content h5 {
+  font-size: 1.05rem !important;
+}
+
+.md-content h6 {
+  font-size: 1.00rem !important;
+}
+
+.md-content p {
+  font-size: 1rem !important;
+  margin-bottom: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.md-content ul {
+  font-size: 1rem !important;
+}
+
+.md-content code,
+.md-content summary,
+.md-content table {
+  font-size: 0.8rem !important;
+  line-height: 1rem;
+}
+
+.md-content details,
+.md-content .tip,
+.md-content .admonition {
+  border-radius: 5px !important;
+}
+
+.md-content table {
+  border-radius: 5px !important;
+}
+
+.md-content code {
+  border-radius: 5px !important;
+  line-height: 1.1rem;
+}
+
+.md-content summary {
+  padding-top: 0.6rem !important;
+  padding-bottom: 0.6rem !important;
+  font-size: 1rem !important;
 }

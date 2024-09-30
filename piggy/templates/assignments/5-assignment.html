@@ -1,101 +1,74 @@
-<head>
-  {% include "partials/common_head.html" %}
+{% extends "layout.html" %}
 
+{% block head %}
+  {{ super() }}
   {{ content.head | safe }}
+{% endblock %}
 
-  <style>
-    a {
-      color: cyan;
-    }
-
-    header {
-      background-color: #333;
-      color: white;
-      padding: 1em;
-      text-align: center;
-    }
-
-    .admonition p:nth-child(2),
-    details p:nth-child(2) {
-      margin-top: 0.6rem;
-    }
-
-    .admonition p:nth-child(2),
-    details p:nth-child(2) {
-      margin-bottom: 0.6rem;
-    }
-
-    .md-container blockquote,
-    .md-container dl,
-    .md-container dd,
-    .md-container h1,
-    .md-container h2,
-    .md-container h3,
-    .md-container h4,
-    .md-container h5,
-    .md-container h6,
-    .md-container hr,
-    .md-container figure,
-    .md-container p,
-    .md-container pre {
-      /* Set to standard value */
-      margin: initial;
-      padding: initial;
-    }
-
-    .md-content h3 {
-      margin: 1.6em 0 -0.5em;
-      margin-block-end: initial;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1 class="text-2xl">{{ content.heading }}</h1>
-    {% if content.meta.difficulty %}
-      {% if content.meta.difficulty > 50 %}
-        Difficulty: UMULIG!!!
-      {% else %}
-        <p>Difficulty: {{ '⭐' * content.meta.difficulty }}</p>
-      {% endif %}
-    {% endif %}
-
-    {# Breadcrumbs #}
-    {# TODO: Requires custom styling to not interfere with tailwind(?) #}
-    {# {% include "partials/parts/breadcrumbs.html" %} #}
-
-    {# Level select #}
-    <div id="level-select">
-      Level select:
+{% block header %}
+  <div id="meta-container">
+    {# 
+    TODO:
+    - difficulty? nah
+    - Level Select
+      - Button menu?
+      - Tabs?
+    - Language Select
+      - Dropdown menu? -> probably
+      - Button menu?
+    #}
+    <!-- Language Selection -->
+    <div id="language-container">
+      <button class="dropbtn">
+        🌐 Language: {{ current_language }}
+      </button>
+      <div class="language-dropdown">
+        {% for lang, val in supported_languages.items() %}
+          <a
+            {% if github_pages %}
+              href="{{ request.path.split('/lang/')[0] }}{{ '/lang/' + lang if lang else '' }}"
+            {% else %}
+              onclick="document.cookie = 'lang={{ lang }}'; location.reload();"
+            {% endif %}
+          >
+            {{ val.name }}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+    
+    <!-- Level Selection Menu -->
+    <nav id="level-container">
       {% for link, assignment in meta.get(AssignmentTemplate.LEVELS_DATA.name).data.items() %}
         {% if assignment.level | int == level | int %}
-          {{ assignment.level }}
+          <!-- Current Level (Non-clickable) -->
+          <div class="level-button active-level-button">
+            <span class="assignment-level">
+              Level {{ assignment.level }}
+            </span>
+            <!-- Tooltip -->
+            <div class="nav-tooltip">
+              {{ assignment.meta.title }}
+            </div>
+          </div>
         {% else %}
-          <a href="{{ link }}">{{ assignment.level }}</a>
+          <!-- Other Levels (Clickable) -->
+          <div class="level-button">
+            <a href="{{ link }}" class="assignment-level">
+              Level {{ assignment.level }}
+            </a>
+            <!-- Tooltip -->
+            <div class="nav-tooltip">
+              {{ assignment.meta.title }}
+            </div>
+          </div>
         {% endif %}
       {% endfor %}
-    </div>
-
-    <div>
-      {# Language select #}
-      <div>Current language: {{ current_language }}</div>
-      {% for lang, val in supported_languages.items() %}
-        <a
-          {% if github_pages %}
-            href="{{ request.path.split('/lang/')[0] }}{{ '/lang/' + lang if lang else '' }}"
-          {% else %}
-            onclick="document.cookie = 'lang={{ lang }}'; location.reload();"
-          {% endif %}
-          >{{ val.name }}</a
-        >
-      {% endfor %}
-    </div>
-
-    <a href="/">Home</a>
-  </header>
-  <main>{{ content.body | safe }}</main>
-
-  {% if debug %}
-    {% include "partials/devtools/_devtools.html" %}
-  {% endif %}
-</body>
+    </nav>
+  </div>
+{% endblock %}
+  
+{% block base %}
+  <h1 class="text-4xl font-semibold assignment-heading">{{ content.heading }}</h1>
+  {{ content.body | safe }}
+{% endblock %}
