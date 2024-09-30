@@ -1,6 +1,6 @@
 name: Prettier
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 jobs:
   prettier:
     name: Prettier Check
@@ -8,6 +8,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Install Packages
+        run: npm install
 
       - name: Run Prettier
         id: prettier-run
