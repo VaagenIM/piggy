@@ -8,6 +8,7 @@ description: Fancy sunset, purple, neon, gradients!
   /* Synthwave sunset colors */
   --piggy-main: rgb(34, 18, 48); /* Deep, rich sunset purple */
   --piggy-light: #ffd27f; /* Warm, soft golden yellow */
+  --piggy-neutral: #866997; /* Gray */
   --piggy-dark: rgb(48, 20, 58); /* Darker purple for contrast */
 
   --piggy-text-main: #ffcc66; /* Soft, glowing sunset orange */
@@ -95,11 +96,11 @@ description: Fancy sunset, purple, neon, gradients!
 }
 
 [data-theme="synthwave"] .md-content tr:nth-child(odd) td {
-  background-color: #49160c;
+  background-color: #41140b;
 }
 
 [data-theme="synthwave"] .md-content tr:nth-child(even) td {
-  background-color: #5e2015;
+  background-color: #572118;
 }
 
 [data-theme="synthwave"] .md-content details,

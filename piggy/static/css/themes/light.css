@@ -8,6 +8,7 @@ description: The default light theme.
   /* Softer light mode theme with more contrast */
   --piggy-main: rgb(225, 225, 225); /* Slightly darker gray for the main background */
   --piggy-light: #fefefe; /* Almost white, but still soft for highlights */
+  --piggy-neutral: #757575; /* Gray */
   --piggy-dark: rgb(60, 60, 60); /* Darker text for better contrast */
 
   --piggy-text-main: var(--piggy-dark); /* Darker text for readability */

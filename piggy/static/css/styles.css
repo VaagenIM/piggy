@@ -673,3 +673,8 @@ details p:nth-child(2) {
   padding-bottom: 0.6rem !important;
   font-size: 1rem !important;
 }
+
+.md-content blockquote {
+  color: var(--piggy-neutral) !important;
+  border-left: .2rem solid var(--piggy-neutral) !important;
+}

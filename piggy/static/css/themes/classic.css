@@ -7,6 +7,7 @@ description: The classic look of piggy!
 [data-theme="classic"] {
   --piggy-main: #ece4ec; 
   --piggy-light: #ffffff;
+  --piggy-neutral: #747070; /* Gray */
   --piggy-dark: #000000;
 
   --piggy-text-main: var(--piggy-dark);
