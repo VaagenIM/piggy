@@ -4,9 +4,9 @@ const settingsBtn = document.getElementById("settings-btn");
 const closeBtn = document.querySelector(".settings-menu .closebtn");
 const themeSelect = document.getElementById("theme-select");
 const dyslexiaBtn = document.getElementById("dyslexia-button");
-
-const currentTheme = localStorage.getItem("theme") || "dark";
-const fontTheme = localStorage.getItem("data-font-theme") || "default";
+// Declared in on-load.js
+// const currentTheme = localStorage.getItem("theme") || "dark";
+// const fontTheme = localStorage.getItem("data-font-theme") || "default";
 
 function pageTransition() {
   document.body.classList.add("transition");
