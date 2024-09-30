@@ -33,7 +33,7 @@ function toggleDyslexia() {
     if (fontTheme === "default") {
         document.documentElement.setAttribute('data-font-theme', 'dyslexia');
         localStorage.setItem('data-font-theme', 'dyslexia'); // Save theme to localStorage
-        dyslexiaBtn.innerHTML = "Dyslexia Friendly Mode [✔]"
+        dyslexiaBtn.innerHTML = "Dyslexia Friendly Mode [✅]"
     } else {
         document.documentElement.setAttribute('data-font-theme', 'default');
         localStorage.setItem('data-font-theme', 'default'); // Save theme to localStorage
@@ -41,7 +41,6 @@ function toggleDyslexia() {
     }
 
     pageTransition();
-
 }
 
 // Set the current theme on page load

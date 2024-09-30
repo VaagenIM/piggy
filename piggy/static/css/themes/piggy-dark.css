@@ -11,7 +11,7 @@ description: A dark pink theme.
   --piggy-dark: #f0e1e4; /* Light pink for text contrast */
 
   --piggy-text-main: var(--piggy-dark); /* Light text for readability */
-  --piggy-shadow-text: rgba(255, 255, 255, 0.1); /* Soft shadow for light text */
+  --piggy-shadow-text: rgba(255, 255, 255, 0.025); /* Soft shadow for light text */
   --piggy-shadow-box: #ffffff11;
   --piggy-shadow-glow: rgba(255, 255, 255, 0.2);
 
@@ -40,6 +40,7 @@ description: A dark pink theme.
 
   --piggy-button: #a06672; /* Dark pink button */
   --piggy-button-hover: #c0858e; /* Lighter pink on hover */
+  --piggy-button-active: #d37381; /* Slightly more colored active color */
   --piggy-text-button: #ffffff; /* White button text */
 
   --piggy-thumbnail-overlay: rgba(0, 0, 0, 0.5); /* Dark overlay */
@@ -53,9 +54,55 @@ description: A dark pink theme.
 
   --piggy-menu: var(--piggy-light);
   --piggy-menu-text: var(--piggy-dark);
+
+  --piggy-tooltip: #000000;
+  --piggy-tooltip-text: #ffffff;
+
+  --piggy-text-hyperlink: #407eb1;
+  --piggy-text-hyperlink-hover: #89b8df;
 }
 
 [data-theme="piggy-dark"] .level-count-container {
   color: var(--piggy-light);
   background-color: var(--piggy-dark);
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+[data-theme="piggy-dark"] .md-content .admonition-title {
+  font-size: 0.8rem !important;
+}
+
+[data-theme="piggy-dark"] .md-content code:not(.md-code__content) {
+  background-color: #4e3a3e;
+  color: #dfbfc6;
+}
+
+[data-theme="piggy-dark"] .md-content .md-code__content {
+  filter: hue-rotate(115deg);
+  border: 1px solid #676a74;
+}
+
+[data-theme="piggy-dark"] .md-content table {
+  border: 1px solid #301c1f !important;
+}
+
+[data-theme="piggy-dark"] .md-content th {
+  background-color: #75434d;
+}
+
+[data-theme="piggy-dark"] .md-content tr:nth-child(odd) td {
+  background-color: #533037;
+}
+
+[data-theme="piggy-dark"] .md-content tr:nth-child(even) td {
+  background-color: #42262a;
+}
+
+[data-theme="piggy-dark"] .md-content details,
+[data-theme="piggy-dark"] .md-content .tip,
+[data-theme="piggy-dark"] .md-content .admonition {
+  background-color: #271a1d;
+  color: var(--piggy-dark);
 }
