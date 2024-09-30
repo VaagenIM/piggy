@@ -57,7 +57,8 @@ description: Fancy sunset, purple, neon, gradients!
   --piggy-menu: var(--piggy-dark);
   --piggy-menu-text: var(--piggy-light);
 
-  --piggy-text-hyperlink: #b131b6;
+  --piggy-text-hyperlink: #3190b6;
+  --piggy-text-hyperlink-hover: #6ab2cf;
 }
 
 [data-theme="synthwave"] .settings-option {
@@ -65,5 +66,41 @@ description: Fancy sunset, purple, neon, gradients!
 }
 
 [data-theme="synthwave"] #settings-btn {
+  color: var(--piggy-light);
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+[data-theme="synthwave"] .md-content .admonition-title {
+  font-size: 0.8rem !important;
+}
+
+[data-theme="synthwave"] .md-content code:not(.md-code__content) {
+  background-color: #532821;
+  color: #f5d1c8;
+}
+
+[data-theme="synthwave"] .md-content .md-code__content {
+  filter: hue-rotate(140deg) contrast(1.2);
+  border: 1px solid #676a74;
+}
+
+[data-theme="synthwave"] .md-content th {
+  background-color: #832a1b;
+}
+
+[data-theme="synthwave"] .md-content tr:nth-child(odd) td {
+  background-color: #49160c;
+}
+
+[data-theme="synthwave"] .md-content tr:nth-child(even) td {
+  background-color: #5e2015;
+}
+
+[data-theme="synthwave"] .md-content details,
+[data-theme="synthwave"] .md-content .tip,
+[data-theme="synthwave"] .md-content .admonition {
+  background-color: #271a1d;
   color: var(--piggy-light);
 }

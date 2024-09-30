@@ -80,7 +80,8 @@ description: The default light theme.
 }
 
 [data-theme="light"] .md-content .md-code__content {
-  filter: invert() hue-rotate(230deg) contrast(1.45);
+  filter: invert() hue-rotate(210deg) contrast(1.45);
+  border: 1px solid #6d6f78;
 }
 
 [data-theme="light"] .md-content table {
@@ -88,7 +89,7 @@ description: The default light theme.
 }
 
 [data-theme="light"] .md-content th {
-  background-color: #9fbfda;
+  background-color: #d0d4e8;
 }
 
 [data-theme="light"] .md-content tr:nth-child(odd) td {
@@ -102,6 +103,6 @@ description: The default light theme.
 [data-theme="light"] .md-content details,
 [data-theme="light"] .md-content .tip,
 [data-theme="light"] .md-content .admonition {
-  background-color: #e0e0e0;
+  background-color: #f4f4f4;
   color: var(--piggy-dark);
 }

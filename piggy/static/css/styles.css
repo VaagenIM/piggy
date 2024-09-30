@@ -446,6 +446,16 @@ details p:nth-child(2) {
   line-height: 1rem;
 }
 
+.md-content details,
+.md-content .tip,
+.md-content .admonition {
+  border-radius: 5px !important;
+}
+
+.md-content table {
+  border-radius: 5px !important;
+}
+
 .md-content code {
   border-radius: 5px !important;
 }

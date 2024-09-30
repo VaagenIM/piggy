@@ -55,7 +55,8 @@ description: Relaxing pastel pink theme.
   --piggy-menu: rgb(255, 204, 213);
   --piggy-menu-text: var(--piggy-dark);
 
-  --piggy-text-hyperlink: #316997;
+  --piggy-text-hyperlink: #539cd8;
+  --piggy-text-hyperlink-hover: #316997;
 }
 
 [data-theme="piggy"] .level-count-container {
@@ -71,12 +72,13 @@ description: Relaxing pastel pink theme.
 }
 
 [data-theme="piggy"] .md-content code:not(.md-code__content) {
-  background-color: #c7c7c7;
+  background-color: #f3cad1;
   color: #333;
 }
 
 [data-theme="piggy"] .md-content .md-code__content {
-  filter: invert() contrast(1.2) hue-rotate(275deg);
+  filter: invert() contrast(1.35) hue-rotate(290deg);
+  border: 1px solid #676a74;
 }
 
 [data-theme="piggy"] .md-content table {
@@ -84,15 +86,15 @@ description: Relaxing pastel pink theme.
 }
 
 [data-theme="piggy"] .md-content th {
-  background-color: #ffafdb;
+  background-color: #ffb5c3;
 }
 
 [data-theme="piggy"] .md-content tr:nth-child(odd) td {
-  background-color: #ffddf0;
+  background-color: rgb(255, 226, 231);
 }
 
 [data-theme="piggy"] .md-content tr:nth-child(even) td {
-  background-color: #ffcce8;
+  background-color: rgb(254, 210, 218);
 }
 
 [data-theme="piggy"] .md-content details,

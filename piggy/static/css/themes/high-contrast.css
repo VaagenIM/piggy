@@ -133,6 +133,8 @@ description: High contrast theme for maximum visibility.
   background-color: black;
   color: white;
   border: 1px solid white;
+  border-radius: 4px !important;
+  padding: 1px 5px 1px 5px !important;
 }
 
 [data-theme="high-contrast"] .md-content table {
@@ -173,7 +175,7 @@ description: High contrast theme for maximum visibility.
 [data-theme="high-contrast"] .md-content :is(details, .admonition)
 {
   border: 3px solid !important;
-  border-radius: 0px;
+  border-radius: 0px !important;
 }
 
 [data-theme="high-contrast"] .md-content :is(.note, .abstract, .info, .tip)
