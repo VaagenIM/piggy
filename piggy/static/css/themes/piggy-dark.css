@@ -8,6 +8,7 @@ description: A dark pink theme.
   /* Dark theme piggy colors */
   --piggy-main: #2e1f24; /* Dark reddish-brown background */
   --piggy-light: #3d2a30; /* Slightly lighter for contrast */
+  --piggy-neutral: #8a767c; /* Gray */
   --piggy-dark: #f0e1e4; /* Light pink for text contrast */
 
   --piggy-text-main: var(--piggy-dark); /* Light text for readability */
