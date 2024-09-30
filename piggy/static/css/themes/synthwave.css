@@ -43,6 +43,7 @@ description: Fancy sunset, purple, neon, gradients!
 
   --piggy-button: #ff6347; /* Sunset red-orange */
   --piggy-button-hover: #ff8364; /* Lighter orange for hover */
+  --piggy-button-active: #d33417; /* Slightly more colored active color */
   --piggy-text-button: #333;
 
   --piggy-thumbnail-overlay: #00000099; /* Dark overlay for vivid highlights */
@@ -56,6 +57,9 @@ description: Fancy sunset, purple, neon, gradients!
 
   --piggy-menu: var(--piggy-dark);
   --piggy-menu-text: var(--piggy-light);
+
+  --piggy-tooltip: #000000;
+  --piggy-tooltip-text: #ffffff;
 
   --piggy-text-hyperlink: #3190b6;
   --piggy-text-hyperlink-hover: #6ab2cf;

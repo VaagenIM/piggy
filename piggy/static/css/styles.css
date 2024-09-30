@@ -204,13 +204,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .piggy-button {
-  padding: 15px;
+  padding: 5px 15px 5px 15px;
   background-color: var(--piggy-button);
   color: var(--piggy-text-button);
   border-radius: 5px;
 }
 
-.piggy-button:hover {
+.piggy-button:not(.no-hover):hover {
   background-color: var(--piggy-button-hover);
 }
 
@@ -266,6 +266,9 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 2rem;
 }
 
+/***************************\
+|*     NAVIGATION MENU     *|
+\***************************/
 .piggy-navbar {
   background: linear-gradient(90deg, var(--piggy-navbar-start) 0%, var(--piggy-navbar-end) 100%);
 }
@@ -286,7 +289,9 @@ h1, h2, h3, h4, h5, h6 {
   font-size: var(--piggy-font-size);
 }
 
-/* Settings Button */
+/*************************\
+|*     SETTINGS MENU     *|
+\*************************/
 #settings-btn {
   background-color: var(--piggy-button);
   color: var(--piggy-text-button);
@@ -372,14 +377,102 @@ h1, h2, h3, h4, h5, h6 {
   background-color: var(--piggy-button-hover);
 }
 
-/* Show Tooltip on Hover */
-.theme-option:hover .theme-tooltiptext {
-  visibility: visible;
+/************************\
+|*     LEVEL SELECT     *|
+\************************/
+#level-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(90deg, var(--piggy-navbar-start) 0%, var(--piggy-navbar-end) 100%);
+  padding: 10px;
+  gap: 15px;
+  border-top: 2px solid var(--piggy-card-start);
 }
 
-/****************************\
-|*     MARKDOWN STYLING     *|
-\****************************/
+/* Level Buttons */
+#level-container .level-button {
+  position: relative;
+  border-radius: 5px;
+  border: 1px solid var(--piggy-dark);
+}
+
+/* Assignment Level Links and Spans */
+#level-container .assignment-level {
+  color: var(--piggy-text-navbar);
+  text-decoration: none;
+  padding: 5px 12px;
+  border-radius: 5px;
+  background-color: var(--piggy-button);
+  transition: background-color 0.3s;
+  font-weight: bold;
+  display: inline-block;
+}
+
+/* Hover Effect for Links */
+#level-container .assignment-level:hover {
+  background-color: var(--piggy-button-hover);
+}
+
+/* Current Level Styling */
+#level-container .active-level-button .assignment-level {
+  background-color: var(--piggy-button-active);
+  cursor: default;
+}
+
+/* Tooltip Text */
+#level-container .nav-tooltip {
+  visibility: hidden;
+  width: max-content;
+  max-width: 200px;
+  background-color: var(--piggy-tooltip);
+  color: var(--piggy-tooltip-text);
+  text-align: center;
+  padding: 8px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+/* Tooltip Arrow */
+#level-container .nav-tooltip::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent var(--piggy-tooltip) transparent;
+}
+
+/* Show Tooltip on Hover */
+#level-container .level-button:hover .nav-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  #level-container {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  #level-container .nav-tooltip {
+    bottom: -60px;
+  }
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
 
 .md-container a {
   color: var(--piggy-text-hyperlink) !important;

@@ -40,6 +40,7 @@ description: A dark pink theme.
 
   --piggy-button: #a06672; /* Dark pink button */
   --piggy-button-hover: #c0858e; /* Lighter pink on hover */
+  --piggy-button-active: #d37381; /* Slightly more colored active color */
   --piggy-text-button: #ffffff; /* White button text */
 
   --piggy-thumbnail-overlay: rgba(0, 0, 0, 0.5); /* Dark overlay */
@@ -53,6 +54,9 @@ description: A dark pink theme.
 
   --piggy-menu: var(--piggy-light);
   --piggy-menu-text: var(--piggy-dark);
+
+  --piggy-tooltip: #000000;
+  --piggy-tooltip-text: #ffffff;
 
   --piggy-text-hyperlink: #407eb1;
   --piggy-text-hyperlink-hover: #89b8df;

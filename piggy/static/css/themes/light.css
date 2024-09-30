@@ -40,6 +40,7 @@ description: The default light theme.
   
   --piggy-button: #d0d4e8; /* Soft pastel blue button */
   --piggy-button-hover: #b2b8d4; /* Slightly darker hover */
+  --piggy-button-active: #96beee; /* Slightly more colored active color */
   --piggy-text-button: #333333;
   
   --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7); /* Softer overlay */
@@ -53,6 +54,9 @@ description: The default light theme.
 
   --piggy-menu: var(--piggy-light);
   --piggy-menu-text: var(--piggy-dark);
+
+  --piggy-tooltip: #000000;
+  --piggy-tooltip-text: #ffffff;
 
   --piggy-text-hyperlink: #316997;
   --piggy-text-hyperlink-hover: #316997;

@@ -39,6 +39,7 @@ description: The classic look of piggy!
   
   --piggy-button: #c099a8;
   --piggy-button-hover: #ddb2c2;
+  --piggy-button-active: rgb(241, 127, 138); /* Slightly more colored active color */
   --piggy-text-button: var(--piggy-dark);
   
   --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7);
@@ -53,9 +54,11 @@ description: The classic look of piggy!
   --piggy-menu: var(--piggy-light);
   --piggy-menu-text: var(--piggy-dark);
 
+  --piggy-tooltip: #000000;
+  --piggy-tooltip-text: #ffffff;
+
   --piggy-text-hyperlink: #458bc4;
   --piggy-text-hyperlink-hover: rgb(62, 86, 107);
-
 }
 
 [data-theme="classic"] .level-count-container {

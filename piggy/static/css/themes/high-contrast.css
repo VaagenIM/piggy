@@ -36,6 +36,7 @@ description: High contrast theme for maximum visibility.
   
   --piggy-button: #000; /* Bright red-orange button */
   --piggy-button-hover: #999; /* Brighter hover */
+  --piggy-button-active: #00ffff80; /* Brighter hover */
   --piggy-text-button: #fff; /* White text */
   
   --piggy-thumbnail-overlay: rgba(0, 0, 0, 1); /* Light overlay */
@@ -49,14 +50,17 @@ description: High contrast theme for maximum visibility.
 
   --piggy-text-hyperlink: #00ffff;
   --piggy-text-hyperlink-hover: #99ffff;
+
+  --piggy-tooltip: #000000;
+  --piggy-tooltip-text: #ffffff;
 }
 
-[data-theme="high-contrast" ] .card-container {
+[data-theme="high-contrast"] .card-container {
   border-radius: 0px;
   margin: 5px;
 }
 
-[data-theme="high-contrast" ] .thumbnail-image {
+[data-theme="high-contrast"] .thumbnail-image {
   border-radius: 0px;
   border-width: var(--piggy-card-border-width);
   border-color: #ff0000;
@@ -64,7 +68,7 @@ description: High contrast theme for maximum visibility.
   padding: 5px;
 }
 
-[data-theme="high-contrast" ] .thumbnail-text-overlay {
+[data-theme="high-contrast"] .thumbnail-text-overlay {
   border-radius: 0px;
   border-width: var(--piggy-card-border-width);
   border-color: #00ff00;
@@ -72,19 +76,28 @@ description: High contrast theme for maximum visibility.
   margin-top: 5px;
 }
 
-[data-theme="high-contrast" ] .tag-box {
+[data-theme="high-contrast"] .tag-box {
   border-radius: 0px;
   border-width: var(--piggy-card-border-width);
   margin-top: 5px;
 }
 
-[data-theme="high-contrast" ] .piggy-navbar {
+[data-theme="high-contrast"] .piggy-navbar, 
+[data-theme="high-contrast"] #level-container {
   border-bottom: var(--piggy-card-border-width) solid white;
 }
 
-[data-theme="high-contrast" ] .piggy-button {
+[data-theme="high-contrast"] .piggy-button,
+[data-theme="high-contrast"] .assignment-level {
   border-width: var(--piggy-card-border-width);
+  border-radius: 0px !important;
 }
+
+[data-theme="high-contrast"] .level-button {
+  border-radius: 0px !important;
+  border-width: 0px;
+}
+
 
 [data-theme="high-contrast"] .level-count-container {
   border-radius: 0px;
@@ -139,6 +152,7 @@ description: High contrast theme for maximum visibility.
 
 [data-theme="high-contrast"] .md-content table {
   border: 2px solid white !important;
+  border-radius: 0px !important;
 }
 
 [data-theme="high-contrast"] .md-content th {

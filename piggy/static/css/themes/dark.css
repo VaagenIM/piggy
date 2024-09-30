@@ -43,6 +43,7 @@ description: The default dark theme.
 
   --piggy-button: #4a6783; /* Muted blue */
   --piggy-button-hover: #647a95; /* Slightly brighter hover */
+  --piggy-button-active: #2a5d9b; /* Slightly more colored active color */
   --piggy-text-button: #ffffff;
 
   --piggy-thumbnail-overlay: #00000077; /* Lighter overlay */
@@ -57,12 +58,20 @@ description: The default dark theme.
   --piggy-menu: var(--piggy-dark);
   --piggy-menu-text: var(--piggy-light);
 
+  --piggy-tooltip: #000000;
+  --piggy-tooltip-text: #ffffff;
+
   --piggy-text-hyperlink: #407eb1;
   --piggy-text-hyperlink-hover: #407eb1;
 }
 
 [data-theme="dark"] .md-content .md-code__content {
   border: 1px solid #474a56;
+}
+
+[data-theme="dark"] .md-content code:not(.md-code__content) {
+  background-color: #3a3c42;
+  color: #dddddd;
 }
 
 [data-theme="dark"] .md-content th {

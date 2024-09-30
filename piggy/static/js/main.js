@@ -41,7 +41,6 @@ function toggleDyslexia() {
     }
 
     pageTransition();
-
 }
 
 // Set the current theme on page load

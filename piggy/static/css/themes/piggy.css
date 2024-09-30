@@ -39,6 +39,7 @@ description: Relaxing pastel pink theme.
   
   --piggy-button: #ff99ac; /* Pink button */
   --piggy-button-hover: #ff7381; /* Darker pink on hover */
+  --piggy-button-active: #f86f7d; /* Slightly more colored active color */
   --piggy-text-button: #ffffff; /* White button text */
   
   --piggy-thumbnail-overlay: rgba(255, 226, 232, 0.7); /* Light overlay */
@@ -54,6 +55,9 @@ description: Relaxing pastel pink theme.
 
   --piggy-menu: rgb(255, 204, 213);
   --piggy-menu-text: var(--piggy-dark);
+
+  --piggy-tooltip: #000000;
+  --piggy-tooltip-text: #ffffff;
 
   --piggy-text-hyperlink: #539cd8;
   --piggy-text-hyperlink-hover: #316997;

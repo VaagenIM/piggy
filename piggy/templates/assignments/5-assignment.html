@@ -6,7 +6,48 @@
 {% endblock %}
 
 {% block header %}
-  <h1 class="text-2xl assignment-heading">{{ content.heading }}</h1>
+  <div class="meta-container">
+    {# 
+    TODO:
+    - difficulty? nah
+    - Level Select
+      - Button menu?
+      - Tabs?
+    - Language Select
+      - Dropdown menu? -> probably
+      - Button menu?
+    #}
+    <!-- Level Selection Menu -->
+    <nav id="level-container">
+      {% for link, assignment in meta.get(AssignmentTemplate.LEVELS_DATA.name).data.items() %}
+        {% if assignment.level | int == level | int %}
+          <!-- Current Level (Non-clickable) -->
+          <div class="level-button active-level-button">
+            <span class="assignment-level">
+              Level {{ assignment.level }}
+            </span>
+            <!-- Tooltip -->
+            <div class="nav-tooltip">
+              {{ assignment.meta.title }}
+            </div>
+          </div>
+        {% else %}
+          <!-- Other Levels (Clickable) -->
+          <div class="level-button">
+            <a href="{{ link }}" class="assignment-level">
+              Level {{ assignment.level }}
+            </a>
+            <!-- Tooltip -->
+            <div class="nav-tooltip">
+              {{ assignment.meta.title }}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </nav>
+  </div>
+
+  <h1 class="text-4xl font-semibold assignment-heading">{{ content.heading }}</h1>
 {% endblock %}
 
 {% block base %}
