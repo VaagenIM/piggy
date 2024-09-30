@@ -19,9 +19,7 @@
     #}
     <!-- Language Selection -->
     <div id="language-container">
-      <button class="dropbtn">
-        🌐 Language: {{ current_language }}
-      </button>
+      <button class="dropbtn">🌐 Language: {{ current_language }}</button>
       <div class="language-dropdown">
         {% for lang, val in supported_languages.items() %}
           <a
@@ -36,20 +34,16 @@
         {% endfor %}
       </div>
     </div>
-    
+
     <!-- Level Selection Menu -->
     <nav id="level-container">
       {% for link, assignment in meta.get(AssignmentTemplate.LEVELS_DATA.name).data.items() %}
         {% if assignment.level | int == level | int %}
           <!-- Current Level (Non-clickable) -->
           <div class="level-button active-level-button">
-            <span class="assignment-level">
-              Level {{ assignment.level }}
-            </span>
+            <span class="assignment-level"> Level {{ assignment.level }} </span>
             <!-- Tooltip -->
-            <div class="nav-tooltip">
-              {{ assignment.meta.title }}
-            </div>
+            <div class="nav-tooltip">{{ assignment.meta.title }}</div>
           </div>
         {% else %}
           <!-- Other Levels (Clickable) -->
@@ -58,17 +52,17 @@
               Level {{ assignment.level }}
             </a>
             <!-- Tooltip -->
-            <div class="nav-tooltip">
-              {{ assignment.meta.title }}
-            </div>
+            <div class="nav-tooltip">{{ assignment.meta.title }}</div>
           </div>
         {% endif %}
       {% endfor %}
     </nav>
   </div>
 {% endblock %}
-  
+
 {% block base %}
-  <h1 class="text-4xl font-semibold assignment-heading">{{ content.heading }}</h1>
+  <h1 class="text-4xl font-semibold assignment-heading">
+    {{ content.heading }}
+  </h1>
   {{ content.body | safe }}
 {% endblock %}

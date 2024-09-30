@@ -8,43 +8,45 @@ description: High contrast theme for maximum visibility.
   --piggy-light: #ffffff; /* Pure white for high contrast text */
   --piggy-neutral: #7f7f7f; /* Gray */
   --piggy-dark: #ffffff; /* White text for maximum contrast */
-  
+
   --piggy-text-main: var(--piggy-light); /* White text for readability */
-  --piggy-shadow-text: rgba(255, 255, 255, 0.0); /* No text shadow */
-  
+  --piggy-shadow-text: rgba(255, 255, 255, 0); /* No text shadow */
+
   /* High-contrast card colors with colorful borders */
   --piggy-card-start: #111; /* Dark gray card background for subtle contrast */
   --piggy-card-end: #111;
   --piggy-card-border: #ff00ff; /* Magenta border */
   --piggy-text-card: #ffffff; /* White text in cards for visibility */
-  
+
   --piggy-extra-card-start: #111111; /* Slightly lighter than black for extra cards */
   --piggy-extra-card-end: #111111;
   --piggy-extra-card-border: #00ffff; /* Cyan border */
   --piggy-text-extra-card: #ffffff; /* White text for high contrast */
-  
+
   --piggy-resource-card-start: #444444; /* Medium dark gray for resource cards */
   --piggy-resource-card-end: #444444;
   --piggy-resource-card-border: #ffff00; /* Yellow border for resource cards */
   --piggy-text-resource-card: #ffffff; /* White text for clarity */
 
   --piggy-card-border-width: 4px;
-  
+
   /* Navbar and buttons */
   --piggy-navbar-start: #000000; /* Black navbar */
   --piggy-navbar-end: #000000; /* Slight gradient for depth */
   --piggy-text-navbar: #ffffff; /* White navbar text */
-  
+
   --piggy-button: #000; /* Bright red-orange button */
   --piggy-button-hover: #999; /* Brighter hover */
   --piggy-button-active: #00ffff80; /* Brighter hover */
   --piggy-text-button: #fff; /* White text */
-  
+
   --piggy-thumbnail-overlay: rgba(0, 0, 0, 1); /* Light overlay */
   --piggy-text-thumbnail: var(--piggy-light); /* White text for thumbnails */
-  
+
   --piggy-text-tag: #ffffff; /* White text for tags */
-  --piggy-text-description: var(--piggy-light); /* White text for descriptions */
+  --piggy-text-description: var(
+    --piggy-light
+  ); /* White text for descriptions */
   --piggy-text-title: var(--piggy-light); /* White text for titles */
   --piggy-text-breadcrumb: var(--piggy-light); /* White text for breadcrumbs */
   --piggy-text-breadcrumb-hover: #ffff00; /* Yellow hover for breadcrumb links */
@@ -175,13 +177,19 @@ description: High contrast theme for maximum visibility.
   border-bottom: 1px solid white;
 }
 
-[data-theme="high-contrast"] #language-container .language-dropdown a:last-child {
+[data-theme="high-contrast"]
+  #language-container
+  .language-dropdown
+  a:last-child {
   border-bottom: none;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
 }
 
-[data-theme="high-contrast"] #language-container .language-dropdown a:first-child {
+[data-theme="high-contrast"]
+  #language-container
+  .language-dropdown
+  a:first-child {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
 }
@@ -229,7 +237,7 @@ description: High contrast theme for maximum visibility.
   border: 2px solid white;
   border-radius: 0px !important;
   background-color: black;
-  filter: contrast(2.0);
+  filter: contrast(2);
 }
 
 /************************\
@@ -237,176 +245,144 @@ description: High contrast theme for maximum visibility.
 \************************/
 
 /* NOTE, ABSTRACT, INFO, TIP - [CYAN] */
-[data-theme="high-contrast"] .md-content :is(details, .admonition)
-{
+[data-theme="high-contrast"] .md-content :is(details, .admonition) {
   border: 3px solid !important;
   border-radius: 0px !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.note, .abstract, .info, .tip)
-{
+[data-theme="high-contrast"] .md-content :is(.note, .abstract, .info, .tip) {
   border-color: #00ffff !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.note, .abstract, .info, .tip) summary
-{
+[data-theme="high-contrast"]
+  .md-content
+  :is(.note, .abstract, .info, .tip)
+  summary {
   background-color: #00ffff20 !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.note, .abstract, .info, .tip) summary::after
-{
+[data-theme="high-contrast"]
+  .md-content
+  :is(.note, .abstract, .info, .tip)
+  summary::after {
   color: #00ffff !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.note, .abstract, .info, .tip) :is(summary, .admonition-title)::before
-{
-  filter: 
-    brightness(0)
-    saturate(100%)
-    invert(94%)
-    sepia(77%)
-    saturate(7497%)
-    hue-rotate(102deg)
-    brightness(109%)
-    contrast(101%);
+[data-theme="high-contrast"]
+  .md-content
+  :is(.note, .abstract, .info, .tip)
+  :is(summary, .admonition-title)::before {
+  filter: brightness(0) saturate(100%) invert(94%) sepia(77%) saturate(7497%)
+    hue-rotate(102deg) brightness(109%) contrast(101%);
 }
 
 /* SUCCESS, QUESTION [GREEN] */
-[data-theme="high-contrast"] .md-content :is(.success, .question)
-{
+[data-theme="high-contrast"] .md-content :is(.success, .question) {
   border-color: #00ff00 !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.success, .question) summary
-{
+[data-theme="high-contrast"] .md-content :is(.success, .question) summary {
   background-color: #00ff0020 !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.success, .question) summary::after
-{
+[data-theme="high-contrast"]
+  .md-content
+  :is(.success, .question)
+  summary::after {
   color: #00ff00 !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.success, .question) :is(summary, .admonition-title)::before
-{
-  filter: 
-    brightness(0)
-    saturate(100%)
-    invert(72%)
-    sepia(48%)
-    saturate(7500%)
-    hue-rotate(84deg)
-    brightness(127%)
-    contrast(115%);
+[data-theme="high-contrast"]
+  .md-content
+  :is(.success, .question)
+  :is(summary, .admonition-title)::before {
+  filter: brightness(0) saturate(100%) invert(72%) sepia(48%) saturate(7500%)
+    hue-rotate(84deg) brightness(127%) contrast(115%);
 }
 
 /* WARNING, FAILURE [ORANGE] */
-[data-theme="high-contrast"] .md-content :is(.warning, .failure)
-{
+[data-theme="high-contrast"] .md-content :is(.warning, .failure) {
   border-color: #ff5b00 !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.warning, .failure) summary
-{
+[data-theme="high-contrast"] .md-content :is(.warning, .failure) summary {
   background-color: #ff5b0020 !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.warning, .failure) summary::after
-{
+[data-theme="high-contrast"]
+  .md-content
+  :is(.warning, .failure)
+  summary::after {
   color: #ff5b00 !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.warning, .failure) :is(summary, .admonition-title)::before
-{
-  filter: 
-    brightness(0)
-    saturate(100%)
-    invert(38%)
-    sepia(49%)
-    saturate(3030%)
-    hue-rotate(1deg)
-    brightness(103%)
-    contrast(106%);
+[data-theme="high-contrast"]
+  .md-content
+  :is(.warning, .failure)
+  :is(summary, .admonition-title)::before {
+  filter: brightness(0) saturate(100%) invert(38%) sepia(49%) saturate(3030%)
+    hue-rotate(1deg) brightness(103%) contrast(106%);
 }
 
 /* DANGER, BUG [RED] */
 /* WARNING, FAILURE [ORANGE] */
-[data-theme="high-contrast"] .md-content :is(.danger, .bug)
-{
+[data-theme="high-contrast"] .md-content :is(.danger, .bug) {
   border-color: #ff0000 !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.danger, .bug) summary
-{
+[data-theme="high-contrast"] .md-content :is(.danger, .bug) summary {
   background-color: #ff000020 !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.danger, .bug) summary::after
-{
+[data-theme="high-contrast"] .md-content :is(.danger, .bug) summary::after {
   color: #ff0000 !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.danger, .bug) :is(summary, .admonition-title)::before
-{
-  filter: 
-    brightness(0)
-    saturate(100%)
-    invert(16%)
-    sepia(90%)
-    saturate(6855%)
-    hue-rotate(6deg)
-    brightness(101%)
-    contrast(124%);
+[data-theme="high-contrast"]
+  .md-content
+  :is(.danger, .bug)
+  :is(summary, .admonition-title)::before {
+  filter: brightness(0) saturate(100%) invert(16%) sepia(90%) saturate(6855%)
+    hue-rotate(6deg) brightness(101%) contrast(124%);
 }
 
 /* EXAMPLE [MAGENTA] */
-[data-theme="high-contrast"] .md-content :is(.example)
-{
+[data-theme="high-contrast"] .md-content :is(.example) {
   border-color: #ff00ff !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.example) summary
-{
+[data-theme="high-contrast"] .md-content :is(.example) summary {
   background-color: #ff00ff20 !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.example) summary::after
-{
+[data-theme="high-contrast"] .md-content :is(.example) summary::after {
   color: #ff00ff !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.example) :is(summary, .admonition-title)::before
-{
-  filter: 
-    brightness(0)
-    saturate(100%)
-    invert(17%)
-    sepia(75%)
-    saturate(5424%)
-    hue-rotate(294deg)
-    brightness(116%)
-    contrast(122%);
+[data-theme="high-contrast"]
+  .md-content
+  :is(.example)
+  :is(summary, .admonition-title)::before {
+  filter: brightness(0) saturate(100%) invert(17%) sepia(75%) saturate(5424%)
+    hue-rotate(294deg) brightness(116%) contrast(122%);
 }
 
 /* QUOTE [WHITE] */
-[data-theme="high-contrast"] .md-content :is(.quote)
-{
+[data-theme="high-contrast"] .md-content :is(.quote) {
   border-color: #ffffff !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.quote) summary
-{
+[data-theme="high-contrast"] .md-content :is(.quote) summary {
   background-color: #ffffff20 !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.quote) summary::after
-{
+[data-theme="high-contrast"] .md-content :is(.quote) summary::after {
   color: #ffffff !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.quote) :is(summary, .admonition-title)::before
-{
-  filter: 
-    grayscale()
-    brightness(2);
+[data-theme="high-contrast"]
+  .md-content
+  :is(.quote)
+  :is(summary, .admonition-title)::before {
+  filter: grayscale() brightness(2);
 }

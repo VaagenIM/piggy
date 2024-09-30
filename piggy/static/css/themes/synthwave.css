@@ -14,10 +14,15 @@ description: Fancy sunset, purple, neon, gradients!
   --piggy-text-main: #ffcc66; /* Soft, glowing sunset orange */
   --piggy-text-light: #ff9b9b; /* Warm pink for accents */
   --piggy-text-dark: #ffcb91; /* Sunset orange for text highlights */
-  
+
   --piggy-shadow-text: #ff8c0030; /* Soft orange shadow */
   --piggy-shadow-box: #ff004450; /* Pink shadow for box elements */
-  --piggy-shadow-glow: rgba(255, 140, 0, 0.4); /* Glowing orange sunset effect */
+  --piggy-shadow-glow: rgba(
+    255,
+    140,
+    0,
+    0.4
+  ); /* Glowing orange sunset effect */
 
   /* Piggy sunset card colors */
   --piggy-card-start: rgba(255, 143, 89, 0.3); /* Gradient from orange */
@@ -25,12 +30,27 @@ description: Fancy sunset, purple, neon, gradients!
   --piggy-card-border: #ff9b9b; /* Pinkish sunset border */
   --piggy-text-card: var(--piggy-text-light);
 
-  --piggy-extra-card-start: rgba(241, 169, 160, 0.3); /* Soft pastel pink gradient */
-  --piggy-extra-card-end: rgba(255, 122, 122, 0.3); /* Gentle orange-pink gradient */
+  --piggy-extra-card-start: rgba(
+    241,
+    169,
+    160,
+    0.3
+  ); /* Soft pastel pink gradient */
+  --piggy-extra-card-end: rgba(
+    255,
+    122,
+    122,
+    0.3
+  ); /* Gentle orange-pink gradient */
   --piggy-extra-card-border: #ff8c00; /* Warm orange border */
   --piggy-text-extra-card: #ffffff;
 
-  --piggy-resource-card-start: rgba(255, 200, 85, 0.3); /* Bright sunset yellow */
+  --piggy-resource-card-start: rgba(
+    255,
+    200,
+    85,
+    0.3
+  ); /* Bright sunset yellow */
   --piggy-resource-card-end: rgba(255, 122, 122, 0.3); /* Sunset orange-pink */
   --piggy-resource-card-border: #ffa500; /* Bright orange border */
   --piggy-text-resource-card: #4f4f4f; /* Gray for contrast */
@@ -38,8 +58,16 @@ description: Fancy sunset, purple, neon, gradients!
   --piggy-card-border-width: 1px;
 
   /* Piggy sunset elements */
-  --piggy-navbar-start: rgb(48, 20, 58); /* Deep purple, like the end of sunset */
-  --piggy-navbar-end: rgb(34, 18, 48); /* Darker purple for a cohesive gradient */
+  --piggy-navbar-start: rgb(
+    48,
+    20,
+    58
+  ); /* Deep purple, like the end of sunset */
+  --piggy-navbar-end: rgb(
+    34,
+    18,
+    48
+  ); /* Darker purple for a cohesive gradient */
   --piggy-text-navbar: var(--piggy-light);
 
   --piggy-button: #ff6347; /* Sunset red-orange */

@@ -14,54 +14,56 @@
   )
 %}
   <a
-  href="{{ abspath }}/{{ item }}"
-  class="card-container grid-cols-2 p-3 block {{ extra_classes }}"
+    href="{{ abspath }}/{{ item }}"
+    class="card-container grid-cols-2 p-3 block {{ extra_classes }}"
   >
-  {% if level_count %}
-    <div class="level-count-container text-sm">{{ level_count }} Level{{ 's' if level_count != 1 }}</div>
-  {% endif %}
-
-  {% if title %}
-    <div class="card-title text-2xl font-extrabold text-center pb-2">
-      {{ title }}
-    </div>
-  {% endif %}
-  
-  <div class="thumbnail-container">
-    <img
-      class="thumbnail-image w-full object-cover"
-      src="{{ thumbnail }}"
-      alt="{{ thumbnail_alt }}"
-    />
-
-    {% if difficulty %}
-      {% if difficulty > 0 %}
-        <div class="thumbnail-text-overlay">
-          {% if difficulty > 7 %}
-            <!-- Hardcoded color here, change this-->
-            <span
-              >Difficulty:
-              <span class="difficulty-overkill">⭐ × {{ difficulty }}</span></span
-            >
-          {% else %}
-            <span>Difficulty: {{ difficulty * '⭐' }}</span>
-          {% endif %}
-        </div>
-      {% endif %}
-    {% else %}
-      {% if overlay_text %}
-        <div class="thumbnail-text-overlay">{{ overlay_text }}</div>
-      {% endif %}
+    {% if level_count %}
+      <div class="level-count-container text-sm">
+        {{ level_count }} Level{{ 's' if level_count != 1 }}
+      </div>
     {% endif %}
+
+    {% if title %}
+      <div class="card-title text-2xl font-extrabold text-center pb-2">
+        {{ title }}
+      </div>
+    {% endif %}
+
+    <div class="thumbnail-container">
+      <img
+        class="thumbnail-image w-full object-cover"
+        src="{{ thumbnail }}"
+        alt="{{ thumbnail_alt }}"
+      />
+
+      {% if difficulty %}
+        {% if difficulty > 0 %}
+          <div class="thumbnail-text-overlay">
+            {% if difficulty > 7 %}
+              <!-- Hardcoded color here, change this-->
+              <span
+                >Difficulty:
+                <span class="difficulty-overkill"
+                  >⭐ × {{ difficulty }}</span
+                ></span
+              >
+            {% else %}
+              <span>Difficulty: {{ difficulty * '⭐' }}</span>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% else %}
+        {% if overlay_text %}
+          <div class="thumbnail-text-overlay">{{ overlay_text }}</div>
+        {% endif %}
+      {% endif %}
     </div>
 
     {# Card Tags #}
     {% if tags %}
       <div class="tags-container">
         {% for tag in tags %}
-          <span class="tag-box text-sm" data-tag="{{ tag }}">
-            {{ tag }}
-          </span>
+          <span class="tag-box text-sm" data-tag="{{ tag }}"> {{ tag }} </span>
         {% endfor %}
       </div>
     {% endif %}

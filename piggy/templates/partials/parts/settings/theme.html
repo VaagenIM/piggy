@@ -1,8 +1,10 @@
 <h3 class="settings-title">Theme:</h3>
 <div class="select-container">
-    <select id="theme-select" class="settings-option theme-select">
-        {% for theme in themes %}
-        <option class="theme-option" value="{{ theme.path }}">{{ theme.name }}</option>
-        {% endfor %}
-    </select>
+  <select id="theme-select" class="settings-option theme-select">
+    {% for theme in themes %}
+      <option class="theme-option" value="{{ theme.path }}">
+        {{ theme.name }}
+      </option>
+    {% endfor %}
+  </select>
 </div>

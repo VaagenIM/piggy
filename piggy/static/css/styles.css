@@ -25,9 +25,10 @@
 
 /* Regular */
 @font-face {
-  font-family: 'OpenDyslexic';
-  src: url('/static/fonts/OpenDyslexic-Regular.woff2') format('woff2'),
-       url('/static/fonts/OpenDyslexic-Regular.woff') format('woff');
+  font-family: "OpenDyslexic";
+  src:
+    url("/static/fonts/OpenDyslexic-Regular.woff2") format("woff2"),
+    url("/static/fonts/OpenDyslexic-Regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
   letter-spacing: -10px;
@@ -35,9 +36,10 @@
 
 /* Italic */
 @font-face {
-  font-family: 'OpenDyslexic';
-  src: url('/static/fonts/OpenDyslexic-Italic.woff2') format('woff2'),
-  url('/static/fonts/OpenDyslexic-Italic.woff') format('woff');
+  font-family: "OpenDyslexic";
+  src:
+    url("/static/fonts/OpenDyslexic-Italic.woff2") format("woff2"),
+    url("/static/fonts/OpenDyslexic-Italic.woff") format("woff");
   font-weight: 400;
   font-style: italic;
   letter-spacing: -10px;
@@ -45,9 +47,10 @@
 
 /* Bold */
 @font-face {
-  font-family: 'OpenDyslexic';
-  src: url('/static/fonts/OpenDyslexic-Bold.woff2') format('woff2'),
-       url('/static/fonts/OpenDyslexic-Bold.woff') format('woff');
+  font-family: "OpenDyslexic";
+  src:
+    url("/static/fonts/OpenDyslexic-Bold.woff2") format("woff2"),
+    url("/static/fonts/OpenDyslexic-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   letter-spacing: -10px;
@@ -55,24 +58,25 @@
 
 /* Bold Italic */
 @font-face {
-  font-family: 'OpenDyslexic';
-  src: url('/static/fonts/OpenDyslexic-BoldItalic.woff2') format('woff2'),
-       url('/static/fonts/OpenDyslexic-BoldItalic.woff') format('woff');
+  font-family: "OpenDyslexic";
+  src:
+    url("/static/fonts/OpenDyslexic-BoldItalic.woff2") format("woff2"),
+    url("/static/fonts/OpenDyslexic-BoldItalic.woff") format("woff");
   font-weight: 700;
   font-style: italic;
   letter-spacing: -10px;
 }
 
 @font-face {
-  font-family: 'Lexia';
-  src: url('/static/fonts/LEXIA___.ttf') format('TrueType');
+  font-family: "Lexia";
+  src: url("/static/fonts/LEXIA___.ttf") format("TrueType");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Lexia';
-  src: url('/static/fonts/LEXIB___.ttf') format('TrueType');
+  font-family: "Lexia";
+  src: url("/static/fonts/LEXIB___.ttf") format("TrueType");
   font-weight: 700;
   font-style: normal;
 }
@@ -90,7 +94,12 @@
 |*     ELEMENT OVERRIDES     *|
 \*****************************/
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--piggy-text-main) !important;
 }
 
@@ -107,7 +116,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .card-container {
   position: relative;
-  background: linear-gradient(45deg, var(--piggy-card-start) 0%, var(--piggy-card-end) 100%);
+  background: linear-gradient(
+    45deg,
+    var(--piggy-card-start) 0%,
+    var(--piggy-card-end) 100%
+  );
   color: var(--piggy-text-card);
   transition:
     transform 0.1s ease,
@@ -126,7 +139,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .extra-card {
-  background: linear-gradient(45deg, var(--piggy-extra-card-start) 0%, var(--piggy-extra-card-end) 100%);
+  background: linear-gradient(
+    45deg,
+    var(--piggy-extra-card-start) 0%,
+    var(--piggy-extra-card-end) 100%
+  );
   border: var(--piggy-card-border-width) solid var(--piggy-extra-card-border);
 }
 
@@ -166,7 +183,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .difficulty-overkill {
-  color: var(--piggy-text-main)
+  color: var(--piggy-text-main);
 }
 
 .thumbnail-text-overlay-compact {
@@ -281,7 +298,11 @@ h1, h2, h3, h4, h5, h6 {
 |*     NAVIGATION MENU     *|
 \***************************/
 .piggy-navbar {
-  background: linear-gradient(90deg, var(--piggy-navbar-start) 0%, var(--piggy-navbar-end) 100%);
+  background: linear-gradient(
+    90deg,
+    var(--piggy-navbar-start) 0%,
+    var(--piggy-navbar-end) 100%
+  );
 }
 
 .piggy-breadcrumb {
@@ -394,7 +415,11 @@ h1, h2, h3, h4, h5, h6 {
 #meta-container {
   display: flex;
   align-items: center;
-  background: linear-gradient(90deg, var(--piggy-navbar-start) 0%, var(--piggy-navbar-end) 100%);
+  background: linear-gradient(
+    90deg,
+    var(--piggy-navbar-start) 0%,
+    var(--piggy-navbar-end) 100%
+  );
   border-top: 2px solid var(--piggy-card-start);
 }
 
@@ -458,7 +483,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Tooltip Arrow */
 #level-container .nav-tooltip::after {
-  content: '';
+  content: "";
   position: absolute;
   top: -12px;
   left: 50%;
@@ -602,11 +627,11 @@ details p:nth-child(2) {
   padding: initial;
 }
 
-.md-content h1, 
-.md-content h2, 
-.md-content h3, 
-.md-content h4, 
-.md-content h5, 
+.md-content h1,
+.md-content h2,
+.md-content h3,
+.md-content h4,
+.md-content h5,
 .md-content h6 {
   font-weight: bold !important;
   margin-top: 1.35rem !important;
@@ -633,7 +658,7 @@ details p:nth-child(2) {
 }
 
 .md-content h6 {
-  font-size: 1.00rem !important;
+  font-size: 1rem !important;
 }
 
 .md-content p {
@@ -676,5 +701,5 @@ details p:nth-child(2) {
 
 .md-content blockquote {
   color: var(--piggy-neutral) !important;
-  border-left: .2rem solid var(--piggy-neutral) !important;
+  border-left: 0.2rem solid var(--piggy-neutral) !important;
 }
