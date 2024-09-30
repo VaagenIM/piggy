@@ -8,10 +8,12 @@ description: The default dark theme.
   /* piggy colors */
   --piggy-main: rgb(34, 41, 47); /* A darker, more muted tone */
   --piggy-light: #f0f4f8; /* A soft off-white */
+  --piggy-neutral: #60656B; /* Gray */
   --piggy-dark: rgb(51, 61, 71); /* Darker tone with reduced contrast */
 
   --piggy-text-main: var(--piggy-light);
   --piggy-text-light: var(--piggy-light);
+  --piggy-text-neutral: var(--piggy-neutral);
   --piggy-text-dark: var(--piggy-dark);
   
   --piggy-shadow-text: #00000029; /* Softer shadows */

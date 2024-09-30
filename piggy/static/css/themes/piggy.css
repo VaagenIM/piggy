@@ -7,6 +7,7 @@ description: Relaxing pastel pink theme.
 [data-theme="piggy"] {
   --piggy-main: #ffe6e9; /* Soft pink background */
   --piggy-light: #ffffff; /* White for highlights */
+  --piggy-neutral: #7a6e72; /* Gray */
   --piggy-dark: #4d4d4d; /* Dark gray for text contrast */
   
   --piggy-text-main: var(--piggy-dark); /* Dark text for readability */

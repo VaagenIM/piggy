@@ -6,6 +6,7 @@ description: High contrast theme for maximum visibility.
 [data-theme="high-contrast"] {
   --piggy-main: #000000; /* Pure black background */
   --piggy-light: #ffffff; /* Pure white for high contrast text */
+  --piggy-neutral: #7f7f7f; /* Gray */
   --piggy-dark: #ffffff; /* White text for maximum contrast */
   
   --piggy-text-main: var(--piggy-light); /* White text for readability */
