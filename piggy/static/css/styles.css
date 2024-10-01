@@ -231,37 +231,6 @@ h6 {
   display: none;
 }
 
-.piggy-button {
-  padding: 5px 15px 5px 15px;
-  background-color: var(--piggy-button);
-  color: var(--piggy-text-button);
-  border-radius: 5px;
-}
-
-.piggy-button:not(.no-hover):hover {
-  background-color: var(--piggy-button-hover);
-}
-
-.see-more {
-  display: none;
-  cursor: pointer;
-  background-color: var(--piggy-button);
-  color: var(--piggy-text-button);
-  padding: 0.1rem;
-  border-radius: 2rem;
-  text-align: center;
-  margin-top: 0.5rem;
-  transition: background-color 0.1s ease;
-}
-
-.see-more:hover {
-  background-color: var(--piggy-button-hover);
-}
-
-.tags-container + .see-more {
-  display: block;
-}
-
 .tag-box {
   margin: 2px 2px 2px 2px;
   box-shadow: inset 0px 0px 5px 0 var(--piggy-shadow-box);
@@ -310,34 +279,15 @@ h6 {
   font-size: var(--piggy-font-size);
 }
 
-.piggy-breadcrumb:hover {
+.piggy-breadcrumb:not(.no-hover):hover {
   color: var(--piggy-text-breadcrumb-hover);
   transition: color 0.2s ease;
-  font-size: var(--piggy-font-size);
-}
-
-.piggy-breadcrumb-no-hover {
-  color: var(--piggy-text-breadcrumb);
   font-size: var(--piggy-font-size);
 }
 
 /*************************\
 |*     SETTINGS MENU     *|
 \*************************/
-#settings-btn {
-  background-color: var(--piggy-button);
-  color: var(--piggy-text-button);
-  border: 1px solid var(--piggy-dark);
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-  flex-shrink: 0;
-}
-
-#settings-btn:hover {
-  background-color: var(--piggy-button-hover);
-}
 
 /* Settings Menu */
 .settings-menu {
@@ -360,7 +310,7 @@ h6 {
 }
 
 /* Close Button */
-.settings-menu .closebtn {
+.settings-menu .close-button {
   position: absolute;
   top: 20px;
   left: 20px;
@@ -372,23 +322,6 @@ h6 {
 .settings-content {
   width: 300px;
   padding: 60px 20px 20px 20px; /* Top padding to push content below the close button */
-}
-
-/* Theme Select */
-.settings-option {
-  width: 100%; /* Occupies full width of its container */
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  border: 1px solid var(--piggy-dark);
-  background-color: var(--piggy-button);
-  color: var(--piggy-text-button);
-  cursor: pointer;
-  appearance: none; /* Removes default styles for consistent appearance */
-}
-
-.settings-option:hover {
-  background-color: var(--piggy-button-hover);
 }
 
 .theme-select option {

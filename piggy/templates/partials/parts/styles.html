@@ -55,6 +55,11 @@
   rel="stylesheet"
 />
 
+<link
+  href="{{ url_for('static', filename='css/snout.css') }}"
+  rel="stylesheet"
+/>
+
 {% for theme_file in themes %}
   <link
     href="{{ url_for('static', filename='css/themes/' + theme_file.path + '.css') }}"

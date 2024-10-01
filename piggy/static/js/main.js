@@ -1,9 +1,9 @@
 // Get elements
 const settingsMenu = document.getElementById("settings-menu");
-const settingsBtn = document.getElementById("settings-btn");
-const closeBtn = document.querySelector(".settings-menu .closebtn");
+const settingsButton = document.getElementById("settings-button");
+const closeButton = document.querySelector(".settings-menu .close-button");
 const themeSelect = document.getElementById("theme-select");
-const dyslexiaBtn = document.getElementById("dyslexia-button");
+const dyslexiaButton = document.getElementById("dyslexia-button");
 // Declared in on-load.js
 // const currentTheme = localStorage.getItem("theme") || "dark";
 // const fontTheme = localStorage.getItem("data-font-theme") || "default";
@@ -33,32 +33,33 @@ function toggleDyslexia() {
   if (fontTheme === "default") {
     document.documentElement.setAttribute("data-font-theme", "dyslexia");
     localStorage.setItem("data-font-theme", "dyslexia"); // Save theme to localStorage
-    dyslexiaBtn.innerHTML = "Dyslexia Friendly Mode [✅]";
+    dyslexiaButton.innerHTML = "Dyslexia Friendly Mode [✅]";
   } else {
     document.documentElement.setAttribute("data-font-theme", "default");
     localStorage.setItem("data-font-theme", "default"); // Save theme to localStorage
-    dyslexiaBtn.innerHTML = "Dyslexia Friendly Mode";
+    dyslexiaButton.innerHTML = "Dyslexia Friendly Mode";
   }
 
   pageTransition();
 }
 
+// TODO: fix this:
 if (fontTheme === "default") {
-  dyslexiaBtn.innerHTML = "Dyslexia Friendly Mode";
+  dyslexiaButton.innerHTML = "Dyslexia Friendly Mode";
 } else {
-  dyslexiaBtn.innerHTML = "Dyslexia Friendly Mode [✔]";
+  dyslexiaButton.innerHTML = "Dyslexia Friendly Mode [✅]";
 }
 
 // Set the selected option based on the current theme
 themeSelect.value = currentTheme;
 
 // Event listener for the Settings button
-settingsBtn.addEventListener("click", openSettingsMenu);
+settingsButton.addEventListener("click", openSettingsMenu);
 
 // Event listener for the Close button inside the menu
-closeBtn.addEventListener("click", closeSettingsMenu);
+closeButton.addEventListener("click", closeSettingsMenu);
 
-dyslexiaBtn.addEventListener("click", toggleDyslexia);
+dyslexiaButton.addEventListener("click", toggleDyslexia);
 
 // Event listener for theme selection change
 themeSelect.addEventListener("change", function () {
@@ -74,7 +75,7 @@ window.addEventListener("click", function (event) {
   if (
     settingsMenu.classList.contains("open") && // Only if the menu is open
     !settingsMenu.contains(event.target) && // Click is outside the menu
-    event.target !== settingsBtn // Click is not on the settings button
+    event.target !== settingsButton // Click is not on the settings button
   ) {
     closeSettingsMenu();
   }
