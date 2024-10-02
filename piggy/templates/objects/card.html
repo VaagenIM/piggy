@@ -61,9 +61,14 @@
 
     {# Card Tags #}
     {% if tags %}
-      <div class="tags-container">
+      <div class="tags-container mt-2">
         {% for tag in tags %}
-          <span class="tag-box text-sm" data-tag="{{ tag }}"> {{ tag }} </span>
+          <span
+            class="tag-box inline-block text-sm px-2 py-1 rounded-full font-semibold"
+            data-tag="{{ tag }}"
+          >
+            {{ tag }}
+          </span>
         {% endfor %}
       </div>
     {% endif %}

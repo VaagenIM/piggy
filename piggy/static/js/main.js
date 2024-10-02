@@ -1,7 +1,7 @@
 // Get elements
 const settingsMenu = document.getElementById("settings-menu");
 const settingsButton = document.getElementById("settings-button");
-const closeButton = document.querySelector(".settings-menu .close-button");
+const closeButton = document.querySelector("#settings-menu .close-button");
 const themeSelect = document.getElementById("theme-select");
 const dyslexiaButton = document.getElementById("dyslexia-button");
 // Declared in on-load.js

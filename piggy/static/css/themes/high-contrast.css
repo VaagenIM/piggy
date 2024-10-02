@@ -81,6 +81,8 @@ description: High contrast theme for maximum visibility.
 
 [data-theme="high-contrast"] .tag-box {
   border-radius: 0px;
+  border-color: white !important;
+  background-color: transparent !important;
   border-width: var(--piggy-card-border-width);
   margin-top: 5px;
 }
@@ -93,18 +95,8 @@ description: High contrast theme for maximum visibility.
   border-bottom: var(--piggy-card-border-width) solid white;
 }
 
-[data-theme="high-contrast"] .piggy-button {
+[data-theme="high-contrast"] .snout-button {
   border-width: var(--piggy-card-border-width);
-  border-radius: 0px !important;
-}
-
-[data-theme="high-contrast"] .assignment-level {
-  border-width: 2px;
-  border-radius: 0px !important;
-}
-
-[data-theme="high-contrast"] .dropbtn {
-  border-width: 3px !important;
   border-radius: 0px !important;
 }
 
@@ -124,12 +116,12 @@ description: High contrast theme for maximum visibility.
   left: 11px;
 }
 
-[data-theme="high-contrast"] .settings-menu {
+[data-theme="high-contrast"] #settings-menu {
   background-color: black;
   border-left: 4px solid white;
 }
 
-[data-theme="high-contrast"] .theme-select option {
+[data-theme="high-contrast"] #theme-select option {
   background-color: black;
 }
 
@@ -143,12 +135,6 @@ description: High contrast theme for maximum visibility.
   border-width: 3px;
 }
 
-[data-theme="high-contrast"] .tag-box {
-  background-color: transparent !important;
-  border-color: white !important;
-  border-width: 3px;
-}
-
 /* Tooltip Text */
 [data-theme="high-contrast"] #level-container .nav-tooltip {
   border-radius: 0px;
@@ -159,12 +145,6 @@ description: High contrast theme for maximum visibility.
 /* Tooltip Text */
 [data-theme="high-contrast"] #level-container .nav-tooltip::after {
   border-width: 0;
-}
-
-[data-theme="high-contrast"] #language-container .dropbtn {
-  border-radius: 0px;
-  border-width: 1px;
-  background-color: black;
 }
 
 [data-theme="high-contrast"] #language-container .language-dropdown {
@@ -237,8 +217,54 @@ description: High contrast theme for maximum visibility.
   border: 2px solid white;
   border-radius: 0px !important;
   background-color: black;
-  filter: contrast(2);
+  filter: contrast(1.35);
 }
+
+/* POTENTIAL COLORS FOR CODE?
+[data-theme="high-contrast"] .md-content .md-code__content .nt {
+  color: #ff0000;
+}
+
+[data-theme="high-contrast"] .md-content .md-code__content .k {
+  color: #6a5acd;
+}
+
+[data-theme="high-contrast"] .md-content .md-code__content .p {
+  color: #ff69b4;
+}
+
+[data-theme="high-contrast"] .md-content .md-code__content .n {
+  color: #ffff00;
+}
+
+[data-theme="high-contrast"] .md-content .md-code__content .mh {
+  color: #00ff00;
+}
+
+[data-theme="high-contrast"] .md-content .md-code__content .mi {
+  color: #f4a460;
+}
+
+[data-theme="high-contrast"] .md-content .md-code__content .kt {
+  color: #0000ff;
+}
+
+[data-theme="high-contrast"] .md-content .md-code__content .nd {
+  color: #ff00ff;
+}
+
+[data-theme="high-contrast"] .md-content .md-code__content .nc {
+  color: #90ee90;
+}
+
+[data-theme="high-contrast"] .md-content .md-code__content .kc {
+  color: #87cefa;
+}
+
+[data-theme="high-contrast"] .md-content .md-code__content span {
+  color: #ffffff;
+}
+*/
 
 /************************\
 |*     DETAIL BOXES     *|

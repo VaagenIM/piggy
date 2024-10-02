@@ -1,13 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@layer components {
-  .tags-container {
-    @apply mt-2;
-  }
-
-  .tag-box {
-    @apply inline-block text-xs px-2 py-1 rounded-full font-semibold;
-  }
-}
