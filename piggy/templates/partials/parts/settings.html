@@ -1,9 +1,11 @@
-<button id="settings-btn">⚙️ Settings</button>
+<button id="settings-button" class="snout-button snout-padding-m snout-border">
+  ⚙️ Settings
+</button>
 
 <!-- Settings Menu -->
-<div id="settings-menu" class="settings-menu">
+<div id="settings-menu">
   <!-- Close Button -->
-  <a href="javascript:void(0)" class="closebtn">&times;</a>
+  <a href="javascript:void(0)" class="close-button">&times;</a>
   <div class="settings-content">
     <!-- Theme Selection -->
     {% include 'partials/parts/settings/theme.html' %}
