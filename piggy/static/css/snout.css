@@ -1,0 +1,50 @@
+/*************************\
+|* SNOUT UTILITY CLASSES *|
+\*************************/
+
+/********************\
+|*     ELEMENTS     *|
+\********************/
+.snout-button {
+  background-color: var(--piggy-button);
+  color: var(--piggy-text-button);
+}
+
+.snout-button:not(.no-hover, .active):hover {
+  background-color: var(--piggy-button-hover);
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.snout-button.active {
+  background-color: var(--piggy-button-active);
+  color: var(--piggy-text-button);
+}
+
+/*******************\
+|*     SPACING     *|
+\*******************/
+.snout-padding-s {
+  padding: 0.15rem 0.35rem 0.15rem 0.35rem;
+}
+
+.snout-padding-m {
+  padding: 0.25rem 0.6rem 0.25rem 0.6rem;
+}
+
+.snout-padding-l {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.snout-padding-xl {
+  padding: 0.75rem 1.25rem 0.75rem 1.25rem;
+}
+
+.snout-border {
+  border: 1px solid var(--piggy-dark);
+  border-radius: 5px;
+}
+
+.snout-full-width {
+  width: 100%;
+}
