@@ -9,7 +9,7 @@
   <div id="meta-container">
     <div id="language-container">
       <button class="snout-button snout-border snout-padding-m">
-        <span class="language-flag">{{ current_language.flag }}</span>
+        {# <span class="language-flag">{{ current_language.flag }}</span> #} 🌐
         {{ current_language.name }}
       </button>
       <div class="language-dropdown">
@@ -21,7 +21,7 @@
               onclick="document.cookie = 'lang={{ lang }}'; location.reload();"
             {% endif %}
           >
-            <span class="language-flag">{{ val.flag }}</span>
+            {# <span class="language-flag">{{ val.flag }}</span> #}
             {{ val.name }}
           </a>
         {% endfor %}
