@@ -91,10 +91,14 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
         meta["summary"] = generate_summary_from_mkdocs_html(sections["body"])
     assignment_data.pop("meta")
 
+    all_metadata = dict({**meta, **get_all_meta_from_path(str(p.parent), PIGGYMAP), **extra_metadata})
+    # Set the title to the assignment's title
+    all_metadata["title"] = sections["meta"]["title"]
+
     render = render_template(
         AssignmentTemplate.ASSIGNMENT.template,
         content=sections,
-        meta={**meta, **get_all_meta_from_path(str(p.parent), PIGGYMAP), **extra_metadata},
+        meta=all_metadata,
         current_language=current_language,
         supported_languages=get_supported_languages(assignment_path=assignment_path),
         media_abspath=f"/{MEDIA_ROUTE}/{p.parent}",
