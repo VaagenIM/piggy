@@ -23,6 +23,18 @@
 |*     FONT IMPORTS     *|
 \************************/
 
+/* Emoji Font*/
+@font-face {
+  font-family: "Emoji";
+  src: url("/static/fonts/emoji-font.ttf") format("TrueType");
+  font-weight: 700;
+  font-style: normal;
+}
+
+.language-flag {
+  font-family: "Emoji", sans-serif !important;
+}
+
 /* Regular */
 @font-face {
   font-family: "OpenDyslexic";
@@ -84,6 +96,10 @@
 [data-font-theme="dyslexia"] *:not(code *, code) {
   font-family: "Lexia", "Comic Sans MS", sans-serif;
   letter-spacing: 0px;
+}
+
+[data-font-theme="dyslexia"] .language-flag {
+  font-family: "Emoji", sans-serif !important;
 }
 
 [data-font-theme="default"] * {
@@ -392,9 +408,12 @@ h6 {
 \****************************/
 #language-container {
   position: relative;
-  margin: 10px 2px 10px 10px;
+  margin: 10px;
   z-index: 1000; /* Ensure it stays above other content */
-  min-width: 175px;
+}
+
+#language-container .snout-button {
+  min-width: 150px;
 }
 
 #language-container .language-dropdown {
@@ -408,11 +427,14 @@ h6 {
   top: 100%; /* Position the dropdown below the button */
   left: 0;
   z-index: 1000;
+
+  max-height: calc(100svh - 40svh);
+  overflow-y: auto;
 }
 
 #language-container .language-dropdown a {
   color: var(--piggy-menu-text);
-  padding: 8px 16px;
+  padding: 5px 10px;
   text-decoration: none;
   border-radius: 0px;
   display: block;
