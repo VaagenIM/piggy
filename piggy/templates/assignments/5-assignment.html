@@ -31,19 +31,24 @@
     <!-- Level Selection Menu -->
     <nav id="level-container">
       {% for link, assignment in meta.get(AssignmentTemplate.LEVELS_DATA.name).data.items() %}
+        {% if current_language.key and current_language.key in assignment.translation_meta %}
+          {% set level_meta = assignment.translation_meta[current_language.key] %}
+        {% else %}
+          {% set level_meta = assignment.meta %}
+        {% endif %}
         {% if assignment.level | int == level | int %}
           <!-- Current Level (Non-clickable) -->
           <div class="snout-button snout-border snout-padding-m active">
             <span> Level {{ assignment.level }} </span>
             <!-- Tooltip -->
-            <div class="nav-tooltip">{{ assignment.meta.title }}</div>
+            <div class="nav-tooltip">{{ level_meta.title }}</div>
           </div>
         {% else %}
           <!-- Other Levels (Clickable) -->
           <div class="snout-button snout-border snout-padding-m">
             <a href="{{ link }}"> Level {{ assignment.level }} </a>
             <!-- Tooltip -->
-            <div class="nav-tooltip">{{ assignment.meta.title }}</div>
+            <div class="nav-tooltip">{{ level_meta.title }}</div>
           </div>
         {% endif %}
       {% endfor %}

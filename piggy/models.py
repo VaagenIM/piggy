@@ -1,6 +1,5 @@
-LANGUAGES = {
+_LANGUAGES = {
     "": {"name": "Norsk", "flag": "🇳🇴"},  # Default language
-
     "aar": {"name": "Afaraf", "flag": "🇪🇷"},  # Eritrea
     "abk": {"name": "Аҧсуа", "flag": "🇬🇪"},  # Georgia (Abkhazia)
     "ace": {"name": "Bahsa Acèh", "flag": "🇮🇩"},  # Indonesia
@@ -206,3 +205,6 @@ LANGUAGES = {
     "zho": {"name": "中文", "flag": "🇨🇳"},  # China
     "zul": {"name": "isiZulu", "flag": "🇿🇦"},  # South Africa
 }
+
+# Add key to all languages for ease of use
+LANGUAGES = {k: {"key": k, **v} for k, v in _LANGUAGES.items()}
