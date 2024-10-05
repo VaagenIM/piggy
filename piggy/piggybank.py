@@ -1,5 +1,6 @@
 import json
 import os
+import timeit
 from pathlib import Path
 
 from frozendict.cool import deepfreeze
@@ -158,13 +159,13 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
     return recursive_sort(piggymap)
 
 
-# Piggymap must be hashable for sooper dooper speed
-PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
-
-
-# DEVTOOL
-def __update_piggymap():
-    global PIGGYMAP
-    print("Rebuilding piggymap")
+# Build the piggymap
+start_time = timeit.default_timer()
+print("Building piggymap")
+# If we are in debug mode, we want to rebuild the piggymap on every request, but only in the main process
+if os.environ.get("WERKZEUG_RUN_MAIN") != "true" and os.environ.get("FLASK_DEBUG") == "1":
+    PIGGYMAP = {}
+# Else block = production mode
+else:
     PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
-    print("Piggymap rebuilt")
+print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")
