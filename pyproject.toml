@@ -10,7 +10,7 @@ dependencies = [
     "gunicorn~=23.0.0",
     "pillow~=10.4.0",
     "beautifulsoup4~=4.12.3",
-    "frozendict==2.4.5",
+    "frozendict==2.4.6",
     "flask-compress==1.15",
     "Flask-Minify==0.48",
 ]
