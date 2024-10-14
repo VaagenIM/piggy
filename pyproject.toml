@@ -11,7 +11,7 @@ dependencies = [
     "pillow~=10.4.0",
     "beautifulsoup4~=4.12.3",
     "frozendict==2.4.5",
-    "flask-compress==1.15",
+    "flask-compress==1.17",
     "Flask-Minify==0.48",
 ]
 
