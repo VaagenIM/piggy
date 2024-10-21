@@ -1,27 +1,17 @@
-function checkTagsVisibility() {
-  const tagsContainers = document.querySelectorAll(".tags-container");
-  tagsContainers.forEach((container) => {
-    const seeMoreButton = container.nextElementSibling;
-    if (container.scrollHeight > container.clientHeight) {
-      seeMoreButton.style.display = "block";
-      container.classList.add("fade");
-    } else {
-      seeMoreButton.style.display = "none";
-      container.classList.remove("fade");
-    }
-  });
-}
-
-function toggleTags(button) {
-  const tagsContainer = button.previousElementSibling;
-  tagsContainer.classList.toggle("expanded");
-  button.textContent = tagsContainer.classList.contains("expanded")
-    ? "Se færre"
-    : "Se flere";
-}
+const COLOR_PRESETS = {
+  python: "#0022aa",
+  javascript: "#ff4400",
+  java: "#4400ff",
+};
 
 // Function to generate a color from a string (tag text)
 function stringToColor(str, transparency = "FF") {
+  str = str.toLowerCase();
+
+  if (COLOR_PRESETS.hasOwnProperty(str)) {
+    return COLOR_PRESETS[str] + transparency;
+  }
+
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
