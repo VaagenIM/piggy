@@ -52,11 +52,9 @@ if __name__ == "__main__":
     # Import after setting the environment variables for testing
     from piggy.app import create_app
     from piggy.devtools import inject_devtools
-    from piggy.piggybank import __update_piggymap
 
     app = create_app(debug=os.environ.get("FLASK_DEBUG", False) == "1")
     inject_devtools(app)  # Inject devtools
-    __update_piggymap()  # Run on every reload
 
     app.run(port=5001)
 else:

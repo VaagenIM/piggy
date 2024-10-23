@@ -17,17 +17,13 @@
     href="{{ abspath }}/{{ item }}"
     class="card-container grid-cols-2 p-3 block {{ extra_classes }}"
   >
-    {% if level_count %}
-      <div class="level-count-container text-sm">
-        {{ level_count }} Level{{ 's' if level_count != 1 }}
-      </div>
-    {% endif %}
-
-    {% if title %}
-      <div class="card-title text-2xl font-extrabold text-center pb-2">
-        {{ title }}
-      </div>
-    {% endif %}
+    <div class="card-header">
+      {% if title %}
+        <div class="card-title text-2xl font-extrabold text-center pb-2">
+          {{ title }}
+        </div>
+      {% endif %}
+    </div>
 
     <div class="thumbnail-container">
       <img
@@ -35,6 +31,12 @@
         src="{{ thumbnail }}"
         alt="{{ thumbnail_alt }}"
       />
+
+      {% if level_count and level_count > 1 %}
+        <div class="level-count-container text-sm">
+          {{ level_count }} Level{{ 's' if level_count != 1 }}
+        </div>
+      {% endif %}
 
       {% if difficulty %}
         {% if difficulty > 0 %}

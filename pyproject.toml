@@ -8,10 +8,10 @@ dependencies = [
     "flask~=3.0.3",
     "turtleconverter@git+https://github.com/sondregronas/turtleconverter@main",
     "gunicorn~=23.0.0",
-    "pillow~=10.4.0",
+    "pillow~=11.0.0",
     "beautifulsoup4~=4.12.3",
-    "frozendict==2.4.4",
-    "flask-compress==1.15",
+    "frozendict==2.4.6",
+    "flask-compress==1.17",
     "Flask-Minify==0.48",
 ]
 
@@ -23,7 +23,7 @@ py-modules = []
 
 [project.optional-dependencies]
 dev = [
-    "ruff~=0.6.3",
+    "ruff~=0.7.0",
 ]
 
 [tool.ruff]
