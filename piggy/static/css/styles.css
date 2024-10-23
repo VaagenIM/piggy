@@ -102,7 +102,8 @@
   font-family: "Emoji", sans-serif !important;
 }
 
-[data-font-theme="default"] * {
+[data-font-theme="default"] header {
+  font-family: "Quicksand", sans-serif;
   letter-spacing: 0px;
 }
 
