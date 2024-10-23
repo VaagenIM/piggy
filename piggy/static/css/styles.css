@@ -102,7 +102,8 @@
   font-family: "Emoji", sans-serif !important;
 }
 
-[data-font-theme="default"] * {
+[data-font-theme="default"] header {
+  font-family: "Quicksand", sans-serif;
   letter-spacing: 0px;
 }
 
@@ -173,6 +174,12 @@ h6 {
 
 .card-title {
   color: var(--piggy-text-title);
+  width: 100%;
+  text-align: center;
+}
+
+.card-header {
+  display: flex;
 }
 
 .thumbnail-container {
@@ -231,11 +238,15 @@ h6 {
 /* TODO: Fix this to not overlap text */
 .level-count-container {
   position: absolute;
+  top: 5px;
+  right: 0;
   color: var(--piggy-light);
-  background-color: var(--piggy-main);
-  width: max-content;
+  background-color: var(--piggy-dark);
   padding: 5px 10px 5px 10px;
+  margin-right: 5px;
   border-radius: 2rem;
+  height: max-content;
+  white-space: nowrap;
 }
 
 /***************************\

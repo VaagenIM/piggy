@@ -8,13 +8,17 @@
     <div
       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
     >
-      {% for item, data in segment.items() %}
-        {% if data.meta.type != "extra" %}
-          {% include 'objects/card-topic.html' %}
-        {% else %}
-          {% set ns.extra_content = true %}
-        {% endif %}
-      {% endfor %}
+      {% if segment.items()|length > 0 %}
+        {% for item, data in segment.items() %}
+          {% if data.meta.type != "extra" %}
+            {% include 'objects/card-topic.html' %}
+          {% else %}
+            {% set ns.extra_content = true %}
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        Hmm... There doesn't seem to be anything here!
+      {% endif %}
     </div>
     {% if ns.extra_content %}
       <br />
