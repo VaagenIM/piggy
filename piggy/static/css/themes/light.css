@@ -129,3 +129,7 @@ description: The default light theme.
   background-color: #f4f4f4;
   color: var(--piggy-dark);
 }
+
+[data-theme="light"] .md-content .tabbed-labels::before {
+  border-color: var(--piggy-dark);
+}

@@ -79,3 +79,7 @@ description: The default dark theme.
 [data-theme="dark"] .md-content th {
   background-color: #4a6783;
 }
+
+[data-theme="dark"] .md-content .tabbed-set {
+  background: #ffffff0a;
+}
