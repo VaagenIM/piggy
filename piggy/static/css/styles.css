@@ -93,7 +93,7 @@
   font-style: normal;
 }
 
-[data-font-theme="dyslexia"] *:not(code *, code) {
+[data-font-theme="dyslexia"] *:not(code *, code, .MathJax *) {
   font-family: "Lexia", "Comic Sans MS", sans-serif;
   letter-spacing: 0px;
 }
@@ -594,4 +594,40 @@ details p:nth-child(2) {
 .md-content blockquote {
   color: var(--piggy-neutral) !important;
   border-left: 0.2rem solid var(--piggy-neutral) !important;
+}
+
+.md-content .tabbed-labels {
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: var(--piggy-dark);
+}
+
+.md-content .tabbed-labels::before {
+  border-width: 0px 0px 3px 0px;
+  border-style: solid;
+  border-color: var(--piggy-light);
+}
+
+.md-content .tabbed-labels a {
+  font-size: 0.9rem !important;
+  color: var(--piggy-text-hyperlink) !important;
+}
+
+.md-content .MJX-TEX {
+  font-family: "Noto Sans Math", "Times New Roman", Times, sans-serif !important;
+}
+
+.md-content .MathJax {
+  text-align: left !important;
+  font-size: 1rem !important;
+}
+
+.md-content .tabbed-set {
+  border: 1px solid var(--piggy-neutral);
+  border-radius: 5px !important;
+  background: #0000000a;
+}
+
+.md-content .tabbed-content {
+  padding: 0rem 1rem 0rem 1rem;
 }

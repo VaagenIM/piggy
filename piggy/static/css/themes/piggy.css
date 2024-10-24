@@ -113,3 +113,7 @@ description: Relaxing pastel pink theme.
   background-color: #e0e0e0;
   color: var(--piggy-dark);
 }
+
+[data-theme="piggy"] .md-content .tabbed-labels::before {
+  border-color: var(--piggy-dark);
+}

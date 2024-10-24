@@ -112,3 +112,11 @@ description: A dark pink theme.
   background-color: #271a1d;
   color: var(--piggy-dark);
 }
+
+[data-theme="piggy-dark"] .md-content .tabbed-labels::before {
+  border-color: var(--piggy-dark);
+}
+
+[data-theme="piggy-dark"] .md-content .tabbed-set {
+  background: #ffffff0a;
+}

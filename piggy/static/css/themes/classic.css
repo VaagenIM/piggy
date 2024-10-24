@@ -114,3 +114,11 @@ description: The classic look of piggy!
   background-color: #e0e0e0;
   color: var(--piggy-dark);
 }
+
+[data-theme="classic"] .md-content .tabbed-labels::before {
+  border-color: var(--piggy-dark);
+}
+
+[data-theme="classic"] .md-content .tabbed-set {
+  background: #0000000a;
+}

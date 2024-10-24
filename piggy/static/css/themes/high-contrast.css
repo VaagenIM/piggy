@@ -220,6 +220,12 @@ description: High contrast theme for maximum visibility.
   filter: contrast(1.35);
 }
 
+[data-theme="high-contrast"] .md-content .tabbed-set {
+  border: 2px solid white;
+  border-radius: 0 !important;
+  background: #00000000;
+}
+
 /* POTENTIAL COLORS FOR CODE?
 [data-theme="high-contrast"] .md-content .md-code__content .nt {
   color: #ff0000;
