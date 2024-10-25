@@ -128,6 +128,28 @@ h6 {
   color: var(--piggy-text-main);
   text-shadow: var(--piggy-shadow-text) 3px 3px 5px;
   font-size: var(--piggy-font-size);
+  padding-bottom: 5rem;
+}
+
+.main-title {
+  font-size: 5rem;
+}
+
+.page-title {
+  font-size: 3rem;
+}
+
+@media screen and (max-width: 800px) {
+  .page-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .page-title {
+    font-size: 2.25rem;
+    word-wrap: break-word;
+  }
 }
 
 /*****************\
@@ -274,6 +296,7 @@ h6 {
 /*************************\
 |*     SETTINGS MENU     *|
 \*************************/
+
 #settings-menu {
   position: fixed;
   top: 0;
@@ -600,17 +623,22 @@ details p:nth-child(2) {
   border-width: 0px 0px 1px 0px;
   border-style: solid;
   border-color: var(--piggy-dark);
+  margin: 0 !important;
+  padding: 0rem 0.5rem 0rem 0.5rem !important;
 }
 
 .md-content .tabbed-labels::before {
   border-width: 0px 0px 3px 0px;
   border-style: solid;
   border-color: var(--piggy-light);
+  padding-top: 100%;
+  z-index: -1;
+  background-color: #0000003a !important;
 }
 
 .md-content .tabbed-labels a {
   font-size: 0.9rem !important;
-  color: var(--piggy-text-hyperlink) !important;
+  color: var(--piggy-text-main) !important;
 }
 
 .md-content .MJX-TEX {

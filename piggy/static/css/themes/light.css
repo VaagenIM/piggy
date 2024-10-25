@@ -132,4 +132,5 @@ description: The default light theme.
 
 [data-theme="light"] .md-content .tabbed-labels::before {
   border-color: var(--piggy-dark);
+  background-color: #8888883a !important;
 }
