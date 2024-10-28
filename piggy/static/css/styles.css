@@ -293,10 +293,92 @@ h6 {
   font-size: var(--piggy-font-size);
 }
 
+/**********************\
+|*     SEARCH BOX     *|
+\**********************/
+/* Center the search container */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Input wrapper for positioning */
+.search-input-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+}
+
+/* Style the input */
+.search-input {
+  width: 100%;
+  padding: 8px 15px 8px 60px; /* Adjusted left padding for icon and separator */
+  border: 1px solid var(--piggy-neutral);
+  border-radius: 25px;
+  background-color: var(--piggy-main);
+  color: var(--piggy-text-main);
+  font-size: 16px;
+  outline: none;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+/* Placeholder text color */
+.search-input::placeholder {
+  color: var(--piggy-text-neutral);
+}
+
+/* Input focus styles */
+.search-input:focus {
+  border-color: var(--piggy-button-hover);
+  box-shadow: 0 0 5px var(--piggy-shadow-glow);
+}
+
+/* Style the icon container */
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 1px; /* Adjust to align vertically */
+  bottom: 1px; /* Adjust to align vertically */
+  display: flex;
+  align-items: center;
+  padding-right: 20px; /* Space between icon and separator */
+  color: var(--piggy-text-neutral);
+}
+
+/* Icon size */
+.search-icon-svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Vertical separator using ::after */
+.search-icon::after {
+  content: "";
+  display: block;
+  width: 1px;
+  background-color: var(--piggy-neutral);
+  height: 100%; /* Full height */
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 800px) {
+  .search-input-wrapper {
+    width: 85%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .search-input-wrapper {
+    width: 95%;
+  }
+}
+
 /*************************\
 |*     SETTINGS MENU     *|
 \*************************/
-
 #settings-menu {
   position: fixed;
   top: 0;
