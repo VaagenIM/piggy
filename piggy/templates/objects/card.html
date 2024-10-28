@@ -15,7 +15,11 @@
 %}
   <a
     href="{{ abspath }}/{{ item }}"
-    class="card-container grid-cols-2 p-3 block {{ extra_classes }}"
+    class="card card-container grid-cols-2 p-3 block {{ extra_classes }}"
+    data-title="{{ title|lower }}"
+    data-description="{{ description|lower }}"
+    data-tags="{{ tags|join(' ')|lower }}"
+    data-overlay-text="{{ overlay_text|lower }}"
   >
     <div class="card-header">
       {% if title %}
