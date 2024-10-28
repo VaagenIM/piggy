@@ -588,9 +588,20 @@ details p:nth-child(2) {
 
 .md-content code,
 .md-content summary,
-.md-content table {
+.md-content table,
+.md-content .linenos {
   font-size: 0.8rem !important;
   line-height: 1rem;
+  z-index: -1 !important;
+}
+
+.md-content .linenodiv {
+  margin-top: 0.1rem;
+  margin-bottom: -0.1rem;
+}
+
+.md-content .linenos .normal {
+  color: var(--piggy-text-main) !important;
 }
 
 .md-content details,
@@ -606,6 +617,11 @@ details p:nth-child(2) {
 .md-content code {
   border-radius: 5px !important;
   line-height: 1.1rem;
+}
+
+.md-content .highlighttable {
+  border-radius: 5px;
+  border: 1px solid var(--piggy-dark);
 }
 
 .md-content summary {
