@@ -230,6 +230,11 @@ description: High contrast theme for maximum visibility.
   background-color: #ffffff18 !important;
 }
 
+[data-theme="high-contrast"] .search-input {
+  border: 2px solid white;
+  border-radius: 0;
+}
+
 /* POTENTIAL COLORS FOR CODE?
 [data-theme="high-contrast"] .md-content .md-code__content .nt {
   color: #ff0000;

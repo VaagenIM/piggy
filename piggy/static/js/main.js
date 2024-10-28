@@ -80,3 +80,5 @@ window.addEventListener("click", function (event) {
     closeSettingsMenu();
   }
 });
+
+// card search script
