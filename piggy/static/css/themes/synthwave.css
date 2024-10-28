@@ -142,3 +142,8 @@ description: Fancy sunset, purple, neon, gradients!
   border: 1px solid var(--piggy-neutral);
   background: #ffffff0a;
 }
+
+[data-theme="synthwave"] .md-content .tabbed-labels::before {
+  border-color: #ff3000;
+  background-color: #ff37003a !important;
+}

@@ -226,6 +226,10 @@ description: High contrast theme for maximum visibility.
   background: #00000000;
 }
 
+[data-theme="high-contrast"] .md-content .tabbed-labels::before {
+  background-color: #ffffff18 !important;
+}
+
 /* POTENTIAL COLORS FOR CODE?
 [data-theme="high-contrast"] .md-content .md-code__content .nt {
   color: #ff0000;

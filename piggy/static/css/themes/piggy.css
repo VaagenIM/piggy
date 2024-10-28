@@ -116,4 +116,5 @@ description: Relaxing pastel pink theme.
 
 [data-theme="piggy"] .md-content .tabbed-labels::before {
   border-color: var(--piggy-dark);
+  background-color: #ff00002a !important;
 }
