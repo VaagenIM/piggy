@@ -553,26 +553,32 @@ details p:nth-child(2) {
   margin-bottom: 0.25rem !important;
 }
 
-.md-content h1 {
+.md-content h1,
+.md-content h1 code {
   font-size: 2rem !important;
 }
 
-.md-content h2 {
+.md-content h2,
+.md-content h2 code {
   font-size: 1.5rem !important;
 }
-.md-content h3 {
+.md-content h3,
+.md-content h3 code {
   font-size: 1.25rem !important;
 }
 
-.md-content h4 {
+.md-content h4,
+.md-content h4 code {
   font-size: 1.15rem !important;
 }
 
-.md-content h5 {
+.md-content h5,
+.md-content h5 code {
   font-size: 1.05rem !important;
 }
 
-.md-content h6 {
+.md-content h6,
+.md-content h6 code {
   font-size: 1rem !important;
 }
 
@@ -592,7 +598,10 @@ details p:nth-child(2) {
 .md-content .linenos {
   font-size: 0.8rem !important;
   line-height: 1rem;
-  z-index: -1 !important;
+}
+
+.md-content code:not(.md-code__content) {
+  padding: 0 0.2rem 0 0.2rem !important;
 }
 
 .md-content .linenodiv {
