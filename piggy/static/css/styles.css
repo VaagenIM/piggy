@@ -732,6 +732,7 @@ details p:nth-child(2) {
   border-color: var(--piggy-dark);
   margin: 0 !important;
   padding: 0rem 0.5rem 0rem 0.5rem !important;
+  flex-wrap: wrap;
 }
 
 .md-content .tabbed-labels::before {
