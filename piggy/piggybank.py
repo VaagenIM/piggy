@@ -137,8 +137,13 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
         for lang in os.listdir(f"{path}/translations") if os.path.isdir(f"{path}/translations") else []:
             if not os.path.exists(f"{path}/translations/{lang}/{item}"):
                 continue
-            translation_sections = mdfile_to_sections(Path(f"{path}/translations/{lang}/{item}"))
-            translation_meta[lang] = translation_sections["meta"]
+            try:
+                translation_sections = mdfile_to_sections(Path(f"{path}/translations/{lang}/{item}"))
+                translation_meta[lang] = translation_sections["meta"]
+            except Exception:
+                # TODO: Handle / visualize this error better
+                print(f"Error: Could not render translation for {lang}/{item}")
+                continue
 
         assignment_key = normalize_path_to_str(i, replace_spaces=True, normalize_url=True, remove_ext=True)
         piggymap[assignment_key] = {
