@@ -6,6 +6,8 @@
 .cache
 *.egg-info
 
+.vscode/
+
 tailwind.css
 
 turtleconvert/
