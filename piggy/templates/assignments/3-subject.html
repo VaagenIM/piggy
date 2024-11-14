@@ -5,10 +5,8 @@
   <h1 class="page-title font-extrabold text-center my-6">{{ meta.name }}</h1>
   {% include 'partials/search_box.html' %}
 
-  <div class="container mx-auto p-4">
-    <div
-      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
-    >
+  <div class="card-grid-wrapper">
+    <div class="card-grid-container">
       {% if segment.items()|length > 0 %}
         {% for item, data in segment.items() %}
           {% if data.meta.type != "extra" %}
@@ -24,9 +22,7 @@
     {% if ns.extra_content %}
       <br />
       <h3 class="extra-title text-2xl text-extrabold">Ekstra:</h3>
-      <div
-        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
-      >
+      <div class="card-grid-container">
         {% for item, data in segment.items() %}
           {% if data.meta.type == "extra" %}
             {% include 'objects/card-topic.html' %}

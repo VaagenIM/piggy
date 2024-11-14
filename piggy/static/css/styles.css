@@ -152,6 +152,65 @@ h6 {
   }
 }
 
+/*********************\
+|*     CARD GRID     *|
+\*********************/
+.card-grid-wrapper {
+  max-width: 100%;
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* very large screen */
+@media (min-width: 1920px) {
+  .card-grid-wrapper {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+
+.card-grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+/* small screen */
+@media (min-width: 640px) {
+  .card-grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* medium screen */
+@media (min-width: 768px) {
+  .card-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* large screen */
+@media (min-width: 1024px) {
+  .card-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* very large screen */
+@media (min-width: 2240px) {
+  .card-grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* extremely large screen */
+@media (min-width: 3200px) {
+  .card-grid-container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
 /*****************\
 |*     CARDS     *|
 \*****************/
