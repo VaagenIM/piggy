@@ -31,8 +31,8 @@ description: The default dark theme.
   --piggy-extra-card-border: var(--piggy-extra-card-start);
   --piggy-text-extra-card: #ffffff;
 
-  --piggy-resource-card-start: rgba(212, 195, 98, 0.3); /* Gentle blues */
-  --piggy-resource-card-end: rgba(228, 213, 128, 0.3);
+  --piggy-resource-card-start: rgba(65, 59, 26, 0.3); /* Gentle blues */
+  --piggy-resource-card-end: rgba(201, 182, 75, 0.3);
   --piggy-resource-card-border: var(--piggy-resource-card-start);
   --piggy-text-resource-card: #4f4f4f; /* A gentle gray for contrast */
 

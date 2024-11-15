@@ -239,7 +239,7 @@ h6 {
 }
 
 /* TODO: Consider a better solution for extra-card and resource card */
-.extra-card {
+.card-type-extra .card {
   background: linear-gradient(
     45deg,
     var(--piggy-extra-card-start) 0%,
@@ -248,8 +248,12 @@ h6 {
   border: var(--piggy-card-border-width) solid var(--piggy-extra-card-border);
 }
 
-.resource-card {
-  background-color: var(--piggy-resource-card-start);
+.card-type-resource .card {
+  background: linear-gradient(
+    45deg,
+    var(--piggy-resource-card-start) 0%,
+    var(--piggy-resource-card-end) 100%
+  );
   border: var(--piggy-card-border-width) solid var(--piggy-resource-card-border);
 }
 
