@@ -93,19 +93,79 @@
   font-style: normal;
 }
 
-[data-font-theme="dyslexia"] *:not(code *, code, .MathJax *) {
+/***********************\
+|*     FONT THEMES     *|
+\***********************/
+[data-font-theme="default"] *:not(code *, code, .MathJax *) {
+  font-family: "Quicksand", sans-serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="arial"] *:not(code *, code, .MathJax *) {
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="lexia"] *:not(code *, code, .MathJax *) {
   font-family: "Lexia", "Comic Sans MS", sans-serif;
   letter-spacing: 0px;
 }
 
-[data-font-theme="dyslexia"] .language-flag {
-  font-family: "Emoji", sans-serif !important;
+[data-font-theme="papyrus"] *:not(code *, code, .MathJax *) {
+  font-family: Papyrus, fanasy, sans-serif;
 }
 
-[data-font-theme="default"] header {
-  font-family: "Quicksand", sans-serif;
+[data-font-theme="impact"] *:not(code *, code, .MathJax *) {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  letter-spacing: 0px;
+  font-weight: 100 !important;
+}
+
+[data-font-theme="times"] *:not(code *, code, .MathJax *) {
+  font-family: "Times New Roman", Times, serif;
   letter-spacing: 0px;
 }
+
+[data-font-theme="courier"] *:not(code *, code, .MathJax *) {
+  font-family: "Courier New", Courier, monospace;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="georgia"] *:not(code *, code, .MathJax *) {
+  font-family: Georgia, serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="verdana"] *:not(code *, code, .MathJax *) {
+  font-family: Verdana, Geneva, sans-serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="trebuchet"] *:not(code *, code, .MathJax *) {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="lucida"] *:not(code *, code, .MathJax *) {
+  font-family: "Lucida Console", Monaco, monospace;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="brush"] *:not(code *, code, .MathJax *) {
+  font-family: "Brush Script MT", cursive;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="gill-sans"] *:not(code *, code, .MathJax *) {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="century-gothic"] *:not(code *, code, .MathJax *) {
+  font-family: "Century Gothic", "Lucida Sans Unicode", sans-serif;
+  letter-spacing: 0px;
+}
+
 
 /*****************************\
 |*     ELEMENT OVERRIDES     *|

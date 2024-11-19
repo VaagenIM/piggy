@@ -3,7 +3,6 @@ const settingsMenu = document.getElementById("settings-menu");
 const settingsButton = document.getElementById("settings-button");
 const closeButton = document.querySelector("#settings-menu .close-button");
 const themeSelect = document.getElementById("theme-select");
-const dyslexiaButton = document.getElementById("dyslexia-button");
 // Declared in on-load.js
 // const currentTheme = localStorage.getItem("theme") || "dark";
 // const fontTheme = localStorage.getItem("data-font-theme") || "default";
@@ -25,31 +24,6 @@ function closeSettingsMenu() {
   settingsMenu.classList.remove("open");
 }
 
-function toggleDyslexia() {
-  // Retrieve the current theme from the data attribute
-  let fontTheme = document.documentElement.getAttribute("data-font-theme");
-
-  // Toggle between 'default' and 'dyslexia'
-  if (fontTheme === "default") {
-    document.documentElement.setAttribute("data-font-theme", "dyslexia");
-    localStorage.setItem("data-font-theme", "dyslexia"); // Save theme to localStorage
-    dyslexiaButton.innerHTML = "Dyslexia Friendly Mode [✅]";
-  } else {
-    document.documentElement.setAttribute("data-font-theme", "default");
-    localStorage.setItem("data-font-theme", "default"); // Save theme to localStorage
-    dyslexiaButton.innerHTML = "Dyslexia Friendly Mode";
-  }
-
-  pageTransition();
-}
-
-// TODO: fix this:
-if (fontTheme === "default") {
-  dyslexiaButton.innerHTML = "Dyslexia Friendly Mode";
-} else {
-  dyslexiaButton.innerHTML = "Dyslexia Friendly Mode [✅]";
-}
-
 // Set the selected option based on the current theme
 themeSelect.value = currentTheme;
 
@@ -58,8 +32,6 @@ settingsButton.addEventListener("click", openSettingsMenu);
 
 // Event listener for the Close button inside the menu
 closeButton.addEventListener("click", closeSettingsMenu);
-
-dyslexiaButton.addEventListener("click", toggleDyslexia);
 
 // Event listener for theme selection change
 themeSelect.addEventListener("change", function () {
