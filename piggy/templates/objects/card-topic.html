@@ -9,7 +9,7 @@
     description = data.meta.description,
     thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." + img_fmt,
     thumbnail_alt = "Header image for " ~ item,
-    extra_classes = 'extra-card' if data.meta.type == 'extra' else '',
+    extra_classes = 'card-type-' + data.meta.type if data.meta.type else '',
     difficulty = data.meta.difficulty,
     tags = data.meta.tags
   )
