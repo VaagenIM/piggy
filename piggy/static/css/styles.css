@@ -119,6 +119,9 @@ h6 {
   color: var(--piggy-text-main) !important;
 }
 
+/************************\
+|*     BASE STYLING     *|
+\************************/
 .transition {
   transition: 0.4s ease;
 }
@@ -132,11 +135,13 @@ h6 {
 }
 
 .main-title {
-  font-size: 5rem;
+  font-size: 3rem;
+  word-wrap: break-word;
 }
 
 .page-title {
   font-size: 3rem;
+  word-wrap: break-word;
 }
 
 @media screen and (max-width: 800px) {
