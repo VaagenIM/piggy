@@ -1,38 +1,35 @@
 {% extends "layout.html" %}
-{% set ns = namespace(extra_content = false) %}
+{%
+  set types = [''] + segment.items()
+  | selectattr("1.meta.type", "defined")
+  | map(attribute="1.meta.type")
+  | list
+%}
 
 {% block base %}
   <h1 class="page-title font-extrabold text-center my-6">{{ meta.name }}</h1>
   {% include 'partials/search_box.html' %}
 
-  <div class="container mx-auto p-4">
-    <div
-      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
-    >
-      {% if segment.items()|length > 0 %}
-        {% for item, data in segment.items() %}
-          {% if data.meta.type != "extra" %}
+  {% if segment.items()|length > 0 %}
+    {% for type in types %}
+      <div class="card-grid-wrapper">
+        {% if type != '' %}
+          <h3 class="extra-title text-2xl text-extrabold">
+            {{ type|capitalize }}:
+          </h3>
+        {% endif %}
+        <div
+          class="card-grid-container {% if type != '' %}card-type-{{ type }}{% endif %}"
+        >
+          {% for item, data in segment.items() if data.meta.type == type or (type == '' and data.meta.type is not defined) %}
             {% include 'objects/card-topic.html' %}
-          {% else %}
-            {% set ns.extra_content = true %}
-          {% endif %}
-        {% endfor %}
-      {% else %}
-        Hmm... There doesn't seem to be anything here!
-      {% endif %}
-    </div>
-    {% if ns.extra_content %}
-      <br />
-      <h3 class="extra-title text-2xl text-extrabold">Ekstra:</h3>
-      <div
-        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
-      >
-        {% for item, data in segment.items() %}
-          {% if data.meta.type == "extra" %}
-            {% include 'objects/card-topic.html' %}
-          {% endif %}
-        {% endfor %}
+          {% endfor %}
+        </div>
       </div>
-    {% endif %}
-  </div>
+    {% endfor %}
+  {% else %}
+    <div class="card-grid-container">
+      Hmm... There doesn't seem to be anything here!
+    </div>
+  {% endif %}
 {% endblock %}
