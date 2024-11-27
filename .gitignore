@@ -6,6 +6,8 @@
 .cache
 *.egg-info
 
+.pytest_cache/
+
 .vscode/
 
 tailwind.css
