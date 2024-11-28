@@ -2,18 +2,24 @@ import pytest
 
 from pathlib import Path
 from piggy.utils import get_css_metadata, get_themes
+from unittest.mock import patch
+
+# clear cache
+def teardown_function(function):
+    get_css_metadata.cache_clear()
+    get_themes.cache_clear()
 
 
 def test_get_css_metadata_valid(tmp_path):
     css_file = tmp_path / "test_theme.css"
     css_content = """/* METADATA
-    id: 13
-    name: Test Theme
-    description: A testy test theme
-    /*
-    body {
-        background-color: #ffffff;
-    }
+        id: 13
+        name: Test Theme
+        description: A testy test theme
+        /*
+        body {
+            background-color: #ffffff;
+        }
     """
 
     css_file.write_text(css_content)
@@ -30,9 +36,9 @@ def test_get_css_metadata_valid(tmp_path):
 def test_get_css_metadata_no_metadata(tmp_path):
     css_file = tmp_path / "no_metadata.css"
     css_content = """
-    body {
-        background-color: #ffffff;
-    }
+        body {
+            background-color: #ffffff;
+        }
     """
 
     css_file.write_text(css_content)
@@ -54,9 +60,9 @@ def test_get_css_metadata_invalid_extension(tmp_path):
 def test_get_css_metadata_invalid_metadata(tmp_path):
     css_file = tmp_path / "invalid_metadata.css"
     css_content = """/* METADATA
-    id
-    name: Invalid Theme test
-    */
+        id
+        name: Invalid Theme test
+        */
     """
 
     css_file.write_text(css_content)
@@ -101,6 +107,15 @@ def test_get_themes(tmp_path, monkeypatch):
 
 
 def test_get_themes_no_css_files(tmp_path, monkeypatch):
+    monkeypatch.setattr("piggy.utils.THEME_PATH", str(tmp_path))
+
+    themes = get_themes()
+
+    assert themes == []
+
+
+def test_get_themes_non_css_files(tmp_path, monkeypatch):
+    (tmp_path / "file.txt").write_text("Very random randomness")
     monkeypatch.setattr("piggy.utils.THEME_PATH", str(tmp_path))
 
     themes = get_themes()
