@@ -39,8 +39,8 @@ description: A theme inspired by the green hues of "The Matrix" movies.
     --piggy-card-border-width: 1px;
   
     /* Piggy elements */
-    --piggy-navbar-start: #000000; /* Navbar start */
-    --piggy-navbar-end: #000000; /* Navbar end */
+    --piggy-navbar-start: #001900; /* Navbar start */
+    --piggy-navbar-end: #001100; /* Navbar end */
     --piggy-text-navbar: var(--piggy-light);
   
     --piggy-button: #004400; /* Dark green button */
@@ -63,8 +63,8 @@ description: A theme inspired by the green hues of "The Matrix" movies.
     --piggy-tooltip: #001100;
     --piggy-tooltip-text: #00ff00;
   
-    --piggy-text-hyperlink: #00ff00;
-    --piggy-text-hyperlink-hover: #00ff00;
+    --piggy-text-hyperlink: #00ffff;
+    --piggy-text-hyperlink-hover: #99ffff;
   }
   
   /******************************\
