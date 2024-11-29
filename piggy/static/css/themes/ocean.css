@@ -16,7 +16,7 @@ description: A theme inspired by the serene blues and teals of the ocean.
     --piggy-text-neutral: var(--piggy-neutral);
     --piggy-text-dark: #89bdd3; /* Mid-tone blue-green */
   
-    --piggy-shadow-text: rgba(0, 43, 54, 0.4); /* Subtle deep shadows */
+    --piggy-shadow-text: rgba(0, 43, 54, 0.2); /* Subtle deep shadows */
     --piggy-shadow-box: rgba(0, 43, 54, 0.3);
     --piggy-shadow-glow: rgba(136, 192, 208, 0.3); /* Aqua glow */
   

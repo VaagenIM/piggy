@@ -8,6 +8,8 @@
     {% endblock %}
   </head>
   <body class="main-container" data-font-theme="none">
+    <div class="background-overlay"></div>
+    <div class="content-wrapper">
     <header>
       {% include "partials/parts/breadcrumbs.html" %}
       {% block header %}
@@ -17,10 +19,11 @@
       {% block base %}
       {% endblock %}
     </main>
-    <footer>
-      {% block footer %}
-      {% endblock %}
-    </footer>
+      <footer>
+        {% block footer %}
+        {% endblock %}
+      </footer>
+    </div>  
   </body>
 
   {% if debug %}
