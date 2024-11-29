@@ -16,7 +16,7 @@ description: A theme inspired by the warm sands and muted tones of the desert.
     --piggy-text-neutral: var(--piggy-neutral);
     --piggy-text-dark: var(--piggy-dark);
   
-    --piggy-shadow-text: rgba(94, 75, 50, 0.4); /* Subtle brown shadows */
+    --piggy-shadow-text: rgba(0, 0, 0, 0); /* Subtle brown shadows */
     --piggy-shadow-box: rgba(94, 75, 50, 0.3);
     --piggy-shadow-glow: rgba(166, 124, 82, 0.3); /* Warm glow */
   
