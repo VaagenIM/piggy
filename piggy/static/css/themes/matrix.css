@@ -63,8 +63,8 @@ description: A theme inspired by the green hues of "The Matrix" movies.
     --piggy-tooltip: #001100;
     --piggy-tooltip-text: #00ff00;
   
-    --piggy-text-hyperlink: #00ff00;
-    --piggy-text-hyperlink-hover: #00ff00;
+    --piggy-text-hyperlink: #00ffff;
+    --piggy-text-hyperlink-hover: #99ffff;
   }
   
   /******************************\

@@ -66,8 +66,8 @@ description: A theme inspired by the warm sands and muted tones of the desert.
     --piggy-tooltip: #e0c090;
     --piggy-tooltip-text: var(--piggy-text-dark);
   
-    --piggy-text-hyperlink: #5f4b32;
-    --piggy-text-hyperlink-hover: #8c6239;
+    --piggy-text-hyperlink: #1a8ce3;
+    --piggy-text-hyperlink-hover: #798b99;
   }
   
   [data-theme="desert"] .level-count-container {
