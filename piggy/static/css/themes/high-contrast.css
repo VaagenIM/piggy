@@ -112,8 +112,6 @@ description: High contrast theme for maximum visibility.
   margin-bottom: 5px;
   color: #fff;
   background-color: #000;
-  top: 7px;
-  left: 11px;
 }
 
 [data-theme="high-contrast"] #settings-menu {
