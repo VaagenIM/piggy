@@ -15,8 +15,8 @@ description: Fancy sunset, purple, neon, gradients!
   --piggy-text-light: #ff9b9b; /* Warm pink for accents */
   --piggy-text-dark: #ffcb91; /* Sunset orange for text highlights */
 
-  --piggy-shadow-text: #ff8c0030; /* Soft orange shadow */
-  --piggy-shadow-box: #ff004450; /* Pink shadow for box elements */
+  --piggy-shadow-text: #ff8c0018; /* Soft orange shadow */
+  --piggy-shadow-box: #ff004f30; /* Pink shadow for box elements */
   --piggy-shadow-glow: rgba(
     255,
     140,
@@ -92,6 +92,10 @@ description: Fancy sunset, purple, neon, gradients!
 
   --piggy-text-hyperlink: #3190b6;
   --piggy-text-hyperlink-hover: #6ab2cf;
+}
+
+[data-theme="synthwave"] .card-container {
+  box-shadow: 2px 2px 15px 0 var(--piggy-shadow-box);
 }
 
 [data-theme="synthwave"] .settings-option {
