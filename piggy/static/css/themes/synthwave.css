@@ -117,7 +117,7 @@ description: Fancy sunset, purple, neon, gradients!
     linear-gradient(to bottom, transparent 0%, transparent 98%, var(--grid-line-color) 99%);
   background-size: 2.5rem 2.5rem;
   transform-origin: top center;
-  transform: translateY(0px) perspective(1000px) rotateX(85deg);
+  transform: translateY(1px) perspective(1000px) rotateX(85deg);
   animation: scrollGrid 10s linear infinite;
 }
 
