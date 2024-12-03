@@ -111,13 +111,13 @@ description: Fancy sunset, purple, neon, gradients!
 }
 
 [data-theme="synthwave"] .background-overlay {
-  height: 125%;
+  height: 200%;
   background-image:
-    linear-gradient(to right, transparent 0%, transparent 98%, var(--grid-line-color) 99%),
-    linear-gradient(to bottom, transparent 0%, transparent 98%, var(--grid-line-color) 99%);
+  linear-gradient(to right, transparent 0%, transparent 98%, var(--grid-line-color) 99%),
+  linear-gradient(to bottom, transparent 0%, transparent 98%, var(--grid-line-color) 99%);
   background-size: 2.5rem 2.5rem;
   transform-origin: top center;
-  transform: translateY(0px) perspective(1000px) rotateX(85deg);
+  transform: translateY(2%) perspective(40rem) rotateX(77deg);
   animation: scrollGrid 10s linear infinite;
 }
 
