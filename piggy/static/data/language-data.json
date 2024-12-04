@@ -1,0 +1,1847 @@
+{
+  "": {
+    "name": "Norsk",
+    "flag": "🇳🇴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "nb_NO",
+    "font": "sans-serif",
+    "country_code": "NO"
+  },
+  "aar": {
+    "name": "Afaraf",
+    "flag": "🇪🇷",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "aa_ER",
+    "font": "sans-serif",
+    "country_code": "ER"
+  },
+  "abk": {
+    "name": "Аҧсуа",
+    "flag": "🇬🇪",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "ab_GE",
+    "font": "serif",
+    "country_code": "GE"
+  },
+  "ace": {
+    "name": "Bahsa Acèh",
+    "flag": "🇮🇩",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ace_ID",
+    "font": "sans-serif",
+    "country_code": "ID"
+  },
+  "ach": {
+    "name": "Lwo",
+    "flag": "🇺🇬",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ach_UG",
+    "font": "sans-serif",
+    "country_code": "UG"
+  },
+  "ada": {
+    "name": "Adangme",
+    "flag": "🇬🇭",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ada_GH",
+    "font": "sans-serif",
+    "country_code": "GH"
+  },
+  "ady": {
+    "name": "Адыгэбзэ",
+    "flag": "🇷🇺",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "ady_RU",
+    "font": "serif",
+    "country_code": "RU"
+  },
+  "afr": {
+    "name": "Afrikaans",
+    "flag": "🇿🇦",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "af_ZA",
+    "font": "sans-serif",
+    "country_code": "ZA"
+  },
+  "ain": {
+    "name": "アイヌ・イタㇰ",
+    "flag": "🇯🇵",
+    "direction": "ltr",
+    "script": "Katakana",
+    "locale": "ain_JP",
+    "font": "'Noto Sans Japanese', sans-serif",
+    "country_code": "JP"
+  },
+  "aka": {
+    "name": "Akan",
+    "flag": "🇬🇭",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ak_GH",
+    "font": "sans-serif",
+    "country_code": "GH"
+  },
+  "alb": {
+    "name": "Shqip",
+    "flag": "🇦🇱",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "sq_AL",
+    "font": "sans-serif",
+    "country_code": "AL"
+  },
+  "amh": {
+    "name": "አማርኛ",
+    "flag": "🇪🇹",
+    "direction": "ltr",
+    "script": "Ge'ez",
+    "locale": "am_ET",
+    "font": "'Noto Sans Ethiopic', sans-serif",
+    "country_code": "ET"
+  },
+  "ara": {
+    "name": "العربية",
+    "flag": "🇸🇦",
+    "direction": "rtl",
+    "script": "Arabic",
+    "locale": "ar_SA",
+    "font": "'Amiri', serif",
+    "country_code": "SA"
+  },
+  "arg": {
+    "name": "Aragonés",
+    "flag": "🇪🇸",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "an_ES",
+    "font": "sans-serif",
+    "country_code": "ES"
+  },
+  "arm": {
+    "name": "Հայերեն",
+    "flag": "🇦🇲",
+    "direction": "ltr",
+    "script": "Armenian",
+    "locale": "hy_AM",
+    "font": "'Noto Sans Armenian', sans-serif",
+    "country_code": "AM"
+  },
+  "asm": {
+    "name": "অসমীয়া",
+    "flag": "🇮🇳",
+    "direction": "ltr",
+    "script": "Bengali-Assamese",
+    "locale": "as_IN",
+    "font": "'Noto Sans Bengali', sans-serif",
+    "country_code": "IN"
+  },
+  "ava": {
+    "name": "Авар мацӀ",
+    "flag": "🇷🇺",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "av_RU",
+    "font": "serif",
+    "country_code": "RU"
+  },
+  "ave": {
+    "name": "Avestan",
+    "flag": "🏳️",
+    "direction": "ltr",
+    "script": "Avestan",
+    "locale": null,
+    "font": "serif",
+    "country_code": null
+  },
+  "aym": {
+    "name": "Aymar aru",
+    "flag": "🇧🇴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ay_BO",
+    "font": "sans-serif",
+    "country_code": "BO"
+  },
+  "aze": {
+    "name": "Azərbaycanca",
+    "flag": "🇦🇿",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "az_AZ",
+    "font": "sans-serif",
+    "country_code": "AZ"
+  },
+  "bak": {
+    "name": "Башҡорт теле",
+    "flag": "🇷🇺",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "ba_RU",
+    "font": "serif",
+    "country_code": "RU"
+  },
+  "bam": {
+    "name": "Bamanankan",
+    "flag": "🇲🇱",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "bm_ML",
+    "font": "sans-serif",
+    "country_code": "ML"
+  },
+  "baq": {
+    "name": "Euskara",
+    "flag": "🇪🇸",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "eu_ES",
+    "font": "sans-serif",
+    "country_code": "ES"
+  },
+  "bel": {
+    "name": "Беларуская",
+    "flag": "🇧🇾",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "be_BY",
+    "font": "serif",
+    "country_code": "BY"
+  },
+  "ben": {
+    "name": "বাংলা",
+    "flag": "🇧🇩",
+    "direction": "ltr",
+    "script": "Bengali",
+    "locale": "bn_BD",
+    "font": "'Noto Sans Bengali', sans-serif",
+    "country_code": "BD"
+  },
+  "bih": {
+    "name": "भोजपुरी",
+    "flag": "🇮🇳",
+    "direction": "ltr",
+    "script": "Devanagari",
+    "locale": "bh_IN",
+    "font": "'Noto Sans Devanagari', sans-serif",
+    "country_code": "IN"
+  },
+  "bis": {
+    "name": "Bislama",
+    "flag": "🇻🇺",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "bi_VU",
+    "font": "sans-serif",
+    "country_code": "VU"
+  },
+  "bod": {
+    "name": "བོད་ཡིག",
+    "flag": "🇨🇳",
+    "direction": "ltr",
+    "script": "Tibetan",
+    "locale": "bo_CN",
+    "font": "'Noto Sans Tibetan', sans-serif",
+    "country_code": "CN"
+  },
+  "bos": {
+    "name": "Bosanski",
+    "flag": "🇧🇦",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "bs_BA",
+    "font": "sans-serif",
+    "country_code": "BA"
+  },
+  "bre": {
+    "name": "Brezhoneg",
+    "flag": "🇫🇷",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "br_FR",
+    "font": "sans-serif",
+    "country_code": "FR"
+  },
+  "bul": {
+    "name": "Български",
+    "flag": "🇧🇬",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "bg_BG",
+    "font": "serif",
+    "country_code": "BG"
+  },
+  "bur": {
+    "name": "မြန်မာစာ",
+    "flag": "🇲🇲",
+    "direction": "ltr",
+    "script": "Burmese",
+    "locale": "my_MM",
+    "font": "'Noto Sans Myanmar', sans-serif",
+    "country_code": "MM"
+  },
+  "cat": {
+    "name": "Català",
+    "flag": "🇪🇸",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ca_ES",
+    "font": "sans-serif",
+    "country_code": "ES"
+  },
+  "ces": {
+    "name": "Čeština",
+    "flag": "🇨🇿",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "cs_CZ",
+    "font": "sans-serif",
+    "country_code": "CZ"
+  },
+  "cha": {
+    "name": "Chamoru",
+    "flag": "🇬🇺",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ch_GU",
+    "font": "sans-serif",
+    "country_code": "GU"
+  },
+  "che": {
+    "name": "нохчийн мотт",
+    "flag": "🇷🇺",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "ce_RU",
+    "font": "serif",
+    "country_code": "RU"
+  },
+  "chi": {
+    "name": "中文",
+    "flag": "🇨🇳",
+    "direction": "ltr",
+    "script": "Han",
+    "locale": "zh_CN",
+    "font": "'Noto Sans SC', sans-serif",
+    "country_code": "CN"
+  },
+  "chu": {
+    "name": "Словѣньскъ",
+    "flag": "🏳️",
+    "direction": "ltr",
+    "script": "Old Cyrillic",
+    "locale": null,
+    "font": "serif",
+    "country_code": null
+  },
+  "chv": {
+    "name": "Чӑвашла",
+    "flag": "🇷🇺",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "cv_RU",
+    "font": "serif",
+    "country_code": "RU"
+  },
+  "cor": {
+    "name": "Kernewek",
+    "flag": "🏴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "kw_GB",
+    "font": "sans-serif",
+    "country_code": "GB"
+  },
+  "cos": {
+    "name": "Corsu",
+    "flag": "🇫🇷",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "co_FR",
+    "font": "sans-serif",
+    "country_code": "FR"
+  },
+  "cre": {
+    "name": "Nehiyaw",
+    "flag": "🇨🇦",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "cr_CA",
+    "font": "sans-serif",
+    "country_code": "CA"
+  },
+  "cym": {
+    "name": "Cymraeg",
+    "flag": "🏴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "cy_GB",
+    "font": "sans-serif",
+    "country_code": "GB"
+  },
+  "dan": {
+    "name": "Dansk",
+    "flag": "🇩🇰",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "da_DK",
+    "font": "sans-serif",
+    "country_code": "DK"
+  },
+  "deu": {
+    "name": "Deutsch",
+    "flag": "🇩🇪",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "de_DE",
+    "font": "sans-serif",
+    "country_code": "DE"
+  },
+  "div": {
+    "name": "ދިވެހި",
+    "flag": "🇲🇻",
+    "direction": "rtl",
+    "script": "Thaana",
+    "locale": "dv_MV",
+    "font": "'Noto Sans Thaana', sans-serif",
+    "country_code": "MV"
+  },
+  "dut": {
+    "name": "Nederlands",
+    "flag": "🇳🇱",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "nl_NL",
+    "font": "sans-serif",
+    "country_code": "NL"
+  },
+  "dzo": {
+    "name": "རྫོང་ཁ",
+    "flag": "🇧🇹",
+    "direction": "ltr",
+    "script": "Tibetan",
+    "locale": "dz_BT",
+    "font": "'Noto Sans Tibetan', sans-serif",
+    "country_code": "BT"
+  },
+  "ell": {
+    "name": "Ελληνικά",
+    "flag": "🇬🇷",
+    "direction": "ltr",
+    "script": "Greek",
+    "locale": "el_GR",
+    "font": "sans-serif",
+    "country_code": "GR"
+  },
+  "eng": {
+    "name": "English",
+    "flag": "🇬🇧",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "en_GB",
+    "font": "sans-serif",
+    "country_code": "GB"
+  },
+  "epo": {
+    "name": "Esperanto",
+    "flag": "🏳️",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "eo",
+    "font": "sans-serif",
+    "country_code": null
+  },
+  "est": {
+    "name": "Eesti",
+    "flag": "🇪🇪",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "et_EE",
+    "font": "sans-serif",
+    "country_code": "EE"
+  },
+  "eus": {
+    "name": "Euskara",
+    "flag": "🇪🇸",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "eu_ES",
+    "font": "sans-serif",
+    "country_code": "ES"
+  },
+  "ewe": {
+    "name": "Eʋegbe",
+    "flag": "🇹🇬",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ee_TG",
+    "font": "sans-serif",
+    "country_code": "TG"
+  },
+  "fao": {
+    "name": "Føroyskt",
+    "flag": "🇫🇴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "fo_FO",
+    "font": "sans-serif",
+    "country_code": "FO"
+  },
+  "fas": {
+    "name": "فارسی",
+    "flag": "🇮🇷",
+    "direction": "rtl",
+    "script": "Arabic",
+    "locale": "fa_IR",
+    "font": "'Amiri', serif",
+    "country_code": "IR"
+  },
+  "fij": {
+    "name": "Na Vosa Vakaviti",
+    "flag": "🇫🇯",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "fj_FJ",
+    "font": "sans-serif",
+    "country_code": "FJ"
+  },
+  "fin": {
+    "name": "Suomi",
+    "flag": "🇫🇮",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "fi_FI",
+    "font": "sans-serif",
+    "country_code": "FI"
+  },
+  "fra": {
+    "name": "Français",
+    "flag": "🇫🇷",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "fr_FR",
+    "font": "sans-serif",
+    "country_code": "FR"
+  },
+  "fre": {
+    "name": "Français",
+    "flag": "🇫🇷",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "fr_FR",
+    "font": "sans-serif",
+    "country_code": "FR"
+  },
+  "fry": {
+    "name": "Frysk",
+    "flag": "🇳🇱",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "fy_NL",
+    "font": "sans-serif",
+    "country_code": "NL"
+  },
+  "ful": {
+    "name": "Fulfulde",
+    "flag": "🇳🇬",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ff_NG",
+    "font": "sans-serif",
+    "country_code": "NG"
+  },
+  "geo": {
+    "name": "ქართული",
+    "flag": "🇬🇪",
+    "direction": "ltr",
+    "script": "Georgian",
+    "locale": "ka_GE",
+    "font": "'Noto Sans Georgian', sans-serif",
+    "country_code": "GE"
+  },
+  "ger": {
+    "name": "Deutsch",
+    "flag": "🇩🇪",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "de_DE",
+    "font": "sans-serif",
+    "country_code": "DE"
+  },
+  "gla": {
+    "name": "Gàidhlig",
+    "flag": "🏴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "gd_GB",
+    "font": "sans-serif",
+    "country_code": "GB"
+  },
+  "gle": {
+    "name": "Gaeilge",
+    "flag": "🇮🇪",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ga_IE",
+    "font": "sans-serif",
+    "country_code": "IE"
+  },
+  "glg": {
+    "name": "Galego",
+    "flag": "🇪🇸",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "gl_ES",
+    "font": "sans-serif",
+    "country_code": "ES"
+  },
+  "glv": {
+    "name": "Gaelg",
+    "flag": "🇮🇲",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "gv_IM",
+    "font": "sans-serif",
+    "country_code": "IM"
+  },
+  "gre": {
+    "name": "Ελληνικά",
+    "flag": "🇬🇷",
+    "direction": "ltr",
+    "script": "Greek",
+    "locale": "el_GR",
+    "font": "sans-serif",
+    "country_code": "GR"
+  },
+  "grn": {
+    "name": "Avañe'ẽ",
+    "flag": "🇵🇾",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "gn_PY",
+    "font": "sans-serif",
+    "country_code": "PY"
+  },
+  "guj": {
+    "name": "ગુજરાતી",
+    "flag": "🇮🇳",
+    "direction": "ltr",
+    "script": "Gujarati",
+    "locale": "gu_IN",
+    "font": "'Noto Sans Gujarati', sans-serif",
+    "country_code": "IN"
+  },
+  "hat": {
+    "name": "Kreyòl ayisyen",
+    "flag": "🇭🇹",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ht_HT",
+    "font": "sans-serif",
+    "country_code": "HT"
+  },
+  "hau": {
+    "name": "Hausa",
+    "flag": "🇳🇬",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ha_NG",
+    "font": "sans-serif",
+    "country_code": "NG"
+  },
+  "heb": {
+    "name": "עברית",
+    "flag": "🇮🇱",
+    "direction": "rtl",
+    "script": "Hebrew",
+    "locale": "he_IL",
+    "font": "'Noto Sans Hebrew', sans-serif",
+    "country_code": "IL"
+  },
+  "her": {
+    "name": "Otjiherero",
+    "flag": "🇳🇦",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "hz_NA",
+    "font": "sans-serif",
+    "country_code": "NA"
+  },
+  "hin": {
+    "name": "हिन्दी",
+    "flag": "🇮🇳",
+    "direction": "ltr",
+    "script": "Devanagari",
+    "locale": "hi_IN",
+    "font": "'Noto Sans Devanagari', sans-serif",
+    "country_code": "IN"
+  },
+  "hmo": {
+    "name": "Hiri Motu",
+    "flag": "🇵🇬",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ho_PG",
+    "font": "sans-serif",
+    "country_code": "PG"
+  },
+  "hrv": {
+    "name": "Hrvatski",
+    "flag": "🇭🇷",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "hr_HR",
+    "font": "sans-serif",
+    "country_code": "HR"
+  },
+  "hun": {
+    "name": "Magyar",
+    "flag": "🇭🇺",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "hu_HU",
+    "font": "sans-serif",
+    "country_code": "HU"
+  },
+  "hye": {
+    "name": "Հայերեն",
+    "flag": "🇦🇲",
+    "direction": "ltr",
+    "script": "Armenian",
+    "locale": "hy_AM",
+    "font": "'Noto Sans Armenian', sans-serif",
+    "country_code": "AM"
+  },
+  "ibo": {
+    "name": "Igbo",
+    "flag": "🇳🇬",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ig_NG",
+    "font": "sans-serif",
+    "country_code": "NG"
+  },
+  "ice": {
+    "name": "Íslenska",
+    "flag": "🇮🇸",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "is_IS",
+    "font": "sans-serif",
+    "country_code": "IS"
+  },
+  "ido": {
+    "name": "Ido",
+    "flag": "🏳️",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "io",
+    "font": "sans-serif",
+    "country_code": null
+  },
+  "iii": {
+    "name": "ꆈꌠ꒿ Nuosuhxop",
+    "flag": "🇨🇳",
+    "direction": "ltr",
+    "script": "Yi",
+    "locale": "ii_CN",
+    "font": "'Noto Sans Yi', sans-serif",
+    "country_code": "CN"
+  },
+  "iku": {
+    "name": "ᐃᓄᒃᑎᑐᑦ",
+    "flag": "🇨🇦",
+    "direction": "ltr",
+    "script": "Canadian Aboriginal Syllabics",
+    "locale": "iu_CA",
+    "font": "'Noto Sans Canadian Aboriginal', sans-serif",
+    "country_code": "CA"
+  },
+  "ind": {
+    "name": "Bahasa Indonesia",
+    "flag": "🇮🇩",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "id_ID",
+    "font": "sans-serif",
+    "country_code": "ID"
+  },
+  "ipk": {
+    "name": "Iñupiatun",
+    "flag": "🇺🇸",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ik_US",
+    "font": "sans-serif",
+    "country_code": "US"
+  },
+  "isl": {
+    "name": "Íslenska",
+    "flag": "🇮🇸",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "is_IS",
+    "font": "sans-serif",
+    "country_code": "IS"
+  },
+  "ita": {
+    "name": "Italiano",
+    "flag": "🇮🇹",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "it_IT",
+    "font": "sans-serif",
+    "country_code": "IT"
+  },
+  "jav": {
+    "name": "Basa Jawa",
+    "flag": "🇮🇩",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "jv_ID",
+    "font": "sans-serif",
+    "country_code": "ID"
+  },
+  "jpn": {
+    "name": "日本語",
+    "flag": "🇯🇵",
+    "direction": "ltr",
+    "script": "Han, Hiragana, Katakana",
+    "locale": "ja_JP",
+    "font": "'Noto Sans JP', sans-serif",
+    "country_code": "JP"
+  },
+  "kal": {
+    "name": "Kalaallisut",
+    "flag": "🇬🇱",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "kl_GL",
+    "font": "sans-serif",
+    "country_code": "GL"
+  },
+  "kan": {
+    "name": "ಕನ್ನಡ",
+    "flag": "🇮🇳",
+    "direction": "ltr",
+    "script": "Kannada",
+    "locale": "kn_IN",
+    "font": "'Noto Sans Kannada', sans-serif",
+    "country_code": "IN"
+  },
+  "kas": {
+    "name": "कश्मीरी",
+    "flag": "🇮🇳",
+    "direction": "rtl",
+    "script": "Arabic",
+    "locale": "ks_IN",
+    "font": "'Noto Nastaliq Urdu', serif",
+    "country_code": "IN"
+  },
+  "kat": {
+    "name": "ქართული",
+    "flag": "🇬🇪",
+    "direction": "ltr",
+    "script": "Georgian",
+    "locale": "ka_GE",
+    "font": "'Noto Sans Georgian', sans-serif",
+    "country_code": "GE"
+  },
+  "kau": {
+    "name": "Kanuri",
+    "flag": "🇳🇬",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "kr_NG",
+    "font": "sans-serif",
+    "country_code": "NG"
+  },
+  "kaz": {
+    "name": "Қазақша",
+    "flag": "🇰🇿",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "kk_KZ",
+    "font": "serif",
+    "country_code": "KZ"
+  },
+  "khm": {
+    "name": "ភាសាខ្មែរ",
+    "flag": "🇰🇭",
+    "direction": "ltr",
+    "script": "Khmer",
+    "locale": "km_KH",
+    "font": "'Noto Sans Khmer', sans-serif",
+    "country_code": "KH"
+  },
+  "kik": {
+    "name": "Gĩkũyũ",
+    "flag": "🇰🇪",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ki_KE",
+    "font": "sans-serif",
+    "country_code": "KE"
+  },
+  "kin": {
+    "name": "Ikinyarwanda",
+    "flag": "🇷🇼",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "rw_RW",
+    "font": "sans-serif",
+    "country_code": "RW"
+  },
+  "kir": {
+    "name": "Кыргызча",
+    "flag": "🇰🇬",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "ky_KG",
+    "font": "serif",
+    "country_code": "KG"
+  },
+  "kom": {
+    "name": "Коми кыв",
+    "flag": "🇷🇺",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "kv_RU",
+    "font": "serif",
+    "country_code": "RU"
+  },
+  "kon": {
+    "name": "Kikongo",
+    "flag": "🇨🇩",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "kg_CD",
+    "font": "sans-serif",
+    "country_code": "CD"
+  },
+  "kor": {
+    "name": "한국어",
+    "flag": "🇰🇷",
+    "direction": "ltr",
+    "script": "Hangul",
+    "locale": "ko_KR",
+    "font": "'Noto Sans KR', sans-serif",
+    "country_code": "KR"
+  },
+  "kua": {
+    "name": "Kuanyama",
+    "flag": "🇳🇦",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "kj_NA",
+    "font": "sans-serif",
+    "country_code": "NA"
+  },
+  "kur": {
+    "name": "Kurdî",
+    "flag": "🇹🇷",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ku_TR",
+    "font": "sans-serif",
+    "country_code": "TR"
+  },
+  "lao": {
+    "name": "ພາສາລາວ",
+    "flag": "🇱🇦",
+    "direction": "ltr",
+    "script": "Lao",
+    "locale": "lo_LA",
+    "font": "'Noto Sans Lao', sans-serif",
+    "country_code": "LA"
+  },
+  "lat": {
+    "name": "Latina",
+    "flag": "🇻🇦",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "la_VA",
+    "font": "serif",
+    "country_code": "VA"
+  },
+  "lav": {
+    "name": "Latviešu",
+    "flag": "🇱🇻",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "lv_LV",
+    "font": "sans-serif",
+    "country_code": "LV"
+  },
+  "lim": {
+    "name": "Limburgs",
+    "flag": "🇳🇱",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "li_NL",
+    "font": "sans-serif",
+    "country_code": "NL"
+  },
+  "lin": {
+    "name": "Lingála",
+    "flag": "🇨🇩",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ln_CD",
+    "font": "sans-serif",
+    "country_code": "CD"
+  },
+  "lit": {
+    "name": "Lietuvių",
+    "flag": "🇱🇹",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "lt_LT",
+    "font": "sans-serif",
+    "country_code": "LT"
+  },
+  "ltz": {
+    "name": "Lëtzebuergesch",
+    "flag": "🇱🇺",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "lb_LU",
+    "font": "sans-serif",
+    "country_code": "LU"
+  },
+  "lub": {
+    "name": "Kiluba",
+    "flag": "🇨🇩",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "lu_CD",
+    "font": "sans-serif",
+    "country_code": "CD"
+  },
+  "lug": {
+    "name": "Luganda",
+    "flag": "🇺🇬",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "lg_UG",
+    "font": "sans-serif",
+    "country_code": "UG"
+  },
+  "mac": {
+    "name": "Македонски",
+    "flag": "🇲🇰",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "mk_MK",
+    "font": "serif",
+    "country_code": "MK"
+  },
+  "mah": {
+    "name": "Kajin M̧ajeļ",
+    "flag": "🇲🇭",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "mh_MH",
+    "font": "sans-serif",
+    "country_code": "MH"
+  },
+  "mal": {
+    "name": "മലയാളം",
+    "flag": "🇮🇳",
+    "direction": "ltr",
+    "script": "Malayalam",
+    "locale": "ml_IN",
+    "font": "'Noto Sans Malayalam', sans-serif",
+    "country_code": "IN"
+  },
+  "mar": {
+    "name": "मराठी",
+    "flag": "🇮🇳",
+    "direction": "ltr",
+    "script": "Devanagari",
+    "locale": "mr_IN",
+    "font": "'Noto Sans Devanagari', sans-serif",
+    "country_code": "IN"
+  },
+  "mkd": {
+    "name": "Македонски",
+    "flag": "🇲🇰",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "mk_MK",
+    "font": "serif",
+    "country_code": "MK"
+  },
+  "mlg": {
+    "name": "Malagasy",
+    "flag": "🇲🇬",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "mg_MG",
+    "font": "sans-serif",
+    "country_code": "MG"
+  },
+  "mlt": {
+    "name": "Malti",
+    "flag": "🇲🇹",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "mt_MT",
+    "font": "sans-serif",
+    "country_code": "MT"
+  },
+  "mon": {
+    "name": "Монгол",
+    "flag": "🇲🇳",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "mn_MN",
+    "font": "serif",
+    "country_code": "MN"
+  },
+  "mri": {
+    "name": "Te Reo Māori",
+    "flag": "🇳🇿",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "mi_NZ",
+    "font": "sans-serif",
+    "country_code": "NZ"
+  },
+  "msa": {
+    "name": "Bahasa Melayu",
+    "flag": "🇲🇾",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ms_MY",
+    "font": "sans-serif",
+    "country_code": "MY"
+  },
+  "mya": {
+    "name": "မြန်မာစာ",
+    "flag": "🇲🇲",
+    "direction": "ltr",
+    "script": "Burmese",
+    "locale": "my_MM",
+    "font": "'Noto Sans Myanmar', sans-serif",
+    "country_code": "MM"
+  },
+  "nau": {
+    "name": "Ekakairũ Naoero",
+    "flag": "🇳🇷",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "na_NR",
+    "font": "sans-serif",
+    "country_code": "NR"
+  },
+  "nav": {
+    "name": "Diné bizaad",
+    "flag": "🇺🇸",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "nv_US",
+    "font": "sans-serif",
+    "country_code": "US"
+  },
+  "nbl": {
+    "name": "isiNdebele",
+    "flag": "🇿🇦",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "nr_ZA",
+    "font": "sans-serif",
+    "country_code": "ZA"
+  },
+  "nde": {
+    "name": "isiNdebele",
+    "flag": "🇿🇼",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "nd_ZW",
+    "font": "sans-serif",
+    "country_code": "ZW"
+  },
+  "ndo": {
+    "name": "Owambo",
+    "flag": "🇳🇦",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ng_NA",
+    "font": "sans-serif",
+    "country_code": "NA"
+  },
+  "nep": {
+    "name": "नेपाली",
+    "flag": "🇳🇵",
+    "direction": "ltr",
+    "script": "Devanagari",
+    "locale": "ne_NP",
+    "font": "'Noto Sans Devanagari', sans-serif",
+    "country_code": "NP"
+  },
+  "nld": {
+    "name": "Nederlands",
+    "flag": "🇳🇱",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "nl_NL",
+    "font": "sans-serif",
+    "country_code": "NL"
+  },
+  "nno": {
+    "name": "Norsk nynorsk",
+    "flag": "🇳🇴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "nn_NO",
+    "font": "sans-serif",
+    "country_code": "NO"
+  },
+  "nob": {
+    "name": "Norsk bokmål",
+    "flag": "🇳🇴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "nb_NO",
+    "font": "sans-serif",
+    "country_code": "NO"
+  },
+  "nor": {
+    "name": "Norsk",
+    "flag": "🇳🇴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "no_NO",
+    "font": "sans-serif",
+    "country_code": "NO"
+  },
+  "nya": {
+    "name": "ChiCheŵa",
+    "flag": "🇲🇼",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ny_MW",
+    "font": "sans-serif",
+    "country_code": "MW"
+  },
+  "oci": {
+    "name": "Occitan",
+    "flag": "🇫🇷",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "oc_FR",
+    "font": "sans-serif",
+    "country_code": "FR"
+  },
+  "oji": {
+    "name": "ᐊᓂᔑᓈᐯᒧᐎᓐ",
+    "flag": "🇨🇦",
+    "direction": "ltr",
+    "script": "Canadian Aboriginal Syllabics",
+    "locale": "oj_CA",
+    "font": "'Noto Sans Canadian Aboriginal', sans-serif",
+    "country_code": "CA"
+  },
+  "ori": {
+    "name": "ଓଡ଼ିଆ",
+    "flag": "🇮🇳",
+    "direction": "ltr",
+    "script": "Oriya",
+    "locale": "or_IN",
+    "font": "'Noto Sans Oriya', sans-serif",
+    "country_code": "IN"
+  },
+  "orm": {
+    "name": "Afaan Oromoo",
+    "flag": "🇪🇹",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "om_ET",
+    "font": "sans-serif",
+    "country_code": "ET"
+  },
+  "oss": {
+    "name": "Ирон æвзаг",
+    "flag": "🇷🇺",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "os_RU",
+    "font": "serif",
+    "country_code": "RU"
+  },
+  "pan": {
+    "name": "ਪੰਜਾਬੀ",
+    "flag": "🇮🇳",
+    "direction": "ltr",
+    "script": "Gurmukhi",
+    "locale": "pa_IN",
+    "font": "'Noto Sans Gurmukhi', sans-serif",
+    "country_code": "IN"
+  },
+  "per": {
+    "name": "فارسی",
+    "flag": "🇮🇷",
+    "direction": "rtl",
+    "script": "Arabic",
+    "locale": "fa_IR",
+    "font": "'Amiri', serif",
+    "country_code": "IR"
+  },
+  "pli": {
+    "name": "पाऴि",
+    "flag": "🏳️",
+    "direction": "ltr",
+    "script": "Devanagari",
+    "locale": null,
+    "font": "'Noto Sans Devanagari', sans-serif",
+    "country_code": null
+  },
+  "pol": {
+    "name": "Polski",
+    "flag": "🇵🇱",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "pl_PL",
+    "font": "sans-serif",
+    "country_code": "PL"
+  },
+  "por": {
+    "name": "Português",
+    "flag": "🇵🇹",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "pt_PT",
+    "font": "sans-serif",
+    "country_code": "PT"
+  },
+  "pus": {
+    "name": "پښتو",
+    "flag": "🇦🇫",
+    "direction": "rtl",
+    "script": "Arabic",
+    "locale": "ps_AF",
+    "font": "'Noto Naskh Arabic', serif",
+    "country_code": "AF"
+  },
+  "que": {
+    "name": "Runa Simi",
+    "flag": "🇵🇪",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "qu_PE",
+    "font": "sans-serif",
+    "country_code": "PE"
+  },
+  "roh": {
+    "name": "Rumantsch",
+    "flag": "🇨🇭",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "rm_CH",
+    "font": "sans-serif",
+    "country_code": "CH"
+  },
+  "ron": {
+    "name": "Română",
+    "flag": "🇷🇴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ro_RO",
+    "font": "sans-serif",
+    "country_code": "RO"
+  },
+  "rum": {
+    "name": "Română",
+    "flag": "🇷🇴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ro_RO",
+    "font": "sans-serif",
+    "country_code": "RO"
+  },
+  "run": {
+    "name": "Kirundi",
+    "flag": "🇧🇮",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "rn_BI",
+    "font": "sans-serif",
+    "country_code": "BI"
+  },
+  "rus": {
+    "name": "Русский",
+    "flag": "🇷🇺",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "ru_RU",
+    "font": "serif",
+    "country_code": "RU"
+  },
+  "sag": {
+    "name": "Sängö",
+    "flag": "🇨🇫",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "sg_CF",
+    "font": "sans-serif",
+    "country_code": "CF"
+  },
+  "san": {
+    "name": "संस्कृतम्",
+    "flag": "🇮🇳",
+    "direction": "ltr",
+    "script": "Devanagari",
+    "locale": "sa_IN",
+    "font": "'Noto Sans Devanagari', sans-serif",
+    "country_code": "IN"
+  },
+  "sin": {
+    "name": "සිංහල",
+    "flag": "🇱🇰",
+    "direction": "ltr",
+    "script": "Sinhala",
+    "locale": "si_LK",
+    "font": "'Noto Sans Sinhala', sans-serif",
+    "country_code": "LK"
+  },
+  "slk": {
+    "name": "Slovenčina",
+    "flag": "🇸🇰",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "sk_SK",
+    "font": "sans-serif",
+    "country_code": "SK"
+  },
+  "slo": {
+    "name": "Slovenčina",
+    "flag": "🇸🇰",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "sk_SK",
+    "font": "sans-serif",
+    "country_code": "SK"
+  },
+  "slv": {
+    "name": "Slovenščina",
+    "flag": "🇸🇮",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "sl_SI",
+    "font": "sans-serif",
+    "country_code": "SI"
+  },
+  "sme": {
+    "name": "Davvisámegiella",
+    "flag": "🇳🇴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "se_NO",
+    "font": "sans-serif",
+    "country_code": "NO"
+  },
+  "smo": {
+    "name": "Gagana Samoa",
+    "flag": "🇼🇸",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "sm_WS",
+    "font": "sans-serif",
+    "country_code": "WS"
+  },
+  "sna": {
+    "name": "ChiShona",
+    "flag": "🇿🇼",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "sn_ZW",
+    "font": "sans-serif",
+    "country_code": "ZW"
+  },
+  "snd": {
+    "name": "سنڌي",
+    "flag": "🇵🇰",
+    "direction": "rtl",
+    "script": "Arabic",
+    "locale": "sd_PK",
+    "font": "'Noto Naskh Arabic', serif",
+    "country_code": "PK"
+  },
+  "som": {
+    "name": "Soomaaliga",
+    "flag": "🇸🇴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "so_SO",
+    "font": "sans-serif",
+    "country_code": "SO"
+  },
+  "sot": {
+    "name": "Sesotho",
+    "flag": "🇱🇸",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "st_LS",
+    "font": "sans-serif",
+    "country_code": "LS"
+  },
+  "spa": {
+    "name": "Español",
+    "flag": "🇪🇸",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "es_ES",
+    "font": "sans-serif",
+    "country_code": "ES"
+  },
+  "sqi": {
+    "name": "Shqip",
+    "flag": "🇦🇱",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "sq_AL",
+    "font": "sans-serif",
+    "country_code": "AL"
+  },
+  "srd": {
+    "name": "Sardu",
+    "flag": "🇮🇹",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "sc_IT",
+    "font": "sans-serif",
+    "country_code": "IT"
+  },
+  "srp": {
+    "name": "Српски",
+    "flag": "🇷🇸",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "sr_RS",
+    "font": "serif",
+    "country_code": "RS"
+  },
+  "ssw": {
+    "name": "SiSwati",
+    "flag": "🇸🇿",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ss_SZ",
+    "font": "sans-serif",
+    "country_code": "SZ"
+  },
+  "sun": {
+    "name": "Basa Sunda",
+    "flag": "🇮🇩",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "su_ID",
+    "font": "sans-serif",
+    "country_code": "ID"
+  },
+  "swa": {
+    "name": "Kiswahili",
+    "flag": "🇰🇪",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "sw_KE",
+    "font": "sans-serif",
+    "country_code": "KE"
+  },
+  "swe": {
+    "name": "Svenska",
+    "flag": "🇸🇪",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "sv_SE",
+    "font": "sans-serif",
+    "country_code": "SE"
+  },
+  "tah": {
+    "name": "Reo Tahiti",
+    "flag": "🇵🇫",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ty_PF",
+    "font": "sans-serif",
+    "country_code": "PF"
+  },
+  "tam": {
+    "name": "தமிழ்",
+    "flag": "🇮🇳",
+    "direction": "ltr",
+    "script": "Tamil",
+    "locale": "ta_IN",
+    "font": "'Noto Sans Tamil', sans-serif",
+    "country_code": "IN"
+  },
+  "tat": {
+    "name": "Татар теле",
+    "flag": "🇷🇺",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "tt_RU",
+    "font": "serif",
+    "country_code": "RU"
+  },
+  "tel": {
+    "name": "తెలుగు",
+    "flag": "🇮🇳",
+    "direction": "ltr",
+    "script": "Telugu",
+    "locale": "te_IN",
+    "font": "'Noto Sans Telugu', sans-serif",
+    "country_code": "IN"
+  },
+  "tgk": {
+    "name": "Тоҷикӣ",
+    "flag": "🇹🇯",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "tg_TJ",
+    "font": "serif",
+    "country_code": "TJ"
+  },
+  "tgl": {
+    "name": "Tagalog",
+    "flag": "🇵🇭",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "tl_PH",
+    "font": "sans-serif",
+    "country_code": "PH"
+  },
+  "tha": {
+    "name": "ไทย",
+    "flag": "🇹🇭",
+    "direction": "ltr",
+    "script": "Thai",
+    "locale": "th_TH",
+    "font": "'Noto Sans Thai', sans-serif",
+    "country_code": "TH"
+  },
+  "tib": {
+    "name": "བོད་ཡིག",
+    "flag": "🇨🇳",
+    "direction": "ltr",
+    "script": "Tibetan",
+    "locale": "bo_CN",
+    "font": "'Noto Sans Tibetan', sans-serif",
+    "country_code": "CN"
+  },
+  "tir": {
+    "name": "ትግርኛ",
+    "flag": "🇪🇷",
+    "direction": "ltr",
+    "script": "Ge'ez",
+    "locale": "ti_ER",
+    "font": "'Noto Sans Ethiopic', sans-serif",
+    "country_code": "ER"
+  },
+  "ton": {
+    "name": "faka Tonga",
+    "flag": "🇹🇴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "to_TO",
+    "font": "sans-serif",
+    "country_code": "TO"
+  },
+  "tsn": {
+    "name": "Setswana",
+    "flag": "🇧🇼",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "tn_BW",
+    "font": "sans-serif",
+    "country_code": "BW"
+  },
+  "tso": {
+    "name": "Xitsonga",
+    "flag": "🇿🇦",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ts_ZA",
+    "font": "sans-serif",
+    "country_code": "ZA"
+  },
+  "tuk": {
+    "name": "Türkmençe",
+    "flag": "🇹🇲",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "tk_TM",
+    "font": "sans-serif",
+    "country_code": "TM"
+  },
+  "tur": {
+    "name": "Türkçe",
+    "flag": "🇹🇷",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "tr_TR",
+    "font": "sans-serif",
+    "country_code": "TR"
+  },
+  "twi": {
+    "name": "Twi",
+    "flag": "🇬🇭",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "tw_GH",
+    "font": "sans-serif",
+    "country_code": "GH"
+  },
+  "uig": {
+    "name": "Uyƣurqə",
+    "flag": "🇨🇳",
+    "direction": "rtl",
+    "script": "Arabic",
+    "locale": "ug_CN",
+    "font": "'Noto Sans Arabic', sans-serif",
+    "country_code": "CN"
+  },
+  "ukr": {
+    "name": "Українська",
+    "flag": "🇺🇦",
+    "direction": "ltr",
+    "script": "Cyrillic",
+    "locale": "uk_UA",
+    "font": "serif",
+    "country_code": "UA"
+  },
+  "urd": {
+    "name": "اردو",
+    "flag": "🇵🇰",
+    "direction": "rtl",
+    "script": "Arabic",
+    "locale": "ur_PK",
+    "font": "'Noto Nastaliq Urdu', serif",
+    "country_code": "PK"
+  },
+  "uzb": {
+    "name": "Oʻzbek",
+    "flag": "🇺🇿",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "uz_UZ",
+    "font": "sans-serif",
+    "country_code": "UZ"
+  },
+  "ven": {
+    "name": "Tshivenḓa",
+    "flag": "🇿🇦",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "ve_ZA",
+    "font": "sans-serif",
+    "country_code": "ZA"
+  },
+  "vie": {
+    "name": "Tiếng Việt",
+    "flag": "🇻🇳",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "vi_VN",
+    "font": "sans-serif",
+    "country_code": "VN"
+  },
+  "vol": {
+    "name": "Volapük",
+    "flag": "🏳️",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "vo",
+    "font": "sans-serif",
+    "country_code": null
+  },
+  "wel": {
+    "name": "Cymraeg",
+    "flag": "🏴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "cy_GB",
+    "font": "sans-serif",
+    "country_code": "GB"
+  },
+  "wln": {
+    "name": "Walon",
+    "flag": "🇧🇪",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "wa_BE",
+    "font": "sans-serif",
+    "country_code": "BE"
+  },
+  "wol": {
+    "name": "Wolof",
+    "flag": "🇸🇳",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "wo_SN",
+    "font": "sans-serif",
+    "country_code": "SN"
+  },
+  "xho": {
+    "name": "isiXhosa",
+    "flag": "🇿🇦",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "xh_ZA",
+    "font": "sans-serif",
+    "country_code": "ZA"
+  },
+  "yid": {
+    "name": "ייִדיש",
+    "flag": "🏳️",
+    "direction": "rtl",
+    "script": "Hebrew",
+    "locale": "yi",
+    "font": "'Noto Sans Hebrew', sans-serif",
+    "country_code": null
+  },
+  "yor": {
+    "name": "Yorùbá",
+    "flag": "🇳🇬",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "yo_NG",
+    "font": "sans-serif",
+    "country_code": "NG"
+  },
+  "zha": {
+    "name": "Saɯ cueŋƅ",
+    "flag": "🇨🇳",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "za_CN",
+    "font": "sans-serif",
+    "country_code": "CN"
+  },
+  "zho": {
+    "name": "中文",
+    "flag": "🇨🇳",
+    "direction": "ltr",
+    "script": "Han",
+    "locale": "zh_CN",
+    "font": "'Noto Sans SC', sans-serif",
+    "country_code": "CN"
+  },
+  "zul": {
+    "name": "isiZulu",
+    "flag": "🇿🇦",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "zu_ZA",
+    "font": "sans-serif",
+    "country_code": "ZA"
+  }
+}
