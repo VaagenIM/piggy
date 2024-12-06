@@ -1,0 +1,42 @@
+/* METADATA
+id: 10
+name: "Dance"
+description: "A whimsical and colorful theme with dancing animations."
+*/
+
+[data-theme="dance"] {
+  /* Theme colors */
+  --piggy-main: #ffcc00;          /* Bright yellow */
+  --piggy-light: #ffffff;         /* White */
+  --piggy-neutral: #ff66cc;       /* Bright pink */
+  --piggy-dark: #33ccff;          /* Bright blue */
+
+  --piggy-text-main: #000000;     /* Black text */
+  --piggy-text-light: #000000;
+  --piggy-text-neutral: #ffffff;
+  --piggy-text-dark: #ffffff;
+
+  --piggy-shadow-text: rgba(0, 0, 0, 0.3);
+  --piggy-shadow-box: rgba(0, 0, 0, 0.2);
+  --piggy-shadow-glow: rgba(255, 255, 255, 0.4);
+
+  /* Card colors */
+  --piggy-card-start: #ff99cc;    /* Pink gradient start */
+  --piggy-card-end: #ffcc99;      /* Orange gradient end */
+  --piggy-card-border: #ff6699;   /* Bright pink border */
+  --piggy-text-card: #ffffff;
+
+  --piggy-card-border-width: 2px;
+}
+
+/* Animation keyframes */
+@keyframes dance {
+  0%   { transform: translateY(0px) scale(98%) rotate(-4deg) translateX(100px)}
+  50%   { transform: translateY(-10px) scale(100%) rotate(4deg) translateX(-100px) }
+  100% { transform: translateY(0px) scale(98%) rotate(-4deg) translateX(100px)}
+}
+
+/* Apply animation to .card-container */
+[data-theme="dance"] .card-container {
+  animation: dance 2s infinite ease-in-out;
+}
