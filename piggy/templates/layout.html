@@ -15,7 +15,7 @@
       {% block header %}
       {% endblock %}
     </header>
-    <main>
+    <main dir="{% if current_language %}{{ current_language.direction }}{% endif %}">
       {% block base %}
       {% endblock %}
     </main>
