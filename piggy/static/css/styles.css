@@ -849,3 +849,13 @@ details p:nth-child(2) {
 .md-content .tabbed-content {
   padding: 0rem 1rem 0rem 1rem;
 }
+
+details ol li, .admonition ol li {
+  font-size: 1rem !important;
+  list-style: decimal !important;
+}
+
+details ul li, .admonition ul li {
+  font-size: 1rem !important;
+  list-style: disc !important;
+}
