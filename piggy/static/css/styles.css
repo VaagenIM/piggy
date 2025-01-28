@@ -171,6 +171,21 @@ h6 {
   }
 }
 
+@media screen and (min-width: 800px) {
+  /* Make header sticky on larger displays */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0px 0px 5px #00000066;
+  }
+}
+
+img[src*='#center'] {
+  display: inline-block;
+  margin: auto;
+}
+
 /*********************\
 |*     CARD GRID     *|
 \*********************/
