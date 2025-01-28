@@ -46,11 +46,9 @@
             </div>
           {% else %}
             <!-- Other Levels (Clickable) -->
-            <div class="snout-button snout-border snout-padding-m">
-              <a href="{{ link }}"> Level {{ assignment.level }} </a>
+              <a href="{{ link }}" class="snout-button snout-border snout-padding-m"> Level {{ assignment.level }} </a>
               <!-- Tooltip -->
               <div class="nav-tooltip">{{ level_meta.title }}</div>
-            </div>
           {% endif %}
         {% endfor %}
       </nav>
