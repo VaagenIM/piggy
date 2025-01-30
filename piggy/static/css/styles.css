@@ -846,10 +846,6 @@ details p:nth-child(2) {
   color: var(--piggy-text-main) !important;
 }
 
-.md-content .MJX-TEX {
-  font-family: "Noto Sans Math", "Times New Roman", Times, sans-serif !important;
-}
-
 .md-content .MathJax {
   text-align: left !important;
   font-size: 1rem !important;
@@ -873,4 +869,9 @@ details ol li, .admonition ol li {
 details ul li, .admonition ul li {
   font-size: 1rem !important;
   list-style: disc !important;
+}
+
+.md-content .arithmatex, .md-content .MJX-TEX {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif !important;
+  font-size: 1rem;
 }
