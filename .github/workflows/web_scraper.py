@@ -106,7 +106,7 @@ def download_site():
                 if link == "/":
                     path = "index.html"
                 else:
-                    path = link.strip("/")
+                    path = link.strip("/").split("#")[0]
                     if "." not in path:
                         path += ".html"
                 print(f"Writing {link}")
