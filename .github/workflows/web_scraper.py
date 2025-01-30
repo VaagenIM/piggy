@@ -115,7 +115,7 @@ def download_site():
                     f.write(html.encode())
     for link in media_links:
         print(f"Downloading {link}")
-        path = link.strip("/")
+        path = link.strip("/").split("#")[0]
         r = requests.get(f"{url}/{path}", allow_redirects=True)
         os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
         path = unquote_path(path)
