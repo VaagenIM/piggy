@@ -14,14 +14,7 @@ def cleanup():
 
 
 def run_tailwind(reload=False):
-    cmd = (
-        "cd piggy && "
-        "npx tailwindcss "
-        "-c tailwind.config.js "
-        "-i static/css/tailwind.input.css "
-        "-o static/css/tailwind.css "
-        f"{'--watch' if reload else ''} "
-    )
+    cmd = f"cd piggy && npx tailwindcss -c tailwind.config.js -o static/css/tailwind.css {'--watch' if reload else ''} "
     subprocesses.append(subprocess.Popen(cmd, shell=True))
 
 
@@ -44,7 +37,7 @@ if __name__ == "__main__":
     # Run these once on the first run
     if os.environ.get("WERKZEUG_RUN_MAIN") != "true":
         # This code will run only once, not in the reloaded processes
-        checkout_branch("output")
+        checkout_branch("test-output")
         run_tailwind(reload=True)  # TODO: This does not keep watching for changes
         subprocesses.append(subprocess.Popen('npx livereload "piggy/, piggybank/"', shell=True))
         print("Houston, we have lift-off! (http://localhost:5001)")
@@ -54,7 +47,7 @@ if __name__ == "__main__":
     from piggy.devtools import inject_devtools
 
     app = create_app(debug=os.environ.get("FLASK_DEBUG", False) == "1")
-    inject_devtools(app)  # Inject devtools
+    inject_devtools(app)
 
     app.run(port=5001)
 else:
