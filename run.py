@@ -44,7 +44,7 @@ if __name__ == "__main__":
     # Run these once on the first run
     if os.environ.get("WERKZEUG_RUN_MAIN") != "true":
         # This code will run only once, not in the reloaded processes
-        checkout_branch("test-output")
+        checkout_branch("output")
         run_tailwind(reload=True)  # TODO: This does not keep watching for changes
         subprocesses.append(subprocess.Popen('npx livereload "piggy/, piggybank/"', shell=True))
         print("Houston, we have lift-off! (http://localhost:5001)")

@@ -1,0 +1,31 @@
+{% macro quick_access(tree) %}
+<div class="quick-access-wrapper">
+    <div class="quick-access-heading">Quick Access</div>
+    <div class="quick-access-columns">
+      {% for year_key, year in tree.items() %}
+        {% if year.data is defined %}
+          <div class="quick-access-column">
+            <h3 class="quick-access-year-heading">{{ year.meta.name }}</h3>
+            {% for sd_key, sd in year.data.items() %}
+            <div class="quick-access-card-header">
+              <div class="quick-access-study-direction">{{ sd.meta.name }}:</div>
+            </div>
+              <div class="quick-access-card">
+                {% if sd.data is defined %}
+                  <div class="quick-access-subjects">
+                    {% for subj_key, subj in sd.data.items() %}
+                      <a href="/{{ subj.meta.system_path | string | replace('piggybank', 'main') }}"
+                      class="quick-access-subject-button">
+                        <img class="quick-access-thumbnail" src="/{{ subj.meta.system_path | string | replace('piggybank', 'img') }}/media/header.webp" alt="{{ subj.meta.name }}">
+                      </a>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endmacro %}
