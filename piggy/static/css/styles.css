@@ -250,7 +250,7 @@ img[src*='#center'] {
 \****************/
 .quick-access-wrapper {
   background-color: var(--piggy-main);
-  padding: 2rem;
+  padding: 1rem;
   border: 2px solid var(--piggy-neutral);
   border-radius: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -270,7 +270,7 @@ img[src*='#center'] {
 /* Flex container for the year columns */
 .quick-access-columns {
   display: flex;
-  gap: 1.5rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
 }
 
@@ -292,7 +292,7 @@ img[src*='#center'] {
 .quick-access-year-heading {
   border-bottom: 1px solid var(--piggy-neutral);
   color: var(--light);
-  font-size: 1.75rem;
+  font-size: 2.5rem;
   font-weight: 900;
   margin-bottom: 1rem;
   text-align: center;
@@ -354,6 +354,18 @@ img[src*='#center'] {
   box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
   object-fit: cover;
 }
+
+.quick-access-description {
+  color: var(--piggy-text-main);
+  font-weight: bold;
+  padding: 0.2rem;
+}
+
+.quick-access-heading {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
 
 /*****************\
 |*     CARDS     *|
