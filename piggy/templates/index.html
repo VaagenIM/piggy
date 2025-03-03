@@ -1,15 +1,23 @@
 {% extends 'layout.html' %}
+
+{% from "partials/parts/quick_access.html" import quick_access %}
+
 {% block base %}
   <main class="container mx-auto text-center">
-    <h1 class="main-title text-5xl font-extrabold text-center my-6">
-      Velkommen til piggy!
-    </h1>
-    <div class="h-4"></div>
-    <a
+      <h1 class="main-title text-5xl font-extrabold text-center my-6">
+        Velkommen til piggy!
+        
+      </h1>
+      <div class="h-4"></div>
+      <a
       class="snout-button snout-padding-xl snout-border text-3xl font-bold p-4"
       href="/{{ ASSIGNMENT_URL_PREFIX }}"
-    >
+      >
       Oppgaver
     </a>
+    
+    <div id="quick-access" class="mt-8">
+      {{ quick_access(piggymap) }}
+    </div>
   </main>
 {% endblock %}

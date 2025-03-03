@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "tailwindcss": "^3.4.10",
+    "tailwindcss": "^4.0.3",
     "upgrade": "^1.1.0"
   },
   "devDependencies": {
