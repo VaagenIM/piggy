@@ -7,7 +7,7 @@ from flask_minify import Minify
 from turtleconverter import generate_static_files
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate
+from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate, STATIC_FONTS_PATHS
 from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
@@ -51,6 +51,7 @@ def create_app(debug: bool = False) -> Flask:
             "AssignmentTemplate": AssignmentTemplate,
             "themes": get_themes(),
             "debug": app.debug,
+            "static_fonts_paths": STATIC_FONTS_PATHS,
         }
 
     @app.template_global()
