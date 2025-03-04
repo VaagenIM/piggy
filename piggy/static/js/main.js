@@ -53,7 +53,13 @@ if (fontTheme === "default") {
 // Set the selected option based on the current theme
 themeSelect.value = currentTheme;
 
-// Start Matrix animation if the theme is "matrix"
+function stopAllAnimations() {
+  stopMatrixAnimation();
+  stopOceanShaderAnimation();
+  stopSpaceAnimation();
+}
+
+// Start animation if a theme with animation is selected
 switch (currentTheme) {
   case "matrix":
     startMatrixAnimation();
@@ -83,12 +89,6 @@ themeSelect.addEventListener("change", function () {
   const selectedTheme = themeSelect.value;
   document.documentElement.setAttribute("data-theme", selectedTheme);
   localStorage.setItem("theme", selectedTheme); // Save theme to localStorage
-
-  function stopAllAnimations() {
-    stopMatrixAnimation();
-    stopOceanShaderAnimation();
-    stopSpaceAnimation();
-  }
   
   switch (selectedTheme) {
     case "matrix":
