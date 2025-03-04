@@ -7,7 +7,7 @@ from flask_minify import Minify
 from turtleconverter import generate_static_files
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate
+from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate, STATIC_FONTS_PATHS
 from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
@@ -26,6 +26,8 @@ def create_app(debug: bool = False) -> Flask:
     app = Flask(__name__, static_folder="static")
 
     app.debug = debug
+    # TODO: add to env (we use nginx caching for prod)
+    default_cache_ttl = 60 * 15 if debug else None  # 15 min in debug mode
 
     # The following is necessary for the app to work behind a reverse proxy
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
@@ -49,6 +51,7 @@ def create_app(debug: bool = False) -> Flask:
             "AssignmentTemplate": AssignmentTemplate,
             "themes": get_themes(),
             "debug": app.debug,
+            "static_fonts_paths": STATIC_FONTS_PATHS,
         }
 
     @app.template_global()
@@ -113,14 +116,14 @@ def create_app(debug: bool = False) -> Flask:
         else:
             folder = "attachments"
         try:
-            return send_file(Path(system_path / folder / filename).absolute())
+            return send_file(Path(system_path / folder / filename).absolute(), max_age=default_cache_ttl)
         except FileNotFoundError:
             if folder == "media":
                 # if there is no /, we are at the root folder and should repeat the name
                 _, name = wildcard.rsplit("/", 1) if "/" in wildcard else (wildcard, wildcard)
                 query_params = {"c": name, "width": 1024, "height": 512}
                 return generate_thumbnail(name, request=request.from_values(query_string=query_params))
-            return send_file("static/img/placeholders/100x100.png")
+            return send_file("static/img/placeholders/100x100.png", max_age=default_cache_ttl)
 
     app.register_blueprint(assignment_routes)
     app.register_blueprint(media_routes)

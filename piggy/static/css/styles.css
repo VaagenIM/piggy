@@ -1,4 +1,6 @@
-/* 
+@import "tailwindcss";
+
+/*
   SOMEWHAT TEMP 30.09.2024
   
   TODO:
@@ -181,7 +183,7 @@ h6 {
   }
 }
 
-img[src*='#center'] {
+img[src*="#center"] {
   display: inline-block;
   margin: auto;
 }
@@ -365,7 +367,6 @@ img[src*='#center'] {
   font-size: 2rem;
   font-weight: bold;
 }
-
 
 /*****************\
 |*     CARDS     *|
@@ -863,6 +864,7 @@ details p:nth-child(2) {
 .md-content h2 code {
   font-size: 1.5rem !important;
 }
+
 .md-content h3,
 .md-content h3 code {
   font-size: 1.25rem !important;
@@ -983,17 +985,20 @@ details p:nth-child(2) {
   padding: 0rem 1rem 0rem 1rem;
 }
 
-details ol li, .admonition ol li {
+details ol li,
+.admonition ol li {
   font-size: 1rem !important;
   list-style: decimal !important;
 }
 
-details ul li, .admonition ul li {
+details ul li,
+.admonition ul li {
   font-size: 1rem !important;
   list-style: disc !important;
 }
 
-.md-content .arithmatex, .md-content .MJX-TEX {
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif !important;
+.md-content .arithmatex,
+.md-content .MJX-TEX {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif !important;
   font-size: 1rem;
 }

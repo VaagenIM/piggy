@@ -5,119 +5,118 @@ description: A theme inspired by the serene blues and teals of the ocean.
 */
 
 [data-theme="ocean"] {
-    /* General colors */
-    --piggy-main: #002b36; /* Deep ocean blue */
-    --piggy-light: #88c0d0; /* Soft aqua for text */
-    --piggy-neutral: #336b87; /* Muted teal */
-    --piggy-dark: #001f27; /* Dark navy for contrast */
-  
-    --piggy-text-main: var(--piggy-light);
-    --piggy-text-light: #d8f3f8; /* Lighter aqua for highlights */
-    --piggy-text-neutral: var(--piggy-neutral);
-    --piggy-text-dark: #89bdd3; /* Mid-tone blue-green */
-  
-    --piggy-shadow-text: rgba(0, 43, 54, 0.2); /* Subtle deep shadows */
-    --piggy-shadow-box: rgba(0, 43, 54, 0.3);
-    --piggy-shadow-glow: rgba(136, 192, 208, 0.3); /* Aqua glow */
-  
-    /* Card colors */
-    --piggy-card-start: rgba(0, 85, 102, 0.5); /* Gradient start */
-    --piggy-card-end: rgba(0, 115, 135, 0.5); /* Gradient end */
-    --piggy-card-border: #88c0d0; /* Aqua for borders */
-    --piggy-text-card: var(--piggy-text-light);
-  
-    --piggy-extra-card-start: rgba(0, 90, 120, 0.5); /* Extra card start */
-    --piggy-extra-card-end: rgba(0, 130, 150, 0.5); /* Extra card end */
-    --piggy-extra-card-border: var(--piggy-card-border);
-    --piggy-text-extra-card: #ffffff;
-  
-    --piggy-resource-card-start: rgba(20, 70, 80, 0.5); /* Resource card start */
-    --piggy-resource-card-end: rgba(50, 110, 120, 0.5); /* Resource card end */
-    --piggy-resource-card-border: #88c0d0;
-    --piggy-text-resource-card: #e0f7fa; /* Soft, gentle aqua */
-  
-    --piggy-card-border-width: 1px;
-  
-    /* Navbar */
-    --piggy-navbar-start: #003b4d; /* Dark blue-green */
-    --piggy-navbar-end: #004f63; /* Gradient effect */
-    --piggy-text-navbar: var(--piggy-light);
-  
-    /* Buttons */
-    --piggy-button: #005f73; /* Darker teal */
-    --piggy-button-hover: #007f9b; /* Brighter teal on hover */
-    --piggy-button-active: #004f63; /* Slightly darker teal on active */
-    --piggy-text-button: #ffffff;
-  
-    /* Thumbnails */
-    --piggy-thumbnail-overlay: rgba(0, 43, 54, 0.5); /* Subtle overlay */
-    --piggy-text-thumbnail: var(--piggy-light);
-  
-    /* Text and links */
-    --piggy-text-tag: #88c0d0;
-    --piggy-text-description: var(--piggy-light);
-    --piggy-text-title: var(--piggy-light);
-    --piggy-text-breadcrumb: var(--piggy-light);
-    --piggy-text-breadcrumb-hover: #b3ecf0;
-  
-    --piggy-menu: var(--piggy-main);
-    --piggy-menu-text: var(--piggy-light);
-  
-    --piggy-tooltip: #003b4d;
-    --piggy-tooltip-text: #ffffff;
-  
-    --piggy-text-hyperlink: #4172b2;
-    --piggy-text-hyperlink-hover: #83c1d9;
-  }
-  
-  /******************************\
-  |*     MARKDOWN OVERRIDES     *|
-  \******************************/
-  
-  [data-theme="ocean"] .md-content .admonition-title {
-    font-size: 0.8rem !important;
-  }
-  
-  [data-theme="ocean"] .md-content code:not(.md-code__content) {
-    background-color: #001219; /* Darker navy blue */
-    color: #d8f3f8; /* Light aqua text */
-  }
-  
-  [data-theme="ocean"] .md-content .md-code__content {
-    background-color: #000a0f; /* Even darker background for code blocks */
-    color: #d8f3f8; /* Aqua text */
-    border: 1px solid #002b36; /* Dark border */
-  }
-  
-  [data-theme="ocean"] .md-content table {
-    border: 1px solid #336b87 !important;
-  }
-  
-  [data-theme="ocean"] .md-content th {
-    background-color: #004f63; /* Teal background */
-  }
-  
-  [data-theme="ocean"] .md-content tr:nth-child(odd) td {
-    background-color: rgba(0, 70, 80, 0.5); /* Teal */
-  }
-  
-  [data-theme="ocean"] .md-content tr:nth-child(even) td {
-    background-color: rgba(0, 90, 100, 0.5); /* Slightly lighter teal */
-  }
-  
-  [data-theme="ocean"] .md-content details,
-  [data-theme="ocean"] .md-content .tip,
-  [data-theme="ocean"] .md-content .admonition {
-    background-color: #002b36;
-    color: var(--piggy-light);
-  }
-  
-  [data-theme="ocean"] .md-content .tabbed-labels::before {
-    border-color: #88c0d0;
-    background-color: rgba(136, 192, 208, 0.2) !important;
-  }
-  
-  [data-theme="ocean"] .md-content .tabbed-set {
-    background: #002b36;
-  }
-  
+  /* General colors */
+  --piggy-main: #002b36; /* Deep ocean blue */
+  --piggy-light: #88c0d0; /* Soft aqua for text */
+  --piggy-neutral: #336b87; /* Muted teal */
+  --piggy-dark: #001f27; /* Dark navy for contrast */
+
+  --piggy-text-main: var(--piggy-light);
+  --piggy-text-light: #d8f3f8; /* Lighter aqua for highlights */
+  --piggy-text-neutral: var(--piggy-neutral);
+  --piggy-text-dark: #89bdd3; /* Mid-tone blue-green */
+
+  --piggy-shadow-text: rgba(0, 43, 54, 0.2); /* Subtle deep shadows */
+  --piggy-shadow-box: rgba(0, 43, 54, 0.3);
+  --piggy-shadow-glow: rgba(136, 192, 208, 0.3); /* Aqua glow */
+
+  /* Card colors */
+  --piggy-card-start: rgba(0, 85, 102, 0.5); /* Gradient start */
+  --piggy-card-end: rgba(0, 115, 135, 0.5); /* Gradient end */
+  --piggy-card-border: #88c0d0; /* Aqua for borders */
+  --piggy-text-card: var(--piggy-text-light);
+
+  --piggy-extra-card-start: rgba(0, 90, 120, 0.5); /* Extra card start */
+  --piggy-extra-card-end: rgba(0, 130, 150, 0.5); /* Extra card end */
+  --piggy-extra-card-border: var(--piggy-card-border);
+  --piggy-text-extra-card: #ffffff;
+
+  --piggy-resource-card-start: rgba(20, 70, 80, 0.5); /* Resource card start */
+  --piggy-resource-card-end: rgba(50, 110, 120, 0.5); /* Resource card end */
+  --piggy-resource-card-border: #88c0d0;
+  --piggy-text-resource-card: #e0f7fa; /* Soft, gentle aqua */
+
+  --piggy-card-border-width: 1px;
+
+  /* Navbar */
+  --piggy-navbar-start: #003b4d; /* Dark blue-green */
+  --piggy-navbar-end: #004f63; /* Gradient effect */
+  --piggy-text-navbar: var(--piggy-light);
+
+  /* Buttons */
+  --piggy-button: #005f73; /* Darker teal */
+  --piggy-button-hover: #007f9b; /* Brighter teal on hover */
+  --piggy-button-active: #004f63; /* Slightly darker teal on active */
+  --piggy-text-button: #ffffff;
+
+  /* Thumbnails */
+  --piggy-thumbnail-overlay: rgba(0, 43, 54, 0.5); /* Subtle overlay */
+  --piggy-text-thumbnail: var(--piggy-light);
+
+  /* Text and links */
+  --piggy-text-tag: #88c0d0;
+  --piggy-text-description: var(--piggy-light);
+  --piggy-text-title: var(--piggy-light);
+  --piggy-text-breadcrumb: var(--piggy-light);
+  --piggy-text-breadcrumb-hover: #b3ecf0;
+
+  --piggy-menu: var(--piggy-main);
+  --piggy-menu-text: var(--piggy-light);
+
+  --piggy-tooltip: #003b4d;
+  --piggy-tooltip-text: #ffffff;
+
+  --piggy-text-hyperlink: #4172b2;
+  --piggy-text-hyperlink-hover: #83c1d9;
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+
+[data-theme="ocean"] .md-content .admonition-title {
+  font-size: 0.8rem !important;
+}
+
+[data-theme="ocean"] .md-content code:not(.md-code__content) {
+  background-color: #001219; /* Darker navy blue */
+  color: #d8f3f8; /* Light aqua text */
+}
+
+[data-theme="ocean"] .md-content .md-code__content {
+  background-color: #000a0f; /* Even darker background for code blocks */
+  color: #d8f3f8; /* Aqua text */
+  border: 1px solid #002b36; /* Dark border */
+}
+
+[data-theme="ocean"] .md-content table {
+  border: 1px solid #336b87 !important;
+}
+
+[data-theme="ocean"] .md-content th {
+  background-color: #004f63; /* Teal background */
+}
+
+[data-theme="ocean"] .md-content tr:nth-child(odd) td {
+  background-color: rgba(0, 70, 80, 0.5); /* Teal */
+}
+
+[data-theme="ocean"] .md-content tr:nth-child(even) td {
+  background-color: rgba(0, 90, 100, 0.5); /* Slightly lighter teal */
+}
+
+[data-theme="ocean"] .md-content details,
+[data-theme="ocean"] .md-content .tip,
+[data-theme="ocean"] .md-content .admonition {
+  background-color: #002b36;
+  color: var(--piggy-light);
+}
+
+[data-theme="ocean"] .md-content .tabbed-labels::before {
+  border-color: #88c0d0;
+  background-color: rgba(136, 192, 208, 0.2) !important;
+}
+
+[data-theme="ocean"] .md-content .tabbed-set {
+  background: #002b36;
+}

@@ -5,116 +5,115 @@ description: A theme inspired by the green hues of "The Matrix" movies.
 */
 
 [data-theme="matrix"] {
-    /* Piggy colors */
-    --piggy-main: #000000; /* Black background */
-    --piggy-light: #00ff00; /* Bright green text */
-    --piggy-neutral: #008800; /* Medium green */
-    --piggy-dark: #004400; /* Dark green */
-  
-    --piggy-text-main: var(--piggy-light);
-    --piggy-text-light: var(--piggy-light);
-    --piggy-text-neutral: var(--piggy-neutral);
-    --piggy-text-dark: var(--piggy-dark);
-  
-    --piggy-shadow-text: #003300; /* Dark green shadow */
-    --piggy-shadow-box: #002200;
-    --piggy-shadow-glow: rgba(0, 255, 0, 0.2); /* Green glow */
-  
-    /* Piggy card colors */
-    --piggy-card-start: rgba(0, 20, 0, 0.7); /* Darker gradient start */
-    --piggy-card-end: rgba(0, 40, 0, 0.7);  /* Darker gradient end */
-    --piggy-card-border: #00bb00; /* Bright green border */
-    --piggy-text-card: var(--piggy-text-light);
-  
-    --piggy-extra-card-start: rgba(0, 30, 0, 0.7); /* Darker gradient start */
-    --piggy-extra-card-end: rgba(0, 60, 0, 0.7);   /* Darker gradient end */
-    --piggy-extra-card-border: #00bb00;            /* Brightest green border */
-    --piggy-text-extra-card: #00ff00;
-  
-    --piggy-resource-card-start: rgba(0, 20, 0, 0.7); /* Darker gradient start */
-    --piggy-resource-card-end: rgba(0, 50, 0, 0.7);   /* Darker gradient end */
-    --piggy-resource-card-border: #00bb00;            /* Brightest green border */
-    --piggy-text-resource-card: #00ff00;
-  
-    --piggy-card-border-width: 1px;
-  
-    /* Piggy elements */
-    --piggy-navbar-start: #001900; /* Navbar start */
-    --piggy-navbar-end: #001100; /* Navbar end */
-    --piggy-text-navbar: var(--piggy-light);
-  
-    --piggy-button: #004400; /* Dark green button */
-    --piggy-button-hover: #008800; /* Brighter on hover */
-    --piggy-button-active: #002200; /* Darker when active */
-    --piggy-text-button: #00ff00;
-  
-    --piggy-thumbnail-overlay: #00330077; /* Lighter overlay */
-    --piggy-text-thumbnail: var(--piggy-light);
-  
-    --piggy-text-tag: #00ff00;
-    --piggy-text-description: var(--piggy-light);
-    --piggy-text-title: var(--piggy-light);
-    --piggy-text-breadcrumb: var(--piggy-light);
-    --piggy-text-breadcrumb-hover: #00cc00;
-  
-    --piggy-menu: var(--piggy-main);
-    --piggy-menu-text: var(--piggy-light);
-  
-    --piggy-tooltip: #001100;
-    --piggy-tooltip-text: #00ff00;
-  
-    --piggy-text-hyperlink: #00ffff;
-    --piggy-text-hyperlink-hover: #99ffff;
-  }
-  
-  /******************************\
-  |*     MARKDOWN OVERRIDES     *|
-  \******************************/
-  
-  [data-theme="matrix"] .md-content .admonition-title {
-    font-size: 0.8rem !important;
-  }
-  
-  [data-theme="matrix"] .md-content code:not(.md-code__content) {
-    background-color: #001100;
-    color: #00ff00;
-  }
+  /* Piggy colors */
+  --piggy-main: #000000; /* Black background */
+  --piggy-light: #00ff00; /* Bright green text */
+  --piggy-neutral: #008800; /* Medium green */
+  --piggy-dark: #004400; /* Dark green */
 
-  [data-theme="matrix"] .md-content .md-code__content {
-      filter: contrast(1.35);
-      border: 1px solid #00ff00;
-      background-color: black;
-  }
-  
-  [data-theme="matrix"] .md-content table {
-    border: 1px solid #006600 !important;
-  }
-  
-  [data-theme="matrix"] .md-content th {
-    background-color: #002200;
-  }
-  
-  [data-theme="matrix"] .md-content tr:nth-child(odd) td {
-    background-color: #001100;
-  }
-  
-  [data-theme="matrix"] .md-content tr:nth-child(even) td {
-    background-color: #000000;
-  }
-  
-  [data-theme="matrix"] .md-content details,
-  [data-theme="matrix"] .md-content .tip,
-  [data-theme="matrix"] .md-content .admonition {
-    background-color: #001100;
-    color: #00ff00;
-  }
-  
-  [data-theme="matrix"] .md-content .tabbed-labels::before {
-    border-color: #00ff00;
-    background-color: rgba(0, 255, 0, 0.2) !important;
-  }
-  
-  [data-theme="matrix"] .md-content .tabbed-set {
-    background: #001100;
-  }
-  
+  --piggy-text-main: var(--piggy-light);
+  --piggy-text-light: var(--piggy-light);
+  --piggy-text-neutral: var(--piggy-neutral);
+  --piggy-text-dark: var(--piggy-dark);
+
+  --piggy-shadow-text: #003300; /* Dark green shadow */
+  --piggy-shadow-box: #002200;
+  --piggy-shadow-glow: rgba(0, 255, 0, 0.2); /* Green glow */
+
+  /* Piggy card colors */
+  --piggy-card-start: rgba(0, 20, 0, 0.7); /* Darker gradient start */
+  --piggy-card-end: rgba(0, 40, 0, 0.7); /* Darker gradient end */
+  --piggy-card-border: #00bb00; /* Bright green border */
+  --piggy-text-card: var(--piggy-text-light);
+
+  --piggy-extra-card-start: rgba(0, 30, 0, 0.7); /* Darker gradient start */
+  --piggy-extra-card-end: rgba(0, 60, 0, 0.7); /* Darker gradient end */
+  --piggy-extra-card-border: #00bb00; /* Brightest green border */
+  --piggy-text-extra-card: #00ff00;
+
+  --piggy-resource-card-start: rgba(0, 20, 0, 0.7); /* Darker gradient start */
+  --piggy-resource-card-end: rgba(0, 50, 0, 0.7); /* Darker gradient end */
+  --piggy-resource-card-border: #00bb00; /* Brightest green border */
+  --piggy-text-resource-card: #00ff00;
+
+  --piggy-card-border-width: 1px;
+
+  /* Piggy elements */
+  --piggy-navbar-start: #001900; /* Navbar start */
+  --piggy-navbar-end: #001100; /* Navbar end */
+  --piggy-text-navbar: var(--piggy-light);
+
+  --piggy-button: #004400; /* Dark green button */
+  --piggy-button-hover: #008800; /* Brighter on hover */
+  --piggy-button-active: #002200; /* Darker when active */
+  --piggy-text-button: #00ff00;
+
+  --piggy-thumbnail-overlay: #00330077; /* Lighter overlay */
+  --piggy-text-thumbnail: var(--piggy-light);
+
+  --piggy-text-tag: #00ff00;
+  --piggy-text-description: var(--piggy-light);
+  --piggy-text-title: var(--piggy-light);
+  --piggy-text-breadcrumb: var(--piggy-light);
+  --piggy-text-breadcrumb-hover: #00cc00;
+
+  --piggy-menu: var(--piggy-main);
+  --piggy-menu-text: var(--piggy-light);
+
+  --piggy-tooltip: #001100;
+  --piggy-tooltip-text: #00ff00;
+
+  --piggy-text-hyperlink: #00ffff;
+  --piggy-text-hyperlink-hover: #99ffff;
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+
+[data-theme="matrix"] .md-content .admonition-title {
+  font-size: 0.8rem !important;
+}
+
+[data-theme="matrix"] .md-content code:not(.md-code__content) {
+  background-color: #001100;
+  color: #00ff00;
+}
+
+[data-theme="matrix"] .md-content .md-code__content {
+  filter: contrast(1.35);
+  border: 1px solid #00ff00;
+  background-color: black;
+}
+
+[data-theme="matrix"] .md-content table {
+  border: 1px solid #006600 !important;
+}
+
+[data-theme="matrix"] .md-content th {
+  background-color: #002200;
+}
+
+[data-theme="matrix"] .md-content tr:nth-child(odd) td {
+  background-color: #001100;
+}
+
+[data-theme="matrix"] .md-content tr:nth-child(even) td {
+  background-color: #000000;
+}
+
+[data-theme="matrix"] .md-content details,
+[data-theme="matrix"] .md-content .tip,
+[data-theme="matrix"] .md-content .admonition {
+  background-color: #001100;
+  color: #00ff00;
+}
+
+[data-theme="matrix"] .md-content .tabbed-labels::before {
+  border-color: #00ff00;
+  background-color: rgba(0, 255, 0, 0.2) !important;
+}
+
+[data-theme="matrix"] .md-content .tabbed-set {
+  background: #001100;
+}
