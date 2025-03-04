@@ -23,16 +23,10 @@
 |*     FONT IMPORTS     *|
 \************************/
 
-/* Emoji Font*/
-@font-face {
-  font-family: "Emoji";
-  src: url("/static/fonts/emoji-font.ttf") format("TrueType");
-  font-weight: 700;
-  font-style: normal;
-}
-
 .language-flag {
-  font-family: "Emoji", sans-serif !important;
+  font-family: "Noto Color Emoji", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 /* Regular */

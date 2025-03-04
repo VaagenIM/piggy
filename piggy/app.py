@@ -25,9 +25,11 @@ os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
 def create_app(debug: bool = False) -> Flask:
     app = Flask(__name__, static_folder="static")
 
+    # TODO: add cache time to env (we use nginx caching for prod)
+    default_cache_ttl = 86400 * 30 if debug else None  # 30 days
+    app.config["SEND_FILE_MAX_AGE_DEFAULT"] = default_cache_ttl
+
     app.debug = debug
-    # TODO: add to env (we use nginx caching for prod)
-    default_cache_ttl = 60 * 15 if debug else None  # 15 min in debug mode
 
     # The following is necessary for the app to work behind a reverse proxy
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
@@ -116,14 +118,14 @@ def create_app(debug: bool = False) -> Flask:
         else:
             folder = "attachments"
         try:
-            return send_file(Path(system_path / folder / filename).absolute(), max_age=default_cache_ttl)
+            return send_file(Path(system_path / folder / filename).absolute())
         except FileNotFoundError:
             if folder == "media":
                 # if there is no /, we are at the root folder and should repeat the name
                 _, name = wildcard.rsplit("/", 1) if "/" in wildcard else (wildcard, wildcard)
                 query_params = {"c": name, "width": 1024, "height": 512}
                 return generate_thumbnail(name, request=request.from_values(query_string=query_params))
-            return send_file("static/img/placeholders/100x100.png", max_age=default_cache_ttl)
+            return send_file("static/img/placeholders/100x100.png")
 
     app.register_blueprint(assignment_routes)
     app.register_blueprint(media_routes)
