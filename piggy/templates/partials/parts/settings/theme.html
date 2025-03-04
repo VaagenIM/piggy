@@ -5,7 +5,7 @@
     class="snout-button snout-border snout-padding-l snout-full-width"
   >
     {% for theme in themes %}
-      <option class="theme-option" value="{{ theme.path }}">
+      <option class="theme-option {% if theme.type == 'dark' %}dark-theme{% else %}light-theme{% endif %}" value="{{ theme.path }}">
         {{ theme.name }}
       </option>
     {% endfor %}

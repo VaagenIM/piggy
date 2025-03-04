@@ -2,6 +2,7 @@
 id: 4
 name: High Contrast
 description: High contrast theme for maximum visibility.
+type: dark
 */
 [data-theme="high-contrast"] {
   --piggy-main: #000000; /* Pure black background */

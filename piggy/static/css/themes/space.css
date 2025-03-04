@@ -1,0 +1,129 @@
+/* METADATA
+id: 10
+name: Space
+description: A theme inspired by the infinite cosmos and deep space, featuring deep blacks, electric cyan accents, and cosmic highlights.
+type: dark
+*/
+
+[data-theme="space"] {
+  /* General colors */
+  --piggy-main: #0b0c10; /* Deep space black */
+  --piggy-light: #66fcf1; /* Electric cyan for text */
+  --piggy-neutral: #1f2833; /* Dark blue-grey */
+  --piggy-dark: #0f0f0f; /* Pure black for contrast */
+
+  --piggy-text-main: var(--piggy-light);
+  --piggy-text-light: #c5c6c7; /* Light grey for highlights */
+  --piggy-text-neutral: var(--piggy-neutral);
+  --piggy-text-dark: #45a29e; /* Muted teal accent */
+
+  --piggy-shadow-text: rgba(11, 12, 16, 0.2); /* Subtle deep shadows */
+  --piggy-shadow-box: rgba(11, 12, 16, 0.3);
+  --piggy-shadow-glow: rgba(102, 252, 241, 0.3); /* Neon cyan glow */
+
+  /* Card colors */
+  --piggy-card-start: rgba(17, 17, 17, 0.5); /* Gradient start */
+  --piggy-card-end: rgba(26, 26, 26, 0.5); /* Gradient end */
+  --piggy-card-border: #66fcf1; /* Cyan for borders */
+  --piggy-text-card: var(--piggy-text-light);
+
+  --piggy-extra-card-start: rgba(20, 20, 20, 0.5);
+  --piggy-extra-card-end: rgba(30, 30, 30, 0.5);
+  --piggy-extra-card-border: var(--piggy-card-border);
+  --piggy-text-extra-card: #ffffff;
+
+  --piggy-resource-card-start: rgba(15, 15, 15, 0.5);
+  --piggy-resource-card-end: rgba(25, 25, 25, 0.5);
+  --piggy-resource-card-border: #66fcf1;
+  --piggy-text-resource-card: #e0f7fa;
+
+  --piggy-card-border-width: 1px;
+
+  /* Navbar */
+  --piggy-navbar-start: #0b0c10;
+  --piggy-navbar-end: #1f2833;
+  --piggy-text-navbar: var(--piggy-light);
+
+  /* Buttons */
+  --piggy-button: #45a29e;
+  --piggy-button-hover: #66fcf1;
+  --piggy-button-active: #1f2833;
+  --piggy-text-button: #ffffff;
+
+  /* Thumbnails */
+  --piggy-thumbnail-overlay: rgba(11, 12, 16, 0.5);
+  --piggy-text-thumbnail: var(--piggy-light);
+
+  /* Text and links */
+  --piggy-text-tag: #66fcf1;
+  --piggy-text-description: var(--piggy-light);
+  --piggy-text-title: var(--piggy-light);
+  --piggy-text-breadcrumb: var(--piggy-light);
+  --piggy-text-breadcrumb-hover: #45a29e;
+
+  --piggy-menu: var(--piggy-main);
+  --piggy-menu-text: var(--piggy-light);
+
+  --piggy-tooltip: #1f2833;
+  --piggy-tooltip-text: #ffffff;
+
+  --piggy-text-hyperlink: #66fcf1;
+  --piggy-text-hyperlink-hover: #45a29e;
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+
+[data-theme="space"] .md-content .admonition-title {
+  font-size: 0.8rem !important;
+}
+
+[data-theme="space"] .md-content code:not(.md-code__content) {
+  background-color: #0f0f0f;
+  color: #66fcf1;
+}
+
+[data-theme="space"] .md-content .md-code__content {
+  background-color: #0b0c10;
+  color: #66fcf1;
+  border: 1px solid #1f2833;
+}
+
+[data-theme="space"] .md-content table {
+  border: 1px solid #66fcf1 !important;
+}
+
+[data-theme="space"] .md-content th {
+  background-color: #1f2833;
+}
+
+[data-theme="space"] .md-content tr:nth-child(odd) td {
+  background-color: rgba(15, 15, 15, 0.5);
+}
+
+[data-theme="space"] .md-content tr:nth-child(even) td {
+  background-color: rgba(25, 25, 25, 0.5);
+}
+
+[data-theme="space"] .md-content details,
+[data-theme="space"] .md-content .tip,
+[data-theme="space"] .md-content .admonition {
+  background-color: #0b0c10;
+  color: var(--piggy-light);
+}
+
+[data-theme="space"] .md-content .tabbed-labels::before {
+  border-color: #66fcf1;
+  background-color: rgba(102, 252, 241, 0.2) !important;
+}
+
+[data-theme="space"] .md-content .tabbed-set {
+  background: #0b0c10;
+}
+
+[data-theme="space"] .md-content {
+  border: 1px solid var(--piggy-light);
+  border-radius: 0.5rem;
+  background-color: #000000cc;
+}
