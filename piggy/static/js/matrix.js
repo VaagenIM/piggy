@@ -2,7 +2,7 @@
 let matrixIntervalId;
 let drops = [];
 const fontSize = 16;             // Constant font size
-const colSpacing = fontSize * 0.8; // Column spacing (80% of fontSize) for closer characters
+const colSpacing = fontSize * 0.8; // Column spacing for closer characters
 
 function startMatrixAnimation() {
   // Get the background overlay container
@@ -38,11 +38,13 @@ function startMatrixAnimation() {
   ctx.font = fontSize + 'px monospace';
   ctx.textAlign = "center";
   
-  // Calculate the number of columns based on colSpacing and initialize drops array
+  // Calculate number of columns based on colSpacing
   let columns = Math.floor(canvas.width / colSpacing);
-  drops = Array(columns).fill(0);
+  // Initialize drops array with random starting positions to fill the canvas
+  drops = Array.from({length: columns}, () => 
+    Math.floor(Math.random() * (canvas.height / fontSize))
+  );
   
-  // The draw function for animation
   function draw() {
     // Create a fading effect by drawing a translucent black rectangle
     ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
@@ -99,6 +101,8 @@ window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     let columns = Math.floor(canvas.width / colSpacing);
-    drops = Array(columns).fill(0);
+    drops = Array.from({length: columns}, () => 
+      Math.floor(Math.random() * (canvas.height / fontSize))
+    );
   }
 });
