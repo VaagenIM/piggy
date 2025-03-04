@@ -54,10 +54,18 @@ if (fontTheme === "default") {
 themeSelect.value = currentTheme;
 
 // Start Matrix animation if the theme is "matrix"
-if (currentTheme === "matrix") {
-  startMatrixAnimation();
-} else if (currentTheme === "ocean") {
-  startOceanShaderAnimation();
+switch (currentTheme) {
+  case "matrix":
+    startMatrixAnimation();
+    break;
+  case "ocean":
+    startOceanShaderAnimation();
+    break;
+  case "space":
+    startSpaceAnimation();
+    break;
+  default:
+    stopAllAnimations();
 }
 
 // Event listener for the Settings button
@@ -76,16 +84,27 @@ themeSelect.addEventListener("change", function () {
   document.documentElement.setAttribute("data-theme", selectedTheme);
   localStorage.setItem("theme", selectedTheme); // Save theme to localStorage
 
-  // Activate or deactivate the Matrix effect based on the selected theme
-  if (selectedTheme === "matrix") {
-    stopOceanShaderAnimation();
-    startMatrixAnimation();
-  } else if (selectedTheme === "ocean") {
-    stopMatrixAnimation();
-    startOceanShaderAnimation();
-  } else {
+  function stopAllAnimations() {
     stopMatrixAnimation();
     stopOceanShaderAnimation();
+    stopSpaceAnimation();
+  }
+  
+  switch (selectedTheme) {
+    case "matrix":
+      stopAllAnimations();
+      startMatrixAnimation();
+      break;
+    case "ocean":
+      stopAllAnimations();
+      startOceanShaderAnimation();
+      break;
+    case "space":
+      stopAllAnimations();
+      startSpaceAnimation();
+      break;
+    default:
+      stopAllAnimations();
   }
 });
 
