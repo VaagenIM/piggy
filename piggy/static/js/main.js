@@ -53,6 +53,11 @@ if (fontTheme === "default") {
 // Set the selected option based on the current theme
 themeSelect.value = currentTheme;
 
+// Start Matrix animation if the theme is "matrix"
+if (currentTheme === "matrix") {
+  startMatrixAnimation();
+}
+
 // Event listener for the Settings button
 settingsButton.addEventListener("click", openSettingsMenu);
 
@@ -68,6 +73,13 @@ themeSelect.addEventListener("change", function () {
   const selectedTheme = themeSelect.value;
   document.documentElement.setAttribute("data-theme", selectedTheme);
   localStorage.setItem("theme", selectedTheme); // Save theme to localStorage
+
+  // Activate or deactivate the Matrix effect based on the selected theme
+  if (selectedTheme === "matrix") {
+    startMatrixAnimation();
+  } else {
+    stopMatrixAnimation();
+  }
 });
 
 // Close settings menu when clicking outside of it
