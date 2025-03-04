@@ -6,7 +6,7 @@ description: Fancy sunset, purple, neon, gradients!
 
 [data-theme="synthwave"] {
   /* Synthwave sunset colors */
-  --piggy-main: rgb(34, 18, 48); /* Deep, rich sunset purple */
+  --piggy-main: rgb(0, 0, 0); /* Deep, rich sunset purple */
   --piggy-light: #ffd27f; /* Warm, soft golden yellow */
   --piggy-neutral: #866997; /* Gray */
   --piggy-dark: rgb(48, 20, 58); /* Darker purple for contrast */
@@ -15,8 +15,8 @@ description: Fancy sunset, purple, neon, gradients!
   --piggy-text-light: #ff9b9b; /* Warm pink for accents */
   --piggy-text-dark: #ffcb91; /* Sunset orange for text highlights */
 
-  --piggy-shadow-text: #ff8c0030; /* Soft orange shadow */
-  --piggy-shadow-box: #ff004450; /* Pink shadow for box elements */
+  --piggy-shadow-text: #ff8c0018; /* Soft orange shadow */
+  --piggy-shadow-box: #ff00a630; /* Pink shadow for box elements */
   --piggy-shadow-glow: rgba(
     255,
     140,
@@ -92,6 +92,83 @@ description: Fancy sunset, purple, neon, gradients!
 
   --piggy-text-hyperlink: #3190b6;
   --piggy-text-hyperlink-hover: #6ab2cf;
+
+  --grid-line-color: #cc00ffaa; /* Grid lines */
+  --grid-background-color: var(--piggy-dark); /* Background color */
+}
+
+[data-theme="synthwave"] .main-container {
+  background-color: #000000;
+}
+
+@keyframes scrollGrid {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 200px;
+  }
+}
+
+[data-theme="synthwave"] .background-overlay {
+  height: 200%;
+  background-image: linear-gradient(
+      to right,
+      transparent 0%,
+      transparent 98%,
+      var(--grid-line-color) 99%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 98%,
+      var(--grid-line-color) 99%
+    );
+  background-size: 2.5rem 2.5rem;
+  transform-origin: top center;
+  transform: translateY(2%) perspective(40rem) rotateX(77deg);
+  animation: scrollGrid 10s linear infinite;
+}
+
+[data-theme="synthwave"] .card-container {
+  box-shadow: 2px 2px 15px 0 var(--piggy-shadow-box);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+@keyframes boxShadowScroll {
+  0% {
+    box-shadow: 0px 0px 15px 0 #ff00a6;
+    border-color: #ff00a6;
+  }
+  25% {
+    box-shadow: 0px 0px 15px 0 #ff9500;
+    border-color: #ff9500;
+  }
+  50% {
+    box-shadow: 0px 0px 15px 0 #00ff33;
+    border-color: #00ff33;
+  }
+  75% {
+    box-shadow: 0px 0px 15px 0 #009dff;
+    border-color: #009dff;
+  }
+  100% {
+    box-shadow: 0px 0px 15px 0 #ff00a6;
+    border-color: #ff00a6;
+  }
+}
+
+[data-theme="synthwave"] .card-container:hover {
+  border-color: #ff00ff;
+  transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) rotateZ(3deg)
+    scale(98%);
+  box-shadow: 0px 0px 15px 0 #ff00a6;
+  animation: boxShadowScroll 2s alternate infinite;
+  animation-timing-function: linear;
+  animation-delay: 0.4s;
 }
 
 [data-theme="synthwave"] .settings-option {
@@ -107,6 +184,12 @@ description: Fancy sunset, purple, neon, gradients!
 \******************************/
 [data-theme="synthwave"] .md-content .admonition-title {
   font-size: 0.8rem !important;
+}
+
+[data-theme="synthwave"] .md-content {
+  border: 1px solid #cc00ffaa;
+  border-radius: 0.5rem;
+  background-color: #000000cc;
 }
 
 [data-theme="synthwave"] .md-content code:not(.md-code__content) {

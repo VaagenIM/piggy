@@ -1,4 +1,6 @@
 {% extends 'layout.html' %}
+{% from "partials/parts/quick_access.html" import quick_access %}
+
 {% block base %}
   <main class="container mx-auto text-center">
     <h1 class="main-title text-5xl font-extrabold text-center my-6">
@@ -11,5 +13,7 @@
     >
       Oppgaver
     </a>
+
+    <div id="quick-access" class="mt-8">{{ quick_access(piggymap) }}</div>
   </main>
 {% endblock %}

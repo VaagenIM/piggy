@@ -1,0 +1,139 @@
+/* METADATA
+id: 9
+name: Desert
+description: A theme inspired by the warm sands and muted tones of the desert.
+*/
+
+[data-theme="desert"] {
+  /* General colors */
+  --piggy-main: #f4e7d3; /* Sandy beige background */
+  --piggy-light: #5f4b32; /* Dark brown for text */
+  --piggy-neutral: #a67c52; /* Medium brown */
+  --piggy-dark: #3e2a14; /* Dark brown for contrast */
+
+  --piggy-text-main: var(--piggy-dark);
+  --piggy-text-light: var(--piggy-light);
+  --piggy-text-neutral: var(--piggy-neutral);
+  --piggy-text-dark: var(--piggy-dark);
+
+  --piggy-shadow-text: rgba(0, 0, 0, 0); /* Subtle brown shadows */
+  --piggy-shadow-box: rgba(94, 75, 50, 0.3);
+  --piggy-shadow-glow: rgba(166, 124, 82, 0.3); /* Warm glow */
+
+  /* Card colors */
+  --piggy-card-start: rgba(244, 231, 211, 0.8); /* Light sand gradient start */
+  --piggy-card-end: rgba(229, 204, 175, 0.8); /* Slightly darker gradient end */
+  --piggy-card-border: #a67c52; /* Medium brown border */
+  --piggy-text-card: var(--piggy-text-dark);
+
+  --piggy-extra-card-start: rgba(230, 200, 160, 0.8); /* Extra card start */
+  --piggy-extra-card-end: rgba(210, 180, 140, 0.8); /* Extra card end */
+  --piggy-extra-card-border: var(--piggy-card-border);
+  --piggy-text-extra-card: var(--piggy-text-dark);
+
+  --piggy-resource-card-start: rgba(
+    220,
+    190,
+    150,
+    0.8
+  ); /* Resource card start */
+  --piggy-resource-card-end: rgba(200, 170, 130, 0.8); /* Resource card end */
+  --piggy-resource-card-border: var(--piggy-card-border);
+  --piggy-text-resource-card: var(--piggy-text-dark);
+
+  --piggy-card-border-width: 1px;
+
+  /* Navbar */
+  --piggy-navbar-start: #d2b48c; /* Tan */
+  --piggy-navbar-end: #c2a678; /* Gradient effect */
+  --piggy-text-navbar: var(--piggy-text-dark);
+
+  /* Buttons */
+  --piggy-button: #a67c52; /* Medium brown */
+  --piggy-button-hover: #8c6239; /* Darker on hover */
+  --piggy-button-active: #5f4b32; /* Darkest when active */
+  --piggy-text-button: #ffffff;
+
+  /* Thumbnails */
+  --piggy-thumbnail-overlay: rgba(94, 75, 50, 0.5); /* Subtle overlay */
+  --piggy-text-thumbnail: var(--piggy-main);
+
+  /* Text and links */
+  --piggy-text-tag: #a67c52;
+  --piggy-text-description: var(--piggy-text-dark);
+  --piggy-text-title: var(--piggy-text-dark);
+  --piggy-text-breadcrumb: var(--piggy-text-dark);
+  --piggy-text-breadcrumb-hover: #8c6239;
+
+  --piggy-menu: var(--piggy-main);
+  --piggy-menu-text: var(--piggy-text-dark);
+
+  --piggy-tooltip: #e0c090;
+  --piggy-tooltip-text: var(--piggy-text-dark);
+
+  --piggy-text-hyperlink: #1a8ce3;
+  --piggy-text-hyperlink-hover: #798b99;
+}
+
+[data-theme="desert"] .level-count-container {
+  color: var(--piggy-dark);
+  background-color: var(--piggy-main);
+}
+
+[data-theme="desert"] .tag-box {
+  color: var(--piggy-dark);
+}
+
+[data-theme="desert"] #theme-select option {
+  color: var(--piggy-main);
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+
+[data-theme="desert"] .md-content .admonition-title {
+  font-size: 0.8rem !important;
+}
+
+[data-theme="desert"] .md-content code:not(.md-code__content) {
+  background-color: #e8d4b0; /* Light sand color */
+  color: #5f4b32; /* Dark brown text */
+}
+
+[data-theme="desert"] .md-content .md-code__content {
+  filter: invert() hue-rotate(10deg) contrast(1.45);
+}
+
+[data-theme="desert"] .md-content table {
+  border: 1px solid #a67c52 !important;
+}
+
+[data-theme="desert"] .md-content th {
+  background-color: #d2b48c; /* Tan */
+  color: var(--piggy-text-dark);
+}
+
+[data-theme="desert"] .md-content tr:nth-child(odd) td {
+  background-color: rgba(244, 231, 211, 0.8); /* Light sand */
+}
+
+[data-theme="desert"] .md-content tr:nth-child(even) td {
+  background-color: rgba(229, 204, 175, 0.8); /* Slightly darker sand */
+}
+
+[data-theme="desert"] .md-content details,
+[data-theme="desert"] .md-content .tip,
+[data-theme="desert"] .md-content .admonition {
+  background-color: #f0e0c0;
+  color: var(--piggy-text-dark);
+}
+
+[data-theme="desert"] .md-content .tabbed-labels::before {
+  border-color: #a67c52;
+  background-color: rgba(166, 124, 82, 0.2) !important;
+}
+
+[data-theme="desert"] .md-content .tabbed-set {
+  background: #f4e7d3;
+}

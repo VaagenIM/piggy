@@ -9,7 +9,7 @@
   <div id="meta-container">
     <div id="language-container">
       <button class="snout-button snout-border snout-padding-m">
-        {# <span class="language-flag">{{ current_language.flag }}</span> #} 🌐
+        <span class="language-flag">{{ current_language.flag }}</span>
         {{ current_language.name }}
       </button>
       <div class="language-dropdown">
@@ -21,7 +21,7 @@
               onclick="document.cookie = 'lang={{ lang }}'; location.reload();"
             {% endif %}
           >
-            {# <span class="language-flag">{{ val.flag }}</span> #}
+            <span class="language-flag">{{ val.flag }}</span>
             {{ val.name }}
           </a>
         {% endfor %}
@@ -46,11 +46,14 @@
             </div>
           {% else %}
             <!-- Other Levels (Clickable) -->
-            <div class="snout-button snout-border snout-padding-m">
-              <a href="{{ link }}"> Level {{ assignment.level }} </a>
-              <!-- Tooltip -->
-              <div class="nav-tooltip">{{ level_meta.title }}</div>
-            </div>
+            <a
+              href="{{ link }}"
+              class="snout-button snout-border snout-padding-m"
+            >
+              Level {{ assignment.level }}
+            </a>
+            <!-- Tooltip -->
+            <div class="nav-tooltip">{{ level_meta.title }}</div>
           {% endif %}
         {% endfor %}
       </nav>
@@ -59,7 +62,7 @@
 {% endblock %}
 
 {% block base %}
-  <h1 class="page-title font-semibold assignment-heading">
+  <h1 class="page-title font-semibold assignment-heading my-6">
     {{ content.heading }}
   </h1>
   {{ content.body | safe }}

@@ -14,14 +14,7 @@ def cleanup():
 
 
 def run_tailwind(reload=False):
-    cmd = (
-        "cd piggy && "
-        "npx tailwindcss "
-        "-c tailwind.config.js "
-        "-i static/css/tailwind.input.css "
-        "-o static/css/tailwind.css "
-        f"{'--watch' if reload else ''} "
-    )
+    cmd = f"cd piggy && npx tailwindcss -c tailwind.config.js -o static/css/tailwind.css {'--watch' if reload else ''} "
     subprocesses.append(subprocess.Popen(cmd, shell=True))
 
 
@@ -54,7 +47,7 @@ if __name__ == "__main__":
     from piggy.devtools import inject_devtools
 
     app = create_app(debug=os.environ.get("FLASK_DEBUG", False) == "1")
-    inject_devtools(app)  # Inject devtools
+    inject_devtools(app)
 
     app.run(port=5001)
 else:
