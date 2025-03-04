@@ -81,7 +81,7 @@ def get_themes():
 
         theme_output.append(theme_data)
 
-    return sorted(theme_output, key=lambda d: d["id"])
+    return sorted(theme_output, key=lambda d: int(d["id"]))
 
 
 # quick and dirty state_machine to read CSS metadata
