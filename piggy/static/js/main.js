@@ -56,6 +56,8 @@ themeSelect.value = currentTheme;
 // Start Matrix animation if the theme is "matrix"
 if (currentTheme === "matrix") {
   startMatrixAnimation();
+} else if (currentTheme === "ocean") {
+  startOceanShaderAnimation();
 }
 
 // Event listener for the Settings button
@@ -76,9 +78,14 @@ themeSelect.addEventListener("change", function () {
 
   // Activate or deactivate the Matrix effect based on the selected theme
   if (selectedTheme === "matrix") {
+    stopOceanShaderAnimation();
     startMatrixAnimation();
+  } else if (selectedTheme === "ocean") {
+    stopMatrixAnimation();
+    startOceanShaderAnimation();
   } else {
     stopMatrixAnimation();
+    stopOceanShaderAnimation();
   }
 });
 
