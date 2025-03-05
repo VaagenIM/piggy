@@ -3,6 +3,7 @@ id: 5
 name: Classic
 description: The classic look of piggy!
 type: light
+preview_style: background-color: #ece4ec; color: #000000;
 */
 
 [data-theme="classic"] {

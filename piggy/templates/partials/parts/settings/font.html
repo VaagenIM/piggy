@@ -1,82 +1,52 @@
 <h3 class="settings-title">Font:</h3>
-<div class="select-container">
-    <select
-    id="font-select"
-    class="snout-button snout-border snout-padding-l snout-full-width"
-    data-font-theme="default"
-    >
-    <option class="font-option" value="default" data-font-theme="default">
-        Default
-    </option>
-    <option class="font-option" value="lexia" data-font-theme="lexia">
-        Lexia
-    </option>
-    <option class="font-option" value="arial" data-font-theme="arial">
-        Arial
-    </option>
-    <option class="font-option" value="impact" data-font-theme="impact">
-        Impact 🤯
-    </option>
-    <option class="font-option" value="papyrus" data-font-theme="papyrus">
-        Papyrus 💀
-    </option>
-    <option class="font-option" value="times" data-font-theme="times">
-        Times New Roman 🤓
-    </option>
-    <option class="font-option" value="courier" data-font-theme="courier">
-        Courier New
-    </option>
-    <option class="font-option" value="georgia" data-font-theme="georgia">
-        Georgia
-    </option>
-    <option class="font-option" value="verdana" data-font-theme="verdana">
-        Verdana
-    </option>
-    <option class="font-option" value="trebuchet" data-font-theme="trebuchet">
-        Trebuchet MS
-    </option>
-    <option class="font-option" value="lucida" data-font-theme="lucida">
-        Lucida Console 🧠
-    </option>
-    <option class="font-option" value="brush" data-font-theme="brush">
-        Brush Script MT 
-    </option>
-    <option class="font-option" value="gill-sans" data-font-theme="gill-sans">
-        Gill Sans
-    </option>
-    <option class="font-option" value="century-gothic" data-font-theme="century-gothic">
-        Century Gothic
-    </option>
-    
-  </select>
+<div class="custom-select" id="font-select">
+  <!-- Placeholder: will be updated by JS if a font is found in localStorage -->
+  <div class="selected" data-value="">
+    Select a font
+  </div>
+  <!-- Dropdown options -->
+  <div class="options-container">
+    <div class="option" data-value="default" style="font-family: 'Quicksand', sans-serif;">
+      Default 🐷
+    </div>
+    <div class="option" data-value="lexia" style="font-family: 'Lexia', sans-serif;">
+      Lexia (Dyslexia friendly!) 👍
+    </div>
+    <div class="option" data-value="arial" style="font-family: Arial, sans-serif;">
+      Arial 😴
+    </div>
+    <div class="option" data-value="impact" style="font-family: Impact, sans-serif;">
+      Impact 🤯
+    </div>
+    <div class="option" data-value="papyrus" style="font-family: Papyrus, sans-serif;">
+      Papyrus 💀
+    </div>
+    <div class="option" data-value="times" style="font-family: 'Times New Roman', serif;">
+      Times New Roman 🤓
+    </div>
+    <div class="option" data-value="courier" style="font-family: 'Courier New', monospace;">
+      Courier New 🧑‍💻
+    </div>
+    <div class="option" data-value="georgia" style="font-family: Georgia, serif;">
+      Georgia 🏳️
+    </div>
+    <div class="option" data-value="verdana" style="font-family: Verdana, sans-serif;">
+      Verdana 🤔
+    </div>
+    <div class="option" data-value="trebuchet" style="font-family: 'Trebuchet MS', sans-serif;">
+      Trebuchet MS 🤺
+    </div>
+    <div class="option" data-value="lucida" style="font-family: 'Lucida Console', monospace;">
+      Lucida Console 🧠
+    </div>
+    <div class="option" data-value="brush" style="font-family: 'Brush Script MT', cursive;">
+      Brush Script MT 💅
+    </div>
+    <div class="option" data-value="gill-sans" style="font-family: 'Gill Sans', sans-serif;">
+      Gill Sans 😎
+    </div>
+    <div class="option" data-value="century-gothic" style="font-family: 'Century Gothic', sans-serif;">
+      Century Gothic 🧛
+    </div>
+  </div>
 </div>
-
-<script>
-  const fontSelect = document.getElementById("font-select");
-  const rootElement = document.documentElement;
-
-  // Function to apply a font theme
-  function applyFontTheme(fontTheme) {
-    rootElement.setAttribute("data-font-theme", fontTheme);
-    fontSelect.setAttribute("data-font-theme", fontTheme);
-    localStorage.setItem("fontTheme", fontTheme);
-  }
-
-  // Function to initialize the font theme
-  function initializeFontTheme() {
-    const savedFontTheme = localStorage.getItem("fontTheme") || "default";
-    rootElement.setAttribute("data-font-theme", savedFontTheme);
-    fontSelect.setAttribute("data-font-theme", savedFontTheme);
-    fontSelect.value = savedFontTheme;
-  }
-
-  // Event listener to handle font changes
-  fontSelect.addEventListener("change", () => {
-    const selectedOption = fontSelect.options[fontSelect.selectedIndex];
-    const selectedFontTheme = selectedOption.dataset.fontTheme;
-    applyFontTheme(selectedFontTheme);
-  });
-
-  // Initialize the font theme on page load
-  initializeFontTheme();
-</script>

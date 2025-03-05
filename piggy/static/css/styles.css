@@ -649,35 +649,116 @@ img[src*="#center"] {
   height: 100%;
   background-color: var(--piggy-menu);
   color: var(--piggy-menu-text);
-  overflow-x: hidden; /* Hide horizontal overflow */
+  overflow-x: hidden;
   transition: width 0.5s;
   z-index: 10000;
   border-left: 1px solid var(--piggy-neutral);
 }
 
-/* Open State */
 #settings-menu.open {
   width: 300px;
 }
 
-/* Close Button */
 #settings-menu .close-button {
   position: absolute;
   top: 20px;
   left: 20px;
   font-size: 36px;
   text-decoration: none;
+  color: var(--piggy-menu-text);
 }
 
-/* Settings Content */
 .settings-content {
   width: 300px;
   padding: 60px 20px 20px 20px;
 }
 
-#theme-select option {
+/* Custom Select Styles */
+.custom-select {
+  position: relative;
+  width: 100%;
   background-color: var(--piggy-light);
   color: var(--piggy-dark);
+  border: 1px solid var(--piggy-neutral);
+  border-radius: 0.2rem;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+.custom-select .selected {
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: var(--piggy-main);
+  color: var(--piggy-text-main);
+  box-sizing: border-box;
+  border-radius: 0.2rem;
+}
+
+.custom-select .options-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: var(--piggy-main);
+  color: var(--piggy-text-main);
+  border: 1px solid var(--piggy-card-border);
+  border-radius: 0.2rem;
+  /* Start closed */
+  max-height: 0;
+  overflow-y: auto;
+  opacity: 0;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  z-index: 10001;
+  box-sizing: border-box;
+  padding: 2px;
+
+  scrollbar-width: thin;                /* Make the scrollbar thinner */
+  scrollbar-color: var(--piggy-dark);           /* thumb color #888, track color #ccc */
+}
+
+.custom-select.open .options-container::-webkit-scrollbar {
+  width: 8px;                           /* Scrollbar width */
+}
+
+.custom-select.open .options-container::-webkit-scrollbar-track {
+  background: #ccc;                     /* Track color */
+  border-radius: 4px;
+}
+
+.custom-select.open .options-container::-webkit-scrollbar-thumb {
+  background-color: #888;               /* Thumb color */
+  border-radius: 4px;
+}
+
+.custom-select.open .options-container {
+  /* max-height is set dynamically via JS */
+  opacity: 1;
+  overflow-y: auto;
+  z-index: 10002;
+  background-color: var(--piggy-menu) !important;
+  border-radius: 0.2rem;
+  border: 1px solid var(--piggy-menu-text);
+}
+
+.custom-select .option {
+  padding: 0.5rem;
+  cursor: pointer;
+  margin: 5px 2px;
+  border-radius: 0.3rem;
+  box-sizing: border-box;
+  background-color: var(--piggy-button);
+  color: var(--piggy-text-button);
+}
+
+.custom-select .option:hover {
+  filter: brightness(1.15) saturate(0.75);
+  background-color: var(--piggy-button-hover);
+  border-color: white;
+}
+
+.custom-select:not(.open) .options-container {
+  pointer-events: none;
 }
 
 /************************\
