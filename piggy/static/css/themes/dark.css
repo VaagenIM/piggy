@@ -3,6 +3,7 @@ id: 0
 name: Dark
 description: The default dark theme.
 type: dark
+preview_style: background-color: rgb(34, 41, 47); color: #f0f4f8;
 */
 
 [data-theme="dark"] {

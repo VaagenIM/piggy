@@ -3,6 +3,7 @@ id: 10
 name: Space
 description: A theme inspired by the infinite cosmos and deep space, featuring deep blacks, electric cyan accents, and cosmic highlights.
 type: dark
+preview_style: background-color: #0b0c10; color: #66fcf1;
 */
 
 [data-theme="space"] {

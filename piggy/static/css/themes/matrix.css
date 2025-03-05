@@ -3,6 +3,7 @@ id: 7
 name: Matrix
 description: A theme inspired by the green hues of "The Matrix" movies.
 type: dark
+preview_style: background-color: #000000; color: #00ff00;
 */
 
 [data-theme="matrix"] {
