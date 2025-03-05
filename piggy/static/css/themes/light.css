@@ -3,6 +3,7 @@ id: 1
 name: Light
 description: The default light theme.
 type: light
+preview_style: background-color: rgb(225, 225, 225); color: rgb(60, 60, 60);
 */
 
 [data-theme="light"] {

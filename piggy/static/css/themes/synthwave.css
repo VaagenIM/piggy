@@ -3,6 +3,7 @@ id: 6
 name: Synthwave
 description: Fancy sunset, purple, neon, gradients!
 type: dark
+preview_style: background-color: rgb(48, 20, 58); color: #ffcc66;
 */
 
 [data-theme="synthwave"] {

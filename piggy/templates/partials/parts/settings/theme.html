@@ -1,13 +1,19 @@
 <h3 class="settings-title">Theme:</h3>
-<div class="select-container">
-  <select
-    id="theme-select"
-    class="snout-button snout-border snout-padding-l snout-full-width"
-  >
+<div class="custom-select" id="theme-select">
+  <!-- Placeholder: will be updated by JS if a theme is found in localStorage -->
+  <div class="selected" data-value="" style="background-color: var(--piggy-main); color: var(--piggy-text-main);">
+    Select a theme
+  </div>
+  <!-- Dropdown options -->
+  <div class="options-container">
     {% for theme in themes %}
-      <option class="theme-option {% if theme.type == 'dark' %}dark-theme{% else %}light-theme{% endif %}" value="{{ theme.path }}">
+      <div 
+        class="option {% if theme.type == 'dark' %}dark-theme{% else %}light-theme{% endif %}" 
+        data-value="{{ theme.path }}"
+        style="{{ theme.preview_style }}"
+      >
         {{ theme.name }}
-      </option>
+      </div>
     {% endfor %}
-  </select>
+  </div>
 </div>
