@@ -27,6 +27,27 @@ function closeSettingsMenu() {
 // Set the selected option based on the current theme
 themeSelect.value = currentTheme;
 
+function stopAllAnimations() {
+  stopMatrixAnimation();
+  stopOceanShaderAnimation();
+  stopSpaceAnimation();
+}
+
+// Start animation if a theme with animation is selected
+switch (currentTheme) {
+  case "matrix":
+    startMatrixAnimation();
+    break;
+  case "ocean":
+    startOceanShaderAnimation();
+    break;
+  case "space":
+    startSpaceAnimation();
+    break;
+  default:
+    stopAllAnimations();
+}
+
 // Event listener for the Settings button
 settingsButton.addEventListener("click", openSettingsMenu);
 
@@ -40,6 +61,23 @@ themeSelect.addEventListener("change", function () {
   const selectedTheme = themeSelect.value;
   document.documentElement.setAttribute("data-theme", selectedTheme);
   localStorage.setItem("theme", selectedTheme); // Save theme to localStorage
+  
+  switch (selectedTheme) {
+    case "matrix":
+      stopAllAnimations();
+      startMatrixAnimation();
+      break;
+    case "ocean":
+      stopAllAnimations();
+      startOceanShaderAnimation();
+      break;
+    case "space":
+      stopAllAnimations();
+      startSpaceAnimation();
+      break;
+    default:
+      stopAllAnimations();
+  }
 });
 
 // Close settings menu when clicking outside of it

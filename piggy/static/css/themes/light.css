@@ -2,6 +2,7 @@
 id: 1
 name: Light
 description: The default light theme.
+type: light
 */
 
 [data-theme="light"] {

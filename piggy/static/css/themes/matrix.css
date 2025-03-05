@@ -2,6 +2,7 @@
 id: 7
 name: Matrix
 description: A theme inspired by the green hues of "The Matrix" movies.
+type: dark
 */
 
 [data-theme="matrix"] {
@@ -116,4 +117,30 @@ description: A theme inspired by the green hues of "The Matrix" movies.
 
 [data-theme="matrix"] .md-content .tabbed-set {
   background: #001100;
+}
+
+#matrix {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  filter: blur(1px);
+}
+
+[data-theme="matrix"] .background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+[data-theme="matrix"] .md-content {
+  border: 1px solid #00ff00;
+  border-radius: 0.5rem;
+  background-color: #000000ee;
 }

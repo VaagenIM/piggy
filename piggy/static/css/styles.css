@@ -1,13 +1,3 @@
-/*
-  SOMEWHAT TEMP 30.09.2024
-  
-  TODO:
-  - Fix spaghetti with classes.
-    - A lot of the buttons have their own styling instead of having the same class, 
-      which there already is one: .piggy-button
-    - I am sure there are some redundant styling classes, but at this point, there
-      is so much spaghetti I can't even bother.
-*/
 
 :root {
   --piggy-font-size: var(15px);
@@ -499,7 +489,7 @@ img[src*="#center"] {
   justify-content: space-between;
   border-radius: 0 0 0.6rem 0.6rem;
   font-weight: bold;
-  text-shadow: 2px 2px 5px var(--piggy-shadow-text); /* Subtle text shadow */
+  text-shadow: 2px 2px 5px var(--piggy-shadow-text);
 }
 
 .difficulty-overkill {
@@ -585,7 +575,7 @@ img[src*="#center"] {
 /* Style the input */
 .search-input {
   width: 100%;
-  padding: 8px 15px 8px 60px; /* Adjusted left padding for icon and separator */
+  padding: 8px 15px 8px 60px;
   border: 1px solid var(--piggy-neutral);
   border-radius: 25px;
   background-color: var(--piggy-main);
@@ -612,11 +602,11 @@ img[src*="#center"] {
 .search-icon {
   position: absolute;
   left: 15px;
-  top: 1px; /* Adjust to align vertically */
-  bottom: 1px; /* Adjust to align vertically */
+  top: 1px;
+  bottom: 1px;
   display: flex;
   align-items: center;
-  padding-right: 20px; /* Space between icon and separator */
+  padding-right: 20px;
   color: var(--piggy-text-neutral);
 }
 
@@ -632,7 +622,7 @@ img[src*="#center"] {
   display: block;
   width: 1px;
   background-color: var(--piggy-neutral);
-  height: 100%; /* Full height */
+  height: 100%;
   margin-left: 10px;
 }
 
@@ -667,7 +657,7 @@ img[src*="#center"] {
 
 /* Open State */
 #settings-menu.open {
-  width: 300px; /* Adjust the width as needed */
+  width: 300px;
 }
 
 /* Close Button */
@@ -682,7 +672,7 @@ img[src*="#center"] {
 /* Settings Content */
 .settings-content {
   width: 300px;
-  padding: 60px 20px 20px 20px; /* Top padding to push content below the close button */
+  padding: 60px 20px 20px 20px;
 }
 
 #theme-select option {
@@ -779,7 +769,7 @@ img[src*="#center"] {
   opacity: 1;
 }
 
-/* Not sure if these are */
+/* Not sure if these are needed */
 @media (max-width: 600px) {
   #level-container {
     flex-wrap: wrap;
@@ -797,7 +787,7 @@ img[src*="#center"] {
 #language-container {
   position: relative;
   margin: 10px;
-  z-index: 1000; /* Ensure it stays above other content */
+  z-index: 1000;
 }
 
 #language-container .snout-button {
