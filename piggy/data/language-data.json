@@ -323,7 +323,7 @@
     "font": "serif",
     "country_code": "RU"
   },
-  "cmn": {
+  "chi": {
     "name": "中文",
     "flag": "🇨🇳",
     "direction": "ltr",
@@ -349,6 +349,15 @@
     "locale": "cv_RU",
     "font": "serif",
     "country_code": "RU"
+  },
+  "cmn": {
+    "name": "中文",
+    "flag": "🇨🇳",
+    "direction": "ltr",
+    "script": "Han",
+    "locale": "zh_CN",
+    "font": "'Noto Sans SC', sans-serif",
+    "country_code": "CN"
   },
   "cor": {
     "name": "Kernewek",
@@ -1817,6 +1826,15 @@
     "font": "sans-serif",
     "country_code": "NG"
   },
+  "yue": {
+    "name": "粵語",
+    "flag": "🇭🇰",
+    "direction": "ltr",
+    "script": "Hant",
+    "locale": "zh_HK",
+    "font": "sans-serif",
+    "country_code": "HK"
+  },
   "zha": {
     "name": "Saɯ cueŋƅ",
     "flag": "🇨🇳",
@@ -1834,6 +1852,24 @@
     "locale": "zh_CN",
     "font": "'Noto Sans SC', sans-serif",
     "country_code": "CN"
+  },
+  "zho-sim": {
+    "name": "简体中文",
+    "flag": "🇨🇳",
+    "direction": "ltr",
+    "script": "Hans",
+    "locale": "zh_CN",
+    "font": "sans-serif",
+    "country_code": "CN"
+  },
+  "zho-tra": {
+    "name": "繁體中文",
+    "flag": "🇹🇼",
+    "direction": "ltr",
+    "script": "Hant",
+    "locale": "zh_TW",
+    "font": "sans-serif",
+    "country_code": "TW"
   },
   "zul": {
     "name": "isiZulu",
