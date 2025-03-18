@@ -34,7 +34,9 @@
         {% for link, assignment in meta.get(AssignmentTemplate.LEVELS_DATA.name).data.items() %}
           {% if current_language.key and current_language.key in assignment.translation_meta %}
             {% set level_meta = assignment.translation_meta[current_language.key] %}
-            {% set link = link ~ "/lang/" ~ current_language.key %}
+            {% if "/lang/" in request.path %}
+              {% set link = "../../" ~ link ~ "/lang/" ~ current_language.key %}
+            {% endif %}
           {% else %}
             {% set level_meta = assignment.meta %}
           {% endif %}
