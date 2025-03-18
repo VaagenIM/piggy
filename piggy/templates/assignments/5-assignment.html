@@ -34,6 +34,7 @@
         {% for link, assignment in meta.get(AssignmentTemplate.LEVELS_DATA.name).data.items() %}
           {% if current_language.key and current_language.key in assignment.translation_meta %}
             {% set level_meta = assignment.translation_meta[current_language.key] %}
+            {% set link = link ~ "/lang/" ~ current_language.key %}
           {% else %}
             {% set level_meta = assignment.meta %}
           {% endif %}
@@ -46,14 +47,11 @@
             </div>
           {% else %}
             <!-- Other Levels (Clickable) -->
-            <a
-              href="{{ link }}"
-              class="snout-button snout-border snout-padding-m"
-            >
+            <a href="{{ link }}" class="snout-button snout-border snout-padding-m">
               Level {{ assignment.level }}
+              <!-- Tooltip -->
               <div class="nav-tooltip">{{ level_meta.title }}</div>
             </a>
-            <!-- Tooltip -->
           {% endif %}
         {% endfor %}
       </nav>

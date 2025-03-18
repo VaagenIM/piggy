@@ -8,6 +8,15 @@
     "font": "sans-serif",
     "country_code": "NO"
   },
+  "nob": {
+    "name": "Norsk",
+    "flag": "🇳🇴",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "nb_NO",
+    "font": "sans-serif",
+    "country_code": "NO"
+  },
   "aar": {
     "name": "Afaraf",
     "flag": "🇪🇷",
