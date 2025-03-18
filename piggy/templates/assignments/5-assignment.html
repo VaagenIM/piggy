@@ -51,9 +51,9 @@
               class="snout-button snout-border snout-padding-m"
             >
               Level {{ assignment.level }}
+              <div class="nav-tooltip">{{ level_meta.title }}</div>
             </a>
             <!-- Tooltip -->
-            <div class="nav-tooltip">{{ level_meta.title }}</div>
           {% endif %}
         {% endfor %}
       </nav>
