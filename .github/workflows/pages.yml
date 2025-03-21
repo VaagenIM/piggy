@@ -9,8 +9,8 @@ on:
     inputs:
       cachebust:
         description: 'Force rebuild'
-        required: false
-        default: 0
+        default: false
+        type: boolean
   push:
     branches: [ main ]
   workflow_run:
