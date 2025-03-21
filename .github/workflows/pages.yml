@@ -6,6 +6,11 @@ on:
   repository_dispatch:
     types: [ fill_piggybank ]
   workflow_dispatch:
+    inputs:
+      cachebust:
+        description: 'Force rebuild'
+        required: false
+        default: 0
   push:
     branches: [ main ]
   workflow_run:
@@ -43,7 +48,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - if: ${{ github.event_name == 'workflow_run' }}
+      - if: ${{ github.event_name == 'workflow_run' || github.event.inputs.cachebust }}
         run: echo "cachebust=${{ github.run_id }}" >> $GITHUB_ENV
 
       - name: Build and push Docker image
@@ -75,7 +80,6 @@ jobs:
               if [ -f "gh-pages/.pid" ]; then
                   break
               fi
-              ls
               sleep 1
           done
           python .github/workflows/web_scraper.py
