@@ -25,7 +25,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-      cachebust: 0
     permissions:
       contents: write
       pages: write
@@ -58,7 +57,7 @@ jobs:
           cache-from: type=gha,mode=max
           cache-to: type=gha
           load: true
-          build-args: CACHE_BUST=${{ env.cachebust }}
+          build-args: CACHE_BUST=${{ env.cachebust || 0 }}
 
       - name: Get piggybank
         run: git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank-demo
