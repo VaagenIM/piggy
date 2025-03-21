@@ -40,9 +40,6 @@ jobs:
       - name: Install dependencies
         run: pip install requests beautifulsoup4 git+https://github.com/sondregronas/turtleconverter@main
 
-      - name: Get piggybank
-        run: git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank-demo
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -55,15 +52,14 @@ jobs:
           cache-from: type=registry,ref=user/app:latest
           cache-to: type=inline,mode=min
 
+      - name: Get piggybank
+        run: git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank-demo
+
       - name: Spin up containers
         run: docker compose -f docker-compose.pages.yml up -d
 
       - name: Run web scraper to build static site
-        run: |
-          echo "Waiting for app to start"
-          sleep 3
-          echo "Running web scraper"
-          python .github/workflows/web_scraper.py
+        run: python .github/workflows/web_scraper.py
 
       - name: Tear down containers
         run: docker compose -f docker-compose.pages.yml down
