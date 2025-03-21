@@ -78,6 +78,8 @@ def get_links(html, path=""):
     links = re.compile(r'href="((?!#|https?://)[^"]*)"').findall(html)
     filtered_links = list()
     for link in links:
+        if link == "javascript:void(0)":
+            continue
         if re.match(r"\.?.+[#:].*", link.split("/")[-1]):
             # Reconstruct without #.* or :.*
             stem = link.split("/")[-1].split("#")[0].split(":")[0]
@@ -100,7 +102,7 @@ def get_media_links(html, path=""):
             continue
         filtered_links.append(link)
 
-    return list(set([x for x in filtered_links if not re.match(r"/static/.*", x)]))
+    return list(set([x for x in filtered_links if not re.match(r"/static/.*", x) or re.match(r"/static/img/.*", x)]))
 
 
 def download_site():
