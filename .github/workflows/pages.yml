@@ -3,12 +3,13 @@
 name: Pages
 
 on:
-  push:
-    branches:
-      - main
   repository_dispatch:
     types: [ fill_piggybank ]
   workflow_dispatch:
+  workflow_run:
+    workflows: [ "CD" ]
+    types:
+      - completed
 
 concurrency:
   group: "pages"
@@ -24,6 +25,7 @@ jobs:
       contents: write
       pages: write
       id-token: write
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name != 'workflow_run' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -42,35 +44,25 @@ jobs:
       - name: Get piggybank
         run: git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank-demo
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Cache Docker layers
-        uses: actions/cache@v4
-        with:
-          path: ${{ runner.temp }}/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          push: false
-          tags: piggy-ci:latest
-          cache-from: type=local,src=${{ runner.temp }}/.buildx-cache
-          cache-to: type=local,dest=${{ runner.temp }}/.buildx-cache-new,mode=max
-
-      - name: Move cache
-        run: |
-          rm -rf ${{ runner.temp }}/.buildx-cache
-          mv ${{ runner.temp }}/.buildx-cache-new ${{ runner.temp }}/.buildx-cache
-
       - name: Spin up containers
         run: docker compose -f docker-compose.pages.yml up -d
 
       - name: Run web scraper to build static site
         run: python .github/workflows/web_scraper.py
+
+      - name: Cache image
+        uses: actions/cache@v2
+        with:
+          path: /tmp/pages-cache
+          key: ${{ runner.os }}-pages-cache
+
+      - if: steps.cache-image.outputs.cache-hit != 'true'
+        name: Pull image
+        run: docker pull ghcr.io/vaagenim/piggy:latest
+
+      - if: steps.cache-image.outputs.cache-hit == 'true'
+        name: Load image
+        run: docker load -i /tmp/pages-cache/image.tar
 
       - name: Tear down containers
         run: docker compose -f docker-compose.pages.yml down
