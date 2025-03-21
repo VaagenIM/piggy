@@ -45,7 +45,7 @@ jobs:
           push: false
           tags: piggy-pages:latest
           cache-from: type=gha,mode=max
-          cache-to: type=gha
+          cache-to: type=gha,mode=max
           load: true
 
       - name: Get piggybank
