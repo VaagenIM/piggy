@@ -4,7 +4,8 @@ A hacky script that scrapes a website and downloads all the pages and media file
 
 import os
 import re
-import shutil
+
+# import shutil
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -136,4 +137,4 @@ def download_site():
 
 generate_static_files(static_folder=Path("demo/static").absolute())
 download_site()
-shutil.copytree(Path(__file__).parents[2] / "piggy/static", Path("demo/static"), dirs_exist_ok=True)
+# shutil.copytree(Path(__file__).parents[2] / "piggy/static", Path("demo/static"), dirs_exist_ok=True)
