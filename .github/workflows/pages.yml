@@ -51,6 +51,7 @@ jobs:
           tags: piggy-pages:latest
           cache-from: type=gha
           cache-to: type=gha
+          load: true
 
       - name: Get piggybank
         run: git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank-demo
