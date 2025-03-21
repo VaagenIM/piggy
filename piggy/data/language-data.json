@@ -26,6 +26,24 @@
     "font": "sans-serif",
     "country_code": "ER"
   },
+  "pirate": {
+    "name": "Pirate",
+    "flag": "🏴‍☠️",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "en_PIR",
+    "font": "sans-serif",
+    "country_code": "X0"
+  },
+  "shakespeare": {
+    "name": "Shakespearean",
+    "flag": "🎭",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "en_SHA",
+    "font": "serif",
+    "country_code": "X0"
+  },
   "abk": {
     "name": "Аҧсуа",
     "flag": "🇬🇪",
