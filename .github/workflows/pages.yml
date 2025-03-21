@@ -8,7 +8,6 @@ on:
   workflow_dispatch:
   push:
     branches: [ main ]
-  # Triggered by CD -> we have a new image
   workflow_run:
     workflows: [ "CD" ]
     types: [ completed ]
