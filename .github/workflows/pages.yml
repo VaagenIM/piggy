@@ -62,7 +62,10 @@ jobs:
       - name: Run web scraper to build static site
         run: |
           echo "Waiting for app to properly start"
-          sleep 30
+          # We can proceed when ".pid" file is available in the folder gh-pages
+          while [ ! -f gh-pages/.pid ]; do
+              sleep 1
+          done
           python .github/workflows/web_scraper.py
 
       - name: Tear down containers
