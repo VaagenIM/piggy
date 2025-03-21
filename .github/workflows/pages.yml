@@ -70,7 +70,12 @@ jobs:
         run: |
           echo "Waiting for app to properly start"
           # We can proceed when ".pid" file is available in the folder gh-pages
-          while [ ! -f gh-pages/.pid ]; do
+          # (or 60 seconds have passed)
+          for i in {1..60}; do
+              if [ -f "gh-pages/.pid" ]; then
+                  break
+              fi
+              ls
               sleep 1
           done
           python .github/workflows/web_scraper.py
