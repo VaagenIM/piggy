@@ -1,4 +1,17 @@
-FROM python:3.12
+FROM python:3.12 AS builder
+
+RUN apt-get update && apt-get install -y nodejs npm && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+WORKDIR /app
+
+COPY pyproject.toml /app
+COPY package.json /app
+
+# TODO: Run tailwindcss generation here in the builder step, so we dont need NPM in the runner
+RUN pip install -U pip && python -m venv venv && . venv/bin/activate && pip install . && npm install --omit=dev
+
+FROM python:3.12-slim AS runner
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -12,10 +25,8 @@ ENV USE_CACHE="1"
 
 WORKDIR /app
 
-COPY pyproject.toml /app
-COPY package.json /app
-
-RUN pip install -U pip && pip install . && npm install --omit=dev
+COPY --from=builder /app/node_modules /app/node_modules
+COPY --from=builder /app/venv /app/venv
 
 # RUN git clone -b main https://github.com/VaagenIM/piggy /piggy
 

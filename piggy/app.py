@@ -141,4 +141,11 @@ def create_app(debug: bool = False) -> Flask:
     Compress(app)
     Minify(app, go=False)
 
+    # If GitHub pages is true, we create a .pid file to signal that the site is running
+    # in a folder called gh-pages, which is the root of the GitHub Pages site
+    if use_github_pages:
+        os.makedirs("gh-pages", exist_ok=True)
+        with open("gh-pages/.pid", "w+") as f:
+            f.write(str(os.getpid()))
+
     return app

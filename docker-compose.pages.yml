@@ -1,7 +1,7 @@
 # Used to generate GitHub Pages
 services:
   app:
-    build: .
+    image: piggy-pages:latest
     container_name: piggy
     ports:
       - "5000:5000"
@@ -16,3 +16,4 @@ services:
       - TZ=Europe/Oslo
     volumes:
       - ./piggybank-demo:/app/piggybank
+      - ./gh-pages:/app/gh-pages
