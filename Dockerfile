@@ -5,17 +5,17 @@ RUN apt-get update && apt-get install -y nodejs npm && \
 
 WORKDIR /app
 
-COPY pyproject.toml /app
-COPY package.json /app
-COPY ./piggy/tailwind.config.js /app
+COPY pyproject.toml .
+COPY package.json .
 
 RUN pip install -U pip && \
     python -m venv venv && \
     . venv/bin/activate && \
     pip install --upgrade pip && \
     pip install . && \
-    npm install --omit=dev && \
-    npx tailwindcss -c tailwind.config.js -o tailwind.css
+    npm install --omit=dev
+COPY piggy .
+RUN npx tailwindcss -c piggy/tailwind.config.js -o tailwind.css
 
 FROM python:3.12-slim AS runner
 
