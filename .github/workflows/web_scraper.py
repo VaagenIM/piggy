@@ -80,12 +80,11 @@ def get_links(html, path=""):
     for link in links:
         if link == "javascript:void(0)":
             continue
-        if re.match(r"\.?.+[#:].*", link.split("/")[-1]):
+        if re.match(r"\.?.+[#:].*", link.split("/")[-1]) and path:
             # Reconstruct without #.* or :.*
             stem = link.split("/")[-1].split("#")[0].split(":")[0]
             directories = link.split("/")[:-1]
-            filtered_links.append("/".join(directories + [stem]))
-            continue
+            link = "/".join(directories + [stem])
         if not link.startswith("/") and path:
             filtered_links.append(f"{path.rsplit('/', 1)[0]}/{link}")
             continue
