@@ -4,8 +4,7 @@ A hacky script that scrapes a website and downloads all the pages and media file
 
 import os
 import re
-
-# import shutil
+import shutil
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -94,7 +93,10 @@ def get_media_links(html, path=""):
             filtered_links.append(f"{path.rsplit('/', 1)[0]}/{link}")
             continue
         filtered_links.append(link)
-    return list(set([x for x in filtered_links if not re.match(r"/static/.*", x)]))
+
+    return list(
+        set([x for x in filtered_links if not re.match(r"/static/.*", x) or re.match(r"/static/.*/tailwind.css", x)])
+    )
 
 
 def download_site():
@@ -137,4 +139,4 @@ def download_site():
 
 generate_static_files(static_folder=Path("demo/static").absolute())
 download_site()
-# shutil.copytree(Path(__file__).parents[2] / "piggy/static", Path("demo/static"), dirs_exist_ok=True)
+shutil.copytree(Path(__file__).parents[2] / "piggy/static", Path("demo/static"), dirs_exist_ok=True)
