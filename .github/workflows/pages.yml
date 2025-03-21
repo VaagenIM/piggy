@@ -35,10 +35,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: 'pip'
-
-      - name: Install dependencies
-        run: pip install requests beautifulsoup4 git+https://github.com/sondregronas/turtleconverter@main
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -59,7 +55,9 @@ jobs:
         run: docker compose -f docker-compose.pages.yml up -d
 
       - name: Run web scraper to build static site
-        run: python .github/workflows/web_scraper.py
+        run: |
+          pip install requests beautifulsoup4 git+https://github.com/sondregronas/turtleconverter@main
+          python .github/workflows/web_scraper.py
 
       - name: Tear down containers
         run: docker compose -f docker-compose.pages.yml down
