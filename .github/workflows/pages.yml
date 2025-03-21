@@ -51,7 +51,7 @@ jobs:
         run: python .github/workflows/web_scraper.py
 
       - name: Cache image
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: /tmp/pages-cache
           key: ${{ runner.os }}-pages-cache
