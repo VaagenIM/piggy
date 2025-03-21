@@ -7,13 +7,12 @@ on:
     types: [ fill_piggybank ]
   workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: [ main ]
   # Triggered by CD -> we have a new image
   workflow_run:
     workflows: [ "CD" ]
-    types:
-      - completed
+    types: [ completed ]
+    branches: [ main ]
 
 concurrency:
   group: "pages"
