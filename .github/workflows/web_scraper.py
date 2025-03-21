@@ -121,7 +121,6 @@ def download_site():
                 with open(f"demo/{path}", "wb+") as f:
                     f.write(html.encode())
 
-    media_links.append("/static/css/tailwind.css")
     for link in media_links:
         print(f"Downloading {link}")
         path = link.strip("/").split("#")[0]
