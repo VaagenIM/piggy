@@ -59,7 +59,11 @@ jobs:
         run: docker compose -f docker-compose.pages.yml up -d
 
       - name: Run web scraper to build static site
-        run: python .github/workflows/web_scraper.py
+        run: |
+          echo "Waiting for app to start"
+          sleep 3
+          echo "Running web scraper"
+          python .github/workflows/web_scraper.py
 
       - name: Tear down containers
         run: docker compose -f docker-compose.pages.yml down
