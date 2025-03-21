@@ -25,7 +25,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-      CACHE_BUST: 0
+      cachebust: 0
     permissions:
       contents: write
       pages: write
@@ -47,7 +47,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - if: ${{ github.event_name == 'workflow_run' }}
-        run: echo "CACHE_BUST=${{ github.run_id }}" >> $GITHUB_ENV
+        run: echo "cachebust=${{ github.run_id }}" >> $GITHUB_ENV
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -58,7 +58,7 @@ jobs:
           cache-from: type=gha,mode=max
           cache-to: type=gha
           load: true
-          build-args: CACHE_BUST=${{ env.CACHE_BUST }}
+          build-args: CACHE_BUST=${{ env.cachebust }}
 
       - name: Get piggybank
         run: git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank-demo
