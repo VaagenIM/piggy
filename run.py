@@ -56,5 +56,4 @@ else:
 
     # TODO: Re-enable (requires branch to be published) (or a env to pass the branch with a PAT)
     # checkout_branch("output")
-    run_tailwind()  # Run once to generate the CSS file
     app = create_app(debug=os.environ.get("FLASK_DEBUG", False) == "1")

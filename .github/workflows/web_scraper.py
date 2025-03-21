@@ -125,6 +125,11 @@ def download_site():
 
         if not path or not r.ok:
             continue
+
+        if len(path.split("/")[-1]) > 255:
+            print("WARNING: Cannot download file with name longer than 255 characters")
+            continue
+
         with open(f"demo/{path}", "wb+") as f:
             f.write(r.content)
 
