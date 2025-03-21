@@ -78,6 +78,12 @@ def get_links(html, path=""):
     links = re.compile(r'href="((?!#|https?://)[^"]*)"').findall(html)
     filtered_links = list()
     for link in links:
+        if re.match(r"\.?.+[#:].*", link.split("/")[-1]):
+            # Reconstruct without #.* or :.*
+            stem = link.split("/")[-1].split("#")[0].split(":")[0]
+            directories = link.split("/")[:-1]
+            filtered_links.append("/".join(directories + [stem]))
+            continue
         if not link.startswith("/") and path:
             filtered_links.append(f"{path.rsplit('/', 1)[0]}/{link}")
             continue
@@ -127,6 +133,7 @@ def download_site():
             path = path.rsplit("?")[0] + ".webp"
 
         if not path or not r.ok:
+            print(f"WARNING: Could not download {link}")
             continue
 
         if len(path.split("/")[-1]) > 255:
