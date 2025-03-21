@@ -94,9 +94,7 @@ def get_media_links(html, path=""):
             continue
         filtered_links.append(link)
 
-    return list(
-        set([x for x in filtered_links if not re.match(r"/static/.*", x) or re.match(r"/static/.*/tailwind.css", x)])
-    )
+    return list(set([x for x in filtered_links if not re.match(r"/static/.*", x)]))
 
 
 def download_site():
@@ -116,6 +114,8 @@ def download_site():
                 os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
                 with open(f"demo/{path}", "wb+") as f:
                     f.write(html.encode())
+
+    media_links.append("/static/css/tailwind.css")
     for link in media_links:
         print(f"Downloading {link}")
         path = link.strip("/").split("#")[0]
