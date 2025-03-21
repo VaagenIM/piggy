@@ -1,7 +1,7 @@
 # Used to generate GitHub Pages
 services:
   app:
-    image: ghcr.io/vaagenim/piggy
+    image: ghcr.io/vaagenim/piggy:latest
     container_name: piggy
     ports:
       - "5000:5000"
