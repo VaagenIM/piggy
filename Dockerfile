@@ -43,7 +43,7 @@ RUN echo  "cd /piggy && \
           cp /piggy/entrypoint.sh /app/entrypoint.sh" > /usr/local/bin/auto-update.sh
 
 COPY . /app
-COPY --from=builder /app/tailwind.css /app/piggy/static/tailwind.css
+COPY --from=builder /app/tailwind.css /app/piggy/static/css/tailwind.css
 
 EXPOSE 5000/tcp
 CMD ["/bin/bash", "entrypoint.sh"]
