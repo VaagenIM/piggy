@@ -2,8 +2,7 @@ import os
 from pathlib import Path
 
 from flask import Flask, send_file, request, Blueprint, render_template
-from flask_compress import Compress
-from flask_minify import Minify
+from flask_squeeze import Squeeze
 from turtleconverter import generate_static_files
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -24,6 +23,8 @@ os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
 
 def create_app(debug: bool = False) -> Flask:
     app = Flask(__name__, static_folder="static")
+
+    Squeeze().init_app(app)
 
     # TODO: add cache time to env (we use nginx caching for prod)
     default_cache_ttl = 86400 * 30 if debug else None  # 30 days
@@ -135,11 +136,6 @@ def create_app(debug: bool = False) -> Flask:
     if os.environ.get("USE_CACHE", "1") == "1":
         with app.app_context(), app.test_request_context():
             cache_directory(PIGGYMAP, fn=get_assignment_wildcard)
-
-    # Compress and minify the app
-    app.config["COMPRESS_MIMETYPES"] = ["text/css", "application/json", "application/javascript"]
-    Compress(app)
-    Minify(app, go=False)
 
     # If GitHub pages is true, we create a .pid file to signal that the site is running
     # in a folder called gh-pages, which is the root of the GitHub Pages site
