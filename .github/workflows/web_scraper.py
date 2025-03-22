@@ -4,7 +4,6 @@ A hacky script that scrapes a website and downloads all the pages and media file
 
 import os
 import re
-import shutil
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -30,7 +29,7 @@ def unquote_path(path):
 def get_html(link):
     """Get the html from the given url, and append the new links to the links list."""
     print(f"Visiting {url}/{link.strip('/')}")
-    r = requests.get(f'{url}/{link.strip("/")}', allow_redirects=True)
+    r = requests.get(f"{url}/{link.strip('/')}", allow_redirects=True)
 
     visited.append(link)
 
@@ -68,10 +67,19 @@ def get_html(link):
         html = re.sub(r'href="attachments/', 'href="../../attachments/', html)
         html = re.sub(r'src="attachments/', 'src="../../attachments/', html)
         html = re.sub(
-            rf"""href=\"({link.split('Level')[0].split("/")[-1]}[^/]+)\"""", rf'href="../../\1/lang/{lang}"', html
+            rf"""href=\"({link.split("Level")[0].split("/")[-1]}[^/]+)\"""", rf'href="../../\1/lang/{lang}"', html
         )
 
     return html
+
+
+def clean_link(link, path):
+    if re.match(r"\.?.+[#:].*", link.split("/")[-1]) and path:
+        # Reconstruct without #.* or :.*
+        stem = link.split("/")[-1].split("#")[0].split(":")[0]
+        directories = link.split("/")[:-1]
+        link = "/".join(directories + [stem])
+    return link
 
 
 def get_links(html, path=""):
@@ -80,28 +88,25 @@ def get_links(html, path=""):
     for link in links:
         if link == "javascript:void(0)":
             continue
-        if re.match(r"\.?.+[#:].*", link.split("/")[-1]) and path:
-            # Reconstruct without #.* or :.*
-            stem = link.split("/")[-1].split("#")[0].split(":")[0]
-            directories = link.split("/")[:-1]
-            link = "/".join(directories + [stem])
+        link = clean_link(link, path)
         if not link.startswith("/") and path:
             filtered_links.append(f"{path.rsplit('/', 1)[0]}/{link}")
             continue
         filtered_links.append(link)
-    return list(set([x for x in filtered_links]))
+    return list(set(filtered_links))
 
 
 def get_media_links(html, path=""):
     links = re.compile(r'src="((?!#|https?://)[^"]*)"').findall(html)
     filtered_links = list()
     for link in links:
+        link = clean_link(link, path)
         if not link.startswith("/") and path:
             filtered_links.append(f"{path.rsplit('/', 1)[0]}/{link}")
             continue
         filtered_links.append(link)
 
-    return list(set([x for x in filtered_links if not re.match(r"/static/.*", x) or re.match(r"/static/img/.*", x)]))
+    return list(set(filtered_links))
 
 
 def download_site():
@@ -146,4 +151,3 @@ def download_site():
 
 generate_static_files(static_folder=Path("demo/static").absolute())
 download_site()
-shutil.copytree(Path(__file__).parents[2] / "piggy/static", Path("demo/static"), dirs_exist_ok=True)
