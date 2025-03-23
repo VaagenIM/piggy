@@ -11,7 +11,7 @@ from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException
-from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
+from piggy.piggybank import generate_piggymap, get_piggymap_segment_from_path
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes
 
 # Ensure the working directory is the root of the project
@@ -39,6 +39,7 @@ def create_app(debug: bool = False) -> Flask:
     media_routes = Blueprint(MEDIA_ROUTE, __name__, url_prefix=f"/{MEDIA_ROUTE}")
 
     generate_static_files(static_folder=Path(os.path.dirname(Path(__file__).absolute())) / "static")
+    generate_piggymap()  # Generate the piggymap on startup (gets cached)
 
     use_github_pages = os.environ.get("GITHUB_PAGES", False)
 
@@ -48,7 +49,7 @@ def create_app(debug: bool = False) -> Flask:
         return {
             "ASSIGNMENT_URL_PREFIX": ASSIGNMENT_ROUTE,
             "MEDIA_URL_PREFIX": MEDIA_ROUTE,
-            "piggymap": PIGGYMAP,
+            "piggymap": generate_piggymap(),
             "img_fmt": "webp",
             "github_pages": use_github_pages,  # Used to determine if we should use lang in URL
             "AssignmentTemplate": AssignmentTemplate,
@@ -112,7 +113,7 @@ def create_app(debug: bool = False) -> Flask:
             # If a language is specified, remove it from the wildcard (+ the assignment name)
             # This only happens when the language is specified in the URL and not via cookies
             wildcard = wildcard.rsplit("/", 2)[0]
-        system_path = get_piggymap_segment_from_path(wildcard, PIGGYMAP)[0].get("system_path", Path())
+        system_path = get_piggymap_segment_from_path(wildcard, generate_piggymap())[0].get("system_path", Path())
         if request.path.split("/")[1] == MEDIA_ROUTE:
             wildcard = wildcard.replace(MEDIA_ROUTE, "", 1).strip("/")
             folder = "media"
@@ -135,7 +136,7 @@ def create_app(debug: bool = False) -> Flask:
     # Cache all assignment related pages if not in debug mode
     if os.environ.get("USE_CACHE", "1") == "1":
         with app.app_context(), app.test_request_context():
-            cache_directory(PIGGYMAP, fn=get_assignment_wildcard)
+            cache_directory(generate_piggymap(), fn=get_assignment_wildcard)
 
     # If GitHub pages is true, we create a .pid file to signal that the site is running
     # in a folder called gh-pages, which is the root of the GitHub Pages site

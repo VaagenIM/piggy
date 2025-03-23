@@ -1,6 +1,7 @@
 import json
 import os
 import timeit
+from functools import lru_cache
 from pathlib import Path
 
 from frozendict.cool import deepfreeze
@@ -91,7 +92,7 @@ def get_template_from_path(path: str) -> str:
     return t
 
 
-def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
+def _generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
     """
     Generate a dictionary of the directory structure of the given path
 
@@ -115,7 +116,7 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
         i = item.replace(" ", "_")  # We don't want spaces in the keys for pretty URLs
         # If the item is a directory, we want to go deeper
         if os.path.isdir(f"{path}/{item}"):
-            new_item = generate_piggymap(Path(f"{path}/{item}"), _current_level=_current_level + 1)
+            new_item = _generate_piggymap(Path(f"{path}/{item}"), _current_level=_current_level + 1)
             if new_item:
                 piggymap[i] = {"data": new_item}
                 # If the folder contains a 'meta.json' file, we should add that as metadata to the folder
@@ -164,13 +165,12 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
     return recursive_sort(piggymap)
 
 
-# Build the piggymap
-start_time = timeit.default_timer()
-print("Building piggymap")
-# If we are in debug mode, we want to rebuild the piggymap on every request, but only in the main process
-if os.environ.get("WERKZEUG_RUN_MAIN") != "true" and os.environ.get("FLASK_DEBUG") == "1":
-    PIGGYMAP = {}
-# Else block = production mode
-else:
-    PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
-print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")
+@lru_cache  # Caching since a restart is required to update the piggymap regardless
+def generate_piggymap():
+    if os.environ.get("WERKZEUG_RUN_MAIN") != "true" and os.environ.get("FLASK_DEBUG") == "1":
+        return {}
+    start_time = timeit.default_timer()
+    print("Building piggymap")
+    piggymap = deepfreeze(_generate_piggymap(PIGGYBANK_FOLDER))
+    print(f"Piggymap built in {timeit.default_timer() - start_time:.2f}s")
+    return piggymap

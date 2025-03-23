@@ -14,7 +14,7 @@ from piggy.exceptions import PiggyHTTPException, PiggyErrorException
 from piggy.models import LANGUAGES
 from piggy.piggybank import (
     get_all_meta_from_path,
-    PIGGYMAP,
+    generate_piggymap,
     get_template_from_path,
     get_piggymap_segment_from_path,
     get_assignment_data_from_path,
@@ -85,13 +85,13 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
     current_language = LANGUAGES.get(lang, "")
 
     # Get the assignment data
-    assignment_data = dict(get_assignment_data_from_path(assignment_path, PIGGYMAP).copy())
+    assignment_data = dict(get_assignment_data_from_path(assignment_path, generate_piggymap()).copy())
     meta = dict(assignment_data.get("meta", {}).copy())
     if "summary" not in meta:
         meta["summary"] = generate_summary_from_mkdocs_html(sections["body"])
     assignment_data.pop("meta")
 
-    all_metadata = dict({**meta, **get_all_meta_from_path(str(p.parent), PIGGYMAP), **extra_metadata})
+    all_metadata = dict({**meta, **get_all_meta_from_path(str(p.parent), generate_piggymap()), **extra_metadata})
     # Set the title to the assignment's title
     all_metadata["title"] = sections["meta"]["title"]
 
@@ -117,13 +117,13 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
     Gets the relevant piggymap from the path. (key = child content, value = dict with relevant child data + meta)
     """
     template_type = get_template_from_path(path)
-    metadata, segment = get_piggymap_segment_from_path(path, PIGGYMAP)
+    metadata, segment = get_piggymap_segment_from_path(path, generate_piggymap())
 
     # If a piggymap segment is not found, raise a 404
     if not segment:
         raise PiggyHTTPException("Page not found", status_code=404)
 
-    metadata = {**metadata, **get_all_meta_from_path(path, PIGGYMAP)}
+    metadata = {**metadata, **get_all_meta_from_path(path, generate_piggymap())}
 
     media_abspath = f"/{MEDIA_ROUTE}/{path}" if path else f"/{MEDIA_ROUTE}"
     abspath = f"/{ASSIGNMENT_ROUTE}/{path}" if path else f"/{ASSIGNMENT_ROUTE}"
