@@ -61,15 +61,16 @@ jobs:
         run: |
           echo "Waiting for app to properly start"
           # We can proceed when ".pid" file is available in the folder gh-pages
+          start_time=$(date +%s)
           while [ ! -f "gh-pages/.pid" ]; do
-              sleep 1
+              sleep 0.1
           done
+          end_time=$(date +%s)
+          echo "App started in $((end_time - start_time)) seconds"
           python .github/workflows/web_scraper.py
 
       - name: Tear down containers
-        run: |
-          docker compose -f docker-compose.pages.yml down
-          rm gh-pages/.pid
+        run: docker compose -f docker-compose.pages.yml down
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
