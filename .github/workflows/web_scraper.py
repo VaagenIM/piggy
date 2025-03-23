@@ -11,9 +11,9 @@ import requests
 from bs4 import BeautifulSoup as bs
 from turtleconverter import generate_static_files
 
-links = ["/"]  # A list of links we need to visit and download (including files that are related to the website)
-visited = []  # A list of links we have visited
-media_links = []
+links = set("/")  # A list of links we need to visit and download (including files that are related to the website)
+visited = set()  # A list of links we have visited
+media_links = set()
 url = "http://127.0.0.1:5000"  # The URL of the website we are scraping
 cname = "https://piggy.iktim.no"  # The CNAME of the website we will push the demo to
 
@@ -28,10 +28,10 @@ def unquote_path(path):
 
 def get_html(link):
     """Get the html from the given url, and append the new links to the links list."""
-    print(f"Visiting {url}/{link.strip('/')}")
+    print(f"Visiting\33[34m{url}/{link.strip('/')}\33[0m")
     r = requests.get(f"{url}/{link.strip('/')}", allow_redirects=True)
 
-    visited.append(link)
+    visited.add(link)
 
     if not r.ok:
         return
@@ -44,16 +44,10 @@ def get_html(link):
 
     new_links = get_links(html, path=link.strip("/"))
 
-    for l in new_links:
-        if l not in links:
-            links.append(l)
-
     # Get media links as long as we are not in the lang folder
+    new_media_links = set()
     if "/lang/" not in link:
         new_media_links = get_media_links(html, path=link.strip("/"))
-        for l in new_media_links:
-            if l not in media_links:
-                media_links.append(l)
 
     # TODO: this is a hack. hopefully temporary.
     html = re.sub(r"""/api/generate_thumbnail/([^?]*)(\?[^"]*)""", r"/api/generate_thumbnail/\1.webp", html)
@@ -70,7 +64,7 @@ def get_html(link):
             rf"""href=\"({link.split("Level")[0].split("/")[-1]}[^/]+)\"""", rf'href="../../\1/lang/{lang}"', html
         )
 
-    return html
+    return (html, new_links, new_media_links)
 
 
 def clean_link(link, path):
@@ -84,70 +78,103 @@ def clean_link(link, path):
 
 def get_links(html, path=""):
     links = re.compile(r'href="((?!#|https?://)[^"]*)"').findall(html)
-    filtered_links = list()
+    filtered_links = set()
     for link in links:
         if link == "javascript:void(0)":
             continue
         link = clean_link(link, path)
         if not link.startswith("/") and path:
-            filtered_links.append(f"{path.rsplit('/', 1)[0]}/{link}")
+            filtered_links.add(f"{path.rsplit('/', 1)[0]}/{link}")
             continue
-        filtered_links.append(link)
-    return list(set(filtered_links))
+        filtered_links.add(link)
+    return filtered_links
 
 
 def get_media_links(html, path=""):
     links = re.compile(r'src="((?!#|https?://)[^"]*)"').findall(html)
-    filtered_links = list()
+    filtered_links = set()
     for link in links:
         link = clean_link(link, path)
         if not link.startswith("/") and path:
-            filtered_links.append(f"{path.rsplit('/', 1)[0]}/{link}")
+            filtered_links.add(f"{path.rsplit('/', 1)[0]}/{link}")
             continue
-        filtered_links.append(link)
+        filtered_links.add(link)
 
-    return list(set(filtered_links))
+    return filtered_links
+
+
+def _write_html(html, path):
+    os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
+    with open(f"demo/{path}", "wb+") as f:
+        f.write(html.encode())
+
+
+def _download_media(link):
+    print(f"Downloading \33[34m{link}\33[0m")
+    path = link.strip("/").split("#")[0]
+    r = requests.get(f"{url}/{path}", allow_redirects=True)
+    os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
+    path = unquote_path(path)
+    # TODO: this is a hack. hopefully temporary.
+    if "/api/generate_thumbnail/" in link:
+        path = path.rsplit("?")[0] + ".webp"
+
+    if not path or not r.ok:
+        print(f"WARNING: Could not download {link}")
+        return
+
+    if len(path.split("/")[-1]) > 255:
+        print("WARNING: Cannot download file with name longer than 255 characters")
+        return
+
+    with open(f"demo/{path}", "wb+") as f:
+        f.write(r.content)
+
+
+import threading
 
 
 def download_site():
+    threads = []
+    media_threads = []
     while visited != links:
-        for link in links:
+        for link in list(links):  # Iterate over a copy to avoid modification issues
             if link not in visited:
+                visited.add(link)
                 html = get_html(link)
                 if not html:
                     continue
+                # Unpack the html tuple
+                html, new_links, new_media_links = html
                 if link == "/":
                     path = "index.html"
                 else:
                     path = link.strip("/").split("#")[0]
                     if "." not in path:
                         path += ".html"
-                print(f"Writing {link}")
-                os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
-                with open(f"demo/{path}", "wb+") as f:
-                    f.write(html.encode())
+                print(f"Writing \33[34m{link}\33[0m")
+                t = threading.Thread(target=_write_html, args=(html, path))
+                t.start()
+                threads.append(t)
 
-    for link in media_links:
-        print(f"Downloading {link}")
-        path = link.strip("/").split("#")[0]
-        r = requests.get(f"{url}/{path}", allow_redirects=True)
-        os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
-        path = unquote_path(path)
-        # TODO: this is a hack. hopefully temporary.
-        if "/api/generate_thumbnail/" in link:
-            path = path.rsplit("?")[0] + ".webp"
+                # Add new links that aren't already in links
+                links.update(new_links - links)
 
-        if not path or not r.ok:
-            print(f"WARNING: Could not download {link}")
-            continue
+                # Start downloading new media links immediately
+                for media_link in new_media_links:
+                    if media_link not in media_links:
+                        media_links.add(media_link)
+                        mt = threading.Thread(target=_download_media, args=(media_link,))
+                        mt.start()
+                        media_threads.append(mt)
 
-        if len(path.split("/")[-1]) > 255:
-            print("WARNING: Cannot download file with name longer than 255 characters")
-            continue
+        for t in threads:
+            t.join()
 
-        with open(f"demo/{path}", "wb+") as f:
-            f.write(r.content)
+    for t in media_threads:
+        t.join()
 
 
-generate_static_files(static_folder=Path("demo/static").absolute())
-download_site()
+if __name__ == "__main__":
+    generate_static_files(static_folder=Path("demo/static").absolute())
+    download_site()
