@@ -2,6 +2,7 @@
 A hacky script that scrapes a website and downloads all the pages and media files.
 """
 
+import multiprocessing
 import os
 import re
 from pathlib import Path
@@ -26,7 +27,7 @@ def unquote_path(path):
     return new_path
 
 
-def get_html(link):
+def get_html(link) -> tuple[str, set[str], set[str]]:
     """Get the html from the given url, and append the new links to the links list."""
     print(f"Visiting \33[34m{url}/{link.strip('/')}\33[0m")
     r = requests.get(f"{url}/{link.strip('/')}", allow_redirects=True)
@@ -34,7 +35,7 @@ def get_html(link):
     visited.add(link)
 
     if not r.ok:
-        return
+        return "", set(), set()
 
     # Only prettify if mimetype is text/html
     if "text/html" in r.headers.get("Content-Type"):
@@ -64,7 +65,7 @@ def get_html(link):
             rf"""href=\"({link.split("Level")[0].split("/")[-1]}[^/]+)\"""", rf'href="../../\1/lang/{lang}"', html
         )
 
-    return (html, new_links, new_media_links)
+    return html, new_links, new_media_links
 
 
 def clean_link(link, path):
@@ -131,48 +132,34 @@ def _download_media(link):
         f.write(r.content)
 
 
-import threading
-
-
 def download_site():
-    threads = []
-    media_threads = []
-    while visited != links:
-        for link in list(links):  # Iterate over a copy to avoid modification issues
-            if link not in visited:
-                visited.add(link)
-                html = get_html(link)
-                if not html:
-                    continue
-                # Unpack the html tuple
-                html, new_links, new_media_links = html
-                if link == "/":
-                    path = "index.html"
-                else:
-                    path = link.strip("/").split("#")[0]
-                    if "." not in path:
-                        path += ".html"
-                print(f"Writing \33[34m{link}\33[0m")
-                t = threading.Thread(target=_write_html, args=(html, path))
-                t.start()
-                threads.append(t)
+    with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
+        while visited != links:
+            tasks = []
+            media_tasks = []
 
-                # Add new links that aren't already in links
-                links.update(new_links - links)
+            for link in list(links):
+                if link not in visited:
+                    visited.add(link)
+                    tasks.append(link)
 
-                # Start downloading new media links immediately
-                for media_link in new_media_links:
-                    if media_link not in media_links:
-                        media_links.add(media_link)
-                        mt = threading.Thread(target=_download_media, args=(media_link,))
-                        mt.start()
-                        media_threads.append(mt)
+            results = pool.map(get_html, tasks)  # Parallel execution
 
-        for t in threads:
-            t.join()
+            for link, (html, new_links, new_media_links) in zip(tasks, results):
+                if html:
+                    if link == "/":
+                        path = "index.html"
+                    else:
+                        path = link.strip("/").split("#")[0]
+                        if "." not in path:
+                            path += ".html"
+                    print(f"Writing \33[34m{link}\33[0m")
+                    pool.apply_async(_write_html, args=(html, path))  # Run in parallel
 
-    for t in media_threads:
-        t.join()
+                    links.update(new_links - links)
+                    media_tasks.extend(new_media_links)
+
+            pool.map(_download_media, media_tasks)  # Download media in parallel
 
 
 if __name__ == "__main__":
