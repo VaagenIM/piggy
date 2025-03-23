@@ -28,7 +28,7 @@ def unquote_path(path):
 
 def get_html(link):
     """Get the html from the given url, and append the new links to the links list."""
-    print(f"Visiting\33[34m{url}/{link.strip('/')}\33[0m")
+    print(f"Visiting \33[34m{url}/{link.strip('/')}\33[0m")
     r = requests.get(f"{url}/{link.strip('/')}", allow_redirects=True)
 
     visited.add(link)
