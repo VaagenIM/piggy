@@ -67,7 +67,9 @@ jobs:
           python .github/workflows/web_scraper.py
 
       - name: Tear down containers
-        run: docker compose -f docker-compose.pages.yml down
+        run: |
+          docker compose -f docker-compose.pages.yml down
+          rm gh-pages/.pid
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
