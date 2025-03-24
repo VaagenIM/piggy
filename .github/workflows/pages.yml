@@ -41,7 +41,15 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and push Docker image
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-docker-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
+
+      - name: Build Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -50,6 +58,8 @@ jobs:
           cache-from: type=gha,mode=max
           cache-to: type=gha,mode=max
           load: true
+        env:
+          DOCKER_BUILDKIT: 1
 
       - name: Get piggybank
         run: git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank-demo
