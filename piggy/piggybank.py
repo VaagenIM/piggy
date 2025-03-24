@@ -1,7 +1,6 @@
 import json
 import os
 import timeit
-from functools import lru_cache
 from pathlib import Path
 
 from frozendict.cool import deepfreeze
@@ -165,12 +164,38 @@ def _generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0)
     return recursive_sort(piggymap)
 
 
-@lru_cache  # Caching since a restart is required to update the piggymap regardless
 def generate_piggymap():
-    if os.environ.get("WERKZEUG_RUN_MAIN") != "true" and os.environ.get("FLASK_DEBUG") == "1":
-        return {}
     start_time = timeit.default_timer()
     print("Building piggymap")
-    piggymap = deepfreeze(_generate_piggymap(PIGGYBANK_FOLDER))
+    piggymap = _generate_piggymap(PIGGYBANK_FOLDER)
     print(f"Piggymap built in {timeit.default_timer() - start_time:.2f}s")
     return piggymap
+
+
+def recurse(data, convert_to_str=False):
+    """Recursively process the dictionary, converting Path objects or strings based on the flag."""
+    for key, value in data.items():
+        if isinstance(value, dict):
+            data[key] = recurse(value, convert_to_str)
+        if convert_to_str and isinstance(value, Path):
+            data[key] = f"path:{value}"
+        if not convert_to_str and isinstance(value, str) and value.startswith("path:"):
+            data[key] = Path(value[5:])
+    return data
+
+
+if __name__ == "__main__":
+    PIGGYMAP = generate_piggymap()
+    PIGGYMAP = recurse(PIGGYMAP, convert_to_str=True)
+    with open(Path(__file__).parent / ".piggymap.json", "w+", encoding="utf-8") as f:
+        json.dump(PIGGYMAP, f, indent=4)
+else:
+    # Handle Flask-related environment conditions
+    if os.environ.get("WERKZEUG_RUN_MAIN") != "true" and os.environ.get("FLASK_DEBUG") == "1":
+        PIGGYMAP = {}
+    else:
+        os.system(f"python {Path(__file__).parent}/piggybank.py")
+        with open(Path(__file__).parent / ".piggymap.json", "r", encoding="utf-8") as f:
+            PIGGYMAP = json.load(f)
+        PIGGYMAP = recurse(PIGGYMAP, convert_to_str=False)
+        PIGGYMAP = deepfreeze(PIGGYMAP)

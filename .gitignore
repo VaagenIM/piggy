@@ -5,6 +5,7 @@
 .DS_Store?
 .cache
 .pid
+.piggymap.json
 *.egg-info
 
 .vscode/
