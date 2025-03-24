@@ -58,7 +58,7 @@ jobs:
         run: docker compose -f docker-compose.pages.yml up -d
 
       - name: Install dependencies
-        run: uv pip install requests beautifulsoup4 git+https://github.com/sondregronas/turtleconverter@main
+        run: uv pip install -r .github/workflows/requirements-pages.txt
 
       - name: Run web scraper to build static site
         run: python .github/workflows/web_scraper.py
