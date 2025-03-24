@@ -16,4 +16,3 @@ services:
       - TZ=Europe/Oslo
     volumes:
       - ./piggybank-demo:/app/piggybank
-      - ./gh-pages:/app/gh-pages
