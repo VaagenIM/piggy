@@ -3,8 +3,9 @@ import os
 import timeit
 from pathlib import Path
 
+import markupsafe
+import yaml
 from frozendict.cool import deepfreeze
-from turtleconverter import mdfile_to_sections
 
 from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper
@@ -91,6 +92,27 @@ def get_template_from_path(path: str) -> str:
     return t
 
 
+def get_frontmatter_from_file(path: Path) -> dict:
+    data = ""
+    frontmatter = {}
+    with open(path, "r", encoding="utf-8") as f:
+        if f.readline().strip() == "---":
+            for line in f:
+                if line.strip() == "---":
+                    break
+                data += line
+    try:
+        frontmatter = yaml.unsafe_load(data)
+    except yaml.YAMLError:
+        print(f"Error parsing frontmatter in {path}")
+
+    if not frontmatter:
+        frontmatter = {}
+
+    frontmatter["title"] = frontmatter.get("title", path.stem.replace("_", " "))
+    return {k: str(markupsafe.escape(v)) for k, v in frontmatter.items()}
+
+
 def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
     """
     Generate a dictionary of the directory structure of the given path
@@ -129,29 +151,22 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
             continue
         assignment_path = Path(f"{path}/{item}")
 
-        # NOTE: This is run both for piggymap generation, and for individual assignment rendering
-        sections = mdfile_to_sections(assignment_path)
+        frontmatter = get_frontmatter_from_file(assignment_path)
 
         # Get translations metadata
         translation_meta = dict()
         for lang in os.listdir(f"{path}/translations") if os.path.isdir(f"{path}/translations") else []:
             if not os.path.exists(f"{path}/translations/{lang}/{item}"):
                 continue
-            try:
-                translation_sections = mdfile_to_sections(Path(f"{path}/translations/{lang}/{item}"))
-                translation_meta[lang] = translation_sections["meta"]
-            except Exception:
-                # TODO: Handle / visualize this error better
-                print(f"Error: Could not render translation for {lang}/{item}")
-                continue
+            translation_meta[lang] = get_frontmatter_from_file(Path(f"{path}/translations/{lang}/{item}"))
 
         assignment_key = normalize_path_to_str(i, replace_spaces=True, normalize_url=True, remove_ext=True)
         piggymap[assignment_key] = {
             "path": assignment_path,
             "level": match.group(1).strip(),
-            "level_name": sections["heading"],
-            "heading": sections["heading"],
-            "meta": sections["meta"],
+            "level_name": frontmatter["title"],
+            "heading": frontmatter["title"],
+            "meta": frontmatter,
             "translation_meta": translation_meta,
         }
 
@@ -164,13 +179,12 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
     return recursive_sort(piggymap)
 
 
-# Build the piggymap
-start_time = timeit.default_timer()
-print("Building piggymap")
 # If we are in debug mode, we want to rebuild the piggymap on every request, but only in the main process
 if os.environ.get("WERKZEUG_RUN_MAIN") != "true" and os.environ.get("FLASK_DEBUG") == "1":
     PIGGYMAP = {}
 # Else block = production mode
 else:
+    start_time = timeit.default_timer()
+    print("Building piggymap")
     PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
-print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")
+    print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")
