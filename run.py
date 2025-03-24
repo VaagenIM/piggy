@@ -8,9 +8,6 @@ subprocesses = []
 @atexit.register
 def cleanup():
     print("\nSo long and thanks for all the fish!")
-    if os.path.exists("gh-pages/.pid"):
-        print("Removing .pid file")
-        os.remove("gh-pages/.pid")
     for p in subprocesses:
         p.terminate()
         p.wait()
