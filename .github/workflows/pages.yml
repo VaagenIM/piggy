@@ -55,6 +55,7 @@ jobs:
       - name: Build Docker image
         uses: docker/build-push-action@v6
         with:
+          path: /tmp/.buildx-cache
           context: .
           push: false
           tags: piggy-pages:latest
