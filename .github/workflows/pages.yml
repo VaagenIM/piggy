@@ -38,28 +38,28 @@ jobs:
       - name: Set up Python
         run: uv python install
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
+      # Cache Docker layers
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile', '**/package.json', '**/pyproject.toml', 'piggy/**', '**/run.py') }}
+          key: ${{ runner.os }}-buildx-${{ hashFiles('**/pyproject.toml', '**/package.json', '**/piggy/**', '**/run.py') }}
           restore-keys: |
-            ${{ runner.os }}-docker-
+            ${{ runner.os }}-buildx-
 
+      # Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Build and cache Docker image
       - name: Build Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: false
           tags: piggy-pages:latest
-          cache-from: type=gha,mode=max
+          cache-from: type=gha
           cache-to: type=gha,mode=max
-          load: true
-        env:
-          DOCKER_BUILDKIT: 1
 
       - name: Get piggybank
         run: git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank-demo
