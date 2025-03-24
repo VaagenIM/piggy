@@ -12,6 +12,7 @@ dependencies = [
     "beautifulsoup4~=4.13.1",
     "frozendict==2.4.6",
     "flask-squeeze==3.3.3",
+    "MarkupSafe==3.0.2,"
 ]
 
 [build-system]
