@@ -29,6 +29,7 @@ def create_app(debug: bool = False) -> Flask:
     # TODO: add cache time to env (we use nginx caching for prod)
     default_cache_ttl = 86400 * 30 if debug else None  # 30 days
     app.config["SEND_FILE_MAX_AGE_DEFAULT"] = default_cache_ttl
+    app.jinja_options["autoescape"] = False
 
     app.debug = debug
 
