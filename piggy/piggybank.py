@@ -2,11 +2,9 @@ import json
 import os
 import timeit
 from pathlib import Path
-from pprint import pprint
 
 import markupsafe
 import yaml
-from frozendict import frozendict
 from frozendict.cool import deepfreeze
 
 from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX
