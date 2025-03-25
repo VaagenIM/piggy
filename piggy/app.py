@@ -11,7 +11,7 @@ from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException
-from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
+from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes
 
 # Ensure the working directory is the root of the project
@@ -56,6 +56,13 @@ def create_app(debug: bool = False) -> Flask:
             "themes": get_themes(),
             "debug": app.debug,
             "static_fonts_paths": STATIC_FONTS_PATHS,
+        }
+
+    @app.context_processor
+    def utilities():
+        """Add utility functions to the context."""
+        return {
+            "unfreeze": unfreeze,
         }
 
     @app.template_global()
@@ -137,12 +144,5 @@ def create_app(debug: bool = False) -> Flask:
     if os.environ.get("USE_CACHE", "1") == "1":
         with app.app_context(), app.test_request_context():
             cache_directory(PIGGYMAP, fn=get_assignment_wildcard)
-
-    # If GitHub pages is true, we create a .pid file to signal that the site is running
-    # in a folder called gh-pages, which is the root of the GitHub Pages site
-    if use_github_pages:
-        os.makedirs("gh-pages", exist_ok=True)
-        with open("gh-pages/.pid", "w+") as f:
-            f.write(str(os.getpid()))
 
     return app

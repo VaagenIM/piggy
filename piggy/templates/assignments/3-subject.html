@@ -1,4 +1,5 @@
-{% extends "layout.html" %}
+{% extends "assignments/_assignments_base.html" %}
+{% block assignment_title %}{{ meta.name }}{% endblock %}
 {%
   set types = [''] + segment.items()
   | selectattr("1.meta.type", "defined")
@@ -6,8 +7,7 @@
   | list
 %}
 
-{% block base %}
-  <h1 class="page-title font-extrabold text-center my-6">{{ meta.name }}</h1>
+{% block assignment_base %}
   {% include 'partials/search_box.html' %}
 
   {% if segment.items()|length > 0 %}

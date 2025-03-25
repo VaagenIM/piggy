@@ -95,12 +95,17 @@ def get_template_from_path(path: str) -> str:
 def get_frontmatter_from_file(path: Path) -> dict:
     data = ""
     frontmatter = {}
+    fallback_title = path.stem.replace("_", " ")
     with open(path, "r", encoding="utf-8") as f:
         if f.readline().strip() == "---":
             for line in f:
                 if line.strip() == "---":
                     break
                 data += line
+        for line in f:
+            if line.strip().startswith("# "):
+                fallback_title = line.lstrip("#").strip()
+                break
     try:
         frontmatter = yaml.unsafe_load(data)
     except yaml.YAMLError:
@@ -109,7 +114,7 @@ def get_frontmatter_from_file(path: Path) -> dict:
     if not frontmatter:
         frontmatter = {}
 
-    frontmatter["title"] = frontmatter.get("title", path.stem.replace("_", " "))
+    frontmatter["title"] = frontmatter.get("title", fallback_title)
     return {k: str(markupsafe.escape(v)) for k, v in frontmatter.items()}
 
 
@@ -179,12 +184,29 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
     return recursive_sort(piggymap)
 
 
-# If we are in debug mode, we want to rebuild the piggymap on every request, but only in the main process
-if os.environ.get("WERKZEUG_RUN_MAIN") != "true" and os.environ.get("FLASK_DEBUG") == "1":
-    PIGGYMAP = {}
-# Else block = production mode
-else:
-    start_time = timeit.default_timer()
-    print("Building piggymap")
-    PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
-    print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")
+def stringify_paths(d: dict) -> dict:
+    for key, value in d.items():
+        if isinstance(value, dict):
+            d[key] = unfreeze(value)
+        if isinstance(value, Path):
+            d[key] = str(value.as_posix())
+    return d
+
+
+@lru_cache_wrapper
+def unfreeze(d):
+    """
+    Unfreeze a frozendict and convert all Path objects to strings, or just convert all Path objects to strings.
+    """
+    if isinstance(d, dict):
+        d = dict(d.copy())
+        return stringify_paths(d)
+    elif isinstance(d, Path):
+        return str(d.as_posix())
+    return d
+
+
+start_time = timeit.default_timer()
+print("Building piggymap")
+PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
+print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")
