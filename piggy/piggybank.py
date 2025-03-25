@@ -97,12 +97,17 @@ def get_template_from_path(path: str) -> str:
 def get_frontmatter_from_file(path: Path) -> dict:
     data = ""
     frontmatter = {}
+    fallback_title = path.stem.replace("_", " ")
     with open(path, "r", encoding="utf-8") as f:
         if f.readline().strip() == "---":
             for line in f:
                 if line.strip() == "---":
                     break
                 data += line
+        for line in f:
+            if line.strip().startswith("# "):
+                fallback_title = line.lstrip("#").strip()
+                break
     try:
         frontmatter = yaml.unsafe_load(data)
     except yaml.YAMLError:
@@ -111,7 +116,7 @@ def get_frontmatter_from_file(path: Path) -> dict:
     if not frontmatter:
         frontmatter = {}
 
-    frontmatter["title"] = frontmatter.get("title", path.stem.replace("_", " "))
+    frontmatter["title"] = frontmatter.get("title", fallback_title)
     return {k: str(markupsafe.escape(v)) for k, v in frontmatter.items()}
 
 
