@@ -11,7 +11,7 @@ from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException
-from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
+from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes
 
 # Ensure the working directory is the root of the project
@@ -56,6 +56,13 @@ def create_app(debug: bool = False) -> Flask:
             "themes": get_themes(),
             "debug": app.debug,
             "static_fonts_paths": STATIC_FONTS_PATHS,
+        }
+
+    @app.context_processor
+    def utilities():
+        """Add utility functions to the context."""
+        return {
+            "unfreeze": unfreeze,
         }
 
     @app.template_global()

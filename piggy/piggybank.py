@@ -2,9 +2,11 @@ import json
 import os
 import timeit
 from pathlib import Path
+from pprint import pprint
 
 import markupsafe
 import yaml
+from frozendict import frozendict
 from frozendict.cool import deepfreeze
 
 from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX
@@ -179,12 +181,29 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
     return recursive_sort(piggymap)
 
 
-# If we are in debug mode, we want to rebuild the piggymap on every request, but only in the main process
-if os.environ.get("WERKZEUG_RUN_MAIN") != "true" and os.environ.get("FLASK_DEBUG") == "1":
-    PIGGYMAP = {}
-# Else block = production mode
-else:
-    start_time = timeit.default_timer()
-    print("Building piggymap")
-    PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
-    print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")
+def stringify_paths(d: dict) -> dict:
+    for key, value in d.items():
+        if isinstance(value, dict):
+            d[key] = unfreeze(value)
+        if isinstance(value, Path):
+            d[key] = str(value.as_posix())
+    return d
+
+
+@lru_cache_wrapper
+def unfreeze(d):
+    """
+    Unfreeze a frozendict and convert all Path objects to strings, or just convert all Path objects to strings.
+    """
+    if isinstance(d, dict):
+        d = dict(d.copy())
+        return stringify_paths(d)
+    elif isinstance(d, Path):
+        return str(d.as_posix())
+    return d
+
+
+start_time = timeit.default_timer()
+print("Building piggymap")
+PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
+print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")

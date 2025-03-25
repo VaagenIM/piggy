@@ -6,7 +6,7 @@
 .cache
 .pid
 *.egg-info
-
+uv.lock
 .vscode/
 
 tailwind.css
@@ -15,6 +15,9 @@ turtleconvert/
 
 .idea/
 venv/
+.venv/
+.venvy/
+venvy/
 __pycache__/
 
 
