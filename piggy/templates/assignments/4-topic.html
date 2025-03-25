@@ -1,22 +1,3 @@
-{% extends "layout.html" %}
-
-{% block base %}
-  <h1 class="page-title font-extrabold text-center my-6">{{ meta.name }}</h1>
-
-  <div class="card-grid-wrapper">
-    <div class="card-grid-container">
-      {% if segment.items()|length > 0 %}
-        {% for item, data in segment.items() %}
-          {% include 'objects/card-assignment.html' %}
-        {% endfor %}
-      {% else %}
-        Hmm... There doesn't seem to be anything here!
-      {% endif %}
-    </div>
-  </div>
-
-  <script
-    src="{{ url_for('static', filename='js/card_script.js') }}"
-    defer
-  ></script>
-{% endblock %}
+{% extends "assignments/_assignments_base.html" %}
+{% set card_type='objects/card-assignment.html' %}
+{% block assignment_title %}{{ meta.name }}{% endblock %}
