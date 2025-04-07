@@ -1049,6 +1049,10 @@ details p:nth-child(2) {
   border-radius: 5px !important;
 }
 
+.md-content table th {
+  min-width: 2rem !important;
+}
+
 .md-content code {
   border-radius: 5px !important;
   line-height: 1.1rem;
@@ -1124,4 +1128,12 @@ details ul li,
 .md-content .MJX-TEX {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif !important;
   font-size: 1rem;
+}
+
+.md-code__content span {
+  max-width: 100% !important;
+  overflow-anchor: auto !important;
+  overflow: hidden !important;
+  text-wrap: wrap !important;
+  word-wrap: break-word !important;
 }
