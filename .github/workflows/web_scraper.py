@@ -65,6 +65,8 @@ def get_html(link) -> tuple[str, set[str], set[str]]:
             rf"""href=\"({link.split("Level")[0].split("/")[-1]}[^/]+)\"""", rf'href="../../\1/lang/{lang}"', html
         )
 
+    # Remove links that are media links
+    new_links -= new_media_links
     return html, new_links, new_media_links
 
 
@@ -74,6 +76,11 @@ def clean_link(link, path):
         stem = link.split("/")[-1].split("#")[0].split(":")[0]
         directories = link.split("/")[:-1]
         link = "/".join(directories + [stem])
+    # Add path to relative links
+    if not link.startswith("/") and path:
+        link = f"/{path.rsplit('/', 1)[0]}/{link}"
+    # Replace \\ with /
+    link = link.replace("\\", "/")
     return link
 
 
@@ -84,9 +91,6 @@ def get_links(html, path=""):
         if link == "javascript:void(0)":
             continue
         link = clean_link(link, path)
-        if not link.startswith("/") and path:
-            filtered_links.add(f"{path.rsplit('/', 1)[0]}/{link}")
-            continue
         filtered_links.add(link)
     return filtered_links
 
@@ -133,17 +137,16 @@ def _download_media(link):
 
 
 def download_site():
+    media_tasks = set()
+    tasks = set()
     with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
         while visited != links:
-            tasks = []
-            media_tasks = []
+            tasks = set(link for link in links if link not in visited)
 
-            for link in list(links):
-                if link not in visited:
-                    visited.add(link)
-                    tasks.append(link)
+            for link in tasks:
+                visited.add(link)  # Mark as visited BEFORE calling get_html()
 
-            results = pool.map(get_html, tasks)  # Parallel execution
+            results = pool.map(get_html, tasks)
 
             for link, (html, new_links, new_media_links) in zip(tasks, results):
                 if html:
@@ -153,13 +156,16 @@ def download_site():
                         path = link.strip("/").split("#")[0]
                         if "." not in path:
                             path += ".html"
+
                     print(f"Writing \33[34m{link}\33[0m")
                     pool.apply_async(_write_html, args=(html, path))  # Run in parallel
 
-                    links.update(new_links - links)
-                    media_tasks.extend(new_media_links)
-
-            pool.map(_download_media, media_tasks)  # Download media in parallel
+                    links.update(new_links)
+                    media_tasks.update(new_media_links)
+    # A separate pool for media tasks, as we don't want to download multiple media files at once
+    # (this appears to happen when we download the media files in parallel with the html files)
+    with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
+        pool.map(_download_media, media_tasks)  # Download media in parallel
 
 
 if __name__ == "__main__":
