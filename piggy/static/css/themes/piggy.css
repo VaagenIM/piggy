@@ -7,53 +7,38 @@ preview_style: background-color: #ff99ac; color: #4d4d4d;
 */
 
 [data-theme="piggy"] {
-  --piggy-main: #ffe6e9; /* Soft pink background */
-  --piggy-light: #ffffff; /* White for highlights */
-  --piggy-neutral: #7a6e72; /* Gray */
-  --piggy-dark: #4d4d4d; /* Dark gray for text contrast */
+  --piggy-main: #ffe6e9;
+  --piggy-light: #ffffff;
+  --piggy-neutral: #7a6e72;
+  --piggy-dark: #4d4d4d;
 
-  --piggy-text-main: var(--piggy-dark); /* Dark text for readability */
-  --piggy-shadow-text: rgba(0, 0, 0, 0); /* No text shadow */
+  --piggy-text-main: var(--piggy-dark);
+  --piggy-shadow-text: rgba(0, 0, 0, 0);
   --piggy-shadow-box: #00000011;
   --piggy-shadow-glow: rgba(0, 0, 0, 0.2);
 
   /* Card colors with pink tones */
-  --piggy-card-start: rgba(255, 220, 229, 1); /* Light pink card background */
-  --piggy-card-end: rgba(
-    255,
-    205,
-    218,
-    1
-  ); /* Slight gradient to a darker pink */
-  --piggy-card-border: #ff99ac; /* Medium pink border */
-  --piggy-text-card: #4d4d4d; /* Dark text in cards for contrast */
-
-  --piggy-extra-card-start: #ffccd5; /* A little darker pink for extra cards */
-  --piggy-extra-card-end: #ffb3c1; /* Slight gradient for depth */
-  --piggy-extra-card-border: var(--piggy-extra-card-start);
-  --piggy-text-extra-card: #333333; /* Dark text */
-
-  --piggy-resource-card-start: #ffe0e6; /* Lighter pink for resource cards */
-  --piggy-resource-card-end: #ffc1cc; /* Soft gradient */
-  --piggy-resource-card-border: var(--piggy-resource-card-start);
-  --piggy-text-resource-card: #333333; /* Dark text */
-
+  --piggy-card-start: rgba(255, 220, 229, 1);
+  --piggy-card-end: rgba(255, 205, 218, 1);
+  --piggy-card-border: #ff99ac;
+  --piggy-text-card: #4d4d4d;
+  
   --piggy-card-border-width: 1px;
 
   /* Navbar and buttons */
-  --piggy-navbar-start: #ffccd5; /* Soft pink for navbar */
-  --piggy-navbar-end: #ff99ac; /* Slightly darker pink gradient */
-  --piggy-text-navbar: #ffffff; /* White text for contrast */
+  --piggy-navbar-start: #ffccd5;
+  --piggy-navbar-end: #ff99ac;
+  --piggy-text-navbar: #ffffff;
 
-  --piggy-button: #ff99ac; /* Pink button */
-  --piggy-button-hover: #ff7381; /* Darker pink on hover */
-  --piggy-button-active: #f86f7d; /* Slightly more colored active color */
-  --piggy-text-button: #ffffff; /* White button text */
+  --piggy-button: #ff99ac;
+  --piggy-button-hover: #ff7381;
+  --piggy-button-active: #f86f7d;
+  --piggy-text-button: #ffffff;
 
-  --piggy-thumbnail-overlay: rgba(255, 226, 232, 0.7); /* Light overlay */
+  --piggy-thumbnail-overlay: rgba(255, 226, 232, 0.7);
   --piggy-text-thumbnail: var(--piggy-dark);
 
-  --piggy-text-tag: #000000; /* Darker pink for tags */
+  --piggy-text-tag: #000000;
   --piggy-text-description: var(--piggy-dark);
   --piggy-text-title: var(--piggy-dark);
   --piggy-text-breadcrumb: var(--piggy-dark);

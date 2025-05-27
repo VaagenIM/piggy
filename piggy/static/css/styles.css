@@ -287,6 +287,51 @@ img[src*="#center"] {
   }
 }
 
+/************************\
+|* ASSIGNMENT CARD GRID *|
+\************************/
+.assignment-card-grid-wrapper {
+  max-width: 100%;
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* small screen */
+@media (min-width: 640px) {
+  .assignment-card-grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* medium screen */
+@media (min-width: 768px) {
+  .assignment-card-grid-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* large screen */
+@media (min-width: 1024px) {
+  .assignment-card-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* very large screen */
+@media (min-width: 2240px) {
+  .assignment-card-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* extremely large screen */
+@media (min-width: 3200px) {
+  .assignment-card-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /****************\
 |* QUICK ACCESS *|
 \****************/
@@ -408,6 +453,16 @@ img[src*="#center"] {
   font-weight: bold;
 }
 
+/****************\
+|*    TITLES    *|
+\****************/
+.assignment-title {
+  font-size: xx-large;
+  font-weight: 600;
+  text-align: center;
+  padding-bottom: 0.2rem;
+}
+
 /*****************\
 |*     CARDS     *|
 \*****************/
@@ -433,25 +488,6 @@ img[src*="#center"] {
   animation-timing-function: ease;
   box-shadow: inset 0px 0px 25px 0 var(--piggy-shadow-glow);
   cursor: pointer;
-}
-
-/* TODO: Consider a better solution for extra-card and resource card */
-.card-type-extra .card {
-  background: linear-gradient(
-    45deg,
-    var(--piggy-extra-card-start) 0%,
-    var(--piggy-extra-card-end) 100%
-  );
-  border: var(--piggy-card-border-width) solid var(--piggy-extra-card-border);
-}
-
-.card-type-resource .card {
-  background: linear-gradient(
-    45deg,
-    var(--piggy-resource-card-start) 0%,
-    var(--piggy-resource-card-end) 100%
-  );
-  border: var(--piggy-card-border-width) solid var(--piggy-resource-card-border);
 }
 
 .card-title {
@@ -531,6 +567,75 @@ img[src*="#center"] {
   white-space: nowrap;
 }
 
+/* Special assignment card alignment trickery */
+.card-align-assignment {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 
+    "header thumbnail"
+    "description thumbnail"
+    "description thumbnail";
+  gap: 0.5rem;
+}
+
+.card-align-assignment .card-header {
+  grid-area: header;
+}
+
+.card-align-assignment .thumbnail-container {
+  grid-area: thumbnail;
+}
+
+.card-align-assignment .description-container {
+  grid-area: description;
+}
+
+.card-align-assignment .tags-container {
+  grid-column: tags;
+}
+
+/* horizontal direction becomes vertical on small screen */
+@media (max-width: 640px) {
+  .card-align-assignment {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "header"
+      "thumbnail"
+      "tags"
+      "description";
+  }
+}
+
+
+/****************************\
+|*     ASSIGNMENT CARDS     *|
+\****************************/
+.card-assignment {
+  background: linear-gradient(
+    135deg,
+    var(--piggy-assignment-card-start) 0%,
+    var(--piggy-assignment-card-end) 100%
+  );
+  border: var(--piggy-card-border-width) solid var(--piggy-assignment-card-border);
+  padding: 0.75rem;
+}
+
+.card-assignment:hover {
+  box-shadow: inset 0 0 20px var(--piggy-assignment-shadow-glow);
+}
+
+.card-assignment .description-container {
+  border: none;
+}
+
+.card-assignment .card-header {
+  text-align: left !important;
+}
+
+.card-assignment .thumbnail-image {
+  aspect-ratio: 16 / 6;
+}
+
 /***************************\
 |*     NAVIGATION MENU     *|
 \***************************/
@@ -556,21 +661,18 @@ img[src*="#center"] {
 /**********************\
 |*     SEARCH BOX     *|
 \**********************/
-/* Center the search container */
 .search-container {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-/* Input wrapper for positioning */
 .search-input-wrapper {
   position: relative;
   width: 100%;
   max-width: 700px;
 }
 
-/* Style the input */
 .search-input {
   width: 100%;
   padding: 8px 15px 8px 60px;
@@ -585,18 +687,15 @@ img[src*="#center"] {
     box-shadow 0.3s;
 }
 
-/* Placeholder text color */
 .search-input::placeholder {
   color: var(--piggy-text-neutral);
 }
 
-/* Input focus styles */
 .search-input:focus {
   border-color: var(--piggy-button-hover);
   box-shadow: 0 0 5px var(--piggy-shadow-glow);
 }
 
-/* Style the icon container */
 .search-icon {
   position: absolute;
   left: 15px;
@@ -608,13 +707,11 @@ img[src*="#center"] {
   color: var(--piggy-text-neutral);
 }
 
-/* Icon size */
 .search-icon-svg {
   width: 20px;
   height: 20px;
 }
 
-/* Vertical separator using ::after */
 .search-icon::after {
   content: "";
   display: block;
@@ -671,7 +768,6 @@ img[src*="#center"] {
   padding: 60px 20px 20px 20px;
 }
 
-/* Custom Select Styles */
 .custom-select {
   position: relative;
   width: 100%;
@@ -713,21 +809,21 @@ img[src*="#center"] {
   box-sizing: border-box;
   padding: 2px;
 
-  scrollbar-width: thin; /* Make the scrollbar thinner */
-  scrollbar-color: var(--piggy-dark); /* thumb color #888, track color #ccc */
+  scrollbar-width: thin;
+  scrollbar-color: var(--piggy-dark);
 }
 
 .custom-select.open .options-container::-webkit-scrollbar {
-  width: 8px; /* Scrollbar width */
+  width: 8px;
 }
 
 .custom-select.open .options-container::-webkit-scrollbar-track {
-  background: #ccc; /* Track color */
+  background: #ccc;
   border-radius: 4px;
 }
 
 .custom-select.open .options-container::-webkit-scrollbar-thumb {
-  background-color: #888; /* Thumb color */
+  background-color: #888;
   border-radius: 4px;
 }
 
@@ -827,7 +923,6 @@ img[src*="#center"] {
   border-color: transparent transparent var(--piggy-tooltip) transparent;
 }
 
-/* Adjust tooltip position when near the left edge */
 @media (max-width: 600px) {
   #level-container .nav-tooltip {
     left: 10px;
@@ -835,7 +930,6 @@ img[src*="#center"] {
   }
 }
 
-/* Adjust tooltip position when near the right edge */
 @media (min-width: calc(100% - 600px)) {
   #level-container .nav-tooltip {
     right: 10px;

@@ -8,35 +8,25 @@ preview_style: background-color: #0b0c10; color: #66fcf1;
 
 [data-theme="space"] {
   /* General colors */
-  --piggy-main: #0b0c10; /* Deep space black */
-  --piggy-light: #66fcf1; /* Electric cyan for text */
-  --piggy-neutral: #1f2833; /* Dark blue-grey */
-  --piggy-dark: #0f0f0f; /* Pure black for contrast */
+  --piggy-main: #0b0c10;
+  --piggy-light: #66fcf1;
+  --piggy-neutral: #1f2833;
+  --piggy-dark: #0f0f0f;
 
   --piggy-text-main: var(--piggy-light);
-  --piggy-text-light: #c5c6c7; /* Light grey for highlights */
+  --piggy-text-light: #c5c6c7;
   --piggy-text-neutral: var(--piggy-neutral);
-  --piggy-text-dark: #45a29e; /* Muted teal accent */
+  --piggy-text-dark: #45a29e;
 
-  --piggy-shadow-text: rgba(11, 12, 16, 0.2); /* Subtle deep shadows */
+  --piggy-shadow-text: rgba(11, 12, 16, 0.2);
   --piggy-shadow-box: rgba(11, 12, 16, 0.3);
-  --piggy-shadow-glow: rgba(102, 252, 241, 0.3); /* Neon cyan glow */
+  --piggy-shadow-glow: rgba(102, 252, 241, 0.3);
 
   /* Card colors */
-  --piggy-card-start: rgba(17, 17, 17, 0.5); /* Gradient start */
-  --piggy-card-end: rgba(26, 26, 26, 0.5); /* Gradient end */
-  --piggy-card-border: #66fcf1; /* Cyan for borders */
+  --piggy-card-start: rgba(17, 17, 17, 0.5);
+  --piggy-card-end: rgba(26, 26, 26, 0.5);
+  --piggy-card-border: #66fcf1;
   --piggy-text-card: var(--piggy-text-light);
-
-  --piggy-extra-card-start: rgba(20, 20, 20, 0.5);
-  --piggy-extra-card-end: rgba(30, 30, 30, 0.5);
-  --piggy-extra-card-border: var(--piggy-card-border);
-  --piggy-text-extra-card: #ffffff;
-
-  --piggy-resource-card-start: rgba(15, 15, 15, 0.5);
-  --piggy-resource-card-end: rgba(25, 25, 25, 0.5);
-  --piggy-resource-card-border: #66fcf1;
-  --piggy-text-resource-card: #e0f7fa;
 
   --piggy-card-border-width: 1px;
 

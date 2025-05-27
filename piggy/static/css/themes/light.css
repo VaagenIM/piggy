@@ -7,64 +7,42 @@ preview_style: background-color: rgb(225, 225, 225); color: rgb(60, 60, 60);
 */
 
 [data-theme="light"] {
-  /* Softer light mode theme with more contrast */
-  --piggy-main: rgb(
-    225,
-    225,
-    225
-  ); /* Slightly darker gray for the main background */
-  --piggy-light: #fefefe; /* Almost white, but still soft for highlights */
-  --piggy-neutral: #757575; /* Gray */
-  --piggy-dark: rgb(60, 60, 60); /* Darker text for better contrast */
+  --piggy-main: rgb(225, 225, 225);
+  --piggy-light: #fefefe;
+  --piggy-neutral: #757575;
+  --piggy-dark: rgb(60, 60, 60);
 
-  --piggy-text-main: var(--piggy-dark); /* Darker text for readability */
-  --piggy-shadow-text: rgba(0, 0, 0, 0); /* No text shadow */
+  --piggy-text-main: var(--piggy-dark);
+  --piggy-shadow-text: rgba(0, 0, 0, 0);
   --piggy-shadow-box: #00000011;
   --piggy-shadow-glow: rgba(0, 0, 0, 0.2);
 
-  /* More contrast for cards */
-  --piggy-card-start: rgba(
-    255,
-    255,
-    255,
-    1
-  ); /* Pure white for card background */
-  --piggy-card-end: rgba(
-    245,
-    245,
-    245,
-    1
-  ); /* Slight gradient for card background */
-  --piggy-card-border: #999999; /* Light gray border */
-  --piggy-text-card: #333333; /* Darker text in the cards for readability */
+  --piggy-card-start: rgba(255, 255, 255, 1);
+  --piggy-card-end: rgba(245, 245, 245, 1);
+  --piggy-card-border: #999999;
+  --piggy-text-card: #333333;
 
-  --piggy-extra-card-start: #cbdbec; /* Pure white for extra cards */
-  --piggy-extra-card-end: #cbdbec; /* Slightly darker gradient to give depth */
-  --piggy-extra-card-border: #999999;
-  --piggy-text-extra-card: #333333;
-
-  --piggy-resource-card-start: #f9fafb; /* Light but slightly off-white for resource cards */
-  --piggy-resource-card-end: #e9ebed; /* A subtle gray gradient */
-  --piggy-resource-card-border: #999999;
-  --piggy-text-resource-card: #333333; /* Darker gray text for readability */
+    /* Assignment cards */
+  --piggy-assignment-card-start: rgba(255, 235, 59, 0.3);
+  --piggy-assignment-card-end: rgba(255, 193, 7, 0.3);
+  --piggy-assignment-card-border: #ffca28;
+  --piggy-assignment-overlay: rgba(255, 193, 7, 0.8);
+  --piggy-assignment-accent: #ffb300;
+  --piggy-assignment-shadow-glow: rgba(255, 193, 7, 0.5);
 
   --piggy-card-border-width: 1px;
 
   /* Navbar and buttons */
-  --piggy-navbar-start: rgb(210, 210, 210); /* Darker light gray navbar */
-  --piggy-navbar-end: rgb(
-    190,
-    190,
-    190
-  ); /* Slightly darker gradient for more contrast */
+  --piggy-navbar-start: rgb(210, 210, 210);
+  --piggy-navbar-end: rgb(190, 190, 190);
   --piggy-text-navbar: #333333;
 
-  --piggy-button: #d0d4e8; /* Soft pastel blue button */
-  --piggy-button-hover: #b2b8d4; /* Slightly darker hover */
-  --piggy-button-active: #96beee; /* Slightly more colored active color */
+  --piggy-button: #d0d4e8;
+  --piggy-button-hover: #b2b8d4;
+  --piggy-button-active: #96beee;
   --piggy-text-button: #333333;
 
-  --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7); /* Softer overlay */
+  --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7);
   --piggy-text-thumbnail: var(--piggy-dark);
 
   --piggy-text-tag: #4a4a4a;

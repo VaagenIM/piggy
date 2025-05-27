@@ -8,49 +8,47 @@ preview_style: background-color: rgb(34, 41, 47); color: #f0f4f8;
 
 [data-theme="dark"] {
   /* piggy colors */
-  --piggy-main: rgb(34, 41, 47); /* A darker, more muted tone */
-  --piggy-light: #f0f4f8; /* A soft off-white */
-  --piggy-neutral: #60656b; /* Gray */
-  --piggy-dark: rgb(51, 61, 71); /* Darker tone with reduced contrast */
+  --piggy-main: rgb(34, 41, 47);
+  --piggy-light: #f0f4f8;
+  --piggy-neutral: #60656b;
+  --piggy-dark: rgb(51, 61, 71);
 
   --piggy-text-main: var(--piggy-light);
   --piggy-text-light: var(--piggy-light);
   --piggy-text-neutral: var(--piggy-neutral);
   --piggy-text-dark: var(--piggy-dark);
 
-  --piggy-shadow-text: #00000029; /* Softer shadows */
+  --piggy-shadow-text: #00000029;
   --piggy-shadow-box: #00000022;
   --piggy-shadow-glow: rgba(255, 255, 255, 20%);
 
   /* piggy card colors */
-  --piggy-card-start: rgba(130, 174, 197, 0.3); /* Soft gradient start */
-  --piggy-card-end: rgba(48, 73, 90, 0.3); /* Softer end gradient */
+  --piggy-card-start: rgba(130, 174, 197, 0.3);
+  --piggy-card-end: rgba(48, 73, 90, 0.3);
   --piggy-card-border: var(--piggy-card-end);
   --piggy-text-card: var(--piggy-text-light);
 
-  --piggy-extra-card-start: rgba(27, 82, 153, 0.3); /* Gentle blues */
-  --piggy-extra-card-end: rgba(159, 190, 223, 0.3);
-  --piggy-extra-card-border: var(--piggy-extra-card-start);
-  --piggy-text-extra-card: #ffffff;
-
-  --piggy-resource-card-start: rgba(65, 59, 26, 0.3); /* Gentle blues */
-  --piggy-resource-card-end: rgba(201, 182, 75, 0.3);
-  --piggy-resource-card-border: var(--piggy-resource-card-start);
-  --piggy-text-resource-card: #4f4f4f; /* A gentle gray for contrast */
+    /* Assignment cards */
+  --piggy-assignment-card-start: rgba(245, 158, 11, 0.3);
+  --piggy-assignment-card-end: rgba(245, 158, 11, 0.15);
+  --piggy-assignment-card-border: #f59e0b;
+  --piggy-assignment-overlay: rgba(245, 158, 11, 0.85);
+  --piggy-assignment-accent: #f59e0b;
+  --piggy-assignment-shadow-glow: rgba(245, 158, 11, 0.5);
 
   --piggy-card-border-width: 1px;
 
   /* piggy elements */
-  --piggy-navbar-start: rgb(51, 61, 71); /* Calmer, less harsh */
-  --piggy-navbar-end: rgb(51, 61, 71); /* Muted blue-gray tones */
+  --piggy-navbar-start: rgb(51, 61, 71);
+  --piggy-navbar-end: rgb(51, 61, 71);
   --piggy-text-navbar: var(--piggy-light);
 
-  --piggy-button: #4a6783; /* Muted blue */
-  --piggy-button-hover: #647a95; /* Slightly brighter hover */
-  --piggy-button-active: #2a5d9b; /* Slightly more colored active color */
+  --piggy-button: #4a6783;
+  --piggy-button-hover: #647a95;
+  --piggy-button-active: #2a5d9b;
   --piggy-text-button: #ffffff;
 
-  --piggy-thumbnail-overlay: #00000077; /* Lighter overlay */
+  --piggy-thumbnail-overlay: #00000077;
   --piggy-text-thumbnail: var(--piggy-light);
 
   --piggy-text-tag: #ffffff;

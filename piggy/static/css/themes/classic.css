@@ -23,16 +23,6 @@ preview_style: background-color: #ece4ec; color: #000000;
   --piggy-card-border: #afa7af;
   --piggy-text-card: #333333;
 
-  --piggy-extra-card-start: #bfd1e0;
-  --piggy-extra-card-end: #bfd1e0;
-  --piggy-extra-card-border: #afa7af;
-  --piggy-text-extra-card: #333333;
-
-  --piggy-resource-card-start: #f9fafb;
-  --piggy-resource-card-end: #e9ebed;
-  --piggy-resource-card-border: #afa7af;
-  --piggy-text-resource-card: #333333;
-
   --piggy-card-border-width: 1px;
 
   /* Navbar and buttons */
@@ -42,11 +32,7 @@ preview_style: background-color: #ece4ec; color: #000000;
 
   --piggy-button: #c099a8;
   --piggy-button-hover: #ddb2c2;
-  --piggy-button-active: rgb(
-    241,
-    127,
-    138
-  ); /* Slightly more colored active color */
+  --piggy-button-active: rgb(241, 127, 138);
   --piggy-text-button: var(--piggy-dark);
 
   --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7);
