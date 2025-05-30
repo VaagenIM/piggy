@@ -883,8 +883,11 @@ img[src*="#center"] {
 }
 
 #level-container .snout-button {
+  flex: 1;
   position: relative;
-  min-width: 85px;
+  min-width: 110px;
+  max-width: 110px;
+  white-space: nowrap;
   text-align: center;
 }
 
@@ -901,7 +904,7 @@ img[src*="#center"] {
   position: absolute;
   z-index: 1;
 
-  /* Position the tooltip below the parent element */
+  /* tooltip goes below the button */
   top: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%);

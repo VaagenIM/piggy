@@ -57,6 +57,14 @@ def create_app(debug: bool = False) -> Flask:
             "debug": app.debug,
             "static_fonts_paths": STATIC_FONTS_PATHS,
         }
+    
+    @app.template_filter('sort_by_level')
+    def sort_by_level(item_list):
+        """
+        Jinja filter: given an iterable of (link, assignment) tuples,
+        return it sorted by int(assignment.level).
+        """
+        return sorted(item_list, key=lambda kv: int(kv[1]['level']))
 
     @app.context_processor
     def utilities():

@@ -34,10 +34,16 @@
       </div>
     </div>
 
-    {% if meta.get(AssignmentTemplate.LEVELS_DATA.name).data.items()|length > 1 %}
+{% set levels = meta
+     .get(AssignmentTemplate.LEVELS_DATA.name)
+     .data
+     .items()
+     | sort_by_level %}
+
+    {% if levels|length > 1 %}
       <!-- Level Selection Menu -->
       <nav id="level-container">
-        {% for link, assignment in meta.get(AssignmentTemplate.LEVELS_DATA.name).data.items() %}
+        {% for link, assignment in levels %}
           {% if current_language.key and current_language.key in assignment.translation_meta %}
             {% set level_meta = assignment.translation_meta[current_language.key] %}
             {% if "/lang/" in request.path %}
