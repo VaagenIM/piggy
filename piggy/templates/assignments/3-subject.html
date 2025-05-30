@@ -9,7 +9,7 @@
   {% set assignments = segment.items() 
        | selectattr('1.meta.type', 'equalto', 'assignment') 
        | list %}
-  {% set exercises   = segment.items() 
+  {% set exercises = segment.items() 
        | selectattr('1.meta.type', 'equalto', 'exercise') 
        | list %}
 
