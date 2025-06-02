@@ -28,6 +28,13 @@ preview_style: background-color: #002b36; color: #88c0d0;
   --piggy-card-border: #88c0d0;
   --piggy-text-card: var(--piggy-text-light);
 
+  --piggy-assignment-card-start: rgba(255,127,80,0.4);
+  --piggy-assignment-card-end: rgba(255,99,71,0.2);
+  --piggy-assignment-card-border: #FF6347;
+  --piggy-assignment-overlay: rgba(255,99,71,0.8);
+  --piggy-assignment-accent: #FF6347;
+  --piggy-assignment-shadow-glow: rgba(255,99,71,0.5);
+
   --piggy-card-border-width: 1px;
 
   /* Navbar */
@@ -60,6 +67,10 @@ preview_style: background-color: #002b36; color: #88c0d0;
 
   --piggy-text-hyperlink: #4172b2;
   --piggy-text-hyperlink-hover: #83c1d9;
+}
+
+[data-theme="ocean"] .assignment-card-grid-container .card-container * {
+  color: var(--piggy-) !important;
 }
 
 /******************************\

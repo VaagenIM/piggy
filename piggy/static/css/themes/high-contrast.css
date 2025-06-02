@@ -14,11 +14,13 @@ preview_style: background-color: #000000; color: #ffffff;
   --piggy-text-main: var(--piggy-light);
   --piggy-shadow-text: rgba(255, 255, 255, 0);
 
-  /* High-contrast card colors with colorful borders */
   --piggy-card-start: #111;
   --piggy-card-end: #111;
   --piggy-card-border: #ff00ff;
   --piggy-text-card: #ffffff;
+
+  /* Assignment cards */
+  --piggy-assignment-card-border: #ff7b00;
 
   --piggy-card-border-width: 4px;
 

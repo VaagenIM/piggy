@@ -7,27 +7,27 @@ preview_style: background-color: #2e1f24; color: #f0e1e4;
 */
 
 [data-theme="piggy-dark"] {
-  /* Dark theme piggy colors */
-  --piggy-main: #2e1f24; /* Dark reddish-brown background */
-  --piggy-light: #3d2a30; /* Slightly lighter for contrast */
-  --piggy-neutral: #8a767c; /* Gray */
-  --piggy-dark: #f0e1e4; /* Light pink for text contrast */
+  --piggy-main: #2e1f24;
+  --piggy-light: #3d2a30;
+  --piggy-neutral: #8a767c;
+  --piggy-dark: #f0e1e4;
 
-  --piggy-text-main: var(--piggy-dark); /* Light text for readability */
-  --piggy-shadow-text: rgba(
-    255,
-    255,
-    255,
-    0.025
-  ); /* Soft shadow for light text */
+  --piggy-text-main: var(--piggy-dark);
+  --piggy-shadow-text: rgba(255, 255, 255, 0.025);
   --piggy-shadow-box: #ffffff11;
   --piggy-shadow-glow: rgba(255, 255, 255, 0.2);
 
-  /* Card colors with darker pink tones */
   --piggy-card-start: rgba(74, 53, 61, 1);
   --piggy-card-end: rgba(60, 40, 47, 1);
   --piggy-card-border: #a06672;
   --piggy-text-card: var(--piggy-dark);
+
+  --piggy-assignment-card-start: rgba(192,133,142,0.3);
+  --piggy-assignment-card-end: rgba(160,100,114,0.3);
+  --piggy-assignment-card-border: #a06472;
+  --piggy-assignment-overlay: rgba(160,100,114,0.85);
+  --piggy-assignment-accent: #a06472;
+  --piggy-assignment-shadow-glow: rgba(160,100,114,0.5);
   
   --piggy-card-border-width: 1px;
 
