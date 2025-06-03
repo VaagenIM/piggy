@@ -7,6 +7,7 @@
       extra_classes='',
       abspath='',
       item='',
+      item_extended='',
       title='title',
       description='description',
       thumbnail='',
@@ -22,10 +23,9 @@
   )
 %}
   {% if card_type == 'assignment' %}
-    {% set wrapper_classes = 'flex flex-col gap-4 p-6 bg-gray-100 rounded-xl shadow-md' %}
-    {% set badge = '<span class="assignment-badge">Assignment</span>' %}
+    {% set badge = '' 
+  %}
   {% else %}
-    {% set wrapper_classes = 'card card-container grid-cols-2 p-3 block' %}
     {% set badge = '' %}
   {% endif %}
 
@@ -37,9 +37,13 @@
     data-tags="{{ tags|join(' ')|lower }}"
     data-overlay-text="{{ overlay_text|lower }}"
   >
+    {% if badge %}
+      {{ badge }}
+    {% endif %}
+
     {% if show_title and title %}
       <div class="card-header">
-        <div class="card-title text-2xl font-extrabold text-center pb-2">
+        <div class="card-title text-2xl font-extrabold text-center pb-1">
           {{ title }}
         </div>
       </div>
@@ -98,7 +102,7 @@
     {% endif %}
 
     {% if show_description and description %}
-      <div class="description-container mt-4 font-semibold">
+      <div class="description-container mt-2 font-semibold">
         {{ description }}
       </div>
     {% endif %}

@@ -549,7 +549,7 @@ img[src*="#center"] {
 .description-container {
   color: var(--piggy-text-description);
   bottom: 0;
-  border-top: 2px solid var(--piggy-text-description);
+  border-top: 1px solid var(--piggy-text-description);
   padding-top: 10px;
 }
 
@@ -570,11 +570,11 @@ img[src*="#center"] {
 /* Special assignment card alignment trickery */
 .card-align-assignment {
   display: grid !important;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0fr 5fr 4fr;
   grid-template-areas: 
-    "header thumbnail"
-    "description thumbnail"
-    "description thumbnail";
+    "badge header thumbnail"
+    "badge description thumbnail"
+    "badge description thumbnail";
   gap: 0.5rem;
 }
 
@@ -625,7 +625,7 @@ img[src*="#center"] {
 }
 
 .card-assignment .description-container {
-  border: none;
+  margin-top: 0 !important;
 }
 
 .card-assignment .card-header {
@@ -633,7 +633,7 @@ img[src*="#center"] {
 }
 
 .card-assignment .thumbnail-image {
-  aspect-ratio: 16 / 6;
+  height: 100%;
 }
 
 /***************************\

@@ -1,6 +1,10 @@
 {# Used by 0, 1, 2 and 4 #}
 {% extends "layout.html" %}
-{% set card_type='objects/card-basic.html' %}
+
+{# fallback to basic card if there is no card type specified #}
+{% if not card_type %}
+  {% set card_type='objects/card-basic.html' %}
+{% endif %}
 
 {% block base %}
   {% block assignment_header %}
