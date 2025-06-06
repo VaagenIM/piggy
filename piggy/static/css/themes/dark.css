@@ -43,28 +43,38 @@ preview_style: background-color: rgb(34, 41, 47); color: #f0f4f8;
   --piggy-navbar-end: rgb(51, 61, 71);
   --piggy-text-navbar: var(--piggy-light);
 
+  /* buttons */
   --piggy-button: #4a6783;
   --piggy-button-hover: #647a95;
   --piggy-button-active: #2a5d9b;
   --piggy-text-button: #ffffff;
 
+  /* thumbnails */
   --piggy-thumbnail-overlay: #00000077;
   --piggy-text-thumbnail: var(--piggy-light);
 
+  /* text */
   --piggy-text-tag: #ffffff;
   --piggy-text-description: var(--piggy-light);
   --piggy-text-title: var(--piggy-light);
   --piggy-text-breadcrumb: var(--piggy-light);
   --piggy-text-breadcrumb-hover: #a6aaad;
 
+  /* menus */
   --piggy-menu: var(--piggy-dark);
   --piggy-menu-text: var(--piggy-light);
 
+  /* tooltips */
   --piggy-tooltip: #000000;
   --piggy-tooltip-text: #ffffff;
 
+  /* links */
   --piggy-text-hyperlink: #407eb1;
   --piggy-text-hyperlink-hover: #407eb1;
+
+  /* info boxes */
+  --piggy-info-box-background: #00859c49;
+  --piggy-info-box-border: #00859c;
 }
 
 [data-theme="dark"] .md-content .md-code__content {

@@ -14,15 +14,15 @@ from piggy.exceptions import PiggyHTTPException
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes
 
+from jinja2 import ChoiceLoader, FileSystemLoader
+
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
 
-
 # TODO: Logging
 
-
 def create_app(debug: bool = False) -> Flask:
-    app = Flask(__name__, static_folder="static")
+    app = Flask(__name__, static_folder='static')
 
     Squeeze().init_app(app)
 
@@ -35,6 +35,13 @@ def create_app(debug: bool = False) -> Flask:
 
     # The following is necessary for the app to work behind a reverse proxy
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
+    static_path = Path(app.root_path) / app.static_folder
+
+    app.jinja_loader = ChoiceLoader([
+        app.jinja_loader,
+        FileSystemLoader(str(static_path))
+    ])
 
     assignment_routes = Blueprint(ASSIGNMENT_ROUTE, __name__, url_prefix=f"/{ASSIGNMENT_ROUTE}")
     media_routes = Blueprint(MEDIA_ROUTE, __name__, url_prefix=f"/{MEDIA_ROUTE}")
