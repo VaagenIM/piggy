@@ -332,6 +332,31 @@ img[src*="#center"] {
   }
 }
 
+/*************************\
+|* EXTRA ASSIGNMENT BITS *|
+\*************************/
+.assignment-meta-note {
+  position: relative;
+  box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
+  border-color: var(--piggy-card-border);
+  border-width: var(--piggy-card-border-width);
+  border-radius: 1rem;
+  background: var(--piggy-info-box-background);
+  border: 1px solid var(--piggy-info-box-border);
+  padding: 0.75rem;
+  margin: 0rem auto 0.5rem auto;
+  width: max-content;
+  font-size: 1.1rem;
+}
+
+.assignment-meta-note-icon {
+  fill: var(--piggy-text-main);
+  width: 1.1rem;
+  height: 1.1rem;
+  display: inline;
+  margin: 0.1rem;
+}
+
 /****************\
 |* QUICK ACCESS *|
 \****************/
@@ -345,7 +370,6 @@ img[src*="#center"] {
   margin: 2rem auto;
 }
 
-/* Main heading */
 .quick-access-heading {
   color: var(--piggy-text-main);
   text-align: center;
@@ -354,14 +378,12 @@ img[src*="#center"] {
   font-size: 2rem;
 }
 
-/* Flex container for the year columns */
 .quick-access-columns {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
 }
 
-/* Each year column styling */
 .quick-access-column {
   background-color: var(--piggy-main);
   padding: 1rem;
@@ -375,7 +397,6 @@ img[src*="#center"] {
   gap: 1rem;
 }
 
-/* Year heading inside each column */
 .quick-access-year-heading {
   border-bottom: 1px solid var(--piggy-neutral);
   color: var(--light);
@@ -385,7 +406,6 @@ img[src*="#center"] {
   text-align: center;
 }
 
-/* Styling for each study direction card */
 .quick-access-card {
   background-color: var(--piggy-main);
   border: 1px solid var(--piggy-neutral);
@@ -394,7 +414,6 @@ img[src*="#center"] {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Header for each card */
 .quick-access-card-header {
   background-color: var(--piggy-main);
   padding: 0.5rem 1rem;
@@ -403,13 +422,11 @@ img[src*="#center"] {
   text-align: center;
 }
 
-/* Study direction name (inside the header) */
 .quick-access-study-direction {
   font-size: 1.25rem;
   margin-bottom: 0;
 }
 
-/* Container for the subject buttons */
 .quick-access-subjects {
   display: flex;
   flex-wrap: wrap;
@@ -417,7 +434,6 @@ img[src*="#center"] {
   padding: 0.5rem 1rem;
 }
 
-/* Styling for subject buttons */
 .quick-access-subject-button {
   color: var(--piggy-text-button);
   border: 1px solid var(--piggy-dark);
@@ -549,7 +565,7 @@ img[src*="#center"] {
 .description-container {
   color: var(--piggy-text-description);
   bottom: 0;
-  border-top: 2px solid var(--piggy-text-description);
+  border-top: 1px solid var(--piggy-text-description);
   padding-top: 10px;
 }
 
@@ -570,11 +586,11 @@ img[src*="#center"] {
 /* Special assignment card alignment trickery */
 .card-align-assignment {
   display: grid !important;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0fr 5fr 4fr;
   grid-template-areas: 
-    "header thumbnail"
-    "description thumbnail"
-    "description thumbnail";
+    "badge header thumbnail"
+    "badge description thumbnail"
+    "badge description thumbnail";
   gap: 0.5rem;
 }
 
@@ -625,7 +641,7 @@ img[src*="#center"] {
 }
 
 .card-assignment .description-container {
-  border: none;
+  margin-top: 0 !important;
 }
 
 .card-assignment .card-header {
@@ -633,7 +649,7 @@ img[src*="#center"] {
 }
 
 .card-assignment .thumbnail-image {
-  aspect-ratio: 16 / 6;
+  height: 100%;
 }
 
 /***************************\
@@ -883,8 +899,11 @@ img[src*="#center"] {
 }
 
 #level-container .snout-button {
+  flex: 1;
   position: relative;
-  min-width: 85px;
+  min-width: 110px;
+  max-width: 110px;
+  white-space: nowrap;
   text-align: center;
 }
 
@@ -901,7 +920,7 @@ img[src*="#center"] {
   position: absolute;
   z-index: 1;
 
-  /* Position the tooltip below the parent element */
+  /* tooltip goes below the button */
   top: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%);

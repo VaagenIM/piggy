@@ -28,6 +28,16 @@ preview_style: background-color: #000000; color: #00ff00;
   --piggy-card-border: #00bb00;
   --piggy-text-card: var(--piggy-text-light);
 
+  /* Assignment cards */
+  --piggy-assignment-card-start: rgba(0, 255, 191, 0.3);
+  --piggy-assignment-card-end: rgba(0, 255, 191, 0.1);
+  --piggy-assignment-card-border: rgb(0, 255, 191);
+  --piggy-assignment-overlay: rgba(0, 255, 191, 0.8);
+  --piggy-assignment-accent: #00ffff;
+  --piggy-assignment-shadow-glow: rgba(47, 58, 58, 0.5);
+
+  --piggy-assignment-text: rgba(0, 255, 191);
+
   --piggy-card-border-width: 1px;
 
   /* Piggy elements */
@@ -59,9 +69,32 @@ preview_style: background-color: #000000; color: #00ff00;
   --piggy-text-hyperlink-hover: #99ffff;
 }
 
+[data-theme="matrix"] .card-container {
+  border-radius: 0.25rem;
+}
+
+[data-theme="matrix"] .thumbnail-image {
+  border-radius: 0.25rem !important;
+  box-shadow: var(--piggy-assignment-shadow-glow) !important;
+}
+
+[data-theme="matrix"] 
+  .card-assignment .description-container,
+  .card-assignment .card-title {
+  color: var(--piggy-assignment-text) !important;
+}
+
+[data-theme="matrix"] .card-assignment .description-container {
+  border-color: var(--piggy-assignment-text) !important;
+}
+
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
+
+[data-theme="matrix"] .md-content, .md-code__content {
+  border-radius: 0.25rem !important;
+}
 
 [data-theme="matrix"] .md-content .admonition-title {
   font-size: 0.8rem !important;

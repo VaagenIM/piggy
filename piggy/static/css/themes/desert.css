@@ -28,6 +28,14 @@ preview_style: background-color: #f4e7d3; color: #3e2a14;
   --piggy-card-border: #a67c52;
   --piggy-text-card: var(--piggy-text-dark);
 
+  /* Assignment cards */
+  --piggy-assignment-card-start: rgba(210, 144,  93, 0.3);
+  --piggy-assignment-card-end: rgba(179, 121,  78, 0.3);
+  --piggy-assignment-card-border: #b37a4e;
+  --piggy-assignment-overlay: rgba(179, 121,  78, 0.85);
+  --piggy-assignment-accent: #b37a4e;
+  --piggy-assignment-shadow-glow: rgba(179, 121,  78, 0.5);
+
   --piggy-card-border-width: 1px;
 
   /* Navbar */

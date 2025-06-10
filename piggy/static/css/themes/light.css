@@ -22,13 +22,13 @@ preview_style: background-color: rgb(225, 225, 225); color: rgb(60, 60, 60);
   --piggy-card-border: #999999;
   --piggy-text-card: #333333;
 
-    /* Assignment cards */
-  --piggy-assignment-card-start: rgba(255, 235, 59, 0.3);
-  --piggy-assignment-card-end: rgba(255, 193, 7, 0.3);
-  --piggy-assignment-card-border: #ffca28;
-  --piggy-assignment-overlay: rgba(255, 193, 7, 0.8);
-  --piggy-assignment-accent: #ffb300;
-  --piggy-assignment-shadow-glow: rgba(255, 193, 7, 0.5);
+  /* Assignment cards */
+  --piggy-assignment-card-start: rgba(255, 152, 0, 0.3);
+  --piggy-assignment-card-end: rgba(245, 124, 0, 0.3);
+  --piggy-assignment-card-border: #f57c00;
+  --piggy-assignment-overlay: rgba(245, 124, 0, 0.8);
+  --piggy-assignment-accent: #f57c00;
+  --piggy-assignment-shadow-glow: rgba(245, 124, 0, 0.5);
 
   --piggy-card-border-width: 1px;
 

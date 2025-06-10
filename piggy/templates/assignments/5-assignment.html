@@ -5,6 +5,12 @@
   {{ content.head | safe }}
 {% endblock %}
 
+{% if meta.get(AssignmentTemplate.LEVELS_DATA.name).meta.type == "assignment" %}
+  {% set level_text = "Oppgave" %}
+{% else %}
+  {% set level_text = "Level" %}
+{% endif %}
+
 {% block header %}
   <div id="meta-container">
     <div id="language-container">
@@ -28,10 +34,16 @@
       </div>
     </div>
 
-    {% if meta.get(AssignmentTemplate.LEVELS_DATA.name).data.items()|length > 1 %}
+{% set levels = meta
+     .get(AssignmentTemplate.LEVELS_DATA.name)
+     .data
+     .items()
+     | sort_by_level %}
+
+    {% if levels|length > 1 %}
       <!-- Level Selection Menu -->
       <nav id="level-container">
-        {% for link, assignment in meta.get(AssignmentTemplate.LEVELS_DATA.name).data.items() %}
+        {% for link, assignment in levels %}
           {% if current_language.key and current_language.key in assignment.translation_meta %}
             {% set level_meta = assignment.translation_meta[current_language.key] %}
             {% if "/lang/" in request.path %}
@@ -43,14 +55,16 @@
           {% if assignment.level | int == level | int %}
             <!-- Current Level (Non-clickable) -->
             <div class="snout-button snout-border snout-padding-m active">
-              <span> Level {{ assignment.level }} </span>
+              <span> 
+                {{ level_text }} {{ assignment.level }}
+              </span>
               <!-- Tooltip -->
               <div class="nav-tooltip">{{ level_meta.title }}</div>
             </div>
           {% else %}
             <!-- Other Levels (Clickable) -->
             <a href="{{ link }}" class="snout-button snout-border snout-padding-m">
-              Level {{ assignment.level }}
+              {{ level_text }} {{ assignment.level }}
               <!-- Tooltip -->
               <div class="nav-tooltip">{{ level_meta.title }}</div>
             </a>

@@ -23,6 +23,14 @@ preview_style: background-color: #ff99ac; color: #4d4d4d;
   --piggy-card-border: #ff99ac;
   --piggy-text-card: #4d4d4d;
   
+  /* Assignment cards */
+  --piggy-assignment-card-start: rgba(255, 160, 180, 0.5);
+  --piggy-assignment-card-end: rgba(255, 120, 140, 0.3);
+  --piggy-assignment-card-border: #ff4d6d;
+  --piggy-assignment-overlay: rgba(255, 77, 109, 0.8);
+  --piggy-assignment-accent: #ff4d6d;
+  --piggy-assignment-shadow-glow: rgba(255, 77, 109, 0.5);
+
   --piggy-card-border-width: 1px;
 
   /* Navbar and buttons */
