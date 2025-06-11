@@ -45,14 +45,14 @@ jobs:
           version: latest
 
       # Build and cache Docker image
-      - name: Build Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: false
-          tags: piggy-pages:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+      #- name: Build Docker image
+      #  uses: docker/build-push-action@v6
+      #  with:
+      #    context: .
+      #    push: false
+      #    tags: piggy-pages:latest
+      #    cache-from: type=gha
+      #    cache-to: type=gha,mode=max
 
       - name: Get piggybank
         run: git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank-demo
