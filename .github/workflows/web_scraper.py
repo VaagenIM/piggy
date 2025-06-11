@@ -12,7 +12,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 from turtleconverter import generate_static_files
 
-links = set("/", "/404")  # A list of links we need to visit and download (including files that are related to the website)
+links = set(("/", "/404"))  # A list of links we need to visit and download (including files that are related to the website)
 visited = set()  # A list of links we have visited
 media_links = set()
 url = "http://127.0.0.1:5000"  # The URL of the website we are scraping
