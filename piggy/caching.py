@@ -82,7 +82,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
         lang = p.parent.name
         assignment_path = p.parents[2] / p.name
 
-    current_language = LANGUAGES.get(lang, "")
+    current_language = LANGUAGES.get(lang, "")["name"]
 
     # Get the assignment data
     assignment_data = dict(get_assignment_data_from_path(assignment_path, PIGGYMAP).copy())

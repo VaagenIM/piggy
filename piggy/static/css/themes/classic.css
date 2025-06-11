@@ -2,8 +2,6 @@
 id: 5
 name: Classic
 description: The classic look of piggy!
-type: light
-preview_style: background-color: #ece4ec; color: #000000;
 */
 
 [data-theme="classic"] {
@@ -23,13 +21,15 @@ preview_style: background-color: #ece4ec; color: #000000;
   --piggy-card-border: #afa7af;
   --piggy-text-card: #333333;
 
-  /* Assignment cards */
-  --piggy-assignment-card-start: rgba(255, 152, 0, 0.3);
-  --piggy-assignment-card-end: rgba(245, 124, 0, 0.3);
-  --piggy-assignment-card-border: #f57c00;
-  --piggy-assignment-overlay: rgba(245, 124, 0, 0.8);
-  --piggy-assignment-accent: #f57c00;
-  --piggy-assignment-shadow-glow: rgba(245, 124, 0, 0.5);
+  --piggy-extra-card-start: #bfd1e0;
+  --piggy-extra-card-end: #bfd1e0;
+  --piggy-extra-card-border: #afa7af;
+  --piggy-text-extra-card: #333333;
+
+  --piggy-resource-card-start: #f9fafb;
+  --piggy-resource-card-end: #e9ebed;
+  --piggy-resource-card-border: #afa7af;
+  --piggy-text-resource-card: #333333;
 
   --piggy-card-border-width: 1px;
 
@@ -40,7 +40,11 @@ preview_style: background-color: #ece4ec; color: #000000;
 
   --piggy-button: #c099a8;
   --piggy-button-hover: #ddb2c2;
-  --piggy-button-active: rgb(241, 127, 138);
+  --piggy-button-active: rgb(
+    241,
+    127,
+    138
+  ); /* Slightly more colored active color */
   --piggy-text-button: var(--piggy-dark);
 
   --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7);
@@ -109,13 +113,4 @@ preview_style: background-color: #ece4ec; color: #000000;
 [data-theme="classic"] .md-content .admonition {
   background-color: #e0e0e0;
   color: var(--piggy-dark);
-}
-
-[data-theme="classic"] .md-content .tabbed-labels::before {
-  border-color: var(--piggy-dark);
-  background-color: #00000025 !important;
-}
-
-[data-theme="classic"] .md-content .tabbed-set {
-  background: #0000000a;
 }

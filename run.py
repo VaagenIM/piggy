@@ -14,7 +14,14 @@ def cleanup():
 
 
 def run_tailwind(reload=False):
-    cmd = f"cd piggy && npx tailwindcss -c tailwind.config.js -o static/css/tailwind.css {'--watch' if reload else ''} "
+    cmd = (
+        "cd piggy && "
+        "npx tailwindcss "
+        "-c tailwind.config.js "
+        "-i static/css/tailwind.input.css "
+        "-o static/css/tailwind.css "
+        f"{'--watch' if reload else ''} "
+    )
     subprocesses.append(subprocess.Popen(cmd, shell=True))
 
 
@@ -45,9 +52,11 @@ if __name__ == "__main__":
     # Import after setting the environment variables for testing
     from piggy.app import create_app
     from piggy.devtools import inject_devtools
+    from piggy.piggybank import __update_piggymap
 
     app = create_app(debug=os.environ.get("FLASK_DEBUG", False) == "1")
-    inject_devtools(app)
+    inject_devtools(app)  # Inject devtools
+    __update_piggymap()  # Run on every reload
 
     app.run(port=5001)
 else:
@@ -56,4 +65,5 @@ else:
 
     # TODO: Re-enable (requires branch to be published) (or a env to pass the branch with a PAT)
     # checkout_branch("output")
+    run_tailwind()  # Run once to generate the CSS file
     app = create_app(debug=os.environ.get("FLASK_DEBUG", False) == "1")

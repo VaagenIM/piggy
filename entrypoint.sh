@@ -11,7 +11,6 @@ run_app() {
   wait $PID
 }
 
-source venv/bin/activate
 trap 'kill -TERM $PID && wait $PID && echo "SIGTERM received, exiting." && exit 0' TERM
 trap 'kill -TERM $PID && wait $PID && echo "SIGHUP received, restarting." && run_app' HUP
 run_app

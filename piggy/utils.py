@@ -66,7 +66,6 @@ def normalize_url_str(text: str) -> str:
 
 THEME_PATH = "piggy/static/css/themes"
 
-
 @lru_cache_wrapper
 def get_themes():
     themes = os.listdir(THEME_PATH)
@@ -80,25 +79,23 @@ def get_themes():
             continue
 
         theme_output.append(theme_data)
-
-    return sorted(theme_output, key=lambda d: int(d["id"]))
+    
+    return sorted(theme_output, key=lambda d: d['id'])
 
 
 # quick and dirty state_machine to read CSS metadata
-class ParserState:
+class ParserState():
     INIT = 1
     READ = 2
 
-
 CSS_META_IDENTIFIER = "/* METADATA"
-
 
 @lru_cache_wrapper
 def get_css_metadata(path: str):
     css_metadata = {}
     css_path = Path(path)
 
-    if css_path.suffix != ".css":
+    if css_path.suffix != '.css':
         return None
 
     valid = True
@@ -115,7 +112,7 @@ def get_css_metadata(path: str):
                     else:
                         valid = False
                 case ParserState.READ:
-                    meta_item = line.split(":", 1)
+                    meta_item = line.split(':', 1)
 
                     if len(meta_item) < 2:
                         valid = False

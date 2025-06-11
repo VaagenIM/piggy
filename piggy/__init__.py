@@ -1,14 +1,8 @@
 import re
-import os
 from enum import Enum
 from pathlib import Path
 
 PIGGYBANK_FOLDER = Path("piggybank")
-STATIC_FONTS_PATHS = [
-    str(Path(os.path.join(dp, f)).as_posix()).split("/static/fonts/")[-1]
-    for dp, dn, filenames in os.walk(Path(__file__).parent / "static" / "fonts")
-    for f in filenames
-]
 
 # A prefix for the assignment URLs, to avoid conflicts with other routes
 ASSIGNMENT_ROUTE = "main"

@@ -1,12 +1,6 @@
 from flask import abort
 
 
-ERROR_MESSAGES = {
-    "default": "Something went wrong, please try again later.",
-    "404": "Your <strike>queen</strike> gilt is in another castle...",
-}
-
-
 class PiggyException(Exception):
     pass
 

@@ -2,58 +2,87 @@
 id: 6
 name: Synthwave
 description: Fancy sunset, purple, neon, gradients!
-type: dark
-preview_style: background-color: rgb(48, 20, 58); color: #ffcc66;
 */
 
 [data-theme="synthwave"] {
-  --piggy-main: rgb(0, 0, 0);
-  --piggy-light: #ffd27f;
-  --piggy-neutral: #866997;
-  --piggy-dark: rgb(48, 20, 58);
+  /* Synthwave sunset colors */
+  --piggy-main: rgb(34, 18, 48); /* Deep, rich sunset purple */
+  --piggy-light: #ffd27f; /* Warm, soft golden yellow */
+  --piggy-neutral: #866997; /* Gray */
+  --piggy-dark: rgb(48, 20, 58); /* Darker purple for contrast */
 
-  --piggy-text-main: #ffcc66;
-  --piggy-text-light: #ff9b9b;
-  --piggy-text-dark: #ffcb91;
+  --piggy-text-main: #ffcc66; /* Soft, glowing sunset orange */
+  --piggy-text-light: #ff9b9b; /* Warm pink for accents */
+  --piggy-text-dark: #ffcb91; /* Sunset orange for text highlights */
 
-  --piggy-shadow-text: #ff8c0018;
-  --piggy-shadow-box: #ff00a630;
-  --piggy-shadow-glow: rgba(255, 140, 0, 0.4);
+  --piggy-shadow-text: #ff8c0030; /* Soft orange shadow */
+  --piggy-shadow-box: #ff004450; /* Pink shadow for box elements */
+  --piggy-shadow-glow: rgba(
+    255,
+    140,
+    0,
+    0.4
+  ); /* Glowing orange sunset effect */
 
   /* Piggy sunset card colors */
-  --piggy-card-start: rgba(255, 143, 89, 0.3);
-  --piggy-card-end: rgba(211, 82, 112, 0.3);
-  --piggy-card-border: #ff9b9b;
+  --piggy-card-start: rgba(255, 143, 89, 0.3); /* Gradient from orange */
+  --piggy-card-end: rgba(211, 82, 112, 0.3); /* Gradient to warm pink */
+  --piggy-card-border: #ff9b9b; /* Pinkish sunset border */
   --piggy-text-card: var(--piggy-text-light);
 
-  /* Assignment cards */
-  --piggy-assignment-card-start: rgba(155, 49, 0, 0.7);
-  --piggy-assignment-card-end: rgba(155, 49, 34, 0.3);
-  --piggy-assignment-card-border: #FF5722;
-  --piggy-assignment-overlay: rgba(255, 87, 34, 0.8);
-  --piggy-assignment-accent: #FF5722;
-  --piggy-assignment-shadow-glow: rgba(255, 87, 34, 0.5);
+  --piggy-extra-card-start: rgba(
+    241,
+    169,
+    160,
+    0.3
+  ); /* Soft pastel pink gradient */
+  --piggy-extra-card-end: rgba(
+    255,
+    122,
+    122,
+    0.3
+  ); /* Gentle orange-pink gradient */
+  --piggy-extra-card-border: #ff8c00; /* Warm orange border */
+  --piggy-text-extra-card: #ffffff;
+
+  --piggy-resource-card-start: rgba(
+    255,
+    200,
+    85,
+    0.3
+  ); /* Bright sunset yellow */
+  --piggy-resource-card-end: rgba(255, 122, 122, 0.3); /* Sunset orange-pink */
+  --piggy-resource-card-border: #ffa500; /* Bright orange border */
+  --piggy-text-resource-card: #4f4f4f; /* Gray for contrast */
 
   --piggy-card-border-width: 1px;
 
   /* Piggy sunset elements */
-  --piggy-navbar-start: rgb(48, 20, 58);
-  --piggy-navbar-end: rgb(34, 18, 48);
+  --piggy-navbar-start: rgb(
+    48,
+    20,
+    58
+  ); /* Deep purple, like the end of sunset */
+  --piggy-navbar-end: rgb(
+    34,
+    18,
+    48
+  ); /* Darker purple for a cohesive gradient */
   --piggy-text-navbar: var(--piggy-light);
 
-  --piggy-button: #ff6347;
-  --piggy-button-hover: #ff8364;
-  --piggy-button-active: #d33417;
+  --piggy-button: #ff6347; /* Sunset red-orange */
+  --piggy-button-hover: #ff8364; /* Lighter orange for hover */
+  --piggy-button-active: #d33417; /* Slightly more colored active color */
   --piggy-text-button: #333;
 
-  --piggy-thumbnail-overlay: #00000099;
+  --piggy-thumbnail-overlay: #00000099; /* Dark overlay for vivid highlights */
   --piggy-text-thumbnail: var(--piggy-light);
 
   --piggy-text-tag: #ffffff;
   --piggy-text-description: var(--piggy-text-main);
-  --piggy-text-title: #ffcc66;
+  --piggy-text-title: #ffcc66; /* Golden for titles */
   --piggy-text-breadcrumb: var(--piggy-text-main);
-  --piggy-text-breadcrumb-hover: #ffd27f;
+  --piggy-text-breadcrumb-hover: #ffd27f; /* Soft golden yellow for hover */
 
   --piggy-menu: var(--piggy-dark);
   --piggy-menu-text: var(--piggy-light);
@@ -63,86 +92,6 @@ preview_style: background-color: rgb(48, 20, 58); color: #ffcc66;
 
   --piggy-text-hyperlink: #3190b6;
   --piggy-text-hyperlink-hover: #6ab2cf;
-
-  --grid-line-color: #cc00ffaa;
-  --grid-background-color: var(--piggy-dark);
-
-  --piggy-logo-gradient: linear-gradient(45deg, rgb(162, 0, 255), rgb(255, 0, 200), rgb(255, 145, 0));
-  --piggy-logo-border: rgba(0, 0, 0, 0.65);
-}
-
-[data-theme="synthwave"] .main-container {
-  background-color: #000000;
-}
-
-@keyframes scrollGrid {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 0 200px;
-  }
-}
-
-[data-theme="synthwave"] .background-overlay {
-  height: 200%;
-  background-image: linear-gradient(
-      to right,
-      transparent 0%,
-      transparent 98%,
-      var(--grid-line-color) 99%
-    ),
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      transparent 98%,
-      var(--grid-line-color) 99%
-    );
-  background-size: 2.5rem 2.5rem;
-  transform-origin: top center;
-  transform: translateY(2%) perspective(40rem) rotateX(77deg);
-  animation: scrollGrid 10s linear infinite;
-}
-
-[data-theme="synthwave"] .card-container {
-  box-shadow: 2px 2px 15px 0 var(--piggy-shadow-box);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
-}
-
-@keyframes boxShadowScroll {
-  0% {
-    box-shadow: 0px 0px 15px 0 #ff00a6;
-    border-color: #ff00a6;
-  }
-  25% {
-    box-shadow: 0px 0px 15px 0 #ff9500;
-    border-color: #ff9500;
-  }
-  50% {
-    box-shadow: 0px 0px 15px 0 #00ff33;
-    border-color: #00ff33;
-  }
-  75% {
-    box-shadow: 0px 0px 15px 0 #009dff;
-    border-color: #009dff;
-  }
-  100% {
-    box-shadow: 0px 0px 15px 0 #ff00a6;
-    border-color: #ff00a6;
-  }
-}
-
-[data-theme="synthwave"] .card-container:hover {
-  border-color: #ff00ff;
-  transform: perspective(1000px) rotateX(-1deg) rotateY(3deg) rotateZ(1deg)
-    scale(98%);
-  box-shadow: 0px 0px 15px 0 #ff00a6;
-  animation: boxShadowScroll 2s alternate infinite;
-  animation-timing-function: linear;
-  animation-delay: 0.4s;
 }
 
 [data-theme="synthwave"] .settings-option {
@@ -158,12 +107,6 @@ preview_style: background-color: rgb(48, 20, 58); color: #ffcc66;
 \******************************/
 [data-theme="synthwave"] .md-content .admonition-title {
   font-size: 0.8rem !important;
-}
-
-[data-theme="synthwave"] .md-content {
-  border: 1px solid #cc00ffaa;
-  border-radius: 0.5rem;
-  background-color: #000000cc;
 }
 
 [data-theme="synthwave"] .md-content code:not(.md-code__content) {
@@ -193,14 +136,4 @@ preview_style: background-color: rgb(48, 20, 58); color: #ffcc66;
 [data-theme="synthwave"] .md-content .admonition {
   background-color: #271a1d;
   color: var(--piggy-light);
-}
-
-[data-theme="synthwave"] .md-content .tabbed-set {
-  border: 1px solid var(--piggy-neutral);
-  background: #ffffff0a;
-}
-
-[data-theme="synthwave"] .md-content .tabbed-labels::before {
-  border-color: #ff3000;
-  background-color: #ff37003a !important;
 }

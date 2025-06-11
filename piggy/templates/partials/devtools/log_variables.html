@@ -1,55 +1,55 @@
 <!-- pragma: no cover -->
 <script>
-  console.log("GLOBAL CONTEXT VARIABLES");
-  console.log("---");
-  console.log("media_abspath: " + JSON.stringify({{ media_abspath | string | tojson }}));
-  console.log("abspath: " + JSON.stringify({{ abspath | string | tojson }}));
-  console.log("path: " + JSON.stringify({{ path | string | tojson }}));
-  console.log("ASSIGNMENT_URL_PREFIX: " + JSON.stringify({{ ASSIGNMENT_URL_PREFIX | string | tojson }}));
-  console.log("MEDIA_URL_PREFIX: " + JSON.stringify({{ MEDIA_URL_PREFIX | string | tojson }}));
-  console.log("github_pages: " + JSON.stringify({{ github_pages | string | tojson }}));
-  console.log("AssignmentTemplate: " + JSON.stringify({{ AssignmentTemplate | string | tojson }}));
-  console.log("debug: " + JSON.stringify({{ debug | string | tojson }}));
-
-  {% if level %}
-    console.log("");
-    console.log("ASSIGNMENT SPECIFIC VARIABLES");
+    console.log("GLOBAL CONTEXT VARIABLES");
     console.log("---");
-    console.log("current_language: " + JSON.stringify({{ current_language | string | tojson }}));
-    console.log("supported_languages: " + JSON.stringify({{ supported_languages | string | tojson }}));
-    console.log("level: " + JSON.stringify({{ level | string | tojson }}));
-    console.log("level_name: " + JSON.stringify({{ level_name | string | tojson }}));
-    console.log("heading: " + JSON.stringify({{ heading | string | tojson }}));
-  {% endif %}
+    console.log("media_abspath: " + JSON.stringify({{ media_abspath | string | tojson }}));
+    console.log("abspath: " + JSON.stringify({{ abspath | string | tojson }}));
+    console.log("path: " + JSON.stringify({{ path | string | tojson }}));
+    console.log("ASSIGNMENT_URL_PREFIX: " + JSON.stringify({{ ASSIGNMENT_URL_PREFIX | string | tojson }}));
+    console.log("MEDIA_URL_PREFIX: " + JSON.stringify({{ MEDIA_URL_PREFIX | string | tojson }}));
+    console.log("github_pages: " + JSON.stringify({{ github_pages | string | tojson }}));
+    console.log("AssignmentTemplate: " + JSON.stringify({{ AssignmentTemplate | string | tojson }}));
+    console.log("debug: " + JSON.stringify({{ debug | string | tojson }}));
+
+    {% if level %}
+        console.log("");
+        console.log("ASSIGNMENT SPECIFIC VARIABLES");
+        console.log("---");
+        console.log("current_language: " + JSON.stringify({{ current_language | string | tojson }}));
+        console.log("supported_languages: " + JSON.stringify({{ supported_languages | string | tojson }}));
+        console.log("level: " + JSON.stringify({{ level | string | tojson }}));
+        console.log("level_name: " + JSON.stringify({{ level_name | string | tojson }}));
+        console.log("heading: " + JSON.stringify({{ heading | string | tojson }}));
+    {% endif %}
 
 
-  {% if meta %}
+    {% if meta %}
+        console.log("");
+        console.log("META VARIABLES (might be page specific)");
+        console.log("---");
+        {% for k, v in meta.items() %}
+            console.log(JSON.stringify("meta." + {{ k | string | tojson }} + ": " + JSON.stringify({{ v | string | tojson }})));
+        {% endfor %}
+    {% endif %}
+
     console.log("");
-    console.log("META VARIABLES (might be page specific)");
+    console.log("JINJA Specific variables");
     console.log("---");
-    console.log(JSON.stringify({{ unfreeze(meta) | tojson }}, null, 2));
-  {% endif %}
+    console.log("request.path: " + JSON.stringify({{ request.path | string | tojson }}));
+    console.log("request.url: " + JSON.stringify({{ request.url | string | tojson }}));
+    console.log("request.endpoint: " + JSON.stringify({{ request.endpoint | string | tojson }}));
+    console.log("request.full_path: " + JSON.stringify({{ request.full_path | string | tojson }}));
+    console.log("request.url_root: " + JSON.stringify({{ request.url_root | string | tojson }}));
+    console.log("request.base_url: " + JSON.stringify({{ request.base_url | string | tojson }}));
+    console.log("request.host_url: " + JSON.stringify({{ request.host_url | string | tojson }}));
 
-  {% if segment %}
     console.log("");
-    console.log("Segment");
+    console.log("Cluttered variables that take up too much space");
     console.log("---");
-    console.log({{ unfreeze(segment) | tojson}});
-  {% endif %}
-
-  console.log("");
-  console.log("JINJA Specific variables");
-  console.log("---");
-  console.log("request.path: " + JSON.stringify({{ request.path | string | tojson }}));
-  console.log("request.url: " + JSON.stringify({{ request.url | string | tojson }}));
-  console.log("request.endpoint: " + JSON.stringify({{ request.endpoint | string | tojson }}));
-  console.log("request.full_path: " + JSON.stringify({{ request.full_path | string | tojson }}));
-  console.log("request.url_root: " + JSON.stringify({{ request.url_root | string | tojson }}));
-  console.log("request.base_url: " + JSON.stringify({{ request.base_url | string | tojson }}));
-  console.log("request.host_url: " + JSON.stringify({{ request.host_url | string | tojson }}));
-
-  console.log("");
-  console.log("Piggymap");
-  console.log("---");
-  console.log({{ unfreeze(piggymap) | tojson }});
+    console.log("piggymap: " + JSON.stringify({{ piggymap | string | tojson }}));
+    {% if segment %}
+        {% for k, v in segment.items() %}
+            console.log(JSON.stringify("segment." + {{ k | string | tojson }} + ": " + JSON.stringify({{ v | string | tojson }})));
+        {% endfor %}
+    {% endif %}
 </script>

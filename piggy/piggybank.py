@@ -1,11 +1,9 @@
 import json
 import os
-import timeit
 from pathlib import Path
 
-import markupsafe
-import yaml
 from frozendict.cool import deepfreeze
+from turtleconverter import mdfile_to_sections
 
 from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper
@@ -92,33 +90,6 @@ def get_template_from_path(path: str) -> str:
     return t
 
 
-def get_frontmatter_from_file(path: Path) -> dict:
-    data = ""
-    frontmatter = {}
-    fallback_title = path.stem.replace("_", " ")
-    with open(path, "r", encoding="utf-8") as f:
-        if f.readline().strip() == "---":
-            for line in f:
-                if line.strip() == "---":
-                    break
-                data += line
-        f.seek(0)
-        for line in f:
-            if line.strip().startswith("# "):
-                fallback_title = line.lstrip("#").strip()
-                break
-    try:
-        frontmatter = yaml.unsafe_load(data)
-    except yaml.YAMLError:
-        print(f"Error parsing frontmatter in {path}")
-
-    if not frontmatter:
-        frontmatter = {}
-
-    frontmatter["title"] = frontmatter.get("title", fallback_title)
-    return {k: str(markupsafe.escape(v)) for k, v in frontmatter.items()}
-
-
 def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
     """
     Generate a dictionary of the directory structure of the given path
@@ -157,23 +128,16 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
             continue
         assignment_path = Path(f"{path}/{item}")
 
-        frontmatter = get_frontmatter_from_file(assignment_path)
-
-        # Get translations metadata
-        translation_meta = dict()
-        for lang in os.listdir(f"{path}/translations") if os.path.isdir(f"{path}/translations") else []:
-            if not os.path.exists(f"{path}/translations/{lang}/{item}"):
-                continue
-            translation_meta[lang] = get_frontmatter_from_file(Path(f"{path}/translations/{lang}/{item}"))
+        # NOTE: This is run both for piggymap generation, and for individual assignment rendering
+        sections = mdfile_to_sections(assignment_path)
 
         assignment_key = normalize_path_to_str(i, replace_spaces=True, normalize_url=True, remove_ext=True)
         piggymap[assignment_key] = {
             "path": assignment_path,
             "level": match.group(1).strip(),
-            "level_name": frontmatter["title"],
-            "heading": frontmatter["title"],
-            "meta": frontmatter,
-            "translation_meta": translation_meta,
+            "level_name": sections["heading"],
+            "heading": sections["heading"],
+            "meta": sections["meta"],
         }
 
     def recursive_sort(data):
@@ -185,29 +149,13 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
     return recursive_sort(piggymap)
 
 
-def stringify_paths(d: dict) -> dict:
-    for key, value in d.items():
-        if isinstance(value, dict):
-            d[key] = unfreeze(value)
-        if isinstance(value, Path):
-            d[key] = str(value.as_posix())
-    return d
-
-
-@lru_cache_wrapper
-def unfreeze(d):
-    """
-    Unfreeze a frozendict and convert all Path objects to strings, or just convert all Path objects to strings.
-    """
-    if isinstance(d, dict):
-        d = dict(d.copy())
-        return stringify_paths(d)
-    elif isinstance(d, Path):
-        return str(d.as_posix())
-    return d
-
-
-start_time = timeit.default_timer()
-print("Building piggymap")
+# Piggymap must be hashable for sooper dooper speed
 PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
-print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")
+
+
+# DEVTOOL
+def __update_piggymap():
+    global PIGGYMAP
+    print("Rebuilding piggymap")
+    PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
+    print("Piggymap rebuilt")

@@ -4,11 +4,7 @@
 *.DS_Store
 .DS_Store?
 .cache
-.pid
 *.egg-info
-uv.lock
-.vscode/
-.env
 
 tailwind.css
 
@@ -16,9 +12,6 @@ turtleconvert/
 
 .idea/
 venv/
-.venv/
-.venvy/
-venvy/
 __pycache__/
 
 
