@@ -242,6 +242,14 @@ h6 {
   transition: 0.4s ease;
 }
 
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
 .main-container {
   position: relative;
   min-height: 100vh;
@@ -661,7 +669,7 @@ img[src*="#center"] {
 .card-align-assignment {
   display: grid !important;
   grid-template-columns: 0fr 5fr 4fr;
-  grid-template-areas: 
+  grid-template-areas:
     "badge header thumbnail"
     "badge description thumbnail"
     "badge description thumbnail";
@@ -688,14 +696,13 @@ img[src*="#center"] {
 @media (max-width: 640px) {
   .card-align-assignment {
     grid-template-columns: 1fr;
-    grid-template-areas: 
+    grid-template-areas:
       "header"
       "thumbnail"
       "tags"
       "description";
   }
 }
-
 
 /****************************\
 |*     ASSIGNMENT CARDS     *|
@@ -706,7 +713,8 @@ img[src*="#center"] {
     var(--piggy-assignment-card-start) 0%,
     var(--piggy-assignment-card-end) 100%
   );
-  border: var(--piggy-card-border-width) solid var(--piggy-assignment-card-border);
+  border: var(--piggy-card-border-width) solid
+    var(--piggy-assignment-card-border);
   padding: 0.75rem;
 }
 
@@ -1336,7 +1344,6 @@ details ul li,
     width: 80%;
     margin: 0 auto;
     text-align: center;
-    font-size: 3rem !important;
   }
 }
 
@@ -1345,7 +1352,6 @@ details ul li,
   .error-container {
     margin: 0 auto;
     text-align: center;
-    font-size: 4rem;
   }
 
   .error-img {
@@ -1355,7 +1361,7 @@ details ul li,
 }
 
 #piggy-logo {
-  font-family: 'Fredoka', sans-serif;
+  font-family: "Fredoka", sans-serif;
   font-weight: 700;
   font-size: 1.85rem;
   margin: -0.3rem 0.3rem;
@@ -1364,8 +1370,7 @@ details ul li,
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: 0.65px;
-  filter: 
-    drop-shadow(1px 0 0 var(--piggy-logo-border))
+  filter: drop-shadow(1px 0 0 var(--piggy-logo-border))
     drop-shadow(-1px 0 0 var(--piggy-logo-border))
     drop-shadow(0 1px 0 var(--piggy-logo-border))
     drop-shadow(0 -1px 0 var(--piggy-logo-border));
