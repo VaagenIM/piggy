@@ -51,10 +51,8 @@ jobs:
           context: .
           push: false
           tags: piggy-pages:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          build-args: |
-            CACHE_BUST=${{ github.run_id }}
+          # TODO: Optimize cache
+          no-cache: true
 
       - name: Get piggybank
         run: git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank-demo
