@@ -51,14 +51,14 @@ jobs:
           context: .
           push: false
           tags: piggy-pages:latest
-          # TODO: Optimize cache
-          no-cache: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Get piggybank
         run: git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank-demo
 
       - name: Spin up containers
-        run: docker compose -f docker-compose.pages.yml up -d
+        run: docker compose -f docker-compose.pages.yml up -d --build --remove-orphans --force-recreate
 
       - name: Install dependencies
         run: uv pip install -r .github/workflows/requirements-pages.txt
