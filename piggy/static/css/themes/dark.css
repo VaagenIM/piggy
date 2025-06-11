@@ -75,6 +75,7 @@ preview_style: background-color: rgb(34, 41, 47); color: #f0f4f8;
   /* info boxes */
   --piggy-info-box-background: #00859c49;
   --piggy-info-box-border: #00859c;
+
 }
 
 [data-theme="dark"] .md-content .md-code__content {

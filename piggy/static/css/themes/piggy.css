@@ -62,6 +62,11 @@ preview_style: background-color: #ff99ac; color: #4d4d4d;
 
   --piggy-text-hyperlink: #539cd8;
   --piggy-text-hyperlink-hover: #316997;
+
+  /* logo */
+  --piggy-logo: #ff9abc;
+  --piggy-logo-gradient: linear-gradient(45deg, #ffc1d8, #ff5a8f, #c03db9);
+  --piggy-logo-border: rgba(0, 0, 0, 0.6);
 }
 
 [data-theme="piggy"] .level-count-container {

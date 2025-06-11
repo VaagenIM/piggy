@@ -67,6 +67,10 @@ preview_style: background-color: #000000; color: #00ff00;
 
   --piggy-text-hyperlink: #00ffff;
   --piggy-text-hyperlink-hover: #99ffff;
+
+  --piggy-logo: rgb(154, 255, 159);
+  --piggy-logo-gradient: linear-gradient(45deg, rgb(137, 255, 216), rgb(0, 255, 85), rgb(30, 255, 0));
+  --piggy-logo-border: rgba(0, 0, 0, 0.65);
 }
 
 [data-theme="matrix"] .card-container {
