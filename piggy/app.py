@@ -5,14 +5,13 @@ from flask import Flask, send_file, request, Blueprint, render_template
 from flask_squeeze import Squeeze
 from jinja2 import ChoiceLoader, FileSystemLoader
 from turtleconverter import generate_static_files
-from werkzeug.exceptions import HTTPException
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate, STATIC_FONTS_PATHS
 from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
-from piggy.exceptions import PiggyHTTPException, ERROR_MESSAGES
+from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes
 
@@ -70,6 +69,15 @@ def create_app(debug: bool = False) -> Flask:
         return it sorted by int(assignment.level).
         """
         return sorted(item_list, key=lambda kv: int(kv[1]["level"]))
+
+    @app.template_filter("list_difference")
+    def list_difference(original_list, lists):
+        """
+        Jinja filter: returns the difference between two lists.
+        """
+        for list in lists:
+            original_list = [item for item in original_list if item not in list]
+        return original_list
 
     @app.context_processor
     def utilities():
@@ -149,11 +157,11 @@ def create_app(debug: bool = False) -> Flask:
                 return generate_thumbnail(name, request=request.from_values(query_string=query_params))
             return send_file("static/img/placeholders/100x100.png")
 
-    @app.errorhandler(HTTPException)
-    def error(error):
-        # Error message is a fun tooltip
-        error_message = ERROR_MESSAGES.get(str(error.code), ERROR_MESSAGES["default"])
-        return render_template("error.html", error=error, error_message=error_message)
+    @app.errorhandler(Exception)
+    def error(e):
+        e = normalize_http_exception(e)
+        error_message = ERROR_MESSAGE_DESCRIPTIONS.get(str(e.status_code), ERROR_MESSAGE_DESCRIPTIONS["default"])
+        return render_template("error.html", error=e, error_message=error_message)
 
     app.register_blueprint(assignment_routes)
     app.register_blueprint(media_routes)
