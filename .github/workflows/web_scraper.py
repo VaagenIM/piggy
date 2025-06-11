@@ -18,6 +18,27 @@ media_links = set()
 url = "http://127.0.0.1:5000"  # The URL of the website we are scraping
 cname = "https://piggy.iktim.no"  # The CNAME of the website we will push the demo to
 
+# Media link are files that we want to download, but not parse as HTML (e.g. not write as UTF-8)
+# specifically fonts are causing issues.
+media_link_filetypes = [
+    "ttf",
+    "woff",
+    "woff2",
+    "eot",
+    "svg",
+    "otf",
+    "css",
+    "js",
+    "pdf",
+    "png",
+    "jpg",
+    "jpeg",
+    "gif",
+    "webp",
+    "mp4",
+]
+
+
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -97,9 +118,14 @@ def get_links(html, path=""):
 
 
 def get_media_links(html, path=""):
-    links = re.compile(r'src="((?!#|https?://)[^"]*)"').findall(html)
+    media_src_regex = r'src="((?!#|https?://)[^"]+)"'
+    media_href_regex = r'href="((?!#|https?://)[^"]+\.(' + "|".join(media_link_filetypes) + r'))"'
+    media_links_regex = re.compile(rf"{media_src_regex}|{media_href_regex}")
+
+    media_links = media_links_regex.findall(html)
+    media_links = [link[0] or link[1] for link in media_links]
     filtered_links = set()
-    for link in links:
+    for link in media_links:
         link = clean_link(link, path)
         if not link.startswith("/") and path:
             filtered_links.add(f"{path.rsplit('/', 1)[0]}/{link}")
@@ -119,7 +145,11 @@ def _download_media(link):
     print(f"Downloading \33[34m{link}\33[0m")
     path = link.strip("/").split("#")[0]
     r = requests.get(f"{url}/{path}", allow_redirects=True)
-    os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
+    try:
+        os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
+    except NotADirectoryError:
+        print(f"WARNING: Could not create directory for {path}. Skipping download.")
+        return
     path = unquote_path(path)
     # TODO: this is a hack. hopefully temporary.
     if "/api/generate_thumbnail/" in link:

@@ -161,7 +161,7 @@ def create_app(debug: bool = False) -> Flask:
     def error(e):
         e = normalize_http_exception(e)
         error_message = ERROR_MESSAGE_DESCRIPTIONS.get(str(e.status_code), ERROR_MESSAGE_DESCRIPTIONS["default"])
-        return render_template("error.html", error=e, error_message=error_message)
+        return render_template("error.html", error=e, error_message=error_message), e.status_code
 
     app.register_blueprint(assignment_routes)
     app.register_blueprint(media_routes)
