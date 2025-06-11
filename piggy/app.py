@@ -2,22 +2,22 @@ import os
 from pathlib import Path
 
 from flask import Flask, send_file, request, Blueprint, render_template
-from flask_compress import Compress
-from flask_minify import Minify
+from flask_squeeze import Squeeze
+from jinja2 import ChoiceLoader, FileSystemLoader
 from turtleconverter import generate_static_files
+from werkzeug.exceptions import HTTPException
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate
+from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate, STATIC_FONTS_PATHS
 from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
-from piggy.exceptions import PiggyHTTPException
-from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
+from piggy.exceptions import PiggyHTTPException, ERROR_MESSAGES
+from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
-
 
 # TODO: Logging
 
@@ -25,10 +25,21 @@ os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
 def create_app(debug: bool = False) -> Flask:
     app = Flask(__name__, static_folder="static")
 
+    Squeeze().init_app(app)
+
+    # TODO: add cache time to env (we use nginx caching for prod)
+    default_cache_ttl = 86400 * 30 if debug else None  # 30 days
+    app.config["SEND_FILE_MAX_AGE_DEFAULT"] = default_cache_ttl
+    app.jinja_options["autoescape"] = False
+
     app.debug = debug
 
     # The following is necessary for the app to work behind a reverse proxy
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
+    static_path = Path(app.root_path) / app.static_folder
+
+    app.jinja_loader = ChoiceLoader([app.jinja_loader, FileSystemLoader(str(static_path))])
 
     assignment_routes = Blueprint(ASSIGNMENT_ROUTE, __name__, url_prefix=f"/{ASSIGNMENT_ROUTE}")
     media_routes = Blueprint(MEDIA_ROUTE, __name__, url_prefix=f"/{MEDIA_ROUTE}")
@@ -49,6 +60,22 @@ def create_app(debug: bool = False) -> Flask:
             "AssignmentTemplate": AssignmentTemplate,
             "themes": get_themes(),
             "debug": app.debug,
+            "static_fonts_paths": STATIC_FONTS_PATHS,
+        }
+
+    @app.template_filter("sort_by_level")
+    def sort_by_level(item_list):
+        """
+        Jinja filter: given an iterable of (link, assignment) tuples,
+        return it sorted by int(assignment.level).
+        """
+        return sorted(item_list, key=lambda kv: int(kv[1]["level"]))
+
+    @app.context_processor
+    def utilities():
+        """Add utility functions to the context."""
+        return {
+            "unfreeze": unfreeze,
         }
 
     @app.template_global()
@@ -122,6 +149,12 @@ def create_app(debug: bool = False) -> Flask:
                 return generate_thumbnail(name, request=request.from_values(query_string=query_params))
             return send_file("static/img/placeholders/100x100.png")
 
+    @app.errorhandler(HTTPException)
+    def error(error):
+        # Error message is a fun tooltip
+        error_message = ERROR_MESSAGES.get(str(error.code), ERROR_MESSAGES["default"])
+        return render_template("error.html", error=error, error_message=error_message)
+
     app.register_blueprint(assignment_routes)
     app.register_blueprint(media_routes)
     app.register_blueprint(api_routes)
@@ -130,10 +163,5 @@ def create_app(debug: bool = False) -> Flask:
     if os.environ.get("USE_CACHE", "1") == "1":
         with app.app_context(), app.test_request_context():
             cache_directory(PIGGYMAP, fn=get_assignment_wildcard)
-
-    # Compress and minify the app
-    app.config["COMPRESS_MIMETYPES"] = ["text/css", "application/json", "application/javascript"]
-    Compress(app)
-    Minify(app, go=False)
 
     return app

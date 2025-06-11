@@ -1,27 +1,96 @@
-/* 
-  SOMEWHAT TEMP 30.09.2024
-  
-  TODO:
-  - Fix spaghetti with classes.
-    - A lot of the buttons have their own styling instead of having the same class, 
-      which there already is one: .piggy-button
-    - I am sure there are some redundant styling classes, but at this point, there
-      is so much spaghetti I can't even bother.
-*/
-
 :root {
-  --piggy-font-size: var(15px);
+  --piggy-font-size: 15px;
 
   font-size: var(--piggy-font-size);
 
   font-family: "Quicksand", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+
+  /* piggy colors */
+  --piggy-main: rgb(34, 41, 47);
+  --piggy-light: #f0f4f8;
+  --piggy-neutral: #60656b;
+  --piggy-dark: rgb(51, 61, 71);
+
+  --piggy-text-main: var(--piggy-light);
+  --piggy-text-light: var(--piggy-light);
+  --piggy-text-neutral: var(--piggy-neutral);
+  --piggy-text-dark: var(--piggy-dark);
+
+  --piggy-shadow-text: #00000029;
+  --piggy-shadow-box: #00000022;
+  --piggy-shadow-glow: rgba(255, 255, 255, 20%);
+
+  /* piggy card colors */
+  --piggy-card-start: rgba(130, 174, 197, 0.3);
+  --piggy-card-end: rgba(48, 73, 90, 0.3);
+  --piggy-card-border: var(--piggy-card-end);
+  --piggy-text-card: var(--piggy-text-light);
+
+  /* Assignment cards */
+  --piggy-assignment-card-start: rgba(255, 152, 0, 0.3);
+  --piggy-assignment-card-end: rgba(245, 124, 0, 0.15);
+  --piggy-assignment-card-border: #f57c00;
+  --piggy-assignment-overlay: rgba(245, 124, 0, 0.85);
+  --piggy-assignment-accent: #f57c00;
+  --piggy-assignment-shadow-glow: rgba(245, 124, 0, 0.5);
+
+  --piggy-card-border-width: 1px;
+
+  /* piggy elements */
+  --piggy-navbar-start: rgb(51, 61, 71);
+  --piggy-navbar-end: rgb(51, 61, 71);
+  --piggy-text-navbar: var(--piggy-light);
+
+  /* buttons */
+  --piggy-button: #4a6783;
+  --piggy-button-hover: #647a95;
+  --piggy-button-active: #2a5d9b;
+  --piggy-text-button: #ffffff;
+
+  /* thumbnails */
+  --piggy-thumbnail-overlay: #00000077;
+  --piggy-text-thumbnail: var(--piggy-light);
+
+  /* text */
+  --piggy-text-tag: #ffffff;
+  --piggy-text-description: var(--piggy-light);
+  --piggy-text-title: var(--piggy-light);
+  --piggy-text-breadcrumb: var(--piggy-light);
+  --piggy-text-breadcrumb-hover: #a6aaad;
+
+  /* menus */
+  --piggy-menu: var(--piggy-dark);
+  --piggy-menu-text: var(--piggy-light);
+
+  /* tooltips */
+  --piggy-tooltip: #000000;
+  --piggy-tooltip-text: #ffffff;
+
+  /* links */
+  --piggy-text-hyperlink: #407eb1;
+  --piggy-text-hyperlink-hover: #407eb1;
+
+  /* info boxes */
+  --piggy-info-box-background: #00859c49;
+  --piggy-info-box-border: #00859c;
+
+  /* logo */
+  --piggy-logo: #ff9abc;
+  --piggy-logo-gradient: linear-gradient(45deg, #ffc1d8, #ff5a8f, #c03db9);
+  --piggy-logo-border: rgba(66, 28, 53, 0.65);
 }
 
 /************************\
 |*     FONT IMPORTS     *|
 \************************/
+
+.language-flag {
+  font-family: "Noto Color Emoji", sans-serif !important;
+  font-weight: 400;
+  font-style: normal;
+}
 
 /* Regular */
 @font-face {
@@ -81,12 +150,76 @@
   font-style: normal;
 }
 
-[data-font-theme="dyslexia"] *:not(code *, code) {
+/***********************\
+|*     FONT THEMES     *|
+\***********************/
+[data-font-theme="default"] *:not(code *, code, .MathJax *) {
+  font-family: "Quicksand", sans-serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="arial"] *:not(code *, code, .MathJax *) {
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="lexia"] *:not(code *, code, .MathJax *) {
   font-family: "Lexia", "Comic Sans MS", sans-serif;
   letter-spacing: 0px;
 }
 
-[data-font-theme="default"] * {
+[data-font-theme="papyrus"] *:not(code *, code, .MathJax *) {
+  font-family: Papyrus, fanasy, sans-serif;
+}
+
+[data-font-theme="impact"] *:not(code *, code, .MathJax *) {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  letter-spacing: 0px;
+  font-weight: 100 !important;
+}
+
+[data-font-theme="times"] *:not(code *, code, .MathJax *) {
+  font-family: "Times New Roman", Times, serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="courier"] *:not(code *, code, .MathJax *) {
+  font-family: "Courier New", Courier, monospace;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="georgia"] *:not(code *, code, .MathJax *) {
+  font-family: Georgia, serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="verdana"] *:not(code *, code, .MathJax *) {
+  font-family: Verdana, Geneva, sans-serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="trebuchet"] *:not(code *, code, .MathJax *) {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="lucida"] *:not(code *, code, .MathJax *) {
+  font-family: "Lucida Console", Monaco, monospace;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="brush"] *:not(code *, code, .MathJax *) {
+  font-family: "Brush Script MT", cursive;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="gill-sans"] *:not(code *, code, .MathJax *) {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="century-gothic"] *:not(code *, code, .MathJax *) {
+  font-family: "Century Gothic", "Lucida Sans Unicode", sans-serif;
   letter-spacing: 0px;
 }
 
@@ -102,15 +235,330 @@ h6 {
   color: var(--piggy-text-main) !important;
 }
 
+/************************\
+|*     BASE STYLING     *|
+\************************/
 .transition {
   transition: 0.4s ease;
 }
 
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
 .main-container {
-  background-color: var(--piggy-main);
+  position: relative;
+  min-height: 100vh;
   color: var(--piggy-text-main);
   text-shadow: var(--piggy-shadow-text) 3px 3px 5px;
   font-size: var(--piggy-font-size);
+  padding-bottom: 5rem;
+}
+
+.background-overlay {
+  position: fixed;
+  background: var(--piggy-main);
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.main-title {
+  font-size: 3rem;
+  word-wrap: break-word;
+}
+
+.page-title {
+  font-size: 3rem;
+  word-wrap: break-word;
+}
+
+@media screen and (max-width: 800px) {
+  .page-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .page-title {
+    font-size: 2.25rem;
+    word-wrap: break-word;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  /* Make header sticky on larger displays */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0px 0px 5px #00000066;
+  }
+}
+
+img[src*="#center"] {
+  display: inline-block;
+  margin: auto;
+}
+
+/*********************\
+|*     CARD GRID     *|
+\*********************/
+.card-grid-wrapper {
+  max-width: 100%;
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* very large screen */
+@media (min-width: 1920px) {
+  .card-grid-wrapper {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+
+.card-grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+/* small screen */
+@media (min-width: 640px) {
+  .card-grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* medium screen */
+@media (min-width: 768px) {
+  .card-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* large screen */
+@media (min-width: 1024px) {
+  .card-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* very large screen */
+@media (min-width: 2240px) {
+  .card-grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* extremely large screen */
+@media (min-width: 3200px) {
+  .card-grid-container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/************************\
+|* ASSIGNMENT CARD GRID *|
+\************************/
+.assignment-card-grid-wrapper {
+  max-width: 100%;
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* small screen */
+@media (min-width: 640px) {
+  .assignment-card-grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* medium screen */
+@media (min-width: 768px) {
+  .assignment-card-grid-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* large screen */
+@media (min-width: 1024px) {
+  .assignment-card-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* very large screen */
+@media (min-width: 2240px) {
+  .assignment-card-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* extremely large screen */
+@media (min-width: 3200px) {
+  .assignment-card-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/*************************\
+|* EXTRA ASSIGNMENT BITS *|
+\*************************/
+.assignment-meta-note {
+  position: relative;
+  box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
+  border-color: var(--piggy-card-border);
+  border-width: var(--piggy-card-border-width);
+  border-radius: 1rem;
+  background: var(--piggy-info-box-background);
+  border: 1px solid var(--piggy-info-box-border);
+  padding: 0.75rem;
+  margin: 0rem auto 0.5rem auto;
+  width: max-content;
+  font-size: 1.1rem;
+}
+
+.assignment-meta-note-icon {
+  fill: var(--piggy-text-main);
+  width: 1.1rem;
+  height: 1.1rem;
+  display: inline;
+  margin: 0.1rem;
+}
+
+/****************\
+|* QUICK ACCESS *|
+\****************/
+.quick-access-wrapper {
+  background-color: var(--piggy-main);
+  padding: 1rem;
+  border: 2px solid var(--piggy-neutral);
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 2rem auto;
+}
+
+.quick-access-heading {
+  color: var(--piggy-text-main);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  font-size: 2rem;
+}
+
+.quick-access-columns {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.quick-access-column {
+  background-color: var(--piggy-main);
+  padding: 1rem;
+  border: 1px solid var(--piggy-neutral);
+  border-radius: 1rem;
+  flex: 1;
+  min-width: 280px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.quick-access-year-heading {
+  border-bottom: 1px solid var(--piggy-neutral);
+  color: var(--light);
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.quick-access-card {
+  background-color: var(--piggy-main);
+  border: 1px solid var(--piggy-neutral);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.quick-access-card-header {
+  background-color: var(--piggy-main);
+  padding: 0.5rem 1rem;
+  color: var(--piggy-text-main);
+  font-weight: bold;
+  text-align: center;
+}
+
+.quick-access-study-direction {
+  font-size: 1.25rem;
+  margin-bottom: 0;
+}
+
+.quick-access-subjects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.quick-access-subject-button {
+  color: var(--piggy-text-button);
+  border: 1px solid var(--piggy-dark);
+  border-radius: 1rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.quick-access-subject-button:hover {
+  background-color: var(--piggy-button-hover);
+  box-shadow: 0 0 3px var(--piggy-text-main);
+  filter: brightness(1.5);
+  transition: 0.2s;
+}
+
+.quick-access-thumbnail {
+  display: inline-block;
+  aspect-ratio: 16 / 3;
+  width: 100%;
+  border-radius: 1rem;
+  box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
+  object-fit: cover;
+}
+
+.quick-access-description {
+  color: var(--piggy-text-main);
+  font-weight: bold;
+  padding: 0.2rem;
+}
+
+.quick-access-heading {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/****************\
+|*    TITLES    *|
+\****************/
+.assignment-title {
+  font-size: xx-large;
+  font-weight: 600;
+  text-align: center;
+  padding-bottom: 0.2rem;
 }
 
 /*****************\
@@ -140,23 +588,14 @@ h6 {
   cursor: pointer;
 }
 
-/* TODO: Consider a better solution for extra-card and resource card */
-.extra-card {
-  background: linear-gradient(
-    45deg,
-    var(--piggy-extra-card-start) 0%,
-    var(--piggy-extra-card-end) 100%
-  );
-  border: var(--piggy-card-border-width) solid var(--piggy-extra-card-border);
-}
-
-.resource-card {
-  background-color: var(--piggy-resource-card-start);
-  border: var(--piggy-card-border-width) solid var(--piggy-resource-card-border);
-}
-
 .card-title {
   color: var(--piggy-text-title);
+  width: 100%;
+  text-align: center;
+}
+
+.card-header {
+  display: flex;
 }
 
 .thumbnail-container {
@@ -182,7 +621,7 @@ h6 {
   justify-content: space-between;
   border-radius: 0 0 0.6rem 0.6rem;
   font-weight: bold;
-  text-shadow: 2px 2px 5px var(--piggy-shadow-text); /* Subtle text shadow */
+  text-shadow: 2px 2px 5px var(--piggy-shadow-text);
 }
 
 .difficulty-overkill {
@@ -208,18 +647,91 @@ h6 {
 .description-container {
   color: var(--piggy-text-description);
   bottom: 0;
-  border-top: 2px solid var(--piggy-text-description);
+  border-top: 1px solid var(--piggy-text-description);
   padding-top: 10px;
 }
 
 /* TODO: Fix this to not overlap text */
 .level-count-container {
   position: absolute;
+  top: 5px;
+  right: 0;
   color: var(--piggy-light);
-  background-color: var(--piggy-main);
-  width: max-content;
+  background-color: var(--piggy-dark);
   padding: 5px 10px 5px 10px;
+  margin-right: 5px;
   border-radius: 2rem;
+  height: max-content;
+  white-space: nowrap;
+}
+
+/* Special assignment card alignment trickery */
+.card-align-assignment {
+  display: grid !important;
+  grid-template-columns: 0fr 5fr 4fr;
+  grid-template-areas:
+    "badge header thumbnail"
+    "badge description thumbnail"
+    "badge description thumbnail";
+  gap: 0.5rem;
+}
+
+.card-align-assignment .card-header {
+  grid-area: header;
+}
+
+.card-align-assignment .thumbnail-container {
+  grid-area: thumbnail;
+}
+
+.card-align-assignment .description-container {
+  grid-area: description;
+}
+
+.card-align-assignment .tags-container {
+  grid-column: tags;
+}
+
+/* horizontal direction becomes vertical on small screen */
+@media (max-width: 640px) {
+  .card-align-assignment {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "thumbnail"
+      "tags"
+      "description";
+  }
+}
+
+/****************************\
+|*     ASSIGNMENT CARDS     *|
+\****************************/
+.card-assignment {
+  background: linear-gradient(
+    135deg,
+    var(--piggy-assignment-card-start) 0%,
+    var(--piggy-assignment-card-end) 100%
+  );
+  border: var(--piggy-card-border-width) solid
+    var(--piggy-assignment-card-border);
+  padding: 0.75rem;
+}
+
+.card-assignment:hover {
+  box-shadow: inset 0 0 20px var(--piggy-assignment-shadow-glow);
+}
+
+.card-assignment .description-container {
+  margin-top: 0 !important;
+}
+
+.card-assignment .card-header {
+  text-align: left !important;
+}
+
+.card-assignment .thumbnail-image {
+  height: 100%;
 }
 
 /***************************\
@@ -231,6 +743,7 @@ h6 {
     var(--piggy-navbar-start) 0%,
     var(--piggy-navbar-end) 100%
   );
+  vertical-align: middle;
 }
 
 .piggy-breadcrumb {
@@ -244,6 +757,81 @@ h6 {
   font-size: var(--piggy-font-size);
 }
 
+/**********************\
+|*     SEARCH BOX     *|
+\**********************/
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search-input-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 15px 8px 60px;
+  border: 1px solid var(--piggy-neutral);
+  border-radius: 25px;
+  background-color: var(--piggy-main);
+  color: var(--piggy-text-main);
+  font-size: 16px;
+  outline: none;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.search-input::placeholder {
+  color: var(--piggy-text-neutral);
+}
+
+.search-input:focus {
+  border-color: var(--piggy-button-hover);
+  box-shadow: 0 0 5px var(--piggy-shadow-glow);
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 1px;
+  bottom: 1px;
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
+  color: var(--piggy-text-neutral);
+}
+
+.search-icon-svg {
+  width: 20px;
+  height: 20px;
+}
+
+.search-icon::after {
+  content: "";
+  display: block;
+  width: 1px;
+  background-color: var(--piggy-neutral);
+  height: 100%;
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 800px) {
+  .search-input-wrapper {
+    width: 85%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .search-input-wrapper {
+    width: 95%;
+  }
+}
+
 /*************************\
 |*     SETTINGS MENU     *|
 \*************************/
@@ -255,35 +843,117 @@ h6 {
   height: 100%;
   background-color: var(--piggy-menu);
   color: var(--piggy-menu-text);
-  overflow-x: hidden; /* Hide horizontal overflow */
+  overflow-x: hidden;
   transition: width 0.5s;
   z-index: 10000;
   border-left: 1px solid var(--piggy-neutral);
 }
 
-/* Open State */
 #settings-menu.open {
-  width: 300px; /* Adjust the width as needed */
+  width: 300px;
 }
 
-/* Close Button */
 #settings-menu .close-button {
   position: absolute;
   top: 20px;
   left: 20px;
   font-size: 36px;
   text-decoration: none;
+  color: var(--piggy-menu-text);
 }
 
-/* Settings Content */
 .settings-content {
   width: 300px;
-  padding: 60px 20px 20px 20px; /* Top padding to push content below the close button */
+  padding: 60px 20px 20px 20px;
 }
 
-#theme-select option {
+.custom-select {
+  position: relative;
+  width: 100%;
   background-color: var(--piggy-light);
   color: var(--piggy-dark);
+  border: 1px solid var(--piggy-neutral);
+  border-radius: 0.2rem;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+.custom-select .selected {
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: var(--piggy-main);
+  color: var(--piggy-text-main);
+  box-sizing: border-box;
+  border-radius: 0.2rem;
+}
+
+.custom-select .options-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: var(--piggy-main);
+  color: var(--piggy-text-main);
+  border: 1px solid var(--piggy-card-border);
+  border-radius: 0.2rem;
+  /* Start closed */
+  max-height: 0;
+  overflow-y: auto;
+  opacity: 0;
+  transition:
+    max-height 0.3s ease-out,
+    opacity 0.3s ease-out;
+  z-index: 10001;
+  box-sizing: border-box;
+  padding: 2px;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--piggy-dark);
+}
+
+.custom-select.open .options-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-select.open .options-container::-webkit-scrollbar-track {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.custom-select.open .options-container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.custom-select.open .options-container {
+  /* max-height is set dynamically via JS */
+  opacity: 1;
+  overflow-y: auto;
+  z-index: 10002;
+  background-color: var(--piggy-menu) !important;
+  border-radius: 0.2rem;
+  border: 1px solid var(--piggy-menu-text);
+}
+
+.custom-select .option {
+  padding: 0.5rem;
+  cursor: pointer;
+  margin: 5px 2px;
+  border-radius: 0.3rem;
+  box-sizing: border-box;
+  background-color: var(--piggy-button);
+  color: var(--piggy-text-button);
+}
+
+.custom-select .option:hover {
+  filter: brightness(1.15) saturate(0.75);
+  background-color: var(--piggy-button-hover);
+  border-color: white;
+}
+
+.custom-select:not(.open) .options-container {
+  pointer-events: none;
 }
 
 /************************\
@@ -312,8 +982,11 @@ h6 {
 }
 
 #level-container .snout-button {
+  flex: 1;
   position: relative;
-  min-width: 85px;
+  min-width: 110px;
+  max-width: 110px;
+  white-space: nowrap;
   text-align: center;
 }
 
@@ -330,7 +1003,7 @@ h6 {
   position: absolute;
   z-index: 1;
 
-  /* Position the tooltip below the parent element */
+  /* tooltip goes below the button */
   top: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%);
@@ -352,7 +1025,6 @@ h6 {
   border-color: transparent transparent var(--piggy-tooltip) transparent;
 }
 
-/* Adjust tooltip position when near the left edge */
 @media (max-width: 600px) {
   #level-container .nav-tooltip {
     left: 10px;
@@ -360,7 +1032,6 @@ h6 {
   }
 }
 
-/* Adjust tooltip position when near the right edge */
 @media (min-width: calc(100% - 600px)) {
   #level-container .nav-tooltip {
     right: 10px;
@@ -375,7 +1046,7 @@ h6 {
   opacity: 1;
 }
 
-/* Not sure if these are */
+/* Not sure if these are needed */
 @media (max-width: 600px) {
   #level-container {
     flex-wrap: wrap;
@@ -392,9 +1063,12 @@ h6 {
 \****************************/
 #language-container {
   position: relative;
-  margin: 10px 2px 10px 10px;
-  z-index: 1000; /* Ensure it stays above other content */
-  min-width: 175px;
+  margin: 10px;
+  z-index: 1000;
+}
+
+#language-container .snout-button {
+  min-width: 150px;
 }
 
 #language-container .language-dropdown {
@@ -408,11 +1082,14 @@ h6 {
   top: 100%; /* Position the dropdown below the button */
   left: 0;
   z-index: 1000;
+
+  max-height: calc(100svh - 40svh);
+  overflow-y: auto;
 }
 
 #language-container .language-dropdown a {
   color: var(--piggy-menu-text);
-  padding: 8px 16px;
+  padding: 5px 10px;
   text-decoration: none;
   border-radius: 0px;
   display: block;
@@ -497,26 +1174,33 @@ details p:nth-child(2) {
   margin-bottom: 0.25rem !important;
 }
 
-.md-content h1 {
+.md-content h1,
+.md-content h1 code {
   font-size: 2rem !important;
 }
 
-.md-content h2 {
+.md-content h2,
+.md-content h2 code {
   font-size: 1.5rem !important;
 }
-.md-content h3 {
+
+.md-content h3,
+.md-content h3 code {
   font-size: 1.25rem !important;
 }
 
-.md-content h4 {
+.md-content h4,
+.md-content h4 code {
   font-size: 1.15rem !important;
 }
 
-.md-content h5 {
+.md-content h5,
+.md-content h5 code {
   font-size: 1.05rem !important;
 }
 
-.md-content h6 {
+.md-content h6,
+.md-content h6 code {
   font-size: 1rem !important;
 }
 
@@ -532,9 +1216,23 @@ details p:nth-child(2) {
 
 .md-content code,
 .md-content summary,
-.md-content table {
+.md-content table,
+.md-content .linenos {
   font-size: 0.8rem !important;
   line-height: 1rem;
+}
+
+.md-content code:not(.md-code__content) {
+  padding: 0 0.2rem 0 0.2rem !important;
+}
+
+.md-content .linenodiv {
+  margin-top: 0.1rem;
+  margin-bottom: -0.1rem;
+}
+
+.md-content .linenos .normal {
+  color: var(--piggy-text-main) !important;
 }
 
 .md-content details,
@@ -547,9 +1245,18 @@ details p:nth-child(2) {
   border-radius: 5px !important;
 }
 
+.md-content table th {
+  min-width: 2rem !important;
+}
+
 .md-content code {
   border-radius: 5px !important;
   line-height: 1.1rem;
+}
+
+.md-content .highlighttable {
+  border-radius: 5px;
+  border: 1px solid var(--piggy-dark);
 }
 
 .md-content summary {
@@ -561,4 +1268,111 @@ details p:nth-child(2) {
 .md-content blockquote {
   color: var(--piggy-neutral) !important;
   border-left: 0.2rem solid var(--piggy-neutral) !important;
+}
+
+.md-content .tabbed-labels {
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: var(--piggy-dark);
+  margin: 0 !important;
+  padding: 0rem 0.5rem 0rem 0.5rem !important;
+  flex-wrap: wrap;
+}
+
+.md-content .tabbed-labels::before {
+  border-width: 0px 0px 3px 0px;
+  border-style: solid;
+  border-color: var(--piggy-light);
+  padding-top: 100%;
+  z-index: -1;
+  background-color: #0000003a !important;
+}
+
+.md-content .tabbed-labels a {
+  font-size: 0.9rem !important;
+  color: var(--piggy-text-main) !important;
+}
+
+.md-content .MathJax {
+  text-align: left !important;
+  font-size: 1rem !important;
+}
+
+.md-content .tabbed-set {
+  border: 1px solid var(--piggy-neutral);
+  border-radius: 5px !important;
+  background: #0000000a;
+}
+
+.md-content .tabbed-content {
+  padding: 0rem 1rem 0rem 1rem;
+}
+
+details ol li,
+.admonition ol li {
+  font-size: 1rem !important;
+  list-style: decimal !important;
+}
+
+details ul li,
+.admonition ul li {
+  font-size: 1rem !important;
+  list-style: disc !important;
+}
+
+.md-content .arithmatex,
+.md-content .MJX-TEX {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif !important;
+  font-size: 1rem;
+}
+
+.md-code__content span {
+  max-width: 100% !important;
+  overflow-anchor: auto !important;
+  overflow: hidden !important;
+  text-wrap: wrap !important;
+  word-wrap: break-word !important;
+}
+
+/*******************\
+|* ERROR CONTAINER *|
+\*******************/
+
+/* small screen */
+@media (max-width: 640px) {
+  .error-container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
+/* medium screen */
+@media (min-width: 640px) {
+  .error-container {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .error-img {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+}
+
+#piggy-logo {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  font-size: 1.85rem;
+  margin: -0.3rem 0.3rem;
+  color: var(--piggy-logo);
+  background: var(--piggy-logo-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.65px;
+  filter: drop-shadow(1px 0 0 var(--piggy-logo-border))
+    drop-shadow(-1px 0 0 var(--piggy-logo-border))
+    drop-shadow(0 1px 0 var(--piggy-logo-border))
+    drop-shadow(0 -1px 0 var(--piggy-logo-border));
+  text-shadow: none;
 }

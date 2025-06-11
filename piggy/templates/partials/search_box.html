@@ -1,1 +1,53 @@
-<div>search</div>
+<!-- partials/search_box.html -->
+<div class="search-container">
+  <div class="search-input-wrapper">
+    <span class="search-icon" aria-hidden="true">
+      <!-- SVG for magnifying glass icon -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="search-icon-svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path
+          d="M10 2a8 8 0 015.292 13.708l4.085 4.085a1 1 0 01-1.414 1.414l-4.085-4.085A8 8 0 1110 2zm0 2a6 6 0 100 12 6 6 0 000-12z"
+        />
+      </svg>
+    </span>
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Search..."
+      class="search-input"
+    />
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("search-input");
+    const cards = document.querySelectorAll(".card");
+
+    searchInput.addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+
+      cards.forEach((card) => {
+        const title = card.getAttribute("data-title");
+        const description = card.getAttribute("data-description");
+        const tags = card.getAttribute("data-tags");
+        const overlayText = card.getAttribute("data-overlay-text");
+
+        if (
+          title.includes(query) ||
+          description.includes(query) ||
+          tags.includes(query) ||
+          overlayText.includes(query)
+        ) {
+          card.style.display = "";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
+  });
+</script>
