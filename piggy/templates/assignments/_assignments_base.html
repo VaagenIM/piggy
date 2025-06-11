@@ -1,0 +1,37 @@
+{# Used by 0, 1, 2 and 4 #}
+{% extends "layout.html" %}
+
+{# fallback to basic card if there is no card type specified #}
+{% if not card_type %}
+  {% set card_type='objects/card-basic.html' %}
+{% endif %}
+
+{% block base %}
+  {% block assignment_header %}
+    <h1 class="page-title font-extrabold text-center my-6">
+      {% block assignment_title %}{{ meta.name }}{% endblock %}
+    </h1>
+  {% endblock %}
+
+  {% block assignment_base %}
+    <div class="card-grid-wrapper">
+      <div class="card-grid-container">
+        {% if segment.items()|length > 0 %}
+          {% for item, data in segment.items() %}
+            {% include card_type %}
+          {% endfor %}
+        {% else %}
+          Hmm... There doesn't seem to be anything here!
+        {% endif %}
+      </div>
+    </div>
+  {% endblock %}
+
+  {% block assignment_script %}
+    {# Use colors on tags in cards #}
+    <script
+      src="{{ url_for('static', filename='js/card_script.js') }}"
+      defer
+    ></script>
+  {% endblock %}
+{% endblock %}

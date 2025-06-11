@@ -4,5 +4,7 @@
   {% set ns.title = meta.name + " · Piggy" %}
 {% elif content and content.heading %}
   {% set ns.title = content.heading + " · Piggy" %}
+{% elif error and error.code and error.name %}
+  {% set ns.title = error.code ~ " " ~ error.name ~ " · Piggy" %}
 {% endif %}
 <title>{{ ns.title }}</title>

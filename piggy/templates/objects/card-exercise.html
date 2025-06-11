@@ -3,19 +3,15 @@
 {{
   card(
     abspath = abspath,
-    item = item,
+    item = item ~ "/" ~ (data.data.keys()|list)[0],
     title = data.meta.name,
     level_count = data.data|length,
     description = data.meta.description,
     thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." + img_fmt,
     thumbnail_alt = "Header image for " ~ item,
-    extra_classes = 'extra-card' if data.meta.type == 'extra' else '',
+    extra_classes = 'card-exercise',
     difficulty = data.meta.difficulty,
-    tags = data.meta.tags
+    tags = data.meta.tags,
+    card_type = 'exercise'
   )
 }}
-
-<script
-  src="{{ url_for('static', filename='js/card_script.js') }}"
-  defer
-></script>

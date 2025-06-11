@@ -1,50 +1,32 @@
 <nav class="piggy-navbar flex items-center justify-between px-3 py-2">
   {# Breadcrumbs elements #}
+  <a id="piggy-logo" href="/">Piggy</a>
   <ol
-    class="flex flex-wrap items-center space-x-1 md:space-x-2 flex-1 overflow-x-auto overflow-y-hidden"
+  class="flex flex-wrap items-center space-x-1 md:space-x-2 flex-1 overflow-x-auto overflow-y-hidden"
   >
-    {# Home element #}
-    <li class="inline-flex items-center">
-      <a
-        href="/"
-        class="piggy-breadcrumb inline-flex items-center text-sm font-medium"
-      >
-        {# Home Icon #}
-        <svg
-          class="w-3 h-3 me-2.5"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path
-            d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
-          />
-        </svg>
-        Hjem
-      </a>
-    </li>
-
-    {# if we are not at home #}
-    {% if request.path.strip('/') %}
-      {# Go through the path and figure out where we are #}
-      {% set path_segments = request.path.strip('/').split('/') %}
-      {% if "lang" == path_segments[-2] %}
-        {% set path_segments = path_segments[:-2] %}
+  {# Home element #}
+  <li class="inline-flex items-center">
+</li>
+  {# if we are not at home #}
+  {% if request.path.strip('/') %}
+  {# Go through the path and figure out where we are #}
+  {% set path_segments = request.path.strip('/').split('/') %}
+  {% if "lang" == path_segments[-2] %}
+    {% set path_segments = path_segments[:-2] %}
       {% endif %}
 
       {% for p in path_segments %}
-        {% set url = "/" + request.base_url.split(p)[0].split(request.host_url)[1] + p %}
-        {% if p == ASSIGNMENT_URL_PREFIX %}
-          {% set p = "Oppgaver" %}
-        {% elif loop.last %}
-          {% set p = meta.name or meta.title %}
+      {% set url = "/" + request.base_url.split(p)[0].split(request.host_url)[1] + p %}
+      {% if p == ASSIGNMENT_URL_PREFIX %}
+      {% set p = "Oppgaver" %}
+      {% elif loop.last %}
+        {% if meta %}{% set p = meta.name or meta.title %}{% endif %}
         {% else %}
-          {% set p = meta.get(get_template_name_from_index(loop.index)).name %}
+          {% if meta %}{% set p = meta.get(get_template_name_from_index(loop.index)).name %}{% endif %}
         {% endif %}
-
         <li class="flex items-center">
           {# Arrow Icon #}
+          {% if not loop.first %}
           <svg
             class="piggy-breadcrumb no-hover rtl:rotate-180 w-3 h-3 mx-1"
             aria-hidden="true"
@@ -60,6 +42,7 @@
               d="m1 9 4-4-4-4"
             />
           </svg>
+          {% endif %}
           {# Check if we need to create a link #}
           {% if not loop.last %}
             <a
@@ -70,7 +53,7 @@
             </a>
           {% else %}
             <span
-              class="piggy-breadcrumb no-hover ms-1 text-sm font-medium md:text-base break-words"
+              class="piggy-breadcrumb no-hover current ms-1 text-sm font-medium md:text-base break-words"
             >
               {{ p }}
             </span>
@@ -79,6 +62,8 @@
       {% endfor %}
     {% endif %}
   </ol>
+
   {# Settings button #}
   {% include 'partials/parts/settings.html' %}
+
 </nav>

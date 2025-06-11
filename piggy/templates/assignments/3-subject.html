@@ -1,33 +1,41 @@
-{% extends "layout.html" %}
-{% set ns = namespace(extra_content = false) %}
+{% extends "assignments/_assignments_base.html" %}
+{% block assignment_title %}{{ meta.name }}{% endblock %}
 
-{% block base %}
-  <h1 class="text-5xl font-extrabold text-center my-6">{{ meta.name }}</h1>
+{% block assignment_base %}
+  {# moveable search box #}
+  {% include 'partials/search_box.html' %}
 
-  <div class="container mx-auto p-4">
-    <div
-      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
-    >
-      {% for item, data in segment.items() %}
-        {% if data.meta.type != "extra" %}
-          {% include 'objects/card-topic.html' %}
-        {% else %}
-          {% set ns.extra_content = true %}
-        {% endif %}
-      {% endfor %}
-    </div>
-    {% if ns.extra_content %}
-      <br />
-      <h3 class="extra-title text-2xl text-extrabold">Ekstra:</h3>
-      <div
-        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
-      >
-        {% for item, data in segment.items() %}
-          {% if data.meta.type == "extra" %}
-            {% include 'objects/card-topic.html' %}
-          {% endif %}
+  {# split out assignments vs exercises #}
+  {% set assignments = segment.items() 
+       | selectattr('1.meta.type', 'equalto', 'assignment') 
+       | list %}
+  {% set exercises = segment.items() 
+       | selectattr('1.meta.type', 'equalto', 'exercise') 
+       | list %}
+
+  {% if assignments or exercises %}
+    {# ASSIGNMENTS #}
+    <div class="card-grid-wrapper assignment-card-grid-wrapper">
+      <h2 class="assignment-title">Innleveringsoppaver:</h2>
+      <div class="card-grid-container card-type-assignment assignment-card-grid-container">
+        {% for item, data in assignments %}
+          {% include 'objects/card-assignment.html' %}
         {% endfor %}
       </div>
-    {% endif %}
-  </div>
+    </div>
+
+    {# EXERCISES #}
+    <div class="card-grid-wrapper">
+      <h2 class="assignment-title">Øvingsoppgaver:</h2>
+      <div class="card-grid-container card-type-exercise">
+        {% for item, data in exercises %}
+          {% include 'objects/card-exercise.html' %}
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <div class="card-grid-container">
+      Hmm... There doesn't seem to be anything here!
+    </div>
+  {% endif %}
 {% endblock %}
