@@ -8,56 +8,49 @@ preview_style: background-color: #f4e7d3; color: #3e2a14;
 
 [data-theme="desert"] {
   /* General colors */
-  --piggy-main: #f4e7d3; /* Sandy beige background */
-  --piggy-light: #5f4b32; /* Dark brown for text */
-  --piggy-neutral: #a67c52; /* Medium brown */
-  --piggy-dark: #3e2a14; /* Dark brown for contrast */
+  --piggy-main: #f4e7d3;
+  --piggy-light: #5f4b32;
+  --piggy-neutral: #a67c52;
+  --piggy-dark: #3e2a14;
 
   --piggy-text-main: var(--piggy-dark);
   --piggy-text-light: var(--piggy-light);
   --piggy-text-neutral: var(--piggy-neutral);
   --piggy-text-dark: var(--piggy-dark);
 
-  --piggy-shadow-text: rgba(0, 0, 0, 0); /* Subtle brown shadows */
+  --piggy-shadow-text: rgba(0, 0, 0, 0);
   --piggy-shadow-box: rgba(94, 75, 50, 0.3);
-  --piggy-shadow-glow: rgba(166, 124, 82, 0.3); /* Warm glow */
+  --piggy-shadow-glow: rgba(166, 124, 82, 0.3);
 
   /* Card colors */
-  --piggy-card-start: rgba(244, 231, 211, 0.8); /* Light sand gradient start */
-  --piggy-card-end: rgba(229, 204, 175, 0.8); /* Slightly darker gradient end */
-  --piggy-card-border: #a67c52; /* Medium brown border */
+  --piggy-card-start: rgba(244, 231, 211, 0.8);
+  --piggy-card-end: rgba(229, 204, 175, 0.8);
+  --piggy-card-border: #a67c52;
   --piggy-text-card: var(--piggy-text-dark);
 
-  --piggy-extra-card-start: rgba(230, 200, 160, 0.8); /* Extra card start */
-  --piggy-extra-card-end: rgba(210, 180, 140, 0.8); /* Extra card end */
-  --piggy-extra-card-border: var(--piggy-card-border);
-  --piggy-text-extra-card: var(--piggy-text-dark);
-
-  --piggy-resource-card-start: rgba(
-    220,
-    190,
-    150,
-    0.8
-  ); /* Resource card start */
-  --piggy-resource-card-end: rgba(200, 170, 130, 0.8); /* Resource card end */
-  --piggy-resource-card-border: var(--piggy-card-border);
-  --piggy-text-resource-card: var(--piggy-text-dark);
+  /* Assignment cards */
+  --piggy-assignment-card-start: rgba(210, 144,  93, 0.3);
+  --piggy-assignment-card-end: rgba(179, 121,  78, 0.3);
+  --piggy-assignment-card-border: #b37a4e;
+  --piggy-assignment-overlay: rgba(179, 121,  78, 0.85);
+  --piggy-assignment-accent: #b37a4e;
+  --piggy-assignment-shadow-glow: rgba(179, 121,  78, 0.5);
 
   --piggy-card-border-width: 1px;
 
   /* Navbar */
-  --piggy-navbar-start: #d2b48c; /* Tan */
-  --piggy-navbar-end: #c2a678; /* Gradient effect */
+  --piggy-navbar-start: #d2b48c;
+  --piggy-navbar-end: #c2a678;
   --piggy-text-navbar: var(--piggy-text-dark);
 
   /* Buttons */
-  --piggy-button: #a67c52; /* Medium brown */
-  --piggy-button-hover: #8c6239; /* Darker on hover */
-  --piggy-button-active: #5f4b32; /* Darkest when active */
+  --piggy-button: #a67c52;
+  --piggy-button-hover: #8c6239;
+  --piggy-button-active: #5f4b32;
   --piggy-text-button: #ffffff;
 
   /* Thumbnails */
-  --piggy-thumbnail-overlay: rgba(94, 75, 50, 0.5); /* Subtle overlay */
+  --piggy-thumbnail-overlay: rgba(94, 75, 50, 0.5);
   --piggy-text-thumbnail: var(--piggy-main);
 
   /* Text and links */
@@ -75,6 +68,9 @@ preview_style: background-color: #f4e7d3; color: #3e2a14;
 
   --piggy-text-hyperlink: #1a8ce3;
   --piggy-text-hyperlink-hover: #798b99;
+
+  --piggy-logo-gradient: linear-gradient(45deg, rgb(255, 123, 0), rgb(255, 153, 58), rgb(255, 196, 161));
+  --piggy-logo-border: rgba(0, 0, 0, 0.65);
 }
 
 [data-theme="desert"] .level-count-container {
@@ -99,8 +95,8 @@ preview_style: background-color: #f4e7d3; color: #3e2a14;
 }
 
 [data-theme="desert"] .md-content code:not(.md-code__content) {
-  background-color: #e8d4b0; /* Light sand color */
-  color: #5f4b32; /* Dark brown text */
+  background-color: #e8d4b0;
+  color: #5f4b32;
 }
 
 [data-theme="desert"] .md-content .md-code__content {
@@ -112,16 +108,16 @@ preview_style: background-color: #f4e7d3; color: #3e2a14;
 }
 
 [data-theme="desert"] .md-content th {
-  background-color: #d2b48c; /* Tan */
+  background-color: #d2b48c;
   color: var(--piggy-text-dark);
 }
 
 [data-theme="desert"] .md-content tr:nth-child(odd) td {
-  background-color: rgba(244, 231, 211, 0.8); /* Light sand */
+  background-color: rgba(244, 231, 211, 0.8);
 }
 
 [data-theme="desert"] .md-content tr:nth-child(even) td {
-  background-color: rgba(229, 204, 175, 0.8); /* Slightly darker sand */
+  background-color: rgba(229, 204, 175, 0.8);
 }
 
 [data-theme="desert"] .md-content details,

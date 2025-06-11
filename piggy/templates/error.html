@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block base %}
+<div class="error-container">
+    <div class=""></div>
+    <div class="error-msg">
+        <span class="error-status">{{ error.status_code }}</span> - {{ error.message }}!
+    </div>
+    <div class="error-img">
+        <img src="{{ url_for('static', filename='img/piggy-404.png') }}">
+    </div>
+</div>
+{% endblock %}

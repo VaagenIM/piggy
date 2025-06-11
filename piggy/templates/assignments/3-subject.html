@@ -1,32 +1,38 @@
 {% extends "assignments/_assignments_base.html" %}
 {% block assignment_title %}{{ meta.name }}{% endblock %}
-{%
-  set types = [''] + segment.items()
-  | selectattr("1.meta.type", "defined")
-  | map(attribute="1.meta.type")
-  | list
-%}
 
 {% block assignment_base %}
+  {# moveable search box #}
   {% include 'partials/search_box.html' %}
 
-  {% if segment.items()|length > 0 %}
-    {% for type in types %}
-      <div class="card-grid-wrapper">
-        {% if type != '' %}
-          <h3 class="extra-title text-2xl text-extrabold">
-            {{ type|capitalize }}:
-          </h3>
-        {% endif %}
-        <div
-          class="card-grid-container {% if type != '' %}card-type-{{ type }}{% endif %}"
-        >
-          {% for item, data in segment.items() if data.meta.type == type or (type == '' and data.meta.type is not defined) %}
-            {% include 'objects/card-topic.html' %}
-          {% endfor %}
-        </div>
+  {# split out assignments vs exercises #}
+  {% set assignments = segment.items() 
+       | selectattr('1.meta.type', 'equalto', 'assignment') 
+       | list %}
+  {% set exercises = segment.items() 
+       | selectattr('1.meta.type', 'equalto', 'exercise') 
+       | list %}
+
+  {% if assignments or exercises %}
+    {# ASSIGNMENTS #}
+    <div class="card-grid-wrapper assignment-card-grid-wrapper">
+      <h2 class="assignment-title">Innleveringsoppaver:</h2>
+      <div class="card-grid-container card-type-assignment assignment-card-grid-container">
+        {% for item, data in assignments %}
+          {% include 'objects/card-assignment.html' %}
+        {% endfor %}
       </div>
-    {% endfor %}
+    </div>
+
+    {# EXERCISES #}
+    <div class="card-grid-wrapper">
+      <h2 class="assignment-title">Øvingsoppgaver:</h2>
+      <div class="card-grid-container card-type-exercise">
+        {% for item, data in exercises %}
+          {% include 'objects/card-exercise.html' %}
+        {% endfor %}
+      </div>
+    </div>
   {% else %}
     <div class="card-grid-container">
       Hmm... There doesn't seem to be anything here!

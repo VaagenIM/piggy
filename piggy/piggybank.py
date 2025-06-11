@@ -102,6 +102,7 @@ def get_frontmatter_from_file(path: Path) -> dict:
                 if line.strip() == "---":
                     break
                 data += line
+        f.seek(0)
         for line in f:
             if line.strip().startswith("# "):
                 fallback_title = line.lstrip("#").strip()

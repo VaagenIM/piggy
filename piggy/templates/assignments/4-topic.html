@@ -1,3 +1,18 @@
 {% extends "assignments/_assignments_base.html" %}
-{% set card_type='objects/card-assignment.html' %}
-{% block assignment_title %}{{ meta.name }}{% endblock %}
+{% set card_type='objects/card-level.html' %}
+
+{% from 'macros/include.html' import include_svg %}
+
+{% block assignment_header %}
+  {% if meta.name %}
+    <h1 class="page-title font-extrabold text-center my-6">
+      {{ meta.name }}
+    </h1>
+  {% endif %}
+  {% if meta.note %}
+    <div class="assignment-meta-note">
+      {{ include_svg(svg='img/icons/info.svg', class='assignment-meta-note-icon') }}
+      {{ meta.note }}
+    </div>
+  {% endif %}
+{% endblock %}

@@ -6,67 +6,62 @@ type: dark
 preview_style: background-color: #000000; color: #ffffff;
 */
 [data-theme="high-contrast"] {
-  --piggy-main: #000000; /* Pure black background */
-  --piggy-light: #ffffff; /* Pure white for high contrast text */
-  --piggy-neutral: #7f7f7f; /* Gray */
-  --piggy-dark: #ffffff; /* White text for maximum contrast */
+  --piggy-main: #000000;
+  --piggy-light: #ffffff;
+  --piggy-neutral: #7f7f7f;
+  --piggy-dark: #ffffff;
 
-  --piggy-text-main: var(--piggy-light); /* White text for readability */
-  --piggy-shadow-text: rgba(255, 255, 255, 0); /* No text shadow */
+  --piggy-text-main: var(--piggy-light);
+  --piggy-shadow-text: rgba(255, 255, 255, 0);
 
-  /* High-contrast card colors with colorful borders */
-  --piggy-card-start: #111; /* Dark gray card background for subtle contrast */
+  --piggy-card-start: #111;
   --piggy-card-end: #111;
-  --piggy-card-border: #ff00ff; /* Magenta border */
-  --piggy-text-card: #ffffff; /* White text in cards for visibility */
+  --piggy-card-border: #ff00ff;
+  --piggy-text-card: #ffffff;
 
-  --piggy-extra-card-start: #111111; /* Slightly lighter than black for extra cards */
-  --piggy-extra-card-end: #111111;
-  --piggy-extra-card-border: #00ffff; /* Cyan border */
-  --piggy-text-extra-card: #ffffff; /* White text for high contrast */
+  /* Assignment cards */
+  --piggy-assignment-card-border: #ff7b00;
 
-  --piggy-resource-card-start: #444444; /* Medium dark gray for resource cards */
-  --piggy-resource-card-end: #444444;
-  --piggy-resource-card-border: #ffff00; /* Yellow border for resource cards */
-  --piggy-text-resource-card: #ffffff; /* White text for clarity */
-
-  --piggy-card-border-width: 4px;
+  --piggy-card-border-width: 1px;
 
   /* Navbar and buttons */
-  --piggy-navbar-start: #000000; /* Black navbar */
-  --piggy-navbar-end: #000000; /* Slight gradient for depth */
-  --piggy-text-navbar: #ffffff; /* White navbar text */
+  --piggy-navbar-start: #000000;
+  --piggy-navbar-end: #000000;
+  --piggy-text-navbar: #ffffff;
 
-  --piggy-button: #000; /* Bright red-orange button */
-  --piggy-button-hover: #999; /* Brighter hover */
-  --piggy-button-active: #00ffff80; /* Brighter hover */
-  --piggy-text-button: #fff; /* White text */
+  --piggy-button: #000;
+  --piggy-button-hover: #999;
+  --piggy-button-active: #00ffff80;
+  --piggy-text-button: #fff;
 
-  --piggy-thumbnail-overlay: rgba(0, 0, 0, 1); /* Light overlay */
-  --piggy-text-thumbnail: var(--piggy-light); /* White text for thumbnails */
+  --piggy-thumbnail-overlay: rgba(0, 0, 0, 1);
+  --piggy-text-thumbnail: var(--piggy-light);
 
-  --piggy-text-tag: #ffffff; /* White text for tags */
-  --piggy-text-description: var(
-    --piggy-light
-  ); /* White text for descriptions */
-  --piggy-text-title: var(--piggy-light); /* White text for titles */
-  --piggy-text-breadcrumb: var(--piggy-light); /* White text for breadcrumbs */
-  --piggy-text-breadcrumb-hover: #ffff00; /* Yellow hover for breadcrumb links */
+  --piggy-text-tag: #ffffff;
+  --piggy-text-description: var(--piggy-light);
+  --piggy-text-title: var(--piggy-light);
+  --piggy-text-breadcrumb: var(--piggy-light);
+  --piggy-text-breadcrumb-hover: #ffff00;
 
   --piggy-text-hyperlink: #00ffff;
   --piggy-text-hyperlink-hover: #99ffff;
 
   --piggy-tooltip: #000000;
   --piggy-tooltip-text: #ffffff;
+
+  /* logo */
+  --piggy-logo: #ff44ff;
+  --piggy-logo-gradient: #ff44ff;
+  --piggy-logo-border: rgba(0, 0, 0, 0);
 }
 
 [data-theme="high-contrast"] .card-container {
-  border-radius: 0px;
+  border-radius: 5px;
   margin: 5px;
 }
 
 [data-theme="high-contrast"] .thumbnail-image {
-  border-radius: 0px;
+  border-radius: 5px;
   border-width: var(--piggy-card-border-width);
   border-color: #ff0000;
   background-color: #000;
@@ -82,11 +77,11 @@ preview_style: background-color: #000000; color: #ffffff;
 }
 
 [data-theme="high-contrast"] .tag-box {
-  border-radius: 0px;
-  border-color: white !important;
+  border-radius: 5px;
   background-color: transparent !important;
   border-width: var(--piggy-card-border-width);
   margin-top: 5px;
+  filter: saturate(10) brightness(100);
 }
 
 [data-theme="high-contrast"] .piggy-navbar {
@@ -103,13 +98,13 @@ preview_style: background-color: #000000; color: #ffffff;
 }
 
 [data-theme="high-contrast"] .level-button {
-  border-radius: 0px !important;
+  border-radius: 5px !important;
   border-width: 0px;
 }
 
 [data-theme="high-contrast"] .level-count-container {
-  border-radius: 0px;
-  border-width: 4px;
+  border-radius: 5px;
+  border-width: var(--piggy-card-border-width);
   border-color: #ffff00;
   margin-bottom: 5px;
   color: #fff;
@@ -137,12 +132,11 @@ preview_style: background-color: #000000; color: #ffffff;
 
 /* Tooltip Text */
 [data-theme="high-contrast"] #level-container .nav-tooltip {
-  border-radius: 0px;
+  border-radius: 5px;
   border-color: white;
   border-width: 1px;
 }
 
-/* Tooltip Text */
 [data-theme="high-contrast"] #level-container .nav-tooltip::after {
   border-width: 0;
 }
@@ -231,8 +225,8 @@ preview_style: background-color: #000000; color: #ffffff;
 }
 
 [data-theme="high-contrast"] .search-input {
-  border: 2px solid white;
-  border-radius: 0;
+  border: 1px solid white;
+  border-radius: 5px;
 }
 
 /* POTENTIAL COLORS FOR CODE?

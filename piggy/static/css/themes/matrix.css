@@ -8,49 +8,49 @@ preview_style: background-color: #000000; color: #00ff00;
 
 [data-theme="matrix"] {
   /* Piggy colors */
-  --piggy-main: #000000; /* Black background */
-  --piggy-light: #00ff00; /* Bright green text */
-  --piggy-neutral: #008800; /* Medium green */
-  --piggy-dark: #004400; /* Dark green */
+  --piggy-main: #000000;
+  --piggy-light: #00ff00;
+  --piggy-neutral: #008800;
+  --piggy-dark: #004400;
 
   --piggy-text-main: var(--piggy-light);
   --piggy-text-light: var(--piggy-light);
   --piggy-text-neutral: var(--piggy-neutral);
   --piggy-text-dark: var(--piggy-dark);
 
-  --piggy-shadow-text: #003300; /* Dark green shadow */
+  --piggy-shadow-text: #003300;
   --piggy-shadow-box: #002200;
-  --piggy-shadow-glow: rgba(0, 255, 0, 0.2); /* Green glow */
+  --piggy-shadow-glow: rgba(0, 255, 0, 0.2);
 
   /* Piggy card colors */
-  --piggy-card-start: rgba(0, 20, 0, 0.7); /* Darker gradient start */
-  --piggy-card-end: rgba(0, 40, 0, 0.7); /* Darker gradient end */
-  --piggy-card-border: #00bb00; /* Bright green border */
+  --piggy-card-start: rgba(0, 20, 0, 0.7);
+  --piggy-card-end: rgba(0, 40, 0, 0.7);
+  --piggy-card-border: #00bb00;
   --piggy-text-card: var(--piggy-text-light);
 
-  --piggy-extra-card-start: rgba(0, 30, 0, 0.7); /* Darker gradient start */
-  --piggy-extra-card-end: rgba(0, 60, 0, 0.7); /* Darker gradient end */
-  --piggy-extra-card-border: #00bb00; /* Brightest green border */
-  --piggy-text-extra-card: #00ff00;
+  /* Assignment cards */
+  --piggy-assignment-card-start: rgba(0, 255, 191, 0.3);
+  --piggy-assignment-card-end: rgba(0, 255, 191, 0.1);
+  --piggy-assignment-card-border: rgb(0, 255, 191);
+  --piggy-assignment-overlay: rgba(0, 255, 191, 0.8);
+  --piggy-assignment-accent: #00ffff;
+  --piggy-assignment-shadow-glow: rgba(47, 58, 58, 0.5);
 
-  --piggy-resource-card-start: rgba(0, 20, 0, 0.7); /* Darker gradient start */
-  --piggy-resource-card-end: rgba(0, 50, 0, 0.7); /* Darker gradient end */
-  --piggy-resource-card-border: #00bb00; /* Brightest green border */
-  --piggy-text-resource-card: #00ff00;
+  --piggy-assignment-text: rgba(0, 255, 191);
 
   --piggy-card-border-width: 1px;
 
   /* Piggy elements */
-  --piggy-navbar-start: #001900; /* Navbar start */
-  --piggy-navbar-end: #001100; /* Navbar end */
+  --piggy-navbar-start: #001900;
+  --piggy-navbar-end: #001100;
   --piggy-text-navbar: var(--piggy-light);
 
-  --piggy-button: #004400; /* Dark green button */
-  --piggy-button-hover: #008800; /* Brighter on hover */
-  --piggy-button-active: #002200; /* Darker when active */
+  --piggy-button: #004400;
+  --piggy-button-hover: #008800;
+  --piggy-button-active: #002200;
   --piggy-text-button: #00ff00;
 
-  --piggy-thumbnail-overlay: #00330077; /* Lighter overlay */
+  --piggy-thumbnail-overlay: #00330077;
   --piggy-text-thumbnail: var(--piggy-light);
 
   --piggy-text-tag: #00ff00;
@@ -67,11 +67,38 @@ preview_style: background-color: #000000; color: #00ff00;
 
   --piggy-text-hyperlink: #00ffff;
   --piggy-text-hyperlink-hover: #99ffff;
+
+  --piggy-logo: rgb(154, 255, 159);
+  --piggy-logo-gradient: linear-gradient(45deg, rgb(137, 255, 216), rgb(0, 255, 85), rgb(30, 255, 0));
+  --piggy-logo-border: rgba(0, 0, 0, 0.65);
+}
+
+[data-theme="matrix"] .card-container {
+  border-radius: 0.25rem;
+}
+
+[data-theme="matrix"] .thumbnail-image {
+  border-radius: 0.25rem !important;
+  box-shadow: var(--piggy-assignment-shadow-glow) !important;
+}
+
+[data-theme="matrix"] 
+  .card-assignment .description-container,
+  .card-assignment .card-title {
+  color: var(--piggy-assignment-text) !important;
+}
+
+[data-theme="matrix"] .card-assignment .description-container {
+  border-color: var(--piggy-assignment-text) !important;
 }
 
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
+
+[data-theme="matrix"] .md-content, .md-code__content {
+  border-radius: 0.25rem !important;
+}
 
 [data-theme="matrix"] .md-content .admonition-title {
   font-size: 0.8rem !important;

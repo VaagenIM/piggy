@@ -6,6 +6,80 @@
   font-family: "Quicksand", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+
+  /* piggy colors */
+  --piggy-main: rgb(34, 41, 47);
+  --piggy-light: #f0f4f8;
+  --piggy-neutral: #60656b;
+  --piggy-dark: rgb(51, 61, 71);
+
+  --piggy-text-main: var(--piggy-light);
+  --piggy-text-light: var(--piggy-light);
+  --piggy-text-neutral: var(--piggy-neutral);
+  --piggy-text-dark: var(--piggy-dark);
+
+  --piggy-shadow-text: #00000029;
+  --piggy-shadow-box: #00000022;
+  --piggy-shadow-glow: rgba(255, 255, 255, 20%);
+
+  /* piggy card colors */
+  --piggy-card-start: rgba(130, 174, 197, 0.3);
+  --piggy-card-end: rgba(48, 73, 90, 0.3);
+  --piggy-card-border: var(--piggy-card-end);
+  --piggy-text-card: var(--piggy-text-light);
+
+  /* Assignment cards */
+  --piggy-assignment-card-start: rgba(255, 152, 0, 0.3);
+  --piggy-assignment-card-end: rgba(245, 124, 0, 0.15);
+  --piggy-assignment-card-border: #f57c00;
+  --piggy-assignment-overlay: rgba(245, 124, 0, 0.85);
+  --piggy-assignment-accent: #f57c00;
+  --piggy-assignment-shadow-glow: rgba(245, 124, 0, 0.5);
+
+  --piggy-card-border-width: 1px;
+
+  /* piggy elements */
+  --piggy-navbar-start: rgb(51, 61, 71);
+  --piggy-navbar-end: rgb(51, 61, 71);
+  --piggy-text-navbar: var(--piggy-light);
+
+  /* buttons */
+  --piggy-button: #4a6783;
+  --piggy-button-hover: #647a95;
+  --piggy-button-active: #2a5d9b;
+  --piggy-text-button: #ffffff;
+
+  /* thumbnails */
+  --piggy-thumbnail-overlay: #00000077;
+  --piggy-text-thumbnail: var(--piggy-light);
+
+  /* text */
+  --piggy-text-tag: #ffffff;
+  --piggy-text-description: var(--piggy-light);
+  --piggy-text-title: var(--piggy-light);
+  --piggy-text-breadcrumb: var(--piggy-light);
+  --piggy-text-breadcrumb-hover: #a6aaad;
+
+  /* menus */
+  --piggy-menu: var(--piggy-dark);
+  --piggy-menu-text: var(--piggy-light);
+
+  /* tooltips */
+  --piggy-tooltip: #000000;
+  --piggy-tooltip-text: #ffffff;
+
+  /* links */
+  --piggy-text-hyperlink: #407eb1;
+  --piggy-text-hyperlink-hover: #407eb1;
+
+  /* info boxes */
+  --piggy-info-box-background: #00859c49;
+  --piggy-info-box-border: #00859c;
+
+  /* logo */
+  --piggy-logo: #ff9abc;
+  --piggy-logo-gradient: linear-gradient(45deg, #ffc1d8, #ff5a8f, #c03db9);
+  --piggy-logo-border: rgba(66, 28, 53, 0.65);
 }
 
 /************************\
@@ -287,6 +361,76 @@ img[src*="#center"] {
   }
 }
 
+/************************\
+|* ASSIGNMENT CARD GRID *|
+\************************/
+.assignment-card-grid-wrapper {
+  max-width: 100%;
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* small screen */
+@media (min-width: 640px) {
+  .assignment-card-grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* medium screen */
+@media (min-width: 768px) {
+  .assignment-card-grid-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* large screen */
+@media (min-width: 1024px) {
+  .assignment-card-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* very large screen */
+@media (min-width: 2240px) {
+  .assignment-card-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* extremely large screen */
+@media (min-width: 3200px) {
+  .assignment-card-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/*************************\
+|* EXTRA ASSIGNMENT BITS *|
+\*************************/
+.assignment-meta-note {
+  position: relative;
+  box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
+  border-color: var(--piggy-card-border);
+  border-width: var(--piggy-card-border-width);
+  border-radius: 1rem;
+  background: var(--piggy-info-box-background);
+  border: 1px solid var(--piggy-info-box-border);
+  padding: 0.75rem;
+  margin: 0rem auto 0.5rem auto;
+  width: max-content;
+  font-size: 1.1rem;
+}
+
+.assignment-meta-note-icon {
+  fill: var(--piggy-text-main);
+  width: 1.1rem;
+  height: 1.1rem;
+  display: inline;
+  margin: 0.1rem;
+}
+
 /****************\
 |* QUICK ACCESS *|
 \****************/
@@ -300,7 +444,6 @@ img[src*="#center"] {
   margin: 2rem auto;
 }
 
-/* Main heading */
 .quick-access-heading {
   color: var(--piggy-text-main);
   text-align: center;
@@ -309,14 +452,12 @@ img[src*="#center"] {
   font-size: 2rem;
 }
 
-/* Flex container for the year columns */
 .quick-access-columns {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
 }
 
-/* Each year column styling */
 .quick-access-column {
   background-color: var(--piggy-main);
   padding: 1rem;
@@ -330,7 +471,6 @@ img[src*="#center"] {
   gap: 1rem;
 }
 
-/* Year heading inside each column */
 .quick-access-year-heading {
   border-bottom: 1px solid var(--piggy-neutral);
   color: var(--light);
@@ -340,7 +480,6 @@ img[src*="#center"] {
   text-align: center;
 }
 
-/* Styling for each study direction card */
 .quick-access-card {
   background-color: var(--piggy-main);
   border: 1px solid var(--piggy-neutral);
@@ -349,7 +488,6 @@ img[src*="#center"] {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Header for each card */
 .quick-access-card-header {
   background-color: var(--piggy-main);
   padding: 0.5rem 1rem;
@@ -358,13 +496,11 @@ img[src*="#center"] {
   text-align: center;
 }
 
-/* Study direction name (inside the header) */
 .quick-access-study-direction {
   font-size: 1.25rem;
   margin-bottom: 0;
 }
 
-/* Container for the subject buttons */
 .quick-access-subjects {
   display: flex;
   flex-wrap: wrap;
@@ -372,7 +508,6 @@ img[src*="#center"] {
   padding: 0.5rem 1rem;
 }
 
-/* Styling for subject buttons */
 .quick-access-subject-button {
   color: var(--piggy-text-button);
   border: 1px solid var(--piggy-dark);
@@ -408,6 +543,16 @@ img[src*="#center"] {
   font-weight: bold;
 }
 
+/****************\
+|*    TITLES    *|
+\****************/
+.assignment-title {
+  font-size: xx-large;
+  font-weight: 600;
+  text-align: center;
+  padding-bottom: 0.2rem;
+}
+
 /*****************\
 |*     CARDS     *|
 \*****************/
@@ -433,25 +578,6 @@ img[src*="#center"] {
   animation-timing-function: ease;
   box-shadow: inset 0px 0px 25px 0 var(--piggy-shadow-glow);
   cursor: pointer;
-}
-
-/* TODO: Consider a better solution for extra-card and resource card */
-.card-type-extra .card {
-  background: linear-gradient(
-    45deg,
-    var(--piggy-extra-card-start) 0%,
-    var(--piggy-extra-card-end) 100%
-  );
-  border: var(--piggy-card-border-width) solid var(--piggy-extra-card-border);
-}
-
-.card-type-resource .card {
-  background: linear-gradient(
-    45deg,
-    var(--piggy-resource-card-start) 0%,
-    var(--piggy-resource-card-end) 100%
-  );
-  border: var(--piggy-card-border-width) solid var(--piggy-resource-card-border);
 }
 
 .card-title {
@@ -513,7 +639,7 @@ img[src*="#center"] {
 .description-container {
   color: var(--piggy-text-description);
   bottom: 0;
-  border-top: 2px solid var(--piggy-text-description);
+  border-top: 1px solid var(--piggy-text-description);
   padding-top: 10px;
 }
 
@@ -531,6 +657,75 @@ img[src*="#center"] {
   white-space: nowrap;
 }
 
+/* Special assignment card alignment trickery */
+.card-align-assignment {
+  display: grid !important;
+  grid-template-columns: 0fr 5fr 4fr;
+  grid-template-areas: 
+    "badge header thumbnail"
+    "badge description thumbnail"
+    "badge description thumbnail";
+  gap: 0.5rem;
+}
+
+.card-align-assignment .card-header {
+  grid-area: header;
+}
+
+.card-align-assignment .thumbnail-container {
+  grid-area: thumbnail;
+}
+
+.card-align-assignment .description-container {
+  grid-area: description;
+}
+
+.card-align-assignment .tags-container {
+  grid-column: tags;
+}
+
+/* horizontal direction becomes vertical on small screen */
+@media (max-width: 640px) {
+  .card-align-assignment {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "header"
+      "thumbnail"
+      "tags"
+      "description";
+  }
+}
+
+
+/****************************\
+|*     ASSIGNMENT CARDS     *|
+\****************************/
+.card-assignment {
+  background: linear-gradient(
+    135deg,
+    var(--piggy-assignment-card-start) 0%,
+    var(--piggy-assignment-card-end) 100%
+  );
+  border: var(--piggy-card-border-width) solid var(--piggy-assignment-card-border);
+  padding: 0.75rem;
+}
+
+.card-assignment:hover {
+  box-shadow: inset 0 0 20px var(--piggy-assignment-shadow-glow);
+}
+
+.card-assignment .description-container {
+  margin-top: 0 !important;
+}
+
+.card-assignment .card-header {
+  text-align: left !important;
+}
+
+.card-assignment .thumbnail-image {
+  height: 100%;
+}
+
 /***************************\
 |*     NAVIGATION MENU     *|
 \***************************/
@@ -540,6 +735,7 @@ img[src*="#center"] {
     var(--piggy-navbar-start) 0%,
     var(--piggy-navbar-end) 100%
   );
+  vertical-align: middle;
 }
 
 .piggy-breadcrumb {
@@ -556,21 +752,18 @@ img[src*="#center"] {
 /**********************\
 |*     SEARCH BOX     *|
 \**********************/
-/* Center the search container */
 .search-container {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-/* Input wrapper for positioning */
 .search-input-wrapper {
   position: relative;
   width: 100%;
   max-width: 700px;
 }
 
-/* Style the input */
 .search-input {
   width: 100%;
   padding: 8px 15px 8px 60px;
@@ -585,18 +778,15 @@ img[src*="#center"] {
     box-shadow 0.3s;
 }
 
-/* Placeholder text color */
 .search-input::placeholder {
   color: var(--piggy-text-neutral);
 }
 
-/* Input focus styles */
 .search-input:focus {
   border-color: var(--piggy-button-hover);
   box-shadow: 0 0 5px var(--piggy-shadow-glow);
 }
 
-/* Style the icon container */
 .search-icon {
   position: absolute;
   left: 15px;
@@ -608,13 +798,11 @@ img[src*="#center"] {
   color: var(--piggy-text-neutral);
 }
 
-/* Icon size */
 .search-icon-svg {
   width: 20px;
   height: 20px;
 }
 
-/* Vertical separator using ::after */
 .search-icon::after {
   content: "";
   display: block;
@@ -671,7 +859,6 @@ img[src*="#center"] {
   padding: 60px 20px 20px 20px;
 }
 
-/* Custom Select Styles */
 .custom-select {
   position: relative;
   width: 100%;
@@ -713,21 +900,21 @@ img[src*="#center"] {
   box-sizing: border-box;
   padding: 2px;
 
-  scrollbar-width: thin; /* Make the scrollbar thinner */
-  scrollbar-color: var(--piggy-dark); /* thumb color #888, track color #ccc */
+  scrollbar-width: thin;
+  scrollbar-color: var(--piggy-dark);
 }
 
 .custom-select.open .options-container::-webkit-scrollbar {
-  width: 8px; /* Scrollbar width */
+  width: 8px;
 }
 
 .custom-select.open .options-container::-webkit-scrollbar-track {
-  background: #ccc; /* Track color */
+  background: #ccc;
   border-radius: 4px;
 }
 
 .custom-select.open .options-container::-webkit-scrollbar-thumb {
-  background-color: #888; /* Thumb color */
+  background-color: #888;
   border-radius: 4px;
 }
 
@@ -787,8 +974,11 @@ img[src*="#center"] {
 }
 
 #level-container .snout-button {
+  flex: 1;
   position: relative;
-  min-width: 85px;
+  min-width: 110px;
+  max-width: 110px;
+  white-space: nowrap;
   text-align: center;
 }
 
@@ -805,7 +995,7 @@ img[src*="#center"] {
   position: absolute;
   z-index: 1;
 
-  /* Position the tooltip below the parent element */
+  /* tooltip goes below the button */
   top: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%);
@@ -827,7 +1017,6 @@ img[src*="#center"] {
   border-color: transparent transparent var(--piggy-tooltip) transparent;
 }
 
-/* Adjust tooltip position when near the left edge */
 @media (max-width: 600px) {
   #level-container .nav-tooltip {
     left: 10px;
@@ -835,7 +1024,6 @@ img[src*="#center"] {
   }
 }
 
-/* Adjust tooltip position when near the right edge */
 @media (min-width: calc(100% - 600px)) {
   #level-container .nav-tooltip {
     right: 10px;
@@ -1136,4 +1324,50 @@ details ul li,
   overflow: hidden !important;
   text-wrap: wrap !important;
   word-wrap: break-word !important;
+}
+
+/*******************\
+|* ERROR CONTAINER *|
+\*******************/
+
+/* small screen */
+@media (max-width: 640px) {
+  .error-container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 3rem !important;
+  }
+}
+
+/* medium screen */
+@media (min-width: 640px) {
+  .error-container {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 4rem;
+  }
+
+  .error-img {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+}
+
+#piggy-logo {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 1.85rem;
+  margin: -0.3rem 0.3rem;
+  color: var(--piggy-logo);
+  background: var(--piggy-logo-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.65px;
+  filter: 
+    drop-shadow(1px 0 0 var(--piggy-logo-border))
+    drop-shadow(-1px 0 0 var(--piggy-logo-border))
+    drop-shadow(0 1px 0 var(--piggy-logo-border))
+    drop-shadow(0 -1px 0 var(--piggy-logo-border));
+  text-shadow: none;
 }

@@ -1,0 +1,15 @@
+{% from 'objects/card.html' import card %}
+
+{{
+  card(
+    abspath = abspath,
+    item = item,
+    title = data.meta.title,
+    description = data.meta.description,
+    thumbnail = media_abspath + "/" + data.meta.thumbnail + "." + img_fmt if data.meta.thumbnail else url_for('api.generate_thumbnail', text = data.level_name) ~ '?c=' ~ meta.name,
+    thumbnail_alt = 'Header image for ' ~ item,
+    extra_classes = 'block p-3 rounded-lg border border-slate-400' if 'special_condition' in data else '',
+    overlay_text = 'Level ' ~ data.level ~ ' - ' ~ data.level_name if data.level else '',
+    show_overlay=false
+    )
+}}
