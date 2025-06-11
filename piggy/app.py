@@ -3,26 +3,27 @@ from pathlib import Path
 
 from flask import Flask, send_file, request, Blueprint, render_template
 from flask_squeeze import Squeeze
+from jinja2 import ChoiceLoader, FileSystemLoader
 from turtleconverter import generate_static_files
+from werkzeug.exceptions import HTTPException
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate, STATIC_FONTS_PATHS
 from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
-from piggy.exceptions import PiggyHTTPException
+from piggy.exceptions import PiggyHTTPException, ERROR_MESSAGES
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes
-
-from jinja2 import ChoiceLoader, FileSystemLoader
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
 
 # TODO: Logging
 
+
 def create_app(debug: bool = False) -> Flask:
-    app = Flask(__name__, static_folder='static')
+    app = Flask(__name__, static_folder="static")
 
     Squeeze().init_app(app)
 
@@ -38,10 +39,7 @@ def create_app(debug: bool = False) -> Flask:
 
     static_path = Path(app.root_path) / app.static_folder
 
-    app.jinja_loader = ChoiceLoader([
-        app.jinja_loader,
-        FileSystemLoader(str(static_path))
-    ])
+    app.jinja_loader = ChoiceLoader([app.jinja_loader, FileSystemLoader(str(static_path))])
 
     assignment_routes = Blueprint(ASSIGNMENT_ROUTE, __name__, url_prefix=f"/{ASSIGNMENT_ROUTE}")
     media_routes = Blueprint(MEDIA_ROUTE, __name__, url_prefix=f"/{MEDIA_ROUTE}")
@@ -64,14 +62,14 @@ def create_app(debug: bool = False) -> Flask:
             "debug": app.debug,
             "static_fonts_paths": STATIC_FONTS_PATHS,
         }
-    
-    @app.template_filter('sort_by_level')
+
+    @app.template_filter("sort_by_level")
     def sort_by_level(item_list):
         """
         Jinja filter: given an iterable of (link, assignment) tuples,
         return it sorted by int(assignment.level).
         """
-        return sorted(item_list, key=lambda kv: int(kv[1]['level']))
+        return sorted(item_list, key=lambda kv: int(kv[1]["level"]))
 
     @app.context_processor
     def utilities():
@@ -151,9 +149,11 @@ def create_app(debug: bool = False) -> Flask:
                 return generate_thumbnail(name, request=request.from_values(query_string=query_params))
             return send_file("static/img/placeholders/100x100.png")
 
-    @app.errorhandler(PiggyHTTPException)
+    @app.errorhandler(HTTPException)
     def error(error):
-        return render_template("error.html", error=error)
+        # Error message is a fun tooltip
+        error_message = ERROR_MESSAGES.get(str(error.code), ERROR_MESSAGES["default"])
+        return render_template("error.html", error=error, error_message=error_message)
 
     app.register_blueprint(assignment_routes)
     app.register_blueprint(media_routes)
