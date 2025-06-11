@@ -75,8 +75,8 @@ def create_app(debug: bool = False) -> Flask:
         """
         Jinja filter: returns the difference between two lists.
         """
-        for l in lists:
-            original_list = [item for item in original_list if item not in l]
+        for list in lists:
+            original_list = [item for item in original_list if item not in list]
         return original_list
 
     @app.context_processor
