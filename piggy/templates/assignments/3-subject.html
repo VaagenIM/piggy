@@ -5,26 +5,31 @@
   {# moveable search box #}
   {% include 'partials/search_box.html' %}
 
-  {# split out assignments vs exercises #}
-  {% set assignments = segment.items() 
-       | selectattr('1.meta.type', 'equalto', 'assignment') 
-       | list %}
-  {% set exercises = segment.items() 
-       | selectattr('1.meta.type', 'equalto', 'exercise') 
-       | list %}
+  {# filter out assignments #}
+  {%
+    set assignments = segment.items() | selectattr('1.meta.type', 'equalto',
+    'assignment') | list
+  %}
 
-  {% if assignments or exercises %}
-    {# ASSIGNMENTS #}
+  {# everything that doesn't have a type should be treated as an exercise (default type) #}
+  {% set exercises = segment.items() | list_difference([assignments]) %}
+
+  {# ASSIGNMENTS #}
+  {% if assignments %}
     <div class="card-grid-wrapper assignment-card-grid-wrapper">
       <h2 class="assignment-title">Innleveringsoppaver:</h2>
-      <div class="card-grid-container card-type-assignment assignment-card-grid-container">
+      <div
+        class="card-grid-container card-type-assignment assignment-card-grid-container"
+      >
         {% for item, data in assignments %}
           {% include 'objects/card-assignment.html' %}
         {% endfor %}
       </div>
     </div>
+  {% endif %}
 
-    {# EXERCISES #}
+  {# EXERCISES #}
+  {% if exercises %}
     <div class="card-grid-wrapper">
       <h2 class="assignment-title">Øvingsoppgaver:</h2>
       <div class="card-grid-container card-type-exercise">
@@ -33,7 +38,9 @@
         {% endfor %}
       </div>
     </div>
-  {% else %}
+  {% endif %}
+
+  {% if not segment.items() %}
     <div class="card-grid-container">
       Hmm... There doesn't seem to be anything here!
     </div>
