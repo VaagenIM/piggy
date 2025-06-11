@@ -12,8 +12,8 @@ import requests
 from bs4 import BeautifulSoup as bs
 from turtleconverter import generate_static_files
 
-links = set(("/", "/404"))  # A list of links we need to visit and download (including files that are related to the website)
-visited = set()  # A list of links we have visited
+links = set(["/", "/404"])
+visited = set()
 media_links = set()
 url = "http://127.0.0.1:5000"  # The URL of the website we are scraping
 cname = "https://piggy.iktim.no"  # The CNAME of the website we will push the demo to
@@ -34,7 +34,8 @@ def get_html(link) -> tuple[str, set[str], set[str]]:
 
     visited.add(link)
 
-    if not r.ok:
+    if not r.ok and link not in ["/404"]:
+        print(f"WARNING: Could not fetch {link} (status code: {r.status_code})")
         return "", set(), set()
 
     # Only prettify if mimetype is text/html
@@ -138,7 +139,6 @@ def _download_media(link):
 
 def download_site():
     media_tasks = set()
-    tasks = set()
     with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
         while visited != links:
             tasks = set(link for link in links if link not in visited)
