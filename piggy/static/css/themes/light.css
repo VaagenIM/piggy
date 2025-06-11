@@ -59,6 +59,8 @@ preview_style: background-color: rgb(225, 225, 225); color: rgb(60, 60, 60);
 
   --piggy-text-hyperlink: #316997;
   --piggy-text-hyperlink-hover: #316997;
+
+  --piggy-logo-border: rgba(50, 0, 50, 0.5);
 }
 
 [data-theme="light"] .level-count-container {

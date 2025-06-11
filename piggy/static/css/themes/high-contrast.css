@@ -22,7 +22,7 @@ preview_style: background-color: #000000; color: #ffffff;
   /* Assignment cards */
   --piggy-assignment-card-border: #ff7b00;
 
-  --piggy-card-border-width: 4px;
+  --piggy-card-border-width: 1px;
 
   /* Navbar and buttons */
   --piggy-navbar-start: #000000;
@@ -48,15 +48,20 @@ preview_style: background-color: #000000; color: #ffffff;
 
   --piggy-tooltip: #000000;
   --piggy-tooltip-text: #ffffff;
+
+  /* logo */
+  --piggy-logo: #ff44ff;
+  --piggy-logo-gradient: #ff44ff;
+  --piggy-logo-border: rgba(0, 0, 0, 0);
 }
 
 [data-theme="high-contrast"] .card-container {
-  border-radius: 0px;
+  border-radius: 5px;
   margin: 5px;
 }
 
 [data-theme="high-contrast"] .thumbnail-image {
-  border-radius: 0px;
+  border-radius: 5px;
   border-width: var(--piggy-card-border-width);
   border-color: #ff0000;
   background-color: #000;
@@ -72,11 +77,11 @@ preview_style: background-color: #000000; color: #ffffff;
 }
 
 [data-theme="high-contrast"] .tag-box {
-  border-radius: 0px;
-  border-color: white !important;
+  border-radius: 5px;
   background-color: transparent !important;
   border-width: var(--piggy-card-border-width);
   margin-top: 5px;
+  filter: saturate(10) brightness(100);
 }
 
 [data-theme="high-contrast"] .piggy-navbar {
@@ -93,13 +98,13 @@ preview_style: background-color: #000000; color: #ffffff;
 }
 
 [data-theme="high-contrast"] .level-button {
-  border-radius: 0px !important;
+  border-radius: 5px !important;
   border-width: 0px;
 }
 
 [data-theme="high-contrast"] .level-count-container {
-  border-radius: 0px;
-  border-width: 4px;
+  border-radius: 5px;
+  border-width: var(--piggy-card-border-width);
   border-color: #ffff00;
   margin-bottom: 5px;
   color: #fff;
@@ -127,7 +132,7 @@ preview_style: background-color: #000000; color: #ffffff;
 
 /* Tooltip Text */
 [data-theme="high-contrast"] #level-container .nav-tooltip {
-  border-radius: 0px;
+  border-radius: 5px;
   border-color: white;
   border-width: 1px;
 }
@@ -220,8 +225,8 @@ preview_style: background-color: #000000; color: #ffffff;
 }
 
 [data-theme="high-contrast"] .search-input {
-  border: 2px solid white;
-  border-radius: 0;
+  border: 1px solid white;
+  border-radius: 5px;
 }
 
 /* POTENTIAL COLORS FOR CODE?

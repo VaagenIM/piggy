@@ -151,6 +151,10 @@ def create_app(debug: bool = False) -> Flask:
                 return generate_thumbnail(name, request=request.from_values(query_string=query_params))
             return send_file("static/img/placeholders/100x100.png")
 
+    @app.errorhandler(PiggyHTTPException)
+    def error(error):
+        return render_template("error.html", error=error)
+
     app.register_blueprint(assignment_routes)
     app.register_blueprint(media_routes)
     app.register_blueprint(api_routes)
