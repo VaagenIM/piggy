@@ -179,13 +179,13 @@ preview_style: background-color: #000000; color: #ffffff;
   background-color: black;
   color: white;
   border: 1px solid white;
-  border-radius: 4px !important;
+  border-radius: 5px !important;
   padding: 1px 5px 1px 5px !important;
 }
 
 [data-theme="high-contrast"] .md-content table {
-  border: 2px solid white !important;
-  border-radius: 0px !important;
+  border: 1px solid white !important;
+  border-radius: 5px !important;
 }
 
 [data-theme="high-contrast"] .md-content th {
@@ -208,15 +208,15 @@ preview_style: background-color: #000000; color: #ffffff;
 }
 
 [data-theme="high-contrast"] .md-content .md-code__content {
-  border: 2px solid white;
-  border-radius: 0px !important;
+  border: 1px solid white;
+  border-radius: 5px !important;
   background-color: black;
   filter: contrast(1.35);
 }
 
 [data-theme="high-contrast"] .md-content .tabbed-set {
-  border: 2px solid white;
-  border-radius: 0 !important;
+  border: 1px solid white;
+  border-radius: 5px !important;
   background: #00000000;
 }
 
@@ -281,8 +281,8 @@ preview_style: background-color: #000000; color: #ffffff;
 
 /* NOTE, ABSTRACT, INFO, TIP - [CYAN] */
 [data-theme="high-contrast"] .md-content :is(details, .admonition) {
-  border: 3px solid !important;
-  border-radius: 0px !important;
+  border: 1px solid !important;
+  border-radius: 5px !important;
 }
 
 [data-theme="high-contrast"] .md-content :is(.note, .abstract, .info, .tip) {

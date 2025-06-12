@@ -1334,6 +1334,14 @@ details ul li,
   word-wrap: break-word !important;
 }
 
+.md-clipboard {
+  color: var(--piggy-light) !important;
+}
+
+.md-clipboard:hover {
+  color: var(--piggy-neutral) !important;
+}
+
 /*******************\
 |* ERROR CONTAINER *|
 \*******************/
@@ -1360,8 +1368,11 @@ details ul li,
   }
 }
 
+/**************\
+|* PIGGY LOGO *|
+\**************/
 #piggy-logo {
-  font-family: "Fredoka", sans-serif;
+  font-family: "Cherry Bomb One", sans-serif;
   font-weight: 700;
   font-size: 1.85rem;
   margin: -0.3rem 0.3rem;
@@ -1375,4 +1386,30 @@ details ul li,
     drop-shadow(0 1px 0 var(--piggy-logo-border))
     drop-shadow(0 -1px 0 var(--piggy-logo-border));
   text-shadow: none;
+  transition: 0.2s;
+}
+
+@keyframes bubbly {
+  0% {
+    transform: scale(1.0) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.1) rotate(3deg);
+  }
+  50% {
+    transform: scale(1.0) rotate(0deg);
+  }
+  75% {
+    transform: scale(1.1) rotate(-3deg);
+  }
+  100% {
+    transform: scale(1.0) rotate(0deg);
+  }
+}
+
+#piggy-logo:hover {
+  animation-name: bubbly;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }

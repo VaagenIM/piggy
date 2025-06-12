@@ -116,3 +116,11 @@ preview_style: background-color: rgb(225, 225, 225); color: rgb(60, 60, 60);
   border-color: var(--piggy-dark);
   background-color: #8888883a !important;
 }
+
+[data-theme="light"] .md-clipboard {
+  color: var(--piggy-dark) !important;
+}
+
+[data-theme="light"] .md-clipboard:hover {
+  color: var(--piggy-neutral) !important;
+}
