@@ -115,3 +115,11 @@ preview_style: background-color: #2e1f24; color: #f0e1e4;
 [data-theme="piggy-dark"] .md-content .tabbed-set {
   background: #ffffff0a;
 }
+
+[data-theme="piggy-dark"] .md-clipboard {
+  color: var(--piggy-dark) !important;
+}
+
+[data-theme="piggy-dark"] .md-clipboard:hover {
+  color: var(--piggy-neutral) !important;
+}

@@ -1334,6 +1334,14 @@ details ul li,
   word-wrap: break-word !important;
 }
 
+.md-clipboard {
+  color: var(--piggy-light) !important;
+}
+
+.md-clipboard:hover {
+  color: var(--piggy-neutral) !important;
+}
+
 /*******************\
 |* ERROR CONTAINER *|
 \*******************/

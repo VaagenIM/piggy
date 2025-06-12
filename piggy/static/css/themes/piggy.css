@@ -118,3 +118,11 @@ preview_style: background-color: #ff99ac; color: #4d4d4d;
   border-color: var(--piggy-dark);
   background-color: #ff00002a !important;
 }
+
+[data-theme="piggy"] .md-clipboard {
+  color: var(--piggy-dark) !important;
+}
+
+[data-theme="piggy"] .md-clipboard:hover {
+  color: var(--piggy-neutral) !important;
+}

@@ -119,3 +119,11 @@ preview_style: background-color: #ece4ec; color: #000000;
 [data-theme="classic"] .md-content .tabbed-set {
   background: #0000000a;
 }
+
+[data-theme="classic"] .md-clipboard {
+  color: var(--piggy-dark) !important;
+}
+
+[data-theme="classic"] .md-clipboard:hover {
+  color: var(--piggy-neutral) !important;
+}
