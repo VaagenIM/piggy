@@ -8,7 +8,38 @@
       <h2>{{ error_message }}</h2>
     </div>
     <div class="error-img">
-      <img src="{{ url_for('static', filename='img/piggy-404.png') }}" />
+      <img id="error-img" src="{{ url_for('static', filename='img/status_codes/404.png') }}" />
     </div>
   </div>
+
+  <script>
+    function setErrorImage() {
+      let theme = document.documentElement.getAttribute('data-theme') || 'default';
+
+      console.log(theme);
+
+      if (["synthwave", "matrix", "desert", "ocean", "space"].includes(theme)) {
+        theme = "-" + theme
+      } else {
+        theme = ""
+      }
+      
+      const imgElement = document.getElementById('error-img');
+      imgElement.src = "{{ url_for('static', filename='img/status_codes/') }}" + "404" + theme + ".png";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setErrorImage();
+
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.attributeName === 'data-theme') {
+            setErrorImage();
+          }
+        });
+      });
+
+      observer.observe(document.documentElement, { attributes: true });
+    });
+  </script>
 {% endblock %}
