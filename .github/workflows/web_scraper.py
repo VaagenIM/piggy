@@ -6,6 +6,7 @@ import multiprocessing
 import os
 import re
 from pathlib import Path
+from shutil import copytree
 from urllib.parse import unquote
 
 import requests
@@ -201,3 +202,6 @@ def download_site():
 if __name__ == "__main__":
     generate_static_files(static_folder=Path("demo/static").absolute())
     download_site()
+    # Since we are in .github/workflows, we need to go up two directories to find the piggy folder
+    root_dir = Path(__file__).resolve().parents[2]
+    copytree(root_dir / "piggy" / "static", Path("demo/static").absolute(), dirs_exist_ok=True)
