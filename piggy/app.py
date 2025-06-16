@@ -18,6 +18,7 @@ from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
 
+
 # TODO: Logging
 
 
@@ -154,6 +155,7 @@ def create_app(debug: bool = False) -> Flask:
                 # if there is no /, we are at the root folder and should repeat the name
                 _, name = wildcard.rsplit("/", 1) if "/" in wildcard else (wildcard, wildcard)
                 query_params = {"c": name, "width": 1024, "height": 512}
+                name = name.replace("_", " ")
                 return generate_thumbnail(name, request=request.from_values(query_string=query_params))
             return send_file("static/img/placeholders/100x100.png")
 
