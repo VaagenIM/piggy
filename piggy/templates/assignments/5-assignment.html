@@ -18,9 +18,10 @@
         <span class="language-flag">{{ current_language.flag }}</span>
         {{ current_language.name }}
       </button>
-      <div class="language-dropdown">
+      <div class="language-dropdown" id="lang-dd">
         {% for lang, val in supported_languages.items() %}
           <a
+            data-lang="{{ lang }}"
             {% if github_pages %}
               href="{{ request.path.split('/lang/')[0] }}{{ '/lang/' + lang if lang else '' }}"
             {% else %}
@@ -73,6 +74,35 @@
       </nav>
     {% endif %}
   </div>
+
+  <script>
+    // Language sorting function
+    (function () {
+      const container = document.getElementById("lang-dd");
+
+      if (!container) return;
+
+      const preferred = ["", "nno", "eng", "ukr"];
+      const rank = new Map(preferred.map((code, i) => [code, i]));
+      const BIG = 1e9;
+
+      const links = Array.from(container.querySelectorAll(':scope > a'));
+
+      links.sort((a, b) => {
+        const la = a.dataset.lang ?? "";
+        const lb = b.dataset.lang ?? "";
+        const ra = rank.has(la) ? rank.get(la) : BIG;
+        const rb = rank.has(lb) ? rank.get(lb) : BIG;
+
+        if (ra !== rb) return ra - rb;
+
+        return la.localeCompare(lb);
+      });
+
+      links.forEach(el => container.appendChild(el));
+
+    })();
+  </script>
 {% endblock %}
 
 {% block base %}
