@@ -52,6 +52,10 @@
             {% endif %}
           {% else %}
             {% set level_meta = assignment.meta %}
+            {# GitHub Pages only: If a translation doesn't exist for the level, link to the default language #}
+            {% if "/lang/" in request.path %}
+              {% set link = request.path.split('/lang/')[0].split('/')[0:-1] | join('/') ~ "/" ~ link %}
+            {% endif %}
           {% endif %}
           {% if assignment.level | int == level | int %}
             <!-- Current Level (Non-clickable) -->
