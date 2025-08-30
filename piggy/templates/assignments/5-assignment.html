@@ -74,7 +74,7 @@
             >
               {{ level_text }} {{ assignment.level }}
               <!-- Tooltip -->
-              <div class="nav-tooltip">{{ level_meta.title }}</div>
+              <div class="nav-tooltip">{{ level_meta.title | unescape }}</div>
             </a>
           {% endif %}
         {% endfor %}
