@@ -1,3 +1,4 @@
+import html
 import os
 from pathlib import Path
 
@@ -79,6 +80,11 @@ def create_app(debug: bool = False) -> Flask:
         for list in lists:
             original_list = [item for item in original_list if item not in list]
         return original_list
+
+    @app.template_filter("unescape")
+    def unescape(s):
+        """Jinja filter: unescape HTML entities."""
+        return html.unescape(s).replace("<", "&lt;").replace(">", "&gt;")
 
     @app.context_processor
     def utilities():
