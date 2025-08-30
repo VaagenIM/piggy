@@ -35,11 +35,13 @@
       </div>
     </div>
 
-{% set levels = meta
-     .get(AssignmentTemplate.LEVELS_DATA.name)
-     .data
-     .items()
-     | sort_by_level %}
+    {%
+      set levels = meta
+      .get(AssignmentTemplate.LEVELS_DATA.name)
+      .data
+      .items()
+      | sort_by_level
+    %}
 
     {% if levels|length > 1 %}
       <!-- Level Selection Menu -->
@@ -60,15 +62,16 @@
           {% if assignment.level | int == level | int %}
             <!-- Current Level (Non-clickable) -->
             <div class="snout-button snout-border snout-padding-m active">
-              <span> 
-                {{ level_text }} {{ assignment.level }}
-              </span>
+              <span> {{ level_text }} {{ assignment.level }} </span>
               <!-- Tooltip -->
-              <div class="nav-tooltip">{{ level_meta.title }}</div>
+              <div class="nav-tooltip">{{ level_meta.title | unescape }}</div>
             </div>
           {% else %}
             <!-- Other Levels (Clickable) -->
-            <a href="{{ link }}" class="snout-button snout-border snout-padding-m">
+            <a
+              href="{{ link }}"
+              class="snout-button snout-border snout-padding-m"
+            >
               {{ level_text }} {{ assignment.level }}
               <!-- Tooltip -->
               <div class="nav-tooltip">{{ level_meta.title }}</div>
@@ -90,7 +93,7 @@
       const rank = new Map(preferred.map((code, i) => [code, i]));
       const BIG = 1e9;
 
-      const links = Array.from(container.querySelectorAll(':scope > a'));
+      const links = Array.from(container.querySelectorAll(":scope > a"));
 
       links.sort((a, b) => {
         const la = a.dataset.lang ?? "";
@@ -103,8 +106,7 @@
         return la.localeCompare(lb);
       });
 
-      links.forEach(el => container.appendChild(el));
-
+      links.forEach((el) => container.appendChild(el));
     })();
   </script>
 {% endblock %}
