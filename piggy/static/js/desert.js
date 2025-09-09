@@ -1,15 +1,16 @@
-// ocean.js
+// desert.js
 
 (() => {
-  let oceanShaderAnimationId;
+  let desertShaderAnimationId;
   let gl, program, startTime;
   let iTimeLocation, iResolutionLocation;
 
+  // ---------- helpers ----------
   function createShader(gl, type, source) {
     const shader = gl.createShader(type);
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    if (!gl.getShaderParameter(shader, gl. COMPILE_STATUS)) {
       console.error("Shader compile error:", gl.getShaderInfoLog(shader));
       gl.deleteShader(shader);
       return null;
@@ -44,10 +45,7 @@
     return texture;
   }
 
-  // Shader based on "A simple water shader." by Ajarus, viktor@ajarus.com.
-  //
-  // Attribution-ShareAlike CC License.
-
+  // ---------- shaders ----------
   const vertexShaderSource = `
   precision mediump float;
   attribute vec2 a_position;
@@ -58,88 +56,86 @@
   }
   `;
 
+  // Desert fragment shader (dunes + ripples + heat shimmer)
+  // Inspired by classic fbm terrain techniques. WebGL1-safe.
   const fragmentShaderSource = `
+  // based ont he following shader: https://www.shadertoy.com/view/Ndy3DV
+
   precision mediump float;
-  #define PI 3.1415926535897932
-
-  // Water shader parameters
-  const float speed = 0.1;
-  const float speed_x = 0.02;
-  const float speed_y = 0.02;
-
-  const float emboss = 0.5;
-  const float intensity = 3.0;
-  const int steps = 10;
-  const float frequency = 5.0;
-  const int angle = 7;
-
-  const float delta = 60.0;
-  const float gain = 700.0;
-  const float reflectionCutOff = 0.015;
-  const float reflectionIntensity = 2000000.0;
 
   uniform float iTime;
-  uniform vec2 iResolution;
-  uniform sampler2D iChannel0;
+  uniform vec2  iResolution;
 
-  float col(vec2 coord, float time) {
-    float delta_theta = 2.0 * PI / float(angle);
-    float c = 0.0;
-    float theta = 0.0;
-    for (int i = 0; i < steps; i++) {
-      vec2 adjc = coord;
-      theta = delta_theta * float(i);
-      adjc.x += cos(theta) * time * speed + time * speed_x;
-      adjc.y -= sin(theta) * time * speed - time * speed_y;
-      c += cos((adjc.x * cos(theta) - adjc.y * sin(theta)) * frequency) * intensity;
-    }
-    return cos(c);
+  // ---------------- Desert palette ----------------
+  const vec3 SAND_LIGHT = vec3(244.0/255.0, 231.0/255.0, 211.0/255.0);
+  const vec3 SAND_TAN = vec3(210.0/255.0, 180.0/255.0, 140.0/255.0);
+  const vec3 SAND_MID = vec3(184.0/255.0, 165.0/255.0, 140.0/255.0);
+  const vec3 SAND_DARK = vec3(166.0/255.0, 124.0/255.0, 82.0/255.0);
+
+  // ---------------- Original helper ----------------
+  #define MAX_OCTAVES 24
+  void wave(inout float x, inout float y, inout float z, float T, int octaves, float a)
+  {
+      float R = 8.0;
+      float S = 0.03;
+      float W = -0.05;
+      #define RRRRS R*=0.72; S*=1.27; W*=1.21;
+
+      for (int s = 0; s < MAX_OCTAVES; s++) {
+          if (s >= octaves) break;
+          float da = 1.8 + (sin(T * 0.021) * 0.1 + 0.41 * sin(float(s) * 0.71 + T * 0.02)) * a;
+          float dx = cos(da);
+          float dy = sin(da);
+          float t  = -dot(vec2(x - 320.0, y - 240.0), vec2(dx, dy));
+          float sa = sin(T * W + t * S) * R;
+          float ca = cos(T * W + t * S) * R;
+
+          x -= ca * dx * 2.0;
+          y -= ca * dy * 2.0;
+          z -= sa;
+          RRRRS
+      }
   }
 
-  void mainImage(out vec4 fragColor, in vec2 fragCoord) {
-    float time = iTime * 1.3;
-    vec2 p = fragCoord.xy / iResolution.xy;
-    vec2 c1 = p;
-    vec2 c2 = p;
-    float cc1 = col(c1, time);
-    
-    c2.x += iResolution.x / delta;
-    float dx = emboss * (cc1 - col(c2, time)) / delta;
-    
-    c2.x = p.x;
-    c2.y += iResolution.y / delta;
-    float dy = emboss * (cc1 - col(c2, time)) / delta;
-    
-    c1.x += dx * 2.0;
-    c1.y = -(c1.y + dy * 2.0);
-    
-    float alpha = 1.0 + (dx * dy) * gain;
-    float ddx = dx - reflectionCutOff;
-    float ddy = dy - reflectionCutOff;
-    if (ddx > 0.0 && ddy > 0.0) {
-      alpha = pow(alpha, ddx * ddy * reflectionIntensity);
-    }
-    
-    vec4 colr = texture2D(iChannel0, c1) * alpha;
-    fragColor = colr;
+  // ---------------- Main ----------------
+  void mainImage( out vec4 fragColor, in vec2 fragCoord )
+  {
+      vec2 uv  = fragCoord / iResolution.xy * vec2(640.0, 480.0);
+      vec2 uv0 = uv;
+
+      float z = 0.0;
+      wave(uv.x, uv.y, z, iTime * 15.0, 17, 1.0);
+
+      z = (z + 22.0) * 0.018;
+
+      float h = smoothstep(0.05, 0.95, clamp(z, 0.0, 1.0));
+
+      vec3 col = mix(SAND_DARK, SAND_MID, h);
+          col = mix(col,       SAND_TAN, h*h);
+          col = mix(col,     SAND_LIGHT, h*h*h);
+
+      fragColor = vec4(col, 1.0);
   }
 
   void main() {
-    mainImage(gl_FragColor, gl_FragCoord.xy);
+      vec4 c;
+      mainImage(c, gl_FragCoord.xy);
+      gl_FragColor = c;
   }
   `;
 
-  function startOceanShaderAnimation() {
+  // ---------- runtime ----------
+  function startDesertShaderAnimation() {
     const overlay = document.querySelector(".background-overlay");
     if (!overlay) {
       console.error("background-overlay element not found");
       return;
     }
-    
-    let canvas = document.getElementById("oceanShader");
+
+    let canvas = document.getElementById("desertShader");
     if (!canvas) {
       canvas = document.createElement("canvas");
-      canvas.id = "oceanShader";
+      canvas.id = "desertShader";
       canvas.style.position = "absolute";
       canvas.style.top = "0";
       canvas.style.left = "0";
@@ -149,79 +145,71 @@
       canvas.style.pointerEvents = "none";
       overlay.appendChild(canvas);
     }
-    
+
     gl = canvas.getContext("webgl");
     if (!gl) {
       console.error("WebGL not supported");
       return;
     }
-    
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
-    
+
     program = createProgram(gl, vertexShaderSource, fragmentShaderSource);
     if (!program) return;
     gl.useProgram(program);
-    
-    // Set up a full-screen quad
+
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     const positions = new Float32Array([
-      -1, -1,
-      1, -1,
-      -1,  1,
-      -1,  1,
-      1, -1,
-      1,  1
+      -1, -1,  1, -1,  -1,  1,
+      -1,  1,  1, -1,   1,  1
     ]);
     gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
     const aPositionLocation = gl.getAttribLocation(program, "a_position");
     gl.enableVertexAttribArray(aPositionLocation);
     gl.vertexAttribPointer(aPositionLocation, 2, gl.FLOAT, false, 0, 0);
-    
-    // Get uniform locations
+
     iTimeLocation = gl.getUniformLocation(program, "iTime");
     iResolutionLocation = gl.getUniformLocation(program, "iResolution");
     const iChannel0Location = gl.getUniformLocation(program, "iChannel0");
-    
-    // Create a dummy texture for iChannel0 using the ocean main color (#002b36 -> [0,43,54,255])
-    const dummyTexture = createDummyTexture(gl, [0, 43, 54, 255]);
+
+    const dummyTexture = createDummyTexture(gl, [205, 170, 125, 255]);
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, dummyTexture);
     gl.uniform1i(iChannel0Location, 0);
-    
+
     startTime = performance.now();
-    
+
     function render() {
-      // Clear to a deep ocean blue (0,43,54) normalized to [0,1]
-      gl.clearColor(0.0, 43.0/255.0, 54.0/255.0, 1.0);
+      gl.clearColor(205/255, 170/255, 125/255, 1.0);
       gl.clear(gl.COLOR_BUFFER_BIT);
-      
+
       const currentTime = performance.now();
       const elapsedTime = (currentTime - startTime) / 1000.0;
       gl.uniform1f(iTimeLocation, elapsedTime);
       gl.uniform2f(iResolutionLocation, gl.drawingBufferWidth, gl.drawingBufferHeight);
-      
+
       gl.drawArrays(gl.TRIANGLES, 0, 6);
-      oceanShaderAnimationId = requestAnimationFrame(render);
+      desertShaderAnimationId = requestAnimationFrame(render);
     }
     render();
   }
 
-  function stopOceanShaderAnimation() {
-    if (oceanShaderAnimationId) {
-      cancelAnimationFrame(oceanShaderAnimationId);
-      oceanShaderAnimationId = null;
+  function stopDesertShaderAnimation() {
+    if (desertShaderAnimationId) {
+      cancelAnimationFrame(desertShaderAnimationId);
+      desertShaderAnimationId = null;
     }
-    const canvas = document.getElementById("oceanShader");
+    const canvas = document.getElementById("desertShader");
     if (canvas) {
       canvas.remove();
     }
   }
 
   window.addEventListener("resize", () => {
-    const canvas = document.getElementById("oceanShader");
+    const canvas = document.getElementById("desertShader");
     if (canvas && gl) {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -229,6 +217,6 @@
     }
   });
   
-  window.startOceanShaderAnimation = startOceanShaderAnimation;
-  window.stopOceanShaderAnimation = stopOceanShaderAnimation;
+  window.startDesertShaderAnimation = startDesertShaderAnimation;
+  window.stopDesertShaderAnimation = stopDesertShaderAnimation;
 })();

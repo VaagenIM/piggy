@@ -90,6 +90,12 @@ preview_style: background-color: #f4e7d3; color: #3e2a14;
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 
+[data-theme="desert"] .md-content {
+  border: 1px solid #5f4b32;
+  border-radius: 0.5rem;
+  background-color: #e8d4b0;
+}
+
 [data-theme="desert"] .md-content .admonition-title {
   font-size: 0.8rem !important;
 }
