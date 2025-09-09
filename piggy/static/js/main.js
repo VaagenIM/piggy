@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function stopAllAnimations() {
     stopMatrixAnimation();
     stopOceanShaderAnimation();
+    stopDesertShaderAnimation();
     stopSpaceAnimation();
   }
 
@@ -57,6 +58,9 @@ document.addEventListener("DOMContentLoaded", () => {
       break;
     case "ocean":
       startOceanShaderAnimation();
+      break;
+    case "desert":
+      startDesertShaderAnimation();
       break;
     case "space":
       startSpaceAnimation();
@@ -111,6 +115,9 @@ document.addEventListener("DOMContentLoaded", () => {
           break;
         case "ocean":
           startOceanShaderAnimation();
+          break;
+        case "desert":
+          startDesertShaderAnimation();
           break;
         case "space":
           startSpaceAnimation();

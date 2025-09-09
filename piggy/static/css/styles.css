@@ -80,6 +80,9 @@
   --piggy-logo: #ff9abc;
   --piggy-logo-gradient: linear-gradient(45deg, #ffc1d8, #ff5a8f, #c03db9);
   --piggy-logo-border: rgba(66, 28, 53, 0.65);
+
+  /* fix color scheme bug */
+  color-scheme: dark;
 }
 
 /************************\
