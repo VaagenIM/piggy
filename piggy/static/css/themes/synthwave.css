@@ -20,7 +20,7 @@ preview_style: background-color: rgb(48, 20, 58); color: #ffcc66;
   --piggy-shadow-box: #ff00a630;
   --piggy-shadow-glow: rgba(255, 140, 0, 0.4);
 
-  /* Piggy sunset card colors */
+  /* Card colors */
   --piggy-card-start: rgba(255, 143, 89, 0.3);
   --piggy-card-end: rgba(211, 82, 112, 0.3);
   --piggy-card-border: #ff9b9b;
@@ -36,7 +36,7 @@ preview_style: background-color: rgb(48, 20, 58); color: #ffcc66;
 
   --piggy-card-border-width: 1px;
 
-  /* Piggy sunset elements */
+  /* Piggy elements */
   --piggy-navbar-start: rgb(48, 20, 58);
   --piggy-navbar-end: rgb(34, 18, 48);
   --piggy-text-navbar: var(--piggy-light);

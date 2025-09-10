@@ -9,7 +9,7 @@ preview_style: background-color: #ece4ec; color: #000000;
 [data-theme="classic"] {
   --piggy-main: #ece4ec;
   --piggy-light: #ffffff;
-  --piggy-neutral: #747070; /* Gray */
+  --piggy-neutral: #747070;
   --piggy-dark: #000000;
 
   --piggy-text-main: var(--piggy-dark);
@@ -17,7 +17,6 @@ preview_style: background-color: #ece4ec; color: #000000;
   --piggy-shadow-box: #00000022;
   --piggy-shadow-glow: rgba(255, 255, 255, 20%);
 
-  /* More contrast for cards */
   --piggy-card-start: #d6c8d5;
   --piggy-card-end: #d6c8d5;
   --piggy-card-border: #afa7af;

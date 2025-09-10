@@ -17,7 +17,7 @@ preview_style: background-color: #ff99ac; color: #4d4d4d;
   --piggy-shadow-box: #00000011;
   --piggy-shadow-glow: rgba(0, 0, 0, 0.2);
 
-  /* Card colors with pink tones */
+  /* Card colors */
   --piggy-card-start: rgba(255, 220, 229, 1);
   --piggy-card-end: rgba(255, 205, 218, 1);
   --piggy-card-border: #ff99ac;
