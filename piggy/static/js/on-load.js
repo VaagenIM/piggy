@@ -1,4 +1,4 @@
-// Initialize theme and font settings as soon as possible
+// Initialize theme and font settings asap
 const currentTheme = localStorage.getItem("theme") || "dark";
 const fontTheme = localStorage.getItem("fontTheme") || "default";
 
