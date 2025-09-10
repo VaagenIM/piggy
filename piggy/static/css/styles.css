@@ -997,6 +997,7 @@ img[src*="#center"] {
 #level-container .nav-tooltip {
   visibility: hidden;
   width: max-content;
+  white-space: normal;
   max-width: 250px;
   background-color: var(--piggy-tooltip);
   color: var(--piggy-tooltip-text);
