@@ -8,17 +8,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeSelect = document.getElementById("theme-select");
   const themeSelected = themeSelect.querySelector(".selected");
   const fontSelect = document.getElementById("font-select");
-  const fontSelected = fontSelect ? fontSelect.querySelector(".selected") : null;
+  const fontSelected = fontSelect
+    ? fontSelect.querySelector(".selected")
+    : null;
 
   // --- Helper Functions ---
-  // Close all custom selects (except an optional one to keep open)
   function closeAllCustomSelects(except = null) {
-    document.querySelectorAll(".custom-select").forEach(select => {
+    document.querySelectorAll(".custom-select").forEach((select) => {
       if (select !== except) {
         select.classList.remove("open");
         const optionsContainer = select.querySelector(".options-container");
         if (optionsContainer) {
-          // Clear the inline maxHeight so it reverts to the CSS (0 when not open)
           optionsContainer.style.maxHeight = "";
         }
       }
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Dynamically calculate available space and set max-height on the options container
   function updateOptionsMaxHeight(select) {
-    const optionsContainer = select.querySelector('.options-container');
+    const optionsContainer = select.querySelector(".options-container");
     const rect = optionsContainer.getBoundingClientRect();
     const availableHeight = window.innerHeight - rect.top - 10; // 10px margin
     optionsContainer.style.maxHeight = availableHeight + "px";
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   }
 
-  // Stop all background animations (functions from your animation files)
+  // Stop all background animations
   function stopAllAnimations() {
     stopMatrixAnimation();
     stopOceanShaderAnimation();
@@ -50,8 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- Background Animations ---
-  // currentTheme is set in on-load.js; fallback to "dark" if missing
-  const currentTheme = localStorage.getItem("theme") || "dark";
+  // currentTheme is set in on-load.js; fallback to system preference if not set
+  const currentTheme = localStorage.getItem("theme") || systemPreferredTheme;
   switch (currentTheme) {
     case "matrix":
       startMatrixAnimation();
@@ -73,12 +73,15 @@ document.addEventListener("DOMContentLoaded", () => {
   function openSettingsMenu() {
     settingsMenu.classList.add("open");
   }
+
   function closeSettingsMenu() {
     settingsMenu.classList.remove("open");
   }
 
   // --- Initialize Theme Custom Select ---
-  const matchingThemeOption = themeSelect.querySelector(`.option[data-value="${currentTheme}"]`);
+  const matchingThemeOption = themeSelect.querySelector(
+    `.option[data-value="${currentTheme}"]`,
+  );
   if (matchingThemeOption) {
     themeSelected.textContent = matchingThemeOption.textContent;
     themeSelected.setAttribute("data-value", currentTheme);
@@ -95,18 +98,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Attach click event listeners to each theme option
-  themeSelect.querySelectorAll(".option").forEach(option => {
+  themeSelect.querySelectorAll(".option").forEach((option) => {
     option.addEventListener("click", function (e) {
       const selectedTheme = this.getAttribute("data-value");
-      // Update the display
+
       themeSelected.textContent = this.textContent;
       themeSelected.setAttribute("data-value", selectedTheme);
-      
-      // Save and apply the new theme
+
+      // save theme and apply
       localStorage.setItem("theme", selectedTheme);
       document.documentElement.setAttribute("data-theme", selectedTheme);
 
-      // Execute page transition and manage animations
       pageTransition();
       stopAllAnimations();
       switch (selectedTheme) {
@@ -128,19 +130,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Close dropdown after selection
       themeSelect.classList.remove("open");
-  
-      // Also clear the inline style:
+
       const optionsContainer = themeSelect.querySelector(".options-container");
       optionsContainer.style.maxHeight = "";
-      
+
       e.stopPropagation();
     });
   });
 
-  // --- Initialize Font Custom Select (if available) ---
+  // --- Initialize Font Custom Select ---
   if (fontSelect && fontSelected) {
     const savedFontTheme = localStorage.getItem("fontTheme") || "default";
-    const matchingFontOption = fontSelect.querySelector(`.option[data-value="${savedFontTheme}"]`);
+    const matchingFontOption = fontSelect.querySelector(
+      `.option[data-value="${savedFontTheme}"]`,
+    );
     if (matchingFontOption) {
       fontSelected.textContent = matchingFontOption.textContent;
       fontSelected.setAttribute("data-value", savedFontTheme);
@@ -157,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Attach event listeners for each font option
-    fontSelect.querySelectorAll(".option").forEach(option => {
+    fontSelect.querySelectorAll(".option").forEach((option) => {
       option.addEventListener("click", function (e) {
         const selectedFont = this.getAttribute("data-value");
         fontSelected.textContent = this.textContent;
@@ -171,7 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- Global Listeners ---
-  // Close any open custom select when clicking outside
   document.addEventListener("click", () => {
     closeAllCustomSelects();
   });

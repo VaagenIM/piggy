@@ -81,8 +81,8 @@
   --piggy-logo-gradient: linear-gradient(45deg, #ffc1d8, #ff5a8f, #c03db9);
   --piggy-logo-border: rgba(66, 28, 53, 0.65);
 
-  /* fix color scheme bug */
-  color-scheme: dark;
+  /* fix theme bug */
+  color-scheme: dark !important;
 }
 
 /************************\
@@ -997,6 +997,7 @@ img[src*="#center"] {
 #level-container .nav-tooltip {
   visibility: hidden;
   width: max-content;
+  white-space: normal;
   max-width: 250px;
   background-color: var(--piggy-tooltip);
   color: var(--piggy-tooltip-text);
@@ -1123,6 +1124,7 @@ img[src*="#center"] {
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
+
 .md-container a {
   color: var(--piggy-text-hyperlink) !important;
 }

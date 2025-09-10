@@ -33,7 +33,6 @@
   }
 
   function createDummyTexture(gl, color) {
-    // Create a 1x1 texture filled with the specified RGBA color.
     const texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
     const pixel = new Uint8Array(color); // e.g. [R, G, B, A]
@@ -47,7 +46,6 @@
   // Shader based on "A simple water shader." by Ajarus, viktor@ajarus.com.
   //
   // Attribution-ShareAlike CC License.
-
   const vertexShaderSource = `
   precision mediump float;
   attribute vec2 a_position;
@@ -185,7 +183,6 @@
     iResolutionLocation = gl.getUniformLocation(program, "iResolution");
     const iChannel0Location = gl.getUniformLocation(program, "iChannel0");
     
-    // Create a dummy texture for iChannel0 using the ocean main color (#002b36 -> [0,43,54,255])
     const dummyTexture = createDummyTexture(gl, [0, 43, 54, 255]);
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, dummyTexture);
@@ -194,7 +191,6 @@
     startTime = performance.now();
     
     function render() {
-      // Clear to a deep ocean blue (0,43,54) normalized to [0,1]
       gl.clearColor(0.0, 43.0/255.0, 54.0/255.0, 1.0);
       gl.clear(gl.COLOR_BUFFER_BIT);
       

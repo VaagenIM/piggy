@@ -56,10 +56,10 @@
   }
   `;
 
-  // Desert fragment shader (dunes + ripples + heat shimmer)
-  // Inspired by classic fbm terrain techniques. WebGL1-safe.
+  // Desert fragment shader
+  // based on the following shade by klk: https://www.shadertoy.com/view/Ndy3DV
+  // Attribution-ShareAlike CC License.
   const fragmentShaderSource = `
-  // based ont he following shader: https://www.shadertoy.com/view/Ndy3DV
 
   precision mediump float;
 
