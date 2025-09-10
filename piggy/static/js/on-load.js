@@ -1,9 +1,11 @@
-// Initialize theme and font settings asap
 const systemPreferredTheme =
-  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  window.matchMedia && window.matchMedia("(prefers-contrast: more)").matches
+    ? "high-contrast"
+    : window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
 
+// Initialize theme and font settings asap
 const currentTheme = localStorage.getItem("theme") || systemPreferredTheme;
 const fontTheme = localStorage.getItem("fontTheme") || "default";
 
