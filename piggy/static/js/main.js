@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     stopOceanShaderAnimation();
     stopDesertShaderAnimation();
     stopSpaceAnimation();
+    stopGoldenShaderAnimation();
   }
 
   // --- Background Animations ---
@@ -61,6 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
       break;
     case "desert":
       startDesertShaderAnimation();
+      break;
+    case "golden":
+      startGoldenShaderAnimation();
       break;
     case "space":
       startSpaceAnimation();
@@ -120,6 +124,9 @@ document.addEventListener("DOMContentLoaded", () => {
           break;
         case "desert":
           startDesertShaderAnimation();
+          break;
+        case "golden":
+          startGoldenShaderAnimation();
           break;
         case "space":
           startSpaceAnimation();

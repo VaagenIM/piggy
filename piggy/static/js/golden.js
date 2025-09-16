@@ -43,9 +43,8 @@
     return texture;
   }
 
-  // Shader based on "A simple water shader." by Ajarus, viktor@ajarus.com.
-  //
-  // Attribution-ShareAlike CC License.
+  // Shader based on "Crazy Waves" by Alkama: https://www.shadertoy.com/view/XtsXRX
+  // Changes made to make it look like a golden veil
   const vertexShaderSource = `
   precision mediump float;
   attribute vec2 a_position;
@@ -58,72 +57,38 @@
 
   const fragmentShaderSource = `
   precision mediump float;
-  #define PI 3.1415926535897932
-
-  // Water shader parameters
-  const float speed = 0.1;
-  const float speed_x = 0.02;
-  const float speed_y = 0.02;
-
-  const float emboss = 0.5;
-  const float intensity = 3.0;
-  const int steps = 10;
-  const float frequency = 5.0;
-  const int angle = 7;
-
-  const float delta = 60.0;
-  const float gain = 700.0;
-  const float reflectionCutOff = 0.015;
-  const float reflectionIntensity = 2000000.0;
 
   uniform float iTime;
   uniform vec2 iResolution;
-  uniform sampler2D iChannel0;
 
-  float col(vec2 coord, float time) {
-    float delta_theta = 2.0 * PI / float(angle);
-    float c = 0.0;
-    float theta = 0.0;
-    for (int i = 0; i < steps; i++) {
-      vec2 adjc = coord;
-      theta = delta_theta * float(i);
-      adjc.x += cos(theta) * time * speed + time * speed_x;
-      adjc.y -= sin(theta) * time * speed - time * speed_y;
-      c += cos((adjc.x * cos(theta) - adjc.y * sin(theta)) * frequency) * intensity;
-    }
-    return cos(c);
-  }
-
-  void mainImage(out vec4 fragColor, in vec2 fragCoord) {
-    float time = iTime * 1.3;
-    vec2 p = fragCoord.xy / iResolution.xy;
-    vec2 c1 = p;
-    vec2 c2 = p;
-    float cc1 = col(c1, time);
-    
-    c2.x += iResolution.x / delta;
-    float dx = emboss * (cc1 - col(c2, time)) / delta;
-    
-    c2.x = p.x;
-    c2.y += iResolution.y / delta;
-    float dy = emboss * (cc1 - col(c2, time)) / delta;
-    
-    c1.x += dx * 2.0;
-    c1.y = -(c1.y + dy * 2.0);
-    
-    float alpha = 1.0 + (dx * dy) * gain;
-    float ddx = dx - reflectionCutOff;
-    float ddy = dy - reflectionCutOff;
-    if (ddx > 0.0 && ddy > 0.0) {
-      alpha = pow(alpha, ddx * ddy * reflectionIntensity);
-    }
-    
-    vec4 colr = texture2D(iChannel0, c1) * alpha;
-    fragColor = colr;
-  }
+  const float WAVE_SPEED = 0.05;
 
   void main() {
-    mainImage(gl_FragColor, gl_FragCoord.xy);
+    vec2 uv = gl_FragCoord.xy / iResolution.xy;
+
+    vec3 wave_color = vec3(0.0);
+
+    float wave_width = 1.0;
+    uv = -3.0 + 2.0 * uv;
+
+    float cosT = 0.35;
+
+    for (int k = 0; k <= 28; k++) {
+      float i = float(k);
+      uv.y += (0.2 + (0.2 * sin(iTime * 0.071352671) * sin(uv.x + i / 3.0 + 3.0 * (iTime * 0.25 * WAVE_SPEED * 1.137))));
+      uv.x += 1.7 * sin(iTime * WAVE_SPEED * 0.8739);
+
+      float denom = 250.0 * cosT * max(abs(uv.y), 0.002);
+      wave_width = max(0.0005, abs(0.2 / denom));
+
+      wave_color += vec3(
+        wave_width * (0.4 + ((i + 1.0) / 18.0)),
+        wave_width * (i / 9.0) * 0.65,
+        wave_width * ((i + 1.0) / 8.0) * 0.2
+      );
+    }
+
+    gl_FragColor = vec4(wave_color, 1.0);
   }
   `;
 
