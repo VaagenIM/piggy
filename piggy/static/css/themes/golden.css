@@ -1,0 +1,146 @@
+/* METADATA
+id: 11
+name: Golden
+description: A gold-on-onyx theme. (Gonna be, gonna be golden!)
+type: dark
+preview_style: background-color: #3a2f18; color: #ffd86b;
+*/
+
+[data-theme="golden"] {
+  --piggy-main: #0b0b0e;
+  --piggy-light: #15151b;
+  --piggy-neutral: #7f7a66;
+  --piggy-dark: #0b0b0e;
+
+  --piggy-text-main: #f7e9c5;
+  --piggy-shadow-text: rgba(0, 0, 0, 0.35);
+  --piggy-shadow-box: rgba(0, 0, 0, 0.5);
+  --piggy-shadow-glow: rgba(255, 215, 128, 0.35);
+
+  --piggy-card-start: #141419;
+  --piggy-card-end: #101015;
+  --piggy-card-border: #6d5520;
+  --piggy-text-card: var(--piggy-text-main);
+
+  /* Assignment cards */
+  --piggy-assignment-card-start: rgba(255, 200, 80, 0.15);
+  --piggy-assignment-card-end: rgba(255, 170, 50, 0.12);
+  --piggy-assignment-card-border: #d6a149;
+  --piggy-assignment-overlay: rgba(255, 208, 110, 0.85);
+  --piggy-assignment-accent: #ffd86b;
+  --piggy-assignment-shadow-glow: rgba(255, 217, 110, 0.4);
+
+  --piggy-card-border-width: 2px;
+
+  /* Navbar and buttons */
+  --piggy-navbar-start: #141419;
+  --piggy-navbar-end: #1a1a22;
+  --piggy-text-navbar: #f6e7c2;
+
+  --piggy-button: #b8891c;
+  --piggy-button-hover: #d1a52b;
+  --piggy-button-active: #f1c54a;
+  --piggy-text-button: #0b0b0e;
+
+  --piggy-thumbnail-overlay: rgba(0, 0, 0, 0.5);
+  --piggy-text-thumbnail: #ffdf85;
+
+  --piggy-text-tag: #f3d46e;
+  --piggy-text-description: var(--piggy-text-main);
+  --piggy-text-title: #ffe082;
+  --piggy-text-breadcrumb: #e6c86b;
+  --piggy-text-breadcrumb-hover: #ffd86b;
+
+  --piggy-menu: #16161c;
+  --piggy-menu-text: var(--piggy-text-main);
+
+  --piggy-tooltip: #ffe082;
+  --piggy-tooltip-text: #0b0b0e;
+
+  --piggy-text-hyperlink: #ffd86b;
+  --piggy-text-hyperlink-hover: #f0c24a;
+
+  --piggy-logo-gradient: linear-gradient(45deg, #ffd86b, #d4a634, #8c6a1f);
+  --piggy-logo-border: rgba(34, 33, 30, 0.5);
+}
+
+[data-theme="golden"] .level-count-container {
+  color: #0b0b0e;
+  background-color: #ffd86b;
+  box-shadow: 0 0 0.5rem var(--piggy-shadow-glow);
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+[data-theme="golden"] .md-content .admonition-title {
+  font-size: 0.8rem !important;
+}
+
+[data-theme="golden"] .md-content code:not(.md-code__content) {
+  background-color: #1e1e26;
+  color: #ffe7a0;
+  border: 1px solid #3e3416;
+}
+
+[data-theme="golden"] .md-content table code:not(.md-code__content) {
+  background-color: #2a2312;
+  border: 1px solid #5a4818;
+}
+
+[data-theme="golden"] .md-content .md-code__content {
+  border: 1px solid #3e3416;
+  background: #0f0f14;
+  color: var(--piggy-text-main);
+}
+
+[data-theme="golden"] .md-content table {
+  border: 1px solid #3e3416 !important;
+}
+
+[data-theme="golden"] .md-content th {
+  background-color: #201f26;
+  color: #ffd86b;
+  border-bottom: 1px solid #5a4818;
+}
+
+[data-theme="golden"] .md-content tr:nth-child(odd) td {
+  background-color: #15151b;
+}
+
+[data-theme="golden"] .md-content tr:nth-child(even) td {
+  background-color: #101015;
+}
+
+[data-theme="golden"] .md-content details,
+[data-theme="golden"] .md-content .tip,
+[data-theme="golden"] .md-content .admonition {
+  background-color: #15151b;
+  color: var(--piggy-text-main);
+  border: 1px solid #3e3416;
+  box-shadow: 0 0 0.5rem var(--piggy-shadow-glow);
+}
+
+[data-theme="golden"] .md-content .tabbed-labels::before {
+  border-color: #ffd86b;
+  background-color: rgba(255, 216, 107, 0.15) !important;
+}
+
+[data-theme="golden"] .md-content .tabbed-set {
+  background: #0b0b0e;
+  border: 1px solid #2c2410;
+}
+
+[data-theme="golden"] .md-clipboard {
+  color: #ffd86b !important;
+}
+
+[data-theme="golden"] .md-clipboard:hover {
+  color: #f7e9c5 !important;
+}
+
+[data-theme="golden"] .md-content {
+  border: 1px solid var(--piggy-button);
+  border-radius: 0.5rem;
+  background-color: #000000cc;
+}
