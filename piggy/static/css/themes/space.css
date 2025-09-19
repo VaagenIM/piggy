@@ -65,8 +65,8 @@ preview_style: background-color: #0b0c10; color: #66fcf1;
   --piggy-tooltip: #1f2833;
   --piggy-tooltip-text: #ffffff;
 
-  --piggy-text-hyperlink: #66fcf1;
-  --piggy-text-hyperlink-hover: #45a29e;
+  --piggy-text-hyperlink: #c739ff;
+  --piggy-text-hyperlink-hover: #8B6B8B;
 
   --piggy-logo-gradient: linear-gradient(45deg, rgb(255, 255, 255), rgb(0, 162, 255), rgb(0, 110, 255));
   --piggy-logo-border: rgba(0, 0, 0, 0.65);
