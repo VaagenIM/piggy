@@ -423,15 +423,18 @@ img[src*="#center"] {
 .assignment-meta-note {
   position: relative;
   box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
-  border-color: var(--piggy-card-border);
-  border-width: var(--piggy-card-border-width);
+  border: 1px solid var(--piggy-info-box-border);
   border-radius: 1rem;
   background: var(--piggy-info-box-background);
-  border: 1px solid var(--piggy-info-box-border);
+  box-sizing: border-box;
+  width: fit-content;
+  max-width: calc(100% - 2.0rem);
+  overflow-wrap: anywhere;
+  word-break: break-word;
   padding: 0.75rem;
-  margin: 0rem auto 0.5rem auto;
-  width: max-content;
+  margin: 0.5rem auto 0.5rem auto;
   font-size: 1.1rem;
+  text-align: center;
 }
 
 .assignment-meta-note-icon {
