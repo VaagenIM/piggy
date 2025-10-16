@@ -671,6 +671,48 @@ img[src*="#center"] {
   white-space: nowrap;
 }
 
+.difficulty-icon {
+  position: absolute;
+  top: -0.35rem;
+  left: 0.35rem;
+  width: 4rem;
+
+  /* may be used sometime */
+  --difficulty-1-color: #00a000;
+  --difficulty-2-color: #d0b000;
+  --difficulty-3-color: #d00000;
+  --difficulty-4-color: #d000d0;
+  --difficulty-5-color: #0000b0;
+}
+
+/* Potential extra styling for difficulties */
+/*
+.difficulty-1 {
+  filter: 
+    drop-shadow(0.2rem 0.2rem 0 var(--difficulty-1-color));
+}
+
+.difficulty-2 {
+  filter: 
+    drop-shadow(0.2rem 0.2rem 0 var(--difficulty-2-color));
+}
+
+.difficulty-3 {
+  filter: 
+    drop-shadow(0.2rem 0.2rem 0 var(--difficulty-3-color));
+}
+
+.difficulty-4 {
+  filter: 
+    drop-shadow(0.2rem 0.2rem 0 var(--difficulty-4-color));
+}
+
+.difficulty-5 {
+  filter: 
+    drop-shadow(0.2rem 0.2rem 0 var(--difficulty-5-color));
+}
+*/
+
 /* Special assignment card alignment trickery */
 .card-align-assignment {
   display: grid !important;
@@ -1065,6 +1107,11 @@ img[src*="#center"] {
   }
 }
 
+.tooltip-diff-image {
+  display: inline; 
+  width: 2rem;
+}
+
 /****************************\
 |*     LANGUAGE SECTION     *|
 \****************************/
@@ -1421,3 +1468,26 @@ details ul li,
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
+
+/* Potential idea for level selectors (Needs a lot of work) */
+/*
+.level-diff-1 {
+  background-color: #00a00070 !important;
+}
+
+.level-diff-2 {
+  background-color: #a0a00070 !important;
+}
+
+.level-diff-3 {
+  background-color: #a0000070 !important;
+}
+
+.level-diff-4 {
+  background-color: #a000a070 !important;
+}
+
+.level-diff-5 {
+  background-color: #0000a070 !important;
+}
+  */

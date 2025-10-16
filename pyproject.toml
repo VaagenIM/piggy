@@ -9,10 +9,10 @@ dependencies = [
     "turtleconverter@git+https://github.com/sondregronas/turtleconverter@main",
     "gunicorn~=23.0.0",
     "pillow~=11.3.0",
-    "beautifulsoup4~=4.13.1",
+    "beautifulsoup4~=4.14.2",
     "frozendict==2.4.6",
     "flask-squeeze==3.4.0",
-    "MarkupSafe==3.0.2,"
+    "MarkupSafe==3.0.3,"
 ]
 
 [build-system]
@@ -23,7 +23,7 @@ py-modules = []
 
 [project.optional-dependencies]
 dev = [
-    "ruff~=0.13.0",
+    "ruff~=0.14.0",
 ]
 
 [tool.ruff]
