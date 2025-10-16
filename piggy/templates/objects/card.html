@@ -63,26 +63,15 @@
           </div>
         {% endif %}
 
-        {% if show_difficulty and difficulty %}
-          {% if difficulty > 0 %}
-            <div class="thumbnail-text-overlay">
-              {% if difficulty > 7 %}
-                <!-- Hardcoded color here, change this-->
-                <span
-                  >Difficulty:
-                  <span class="difficulty-overkill"
-                    >⭐ × {{ difficulty }}</span
-                  ></span
-                >
-              {% else %}
-                <span>Difficulty: {{ difficulty * '⭐' }}</span>
-              {% endif %}
-            </div>
+        {% if show_difficulty and difficulty and difficulty|int > 0 %}
+          {% if difficulty|int > 5 %}
+            {% set difficulty = "5" %}
           {% endif %}
-        {% else %}
-          {% if show_overlay and overlay_text %}
-            <div class="thumbnail-text-overlay">{{ overlay_text }}</div>
-          {% endif %}
+          <img class="difficulty-icon difficulty-{{ difficulty|string }}" src="{{ url_for('static', filename='img/difficulties/' + difficulty|string + '.png') }}">
+        {% endif %}
+
+        {% if show_overlay and overlay_text %}
+          <div class="thumbnail-text-overlay">{{ overlay_text }}</div>
         {% endif %}
       </div>
     {% endif %}
