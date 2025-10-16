@@ -60,7 +60,11 @@
             {% endif %}
           {% endif %}
 
-          {% set level_difficulty = assignment.meta.difficulty %}
+          {% if assignment.meta.difficulty %}
+            {% set level_difficulty = assignment.meta.difficulty %}
+          {% else %}
+            {% set level_difficulty = "-1" %}
+          {% endif %}
 
           {% if assignment.level | int == level | int %}
             <!-- Current Level (Non-clickable) -->
