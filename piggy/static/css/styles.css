@@ -36,6 +36,14 @@
   --piggy-assignment-accent: #f57c00;
   --piggy-assignment-shadow-glow: rgba(245, 124, 0, 0.5);
 
+  /* Information cards */
+  --piggy-information-card-start: rgba(38, 0, 255, 0.3);
+  --piggy-information-card-end: rgba(53, 0, 245, 0.15);
+  --piggy-information-card-border: #0087f5;
+  --piggy-information-overlay: rgba(0, 78, 245, 0.85);
+  --piggy-information-accent: #0087f5;
+  --piggy-information-shadow-glow: rgba(53, 0, 245, 0.5);
+
   --piggy-card-border-width: 1px;
 
   /* piggy elements */
@@ -417,6 +425,18 @@ img[src*="#center"] {
   }
 }
 
+/************************\
+|* INFORMATION CARD GRID *|
+\************************/
+.information-card-grid-wrapper {
+  grid-template-columns: 1fr;
+  max-width: 100%;
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
 /*************************\
 |* EXTRA ASSIGNMENT BITS *|
 \*************************/
@@ -780,6 +800,22 @@ img[src*="#center"] {
 
 .card-assignment .thumbnail-image {
   height: 100%;
+}
+
+/* Special information card alignment trickery */
+.card-align-information {
+
+}
+
+.card-information {
+  background: linear-gradient(
+    135deg,
+    var(--piggy-information-card-start) 0%,
+    var(--piggy-information-card-end) 100%
+  );
+  border: var(--piggy-card-border-width) solid
+    var(--piggy-information-card-border);
+  padding: 0.75rem;
 }
 
 /***************************\

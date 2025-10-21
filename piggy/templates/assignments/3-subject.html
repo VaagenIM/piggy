@@ -5,6 +5,12 @@
   {# moveable search box #}
   {% include 'partials/search_box.html' %}
 
+  {# filter out information #}
+  {%
+    set informations = segment.items() | selectattr('1.meta.type', 'equalto',
+    'information') | list
+  %}
+
   {# filter out assignments #}
   {%
     set assignments = segment.items() | selectattr('1.meta.type', 'equalto',
@@ -13,6 +19,20 @@
 
   {# everything that doesn't have a type should be treated as an exercise (default type) #}
   {% set exercises = segment.items() | list_difference([assignments]) %}
+
+  {# INFORMATION #}
+  {% if informations %}
+    <div class="card-grid-wrapper information-card-grid-wrapper">
+      <h2 class="assignment-title">Info:</h2>
+      <div
+        class="card-grid-container card-type-information information-card-grid-container"
+      >
+        {% for item, data in informations %}
+          {% include 'objects/card-information.html' %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
 
   {# ASSIGNMENTS #}
   {% if assignments %}

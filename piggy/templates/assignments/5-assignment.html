@@ -7,6 +7,8 @@
 
 {% if meta.get(AssignmentTemplate.LEVELS_DATA.name).meta.type == "assignment" %}
   {% set level_text = "Oppgave" %}
+{% else if meta.get(AssignmentTemplate.LEVELS_DATA.name).meta.type == "information" %}
+  {% set level_text = "Tema" %}
 {% else %}
   {% set level_text = "Level" %}
 {% endif %}
