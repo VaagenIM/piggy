@@ -429,17 +429,16 @@ img[src*="#center"] {
 |* INFORMATION CARD GRID *|
 \************************/
 .information-card-grid-wrapper {
-  grid-template-columns: 1fr;
+  grid-template-columns: 2fr;
   max-width: 100%;
   padding: 1rem;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* small screen */
 @media (min-width: 640px) {
   .information-card-grid-container {
     grid-template-columns: 1fr;
+    max-width: 100%;
   }
 }
 
@@ -447,27 +446,31 @@ img[src*="#center"] {
 @media (min-width: 768px) {
   .information-card-grid-container {
     grid-template-columns: 1fr;
+    max-width: 100%;
   }
 }
 
 /* large screen */
 @media (min-width: 1024px) {
   .information-card-grid-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 2fr 2fr;
+    max-width: 100%;
   }
 }
 
 /* very large screen */
 @media (min-width: 2240px) {
   .information-card-grid-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 2fr 2fr;
+    max-width: 100%;
   }
 }
 
 /* extremely large screen */
 @media (min-width: 3200px) {
   .information-card-grid-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 2fr 2fr;
+    max-width: 100%;
   }
 }
 
@@ -840,9 +843,6 @@ img[src*="#center"] {
 |*    INFORMATION CARDS    *|
 \***************************/
 
-.card-align-information {
-}
-
 .card-information {
   background: linear-gradient(
     135deg,
@@ -862,7 +862,33 @@ img[src*="#center"] {
 }
 
 .card-information .card-title {
-  
+  text-align: left !important;
+}
+
+/* Special information card alignment trickery */
+.card-align-information {
+  display: grid !important;
+  grid-template-columns: 0fr 4fr 3fr;
+  grid-template-areas:
+    "badge header tags"
+    "badge description description";
+  gap: 0.5rem;
+}
+
+.card-align-information .card-header {
+  grid-area: header;
+}
+
+.card-align-information .thumbnail-container {
+  grid-area: thumbnail;
+}
+
+.card-align-information .description-container {
+  grid-area: description;
+}
+
+.card-align-information .tags-container {
+  grid-column: tags;
 }
 
 /***************************\
