@@ -17,7 +17,7 @@
   %}
 
   {# everything that doesn't have a type should be treated as an exercise (default type) #}
-  {% set exercises = segment.items() | list_difference([assignments]) %}
+  {% set exercises = segment.items() | list_difference([assignments] + [informations]) %}
 
   {# INFORMATION #}
   {% if informations %}
