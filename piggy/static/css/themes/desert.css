@@ -29,12 +29,20 @@ preview_style: background-color: #f4e7d3; color: #3e2a14;
   --piggy-text-card: var(--piggy-text-dark);
 
   /* Assignment cards */
-  --piggy-assignment-card-start: rgba(210, 144,  93, 0.3);
-  --piggy-assignment-card-end: rgba(179, 121,  78, 0.3);
+  --piggy-assignment-card-start: rgba(168, 121, 85, 0.7);
+  --piggy-assignment-card-end: rgba(196, 119, 60, 0.3);
   --piggy-assignment-card-border: #b37a4e;
   --piggy-assignment-overlay: rgba(179, 121,  78, 0.85);
   --piggy-assignment-accent: #b37a4e;
   --piggy-assignment-shadow-glow: rgba(179, 121,  78, 0.5);
+
+    /* Information cards */
+  --piggy-information-card-start: rgba(168, 85, 89, 0.7);
+  --piggy-information-card-end: rgba(196, 60, 78, 0.3);
+  --piggy-information-card-border: #b34e4e;
+  --piggy-information-overlay: rgba(179, 78, 100, 0.85);
+  --piggy-information-accent: #b34e6c;
+  --piggy-information-shadow-glow: rgba(179, 78, 83, 0.5);
 
   --piggy-card-border-width: 1px;
 

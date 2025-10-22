@@ -3,20 +3,21 @@
 {{
   card(
     abspath = abspath,
-    item = item,
+    item = item ~ "/" ~ (data.data.keys()|list)[0],
     title = data.meta.name,
     level_count = data.data|length,
     description = data.meta.description,
     thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." + img_fmt,
     thumbnail_alt = "Header image for " ~ item,
-    extra_classes = 'card-assignment card-align-assignment',
+    extra_classes = 'card-information card-align-information',
     difficulty = data.meta.difficulty,
     tags = data.meta.tags,
-    card_type = 'assignment',
+    card_type = 'information',
     show_levels=false,
     show_difficulty=false,
     show_overlay=false,
     show_tags=false,
-    show_description=true
+    show_description=true,
+    show_thumbnail=false,
   )
 }}

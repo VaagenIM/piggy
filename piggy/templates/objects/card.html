@@ -22,16 +22,15 @@
       show_thumbnail=true
   )
 %}
-  {% if card_type == 'assignment' %}
-    {% set badge = '' 
-  %}
+  {% if card_type == 'information' %}
+    {% set badge = '' %}
   {% else %}
     {% set badge = '' %}
   {% endif %}
 
   <a
     href="{{ abspath }}/{{ item }}"
-    class="card card-container grid-cols-2 p-3 block {{ extra_classes }} {{ wrapper_classes }}"
+    class="card card-container p-3 block {{ extra_classes }} {{ wrapper_classes }}"
     data-title="{{ title|lower }}"
     data-description="{{ description|lower }}"
     data-tags="{{ tags|join(' ')|lower }}"

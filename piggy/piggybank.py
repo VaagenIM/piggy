@@ -149,6 +149,9 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
                 # If the folder contains a 'meta.json' file, we should add that as metadata to the folder
                 piggymap[i]["meta"] = load_meta_json(Path(f"{path}/{item}/meta.json"))
                 piggymap[i]["meta"]["system_path"] = Path(f"{path}/{item}")
+            # Subjects should have their type set to exercise by default
+            if _current_level == AssignmentTemplate.TOPIC.index - 1 and i in piggymap:
+                piggymap[i]["meta"]["type"] = piggymap[i]["meta"].get("type", "exercise")
             continue
 
         # If the item is a file, we want to check if it's a valid assignment file
