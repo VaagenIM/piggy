@@ -169,6 +169,11 @@
   letter-spacing: 0px;
 }
 
+[data-font-theme="bitter"] *:not(code *, code, .MathJax *) {
+  font-family: "Bitter", serif;
+  letter-spacing: 0px;
+}
+
 [data-font-theme="raleway"] *:not(code *, code, .MathJax *) {
   font-family: "Raleway", sans-serif;
   letter-spacing: 0px;
