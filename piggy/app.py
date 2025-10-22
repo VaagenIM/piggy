@@ -105,6 +105,11 @@ def create_app(debug: bool = False) -> Flask:
     def index():
         return render_template("index.html")
 
+    @app.route("/.well-known/<path:filename>")
+    def well_known(filename):
+        """Ignore requests to .well-known (chrome devtools etc. use this), would raise a lot of 404's"""
+        return "", 204
+
     @assignment_routes.route("/<path:path>")
     @assignment_routes.route("/")
     @lru_cache_wrapper
@@ -167,6 +172,8 @@ def create_app(debug: bool = False) -> Flask:
 
     @app.errorhandler(Exception)
     def error(e):
+        if debug:
+            raise e
         e = normalize_http_exception(e)
         error_message = ERROR_MESSAGE_DESCRIPTIONS.get(str(e.status_code), ERROR_MESSAGE_DESCRIPTIONS["default"])
         return render_template("error.html", error=e, error_message=error_message), e.status_code
