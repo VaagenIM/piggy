@@ -93,7 +93,8 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
 
     all_metadata = dict({**meta, **get_all_meta_from_path(str(p.parent), PIGGYMAP), **extra_metadata})
     # Set the title to the assignment's title
-    all_metadata["title"] = sections["meta"]["title"]
+    if "title" in sections["meta"]:
+        all_metadata["title"] = sections["meta"]["title"]
 
     render = render_template(
         AssignmentTemplate.ASSIGNMENT.template,
