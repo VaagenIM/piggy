@@ -3,7 +3,7 @@
 
   font-size: var(--piggy-font-size);
 
-  font-family: "Quicksand", sans-serif;
+  font-family: "Noto Sans", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
 
@@ -165,6 +165,21 @@
 |*     FONT THEMES     *|
 \***********************/
 [data-font-theme="default"] *:not(code *, code, .MathJax *) {
+  font-family: "Noto Sans", sans-serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="bitter"] *:not(code *, code, .MathJax *) {
+  font-family: "Bitter", serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="raleway"] *:not(code *, code, .MathJax *) {
+  font-family: "Raleway", sans-serif;
+  letter-spacing: 0px;
+}
+
+[data-font-theme="quicksand"] *:not(code *, code, .MathJax *) {
   font-family: "Quicksand", sans-serif;
   letter-spacing: 0px;
 }
