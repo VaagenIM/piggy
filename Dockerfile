@@ -1,5 +1,7 @@
 FROM python:3.12 AS builder
 
+ARG CACHE_BUST
+
 RUN apt-get update && apt-get install -y nodejs npm && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
