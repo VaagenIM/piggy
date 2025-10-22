@@ -3,6 +3,9 @@ Determine what type of topic we are on (assignment/info/exercise)
 so we can decide whether to remove the last path segment from the breadcrumbs.
 (We want to hide the topic slug in some cases)
 #}
+{% if not meta %}
+  {% set meta = {} %}
+{% endif %}
 {% set topic_type = "" %}
 {% set remove_last_from_data_with_type = ["information", "exercise"] %}
 {% if meta.topic %}
