@@ -1,8 +1,7 @@
 # Used to generate GitHub Pages
 services:
   app:
-    # build: .
-    image: piggy-pages:latest
+    build: .
     container_name: piggy
     ports:
       - "5000:5000"
