@@ -37,12 +37,12 @@
   --piggy-assignment-shadow-glow: rgba(245, 124, 0, 0.5);
 
   /* Information cards */
-  --piggy-information-card-start: rgba(38, 0, 255, 0.3);
-  --piggy-information-card-end: rgba(53, 0, 245, 0.15);
-  --piggy-information-card-border: #0087f5;
-  --piggy-information-overlay: rgba(0, 78, 245, 0.85);
+  --piggy-information-card-start: rgba(0, 119, 255, 0.3);
+  --piggy-information-card-end: rgba(0, 155, 245, 0.15);
+  --piggy-information-card-border: #00a7f5;
+  --piggy-information-overlay: rgba(0, 155, 245, 0.85);
   --piggy-information-accent: #0087f5;
-  --piggy-information-shadow-glow: rgba(53, 0, 245, 0.5);
+  --piggy-information-shadow-glow: rgba(71, 163, 206, 0.5);
 
   --piggy-card-border-width: 1px;
 
@@ -436,6 +436,40 @@ img[src*="#center"] {
   margin-right: auto;
 }
 
+/* small screen */
+@media (min-width: 640px) {
+  .information-card-grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* medium screen */
+@media (min-width: 768px) {
+  .information-card-grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* large screen */
+@media (min-width: 1024px) {
+  .information-card-grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* very large screen */
+@media (min-width: 2240px) {
+  .information-card-grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* extremely large screen */
+@media (min-width: 3200px) {
+  .information-card-grid-container {
+    grid-template-columns: 1fr;
+  }
+}
 
 /*************************\
 |* EXTRA ASSIGNMENT BITS *|
@@ -802,9 +836,11 @@ img[src*="#center"] {
   height: 100%;
 }
 
-/* Special information card alignment trickery */
-.card-align-information {
+/***************************\
+|*    INFORMATION CARDS    *|
+\***************************/
 
+.card-align-information {
 }
 
 .card-information {
@@ -816,6 +852,17 @@ img[src*="#center"] {
   border: var(--piggy-card-border-width) solid
     var(--piggy-information-card-border);
   padding: 0.75rem;
+}
+
+.card-information:hover {
+  box-shadow: inset 0 0 20px var(--piggy-information-shadow-glow);
+  transform: rotate(0.4deg) scale(99%);
+  animation-timing-function: ease;
+  cursor: pointer;
+}
+
+.card-information .card-title {
+  
 }
 
 /***************************\
