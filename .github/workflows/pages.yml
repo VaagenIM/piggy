@@ -60,14 +60,14 @@ jobs:
       - name: Spin up containers
         run: |
           docker buildx create --use || true
+          mkdir -p /tmp/.buildx-cache
           docker buildx build \
             --file Dockerfile \
             --tag piggy-pages:latest \
             --progress=plain \
             --cache-from type=local,src=/tmp/.buildx-cache \
-            --cache-to type=local,dest=/tmp/.buildx-cache-new,mode=max \
-            .
-          docker mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+            --cache-to type=local,dest=/tmp/.buildx-cache,mode=max \
+            --load .
           docker compose -f docker-compose.pages.yml up -d --remove-orphans
 
       - name: Install dependencies
