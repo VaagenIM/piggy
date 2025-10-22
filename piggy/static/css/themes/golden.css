@@ -30,6 +30,13 @@ preview_style: background-color: #3a2f18; color: #ffd86b;
   --piggy-assignment-accent: #ffd86b;
   --piggy-assignment-shadow-glow: rgba(255, 217, 110, 0.4);
 
+  --piggy-information-card-start: rgba(201, 59, 34, 0.7);
+  --piggy-information-card-end: rgba(180, 51, 0, 0.3);
+  --piggy-information-card-border: #d83d00;
+  --piggy-information-overlay: rgba(245, 37, 0, 0.85);
+  --piggy-information-accent: #f54e00;
+  --piggy-information-shadow-glow: rgba(206, 103, 71, 0.5);
+
   --piggy-card-border-width: 2px;
 
   /* Navbar and buttons */
