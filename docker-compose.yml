@@ -14,3 +14,5 @@ services:
 
       - TZ=Europe/Oslo
     restart: unless-stopped
+    volumes:
+      - ./piggybank:/app/piggybank
