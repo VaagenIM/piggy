@@ -1,3 +1,14 @@
+{#
+Determine what type of topic we are on (assignment/info/exercise)
+so we can decide whether to remove the last path segment from the breadcrumbs.
+(We want to hide the topic slug in some cases)
+#}
+{% set topic_type = "" %}
+{% set remove_last_from_data_with_type = ["information", "exercise"] %}
+{% if meta.topic %}
+  {% set topic_type = meta.topic.type %}
+{% endif %}
+
 <nav class="piggy-navbar flex items-center justify-between px-3 py-2">
   {# Breadcrumbs elements #}
   <a id="piggy-logo" href="/">Piggy</a>
@@ -13,6 +24,10 @@
       {% set path_segments = request.path.strip('/').split('/') %}
       {% if "lang" == path_segments[-2] %}
         {% set path_segments = path_segments[:-2] %}
+      {% endif %}
+      {# Remove the last segment if the data type is in the list of ignored types #}
+      {% if meta.LEVELS_DATA and topic_type in remove_last_from_data_with_type %}
+        {% set path_segments = path_segments[:-1] %}
       {% endif %}
 
       {% for p in path_segments %}
