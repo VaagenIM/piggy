@@ -68,7 +68,7 @@ jobs:
             --cache-from type=local,src=/tmp/.buildx-cache \
             --cache-to type=local,dest=/tmp/.buildx-cache,mode=max \
             --load .
-          docker compose -f docker-compose.pages.yml up -d --remove-orphans
+          docker compose -f docker-compose.pages.yml up -d --build --remove-orphans --force-recreate
 
       - name: Install dependencies
         run: uv pip install -r .github/workflows/requirements-pages.txt
