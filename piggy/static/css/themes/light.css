@@ -7,7 +7,7 @@ preview_style: background-color: rgb(225, 225, 225); color: rgb(60, 60, 60);
 */
 
 [data-theme="light"] {
-  --piggy-main: rgb(225, 225, 225);
+  --piggy-main: rgb(245, 245, 245);
   --piggy-light: #fefefe;
   --piggy-neutral: #757575;
   --piggy-dark: rgb(60, 60, 60);
@@ -61,6 +61,11 @@ preview_style: background-color: rgb(225, 225, 225); color: rgb(60, 60, 60);
   --piggy-text-hyperlink-hover: #316997;
 
   --piggy-logo-border: rgba(50, 0, 50, 0.5);
+
+  /* logo */
+  --piggy-logo: #ff9abc;
+  --piggy-logo-gradient: linear-gradient(45deg, #ff72a8, #ff5a8f, #c03db9);
+  --piggy-logo-border: rgba(66, 28, 53, 0.8);
 }
 
 [data-theme="light"] .level-count-container {
