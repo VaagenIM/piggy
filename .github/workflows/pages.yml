@@ -64,7 +64,7 @@ jobs:
         run: uv pip install -r .github/workflows/requirements-pages.txt
 
       - name: Run web scraper to build static site
-        run: sleep 10 && python .github/workflows/web_scraper.py
+        run: python .github/workflows/web_scraper.py
 
       - name: Tear down containers
         run: docker compose -f docker-compose.pages.yml down
