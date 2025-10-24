@@ -52,11 +52,13 @@ def unquote_path(path):
 def get_html(link) -> tuple[str, set[str], set[str]]:
     """Get the html from the given url, and append the new links to the links list."""
     print(f"Visiting \33[34m{url}/{link.strip('/')}\33[0m")
-    r = requests.get(f"{url}/{link.strip('/')}", allow_redirects=True)
+    r = requests.get(f"{url}/{link.strip('/')}", allow_redirects=True, timeout=600)
 
     visited.add(link)
 
     if not r.ok and link not in ["/404"]:
+        if link == "/":
+            raise Exception("Could not fetch the main page. Is the server running?")
         print(f"WARNING: Could not fetch {link} (status code: {r.status_code})")
         return "", set(), set()
 
