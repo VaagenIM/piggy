@@ -15,7 +15,7 @@
 {% if meta.name %}
   {% set ns.og_name = meta.name %}
 {% elif meta.title and level %}
-  {% set ns.og_name = "Level " + level + ": " + meta.title %}
+  {% set ns.og_name = meta.title %}
 {% endif %}
 
 {% if meta.summary %}
@@ -25,7 +25,7 @@
 {% endif %}
 
 {% if meta.thumbnail %}
-  {% set ns.image = meta.thumbnail %}
+  {% set ns.image = media_abspath + meta.thumbnail + "." + img_fmt %}
 {% elif level_name %}
   {% set ns.image = url_for('api.generate_thumbnail', text=level_name, _external=True)+'?c=' + meta.topic.name %}
 {% elif ns.meta_exists %}
@@ -42,7 +42,6 @@
 
 <meta name="twitter:title" content="{{ ns.og_name }}" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta property="twitter:domain" content="{{ request.host }}" />
 <meta property="twitter:url" content="{{ request.url }}" />
 <meta name="twitter:image" content="{{ ns.image }}" />
 
