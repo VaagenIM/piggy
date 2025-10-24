@@ -87,6 +87,11 @@ def get_html(link) -> tuple[str, set[str], set[str]]:
         html = re.sub(r'href="attachments/', 'href="../../attachments/', html)
         html = re.sub(r'src="attachments/', 'src="../../attachments/', html)
         html = re.sub(
+            r'(content="[^"]*?)([\\/])translations[\\/][^"\\/]+[\\/](.*?)"\s+((?:property|name)="(?:og:image|twitter:image)")',
+            r'\1\2\3" \4',
+            html,
+        )
+        html = re.sub(
             rf"""href=\"({link.split("Level")[0].split("/")[-1]}[^/]+)\"""", rf'href="../../\1/lang/{lang}"', html
         )
 
