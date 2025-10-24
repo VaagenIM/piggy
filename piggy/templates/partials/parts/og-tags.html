@@ -24,7 +24,9 @@
   {% set ns.description = meta.description %}
 {% endif %}
 
-{% if meta.thumbnail %}
+{% if not media_abspath and meta.thumbnail %}
+  {% set ns.image = meta.thumbnail %}
+{% elif media_abspath and meta.thumbnail %}
   {% set ns.image = media_abspath + meta.thumbnail + "." + img_fmt %}
 {% elif level_name %}
   {% set ns.image = url_for('api.generate_thumbnail', text=level_name, _external=True)+'?c=' + meta.topic.name %}
