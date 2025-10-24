@@ -28,7 +28,7 @@
   {% set ns.image = meta.thumbnail %}
 {% elif media_abspath and meta.thumbnail %}
   {# TODO: This is a bit of a hack and probably unintended... Not sure why "piggybank" is here... #}
-  {% set ns.image = request.host_url.rstrip('/') + media_abspath.replace("/piggybank", "") + "/" + meta.thumbnail + "." + img_fmt %}
+  {% set ns.image = request.host_url.rstrip('/') + media_abspath.replace("/piggybank", "").replace(" ","_") + "/" + meta.thumbnail + "." + img_fmt %}
 {% elif level_name %}
   {% set ns.image = url_for('api.generate_thumbnail', text=level_name, _external=True)+'?c=' + meta.topic.name %}
 {% elif ns.meta_exists %}
