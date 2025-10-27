@@ -68,6 +68,10 @@ preview_style: background: linear-gradient(90deg, #d6c8d5, #ffffff); color: #000
   --piggy-text-hyperlink: #458bc4;
   --piggy-text-hyperlink-hover: rgb(62, 86, 107);
 
+  /* info boxes */
+  --piggy-info-box-background: #00a3c255;
+  --piggy-info-box-border: #00bcd4;
+
   /* logo */
   --piggy-logo: #ff9abc;
   --piggy-logo-gradient: linear-gradient(45deg, #ffc1d8, #ff5a8f, #c03db9);

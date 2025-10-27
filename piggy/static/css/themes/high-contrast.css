@@ -51,6 +51,10 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-tooltip: #000000;
   --piggy-tooltip-text: #ffffff;
 
+  /* info boxes */
+  --piggy-info-box-background: #000000;
+  --piggy-info-box-border: #00b7ff;
+
   /* logo */
   --piggy-logo: #ff44ff;
   --piggy-logo-gradient: #ff44ff;
