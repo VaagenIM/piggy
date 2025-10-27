@@ -69,6 +69,10 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 
   --piggy-logo-gradient: linear-gradient(45deg, #ffd86b, #d4a634, #8c6a1f);
   --piggy-logo-border: rgba(34, 33, 30, 0.5);
+
+  /* info boxes */
+  --piggy-info-box-background: #00414ec0;
+  --piggy-info-box-border: #00bcd4;
 }
 
 [data-theme="golden"] .level-count-container {

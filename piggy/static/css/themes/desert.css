@@ -79,6 +79,10 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
 
   --piggy-logo-gradient: linear-gradient(45deg, rgb(255, 123, 0), rgb(255, 153, 58), rgb(255, 196, 161));
   --piggy-logo-border: rgba(0, 0, 0, 0.65);
+
+  /* info boxes */
+  --piggy-info-box-background: #69a8b4a4;
+  --piggy-info-box-border: #007d8d;
 }
 
 [data-theme="desert"] .level-count-container {

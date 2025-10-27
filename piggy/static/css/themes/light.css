@@ -73,6 +73,10 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
   --piggy-level-container: rgb(168, 190, 233);
   --piggy-level-container-border: rgba(0, 0, 0, 0);
 
+  /* info boxes */
+  --piggy-info-box-background: #00a3c255;
+  --piggy-info-box-border: #00bcd4;
+
   /* logo */
   --piggy-logo: #ff9abc;
   --piggy-logo-gradient: linear-gradient(45deg, #ff72a8, #ff5a8f, #c03db9);
