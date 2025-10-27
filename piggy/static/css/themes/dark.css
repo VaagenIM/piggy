@@ -3,65 +3,73 @@ id: 0
 name: Dark
 description: The default dark theme.
 type: dark
-preview_style: background-color: rgb(34, 41, 47); color: #f0f4f8;
+preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); color: #ffffff; text-shadow: none;
 */
 
 [data-theme="dark"] {
-  /* piggy colors */
-  --piggy-main: rgb(34, 41, 47);
-  --piggy-light: #f0f4f8;
-  --piggy-neutral: #60656b;
-  --piggy-dark: rgb(51, 61, 71);
+  /* piggy colors (higher contrast) */
+  --piggy-main: rgb(24, 29, 34);
+  --piggy-light: #ffffff;
+  --piggy-neutral: #7a828a;
+  --piggy-dark: rgb(17, 21, 25);
 
   --piggy-text-main: var(--piggy-light);
   --piggy-text-light: var(--piggy-light);
-  --piggy-text-neutral: var(--piggy-neutral);
+  --piggy-text-neutral: #aeb3b9;
   --piggy-text-dark: var(--piggy-dark);
 
-  --piggy-shadow-text: #00000029;
-  --piggy-shadow-box: #00000022;
-  --piggy-shadow-glow: rgba(255, 255, 255, 20%);
+  --piggy-shadow-text: #00000055;
+  --piggy-shadow-box: #00000044;
+  --piggy-shadow-glow: rgba(255, 255, 255, 0.35);
 
   /* piggy card colors */
-  --piggy-card-start: rgba(130, 174, 197, 0.3);
-  --piggy-card-end: rgba(48, 73, 90, 0.3);
-  --piggy-card-border: var(--piggy-card-end);
+  --piggy-card-start: rgba(55, 78, 87, 0.658);
+  --piggy-card-end: rgba(14, 26, 34, 0.55);
+  --piggy-card-border: rgba(83, 100, 110, 0.356);
   --piggy-text-card: var(--piggy-text-light);
 
   /* Assignment cards */
-  --piggy-assignment-card-start: rgba(255, 152, 0, 0.3);
-  --piggy-assignment-card-end: rgba(245, 124, 0, 0.15);
-  --piggy-assignment-card-border: #f57c00;
-  --piggy-assignment-overlay: rgba(245, 124, 0, 0.85);
-  --piggy-assignment-accent: #f57c00;
-  --piggy-assignment-shadow-glow: rgba(245, 124, 0, 0.5);
+  --piggy-assignment-card-start: rgba(214, 129, 0, 0.35);
+  --piggy-assignment-card-end: rgba(99, 49, 0, 0.507);
+  --piggy-assignment-card-border: rgba(255, 152, 0, 0.5);
+  --piggy-assignment-overlay: rgba(245, 124, 0, 0.9);
+  --piggy-assignment-accent: #804f07;
+  --piggy-assignment-shadow-glow: rgba(156, 94, 0, 0.6);
 
-  --piggy-card-border-width: 1px;
+  /* Information cards */
+  --piggy-information-card-start: rgba(0, 98, 179, 0.384);
+  --piggy-information-card-end: rgba(0, 100, 200, 0.35);
+  --piggy-information-card-border: rgba(0, 156, 255, 0.5);
+  --piggy-information-overlay: rgba(0, 150, 255, 0.9);
+  --piggy-information-accent: #00aaff;
+  --piggy-information-shadow-glow: rgba(0, 150, 255, 0.6);
+
+  --piggy-card-border-width: 1.5px;
 
   /* piggy elements */
-  --piggy-navbar-start: rgb(51, 61, 71);
-  --piggy-navbar-end: rgb(51, 61, 71);
+  --piggy-navbar-start: rgb(30, 35, 40);
+  --piggy-navbar-end: rgb(30, 35, 40);
   --piggy-text-navbar: var(--piggy-light);
 
   /* buttons */
-  --piggy-button: #4a6783;
-  --piggy-button-hover: #647a95;
-  --piggy-button-active: #2a5d9b;
-  --piggy-text-button: #ffffff;
+  --piggy-button: #274f6e;
+  --piggy-button-hover: #51748d;
+  --piggy-button-active: #24a1b8;
+  --piggy-text-button: var(--piggy-light);
 
   /* thumbnails */
-  --piggy-thumbnail-overlay: #00000077;
+  --piggy-thumbnail-overlay: #000000aa;
   --piggy-text-thumbnail: var(--piggy-light);
 
   /* text */
   --piggy-text-tag: #ffffff;
   --piggy-text-description: var(--piggy-light);
-  --piggy-text-title: var(--piggy-light);
-  --piggy-text-breadcrumb: var(--piggy-light);
-  --piggy-text-breadcrumb-hover: #a6aaad;
+  --piggy-text-title: #ffffff;
+  --piggy-text-breadcrumb: #d0d3d6;
+  --piggy-text-breadcrumb-hover: #85939e;
 
   /* menus */
-  --piggy-menu: var(--piggy-dark);
+  --piggy-menu: #1c232a;
   --piggy-menu-text: var(--piggy-light);
 
   /* tooltips */
@@ -69,13 +77,22 @@ preview_style: background-color: rgb(34, 41, 47); color: #f0f4f8;
   --piggy-tooltip-text: #ffffff;
 
   /* links */
-  --piggy-text-hyperlink: #407eb1;
-  --piggy-text-hyperlink-hover: #407eb1;
+  --piggy-text-hyperlink: #57a5ff;
+  --piggy-text-hyperlink-hover: #8cc8ff;
 
   /* info boxes */
-  --piggy-info-box-background: #00859c49;
-  --piggy-info-box-border: #00859c;
+  --piggy-info-box-background: #00a3c255;
+  --piggy-info-box-border: #00bcd4;
 
+  /* level container */
+  --piggy-level-container-text: var(--piggy-light);
+  --piggy-level-container: rgb(43, 59, 92);
+  --piggy-level-container-border: rgba(0, 0, 0, 0);
+
+  /* logo */
+  --piggy-logo: #ff9abc;
+  --piggy-logo-gradient: linear-gradient(45deg, #ff72a8, #ff5a8f, #c03db9);
+  --piggy-logo-border: rgba(66, 28, 53, 0.8);
 }
 
 [data-theme="dark"] .md-content .md-code__content {

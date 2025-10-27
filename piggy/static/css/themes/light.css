@@ -3,69 +3,80 @@ id: 1
 name: Light
 description: The default light theme.
 type: light
-preview_style: background-color: rgb(225, 225, 225); color: rgb(60, 60, 60);
+preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); color: rgb(23, 23, 23); text-shadow: none;
 */
 
 [data-theme="light"] {
-  --piggy-main: rgb(225, 225, 225);
-  --piggy-light: #fefefe;
+  --piggy-main: rgb(247, 247, 247);
+  --piggy-light: rgb(255, 255, 255);
   --piggy-neutral: #757575;
-  --piggy-dark: rgb(60, 60, 60);
+  --piggy-dark: rgb(23, 23, 23);
 
   --piggy-text-main: var(--piggy-dark);
   --piggy-shadow-text: rgba(0, 0, 0, 0);
-  --piggy-shadow-box: #00000011;
-  --piggy-shadow-glow: rgba(0, 0, 0, 0.2);
+  --piggy-shadow-box: #00000015;
+  --piggy-shadow-glow: rgba(0, 0, 0, 0.1);
 
-  --piggy-card-start: rgba(255, 255, 255, 1);
-  --piggy-card-end: rgba(245, 245, 245, 1);
-  --piggy-card-border: #999999;
-  --piggy-text-card: #333333;
+  --piggy-card-start: rgb(255, 255, 255);
+  --piggy-card-end: rgb(240, 240, 240);
+  --piggy-card-border: #b1b1b1;
+  --piggy-text-card: var(--piggy-dark);
 
   /* Assignment cards */
-  --piggy-assignment-card-start: rgba(255, 152, 0, 0.3);
-  --piggy-assignment-card-end: rgba(245, 124, 0, 0.3);
-  --piggy-assignment-card-border: #f57c00;
+  --piggy-assignment-card-start: rgba(255, 210, 142, 0.5);
+  --piggy-assignment-card-end: rgba(255, 128, 0, 0.5);
+  --piggy-assignment-card-border: rgba(223, 125, 27, 0.75);
   --piggy-assignment-overlay: rgba(245, 124, 0, 0.8);
   --piggy-assignment-accent: #f57c00;
   --piggy-assignment-shadow-glow: rgba(245, 124, 0, 0.5);
 
+    /* Information cards */
+  --piggy-information-card-start: rgba(138, 203, 255, 0.5);
+  --piggy-information-card-end: rgba(63, 139, 214, 0.5);
+  --piggy-information-card-border: rgba(64, 129, 170, 0.75);
+  --piggy-information-overlay: rgba(0, 150, 255, 0.9);
+  --piggy-information-accent: #00aaff;
+  --piggy-information-shadow-glow: rgba(0, 150, 255, 0.6);
+
   --piggy-card-border-width: 1px;
 
   /* Navbar and buttons */
-  --piggy-navbar-start: rgb(210, 210, 210);
-  --piggy-navbar-end: rgb(190, 190, 190);
+  --piggy-navbar-start: rgb(225, 225, 225);
+  --piggy-navbar-end: rgb(225, 225, 225);
   --piggy-text-navbar: #333333;
 
-  --piggy-button: #d0d4e8;
-  --piggy-button-hover: #b2b8d4;
-  --piggy-button-active: #96beee;
-  --piggy-text-button: #333333;
+  --piggy-button: rgb(213, 206, 243);
+  --piggy-button-hover: rgb(175, 168, 209);
+  --piggy-button-active: rgb(190, 149, 255);
+  --piggy-text-button: var(--piggy-dark);
 
   --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7);
   --piggy-text-thumbnail: var(--piggy-dark);
 
-  --piggy-text-tag: #4a4a4a;
+  --piggy-text-tag: var(--piggy-dark);
   --piggy-text-description: var(--piggy-dark);
   --piggy-text-title: var(--piggy-dark);
   --piggy-text-breadcrumb: var(--piggy-dark);
-  --piggy-text-breadcrumb-hover: var(--piggy-dark);
+  --piggy-text-breadcrumb-hover: #757575;
 
   --piggy-menu: var(--piggy-light);
   --piggy-menu-text: var(--piggy-dark);
 
-  --piggy-tooltip: #000000;
-  --piggy-tooltip-text: #ffffff;
+  --piggy-tooltip: var(--piggy-dark);
+  --piggy-tooltip-text: var(--piggy-light);
 
-  --piggy-text-hyperlink: #316997;
-  --piggy-text-hyperlink-hover: #316997;
+  --piggy-text-hyperlink: #2885d1;
+  --piggy-text-hyperlink-hover: rgb(39, 80, 114);
 
+  /* level container */
+  --piggy-level-container-text: var(--piggy-dark);
+  --piggy-level-container: rgb(168, 190, 233);
+  --piggy-level-container-border: rgba(0, 0, 0, 0);
+
+  /* logo */
+  --piggy-logo: #ff9abc;
+  --piggy-logo-gradient: linear-gradient(45deg, #ff72a8, #ff5a8f, #c03db9);
   --piggy-logo-border: rgba(50, 0, 50, 0.5);
-}
-
-[data-theme="light"] .level-count-container {
-  color: var(--piggy-dark);
-  background-color: var(--piggy-main);
 }
 
 [data-theme="light"] .settings-option {

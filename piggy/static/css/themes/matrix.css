@@ -1,9 +1,9 @@
 /* METADATA
-id: 7
+id: 8
 name: Matrix
 description: A theme inspired by the green hues of "The Matrix" movies.
 type: dark
-preview_style: background-color: #000000; color: #00ff00;
+preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00ff00; text-shadow: none;
 */
 
 [data-theme="matrix"] {
@@ -36,9 +36,17 @@ preview_style: background-color: #000000; color: #00ff00;
   --piggy-assignment-accent: #00ffff;
   --piggy-assignment-shadow-glow: rgba(47, 58, 58, 0.5);
 
-  --piggy-assignment-text: rgba(0, 255, 191);
+  --piggy-assignment-text: rgb(111, 255, 219);
 
   --piggy-card-border-width: 1px;
+
+    /* Information cards */
+  --piggy-information-card-start: rgba(0, 98, 179, 0.384);
+  --piggy-information-card-end: rgba(0, 100, 200, 0.35);
+  --piggy-information-card-border: rgba(0, 156, 255, 0.5);
+  --piggy-information-overlay: rgba(0, 150, 255, 0.9);
+  --piggy-information-accent: #00aaff;
+  --piggy-information-shadow-glow: rgba(0, 150, 255, 0.6);
 
   /* Piggy elements */
   --piggy-navbar-start: #001900;
@@ -71,6 +79,11 @@ preview_style: background-color: #000000; color: #00ff00;
   --piggy-logo: rgb(154, 255, 159);
   --piggy-logo-gradient: linear-gradient(45deg, rgb(137, 255, 216), rgb(0, 255, 85), rgb(30, 255, 0));
   --piggy-logo-border: rgba(0, 0, 0, 0.65);
+
+  /* level container */
+  --piggy-level-container-text: var(--piggy-light);
+  --piggy-level-container: rgb(0, 0, 0);
+  --piggy-level-container-border: rgba(0, 255, 0, 1);
 }
 
 [data-theme="matrix"] .card-container {
