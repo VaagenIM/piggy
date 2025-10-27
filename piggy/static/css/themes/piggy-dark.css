@@ -3,19 +3,19 @@ id: 3
 name: Piggy (Dark)
 description: A dark pink theme.
 type: dark
-preview_style: background-color: #2e1f24; color: #f0e1e4;
+preview_style: background: linear-gradient(90deg, #1f1518, #3d2a30); color: #ece2e4; text-shadow: none;
 */
 
 [data-theme="piggy-dark"] {
-  --piggy-main: #2e1f24;
+  --piggy-main: #1f1518;
   --piggy-light: #3d2a30;
   --piggy-neutral: #8a767c;
-  --piggy-dark: #f0e1e4;
+  --piggy-dark: #ece2e4;
 
   --piggy-text-main: var(--piggy-dark);
   --piggy-shadow-text: rgba(255, 255, 255, 0.025);
-  --piggy-shadow-box: #ffffff11;
-  --piggy-shadow-glow: rgba(255, 255, 255, 0.2);
+  --piggy-shadow-box: rgba(63, 44, 51, 0.342);
+  --piggy-shadow-glow: rgba(80, 158, 90, 0.2);
 
   --piggy-card-start: rgba(74, 53, 61, 1);
   --piggy-card-end: rgba(60, 40, 47, 1);
@@ -29,6 +29,14 @@ preview_style: background-color: #2e1f24; color: #f0e1e4;
   --piggy-assignment-accent: #a06472;
   --piggy-assignment-shadow-glow: rgba(160,100,114,0.5);
   
+  /* Information cards */
+  --piggy-information-card-start: rgba(0, 98, 179, 0.384);
+  --piggy-information-card-end: rgba(0, 100, 200, 0.35);
+  --piggy-information-card-border: rgba(0, 156, 255, 0.5);
+  --piggy-information-overlay: rgba(0, 150, 255, 0.9);
+  --piggy-information-accent: #00aaff;
+  --piggy-information-shadow-glow: rgba(128, 74, 87, 0.5);
+
   --piggy-card-border-width: 1px;
 
   /* Navbar and buttons */
@@ -48,7 +56,7 @@ preview_style: background-color: #2e1f24; color: #f0e1e4;
   --piggy-text-description: var(--piggy-dark);
   --piggy-text-title: var(--piggy-dark);
   --piggy-text-breadcrumb: var(--piggy-dark);
-  --piggy-text-breadcrumb-hover: #f0e1e4;
+  --piggy-text-breadcrumb-hover: #94898b;
 
   --piggy-menu: var(--piggy-light);
   --piggy-menu-text: var(--piggy-dark);
@@ -61,15 +69,14 @@ preview_style: background-color: #2e1f24; color: #f0e1e4;
 
   --piggy-logo-border: rgba(1, 1, 1, 0.6);
 
+  --piggy-level-container-text: var(--piggy-dark);
+  --piggy-level-container: rgb(68, 30, 41);
+  --piggy-level-container-border: rgba(0, 0, 0, 0);
+
   /* logo */
   --piggy-logo: #ff9abc;
   --piggy-logo-gradient: linear-gradient(45deg, #ffc1d8, #ff5a8f, #c03db9);
   --piggy-logo-border: rgba(0, 0, 0, 0.6);
-}
-
-[data-theme="piggy-dark"] .level-count-container {
-  color: var(--piggy-light);
-  background-color: var(--piggy-dark);
 }
 
 /******************************\

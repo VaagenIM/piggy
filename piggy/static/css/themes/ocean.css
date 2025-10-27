@@ -1,15 +1,15 @@
 /* METADATA
-id: 8
+id: 9
 name: Ocean
 description: A theme inspired by the serene blues and teals of the ocean.
 type: dark
-preview_style: background-color: #002b36; color: #88c0d0;
+preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d8e6; text-shadow: none;
 */
 
 [data-theme="ocean"] {
   /* General colors */
   --piggy-main: #002b36;
-  --piggy-light: #88c0d0;
+  --piggy-light: #a7d8e6;
   --piggy-neutral: #336b87;
   --piggy-dark: #001f27;
 
@@ -36,6 +36,14 @@ preview_style: background-color: #002b36; color: #88c0d0;
   --piggy-assignment-shadow-glow: rgba(255,99,71,0.5);
 
   --piggy-card-border-width: 1px;
+
+  /* Information cards */
+  --piggy-information-card-start: rgba(0, 98, 179, 0.384);
+  --piggy-information-card-end: rgba(0, 100, 200, 0.35);
+  --piggy-information-card-border: rgba(0, 156, 255, 0.5);
+  --piggy-information-overlay: rgba(0, 150, 255, 0.9);
+  --piggy-information-accent: #00aaff;
+  --piggy-information-shadow-glow: rgba(0, 150, 255, 0.6);
 
   /* Navbar */
   --piggy-navbar-start: #003b4d;
@@ -70,6 +78,11 @@ preview_style: background-color: #002b36; color: #88c0d0;
 
   --piggy-logo-gradient: linear-gradient(45deg, rgb(255, 143, 231), rgb(80, 162, 255), rgb(0, 38, 255));
   --piggy-logo-border: rgba(0, 0, 0, 0.65);
+
+  /* level container */
+  --piggy-level-container-text: var(--piggy-light);
+  --piggy-level-container: rgb(23, 40, 82);
+  --piggy-level-container-border: rgba(0, 0, 0, 0);
 }
 
 [data-theme="ocean"] .assignment-card-grid-container .card-container * {

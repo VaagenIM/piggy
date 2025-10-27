@@ -3,7 +3,7 @@ id: 0
 name: Dark
 description: The default dark theme.
 type: dark
-preview_style: background-color: rgb(34, 41, 47); color: #f0f4f8;
+preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); color: #ffffff; text-shadow: none;
 */
 
 [data-theme="dark"] {
@@ -66,7 +66,7 @@ preview_style: background-color: rgb(34, 41, 47); color: #f0f4f8;
   --piggy-text-description: var(--piggy-light);
   --piggy-text-title: #ffffff;
   --piggy-text-breadcrumb: #d0d3d6;
-  --piggy-text-breadcrumb-hover: #a6aaad;
+  --piggy-text-breadcrumb-hover: #85939e;
 
   /* menus */
   --piggy-menu: #1c232a;
@@ -83,6 +83,11 @@ preview_style: background-color: rgb(34, 41, 47); color: #f0f4f8;
   /* info boxes */
   --piggy-info-box-background: #00a3c255;
   --piggy-info-box-border: #00bcd4;
+
+  /* level container */
+  --piggy-level-container-text: var(--piggy-light);
+  --piggy-level-container: rgb(43, 59, 92);
+  --piggy-level-container-border: rgba(0, 0, 0, 0);
 
   /* logo */
   --piggy-logo: #ff9abc;

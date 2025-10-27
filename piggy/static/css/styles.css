@@ -578,11 +578,12 @@ img[src*="#center"] {
 }
 
 .card-container:hover {
-  transform: translateY(-0px) rotate(1deg) scale(98%);
+  transform: translateY(-3px) rotate(0.5deg) scale(98%);
   animation-timing-function: ease;
   box-shadow: inset 0px 0px 25px 0 var(--piggy-shadow-glow);
   cursor: pointer;
 }
+
 
 .card-title {
   color: var(--piggy-text-title);
@@ -652,8 +653,9 @@ img[src*="#center"] {
   position: absolute;
   top: 5px;
   right: 0;
-  color: var(--piggy-light);
-  background-color: var(--piggy-dark);
+  color: var(--piggy-level-container-text);
+  background-color: var(--piggy-level-container);
+  border-color: var(--piggy-level-container-border);
   padding: 5px 10px 5px 10px;
   margin-right: 5px;
   border-radius: 2rem;

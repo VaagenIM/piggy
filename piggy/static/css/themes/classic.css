@@ -1,9 +1,9 @@
 /* METADATA
-id: 5
+id: 6
 name: Classic
 description: The classic look of piggy!
 type: light
-preview_style: background-color: #ece4ec; color: #000000;
+preview_style: background: linear-gradient(90deg, #d6c8d5, #ffffff); color: #000000; text-shadow: none;
 */
 
 [data-theme="classic"] {
@@ -29,6 +29,14 @@ preview_style: background-color: #ece4ec; color: #000000;
   --piggy-assignment-overlay: rgba(245, 124, 0, 0.8);
   --piggy-assignment-accent: #f57c00;
   --piggy-assignment-shadow-glow: rgba(245, 124, 0, 0.5);
+
+  /* Information cards */
+  --piggy-information-card-start: rgba(138, 203, 255, 0.5);
+  --piggy-information-card-end: rgba(63, 139, 214, 0.5);
+  --piggy-information-card-border: rgba(64, 129, 170, 0.75);
+  --piggy-information-overlay: rgba(0, 150, 255, 0.9);
+  --piggy-information-accent: #00aaff;
+  --piggy-information-shadow-glow: rgba(0, 150, 255, 0.6);
 
   --piggy-card-border-width: 1px;
 
