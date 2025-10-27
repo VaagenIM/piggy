@@ -3,7 +3,7 @@ id: 4
 name: High Contrast
 description: High contrast theme for maximum visibility.
 type: dark
-preview_style: background-color: #000000; color: #ffffff;
+preview_style: background-color: #000000; color: #ffffff; border: 1px solid #ffffff;
 */
 [data-theme="high-contrast"] {
   --piggy-main: #000000;
@@ -21,6 +21,8 @@ preview_style: background-color: #000000; color: #ffffff;
 
   /* Assignment cards */
   --piggy-assignment-card-border: #ff7b00;
+
+  --piggy-information-card-border: #00b7ff;
 
   --piggy-card-border-width: 1px;
 

@@ -1,9 +1,9 @@
 /* METADATA
-id: 11
+id: 12
 name: Golden
 description: A gold-on-onyx theme. (Gonna be, gonna be golden!)
 type: dark
-preview_style: background-color: #3a2f18; color: #ffd86b;
+preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd86b;
 */
 
 [data-theme="golden"] {

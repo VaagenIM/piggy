@@ -3,7 +3,7 @@ id: 9
 name: Desert
 description: A theme inspired by the warm sands and muted tones of the desert.
 type: light
-preview_style: background-color: #f4e7d3; color: #3e2a14;
+preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d140a; text-shadow: none;
 */
 
 [data-theme="desert"] {
@@ -11,7 +11,7 @@ preview_style: background-color: #f4e7d3; color: #3e2a14;
   --piggy-main: #f4e7d3;
   --piggy-light: #5f4b32;
   --piggy-neutral: #a67c52;
-  --piggy-dark: #3e2a14;
+  --piggy-dark: #1d140a;
 
   --piggy-text-main: var(--piggy-dark);
   --piggy-text-light: var(--piggy-light);

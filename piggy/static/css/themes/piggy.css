@@ -3,14 +3,14 @@ id: 2
 name: Piggy
 description: Relaxing pastel pink theme.
 type: light
-preview_style: background-color: #ff99ac; color: #4d4d4d;
+preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(20, 20, 20); text-shadow: none;
 */
 
 [data-theme="piggy"] {
   --piggy-main: #ffe6e9;
   --piggy-light: #ffffff;
   --piggy-neutral: #7a6e72;
-  --piggy-dark: #4d4d4d;
+  --piggy-dark: rgb(20, 20, 20);
 
   --piggy-text-main: var(--piggy-dark);
   --piggy-shadow-text: rgba(0, 0, 0, 0);
@@ -19,17 +19,25 @@ preview_style: background-color: #ff99ac; color: #4d4d4d;
 
   /* Card colors */
   --piggy-card-start: rgba(255, 220, 229, 1);
-  --piggy-card-end: rgba(255, 205, 218, 1);
-  --piggy-card-border: #ff99ac;
-  --piggy-text-card: #4d4d4d;
+  --piggy-card-end: rgba(255, 220, 229, 1);
+  --piggy-card-border: #ff99cc;
+  --piggy-text-card: var(--piggy-dark);
   
   /* Assignment cards */
-  --piggy-assignment-card-start: rgba(255, 160, 180, 0.5);
-  --piggy-assignment-card-end: rgba(255, 120, 140, 0.3);
-  --piggy-assignment-card-border: #ff4d6d;
+  --piggy-assignment-card-start: rgba(255, 137, 220, 0.5);
+  --piggy-assignment-card-end: rgba(255, 170, 230, 0.5);
+  --piggy-assignment-card-border: #ff4df0;
   --piggy-assignment-overlay: rgba(255, 77, 109, 0.8);
   --piggy-assignment-accent: #ff4d6d;
   --piggy-assignment-shadow-glow: rgba(255, 77, 109, 0.5);
+
+    /* Information cards */
+  --piggy-information-card-start: rgba(138, 203, 255, 0.5);
+  --piggy-information-card-end: rgba(63, 139, 214, 0.5);
+  --piggy-information-card-border: rgba(64, 129, 170, 0.75);
+  --piggy-information-overlay: rgba(0, 150, 255, 0.9);
+  --piggy-information-accent: #00aaff;
+  --piggy-information-shadow-glow: rgba(0, 150, 255, 0.6);
 
   --piggy-card-border-width: 1px;
 
@@ -39,9 +47,9 @@ preview_style: background-color: #ff99ac; color: #4d4d4d;
   --piggy-text-navbar: #ffffff;
 
   --piggy-button: #ff99ac;
-  --piggy-button-hover: #ff7381;
+  --piggy-button-hover: #c97c84;
   --piggy-button-active: #f86f7d;
-  --piggy-text-button: #ffffff;
+  --piggy-text-button: var(--piggy-dark);
 
   --piggy-thumbnail-overlay: rgba(255, 226, 232, 0.7);
   --piggy-text-thumbnail: var(--piggy-dark);
@@ -50,7 +58,7 @@ preview_style: background-color: #ff99ac; color: #4d4d4d;
   --piggy-text-description: var(--piggy-dark);
   --piggy-text-title: var(--piggy-dark);
   --piggy-text-breadcrumb: var(--piggy-dark);
-  --piggy-text-breadcrumb-hover: var(--piggy-dark);
+  --piggy-text-breadcrumb-hover: #555555;
 
   --piggy-font: var("Playpen Sans", sans-serif);
 
@@ -63,15 +71,15 @@ preview_style: background-color: #ff99ac; color: #4d4d4d;
   --piggy-text-hyperlink: #539cd8;
   --piggy-text-hyperlink-hover: #316997;
 
+  /* level container */
+  --piggy-level-container-text: var(--piggy-dark);
+  --piggy-level-container: rgb(255, 156, 197);
+  --piggy-level-container-border: rgba(0, 0, 0, 0);
+
   /* logo */
   --piggy-logo: #ff9abc;
   --piggy-logo-gradient: linear-gradient(45deg, #ffc1d8, #ff5a8f, #c03db9);
   --piggy-logo-border: rgba(0, 0, 0, 0.6);
-}
-
-[data-theme="piggy"] .level-count-container {
-  color: var(--piggy-dark);
-  background-color: var(--piggy-button);
 }
 
 /******************************\
@@ -82,8 +90,8 @@ preview_style: background-color: #ff99ac; color: #4d4d4d;
 }
 
 [data-theme="piggy"] .md-content code:not(.md-code__content) {
-  background-color: #f3cad1;
-  color: #333;
+  background-color: #d3b8ba;
+  color: var(--piggy-dark);
 }
 
 [data-theme="piggy"] .md-content .md-code__content {
