@@ -48,3 +48,69 @@
 .snout-full-width {
   width: 100%;
 }
+
+/*********************\
+|*  SPECIAL STYLING  *|
+\*********************/
+
+.snout-hl-0 {
+  color: rgb(0, 0, 0);
+}
+
+.snout-hl-1 {
+  color: rgb(255, 0, 0);
+}
+
+.snout-hl-2 {
+  color: rgb(0, 255, 0);
+}
+
+.snout-hl-3 {
+  color: rgb(0, 0, 255);
+}
+
+.snout-hl-4 {
+  color: rgb(255, 255, 0);
+}
+
+.snout-hl-5 {
+  color: rgb(255, 0, 255);
+}
+
+.snout-hl-6 {
+  color: rgb(0, 255, 255);
+}
+
+.snout-hl-7 {
+  color: rgb(255, 255, 255);
+}
+
+.snout-wave {
+  position: relative;
+  color: #fff;
+  background: linear-gradient(90deg, #f00, #f60, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+  -webkit-background-clip: text;
+  color: transparent;
+  background-size: 200% 100%;
+  animation: wave 3s linear infinite !important;
+  filter: 
+    drop-shadow(1px 1px 0 #00000088)
+    drop-shadow(-1px 1px 0 #00000088)
+    drop-shadow(-1px -1px 0 #00000088)
+    drop-shadow(1px -1px 0 #00000088)
+    saturate(1.5) brightness(1);
+  font-weight: bold;
+}
+
+/******************\
+|*   ANIMATIONS   *|
+\******************/
+
+@keyframes wave {
+  0% { 
+    background-position: 0% 50%;
+  }
+  100% { 
+    background-position: 200% 50%; 
+  }
+}
