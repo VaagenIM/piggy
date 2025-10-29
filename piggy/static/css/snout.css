@@ -48,3 +48,176 @@
 .snout-full-width {
   width: 100%;
 }
+
+/*********************\
+|*  SPECIAL STYLING  *|
+\*********************/
+
+.snout-hl-0 {
+  color: rgb(0, 0, 0);
+}
+
+.snout-hl-1 {
+  color: rgb(255, 0, 0);
+}
+
+.snout-hl-2 {
+  color: rgb(0, 255, 0);
+}
+
+.snout-hl-3 {
+  color: rgb(0, 0, 255);
+}
+
+.snout-hl-4 {
+  color: rgb(255, 255, 0);
+}
+
+.snout-hl-5 {
+  color: rgb(255, 0, 255);
+}
+
+.snout-hl-6 {
+  color: rgb(0, 255, 255);
+}
+
+.snout-hl-7 {
+  color: rgb(255, 255, 255);
+}
+
+.snout-rainbow {
+  position: relative;
+  color: #fff;
+  background: linear-gradient(90deg, #f00, #f60, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+  -webkit-background-clip: text;
+  color: transparent;
+  background-size: 200% 100%;
+  animation: rainbow 3s linear infinite !important;
+  filter: 
+    drop-shadow(1px 1px 0 #00000088)
+    drop-shadow(-1px 1px 0 #00000088)
+    drop-shadow(-1px -1px 0 #00000088)
+    drop-shadow(1px -1px 0 #00000088)
+    saturate(1.5) brightness(1);
+  font-weight: bold;
+}
+
+.snout-wave {
+  display: inline-block;
+  position: relative;
+  animation: wave 0.75s linear infinite !important;
+}
+
+
+.snout-zoom {
+  display: inline-block;
+  position: relative;
+  animation: zoom 1.5s ease-in-out infinite !important;
+}
+
+.snout-shake {
+  display: inline-block;
+  position: relative;
+  animation: shake 0.15s linear infinite !important;
+}
+
+.snout-warning {
+  display: inline-block;
+  position: relative;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+
+  background: repeating-linear-gradient(
+    35deg,
+    #ff2200 0%,
+    #ff2200 15%,
+    #ffc0a7 25%,
+    #ff2200 35%,
+    #ff2200 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  color: transparent;
+
+  animation: warning 1.2s linear infinite;
+  filter:
+    drop-shadow(0 0 10px #ff220066)
+    brightness(1.2)
+    saturate(1.6)
+    saturate(1.5) brightness(1);
+}
+
+.snout-glow {
+  display: inline-block;
+  position: relative;
+  filter:
+    drop-shadow(0 0 5px #ffffffff)
+    brightness(1.2)
+    saturate(1.6)
+    saturate(1.5) brightness(1);
+}
+
+/******************\
+|*   ANIMATIONS   *|
+\******************/
+
+@keyframes rainbow {
+  0% { 
+    background-position: 0% 50%;
+  }
+  100% { 
+    background-position: 200% 50%; 
+  }
+}
+
+@keyframes wave {
+  0% { 
+    transform: rotateZ(-2deg) skew(-2deg);
+  }
+  25% {
+    transform: translateY(1px);
+  }
+  50% { 
+    transform: rotateZ(2deg) skew(2deg);
+  }
+  75% {
+    transform: translateY(-1px);
+  }
+  100% { 
+    transform: rotateZ(-2deg) skew(-2deg);
+  }
+}
+
+@keyframes zoom {
+  0%, 100% { 
+    transform: scale(0.95);
+  }
+  50% { 
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shake {
+  0% { 
+    transform: translateY(-1px) translateX(1px);
+  }
+  25% {
+    transform: translateY(1px) translateX(0px);
+  }
+  50% { 
+    transform: translateY(-1px) translateX(-1px);
+  }
+  75% {
+    transform: translateY(1px) translateX(0px);
+  }
+  100% { 
+    transform: translateY(-1px) translateX(1px);
+  }
+}
+
+
+@keyframes warning {
+  to { 
+    background-position: 200% 0; 
+  }
+}
