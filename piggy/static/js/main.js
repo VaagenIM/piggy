@@ -12,6 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
     ? fontSelect.querySelector(".selected")
     : null;
 
+  const fontSizeSelect = document.getElementById("font-size-select");
+  const fontSizeSelected = fontSizeSelect 
+    ? fontSizeSelect.querySelector(".selected")
+    : null;
+
   // --- Helper Functions ---
   function closeAllCustomSelects(except = null) {
     document.querySelectorAll(".custom-select").forEach((select) => {
@@ -175,6 +180,41 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("fontTheme", selectedFont);
         document.documentElement.setAttribute("data-font-theme", selectedFont);
         fontSelect.classList.remove("open");
+        e.stopPropagation();
+      });
+    });
+  }
+
+  // --- Initialize Font Size Custom Select ---
+  if (fontSizeSelect && fontSizeSelected) {
+    const savedFontSizeTheme = localStorage.getItem("fontSizeTheme") || "default";
+    const matchingFontSizeOption = fontSizeSelect.querySelector(
+      `.option[data-value="${savedFontSizeTheme}"]`,
+    );
+    if (matchingFontSizeOption) {
+      fontSizeSelected.textContent = matchingFontSizeOption.textContent;
+      fontSizeSelected.setAttribute("data-value", savedFontSizeTheme);
+    }
+
+    // Toggle font size dropdown on click
+    fontSizeSelected.addEventListener("click", (e) => {
+      closeAllCustomSelects(fontSizeSelect);
+      fontSizeSelect.classList.toggle("open");
+      if (fontSizeSelect.classList.contains("open")) {
+        updateOptionsMaxHeight(fontSizeSelect);
+      }
+      e.stopPropagation();
+    });
+
+    // Attach event listeners for each font option
+    fontSizeSelect.querySelectorAll(".option").forEach((option) => {
+      option.addEventListener("click", function (e) {
+        const selectedFontSize = this.getAttribute("data-value");
+        fontSizeSelect.textContent = this.textContent;
+        fontSizeSelect.setAttribute("data-value", selectedFontSize);
+        localStorage.setItem("fontSizeTheme", selectedFontSize);
+        document.documentElement.setAttribute("data-font-theme", selectedFontSize);
+        fontSizeSelect.classList.remove("open");
         e.stopPropagation();
       });
     });
