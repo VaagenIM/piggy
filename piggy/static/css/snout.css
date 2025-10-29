@@ -172,19 +172,19 @@
 
 @keyframes wave {
   0% { 
-    transform: rotateZ(-3deg) skew(-3deg);
+    transform: rotateZ(-2deg) skew(-2deg);
   }
   25% {
     transform: translateY(1px);
   }
   50% { 
-    transform: rotateZ(3deg) skew(3deg);
+    transform: rotateZ(2deg) skew(2deg);
   }
   75% {
     transform: translateY(-1px);
   }
   100% { 
-    transform: rotateZ(-3deg) skew(-3deg);
+    transform: rotateZ(-2deg) skew(-2deg);
   }
 }
 
