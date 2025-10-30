@@ -105,8 +105,14 @@ def create_app(debug: bool = False) -> Flask:
     def index():
         return render_template("index.html")
 
+    @app.route("/service-worker.js")
+    def service_worker():
+        """Serve the service worker file."""
+        return "TBA", 204
+
     @app.route("/.well-known/<path:filename>")
-    def well_known(filename):
+    @app.route("/static/turtleconvert/javascripts/output/<path:filename>")  # Unused
+    def ignored_routes(filename):
         """Ignore requests to .well-known (chrome devtools etc. use this), would raise a lot of 404's"""
         return "", 204
 
