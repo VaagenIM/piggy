@@ -258,19 +258,29 @@ img[src*="#center"] {
   transition: all .3s ease;
   color: var(--piggy-text-main);
   position: fixed;
-  bottom: 2rem;
-  right: 2.5rem;
+  bottom: 1.5rem;
+  right: 1.5rem;
   z-index: 99;
+  background-color: var(--piggy-button);
+  border-radius: 100%;
+  padding: .5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #scroll-to-top-btn:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
+  background-color: var(--piggy-button-hover);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 body:has(#settings-menu.open) #scroll-to-top-btn {
   opacity: 0;
+  pointer-events: none;
 }
-
 
 /*********************\
 |*     CARD GRID     *|
@@ -1170,7 +1180,7 @@ body:has(#settings-menu.open) #scroll-to-top-btn {
 }
 
 .tooltip-diff-image {
-  display: inline; 
+  display: inline;
   width: 2rem;
 }
 
