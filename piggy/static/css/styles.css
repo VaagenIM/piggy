@@ -254,6 +254,24 @@ img[src*="#center"] {
   margin: auto;
 }
 
+#scroll-to-top-btn {
+  transition: all .3s ease;
+  color: var(--piggy-text-main);
+  position: fixed;
+  bottom: 2rem;
+  right: 2.5rem;
+  z-index: 99;
+}
+
+#scroll-to-top-btn:hover {
+  transform: scale(1.2);
+}
+
+body:has(#settings-menu.open) #scroll-to-top-btn {
+  opacity: 0;
+}
+
+
 /*********************\
 |*     CARD GRID     *|
 \*********************/
