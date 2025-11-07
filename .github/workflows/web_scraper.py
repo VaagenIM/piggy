@@ -77,7 +77,7 @@ def get_html(link) -> tuple[str, set[str], set[str]]:
 
     # TODO: this is a hack. hopefully temporary.
     html = re.sub(r"""/api/generate_thumbnail/([^?]*)(\?[^"]*)""", r"/api/generate_thumbnail/\1.webp", html)
-    html = re.sub(r"/media/header.webp\?title=[^\"]*", r"/media/header.webp", html)
+    html = re.sub(r"/media/header\..+\?title=[^\"]*", r"/media/header.webp", html)
 
     # Replace all content (og) links with the cname
     html = re.sub(rf"content=\"({url})([^\"/]*)", rf'content="{cname}\2', html)
@@ -172,6 +172,7 @@ def _download_media(link):
         print("WARNING: Cannot download file with name longer than 255 characters")
         return
 
+    path = path.rsplit("?")[0]
     with open(f"demo/{path}", "wb+") as f:
         f.write(r.content)
 
