@@ -30,6 +30,14 @@ def generate_thumbnail(text: str, request=request):
         ("39cccc", "001f3f"),
         ("7fdbff", "85144b"),
         ("ff851b", "001f3f"),
+        ("f012be", "111111"),
+        ("ffdc00", "111111"),
+        ("001f3f", "ff4136"),
+        ("ffffff", "111111"),
+        ("111111", "ffffff"),
+        ("ff4136", "111111"),
+        ("2ecc40", "111111"),
+        ("ff4136", "85144b"),
     ]
 
     if gibberish and not bg_color and not text_color:
