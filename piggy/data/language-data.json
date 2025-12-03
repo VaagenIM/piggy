@@ -53,6 +53,15 @@
     "font": "serif",
     "country_code": "X0"
   },
+  "leet": {
+    "name": "L33tsp34k",
+    "flag": "💻",
+    "direction": "ltr",
+    "script": "Latin",
+    "locale": "en_L3T",
+    "font": "sans-serif",
+    "country_code": "X0"
+  },
   "abk": {
     "name": "Аҧсуа",
     "flag": "🇬🇪",
