@@ -8,7 +8,7 @@
     level_count = data.data|length,
     description = data.meta.description,
     thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." ~ img_fmt ~ "?title=" ~ data.meta.name,
-    thumbnail_alt = "Header image for " ~ item,
+    thumbnail_alt = "Header image for " ~ data.meta.name,
     extra_classes = 'card-information card-align-information',
     difficulty = data.meta.difficulty,
     tags = data.meta.tags,
