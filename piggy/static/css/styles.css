@@ -1516,6 +1516,20 @@ details ul li,
   transition: 0.2s;
 }
 
+#piggy-logo-icon {
+  display: inline; 
+  width: 32px; 
+  bottom: 5px; 
+  position: relative;
+}
+
+#piggy-index-icon {
+  display: inline; 
+  width: 64px; 
+  bottom: 8px;
+  position: relative;
+}
+
 @keyframes bubbly {
   0% {
     transform: scale(1.0) rotate(0deg);
@@ -1563,3 +1577,7 @@ details ul li,
   background-color: #0000a070 !important;
 }
   */
+
+/************************\
+|* ADMONITION OVERRIDES *|
+\************************/
