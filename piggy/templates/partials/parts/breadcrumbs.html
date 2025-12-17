@@ -14,7 +14,10 @@ so we can decide whether to remove the last path segment from the breadcrumbs.
 
 <nav class="piggy-navbar flex items-center justify-between px-3 py-2">
   {# Breadcrumbs elements #}
-  <a id="piggy-logo" href="/"><img id="piggy-logo-icon" src="{{ url_for('static', filename='img/icons/piggy_icon-128.png')}}"> Piggy</a>
+  <a id="piggy-logo" href="/">
+    <img id="piggy-logo-icon" src="{{ url_for('static', filename='img/icons/piggy_icon-128.png')}}">
+    <span id="piggy-logo-text">Piggy</span>
+  </a>
   <ol
     class="flex flex-wrap items-center space-x-1 md:space-x-2 flex-1 overflow-x-auto overflow-y-hidden"
   >
