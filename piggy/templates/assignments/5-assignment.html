@@ -128,44 +128,68 @@
     })();
   </script>
   <script>
+    function viewportWidth() {
+      return window.visualViewport ? window.visualViewport.width : document.documentElement.clientWidth;
+    }
+
     function positionTooltip(tip) {
       const padding = 8;
 
-      tip.style.transform = "";
+      tip.style.setProperty("--tooltip-shift", "0px");
       tip.style.setProperty("--arrow-shift", "0px");
 
       const rect = tip.getBoundingClientRect();
+      const vw = viewportWidth();
 
-      let shift = 0;
+      const overflowLeft = Math.max(0, padding - rect.left);
+      const overflowRight = Math.max(0, rect.right - (vw - padding));
 
-      if (rect.left < padding) {
-        shift = padding - rect.left;
-      }
-
-      if (rect.right > window.innerWidth - padding) {
-        shift = -(rect.right - (window.innerWidth - padding));
-      }
+      const shift = overflowLeft - overflowRight;
 
       if (shift !== 0) {
-        tip.style.transform = `translateX(calc(-50% + ${shift}px))`;
+        tip.style.setProperty("--tooltip-shift", `${shift}px`);
         tip.style.setProperty("--arrow-shift", `${-shift}px`);
       }
     }
 
     function wireTooltips() {
       const tips = document.querySelectorAll("#level-container .nav-tooltip");
-
       const updateAll = () => tips.forEach(positionTooltip);
 
+      // Resize handling (mobile address bar / orientation changes)
       window.addEventListener("resize", updateAll, { passive: true });
       window.addEventListener("scroll", updateAll, { passive: true });
+      window.addEventListener("orientationchange", updateAll, { passive: true });
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", updateAll, { passive: true });
+        window.visualViewport.addEventListener("scroll", updateAll, { passive: true });
+      }
+
+      // Reposition when tooltip content size changes (e.g., image loads)
+      const ro = new ResizeObserver(entries => {
+        for (const e of entries) positionTooltip(e.target);
+      });
 
       tips.forEach(tip => {
-        const parent = tip.parentElement;
-        if (!parent) return;
+        ro.observe(tip);
 
-        parent.addEventListener("mouseenter", () => positionTooltip(tip));
-        parent.addEventListener("focusin", () => positionTooltip(tip));
+        // If there's an image, reposition after it loads too (extra-safe)
+        tip.querySelectorAll("img").forEach(img => {
+          if (!img.complete) img.addEventListener("load", () => positionTooltip(tip), { once: true });
+        });
+
+        const trigger = tip.parentElement;
+        if (!trigger) return;
+
+        const updateSoon = () => requestAnimationFrame(() => positionTooltip(tip));
+
+        trigger.addEventListener("pointerenter", updateSoon);
+        trigger.addEventListener("pointerdown", updateSoon);
+        trigger.addEventListener("click", updateSoon);
+        trigger.addEventListener("focusin", updateSoon);
+
+        // iOS Safari sometimes behaves better with touchstart fallback
+        trigger.addEventListener("touchstart", updateSoon, { passive: true });
       });
 
       updateAll();
