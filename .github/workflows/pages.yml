@@ -61,7 +61,7 @@ jobs:
           gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers 16 run:app &
 
       - name: Run web scraper to build static site
-        run: sleep 5 && python .github/workflows/web_scraper.py
+        run: python .github/workflows/web_scraper.py
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
