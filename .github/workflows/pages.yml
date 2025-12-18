@@ -53,6 +53,7 @@ jobs:
           uv pip install .
           npm install --omit=dev
           echo "GITHUB_PAGES=1" >> $GITHUB_ENV
+          echo "USE_CACHE=0" >> $GITHUB_ENV
           uv pip install -r .github/workflows/requirements-pages.txt
 
       - name: Start Piggy server
@@ -60,7 +61,7 @@ jobs:
           gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers 16 run:app &
 
       - name: Run web scraper to build static site
-        run: python .github/workflows/web_scraper.py
+        run: sleep 5 && python .github/workflows/web_scraper.py
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
