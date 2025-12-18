@@ -16,7 +16,7 @@ from turtleconverter import generate_static_files
 links = set(["/", "/404"])
 visited = set()
 media_links = set()
-url = "http://127.0.0.1:55555"  # The URL of the website we are scraping
+url = "http://piggy:55555"  # The URL of the website we are scraping
 cname = "https://piggy.iktim.no"  # The CNAME of the website we will push the demo to
 
 # Media link are files that we want to download, but not parse as HTML (e.g. not write as UTF-8)
