@@ -40,6 +40,8 @@ jobs:
 
       - name: Set up npm
         uses: actions/setup-node@v6
+        with:
+          node-version: 24
 
       - name: Get piggybank
         run: |
