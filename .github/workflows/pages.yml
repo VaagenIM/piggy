@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -45,29 +45,23 @@ jobs:
           version: latest
 
       - name: Get piggybank
-        run: git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank-demo
-
-      - name: Spin up containers
         run: |
-          docker buildx create --use || true
-          mkdir -p /tmp/.buildx-cache
-          docker buildx build \
-            --file Dockerfile \
-            --tag piggy-pages:latest \
-            --progress=plain \
-            --cache-from type=local,src=/tmp/.buildx-cache \
-            --cache-to type=local,dest=/tmp/.buildx-cache,mode=max \
-            --load .
-          docker compose -f docker-compose.pages.yml up -d --build --remove-orphans --force-recreate
+          rm -r piggybank
+          git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank
 
       - name: Install dependencies
-        run: uv pip install -r .github/workflows/requirements-pages.txt
+        run: |
+          uv pip install .
+          npm install --omit=dev
+          echo "GITHUB_PAGES=1" >> $GITHUB_ENV
+          uv pip install -r .github/workflows/requirements-pages.txt
+
+      - name: Start Piggy server
+        run: |
+          gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers 16 piggy.app:app &
 
       - name: Run web scraper to build static site
         run: python .github/workflows/web_scraper.py
-
-      - name: Tear down containers
-        run: docker compose -f docker-compose.pages.yml down
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
