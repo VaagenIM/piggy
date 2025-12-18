@@ -38,11 +38,10 @@ jobs:
       - name: Set up Python
         run: uv python install
 
-      # Set up Docker Buildx
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - name: Set up npm
+        uses: actions/setup-node@v6
         with:
-          version: latest
+          node-version: 24
 
       - name: Get piggybank
         run: |
@@ -54,11 +53,12 @@ jobs:
           uv pip install .
           npm install --omit=dev
           echo "GITHUB_PAGES=1" >> $GITHUB_ENV
+          echo "USE_CACHE=0" >> $GITHUB_ENV
           uv pip install -r .github/workflows/requirements-pages.txt
 
       - name: Start Piggy server
         run: |
-          gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers 16 piggy.app:app &
+          gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers 16 run:app &
 
       - name: Run web scraper to build static site
         run: python .github/workflows/web_scraper.py

@@ -53,6 +53,8 @@ else:
     # Production
     from piggy.app import create_app
 
+    run_tailwind(reload=False)
+
     # TODO: Re-enable (requires branch to be published) (or a env to pass the branch with a PAT)
     # checkout_branch("output")
     app = create_app(debug=os.environ.get("FLASK_DEBUG", False) == "1")
