@@ -4,7 +4,7 @@ services:
     build: .
     container_name: piggy
     ports:
-      - "5000:5000"
+      - "55555:5000"
     environment:
       - AUTO_UPDATE=False
 
