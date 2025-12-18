@@ -34,15 +34,6 @@ ENV USE_CACHE="1"
 WORKDIR /app
 
 COPY --from=builder /app/venv /app/venv
-# RUN git clone -b main https://github.com/VaagenIM/piggy /piggy
-
-RUN echo  "cd /piggy && \
-          git pull && \
-          pip install . && \
-          rm -rf /app/* && \
-          cp -r /piggy/piggy/* /app/piggy && \
-          cp /piggy/run.py /app/run.py && \
-          cp /piggy/entrypoint.sh /app/entrypoint.sh" > /usr/local/bin/auto-update.sh
 
 COPY . /app
 COPY --from=builder /app/tailwind.css /app/piggy/static/css/tailwind.css
