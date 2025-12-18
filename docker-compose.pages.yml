@@ -10,7 +10,7 @@ services:
 
       - FLASK_DEBUG="0"
       - USE_CACHE="0"
-      - WEB_CONCURRENCY=16
+      - WEB_CONCURRENCY=1
       - GITHUB_PAGES=1
 
       - TZ=Europe/Oslo
