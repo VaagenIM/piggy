@@ -9,7 +9,7 @@ services:
       - AUTO_UPDATE=False
 
       - FLASK_DEBUG="0"
-      - USE_CACHE="0"
+      - USE_CACHE="1"
       - WEB_CONCURRENCY=1
       - GITHUB_PAGES=1
 
