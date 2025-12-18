@@ -1130,7 +1130,7 @@ body:has(#settings-menu.open) #scroll-to-top-btn {
   visibility: hidden;
   width: max-content;
   white-space: normal;
-  max-width: 250px;
+  max-width: min(250px, calc(100vw - 16px));
   background-color: var(--piggy-tooltip);
   color: var(--piggy-tooltip-text);
   text-align: center;
@@ -1141,7 +1141,7 @@ body:has(#settings-menu.open) #scroll-to-top-btn {
 
   top: calc(100% + 5px);
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(calc(-50% + var(--tooltip-shift, 0px)));
 
   opacity: 0;
   transition: opacity 0.3s;
@@ -1160,18 +1160,34 @@ body:has(#settings-menu.open) #scroll-to-top-btn {
   border-color: transparent transparent var(--piggy-tooltip) transparent;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 800px){
+  .level-button-text {
+    display: none;
+  }
+  
+  #level-container .snout-button {
+    min-width: 48px;
+    max-width: 48px;
+  }
+}
+
+@media (max-height: 430px) and (orientation: landscape) {
   .level-button-text {
     display: none;
   }
 
-  .level-button-number::before {
-    content: "Lv. ";
+  header {
+    position: relative;
   }
-
+  
+  #level-container {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
   #level-container .snout-button {
-    min-width: 64px;
-    max-width: 64px;
+    min-width: 48px;
+    max-width: 48px;
   }
 }
 
@@ -1202,9 +1218,6 @@ body:has(#settings-menu.open) #scroll-to-top-btn {
     flex-wrap: wrap;
     gap: 5px;
   }
-
-  #level-container .nav-tooltip {
-  }
 }
 
 .tooltip-diff-image {
@@ -1222,7 +1235,7 @@ body:has(#settings-menu.open) #scroll-to-top-btn {
 }
 
 #language-container .snout-button {
-  min-width: 150px;
+  min-width: 125px;
 }
 
 #language-container .language-dropdown {
