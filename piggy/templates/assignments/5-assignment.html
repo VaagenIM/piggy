@@ -71,7 +71,7 @@
           {% if assignment.level | int == level | int %}
             <!-- Current Level (Non-clickable) -->
             <div class="snout-button snout-border snout-padding-m active level-diff-{{ level_difficulty }}">
-              <span> {{ level_text }} {{ assignment.level }} </span>
+              <span> <span class="level-button-text">{{ level_text }}</span> <span class="level-button-number">{{ assignment.level }}</span> </span>
               <!-- Tooltip -->
               <div class="nav-tooltip">
                 {% if level_difficulty|int > 0 and level_difficulty|int <= 5 %}
@@ -86,7 +86,7 @@
               href="{{ link }}"
               class="snout-button snout-border snout-padding-m level-diff-{{ level_difficulty }}"
             >
-              {{ level_text }} {{ assignment.level }}
+              <span class="level-button-text">{{ level_text }}</span> <span class="level-button-number">{{ assignment.level }}</span>
               <!-- Tooltip -->
               <div class="nav-tooltip">
                 {% if level_difficulty|int > 0 and level_difficulty|int <= 5 %}
@@ -127,6 +127,52 @@
       links.forEach((el) => container.appendChild(el));
     })();
   </script>
+  <script>
+    function positionTooltip(tip) {
+      const padding = 8;
+
+      tip.style.transform = "";
+      tip.style.setProperty("--arrow-shift", "0px");
+
+      const rect = tip.getBoundingClientRect();
+
+      let shift = 0;
+
+      if (rect.left < padding) {
+        shift = padding - rect.left;
+      }
+
+      if (rect.right > window.innerWidth - padding) {
+        shift = -(rect.right - (window.innerWidth - padding));
+      }
+
+      if (shift !== 0) {
+        tip.style.transform = `translateX(calc(-50% + ${shift}px))`;
+        tip.style.setProperty("--arrow-shift", `${-shift}px`);
+      }
+    }
+
+    function wireTooltips() {
+      const tips = document.querySelectorAll("#level-container .nav-tooltip");
+
+      const updateAll = () => tips.forEach(positionTooltip);
+
+      window.addEventListener("resize", updateAll, { passive: true });
+      window.addEventListener("scroll", updateAll, { passive: true });
+
+      tips.forEach(tip => {
+        const parent = tip.parentElement;
+        if (!parent) return;
+
+        parent.addEventListener("mouseenter", () => positionTooltip(tip));
+        parent.addEventListener("focusin", () => positionTooltip(tip));
+      });
+
+      updateAll();
+    }
+
+    wireTooltips();
+  </script>
 {% endblock %}
 
 {% block base %}
@@ -135,3 +181,4 @@
   </h1>
   {{ content.body | safe }}
 {% endblock %}
+

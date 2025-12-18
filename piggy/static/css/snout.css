@@ -139,7 +139,7 @@
   -webkit-background-clip: text;
   color: transparent;
 
-  animation: warning 1.2s linear infinite;
+  animation: background-scroll 1.2s linear infinite;
   filter:
     drop-shadow(0 0 10px #ff220066)
     brightness(1.2)
@@ -157,6 +157,29 @@
     saturate(1.5) brightness(1);
 }
 
+.snout-fun {
+  display: inline-block;
+  position: relative;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+
+  background: repeating-linear-gradient(
+    35deg,
+    #00a2ff 0%,
+    #ff00dd 25%,
+    #ff5e00 50%,
+    #ff00dd 75%,
+    #00a2ff 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter:
+    drop-shadow(0 0 3px #00000066);
+
+  animation: background-scroll 3.6s linear infinite;
+}
+
 /******************\
 |*   ANIMATIONS   *|
 \******************/
@@ -172,19 +195,19 @@
 
 @keyframes wave {
   0% { 
-    transform: rotateZ(-3deg) skew(-3deg);
+    transform: rotateZ(-2deg) skew(-2deg);
   }
   25% {
     transform: translateY(1px);
   }
   50% { 
-    transform: rotateZ(3deg) skew(3deg);
+    transform: rotateZ(2deg) skew(2deg);
   }
   75% {
     transform: translateY(-1px);
   }
   100% { 
-    transform: rotateZ(-3deg) skew(-3deg);
+    transform: rotateZ(-2deg) skew(-2deg);
   }
 }
 
@@ -216,7 +239,7 @@
 }
 
 
-@keyframes warning {
+@keyframes background-scroll {
   to { 
     background-position: 200% 0; 
   }

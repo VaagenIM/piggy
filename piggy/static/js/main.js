@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (
       settingsMenu.classList.contains("open") &&
       !settingsMenu.contains(event.target) &&
-      event.target !== settingsButton
+      !settingsButton.contains(event.target)
     ) {
       closeSettingsMenu();
     }
