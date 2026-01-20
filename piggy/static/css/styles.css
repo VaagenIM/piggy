@@ -1500,6 +1500,11 @@ details ul li,
   overflow: hidden !important;
   text-wrap: wrap !important;
   word-wrap: break-word !important;
+  font-size: 0.85rem !important;
+}
+
+code.md-code__content {
+    background-color: #0e0e0e !important;
 }
 
 .md-clipboard {
