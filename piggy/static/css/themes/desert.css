@@ -13,6 +13,9 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
   --piggy-neutral: #a67c52;
   --piggy-dark: #1d140a;
 
+  --piggy-code: #2c251f;
+  --piggy-code-bg: #d6bc9e;
+
   --piggy-text-main: var(--piggy-dark);
   --piggy-text-light: var(--piggy-light);
   --piggy-text-neutral: var(--piggy-neutral);
@@ -83,6 +86,22 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
   /* info boxes */
   --piggy-info-box-background: #69a8b4a4;
   --piggy-info-box-border: #007d8d;
+
+  --piggy-header-border: #ffffff;
+
+  --piggy-content-h1: #534530;
+  --piggy-content-h2: #534530;
+  --piggy-content-h3: #534530;
+  --piggy-content-h4: #534530;
+  --piggy-content-h5: #534530;
+  --piggy-content-h6: #534530;
+
+  --piggy-header-bg-h1: #53453030;
+  --piggy-header-bg-h2: #53453030;
+  --piggy-header-bg-h3: #53453030;
+  --piggy-header-bg-h4: #53453030;
+  --piggy-header-bg-h5: #53453030;
+  --piggy-header-bg-h6: #53453030;
 }
 
 [data-theme="desert"] .level-count-container {

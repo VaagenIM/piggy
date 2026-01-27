@@ -1288,6 +1288,10 @@ body:has(#settings-menu.open) #scroll-to-top-btn {
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 
+.md-content {
+  padding: 0.0rem 0.35rem !important;
+}
+
 .md-container a {
   color: var(--piggy-text-hyperlink) !important;
 }
@@ -1338,23 +1342,41 @@ details p:nth-child(2) {
 .md-content h5,
 .md-content h6 {
   font-weight: bold !important;
-  margin-top: 1.35rem !important;
-  margin-bottom: 0.25rem !important;
+  margin-top: 2.0rem !important;
+  margin-bottom: 0.5rem !important;
+  border-bottom: 2px solid !important;
+  padding: 0.35rem 1.25rem 0.1rem 0.5rem !important;
+  width: 100% !important;
 }
 
 .md-content h1,
 .md-content h1 code {
-  font-size: 2rem !important;
+  font-size: 2.0rem !important;
+}
+
+.md-content h1 {
+  color: var(--piggy-content-h1) !important;
+  background-color: var(--piggy-header-bg-h1);
 }
 
 .md-content h2,
 .md-content h2 code {
-  font-size: 1.5rem !important;
+  font-size: 1.75rem !important;
+}
+
+.md-content h2 {
+  color: var(--piggy-content-h2) !important;
+  background-color: var(--piggy-header-bg-h2);
 }
 
 .md-content h3,
 .md-content h3 code {
-  font-size: 1.25rem !important;
+  font-size: 1.35rem !important;
+}
+
+.md-content h3 {
+  color: var(--piggy-content-h3) !important;
+  background-color: var(--piggy-header-bg-h3);
 }
 
 .md-content h4,
@@ -1362,14 +1384,29 @@ details p:nth-child(2) {
   font-size: 1.15rem !important;
 }
 
+.md-content h4 {
+  color: var(--piggy-content-h4) !important;
+  background-color: var(--piggy-header-bg-h4);
+}
+
 .md-content h5,
 .md-content h5 code {
   font-size: 1.05rem !important;
 }
 
+.md-content h5 {
+  color: var(--piggy-content-h5) !important;
+  background-color: var(--piggy-header-bg-h5);
+}
+
 .md-content h6,
 .md-content h6 code {
-  font-size: 1rem !important;
+  font-size: 1.00rem !important;
+}
+
+.md-content h6 {
+  color: var(--piggy-content-h6) !important;
+  background-color: var(--piggy-header-bg-h6);
 }
 
 .md-content p {
@@ -1392,6 +1429,8 @@ details p:nth-child(2) {
 
 .md-content code:not(.md-code__content) {
   padding: 0 0.2rem 0 0.2rem !important;
+  color: var(--piggy-code) !important;
+  background-color: var(--piggy-code-bg) !important;
 }
 
 .md-content .linenodiv {

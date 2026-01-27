@@ -13,6 +13,9 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-neutral: #336b87;
   --piggy-dark: #001f27;
 
+  --piggy-code: #84cde2;
+  --piggy-code-bg: #0e3c48;
+
   --piggy-text-main: var(--piggy-light);
   --piggy-text-light: #d8f3f8;
   --piggy-text-neutral: var(--piggy-neutral);
@@ -87,6 +90,22 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-level-container-text: var(--piggy-light);
   --piggy-level-container: rgb(23, 40, 82);
   --piggy-level-container-border: rgba(0, 0, 0, 0);
+
+  --piggy-header-border: #ffffff;
+
+  --piggy-content-h1: #7da3ba;
+  --piggy-content-h2: #7da3ba;
+  --piggy-content-h3: #7da3ba;
+  --piggy-content-h4: #7da3ba;
+  --piggy-content-h5: #7da3ba;
+  --piggy-content-h6: #7da3ba;
+
+  --piggy-header-bg-h1: #7da3ba20;
+  --piggy-header-bg-h2: #7da3ba20;
+  --piggy-header-bg-h3: #7da3ba20;
+  --piggy-header-bg-h4: #7da3ba20;
+  --piggy-header-bg-h5: #7da3ba20;
+  --piggy-header-bg-h6: #7da3ba20;
 }
 
 [data-theme="ocean"] .assignment-card-grid-container .card-container * {
