@@ -11,6 +11,9 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-neutral: #7f7f7f;
   --piggy-dark: #ffffff;
 
+  --piggy-code: #ffffff;
+  --piggy-code-bg: #161616;
+
   --piggy-text-main: var(--piggy-light);
   --piggy-shadow-text: rgba(255, 255, 255, 0);
 
@@ -55,10 +58,26 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-info-box-background: #000000;
   --piggy-info-box-border: #00b7ff;
 
+  --piggy-header-border: #ffffff;
+
   /* logo */
   --piggy-logo: #ff44ff;
   --piggy-logo-gradient: #ff44ff;
   --piggy-logo-border: rgba(0, 0, 0, 0);
+
+  --piggy-content-h1: #ff0000;
+  --piggy-content-h2: #ffff00;
+  --piggy-content-h3: #00ff00;
+  --piggy-content-h4: #00ffff;
+  --piggy-content-h5: #ff00ff;
+  --piggy-content-h6: #ffffff;
+
+  --piggy-header-bg-h1: rgba(255, 0, 0, 0.1);
+  --piggy-header-bg-h2: rgba(255, 255, 0, 0.1);
+  --piggy-header-bg-h3: rgba(0, 255, 0, 0.1);
+  --piggy-header-bg-h4: rgba(0, 255, 255, 0.1);
+  --piggy-header-bg-h5: rgba(255, 0, 255, 0.1);
+  --piggy-header-bg-h6: rgba(255, 255, 255, 0.1);
 }
 
 [data-theme="high-contrast"] .card-container {

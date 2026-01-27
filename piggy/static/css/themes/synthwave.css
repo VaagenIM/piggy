@@ -12,6 +12,9 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --piggy-neutral: #866997;
   --piggy-dark: rgb(48, 20, 58);
 
+  --piggy-code: #ff8b65;
+  --piggy-code-bg: #240c0c;
+
   --piggy-text-main: #ffcc66;
   --piggy-text-light: #ff9b9b;
   --piggy-text-dark: #ffcb91;
@@ -86,6 +89,58 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --piggy-level-container-text: var(--piggy-light);
   --piggy-level-container: rgb(29, 21, 31);
   --piggy-level-container-border: rgba(0, 0, 0, 0);
+
+  --piggy-header-border: #ffffff;
+
+  --piggy-content-h1: #ff8400;
+  --piggy-content-h2: #ff4800;
+  --piggy-content-h3: #ff0080;
+  --piggy-content-h4: #f200ff;
+  --piggy-content-h5: #0059ff;
+  --piggy-content-h6: #00fbff;
+
+  --piggy-header-bg-h1: linear-gradient(to top, #ff840050, #00000000);
+  --piggy-header-bg-h2: linear-gradient(to top, #ff480050, #00000000);
+  --piggy-header-bg-h3: linear-gradient(to top, #ff008050, #00000000);
+  --piggy-header-bg-h4: linear-gradient(to top, #f200ff50, #00000000);
+  --piggy-header-bg-h5: linear-gradient(to top, #0059ff50, #00000000);
+  --piggy-header-bg-h6: linear-gradient(to top, #00fbff50, #00000000);
+}
+
+[data-theme="synthwave"] .md-content h1 {
+  color: var(--piggy-content-h1) !important;
+  text-shadow: 0px 2px 5px #000000;
+  background: var(--piggy-header-bg-h1);
+}
+
+[data-theme="synthwave"] .md-content h2 {
+  color: var(--piggy-content-h2) !important;
+  text-shadow: 0px 2px 5px #000000;
+  background: var(--piggy-header-bg-h2);
+}
+
+[data-theme="synthwave"] .md-content h3 {
+  color: var(--piggy-content-h3) !important;
+  text-shadow: 0px 2px 5px #000000;
+  background: var(--piggy-header-bg-h3);
+}
+
+[data-theme="synthwave"] .md-content h4 {
+  color: var(--piggy-content-h4) !important;
+  text-shadow: 0px 2px 5px #000000;
+  background: var(--piggy-header-bg-h4);
+}
+
+[data-theme="synthwave"] .md-content h5 {
+  color: var(--piggy-content-h5) !important;
+  text-shadow: 0px 2px 5px #000000;
+  background: var(--piggy-header-bg-h5);
+}
+
+[data-theme="synthwave"] .md-content h6 {
+  color: var(--piggy-content-h6) !important;
+  text-shadow: 0px 2px 5px #000000;
+  background: var(--piggy-header-bg-h6);
 }
 
 [data-theme="synthwave"] .main-container {

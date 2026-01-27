@@ -73,6 +73,22 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   /* info boxes */
   --piggy-info-box-background: #00414ec0;
   --piggy-info-box-border: #00bcd4;
+
+  --piggy-header-border: #ffffff;
+
+  --piggy-content-h1: #f7e9c5;
+  --piggy-content-h2: #f7e9c5;
+  --piggy-content-h3: #f7e9c5;
+  --piggy-content-h4: #f7e9c5;
+  --piggy-content-h5: #f7e9c5;
+  --piggy-content-h6: #f7e9c5;
+
+  --piggy-header-bg-h1: #f7e9c520;
+  --piggy-header-bg-h2: #f7e9c520;
+  --piggy-header-bg-h3: #f7e9c520;
+  --piggy-header-bg-h4: #f7e9c520;
+  --piggy-header-bg-h5: #f7e9c520;
+  --piggy-header-bg-h6: #f7e9c520;
 }
 
 [data-theme="golden"] .level-count-container {

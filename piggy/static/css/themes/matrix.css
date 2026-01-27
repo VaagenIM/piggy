@@ -13,6 +13,9 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   --piggy-neutral: #008800;
   --piggy-dark: #004400;
 
+  --piggy-code: #00ffff;
+  --piggy-code-bg: #002222;
+
   --piggy-text-main: var(--piggy-light);
   --piggy-text-light: var(--piggy-light);
   --piggy-text-neutral: var(--piggy-neutral);
@@ -88,6 +91,59 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   --piggy-level-container-text: var(--piggy-light);
   --piggy-level-container: rgb(0, 0, 0);
   --piggy-level-container-border: rgba(0, 255, 0, 1);
+
+  --piggy-header-border: #ffffff;
+
+  --piggy-content-h1: #00ffc3;
+  --piggy-content-h2: #00ffc3;
+  --piggy-content-h3: #00ffc3;
+  --piggy-content-h4: #00ffc3;
+  --piggy-content-h5: #00ffc3;
+  --piggy-content-h6: #00ffc3;
+
+  --piggy-header-bg-h1: linear-gradient(to top, #00ffc330, #00000000);
+  --piggy-header-bg-h2: linear-gradient(to top, #00ffc330, #00000000);
+  --piggy-header-bg-h3: linear-gradient(to top, #00ffc330, #00000000);
+  --piggy-header-bg-h4: linear-gradient(to top, #00ffc330, #00000000);
+  --piggy-header-bg-h5: linear-gradient(to top, #00ffc330, #00000000);
+  --piggy-header-bg-h6: linear-gradient(to top, #00ffc330, #00000000);
+
+}
+
+[data-theme="matrix"] .md-content h1 {
+  color: var(--piggy-content-h1) !important;
+  text-shadow: 0px 2px 5px #000000;
+  background: var(--piggy-header-bg-h1);
+}
+
+[data-theme="matrix"] .md-content h2 {
+  color: var(--piggy-content-h2) !important;
+  text-shadow: 0px 2px 5px #000000;
+  background: var(--piggy-header-bg-h2);
+}
+
+[data-theme="matrix"] .md-content h3 {
+  color: var(--piggy-content-h3) !important;
+  text-shadow: 0px 2px 5px #000000;
+  background: var(--piggy-header-bg-h3);
+}
+
+[data-theme="matrix"] .md-content h4 {
+  color: var(--piggy-content-h4) !important;
+  text-shadow: 0px 2px 5px #000000;
+  background: var(--piggy-header-bg-h4);
+}
+
+[data-theme="matrix"] .md-content h5 {
+  color: var(--piggy-content-h5) !important;
+  text-shadow: 0px 2px 5px #000000;
+  background: var(--piggy-header-bg-h5);
+}
+
+[data-theme="matrix"] .md-content h6 {
+  color: var(--piggy-content-h6) !important;
+  text-shadow: 0px 2px 5px #000000;
+  background: var(--piggy-header-bg-h6);
 }
 
 [data-theme="matrix"] .card-container {
@@ -119,11 +175,6 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 
 [data-theme="matrix"] .md-content .admonition-title {
   font-size: 0.8rem !important;
-}
-
-[data-theme="matrix"] .md-content code:not(.md-code__content) {
-  background-color: #001100;
-  color: #00ff00;
 }
 
 [data-theme="matrix"] .md-content .md-code__content {

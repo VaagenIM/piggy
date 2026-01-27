@@ -12,6 +12,9 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
   --piggy-neutral: #7a6e72;
   --piggy-dark: rgb(20, 20, 20);
 
+  --piggy-code: #313131;
+  --piggy-code-bg: #d9c5d5;
+
   --piggy-text-main: var(--piggy-dark);
   --piggy-shadow-text: rgba(0, 0, 0, 0);
   --piggy-shadow-box: #00000011;
@@ -84,11 +87,33 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
   --piggy-logo: #ff9abc;
   --piggy-logo-gradient: linear-gradient(45deg, #ffc1d8, #ff5a8f, #c03db9);
   --piggy-logo-border: rgba(0, 0, 0, 0.6);
+
+  --piggy-header-border: #ffffff;
+
+  --piggy-content-h1: #a74980;
+  --piggy-content-h2: #a74980;
+  --piggy-content-h3: #a74980;
+  --piggy-content-h4: #a74980;
+  --piggy-content-h5: #a74980;
+  --piggy-content-h6: #a74980;
+
+  --piggy-header-bg-h1: rgb(167, 73, 128, 0.25);
+  --piggy-header-bg-h2: rgb(167, 73, 128, 0.25);
+  --piggy-header-bg-h3: rgb(167, 73, 128, 0.25);
+  --piggy-header-bg-h4: rgb(167, 73, 128, 0.25);
+  --piggy-header-bg-h5: rgb(167, 73, 128, 0.25);
+  --piggy-header-bg-h6: rgb(167, 73, 128, 0.25);
 }
+
 
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
+[data-theme="piggy"] .md-content {
+  border: 1px solid #573e51aa;
+  border-radius: 0.5rem;
+}
+
 [data-theme="piggy"] .md-content .admonition-title {
   font-size: 0.8rem !important;
 }
