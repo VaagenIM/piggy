@@ -23,7 +23,7 @@ py-modules = []
 
 [project.optional-dependencies]
 dev = [
-    "ruff~=0.14.0",
+    "ruff~=0.15.0",
 ]
 
 [tool.ruff]
