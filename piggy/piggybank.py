@@ -162,6 +162,10 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
 
         frontmatter = get_frontmatter_from_file(assignment_path)
 
+        # Default thumbnail to the assignment group's header image if not specified
+        if "thumbnail" not in frontmatter:
+            frontmatter["thumbnail"] = "media/header"
+
         # Get translations metadata
         translation_meta = dict()
         for lang in os.listdir(f"{path}/translations") if os.path.isdir(f"{path}/translations") else []:
