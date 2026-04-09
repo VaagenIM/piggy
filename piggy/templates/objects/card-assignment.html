@@ -3,7 +3,7 @@
 {{
   card(
     abspath = abspath,
-    item = item,
+    item = item ~ "/" ~ (data.data.keys()|list)[0],
     title = data.meta.name,
     level_count = data.data|length,
     description = data.meta.description,
