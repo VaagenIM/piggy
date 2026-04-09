@@ -7,7 +7,7 @@ so we can decide whether to remove the last path segment from the breadcrumbs.
   {% set meta = {} %}
 {% endif %}
 {% set topic_type = "" %}
-{% set remove_last_from_data_with_type = ["information", "exercise"] %}
+{% set remove_last_from_data_with_type = ["information", "exercise", "assignment"] %}
 {% if meta.topic %}
   {% set topic_type = meta.topic.type %}
 {% endif %}
@@ -15,15 +15,17 @@ so we can decide whether to remove the last path segment from the breadcrumbs.
 <nav class="piggy-navbar flex items-center justify-between px-3 py-2">
   {# Breadcrumbs elements #}
   <a id="piggy-logo" href="/">
-    <img id="piggy-logo-icon" src="{{ url_for('static', filename='img/icons/piggy_icon-128.png')}}">
+    <img
+      id="piggy-logo-icon"
+      src="{{ url_for('static', filename='img/icons/piggy_icon-128.png') }}"
+    />
     <span id="piggy-logo-text">Piggy</span>
   </a>
   <ol
     class="flex flex-wrap items-center space-x-1 md:space-x-2 flex-1 overflow-x-auto overflow-y-hidden"
   >
     {# Home element #}
-    <li class="inline-flex items-center">
-    </li>
+    <li class="inline-flex items-center"></li>
     {# if we are not at home #}
     {% if request.path.strip('/') %}
       {# Go through the path and figure out where we are #}
@@ -86,5 +88,4 @@ so we can decide whether to remove the last path segment from the breadcrumbs.
 
   {# Settings button #}
   {% include 'partials/parts/settings.html' %}
-
 </nav>
