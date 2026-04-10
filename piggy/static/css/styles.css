@@ -79,6 +79,27 @@
   font-style: normal;
 }
 
+/* Cascadia Code PL (Powerline) */
+@font-face {
+  font-family: "Cascadia Code PL";
+  src: url("/static/fonts/CascadiaCodePL.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cascadia Code PL";
+  src: url("/static/fonts/CascadiaCodePLItalic.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+.md-code__content {
+  font-family: "Cascadia Code PL", monospace !important;
+}
+
 /***********************\
 |*     FONT THEMES     *|
 \***********************/
