@@ -305,6 +305,7 @@ body:has(#settings-menu.open) #scroll-to-top-btn {
 
 ol {
   list-style: decimal;
+  font-size: initial;
 }
 
 /*********************\
