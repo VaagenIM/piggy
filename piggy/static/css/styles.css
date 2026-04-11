@@ -303,6 +303,10 @@ body:has(#settings-menu.open) #scroll-to-top-btn {
   pointer-events: none;
 }
 
+ol {
+  list-style: decimal;
+}
+
 /*********************\
 |*     CARD GRID     *|
 \*********************/
