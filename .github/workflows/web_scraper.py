@@ -96,6 +96,16 @@ def get_html(link) -> tuple[str, set[str], set[str]]:
             rf"""href=\"({link.split("Level")[0].split("/")[-1]}[^/]+)\"""", rf'href="../../\1/lang/{lang}"', html
         )
 
+    # Ensure parent directories of every discovered link are also visited.
+    # Some pages (e.g. assignments) hide the parent topic directory from the
+    # breadcrumbs, so the scraper would otherwise never discover it.
+    parent_links = set()
+    for l in new_links:
+        parts = l.strip("/").split("/")
+        for i in range(1, len(parts)):
+            parent_links.add("/" + "/".join(parts[:i]))
+    new_links |= parent_links
+
     # Remove links that are media links
     new_links -= new_media_links
     return html, new_links, new_media_links
