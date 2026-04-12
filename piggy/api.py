@@ -21,7 +21,7 @@ def generate_thumbnail(text: str, request=request):
     # c is a hash of the text to get a color combination
     gibberish = request.args.get("c", "")
 
-    # Text, Background combinations
+    # Text, Background combinations  (text_color, bg_color)
     color_palettes = [
         ("ffffff", "85144b"),
         ("001f3f", "39cccc"),
@@ -29,7 +29,6 @@ def generate_thumbnail(text: str, request=request):
         ("2ecc40", "001f3f"),
         ("39cccc", "001f3f"),
         ("7fdbff", "85144b"),
-        ("ff851b", "001f3f"),
         ("f012be", "111111"),
         ("ffdc00", "111111"),
         ("001f3f", "ff4136"),
@@ -38,11 +37,29 @@ def generate_thumbnail(text: str, request=request):
         ("ff4136", "111111"),
         ("2ecc40", "111111"),
         ("ff4136", "85144b"),
+        # Earthy / warm
+        ("fefae0", "3a5a40"),
+        ("f4f1de", "e07a5f"),
+        ("264653", "e9c46a"),
+        ("f2e9e4", "6b4226"),
+        # Cool / modern
+        ("caf0f8", "023e8a"),
+        ("e0fbfc", "293241"),
+        ("f8f9fa", "495057"),
+        ("ffffff", "6c63ff"),
+        # Vivid / bold
+        ("1a1a2e", "e94560"),
+        ("fca311", "14213d"),
+        ("edf2f4", "d90429"),
+        ("f72585", "3a0ca3"),
+        ("4cc9f0", "560bad"),
+        ("80ffdb", "2b2d42"),
     ]
 
     if gibberish and not bg_color and not text_color:
-        # use a simple hashing function to get a color combination from the gibberish
-        text_color, bg_color = color_palettes[int(md5(gibberish.encode()).hexdigest(), 16) % len(color_palettes)]
+        # Hash both gibberish and the text so each title gets a unique palette
+        seed = int(md5((gibberish + text).encode()).hexdigest(), 16)
+        text_color, bg_color = color_palettes[seed % len(color_palettes)]
 
     if not bg_color:
         bg_color = "111111"
