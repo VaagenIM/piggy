@@ -111,10 +111,6 @@ preview_style: background: linear-gradient(90deg, #d6c8d5, #ffffff); color: #000
   border-radius: 0.5rem;
 }
 
-[data-theme="classic"] .md-content .admonition-title {
-  font-size: 0.8rem !important;
-}
-
 [data-theme="classic"] .md-content code:not(.md-code__content) {
   background-color: #d1d1d1;
   color: var(--piggy-dark);

@@ -100,10 +100,6 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
-[data-theme="golden"] .md-content .admonition-title {
-  font-size: 0.8rem !important;
-}
-
 [data-theme="golden"] .md-content code:not(.md-code__content) {
   background-color: #1e1e26;
   color: #ffe7a0;

@@ -43,7 +43,7 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 
   --piggy-card-border-width: 1px;
 
-    /* Information cards */
+  /* Information cards */
   --piggy-information-card-start: rgba(0, 98, 179, 0.384);
   --piggy-information-card-end: rgba(0, 100, 200, 0.35);
   --piggy-information-card-border: rgba(0, 156, 255, 0.5);
@@ -155,9 +155,8 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   box-shadow: var(--piggy-assignment-shadow-glow) !important;
 }
 
-[data-theme="matrix"] 
-  .card-assignment .description-container,
-  .card-assignment .card-title {
+[data-theme="matrix"] .card-assignment .description-container,
+.card-assignment .card-title {
   color: var(--piggy-assignment-text) !important;
 }
 
@@ -168,13 +167,9 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
-
-[data-theme="matrix"] .md-content, .md-code__content {
+[data-theme="matrix"] .md-content,
+.md-code__content {
   border-radius: 0.25rem !important;
-}
-
-[data-theme="matrix"] .md-content .admonition-title {
-  font-size: 0.8rem !important;
 }
 
 [data-theme="matrix"] .md-content .md-code__content {

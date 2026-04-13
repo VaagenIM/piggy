@@ -25,7 +25,7 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
   --piggy-card-end: rgba(255, 220, 229, 1);
   --piggy-card-border: #ff99cc;
   --piggy-text-card: var(--piggy-dark);
-  
+
   /* Assignment cards */
   --piggy-assignment-card-start: rgba(255, 137, 220, 0.5);
   --piggy-assignment-card-end: rgba(255, 170, 230, 0.5);
@@ -34,7 +34,7 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
   --piggy-assignment-accent: #ff4d6d;
   --piggy-assignment-shadow-glow: rgba(255, 77, 109, 0.5);
 
-    /* Information cards */
+  /* Information cards */
   --piggy-information-card-start: rgba(138, 203, 255, 0.5);
   --piggy-information-card-end: rgba(63, 139, 214, 0.5);
   --piggy-information-card-border: rgba(64, 129, 170, 0.75);
@@ -112,10 +112,6 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
 [data-theme="piggy"] .md-content {
   border: 1px solid #573e51aa;
   border-radius: 0.5rem;
-}
-
-[data-theme="piggy"] .md-content .admonition-title {
-  font-size: 0.8rem !important;
 }
 
 [data-theme="piggy"] .md-content code:not(.md-code__content) {
