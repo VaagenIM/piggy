@@ -8,6 +8,10 @@ const systemPreferredTheme =
 // Initialize theme and font settings asap
 const currentTheme = localStorage.getItem("theme") || systemPreferredTheme;
 const fontTheme = localStorage.getItem("fontTheme") || "default";
+const monoTheme = localStorage.getItem("monoTheme") || "default";
+const fontSize = localStorage.getItem("fontSize") || "default";
 
 document.documentElement.setAttribute("data-theme", currentTheme);
 document.documentElement.setAttribute("data-font-theme", fontTheme);
+document.documentElement.setAttribute("data-mono-theme", monoTheme);
+document.documentElement.setAttribute("data-font-size", fontSize);

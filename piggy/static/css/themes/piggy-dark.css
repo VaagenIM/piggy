@@ -25,13 +25,13 @@ preview_style: background: linear-gradient(90deg, #1f1518, #3d2a30); color: #ece
   --piggy-card-border: #a06672;
   --piggy-text-card: var(--piggy-dark);
 
-  --piggy-assignment-card-start: rgba(192,133,142,0.3);
-  --piggy-assignment-card-end: rgba(160,100,114,0.3);
+  --piggy-assignment-card-start: rgba(192, 133, 142, 0.3);
+  --piggy-assignment-card-end: rgba(160, 100, 114, 0.3);
   --piggy-assignment-card-border: #a06472;
-  --piggy-assignment-overlay: rgba(160,100,114,0.85);
+  --piggy-assignment-overlay: rgba(160, 100, 114, 0.85);
   --piggy-assignment-accent: #a06472;
-  --piggy-assignment-shadow-glow: rgba(160,100,114,0.5);
-  
+  --piggy-assignment-shadow-glow: rgba(160, 100, 114, 0.5);
+
   /* Information cards */
   --piggy-information-card-start: rgba(0, 98, 179, 0.384);
   --piggy-information-card-end: rgba(0, 100, 200, 0.35);
@@ -109,10 +109,6 @@ preview_style: background: linear-gradient(90deg, #1f1518, #3d2a30); color: #ece
 [data-theme="piggy-dark"] .md-content {
   border: 1px solid #85607caa;
   border-radius: 0.5rem;
-}
-
-[data-theme="piggy-dark"] .md-content .admonition-title {
-  font-size: 0.8rem !important;
 }
 
 [data-theme="piggy-dark"] .md-content code:not(.md-code__content) {

@@ -31,12 +31,12 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-card-border: #88c0d0;
   --piggy-text-card: var(--piggy-text-light);
 
-  --piggy-assignment-card-start: rgba(255,127,80,0.4);
-  --piggy-assignment-card-end: rgba(255,99,71,0.2);
+  --piggy-assignment-card-start: rgba(255, 127, 80, 0.4);
+  --piggy-assignment-card-end: rgba(255, 99, 71, 0.2);
   --piggy-assignment-card-border: #FF6347;
-  --piggy-assignment-overlay: rgba(255,99,71,0.8);
+  --piggy-assignment-overlay: rgba(255, 99, 71, 0.8);
   --piggy-assignment-accent: #FF6347;
-  --piggy-assignment-shadow-glow: rgba(255,99,71,0.5);
+  --piggy-assignment-shadow-glow: rgba(255, 99, 71, 0.5);
 
   --piggy-card-border-width: 1px;
 
@@ -115,11 +115,6 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
-
-[data-theme="ocean"] .md-content .admonition-title {
-  font-size: 0.8rem !important;
-}
-
 [data-theme="ocean"] .md-content code:not(.md-code__content) {
   background-color: #001219;
   color: #d8f3f8;

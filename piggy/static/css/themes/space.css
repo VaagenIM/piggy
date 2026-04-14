@@ -111,11 +111,6 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
-
-[data-theme="space"] .md-content .admonition-title {
-  font-size: 0.8rem !important;
-}
-
 [data-theme="space"] .md-content code:not(.md-code__content) {
   background-color: #0f0f0f;
   color: #66fcf1;
