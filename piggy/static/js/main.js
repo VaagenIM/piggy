@@ -5,12 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const themeSelect = document.getElementById("theme-select");
   const fontSelect = document.getElementById("font-select");
+  const monoSelect = document.getElementById("mono-select")
   const fontSizeSelect = document.getElementById("font-size-select");
 
   const THEME_STORAGE_KEY = "theme";
   const FONT_STORAGE_KEY = "fontTheme";
+  const MONO_STORAGE_KEY = "monoTheme";
   const FONT_SIZE_STORAGE_KEY = "fontSize";
   const DEFAULT_FONT_THEME = "default";
+  const DEFAULT_MONO_THEME = "default";
   const DEFAULT_FONT_SIZE = "default";
 
   function closeAllCustomSelects(except = null) {
@@ -105,6 +108,11 @@ document.addEventListener("DOMContentLoaded", () => {
     document.documentElement.setAttribute("data-font-theme", fontTheme);
   }
 
+  function applyMonoTheme(monoTheme) {
+    localStorage.setItem(MONO_STORAGE_KEY, monoTheme);
+    document.documentElement.setAttribute("data-mono-theme", monoTheme);
+  }
+
   function applyFontSize(fontSize) {
     localStorage.setItem(FONT_SIZE_STORAGE_KEY, fontSize);
     document.documentElement.setAttribute("data-font-size", fontSize);
@@ -177,6 +185,13 @@ document.addEventListener("DOMContentLoaded", () => {
     defaultValue: DEFAULT_FONT_THEME,
     onChange: applyFontTheme,
   });
+
+  initializeCustomSelect({
+    select: monoSelect,
+    storageKey: MONO_STORAGE_KEY,
+    defaultValue: DEFAULT_MONO_THEME,
+    onChange: applyMonoTheme
+  })
 
   initializeCustomSelect({
     select: fontSizeSelect,
