@@ -7,7 +7,7 @@ so we can decide whether to remove the last path segment from the breadcrumbs.
   {% set meta = {} %}
 {% endif %}
 {% set topic_type = "" %}
-{% set remove_last_from_data_with_type = ["information", "exercise", "assignment"] %}
+{% set remove_last_from_data_with_type = ["information", "exercise"] %}
 {% if meta.topic %}
   {% set topic_type = meta.topic.type %}
 {% endif %}
