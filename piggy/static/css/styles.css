@@ -1,7 +1,7 @@
 :root {
   --piggy-font-scale: 1;
 
-  font-size: 16px;
+  font-size: 17px;
 
   font-family: "Noto Sans", sans-serif;
   font-optical-sizing: auto;
@@ -192,7 +192,7 @@
 |*     FONT SIZE THEMES     *|
 \****************************/
 :root[data-font-size="xx-small"] {
-  --piggy-font-scale: 0.75;
+  --piggy-font-scale: 0.7;
 }
 
 :root[data-font-size="x-small"] {
@@ -200,23 +200,27 @@
 }
 
 :root[data-font-size="small"] {
-  --piggy-font-scale: 0.9;
+  --piggy-font-scale: 1.0;
 }
 
-:root[data-font-size="normal"] {
-  --piggy-font-scale: 1;
+:root[data-font-size="default"] {
+  --piggy-font-scale: 1.075;
 }
 
 :root[data-font-size="large"] {
-  --piggy-font-scale: 1.25;
+  --piggy-font-scale: 1.2;
 }
 
 :root[data-font-size="x-large"] {
-  --piggy-font-scale: 1.5;
+  --piggy-font-scale: 1.35;
 }
 
 :root[data-font-size="xx-large"] {
-  --piggy-font-scale: 2.0;
+  --piggy-font-scale: 1.5;
+}
+
+:root[data-font-size="xxx-large"] {
+  --piggy-font-scale: 1.85;
 }
 
 /*****************************\
@@ -1347,7 +1351,7 @@ ol {
 \******************************/
 
 .md-content {
-  padding: 0.0rem 0.35rem !important;
+  padding: 0.0rem 0.1rem !important;
 }
 
 .md-container a {
@@ -1479,10 +1483,18 @@ details p:nth-child(2) {
 
 .md-content code,
 .md-content summary,
-.md-content table,
 .md-content .linenos {
-  font-size: calc(0.8rem * var(--piggy-font-scale)) !important;
+  font-size: calc(0.875rem * var(--piggy-font-scale)) !important;
   line-height: calc(1rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content table {
+  font-size: calc(0.9rem * var(--piggy-font-scale)) !important;
+  line-height: calc(1.1rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content table td {
+  padding: calc(0.65rem * var(--piggy-font-scale)) !important;
 }
 
 .md-content code:not(.md-code__content) {

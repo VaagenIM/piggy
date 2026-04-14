@@ -9,7 +9,7 @@ const systemPreferredTheme =
 const currentTheme = localStorage.getItem("theme") || systemPreferredTheme;
 const fontTheme = localStorage.getItem("fontTheme") || "default";
 const monoTheme = localStorage.getItem("monoTheme") || "default";
-const fontSize = localStorage.getItem("fontSize") || "normal";
+const fontSize = localStorage.getItem("fontSize") || "default";
 
 document.documentElement.setAttribute("data-theme", currentTheme);
 document.documentElement.setAttribute("data-font-theme", fontTheme);

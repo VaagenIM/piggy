@@ -1,39 +1,64 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Get elements for the settings menu
   const settingsMenu = document.getElementById("settings-menu");
   const settingsButton = document.getElementById("settings-button");
   const closeButton = document.querySelector("#settings-menu .close-button");
 
-  // Get custom select elements for theme and font
   const themeSelect = document.getElementById("theme-select");
-  const themeSelected = themeSelect.querySelector(".selected");
   const fontSelect = document.getElementById("font-select");
-  const fontSelected = fontSelect
-    ? fontSelect.querySelector(".selected")
-    : null;
+  const fontSizeSelect = document.getElementById("font-size-select");
 
-  // --- Helper Functions ---
+  const THEME_STORAGE_KEY = "theme";
+  const FONT_STORAGE_KEY = "fontTheme";
+  const FONT_SIZE_STORAGE_KEY = "fontSize";
+  const DEFAULT_FONT_THEME = "default";
+  const DEFAULT_FONT_SIZE = "default";
+
   function closeAllCustomSelects(except = null) {
     document.querySelectorAll(".custom-select").forEach((select) => {
       if (select !== except) {
-        select.classList.remove("open");
-        const optionsContainer = select.querySelector(".options-container");
-        if (optionsContainer) {
-          optionsContainer.style.maxHeight = "";
-        }
+        closeCustomSelect(select);
       }
     });
   }
 
-  // Dynamically calculate available space and set max-height on the options container
-  function updateOptionsMaxHeight(select) {
-    const optionsContainer = select.querySelector(".options-container");
-    const rect = optionsContainer.getBoundingClientRect();
-    const availableHeight = window.innerHeight - rect.top - 10; // 10px margin
-    optionsContainer.style.maxHeight = availableHeight + "px";
+  function openCustomSelect(select) {
+    if (!select) return;
+    select.classList.add("open");
+    updateOptionsMaxHeight(select);
   }
 
-  // Smooth page transition
+  function closeCustomSelect(select) {
+    if (!select) return;
+    select.classList.remove("open");
+
+    const optionsContainer = select.querySelector(".options-container");
+    if (optionsContainer) {
+      optionsContainer.style.maxHeight = "";
+    }
+  }
+
+  function toggleCustomSelect(select) {
+    if (!select) return;
+
+    const isOpen = select.classList.contains("open");
+    closeAllCustomSelects(select);
+
+    if (isOpen) {
+      closeCustomSelect(select);
+    } else {
+      openCustomSelect(select);
+    }
+  }
+
+  function updateOptionsMaxHeight(select) {
+    const optionsContainer = select.querySelector(".options-container");
+    if (!optionsContainer) return;
+
+    const rect = optionsContainer.getBoundingClientRect();
+    const availableHeight = window.innerHeight - rect.top - 10;
+    optionsContainer.style.maxHeight = `${availableHeight}px`;
+  }
+
   function pageTransition() {
     document.body.classList.add("transition");
     setTimeout(() => {
@@ -41,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   }
 
-  // Stop all background animations
   function stopAllAnimations() {
     stopMatrixAnimation();
     stopOceanShaderAnimation();
@@ -50,30 +74,85 @@ document.addEventListener("DOMContentLoaded", () => {
     stopGoldenShaderAnimation();
   }
 
-  // --- Background Animations ---
-  // currentTheme is set in on-load.js; fallback to system preference if not set
-  const currentTheme = localStorage.getItem("theme") || systemPreferredTheme;
-  switch (currentTheme) {
-    case "matrix":
-      startMatrixAnimation();
-      break;
-    case "ocean":
-      startOceanShaderAnimation();
-      break;
-    case "desert":
-      startDesertShaderAnimation();
-      break;
-    case "golden":
-      startGoldenShaderAnimation();
-      break;
-    case "space":
-      startSpaceAnimation();
-      break;
-    default:
-      stopAllAnimations();
+  function applyTheme(theme) {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+    document.documentElement.setAttribute("data-theme", theme);
+
+    pageTransition();
+    stopAllAnimations();
+
+    switch (theme) {
+      case "matrix":
+        startMatrixAnimation();
+        break;
+      case "ocean":
+        startOceanShaderAnimation();
+        break;
+      case "desert":
+        startDesertShaderAnimation();
+        break;
+      case "golden":
+        startGoldenShaderAnimation();
+        break;
+      case "space":
+        startSpaceAnimation();
+        break;
+    }
   }
 
-  // --- Settings Menu Functions ---
+  function applyFontTheme(fontTheme) {
+    localStorage.setItem(FONT_STORAGE_KEY, fontTheme);
+    document.documentElement.setAttribute("data-font-theme", fontTheme);
+  }
+
+  function applyFontSize(fontSize) {
+    localStorage.setItem(FONT_SIZE_STORAGE_KEY, fontSize);
+    document.documentElement.setAttribute("data-font-size", fontSize);
+  }
+
+  function initializeCustomSelect({
+    select,
+    storageKey,
+    defaultValue,
+    onChange,
+  }) {
+    if (!select) return;
+
+    const selected = select.querySelector(".selected");
+    const options = select.querySelectorAll(".option");
+
+    if (!selected || options.length === 0) return;
+
+    const savedValue = localStorage.getItem(storageKey) || defaultValue;
+    const matchingOption = select.querySelector(
+      `.option[data-value="${savedValue}"]`,
+    );
+
+    if (matchingOption) {
+      selected.textContent = matchingOption.textContent;
+      selected.setAttribute("data-value", savedValue);
+    }
+
+    selected.addEventListener("click", (event) => {
+      toggleCustomSelect(select);
+      event.stopPropagation();
+    });
+
+    options.forEach((option) => {
+      option.addEventListener("click", (event) => {
+        const value = option.getAttribute("data-value");
+
+        selected.textContent = option.textContent;
+        selected.setAttribute("data-value", value);
+
+        onChange(value);
+        closeCustomSelect(select);
+
+        event.stopPropagation();
+      });
+    });
+  }
+
   function openSettingsMenu() {
     settingsMenu.classList.add("open");
   }
@@ -82,119 +161,50 @@ document.addEventListener("DOMContentLoaded", () => {
     settingsMenu.classList.remove("open");
   }
 
-  // --- Initialize Theme Custom Select ---
-  const matchingThemeOption = themeSelect.querySelector(
-    `.option[data-value="${currentTheme}"]`,
-  );
-  if (matchingThemeOption) {
-    themeSelected.textContent = matchingThemeOption.textContent;
-    themeSelected.setAttribute("data-value", currentTheme);
-  }
+  const currentTheme = localStorage.getItem(THEME_STORAGE_KEY) || systemPreferredTheme;
+  applyTheme(currentTheme);
 
-  // Toggle theme dropdown when clicking its selected area
-  themeSelected.addEventListener("click", (e) => {
-    closeAllCustomSelects(themeSelect);
-    themeSelect.classList.toggle("open");
-    if (themeSelect.classList.contains("open")) {
-      updateOptionsMaxHeight(themeSelect);
-    }
-    e.stopPropagation();
+  initializeCustomSelect({
+    select: themeSelect,
+    storageKey: THEME_STORAGE_KEY,
+    defaultValue: currentTheme,
+    onChange: applyTheme,
   });
 
-  // Attach click event listeners to each theme option
-  themeSelect.querySelectorAll(".option").forEach((option) => {
-    option.addEventListener("click", function (e) {
-      const selectedTheme = this.getAttribute("data-value");
-
-      themeSelected.textContent = this.textContent;
-      themeSelected.setAttribute("data-value", selectedTheme);
-
-      // save theme and apply
-      localStorage.setItem("theme", selectedTheme);
-      document.documentElement.setAttribute("data-theme", selectedTheme);
-
-      pageTransition();
-      stopAllAnimations();
-      switch (selectedTheme) {
-        case "matrix":
-          startMatrixAnimation();
-          break;
-        case "ocean":
-          startOceanShaderAnimation();
-          break;
-        case "desert":
-          startDesertShaderAnimation();
-          break;
-        case "golden":
-          startGoldenShaderAnimation();
-          break;
-        case "space":
-          startSpaceAnimation();
-          break;
-        default:
-          break;
-      }
-
-      // Close dropdown after selection
-      themeSelect.classList.remove("open");
-
-      const optionsContainer = themeSelect.querySelector(".options-container");
-      optionsContainer.style.maxHeight = "";
-
-      e.stopPropagation();
-    });
+  initializeCustomSelect({
+    select: fontSelect,
+    storageKey: FONT_STORAGE_KEY,
+    defaultValue: DEFAULT_FONT_THEME,
+    onChange: applyFontTheme,
   });
 
-  // --- Initialize Font Custom Select ---
-  if (fontSelect && fontSelected) {
-    const savedFontTheme = localStorage.getItem("fontTheme") || "default";
-    const matchingFontOption = fontSelect.querySelector(
-      `.option[data-value="${savedFontTheme}"]`,
-    );
-    if (matchingFontOption) {
-      fontSelected.textContent = matchingFontOption.textContent;
-      fontSelected.setAttribute("data-value", savedFontTheme);
-    }
+  initializeCustomSelect({
+    select: fontSizeSelect,
+    storageKey: FONT_SIZE_STORAGE_KEY,
+    defaultValue: DEFAULT_FONT_SIZE,
+    onChange: applyFontSize,
+  });
 
-    // Toggle font dropdown on click
-    fontSelected.addEventListener("click", (e) => {
-      closeAllCustomSelects(fontSelect);
-      fontSelect.classList.toggle("open");
-      if (fontSelect.classList.contains("open")) {
-        updateOptionsMaxHeight(fontSelect);
-      }
-      e.stopPropagation();
-    });
-
-    // Attach event listeners for each font option
-    fontSelect.querySelectorAll(".option").forEach((option) => {
-      option.addEventListener("click", function (e) {
-        const selectedFont = this.getAttribute("data-value");
-        fontSelected.textContent = this.textContent;
-        fontSelected.setAttribute("data-value", selectedFont);
-        localStorage.setItem("fontTheme", selectedFont);
-        document.documentElement.setAttribute("data-font-theme", selectedFont);
-        fontSelect.classList.remove("open");
-        e.stopPropagation();
-      });
-    });
-  }
-
-  // --- Global Listeners ---
   document.addEventListener("click", () => {
     closeAllCustomSelects();
   });
 
-  // Settings menu event listeners
-  settingsButton.addEventListener("click", openSettingsMenu);
-  closeButton.addEventListener("click", closeSettingsMenu);
-  window.addEventListener("click", function (event) {
+  settingsButton?.addEventListener("click", openSettingsMenu);
+  closeButton?.addEventListener("click", closeSettingsMenu);
+
+  window.addEventListener("click", (event) => {
     if (
-      settingsMenu.classList.contains("open") &&
+      settingsMenu?.classList.contains("open") &&
       !settingsMenu.contains(event.target) &&
-      !settingsButton.contains(event.target)
+      !settingsButton?.contains(event.target)
     ) {
       closeSettingsMenu();
     }
+  });
+
+  window.addEventListener("resize", () => {
+    document.querySelectorAll(".custom-select.open").forEach((select) => {
+      updateOptionsMaxHeight(select);
+    });
   });
 });
