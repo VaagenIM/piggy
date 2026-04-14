@@ -110,7 +110,6 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="piggy"] .md-content {
-  border: 1px solid #573e51aa;
   border-radius: 0.5rem;
 }
 

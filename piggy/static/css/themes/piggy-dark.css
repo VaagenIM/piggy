@@ -102,12 +102,10 @@ preview_style: background: linear-gradient(90deg, #1f1518, #3d2a30); color: #ece
   --piggy-header-bg-h6: rgba(186, 125, 160, 0.1);
 }
 
-
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="piggy-dark"] .md-content {
-  border: 1px solid #85607caa;
   border-radius: 0.5rem;
 }
 

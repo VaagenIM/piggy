@@ -115,7 +115,6 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
 }
 
 [data-theme="dark"] .md-content {
-  border: 1px solid #414141aa;
   border-radius: 0.5rem;
 }
 
