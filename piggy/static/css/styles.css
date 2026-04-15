@@ -1515,10 +1515,6 @@ details p:nth-child(2) {
 
 .md-content p {
   font-size: calc(1rem * var(--piggy-font-scale)) !important;
-}
-
-.md-content p :not(.admonition-title),
-.md-content p :not(summary) {
   margin-bottom: calc(0.9rem * var(--piggy-font-scale)) !important;
   margin-top: calc(0.25rem * var(--piggy-font-scale)) !important;
   line-height: calc(1.75rem * var(--piggy-font-scale)) !important;
