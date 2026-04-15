@@ -107,7 +107,6 @@ preview_style: background: linear-gradient(90deg, #d6c8d5, #ffffff); color: #000
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="classic"] .md-content {
-  border: 1px solid #414141aa;
   border-radius: 0.5rem;
 }
 
