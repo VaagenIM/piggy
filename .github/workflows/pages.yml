@@ -45,8 +45,15 @@ jobs:
 
       - name: Get piggybank
         run: |
-          rm -r piggybank
-          git clone --branch output https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank
+          if [ ! -d piggybank ]; then
+            git clone https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank
+          fi
+          
+          cd piggybank
+          git fetch origin output
+          git checkout output
+          git reset --hard origin/output
+          git clean -fd
 
       - name: Install dependencies
         run: |
