@@ -1,0 +1,42 @@
+/***************************\
+|*  MONOSPACE FONT THEMES  *|
+\***************************/
+[data-mono-theme="default"] code {
+    font-family: "Cascadia Code PL", monospace !important;
+}
+
+[data-mono-theme="fira-code"] code {
+    font-family: "Fira Code", monospace !important;
+}
+
+[data-mono-theme="roboto-mono"] code {
+    font-family: "Roboto Mono", monospace !important;
+}
+
+[data-mono-theme="jetbrains-mono"] code {
+    font-family: "JetBrains Mono", monospace !important;
+}
+
+[data-mono-theme="dm-mono"] code {
+    font-family: "DM Mono", monospace !important;
+    font-weight: 400;
+    font-style: normal;
+}
+
+[data-mono-theme="ubuntu-mono"] code {
+    font-family: "Ubuntu Mono", monospace !important;
+    font-weight: 400;
+    font-style: normal;
+}
+
+[data-mono-theme="kode-mono"] code {
+    font-family: "Kode Mono", monospace !important;
+}
+
+[data-mono-theme="lucida"] code {
+    font-family: "Lucida Console", monospace !important;
+}
+
+[data-mono-theme="courier"] code {
+    font-family: "Courier New", monospace !important;
+}

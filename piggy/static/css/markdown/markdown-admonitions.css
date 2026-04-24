@@ -1,0 +1,32 @@
+/*********************************\
+|* MARKDOWN ADMONITION OVERRIDES *|
+\*********************************/
+.admonition p:nth-child(2),
+details p:nth-child(2) {
+    margin-top: 0.6rem;
+    margin-bottom: 0.6rem;
+}
+
+.md-content details,
+.md-content .tip,
+.md-content .admonition {
+    border-radius: 5px !important;
+}
+
+.md-content summary {
+    padding-top: 0.6rem !important;
+    padding-bottom: 0.6rem !important;
+    font-size: calc(1rem * var(--piggy-font-scale)) !important;
+}
+
+details ol li,
+.admonition ol li {
+    font-size: calc(1rem * var(--piggy-font-scale)) !important;
+    list-style: decimal !important;
+}
+
+details ul li,
+.admonition ul li {
+    font-size: calc(1rem * var(--piggy-font-scale)) !important;
+    list-style: disc !important;
+}

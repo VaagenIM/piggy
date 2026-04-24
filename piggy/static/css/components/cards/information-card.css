@@ -1,0 +1,47 @@
+/***************************\
+|*    INFORMATION CARDS    *|
+\***************************/
+.card-information {
+    background: linear-gradient(135deg,
+            var(--piggy-information-card-start) 0%,
+            var(--piggy-information-card-end) 100%);
+    border: var(--piggy-card-border-width) solid var(--piggy-information-card-border);
+    padding: 0.75rem;
+}
+
+.card-information:hover {
+    box-shadow: inset 0 0 20px var(--piggy-information-shadow-glow);
+    transform: rotate(0.4deg) scale(99%);
+    animation-timing-function: ease;
+    cursor: pointer;
+}
+
+.card-information .card-title {
+    text-align: left !important;
+}
+
+/* Special information card alignment trickery */
+.card-align-information {
+    display: grid !important;
+    grid-template-columns: 0fr 4fr 3fr;
+    grid-template-areas:
+        "badge header tags"
+        "badge description description";
+    gap: 0.5rem;
+}
+
+.card-align-information .card-header {
+    grid-area: header;
+}
+
+.card-align-information .thumbnail-container {
+    grid-area: thumbnail;
+}
+
+.card-align-information .description-container {
+    grid-area: description;
+}
+
+.card-align-information .tags-container {
+    grid-area: tags;
+}

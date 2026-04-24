@@ -1,0 +1,36 @@
+/************************\
+|*    TITLES STYLING    *|
+\************************/
+.main-title {
+    font-size: calc(3rem * var(--piggy-font-scale));
+    word-wrap: break-word;
+}
+
+.page-title {
+    margin-bottom: 0 !important;
+    font-size: calc(3rem * var(--piggy-font-scale));
+    color: var(--piggy-content-h1) !important;
+    word-wrap: break-word;
+    max-width: 1006px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 800px) {
+    .page-title {
+        font-size: calc(2.5rem * var(--piggy-font-scale));
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .page-title {
+        font-size: calc(2.25rem * var(--piggy-font-scale));
+        word-wrap: break-word;
+    }
+}
+
+.assignment-title {
+    font-size: calc(2.5rem * var(--piggy-font-scale));
+    font-weight: 600;
+    text-align: center;
+    padding-bottom: 0.2rem;
+}
