@@ -45,9 +45,8 @@ jobs:
 
       - name: Get piggybank
         run: |
-          if [ ! -d piggybank ]; then
-            git clone https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank
-          fi
+          rm -rf piggybank
+          git clone https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank
           
           cd piggybank
           git fetch origin output
