@@ -76,13 +76,6 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-header-bg-h5: rgba(255, 0, 255, 0.1);
   --piggy-header-bg-h6: rgba(255, 255, 255, 0.1);
 
-  --piggy-code: #ffffff;
-  --piggy-code-bg: #000000;
-  --piggy-code-border: #ffffff;
-
-  --piggy-code-block-bg: #000000;
-  --piggy-code-block-border: #ffffff;
-
   /* Tables */
   --piggy-table-bg: #000000;
   --piggy-table-border: #ffffff;
@@ -100,6 +93,52 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-table-code-text: #ffffff;
 
   --piggy-table-shadow: none;
+
+  /* code blocks */
+  --piggy-code: #ffffff;
+  --piggy-code-bg: #000000;
+  --piggy-code-border: #ffffff;
+
+  --piggy-code-block-bg: #000000;
+  --piggy-code-block-border: #ffffff;
+
+  /* code block extras */
+  --piggy-code-inline-text: #ffffff;
+  --piggy-code-inline-bg: #000000;
+  --piggy-code-inline-border: #ffffff;
+
+  --piggy-code-block-text: #ffffff;
+  --piggy-code-block-background: #000000;
+  --piggy-code-block-border-color: #ffffff;
+
+  --piggy-code-block-line-number: #ffff00;
+  --piggy-code-block-line-number-bg: #000000;
+  --piggy-code-block-line-number-border: #ffffff;
+
+  --piggy-code-clipboard: #ffffff;
+  --piggy-code-clipboard-hover: #ffff00;
+
+  --piggy-code-selection-bg: #ffffff;
+  --piggy-code-selection-text: #000000;
+
+  /* syntax tokens */
+  --piggy-code-token-comment: #bfbfbf;
+  --piggy-code-token-keyword: #ffff00;
+  --piggy-code-token-string: #00ffff;
+  --piggy-code-token-number: #00ff00;
+  --piggy-code-token-function: #ff00ff;
+  --piggy-code-token-class: #ff9900;
+  --piggy-code-token-variable: #ffffff;
+  --piggy-code-token-operator: #ff66ff;
+  --piggy-code-token-punctuation: #ffffff;
+  --piggy-code-token-builtin: #00b7ff;
+  --piggy-code-token-constant: #00ff00;
+  --piggy-code-token-attribute: #ff00ff;
+  --piggy-code-token-tag: #00ff00;
+  --piggy-code-token-decorator: #ff66ff;
+  --piggy-code-token-deleted: #ff0000;
+  --piggy-code-token-inserted: #00ff00;
+  --piggy-code-token-error: #ff0000;
 }
 
 [data-theme="high-contrast"] .card-container {
@@ -218,20 +257,9 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   background-color: #000000;
 }
 
-[data-theme="high-contrast"] .md-content code:not(.md-code__content) {
-  background-color: var(--piggy-code-bg) !important;
-  color: var(--piggy-code) !important;
-  border-color: var(--piggy-code-border) !important;
-  border-radius: 5px !important;
-  padding: 1px 5px !important;
-}
-
+[data-theme="high-contrast"] .md-content .highlighttable,
 [data-theme="high-contrast"] .md-content .md-code__content {
-  background-color: var(--piggy-code-block-bg) !important;
-  color: var(--piggy-code) !important;
-  border-color: var(--piggy-code-block-border) !important;
   border-radius: 5px !important;
-  filter: contrast(1.35);
 }
 
 [data-theme="high-contrast"] .md-content details,
@@ -252,64 +280,10 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   background-color: #ffffff18 !important;
 }
 
-[data-theme="high-contrast"] .md-clipboard {
-  color: #ffffff !important;
-}
-
-[data-theme="high-contrast"] .md-clipboard:hover {
-  color: #ffff00 !important;
-}
-
 [data-theme="high-contrast"] .search-input {
   border: 1px solid #ffffff;
   border-radius: 5px;
 }
-
-/* POTENTIAL COLORS FOR CODE?
-[data-theme="high-contrast"] .md-content .md-code__content .nt {
-  color: #ff0000;
-}
-
-[data-theme="high-contrast"] .md-content .md-code__content .k {
-  color: #6a5acd;
-}
-
-[data-theme="high-contrast"] .md-content .md-code__content .p {
-  color: #ff69b4;
-}
-
-[data-theme="high-contrast"] .md-content .md-code__content .n {
-  color: #ffff00;
-}
-
-[data-theme="high-contrast"] .md-content .md-code__content .mh {
-  color: #00ff00;
-}
-
-[data-theme="high-contrast"] .md-content .md-code__content .mi {
-  color: #f4a460;
-}
-
-[data-theme="high-contrast"] .md-content .md-code__content .kt {
-  color: #0000ff;
-}
-
-[data-theme="high-contrast"] .md-content .md-code__content .nd {
-  color: #ff00ff;
-}
-
-[data-theme="high-contrast"] .md-content .md-code__content .nc {
-  color: #90ee90;
-}
-
-[data-theme="high-contrast"] .md-content .md-code__content .kc {
-  color: #87cefa;
-}
-
-[data-theme="high-contrast"] .md-content .md-code__content span {
-  color: #ffffff;
-}
-*/
 
 /************************\
 |*     DETAIL BOXES     *|

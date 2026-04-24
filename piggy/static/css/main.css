@@ -34,6 +34,8 @@
 
 @import "./markdown/markdown-base.css";
 @import "./markdown/markdown-code.css";
+@import "./markdown/markdown-code-palettes.css";
+@import "./markdown/markdown-code-tokens.css";
 @import "./markdown/markdown-admonitions.css";
 @import "./markdown/markdown-tabs.css";
 @import "./markdown/markdown-math.css";

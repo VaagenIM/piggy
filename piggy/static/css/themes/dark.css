@@ -134,30 +134,54 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
     0 0 0.75rem rgba(87, 165, 255, 0.08);
 
   /* code blocks */
-  --piggy-code: #eecf98;
+  --piggy-code: #dce7f0;
   --piggy-code-bg: #303946;
   --piggy-code-border: rgba(238, 207, 152, 0.18);
 
   --piggy-code-block-bg: #11171d;
   --piggy-code-block-border: rgba(120, 145, 160, 0.35);
+
+  /* code block extras */
+  --piggy-code-inline-text: #f3d19c;
+  --piggy-code-inline-bg: #303946;
+  --piggy-code-inline-border: rgba(238, 207, 152, 0.22);
+
+  --piggy-code-block-text: #dce7f0;
+  --piggy-code-block-background: #11171d;
+  --piggy-code-block-border-color: rgba(120, 145, 160, 0.35);
+
+  --piggy-code-block-line-number: #7f8b96;
+  --piggy-code-block-line-number-bg: #0d1217;
+  --piggy-code-block-line-number-border: rgba(120, 145, 160, 0.24);
+
+  --piggy-code-clipboard: #aeb3b9;
+  --piggy-code-clipboard-hover: #ffffff;
+
+  --piggy-code-selection-bg: #51748d;
+  --piggy-code-selection-text: #ffffff;
+
+  /* syntax tokens */
+  --piggy-code-token-comment: #8b949e;
+  --piggy-code-token-keyword: #ff9d8c;
+  --piggy-code-token-string: #a5d6ff;
+  --piggy-code-token-number: #79c0ff;
+  --piggy-code-token-function: #d2a8ff;
+  --piggy-code-token-class: #ffcb9a;
+  --piggy-code-token-variable: #dce7f0;
+  --piggy-code-token-operator: #dc69ff;
+  --piggy-code-token-punctuation: #aeb3b9;
+  --piggy-code-token-builtin: #6bc4ff;
+  --piggy-code-token-constant: #ffcb9a;
+  --piggy-code-token-attribute: #7ee787;
+  --piggy-code-token-tag: #7ee787;
+  --piggy-code-token-decorator: #ff9abc;
+  --piggy-code-token-deleted: #ff7b72;
+  --piggy-code-token-inserted: #7ee787;
+  --piggy-code-token-error: #ff7b72;
 }
 
 [data-theme="dark"] .md-content {
   border-radius: 0.5rem;
-}
-
-[data-theme="dark"] .md-content code:not(.md-code__content) {
-  background-color: var(--piggy-code-bg) !important;
-  color: var(--piggy-code) !important;
-  border: 1px solid var(--piggy-code-border) !important;
-  border-radius: 0.25rem !important;
-}
-
-[data-theme="dark"] .md-content .md-code__content {
-  background-color: var(--piggy-code-block-bg) !important;
-  color: var(--piggy-code) !important;
-  border: 1px solid var(--piggy-code-block-border) !important;
-  border-radius: 0.5rem !important;
 }
 
 [data-theme="dark"] .md-content .tabbed-set {

@@ -57,9 +57,9 @@ code.md-code__content,
 }
 
 .md-clipboard {
-    color: var(--piggy-light) !important;
+    color: var(--piggy-code-clipboard) !important;
 }
 
 .md-clipboard:hover {
-    color: var(--piggy-neutral) !important;
+    color: var(--piggy-code-clipboard-hover) !important;
 }
