@@ -100,6 +100,32 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
   --piggy-header-bg-h4: rgba(255, 203, 154, 0.25);
   --piggy-header-bg-h5: rgba(107, 196, 255, 0.25);
   --piggy-header-bg-h6: rgba(174, 179, 185, 0.25);
+
+  /* Tables */
+  --piggy-table-bg: #ffffff;
+  --piggy-table-border: #c3c3c3;
+  --piggy-table-cell-border: #d2d2d2;
+
+  --piggy-table-header-start: #eceeff;
+  --piggy-table-header-end: #d7dced;
+  --piggy-table-header-text: #252539;
+
+  --piggy-table-row-odd: #fafafa;
+  --piggy-table-row-even: #f0f1f5;
+  --piggy-table-row-hover: #e4e8f8;
+
+  --piggy-table-code-bg: #dcdff0;
+  --piggy-table-code-text: #333333;
+
+  --piggy-table-shadow: 0 0.25rem 1rem var(--piggy-shadow-box);
+
+  /* code blocks */
+  --piggy-code: #313131;
+  --piggy-code-bg: #dcdcdc;
+  --piggy-code-border: #b8b8b8;
+
+  --piggy-code-block-bg: #f2f2f2;
+  --piggy-code-block-border: #6d6f78;
 }
 
 [data-theme="light"] .settings-option {
@@ -114,29 +140,18 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
 }
 
 [data-theme="light"] .md-content code:not(.md-code__content) {
-  background-color: #c7c7c7;
-  color: #333;
+  background-color: var(--piggy-code-bg) !important;
+  color: var(--piggy-code) !important;
+  border: 1px solid var(--piggy-code-border) !important;
+  border-radius: 0.25rem !important;
 }
 
 [data-theme="light"] .md-content .md-code__content {
+  background-color: var(--piggy-code-block-bg) !important;
+  color: var(--piggy-code) !important;
+  border: 1px solid var(--piggy-code-block-border) !important;
+  border-radius: 0.5rem !important;
   filter: invert() hue-rotate(210deg) contrast(1.45);
-  border: 1px solid #6d6f78;
-}
-
-[data-theme="light"] .md-content table {
-  border: 1px solid #555 !important;
-}
-
-[data-theme="light"] .md-content th {
-  background-color: #d0d4e8;
-}
-
-[data-theme="light"] .md-content tr:nth-child(odd) td {
-  background-color: #e9e9e9;
-}
-
-[data-theme="light"] .md-content tr:nth-child(even) td {
-  background-color: #dadada;
 }
 
 [data-theme="light"] .md-content details,

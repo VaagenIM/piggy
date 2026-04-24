@@ -13,7 +13,11 @@ preview_style: background: linear-gradient(90deg, #d6c8d5, #ffffff); color: #000
   --piggy-dark: #000000;
 
   --piggy-code: #4c3f48;
-  --piggy-code-bg: #e3d4db;
+  --piggy-code-bg: #eadce4;
+  --piggy-code-border: #c9aebb;
+
+  --piggy-code-block-bg: #f5eef2;
+  --piggy-code-block-border: #a58f9b;
 
   --piggy-text-main: var(--piggy-dark);
   --piggy-shadow-text: rgba(0, 0, 0, 0.1);
@@ -95,8 +99,31 @@ preview_style: background: linear-gradient(90deg, #d6c8d5, #ffffff); color: #000
   --piggy-header-bg-h4: rgba(255, 203, 154, 0.25);
   --piggy-header-bg-h5: rgba(107, 196, 255, 0.25);
   --piggy-header-bg-h6: rgba(174, 179, 185, 0.25);
+
+  /* Tables */
+  --piggy-table-bg: #fff8fb;
+  --piggy-table-border: #c5aeb9;
+  --piggy-table-cell-border: #d9c2cd;
+
+  --piggy-table-header-start: #f0c8d8;
+  --piggy-table-header-end: #ddb0c2;
+  --piggy-table-header-text: #3e2731;
+
+  --piggy-table-row-odd: #fff4f8;
+  --piggy-table-row-even: #f4e2ea;
+  --piggy-table-row-hover: #ecd1dc;
+
+  --piggy-table-code-bg: #e8c5d3;
+  --piggy-table-code-text: #3e2731;
+
+  --piggy-table-shadow: 0 0.25rem 1rem var(--piggy-shadow-box);
 }
 
+
+[data-theme="classic"] .level-count-container {
+  color: var(--piggy-dark);
+  background-color: var(--piggy-main);
+}
 
 [data-theme="classic"] .level-count-container {
   color: var(--piggy-dark);
@@ -111,39 +138,22 @@ preview_style: background: linear-gradient(90deg, #d6c8d5, #ffffff); color: #000
 }
 
 [data-theme="classic"] .md-content code:not(.md-code__content) {
-  background-color: #d1d1d1;
-  color: var(--piggy-dark);
-}
-
-[data-theme="classic"] .md-content table code:not(.md-code__content) {
-  background-color: #cf9eb1;
+  background-color: var(--piggy-code-bg) !important;
+  color: var(--piggy-code) !important;
+  border-color: var(--piggy-code-border) !important;
 }
 
 [data-theme="classic"] .md-content .md-code__content {
-  filter: invert() contrast(1.25) hue-rotate(270deg);
-  border: 1px solid #676a74;
-}
-
-[data-theme="classic"] .md-content table {
-  border: 1px solid #555 !important;
-}
-
-[data-theme="classic"] .md-content th {
-  background-color: #e0b1c3;
-}
-
-[data-theme="classic"] .md-content tr:nth-child(odd) td {
-  background-color: #f0d3dd;
-}
-
-[data-theme="classic"] .md-content tr:nth-child(even) td {
-  background-color: #e9c3d1;
+  background-color: var(--piggy-code-block-bg) !important;
+  color: var(--piggy-code) !important;
+  border-color: var(--piggy-code-block-border) !important;
+  filter: invert() contrast(1.18) hue-rotate(270deg);
 }
 
 [data-theme="classic"] .md-content details,
 [data-theme="classic"] .md-content .tip,
 [data-theme="classic"] .md-content .admonition {
-  background-color: #e0e0e0;
+  background-color: #f3e9ef;
   color: var(--piggy-dark);
 }
 

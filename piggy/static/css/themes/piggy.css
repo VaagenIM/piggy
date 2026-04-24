@@ -12,9 +12,6 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
   --piggy-neutral: #7a6e72;
   --piggy-dark: rgb(20, 20, 20);
 
-  --piggy-code: #313131;
-  --piggy-code-bg: #d9c5d5;
-
   --piggy-text-main: var(--piggy-dark);
   --piggy-shadow-text: rgba(0, 0, 0, 0);
   --piggy-shadow-box: #00000011;
@@ -103,8 +100,32 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
   --piggy-header-bg-h4: rgb(167, 73, 128, 0.25);
   --piggy-header-bg-h5: rgb(167, 73, 128, 0.25);
   --piggy-header-bg-h6: rgb(167, 73, 128, 0.25);
-}
 
+  --piggy-code: #4a2634;
+  --piggy-code-bg: #f3d3dc;
+  --piggy-code-border: #d89aad;
+
+  --piggy-code-block-bg: #fff2f6;
+  --piggy-code-block-border: #d989a4;
+
+  /* Tables */
+  --piggy-table-bg: #fff6f8;
+  --piggy-table-border: #e59caf;
+  --piggy-table-cell-border: #efbecb;
+
+  --piggy-table-header-start: #ffc7d4;
+  --piggy-table-header-end: #f5a6bc;
+  --piggy-table-header-text: #4a2634;
+
+  --piggy-table-row-odd: #fff0f4;
+  --piggy-table-row-even: #ffe1e8;
+  --piggy-table-row-hover: #ffd2df;
+
+  --piggy-table-code-bg: #f1c0cf;
+  --piggy-table-code-text: #4a2634;
+
+  --piggy-table-shadow: 0 0.25rem 1rem var(--piggy-shadow-box);
+}
 
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
@@ -114,41 +135,33 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
 }
 
 [data-theme="piggy"] .md-content code:not(.md-code__content) {
-  background-color: #d3b8ba;
-  color: var(--piggy-dark);
+  background-color: var(--piggy-code-bg) !important;
+  color: var(--piggy-code) !important;
+  border-color: var(--piggy-code-border) !important;
 }
 
 [data-theme="piggy"] .md-content .md-code__content {
-  filter: invert() contrast(1.35) hue-rotate(290deg);
-  border: 1px solid #676a74;
-}
-
-[data-theme="piggy"] .md-content table {
-  border: 1px solid #555 !important;
-}
-
-[data-theme="piggy"] .md-content th {
-  background-color: #ffb5c3;
-}
-
-[data-theme="piggy"] .md-content tr:nth-child(odd) td {
-  background-color: rgb(255, 226, 231);
-}
-
-[data-theme="piggy"] .md-content tr:nth-child(even) td {
-  background-color: rgb(254, 210, 218);
+  background-color: var(--piggy-code-block-bg) !important;
+  color: var(--piggy-code) !important;
+  border-color: var(--piggy-code-block-border) !important;
+  filter: invert() contrast(1.22) hue-rotate(290deg);
 }
 
 [data-theme="piggy"] .md-content details,
 [data-theme="piggy"] .md-content .tip,
 [data-theme="piggy"] .md-content .admonition {
-  background-color: #e0e0e0;
+  background-color: #fff1f5;
   color: var(--piggy-dark);
 }
 
 [data-theme="piggy"] .md-content .tabbed-labels::before {
   border-color: var(--piggy-dark);
-  background-color: #ff00002a !important;
+  background-color: #ff6f9f2a !important;
+}
+
+[data-theme="piggy"] .md-content .tabbed-set {
+  background: #ffffff38;
+  border-color: #efb6c6;
 }
 
 [data-theme="piggy"] .md-clipboard {

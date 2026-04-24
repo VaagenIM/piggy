@@ -13,9 +13,6 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   --piggy-neutral: #008800;
   --piggy-dark: #004400;
 
-  --piggy-code: #00ffff;
-  --piggy-code-bg: #002222;
-
   --piggy-text-main: var(--piggy-light);
   --piggy-text-light: var(--piggy-light);
   --piggy-text-neutral: var(--piggy-neutral);
@@ -108,6 +105,32 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   --piggy-header-bg-h5: linear-gradient(to top, #00ffc330, #00000000);
   --piggy-header-bg-h6: linear-gradient(to top, #00ffc330, #00000000);
 
+  --piggy-code: #00ffff;
+  --piggy-code-bg: #001f1f;
+  --piggy-code-border: rgba(0, 255, 255, 0.45);
+
+  --piggy-code-block-bg: #000000;
+  --piggy-code-block-border: #00ff00;
+
+  /* Tables */
+  --piggy-table-bg: #000000;
+  --piggy-table-border: #006600;
+  --piggy-table-cell-border: rgba(0, 255, 0, 0.22);
+
+  --piggy-table-header-start: #003300;
+  --piggy-table-header-end: #001a00;
+  --piggy-table-header-text: #00ffbf;
+
+  --piggy-table-row-odd: #001100;
+  --piggy-table-row-even: #000000;
+  --piggy-table-row-hover: #002b00;
+
+  --piggy-table-code-bg: #001f1f;
+  --piggy-table-code-text: #00ffff;
+
+  --piggy-table-shadow:
+    0 0.35rem 1.25rem rgba(0, 32, 0, 0.75),
+    0 0 0.9rem rgba(0, 255, 0, 0.12);
 }
 
 [data-theme="matrix"] .md-content h1 {
@@ -156,7 +179,7 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 }
 
 [data-theme="matrix"] .card-assignment .description-container,
-.card-assignment .card-title {
+[data-theme="matrix"] .card-assignment .card-title {
   color: var(--piggy-assignment-text) !important;
 }
 
@@ -168,30 +191,32 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="matrix"] .md-content,
-.md-code__content {
+[data-theme="matrix"] .md-code__content {
   border-radius: 0.25rem !important;
 }
 
-[data-theme="matrix"] .md-content .md-code__content {
-  filter: contrast(1.35);
+[data-theme="matrix"] .md-content {
   border: 1px solid #00ff00;
-  background-color: black;
+  border-radius: 0.5rem !important;
+  background-color: #000000ee;
+  box-shadow:
+    0 0 0.75rem rgba(0, 255, 0, 0.14),
+    inset 0 0 1.25rem rgba(0, 255, 0, 0.06);
 }
 
-[data-theme="matrix"] .md-content table {
-  border: 1px solid #006600 !important;
+[data-theme="matrix"] .md-content code:not(.md-code__content) {
+  background-color: var(--piggy-code-bg) !important;
+  color: var(--piggy-code) !important;
+  border-color: var(--piggy-code-border) !important;
+  text-shadow: 0 0 0.35rem rgba(0, 255, 255, 0.35);
 }
 
-[data-theme="matrix"] .md-content th {
-  background-color: #002200;
-}
-
-[data-theme="matrix"] .md-content tr:nth-child(odd) td {
-  background-color: #001100;
-}
-
-[data-theme="matrix"] .md-content tr:nth-child(even) td {
-  background-color: #000000;
+[data-theme="matrix"] .md-content .md-code__content {
+  background-color: var(--piggy-code-block-bg) !important;
+  color: var(--piggy-code) !important;
+  border-color: var(--piggy-code-block-border) !important;
+  filter: contrast(1.25);
+  text-shadow: 0 0 0.35rem rgba(0, 255, 0, 0.35);
 }
 
 [data-theme="matrix"] .md-content details,
@@ -199,6 +224,8 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 [data-theme="matrix"] .md-content .admonition {
   background-color: #001100;
   color: #00ff00;
+  border-color: rgba(0, 255, 0, 0.45);
+  box-shadow: inset 0 0 0.85rem rgba(0, 255, 0, 0.06);
 }
 
 [data-theme="matrix"] .md-content .tabbed-labels::before {
@@ -208,30 +235,14 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 
 [data-theme="matrix"] .md-content .tabbed-set {
   background: #001100;
+  border-color: rgba(0, 255, 0, 0.45);
+  box-shadow: inset 0 0 0.75rem rgba(0, 255, 0, 0.05);
 }
 
-#matrix {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-  filter: blur(1px);
+[data-theme="matrix"] .md-clipboard {
+  color: #00ff00 !important;
 }
 
-[data-theme="matrix"] .background-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: -1;
-}
-
-[data-theme="matrix"] .md-content {
-  border: 1px solid #00ff00;
-  border-radius: 0.5rem;
-  background-color: #000000ee;
+[data-theme="matrix"] .md-clipboard:hover {
+  color: #00ffff !important;
 }

@@ -13,9 +13,6 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-neutral: #336b87;
   --piggy-dark: #001f27;
 
-  --piggy-code: #84cde2;
-  --piggy-code-bg: #0e3c48;
-
   --piggy-text-main: var(--piggy-light);
   --piggy-text-light: #d8f3f8;
   --piggy-text-neutral: var(--piggy-neutral);
@@ -106,40 +103,54 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-header-bg-h4: #7da3ba20;
   --piggy-header-bg-h5: #7da3ba20;
   --piggy-header-bg-h6: #7da3ba20;
-}
 
-[data-theme="ocean"] .assignment-card-grid-container .card-container * {
-  color: var(--piggy-) !important;
+  --piggy-code: #d8f3f8;
+  --piggy-code-bg: #073946;
+  --piggy-code-border: rgba(136, 192, 208, 0.28);
+
+  --piggy-code-block-bg: #001923;
+  --piggy-code-block-border: rgba(136, 192, 208, 0.35);
+
+  /* Tables */
+  --piggy-table-bg: #002530;
+  --piggy-table-border: rgba(136, 192, 208, 0.38);
+  --piggy-table-cell-border: rgba(136, 192, 208, 0.22);
+
+  --piggy-table-header-start: #005f73;
+  --piggy-table-header-end: #004759;
+  --piggy-table-header-text: #e6fbff;
+
+  --piggy-table-row-odd: rgba(0, 70, 80, 0.55);
+  --piggy-table-row-even: rgba(0, 90, 100, 0.48);
+  --piggy-table-row-hover: rgba(0, 127, 155, 0.38);
+
+  --piggy-table-code-bg: #073946;
+  --piggy-table-code-text: #d8f3f8;
+
+  --piggy-table-shadow:
+    0 0.35rem 1.25rem var(--piggy-shadow-box),
+    0 0 0.85rem rgba(136, 192, 208, 0.08);
 }
 
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
+[data-theme="ocean"] .md-content {
+  border: 1px solid rgba(136, 192, 208, 0.45);
+  border-radius: 0.5rem;
+  background-color: #00000044;
+}
+
 [data-theme="ocean"] .md-content code:not(.md-code__content) {
-  background-color: #001219;
-  color: #d8f3f8;
+  background-color: var(--piggy-code-bg) !important;
+  color: var(--piggy-code) !important;
+  border-color: var(--piggy-code-border) !important;
 }
 
 [data-theme="ocean"] .md-content .md-code__content {
-  background-color: #000a0f;
-  color: #d8f3f8;
-  border: 1px solid #002b36;
-}
-
-[data-theme="ocean"] .md-content table {
-  border: 1px solid #336b87 !important;
-}
-
-[data-theme="ocean"] .md-content th {
-  background-color: #004f63;
-}
-
-[data-theme="ocean"] .md-content tr:nth-child(odd) td {
-  background-color: rgba(0, 70, 80, 0.5);
-}
-
-[data-theme="ocean"] .md-content tr:nth-child(even) td {
-  background-color: rgba(0, 90, 100, 0.5);
+  background-color: var(--piggy-code-block-bg) !important;
+  color: var(--piggy-code) !important;
+  border-color: var(--piggy-code-block-border) !important;
 }
 
 [data-theme="ocean"] .md-content details,
@@ -156,10 +167,13 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
 
 [data-theme="ocean"] .md-content .tabbed-set {
   background: #002b36;
+  border-color: rgba(136, 192, 208, 0.35);
 }
 
-[data-theme="ocean"] .md-content {
-  border: 1px solid var(--piggy-light);
-  border-radius: 0.5rem;
-  background-color: #00000044;
+[data-theme="ocean"] .md-clipboard {
+  color: var(--piggy-light) !important;
+}
+
+[data-theme="ocean"] .md-clipboard:hover {
+  color: #83c1d9 !important;
 }

@@ -14,7 +14,6 @@
 /************************\
 |*     FONT IMPORTS     *|
 \************************/
-
 .language-flag {
   font-family: "Noto Color Emoji", sans-serif !important;
   font-weight: 400;
@@ -1534,19 +1533,14 @@ details p:nth-child(2) {
   line-height: calc(1rem * var(--piggy-font-scale)) !important;
 }
 
-.md-content table {
-  font-size: calc(0.9rem * var(--piggy-font-scale)) !important;
-  line-height: calc(1.1rem * var(--piggy-font-scale)) !important;
-}
-
-.md-content table td {
-  padding: calc(0.65rem * var(--piggy-font-scale)) !important;
-}
-
 .md-content code:not(.md-code__content) {
-  padding: 0 0.2rem 0 0.2rem !important;
+  padding: 0 0.2rem !important;
+
   color: var(--piggy-code) !important;
   background-color: var(--piggy-code-bg) !important;
+
+  border: 1px solid var(--piggy-code-border) !important;
+  border-radius: 0.25rem !important;
 }
 
 .md-content .linenodiv {
@@ -1564,22 +1558,14 @@ details p:nth-child(2) {
   border-radius: 5px !important;
 }
 
-.md-content table {
-  border-radius: 5px !important;
-}
-
-.md-content table th {
-  min-width: 2rem !important;
-}
-
 .md-content code {
-  border-radius: 5px !important;
   line-height: 1.1rem;
 }
 
 .md-content .highlighttable {
-  border-radius: 5px;
-  border: 1px solid var(--piggy-dark);
+  border-radius: 0.5rem !important;
+  border: 1px solid var(--piggy-code-block-border) !important;
+  overflow: hidden !important;
 }
 
 .md-content summary {
@@ -1653,15 +1639,19 @@ details ul li,
   max-width: 100% !important;
   overflow-anchor: auto !important;
   overflow: hidden !important;
-  text-wrap: wrap !important;
+  white-space: pre-wrap !important;
   word-wrap: break-word !important;
   padding-top: calc(0.25rem * var(--piggy-font-scale)) !important;
   padding-bottom: calc(0.25rem * var(--piggy-font-scale)) !important;
   font-size: calc(0.85rem * var(--piggy-font-scale)) !important;
 }
 
-code.md-code__content {
-  background-color: #0e0e0e !important;
+code.md-code__content,
+.md-content .md-code__content {
+  background-color: var(--piggy-code-block-bg) !important;
+  color: var(--piggy-code) !important;
+  border: 1px solid var(--piggy-code-block-border) !important;
+  border-radius: 0.5rem !important;
 }
 
 .md-clipboard {
@@ -1670,6 +1660,116 @@ code.md-code__content {
 
 .md-clipboard:hover {
   color: var(--piggy-neutral) !important;
+}
+
+/*********************\
+|*  TABLE OVERRIDES  *|
+\*********************/
+
+.md-typeset__table {
+  display: inline-block !important;
+  width: auto !important;
+  max-width: 100% !important;
+  margin: 1em 0 !important;
+}
+
+.md-typeset__scrollwrap {
+  display: inline-block !important;
+  width: auto !important;
+  max-width: 100% !important;
+
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+
+  border-radius: 0.65rem !important;
+  background: transparent !important;
+}
+
+.md-content table,
+.md-typeset table:not([class]) {
+  width: auto !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+
+  table-layout: auto !important;
+
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  overflow: hidden !important;
+
+  background: var(--piggy-table-bg) !important;
+  color: var(--piggy-text-main) !important;
+
+  border: 1px solid var(--piggy-table-border) !important;
+  border-radius: 0.65rem !important;
+
+  box-shadow: var(--piggy-table-shadow) !important;
+
+  font-size: calc(0.9rem * var(--piggy-font-scale)) !important;
+  line-height: calc(1.25rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content table th,
+.md-content table td,
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td {
+  padding: calc(0.65rem * var(--piggy-font-scale)) calc(0.8rem * var(--piggy-font-scale)) !important;
+
+  border-right: 1px solid var(--piggy-table-cell-border) !important;
+  border-bottom: 1px solid var(--piggy-table-cell-border) !important;
+
+  color: var(--piggy-text-main) !important;
+
+  max-width: 24rem !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+}
+
+.md-content table th:last-child,
+.md-content table td:last-child,
+.md-typeset table:not([class]) th:last-child,
+.md-typeset table:not([class]) td:last-child {
+  border-right: none !important;
+}
+
+.md-content table tr:last-child td,
+.md-typeset table:not([class]) tr:last-child td {
+  border-bottom: none !important;
+}
+
+.md-content table th,
+.md-typeset table:not([class]) th {
+  min-width: 2rem !important;
+
+  background: linear-gradient(180deg,
+      var(--piggy-table-header-start),
+      var(--piggy-table-header-end)) !important;
+
+  color: var(--piggy-table-header-text) !important;
+  font-weight: 700 !important;
+  text-align: left !important;
+}
+
+.md-content table tr:nth-child(odd) td,
+.md-typeset table:not([class]) tr:nth-child(odd) td {
+  background-color: var(--piggy-table-row-odd) !important;
+}
+
+.md-content table tr:nth-child(even) td,
+.md-typeset table:not([class]) tr:nth-child(even) td {
+  background-color: var(--piggy-table-row-even) !important;
+}
+
+.md-content table tr:hover td,
+.md-typeset table:not([class]) tr:hover td {
+  background-color: var(--piggy-table-row-hover) !important;
+}
+
+.md-content table td code,
+.md-typeset table:not([class]) td code {
+  background-color: var(--piggy-table-code-bg) !important;
+  color: var(--piggy-table-code-text) !important;
 }
 
 /*******************\
@@ -1775,30 +1875,3 @@ code.md-code__content {
     display: inline;
   }
 }
-
-/* Potential idea for level selectors (Needs a lot of work) */
-/*
-.level-diff-1 {
-  background-color: #00a00070 !important;
-}
-
-.level-diff-2 {
-  background-color: #a0a00070 !important;
-}
-
-.level-diff-3 {
-  background-color: #a0000070 !important;
-}
-
-.level-diff-4 {
-  background-color: #a000a070 !important;
-}
-
-.level-diff-5 {
-  background-color: #0000a070 !important;
-}
-  */
-
-/************************\
-|* ADMONITION OVERRIDES *|
-\************************/

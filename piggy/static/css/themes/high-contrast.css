@@ -11,9 +11,6 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-neutral: #7f7f7f;
   --piggy-dark: #ffffff;
 
-  --piggy-code: #ffffff;
-  --piggy-code-bg: #161616;
-
   --piggy-text-main: var(--piggy-light);
   --piggy-shadow-text: rgba(255, 255, 255, 0);
 
@@ -78,6 +75,31 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-header-bg-h4: rgba(0, 255, 255, 0.1);
   --piggy-header-bg-h5: rgba(255, 0, 255, 0.1);
   --piggy-header-bg-h6: rgba(255, 255, 255, 0.1);
+
+  --piggy-code: #ffffff;
+  --piggy-code-bg: #000000;
+  --piggy-code-border: #ffffff;
+
+  --piggy-code-block-bg: #000000;
+  --piggy-code-block-border: #ffffff;
+
+  /* Tables */
+  --piggy-table-bg: #000000;
+  --piggy-table-border: #ffffff;
+  --piggy-table-cell-border: #ffffff;
+
+  --piggy-table-header-start: #000000;
+  --piggy-table-header-end: #111111;
+  --piggy-table-header-text: #ffffff;
+
+  --piggy-table-row-odd: #1a1a1a;
+  --piggy-table-row-even: #000000;
+  --piggy-table-row-hover: #262626;
+
+  --piggy-table-code-bg: #000000;
+  --piggy-table-code-text: #ffffff;
+
+  --piggy-table-shadow: none;
 }
 
 [data-theme="high-contrast"] .card-container {
@@ -190,57 +212,56 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
+[data-theme="high-contrast"] .md-content {
+  border: 1px solid #ffffff;
+  border-radius: 5px !important;
+  background-color: #000000;
+}
+
 [data-theme="high-contrast"] .md-content code:not(.md-code__content) {
-  background-color: black;
-  color: white;
-  border: 1px solid white;
+  background-color: var(--piggy-code-bg) !important;
+  color: var(--piggy-code) !important;
+  border-color: var(--piggy-code-border) !important;
   border-radius: 5px !important;
-  padding: 1px 5px 1px 5px !important;
+  padding: 1px 5px !important;
 }
 
-[data-theme="high-contrast"] .md-content table {
-  border: 1px solid white !important;
+[data-theme="high-contrast"] .md-content .md-code__content {
+  background-color: var(--piggy-code-block-bg) !important;
+  color: var(--piggy-code) !important;
+  border-color: var(--piggy-code-block-border) !important;
   border-radius: 5px !important;
-}
-
-[data-theme="high-contrast"] .md-content th {
-  background-color: black;
-}
-
-[data-theme="high-contrast"] .md-content tr:nth-child(odd) td {
-  background-color: #0d0d0d;
-}
-
-[data-theme="high-contrast"] .md-content tr:nth-child(even) td {
-  background-color: black;
+  filter: contrast(1.35);
 }
 
 [data-theme="high-contrast"] .md-content details,
 [data-theme="high-contrast"] .md-content .tip,
 [data-theme="high-contrast"] .md-content .admonition {
-  background-color: black;
-  color: white;
-}
-
-[data-theme="high-contrast"] .md-content .md-code__content {
-  border: 1px solid white;
-  border-radius: 5px !important;
-  background-color: black;
-  filter: contrast(1.35);
+  background-color: #000000;
+  color: #ffffff;
 }
 
 [data-theme="high-contrast"] .md-content .tabbed-set {
-  border: 1px solid white;
+  border-color: #ffffff;
   border-radius: 5px !important;
   background: #00000000;
 }
 
 [data-theme="high-contrast"] .md-content .tabbed-labels::before {
+  border-color: #ffffff;
   background-color: #ffffff18 !important;
 }
 
+[data-theme="high-contrast"] .md-clipboard {
+  color: #ffffff !important;
+}
+
+[data-theme="high-contrast"] .md-clipboard:hover {
+  color: #ffff00 !important;
+}
+
 [data-theme="high-contrast"] .search-input {
-  border: 1px solid white;
+  border: 1px solid #ffffff;
   border-radius: 5px;
 }
 
