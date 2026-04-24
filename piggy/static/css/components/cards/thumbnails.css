@@ -1,0 +1,28 @@
+/*******************\
+|* CARD THUMBNAILS *|
+\*******************/
+.thumbnail-container {
+    position: relative;
+}
+
+.thumbnail-image {
+    aspect-ratio: 16 / 5;
+    width: 100%;
+    border-radius: 0.65rem;
+    box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
+}
+
+.thumbnail-text-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--piggy-thumbnail-overlay);
+    color: var(--piggy-text-thumbnail);
+    padding: 4px 10px 4px 10px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 0 0 0.6rem 0.6rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px var(--piggy-shadow-text);
+}

@@ -1,0 +1,35 @@
+/*****************************\
+|*  MARKDOWN TABS OVERRIDES  *|
+\*****************************/
+.md-content .tabbed-labels {
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color: var(--piggy-dark);
+    margin: 0 !important;
+    padding: 0rem 0.5rem 0rem 0.5rem !important;
+    flex-wrap: wrap;
+}
+
+.md-content .tabbed-labels::before {
+    border-width: 0px 0px 3px 0px;
+    border-style: solid;
+    border-color: var(--piggy-light);
+    padding-top: 100%;
+    z-index: -1;
+    background-color: #0000003a !important;
+}
+
+.md-content .tabbed-labels a {
+    font-size: calc(0.9rem * var(--piggy-font-scale)) !important;
+    color: var(--piggy-text-main) !important;
+}
+
+.md-content .tabbed-set {
+    border: 1px solid var(--piggy-neutral);
+    border-radius: 5px !important;
+    background: #0000000a;
+}
+
+.md-content .tabbed-content {
+    padding: 0rem 1rem 0rem 1rem;
+}

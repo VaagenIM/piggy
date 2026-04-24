@@ -12,9 +12,6 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --piggy-neutral: #866997;
   --piggy-dark: rgb(48, 20, 58);
 
-  --piggy-code: #ff8b65;
-  --piggy-code-bg: #240c0c;
-
   --piggy-text-main: #ffcc66;
   --piggy-text-light: #ff9b9b;
   --piggy-text-dark: #ffcb91;
@@ -105,6 +102,73 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --piggy-header-bg-h4: linear-gradient(to top, #f200ff50, #00000000);
   --piggy-header-bg-h5: linear-gradient(to top, #0059ff50, #00000000);
   --piggy-header-bg-h6: linear-gradient(to top, #00fbff50, #00000000);
+
+  /* Tables */
+  --piggy-table-bg: #110611;
+  --piggy-table-border: rgba(204, 0, 255, 0.55);
+  --piggy-table-cell-border: rgba(255, 87, 34, 0.28);
+
+  --piggy-table-header-start: #832a1b;
+  --piggy-table-header-end: #4f1744;
+  --piggy-table-header-text: #ffd27f;
+
+  --piggy-table-row-odd: #251025;
+  --piggy-table-row-even: #351326;
+  --piggy-table-row-hover: #4a1740;
+
+  --piggy-table-code-bg: #3a1620;
+  --piggy-table-code-text: #ffd6c8;
+
+  --piggy-table-shadow:
+    0 0.35rem 1.25rem var(--piggy-shadow-box),
+    0 0 0.9rem rgba(204, 0, 255, 0.16),
+    0 0 1.2rem rgba(255, 87, 34, 0.08);
+
+  /* code blocks */
+  --piggy-code: #ffd6c8;
+  --piggy-code-bg: #3a1620;
+  --piggy-code-border: rgba(255, 99, 71, 0.42);
+
+  --piggy-code-block-bg: #120815;
+  --piggy-code-block-border: rgba(204, 0, 255, 0.55);
+
+  /* code block extras */
+  --piggy-code-inline-text: #ffd6c8;
+  --piggy-code-inline-bg: #3a1620;
+  --piggy-code-inline-border: rgba(255, 99, 71, 0.42);
+
+  --piggy-code-block-text: #ffe2d5;
+  --piggy-code-block-background: #120815;
+  --piggy-code-block-border-color: rgba(204, 0, 255, 0.55);
+
+  --piggy-code-block-line-number: #a06cb8;
+  --piggy-code-block-line-number-bg: #0b050d;
+  --piggy-code-block-line-number-border: rgba(204, 0, 255, 0.32);
+
+  --piggy-code-clipboard: #ffd27f;
+  --piggy-code-clipboard-hover: #ff8b65;
+
+  --piggy-code-selection-bg: #ff5722;
+  --piggy-code-selection-text: #120815;
+
+  /* syntax tokens */
+  --piggy-code-token-comment: #9b7aa8;
+  --piggy-code-token-keyword: #ff4fd8;
+  --piggy-code-token-string: #00fbff;
+  --piggy-code-token-number: #ffcc66;
+  --piggy-code-token-function: #ff8b65;
+  --piggy-code-token-class: #ffd27f;
+  --piggy-code-token-variable: #ffe2d5;
+  --piggy-code-token-operator: #f200ff;
+  --piggy-code-token-punctuation: #cfa8dc;
+  --piggy-code-token-builtin: #00d9ff;
+  --piggy-code-token-constant: #ffcc66;
+  --piggy-code-token-attribute: #ff8b65;
+  --piggy-code-token-tag: #00ff99;
+  --piggy-code-token-decorator: #ff00a6;
+  --piggy-code-token-deleted: #ff3b3b;
+  --piggy-code-token-inserted: #00ff99;
+  --piggy-code-token-error: #ff3b3b;
 }
 
 [data-theme="synthwave"] .md-content h1 {
@@ -232,28 +296,9 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   border: 1px solid #cc00ffaa;
   border-radius: 0.5rem;
   background-color: #000000cc;
-}
-
-[data-theme="synthwave"] .md-content code:not(.md-code__content) {
-  background-color: #532821;
-  color: #f5d1c8;
-}
-
-[data-theme="synthwave"] .md-content .md-code__content {
-  filter: hue-rotate(140deg) contrast(1.2);
-  border: 1px solid #676a74;
-}
-
-[data-theme="synthwave"] .md-content th {
-  background-color: #832a1b;
-}
-
-[data-theme="synthwave"] .md-content tr:nth-child(odd) td {
-  background-color: #41140b;
-}
-
-[data-theme="synthwave"] .md-content tr:nth-child(even) td {
-  background-color: #572118;
+  box-shadow:
+    0 0 0.9rem rgba(204, 0, 255, 0.16),
+    inset 0 0 1.25rem rgba(255, 87, 34, 0.05);
 }
 
 [data-theme="synthwave"] .md-content details,
@@ -261,11 +306,13 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 [data-theme="synthwave"] .md-content .admonition {
   background-color: #271a1d;
   color: var(--piggy-light);
+  border-color: rgba(255, 87, 34, 0.35);
 }
 
 [data-theme="synthwave"] .md-content .tabbed-set {
-  border: 1px solid var(--piggy-neutral);
+  border-color: var(--piggy-neutral);
   background: #ffffff0a;
+  box-shadow: inset 0 0 0.75rem rgba(204, 0, 255, 0.08);
 }
 
 [data-theme="synthwave"] .md-content .tabbed-labels::before {
