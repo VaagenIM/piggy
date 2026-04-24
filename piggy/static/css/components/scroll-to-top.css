@@ -1,0 +1,37 @@
+/************************\
+|* SCROLL TO TOP BUTTON *|
+\************************/
+#scroll-to-top-btn {
+    transition: all .3s ease;
+    color: var(--piggy-text-main);
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 99;
+    background-color: var(--piggy-button);
+    border-radius: 100%;
+    padding: .5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(3rem * var(--piggy-font-scale));
+    height: calc(3rem * var(--piggy-font-scale));
+}
+
+#scroll-to-top-btn:hover {
+    transform: scale(1.1);
+    background-color: var(--piggy-button-hover);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+body:has(#settings-menu.open) #scroll-to-top-btn {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#scroll-to-top-btn svg {
+    width: calc(1.75rem * var(--piggy-font-scale));
+    height: calc(1.75rem * var(--piggy-font-scale));
+}

@@ -13,9 +13,6 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
   --piggy-neutral: #1f2833;
   --piggy-dark: #0f0f0f;
 
-  --piggy-code: #94fff8;
-  --piggy-code-bg: #0a2322;
-
   --piggy-text-main: var(--piggy-light);
   --piggy-text-light: #c5c6c7;
   --piggy-text-neutral: var(--piggy-neutral);
@@ -106,36 +103,84 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
   --piggy-header-bg-h4: #66fcf120;
   --piggy-header-bg-h5: #66fcf120;
   --piggy-header-bg-h6: #66fcf120;
+
+  /* Tables */
+  --piggy-table-bg: #090b10;
+  --piggy-table-border: rgba(102, 252, 241, 0.42);
+  --piggy-table-cell-border: rgba(102, 252, 241, 0.2);
+
+  --piggy-table-header-start: #1f2833;
+  --piggy-table-header-end: #121820;
+  --piggy-table-header-text: #a8fff9;
+
+  --piggy-table-row-odd: rgba(15, 18, 24, 0.72);
+  --piggy-table-row-even: rgba(24, 28, 36, 0.62);
+  --piggy-table-row-hover: rgba(69, 162, 158, 0.28);
+
+  --piggy-table-code-bg: #102528;
+  --piggy-table-code-text: #94fff8;
+
+  --piggy-table-shadow:
+    0 0.35rem 1.25rem var(--piggy-shadow-box),
+    0 0 0.9rem rgba(102, 252, 241, 0.1);
+
+  /* code blocks */
+  --piggy-code: #c9fffb;
+  --piggy-code-bg: #102528;
+  --piggy-code-border: rgba(102, 252, 241, 0.32);
+
+  --piggy-code-block-bg: #06080d;
+  --piggy-code-block-border: rgba(102, 252, 241, 0.42);
+
+  /* code block extras */
+  --piggy-code-inline-text: #94fff8;
+  --piggy-code-inline-bg: #102528;
+  --piggy-code-inline-border: rgba(102, 252, 241, 0.32);
+
+  --piggy-code-block-text: #c9fffb;
+  --piggy-code-block-background: #06080d;
+  --piggy-code-block-border-color: rgba(102, 252, 241, 0.42);
+
+  --piggy-code-block-line-number: #45a29e;
+  --piggy-code-block-line-number-bg: #030508;
+  --piggy-code-block-line-number-border: rgba(102, 252, 241, 0.22);
+
+  --piggy-code-clipboard: #66fcf1;
+  --piggy-code-clipboard-hover: #c739ff;
+
+  --piggy-code-selection-bg: #66fcf1;
+  --piggy-code-selection-text: #06080d;
+
+  /* syntax tokens */
+  --piggy-code-token-comment: #6f7f91;
+  --piggy-code-token-keyword: #66fcf1;
+  --piggy-code-token-string: #9dffb0;
+  --piggy-code-token-number: #ffd166;
+  --piggy-code-token-function: #8ab4ff;
+  --piggy-code-token-class: #c792ff;
+  --piggy-code-token-variable: #c9fffb;
+  --piggy-code-token-operator: #ff66d8;
+  --piggy-code-token-punctuation: #a8fff9;
+  --piggy-code-token-builtin: #45d6ff;
+  --piggy-code-token-constant: #ffd166;
+  --piggy-code-token-attribute: #c739ff;
+  --piggy-code-token-tag: #66fcf1;
+  --piggy-code-token-decorator: #ff7edb;
+  --piggy-code-token-deleted: #ff5c7a;
+  --piggy-code-token-inserted: #9dffb0;
+  --piggy-code-token-error: #ff5c7a;
 }
 
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
-[data-theme="space"] .md-content code:not(.md-code__content) {
-  background-color: #0f0f0f;
-  color: #66fcf1;
-}
-
-[data-theme="space"] .md-content .md-code__content {
-  background-color: #0b0c10;
-  color: #66fcf1;
-  border: 1px solid #1f2833;
-}
-
-[data-theme="space"] .md-content table {
-  border: 1px solid #66fcf1 !important;
-}
-
-[data-theme="space"] .md-content th {
-  background-color: #1f2833;
-}
-
-[data-theme="space"] .md-content tr:nth-child(odd) td {
-  background-color: rgba(15, 15, 15, 0.5);
-}
-
-[data-theme="space"] .md-content tr:nth-child(even) td {
-  background-color: rgba(25, 25, 25, 0.5);
+[data-theme="space"] .md-content {
+  border: 1px solid rgba(102, 252, 241, 0.55);
+  border-radius: 0.5rem;
+  background-color: #000000cc;
+  box-shadow:
+    0 0 0.9rem rgba(102, 252, 241, 0.08),
+    inset 0 0 1.25rem rgba(102, 252, 241, 0.04);
 }
 
 [data-theme="space"] .md-content details,
@@ -143,6 +188,7 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
 [data-theme="space"] .md-content .admonition {
   background-color: #0b0c10;
   color: var(--piggy-light);
+  border-color: rgba(102, 252, 241, 0.28);
 }
 
 [data-theme="space"] .md-content .tabbed-labels::before {
@@ -152,10 +198,5 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
 
 [data-theme="space"] .md-content .tabbed-set {
   background: #0b0c10;
-}
-
-[data-theme="space"] .md-content {
-  border: 1px solid var(--piggy-light);
-  border-radius: 0.5rem;
-  background-color: #000000cc;
+  border-color: rgba(102, 252, 241, 0.28);
 }

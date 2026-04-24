@@ -16,6 +16,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const DEFAULT_MONO_THEME = "default";
   const DEFAULT_FONT_SIZE = "default";
 
+  function getThemeType(themePath) {
+    const themes = Array.isArray(window.PIGGY_THEMES) ? window.PIGGY_THEMES : [];
+    const themeData = themes.find((theme) => theme.path === themePath);
+
+    return themeData?.type || "dark";
+  }
+
   function closeAllCustomSelects(except = null) {
     document.querySelectorAll(".custom-select").forEach((select) => {
       if (select !== except) {
@@ -78,8 +85,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function applyTheme(theme) {
+    const themeType = getThemeType(theme);
+
     localStorage.setItem(THEME_STORAGE_KEY, theme);
     document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute("data-theme-type", themeType);
 
     pageTransition();
     stopAllAnimations();

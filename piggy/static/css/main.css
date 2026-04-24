@@ -1,0 +1,44 @@
+@import "./base/root.css";
+@import "./base/elements.css";
+@import "./base/utilities.css";
+
+@import "./fonts/imports.css";
+@import "./fonts/font-themes.css";
+@import "./fonts/monospace-themes.css";
+@import "./fonts/font-size-themes.css";
+
+@import "./layout/page-shell.css";
+@import "./layout/titles.css";
+
+@import "./components/navigation.css";
+@import "./components/logo.css";
+@import "./components/search.css";
+@import "./components/settings-menu.css";
+@import "./components/level-select.css";
+@import "./components/language-selector.css";
+@import "./components/scroll-to-top.css";
+@import "./components/quick-access.css";
+@import "./components/assignment-meta.css";
+@import "./components/error-page.css";
+
+@import "./components/card-grid.css";
+@import "./components/assignment-grid.css";
+@import "./components/information-grid.css";
+
+@import "./components/cards/base-card.css";
+@import "./components/cards/thumbnails.css";
+@import "./components/cards/tags.css";
+@import "./components/cards/difficulty.css";
+@import "./components/cards/assignment-card.css";
+@import "./components/cards/information-card.css";
+
+@import "./markdown/markdown-base.css";
+@import "./markdown/markdown-code.css";
+@import "./markdown/markdown-code-palettes.css";
+@import "./markdown/markdown-code-tokens.css";
+@import "./markdown/markdown-admonitions.css";
+@import "./markdown/markdown-tabs.css";
+@import "./markdown/markdown-math.css";
+@import "./markdown/markdown-tables.css";
+
+@import "./animations/keyframes.css";

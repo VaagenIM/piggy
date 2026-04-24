@@ -1,0 +1,55 @@
+/**************\
+|* PIGGY LOGO *|
+\**************/
+#piggy-logo {
+    margin: -0.3rem 0.3rem;
+}
+
+#piggy-logo:hover {
+    animation-name: bubbly;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+#piggy-logo-icon {
+    display: inline;
+    width: calc(2rem * var(--piggy-font-scale));
+    bottom: calc(0.35rem * var(--piggy-font-scale));
+    position: relative;
+}
+
+#piggy-logo-text {
+    font-family: "Cherry Bomb One", sans-serif;
+    font-weight: 700;
+    font-size: calc(1.85rem * var(--piggy-font-scale));
+    color: var(--piggy-logo);
+    background: var(--piggy-logo-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.65px;
+    filter: drop-shadow(1px 0 0 var(--piggy-logo-border)) drop-shadow(-1px 0 0 var(--piggy-logo-border)) drop-shadow(0 1px 0 var(--piggy-logo-border)) drop-shadow(0 -1px 0 var(--piggy-logo-border));
+    text-shadow: none;
+    transition: 0.2s;
+}
+
+#piggy-index-icon {
+    display: inline;
+    width: 64px;
+    bottom: 8px;
+    position: relative;
+}
+
+/* small screen */
+@media (max-width: 640px) {
+    #piggy-logo-text {
+        display: none;
+    }
+}
+
+/* big screen */
+@media (min-width: 640px) {
+    #piggy-logo-text {
+        display: inline;
+    }
+}
