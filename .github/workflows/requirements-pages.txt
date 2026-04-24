@@ -1,4 +1,5 @@
 requests==2.33.0
 beautifulsoup4==4.13.3
 git+https://github.com/sondregronas/turtleconverter@main
-minify-html==0.18.1
+rjsmin==1.2.5
+rcssmin==1.2.2

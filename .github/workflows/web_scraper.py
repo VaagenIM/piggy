@@ -11,7 +11,8 @@ from shutil import copytree
 from urllib.parse import unquote
 from bs4 import BeautifulSoup as bs
 from turtleconverter import generate_static_files
-from minify_html import minify
+from rjsmin import jsmin
+from rcssmin import cssmin
 
 links = set(["/", "/404"])
 visited = set()
@@ -166,7 +167,7 @@ def _download_media(link):
     r = requests.get(f"{url}/{path}", allow_redirects=True)
     try:
         os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
-    except NotADirectoryError:
+    except (NotADirectoryError, OSError):
         print(f"WARNING: Could not create directory for {path}. Skipping download.")
         return
     path = unquote_path(path)
@@ -218,19 +219,39 @@ def download_site():
         pool.map(_download_media, media_tasks)  # Download media in parallel
 
 
+def _minify(path, filetype):
+    if path.name.endswith(f".min.{filetype}"):
+        # Already minified, skip
+        return
+    with open(path, "r", encoding="utf-8") as f:
+        content = f.read()
+    try:
+        if filetype == "css":
+            minified_content = cssmin(content)
+        elif filetype == "js":
+            minified_content = jsmin(content)
+        else:
+            raise ValueError(f"Unsupported filetype: {filetype}")
+    except Exception as e:
+        print(f"WARNING: Minification failed for {path}: {e}")
+        minified_content = content
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(minified_content)
+
+
+def minify_folder(folder):
+    for dirpath, _, filenames in os.walk(folder):
+        for filename in filenames:
+            p = Path(dirpath) / filename
+            suffix = p.suffix.lower().lstrip('.')
+            if suffix in ["css", "js"]:
+                _minify(p, suffix)
+
+
 if __name__ == "__main__":
     generate_static_files(static_folder=Path("demo/static").absolute())
     download_site()
     # Since we are in .github/workflows, we need to go up two directories to find the piggy folder
     root_dir = Path(__file__).resolve().parents[2]
     copytree(root_dir / "piggy" / "static", Path("demo/static").absolute(), dirs_exist_ok=True)
-    # Minify all css and js files in the demo/static folder
-    for dirpath, _, filenames in os.walk("demo/static"):
-        for filename in filenames:
-            p = Path(dirpath) / filename
-            if p.suffix[1:] in ["css", "js"]:
-                with open(p, "r", encoding="utf-8") as f:
-                    content = f.read()
-                minified_content = minify(content)
-                with open(p, "w", encoding="utf-8") as f:
-                    f.write(minified_content)
+    minify_folder(Path("demo/static").absolute())
