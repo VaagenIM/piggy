@@ -48,6 +48,9 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-text-hyperlink: #00ffff;
   --piggy-text-hyperlink-hover: #99ffff;
 
+  --piggy-menu: #000000;
+  --piggy-menu-text: #ffffff;
+
   --piggy-tooltip: #000000;
   --piggy-tooltip-text: #ffffff;
 
@@ -283,6 +286,11 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
 [data-theme="high-contrast"] .search-input {
   border: 1px solid #ffffff;
   border-radius: 5px;
+}
+
+/* fix copy button */
+[data-theme="high-contrast"] .md-content .md-code__button[data-md-type="copy"] {
+  border-radius: 0 0.25rem 0 0.25rem !important;
 }
 
 /************************\
