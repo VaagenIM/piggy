@@ -4,64 +4,64 @@
 .md-content code,
 .md-content summary,
 .md-content .linenos {
-    font-size: calc(0.875rem * var(--piggy-font-scale)) !important;
-    line-height: calc(1rem * var(--piggy-font-scale)) !important;
+  font-size: calc(0.875rem * var(--piggy-font-scale)) !important;
+  line-height: calc(1rem * var(--piggy-font-scale)) !important;
 }
 
 .md-content code:not(.md-code__content) {
-    padding: 0 0.2rem !important;
+  padding: 0 0.2rem !important;
 
-    color: var(--piggy-code) !important;
-    background-color: var(--piggy-code-bg) !important;
+  color: var(--piggy-code) !important;
+  background-color: var(--piggy-code-bg) !important;
 
-    border: 1px solid var(--piggy-code-border) !important;
-    border-radius: 0.25rem !important;
+  border: 1px solid var(--piggy-code-border) !important;
+  border-radius: 0.25rem !important;
 }
 
 .md-content .linenodiv {
-    margin-top: 0.1rem;
-    margin-bottom: -0.1rem;
+  margin-top: 0.1rem;
+  margin-bottom: -0.1rem;
 }
 
 .md-content .linenos .normal {
-    color: var(--piggy-text-main) !important;
+  color: var(--piggy-text-main) !important;
 }
 
 .md-content code {
-    line-height: 1.1rem;
+  line-height: 1.1rem;
 }
 
 .md-content .highlighttable {
-    border-radius: 0.5rem !important;
-    border: 1px solid var(--piggy-code-block-border) !important;
-    overflow: hidden !important;
+  border-radius: 0.5rem !important;
+  border: 1px solid var(--piggy-code-block-border) !important;
+  overflow: hidden !important;
 }
 
 .md-code__content span {
-    max-width: 100% !important;
-    overflow-anchor: auto !important;
-    overflow: hidden !important;
-    white-space: pre-wrap !important;
-    word-wrap: break-word !important;
-    padding-top: calc(0.25rem * var(--piggy-font-scale)) !important;
-    padding-bottom: calc(0.25rem * var(--piggy-font-scale)) !important;
-    font-size: calc(0.85rem * var(--piggy-font-scale)) !important;
+  max-width: 100% !important;
+  overflow-anchor: auto !important;
+  overflow: hidden !important;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  padding-top: calc(0.25rem * var(--piggy-font-scale)) !important;
+  padding-bottom: calc(0.25rem * var(--piggy-font-scale)) !important;
+  font-size: calc(0.85rem * var(--piggy-font-scale)) !important;
 }
 
 code.md-code__content,
 .md-content .md-code__content {
-    background-color: var(--piggy-code-block-bg) !important;
-    color: var(--piggy-code) !important;
-    border: 1px solid var(--piggy-code-block-border) !important;
-    border-radius: 0.5rem !important;
+  background-color: var(--piggy-code-block-bg) !important;
+  color: var(--piggy-code) !important;
+  border: 1px solid var(--piggy-code-block-border) !important;
+  border-radius: 0.5rem !important;
 }
 
 .md-clipboard {
-    color: var(--piggy-code-clipboard) !important;
+  color: var(--piggy-code-clipboard) !important;
 }
 
 .md-clipboard:hover {
-    color: var(--piggy-code-clipboard-hover) !important;
+  color: var(--piggy-code-clipboard-hover) !important;
 }
 
 /**********************\
@@ -91,9 +91,13 @@ code.md-code__content,
   margin: 0 !important;
 
   color: var(--piggy-code-clipboard) !important;
-  background: var(--piggy-code-block-background, var(--piggy-code-block-bg)) !important;
+  background: var(
+    --piggy-code-block-background,
+    var(--piggy-code-block-bg)
+  ) !important;
 
-  border: 1px solid var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
+  border: 1px solid
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
 
   border-radius: 0 0.5rem 0 0.5rem !important;
 
@@ -149,7 +153,8 @@ code.md-code__content,
   color: var(--piggy-tooltip-text, #ffffff) !important;
   background: var(--piggy-tooltip, #000000) !important;
 
-  border: 1px solid var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
+  border: 1px solid
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
   border-radius: 0.3rem !important;
 
   font-size: 0.75rem !important;

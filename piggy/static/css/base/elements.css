@@ -7,23 +7,23 @@ h3,
 h4,
 h5,
 h6 {
-    color: var(--piggy-text-main) !important;
+  color: var(--piggy-text-main) !important;
 }
 
 h1 {
-    font-size: calc(2.5rem * var(--piggy-font-scale));
+  font-size: calc(2.5rem * var(--piggy-font-scale));
 }
 
 h2 {
-    font-size: calc(1.5rem * var(--piggy-font-scale));
+  font-size: calc(1.5rem * var(--piggy-font-scale));
 }
 
 img[src*="#center"] {
-    display: inline-block;
-    margin: auto;
+  display: inline-block;
+  margin: auto;
 }
 
 ol {
-    list-style: decimal;
-    font-size: calc(1rem * var(--piggy-font-scale));
+  list-style: decimal;
+  font-size: calc(1rem * var(--piggy-font-scale));
 }

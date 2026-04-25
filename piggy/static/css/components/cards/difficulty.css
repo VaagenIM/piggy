@@ -2,37 +2,37 @@
 |* CARD DIFFICULTY *|
 \*******************/
 .difficulty-overkill {
-    color: var(--piggy-text-main);
+  color: var(--piggy-text-main);
 }
 
 /* TODO: Fix this to not overlap text */
 .level-count-container {
-    position: absolute;
-    top: 5px;
-    right: 0;
-    color: var(--piggy-level-container-text);
-    background-color: var(--piggy-level-container);
-    border-color: var(--piggy-level-container-border);
-    padding: 5px 10px 5px 10px;
-    margin-right: 5px;
-    border-radius: 2rem;
-    height: max-content;
-    white-space: nowrap;
-    font-size: calc(0.85rem * var(--piggy-font-scale));
+  position: absolute;
+  top: 5px;
+  right: 0;
+  color: var(--piggy-level-container-text);
+  background-color: var(--piggy-level-container);
+  border-color: var(--piggy-level-container-border);
+  padding: 5px 10px 5px 10px;
+  margin-right: 5px;
+  border-radius: 2rem;
+  height: max-content;
+  white-space: nowrap;
+  font-size: calc(0.85rem * var(--piggy-font-scale));
 }
 
 .difficulty-icon {
-    position: absolute;
-    top: -0.35rem;
-    left: 0.35rem;
-    width: 4rem;
+  position: absolute;
+  top: -0.35rem;
+  left: 0.35rem;
+  width: 4rem;
 
-    /* may be used sometime */
-    --difficulty-1-color: #00a000;
-    --difficulty-2-color: #d0b000;
-    --difficulty-3-color: #d00000;
-    --difficulty-4-color: #d000d0;
-    --difficulty-5-color: #0000b0;
+  /* may be used sometime */
+  --difficulty-1-color: #00a000;
+  --difficulty-2-color: #d0b000;
+  --difficulty-3-color: #d00000;
+  --difficulty-4-color: #d000d0;
+  --difficulty-5-color: #0000b0;
 }
 
 /*

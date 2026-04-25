@@ -18,13 +18,11 @@
                     {% for subj_key, subj in sd.data.items() %}
                       <a
                         href="/{{ subj.meta.system_path | string | replace('piggybank', 'main') }}"
-                        class="quick-access-subject-button"
-                      >
+                        class="quick-access-subject-button">
                         <img
                           class="quick-access-thumbnail"
                           src="/{{ subj.meta.system_path | string | replace('piggybank', 'img') }}/media/header.webp"
-                          alt="{{ subj.meta.name }}"
-                        />
+                          alt="{{ subj.meta.name }}" />
                       </a>
                     {% endfor %}
                   </div>

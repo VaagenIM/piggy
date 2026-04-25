@@ -1,6 +1,7 @@
 {% from 'objects/card.html' import card %}
 
-{{ card(
+{{
+  card(
     abspath = abspath,
     item = item,
     title = data.meta.name,
@@ -17,4 +18,5 @@
     show_overlay=false,
     show_tags=false,
     show_description=true
-  ) }}
+  )
+}}

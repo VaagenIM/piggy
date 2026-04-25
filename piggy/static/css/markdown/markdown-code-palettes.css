@@ -13,102 +13,102 @@
 |* LIGHT THEMES *|
 \****************/
 [data-theme-type="light"] {
-    /* Inline code */
-    --piggy-code: #24292f;
-    --piggy-code-bg: #eef1f5;
-    --piggy-code-border: #c9d1d9;
+  /* Inline code */
+  --piggy-code: #24292f;
+  --piggy-code-bg: #eef1f5;
+  --piggy-code-border: #c9d1d9;
 
-    /* Code block shell */
-    --piggy-code-block-bg: #f6f8fa;
-    --piggy-code-block-border: #d0d7de;
+  /* Code block shell */
+  --piggy-code-block-bg: #f6f8fa;
+  --piggy-code-block-border: #d0d7de;
 
-    /* Optional newer aliases, if used later */
-    --piggy-code-inline-text: #24292f;
-    --piggy-code-inline-bg: #eef1f5;
-    --piggy-code-inline-border: #c9d1d9;
+  /* Optional newer aliases, if used later */
+  --piggy-code-inline-text: #24292f;
+  --piggy-code-inline-bg: #eef1f5;
+  --piggy-code-inline-border: #c9d1d9;
 
-    --piggy-code-block-text: #24292f;
-    --piggy-code-block-background: #f6f8fa;
-    --piggy-code-block-border-color: #d0d7de;
+  --piggy-code-block-text: #24292f;
+  --piggy-code-block-background: #f6f8fa;
+  --piggy-code-block-border-color: #d0d7de;
 
-    --piggy-code-block-line-number: #6e7781;
-    --piggy-code-block-line-number-bg: #eef1f5;
-    --piggy-code-block-line-number-border: #d0d7de;
+  --piggy-code-block-line-number: #6e7781;
+  --piggy-code-block-line-number-bg: #eef1f5;
+  --piggy-code-block-line-number-border: #d0d7de;
 
-    --piggy-code-clipboard: #57606a;
-    --piggy-code-clipboard-hover: #24292f;
+  --piggy-code-clipboard: #57606a;
+  --piggy-code-clipboard-hover: #24292f;
 
-    --piggy-code-selection-bg: #b6d7ff;
-    --piggy-code-selection-text: #24292f;
+  --piggy-code-selection-bg: #b6d7ff;
+  --piggy-code-selection-text: #24292f;
 
-    /* Pygments token palette */
-    --piggy-code-token-comment: #57606a;
-    --piggy-code-token-keyword: #cf222e;
-    --piggy-code-token-string: #0a3069;
-    --piggy-code-token-number: #0550ae;
-    --piggy-code-token-function: #8250df;
-    --piggy-code-token-class: #953800;
-    --piggy-code-token-variable: #24292f;
-    --piggy-code-token-operator: #24292f;
-    --piggy-code-token-punctuation: #57606a;
-    --piggy-code-token-builtin: #0550ae;
-    --piggy-code-token-constant: #0550ae;
-    --piggy-code-token-attribute: #8250df;
-    --piggy-code-token-tag: #116329;
-    --piggy-code-token-decorator: #8250df;
-    --piggy-code-token-deleted: #cf222e;
-    --piggy-code-token-inserted: #116329;
-    --piggy-code-token-error: #cf222e;
+  /* Pygments token palette */
+  --piggy-code-token-comment: #57606a;
+  --piggy-code-token-keyword: #cf222e;
+  --piggy-code-token-string: #0a3069;
+  --piggy-code-token-number: #0550ae;
+  --piggy-code-token-function: #8250df;
+  --piggy-code-token-class: #953800;
+  --piggy-code-token-variable: #24292f;
+  --piggy-code-token-operator: #24292f;
+  --piggy-code-token-punctuation: #57606a;
+  --piggy-code-token-builtin: #0550ae;
+  --piggy-code-token-constant: #0550ae;
+  --piggy-code-token-attribute: #8250df;
+  --piggy-code-token-tag: #116329;
+  --piggy-code-token-decorator: #8250df;
+  --piggy-code-token-deleted: #cf222e;
+  --piggy-code-token-inserted: #116329;
+  --piggy-code-token-error: #cf222e;
 }
 
 /***************\
 |* DARK THEMES *|
 \***************/
 [data-theme-type="dark"] {
-    /* Inline code */
-    --piggy-code: #dce7f0;
-    --piggy-code-bg: #303946;
-    --piggy-code-border: rgba(238, 207, 152, 0.18);
+  /* Inline code */
+  --piggy-code: #dce7f0;
+  --piggy-code-bg: #303946;
+  --piggy-code-border: rgba(238, 207, 152, 0.18);
 
-    /* Code block shell */
-    --piggy-code-block-bg: #0f151b;
-    --piggy-code-block-border: rgba(120, 145, 160, 0.4);
+  /* Code block shell */
+  --piggy-code-block-bg: #0f151b;
+  --piggy-code-block-border: rgba(120, 145, 160, 0.4);
 
-    /* Optional newer aliases, if used later */
-    --piggy-code-inline-text: #f3d19c;
-    --piggy-code-inline-bg: #303946;
-    --piggy-code-inline-border: rgba(238, 207, 152, 0.22);
+  /* Optional newer aliases, if used later */
+  --piggy-code-inline-text: #f3d19c;
+  --piggy-code-inline-bg: #303946;
+  --piggy-code-inline-border: rgba(238, 207, 152, 0.22);
 
-    --piggy-code-block-text: #dce7f0;
-    --piggy-code-block-background: #0f151b;
-    --piggy-code-block-border-color: rgba(120, 145, 160, 0.4);
+  --piggy-code-block-text: #dce7f0;
+  --piggy-code-block-background: #0f151b;
+  --piggy-code-block-border-color: rgba(120, 145, 160, 0.4);
 
-    --piggy-code-block-line-number: #7f8b96;
-    --piggy-code-block-line-number-bg: #0a0f14;
-    --piggy-code-block-line-number-border: rgba(120, 145, 160, 0.24);
+  --piggy-code-block-line-number: #7f8b96;
+  --piggy-code-block-line-number-bg: #0a0f14;
+  --piggy-code-block-line-number-border: rgba(120, 145, 160, 0.24);
 
-    --piggy-code-clipboard: #aeb3b9;
-    --piggy-code-clipboard-hover: #ffffff;
+  --piggy-code-clipboard: #aeb3b9;
+  --piggy-code-clipboard-hover: #ffffff;
 
-    --piggy-code-selection-bg: #51748d;
-    --piggy-code-selection-text: #ffffff;
+  --piggy-code-selection-bg: #51748d;
+  --piggy-code-selection-text: #ffffff;
 
-    /* Pygments token palette */
-    --piggy-code-token-comment: #8b949e;
-    --piggy-code-token-keyword: #ff7b72;
-    --piggy-code-token-string: #a5d6ff;
-    --piggy-code-token-number: #79c0ff;
-    --piggy-code-token-function: #d2a8ff;
-    --piggy-code-token-class: #ffa657;
-    --piggy-code-token-variable: #dce7f0;
-    --piggy-code-token-operator: #ff9d8c;
-    --piggy-code-token-punctuation: #aeb3b9;
-    --piggy-code-token-builtin: #79c0ff;
-    --piggy-code-token-constant: #ffa657;
-    --piggy-code-token-attribute: #7ee787;
-    --piggy-code-token-tag: #7ee787;
-    --piggy-code-token-decorator: #ff9abc;
-    --piggy-code-token-deleted: #ff7b72;
-    --piggy-code-token-inserted: #7ee787;
-    --piggy-code-token-error: #ff7b72;
+  /* Pygments token palette */
+  --piggy-code-token-comment: #8b949e;
+  --piggy-code-token-keyword: #ff7b72;
+  --piggy-code-token-string: #a5d6ff;
+  --piggy-code-token-number: #79c0ff;
+  --piggy-code-token-function: #d2a8ff;
+  --piggy-code-token-class: #ffa657;
+  --piggy-code-token-variable: #dce7f0;
+  --piggy-code-token-operator: #ff9d8c;
+  --piggy-code-token-punctuation: #aeb3b9;
+  --piggy-code-token-builtin: #79c0ff;
+  --piggy-code-token-constant: #ffa657;
+  --piggy-code-token-attribute: #7ee787;
+  --piggy-code-token-tag: #7ee787;
+  --piggy-code-token-decorator: #ff9abc;
+  --piggy-code-token-deleted: #ff7b72;
+  --piggy-code-token-inserted: #7ee787;
+  --piggy-code-token-error: #ff7b72;
 }

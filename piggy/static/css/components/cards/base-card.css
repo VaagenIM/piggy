@@ -2,41 +2,42 @@
 |*     CARDS     *|
 \*****************/
 .card-container {
-    position: relative;
-    background: linear-gradient(45deg,
-            var(--piggy-card-start) 0%,
-            var(--piggy-card-end) 100%);
-    color: var(--piggy-text-card);
-    transition:
-        transform 0.1s ease,
-        box-shadow 0.1s ease;
-    box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
-    border-color: var(--piggy-card-border);
-    border-width: var(--piggy-card-border-width);
-    border-radius: 1rem;
+  position: relative;
+  background: linear-gradient(
+    45deg,
+    var(--piggy-card-start) 0%,
+    var(--piggy-card-end) 100%
+  );
+  color: var(--piggy-text-card);
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+  box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
+  border-color: var(--piggy-card-border);
+  border-width: var(--piggy-card-border-width);
+  border-radius: 1rem;
 }
 
 .card-container:hover {
-    transform: translateY(-3px) rotate(0.5deg) scale(98%);
-    animation-timing-function: ease;
-    box-shadow: inset 0px 0px 25px 0 var(--piggy-shadow-glow);
-    cursor: pointer;
+  transform: translateY(-3px) rotate(0.5deg) scale(98%);
+  animation-timing-function: ease;
+  box-shadow: inset 0px 0px 25px 0 var(--piggy-shadow-glow);
+  cursor: pointer;
 }
 
-
 .card-title {
-    color: var(--piggy-text-title);
-    font-size: calc(1.25rem * var(--piggy-font-scale));
-    width: 100%;
-    text-align: center;
+  color: var(--piggy-text-title);
+  font-size: calc(1.25rem * var(--piggy-font-scale));
+  width: 100%;
+  text-align: center;
 }
 
 .card-header {
-    display: flex;
+  display: flex;
 }
 
 .description-container {
-    color: var(--piggy-text-description);
-    border-top: 1px solid var(--piggy-text-description);
-    padding-top: 10px;
+  color: var(--piggy-text-description);
+  border-top: 1px solid var(--piggy-text-description);
+  padding-top: 10px;
 }

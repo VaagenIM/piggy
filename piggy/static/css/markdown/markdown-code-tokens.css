@@ -1,79 +1,79 @@
 :root {
-    /* Detailed Pygments aliases */
-    --piggy-code-syntax-text: var(--piggy-code-block-text, var(--piggy-code));
+  /* Detailed Pygments aliases */
+  --piggy-code-syntax-text: var(--piggy-code-block-text, var(--piggy-code));
 
-    --piggy-code-syntax-comment: var(--piggy-code-token-comment);
-    --piggy-code-syntax-comment-special: var(--piggy-code-token-comment);
+  --piggy-code-syntax-comment: var(--piggy-code-token-comment);
+  --piggy-code-syntax-comment-special: var(--piggy-code-token-comment);
 
-    --piggy-code-syntax-keyword: var(--piggy-code-token-keyword);
-    --piggy-code-syntax-keyword-constant: var(--piggy-code-token-keyword);
-    --piggy-code-syntax-keyword-declaration: var(--piggy-code-token-keyword);
-    --piggy-code-syntax-keyword-namespace: var(--piggy-code-token-keyword);
-    --piggy-code-syntax-keyword-pseudo: var(--piggy-code-token-keyword);
-    --piggy-code-syntax-keyword-reserved: var(--piggy-code-token-keyword);
-    --piggy-code-syntax-keyword-type: var(--piggy-code-token-class);
+  --piggy-code-syntax-keyword: var(--piggy-code-token-keyword);
+  --piggy-code-syntax-keyword-constant: var(--piggy-code-token-keyword);
+  --piggy-code-syntax-keyword-declaration: var(--piggy-code-token-keyword);
+  --piggy-code-syntax-keyword-namespace: var(--piggy-code-token-keyword);
+  --piggy-code-syntax-keyword-pseudo: var(--piggy-code-token-keyword);
+  --piggy-code-syntax-keyword-reserved: var(--piggy-code-token-keyword);
+  --piggy-code-syntax-keyword-type: var(--piggy-code-token-class);
 
-    --piggy-code-syntax-name: var(--piggy-code-token-variable);
-    --piggy-code-syntax-name-attribute: var(--piggy-code-token-attribute);
-    --piggy-code-syntax-name-builtin: var(--piggy-code-token-builtin);
-    --piggy-code-syntax-name-builtin-pseudo: var(--piggy-code-token-builtin);
-    --piggy-code-syntax-name-class: var(--piggy-code-token-class);
-    --piggy-code-syntax-name-constant: var(--piggy-code-token-constant);
-    --piggy-code-syntax-name-decorator: var(--piggy-code-token-decorator);
-    --piggy-code-syntax-name-entity: var(--piggy-code-token-tag);
-    --piggy-code-syntax-name-exception: var(--piggy-code-token-class);
-    --piggy-code-syntax-name-function: var(--piggy-code-token-function);
-    --piggy-code-syntax-name-function-magic: var(--piggy-code-token-function);
-    --piggy-code-syntax-name-label: var(--piggy-code-token-tag);
-    --piggy-code-syntax-name-namespace: var(--piggy-code-token-class);
-    --piggy-code-syntax-name-other: var(--piggy-code-token-variable);
-    --piggy-code-syntax-name-property: var(--piggy-code-token-attribute);
-    --piggy-code-syntax-name-tag: var(--piggy-code-token-tag);
-    --piggy-code-syntax-name-variable: var(--piggy-code-token-variable);
-    --piggy-code-syntax-name-variable-class: var(--piggy-code-token-variable);
-    --piggy-code-syntax-name-variable-global: var(--piggy-code-token-variable);
-    --piggy-code-syntax-name-variable-instance: var(--piggy-code-token-variable);
-    --piggy-code-syntax-name-variable-magic: var(--piggy-code-token-variable);
+  --piggy-code-syntax-name: var(--piggy-code-token-variable);
+  --piggy-code-syntax-name-attribute: var(--piggy-code-token-attribute);
+  --piggy-code-syntax-name-builtin: var(--piggy-code-token-builtin);
+  --piggy-code-syntax-name-builtin-pseudo: var(--piggy-code-token-builtin);
+  --piggy-code-syntax-name-class: var(--piggy-code-token-class);
+  --piggy-code-syntax-name-constant: var(--piggy-code-token-constant);
+  --piggy-code-syntax-name-decorator: var(--piggy-code-token-decorator);
+  --piggy-code-syntax-name-entity: var(--piggy-code-token-tag);
+  --piggy-code-syntax-name-exception: var(--piggy-code-token-class);
+  --piggy-code-syntax-name-function: var(--piggy-code-token-function);
+  --piggy-code-syntax-name-function-magic: var(--piggy-code-token-function);
+  --piggy-code-syntax-name-label: var(--piggy-code-token-tag);
+  --piggy-code-syntax-name-namespace: var(--piggy-code-token-class);
+  --piggy-code-syntax-name-other: var(--piggy-code-token-variable);
+  --piggy-code-syntax-name-property: var(--piggy-code-token-attribute);
+  --piggy-code-syntax-name-tag: var(--piggy-code-token-tag);
+  --piggy-code-syntax-name-variable: var(--piggy-code-token-variable);
+  --piggy-code-syntax-name-variable-class: var(--piggy-code-token-variable);
+  --piggy-code-syntax-name-variable-global: var(--piggy-code-token-variable);
+  --piggy-code-syntax-name-variable-instance: var(--piggy-code-token-variable);
+  --piggy-code-syntax-name-variable-magic: var(--piggy-code-token-variable);
 
-    --piggy-code-syntax-string: var(--piggy-code-token-string);
-    --piggy-code-syntax-string-affix: var(--piggy-code-token-string);
-    --piggy-code-syntax-string-backtick: var(--piggy-code-token-string);
-    --piggy-code-syntax-string-char: var(--piggy-code-token-string);
-    --piggy-code-syntax-string-delimiter: var(--piggy-code-token-string);
-    --piggy-code-syntax-string-doc: var(--piggy-code-token-comment);
-    --piggy-code-syntax-string-double: var(--piggy-code-token-string);
-    --piggy-code-syntax-string-escape: var(--piggy-code-token-constant);
-    --piggy-code-syntax-string-heredoc: var(--piggy-code-token-string);
-    --piggy-code-syntax-string-interpol: var(--piggy-code-token-builtin);
-    --piggy-code-syntax-string-other: var(--piggy-code-token-string);
-    --piggy-code-syntax-string-regex: var(--piggy-code-token-tag);
-    --piggy-code-syntax-string-single: var(--piggy-code-token-string);
-    --piggy-code-syntax-string-symbol: var(--piggy-code-token-string);
+  --piggy-code-syntax-string: var(--piggy-code-token-string);
+  --piggy-code-syntax-string-affix: var(--piggy-code-token-string);
+  --piggy-code-syntax-string-backtick: var(--piggy-code-token-string);
+  --piggy-code-syntax-string-char: var(--piggy-code-token-string);
+  --piggy-code-syntax-string-delimiter: var(--piggy-code-token-string);
+  --piggy-code-syntax-string-doc: var(--piggy-code-token-comment);
+  --piggy-code-syntax-string-double: var(--piggy-code-token-string);
+  --piggy-code-syntax-string-escape: var(--piggy-code-token-constant);
+  --piggy-code-syntax-string-heredoc: var(--piggy-code-token-string);
+  --piggy-code-syntax-string-interpol: var(--piggy-code-token-builtin);
+  --piggy-code-syntax-string-other: var(--piggy-code-token-string);
+  --piggy-code-syntax-string-regex: var(--piggy-code-token-tag);
+  --piggy-code-syntax-string-single: var(--piggy-code-token-string);
+  --piggy-code-syntax-string-symbol: var(--piggy-code-token-string);
 
-    --piggy-code-syntax-number: var(--piggy-code-token-number);
-    --piggy-code-syntax-number-bin: var(--piggy-code-token-number);
-    --piggy-code-syntax-number-float: var(--piggy-code-token-number);
-    --piggy-code-syntax-number-hex: var(--piggy-code-token-number);
-    --piggy-code-syntax-number-integer: var(--piggy-code-token-number);
-    --piggy-code-syntax-number-integer-long: var(--piggy-code-token-number);
-    --piggy-code-syntax-number-oct: var(--piggy-code-token-number);
+  --piggy-code-syntax-number: var(--piggy-code-token-number);
+  --piggy-code-syntax-number-bin: var(--piggy-code-token-number);
+  --piggy-code-syntax-number-float: var(--piggy-code-token-number);
+  --piggy-code-syntax-number-hex: var(--piggy-code-token-number);
+  --piggy-code-syntax-number-integer: var(--piggy-code-token-number);
+  --piggy-code-syntax-number-integer-long: var(--piggy-code-token-number);
+  --piggy-code-syntax-number-oct: var(--piggy-code-token-number);
 
-    --piggy-code-syntax-operator: var(--piggy-code-token-operator);
-    --piggy-code-syntax-operator-word: var(--piggy-code-token-keyword);
-    --piggy-code-syntax-punctuation: var(--piggy-code-token-punctuation);
+  --piggy-code-syntax-operator: var(--piggy-code-token-operator);
+  --piggy-code-syntax-operator-word: var(--piggy-code-token-keyword);
+  --piggy-code-syntax-punctuation: var(--piggy-code-token-punctuation);
 
-    --piggy-code-syntax-generic-deleted: var(--piggy-code-token-deleted);
-    --piggy-code-syntax-generic-emph: var(--piggy-code-syntax-text);
-    --piggy-code-syntax-generic-error: var(--piggy-code-token-error);
-    --piggy-code-syntax-generic-heading: var(--piggy-code-token-function);
-    --piggy-code-syntax-generic-inserted: var(--piggy-code-token-inserted);
-    --piggy-code-syntax-generic-output: var(--piggy-code-token-comment);
-    --piggy-code-syntax-generic-prompt: var(--piggy-code-token-comment);
-    --piggy-code-syntax-generic-strong: var(--piggy-code-syntax-text);
-    --piggy-code-syntax-generic-subheading: var(--piggy-code-token-function);
-    --piggy-code-syntax-generic-traceback: var(--piggy-code-token-error);
+  --piggy-code-syntax-generic-deleted: var(--piggy-code-token-deleted);
+  --piggy-code-syntax-generic-emph: var(--piggy-code-syntax-text);
+  --piggy-code-syntax-generic-error: var(--piggy-code-token-error);
+  --piggy-code-syntax-generic-heading: var(--piggy-code-token-function);
+  --piggy-code-syntax-generic-inserted: var(--piggy-code-token-inserted);
+  --piggy-code-syntax-generic-output: var(--piggy-code-token-comment);
+  --piggy-code-syntax-generic-prompt: var(--piggy-code-token-comment);
+  --piggy-code-syntax-generic-strong: var(--piggy-code-syntax-text);
+  --piggy-code-syntax-generic-subheading: var(--piggy-code-token-function);
+  --piggy-code-syntax-generic-traceback: var(--piggy-code-token-error);
 
-    --piggy-code-syntax-error: var(--piggy-code-token-error);
+  --piggy-code-syntax-error: var(--piggy-code-token-error);
 }
 
 /********************************\
@@ -83,12 +83,12 @@
 .md-content .highlight,
 .md-content .highlight code,
 .md-content .highlight pre {
-    color: var(--piggy-code-syntax-text) !important;
+  color: var(--piggy-code-syntax-text) !important;
 }
 
 /* Whitespace */
 .md-content .highlight .w {
-    color: inherit !important;
+  color: inherit !important;
 }
 
 /* Comments */
@@ -99,8 +99,8 @@
 .md-content .highlight .cpf,
 .md-content .highlight .cs,
 .md-content .highlight .ch {
-    color: var(--piggy-code-syntax-comment) !important;
-    font-style: italic;
+  color: var(--piggy-code-syntax-comment) !important;
+  font-style: italic;
 }
 
 /* Keywords */
@@ -110,14 +110,14 @@
 .md-content .highlight .kn,
 .md-content .highlight .kp,
 .md-content .highlight .kr {
-    color: var(--piggy-code-syntax-keyword) !important;
-    font-weight: 600;
+  color: var(--piggy-code-syntax-keyword) !important;
+  font-weight: 600;
 }
 
 /* Types */
 .md-content .highlight .kt {
-    color: var(--piggy-code-syntax-keyword-type) !important;
-    font-weight: 600;
+  color: var(--piggy-code-syntax-keyword-type) !important;
+  font-weight: 600;
 }
 
 /* Strings */
@@ -135,7 +135,7 @@
 .md-content .highlight .sx,
 .md-content .highlight .sr,
 .md-content .highlight .ss {
-    color: var(--piggy-code-syntax-string) !important;
+  color: var(--piggy-code-syntax-string) !important;
 }
 
 /* Numbers */
@@ -146,21 +146,21 @@
 .md-content .highlight .mi,
 .md-content .highlight .mo,
 .md-content .highlight .il {
-    color: var(--piggy-code-syntax-number) !important;
+  color: var(--piggy-code-syntax-number) !important;
 }
 
 /* Functions */
 .md-content .highlight .nf,
 .md-content .highlight .fm {
-    color: var(--piggy-code-syntax-name-function) !important;
+  color: var(--piggy-code-syntax-name-function) !important;
 }
 
 /* Classes / namespaces */
 .md-content .highlight .nc,
 .md-content .highlight .nn,
 .md-content .highlight .ne {
-    color: var(--piggy-code-syntax-name-class) !important;
-    font-weight: 600;
+  color: var(--piggy-code-syntax-name-class) !important;
+  font-weight: 600;
 }
 
 /* Variables / names */
@@ -171,86 +171,86 @@
 .md-content .highlight .vg,
 .md-content .highlight .vi,
 .md-content .highlight .vm {
-    color: var(--piggy-code-syntax-name-variable) !important;
+  color: var(--piggy-code-syntax-name-variable) !important;
 }
 
 /* Builtins */
 .md-content .highlight .nb,
 .md-content .highlight .bp {
-    color: var(--piggy-code-syntax-name-builtin) !important;
+  color: var(--piggy-code-syntax-name-builtin) !important;
 }
 
 /* Constants */
 .md-content .highlight .no {
-    color: var(--piggy-code-syntax-name-constant) !important;
+  color: var(--piggy-code-syntax-name-constant) !important;
 }
 
 /* Attributes / properties */
 .md-content .highlight .na,
 .md-content .highlight .py {
-    color: var(--piggy-code-syntax-name-attribute) !important;
+  color: var(--piggy-code-syntax-name-attribute) !important;
 }
 
 /* Tags / labels / entities */
 .md-content .highlight .nt,
 .md-content .highlight .nl,
 .md-content .highlight .ni {
-    color: var(--piggy-code-syntax-name-tag) !important;
+  color: var(--piggy-code-syntax-name-tag) !important;
 }
 
 /* Decorators */
 .md-content .highlight .nd {
-    color: var(--piggy-code-syntax-name-decorator) !important;
+  color: var(--piggy-code-syntax-name-decorator) !important;
 }
 
 /* Operators */
 .md-content .highlight .o {
-    color: var(--piggy-code-syntax-operator) !important;
+  color: var(--piggy-code-syntax-operator) !important;
 }
 
 .md-content .highlight .ow {
-    color: var(--piggy-code-syntax-operator-word) !important;
-    font-weight: 600;
+  color: var(--piggy-code-syntax-operator-word) !important;
+  font-weight: 600;
 }
 
 /* Punctuation */
 .md-content .highlight .p {
-    color: var(--piggy-code-syntax-punctuation) !important;
+  color: var(--piggy-code-syntax-punctuation) !important;
 }
 
 /* Generic/diff tokens */
 .md-content .highlight .gd {
-    color: var(--piggy-code-syntax-generic-deleted) !important;
+  color: var(--piggy-code-syntax-generic-deleted) !important;
 }
 
 .md-content .highlight .gi {
-    color: var(--piggy-code-syntax-generic-inserted) !important;
+  color: var(--piggy-code-syntax-generic-inserted) !important;
 }
 
 .md-content .highlight .ge {
-    color: var(--piggy-code-syntax-generic-emph) !important;
-    font-style: italic;
+  color: var(--piggy-code-syntax-generic-emph) !important;
+  font-style: italic;
 }
 
 .md-content .highlight .gs {
-    color: var(--piggy-code-syntax-generic-strong) !important;
-    font-weight: 700;
+  color: var(--piggy-code-syntax-generic-strong) !important;
+  font-weight: 700;
 }
 
 .md-content .highlight .gh,
 .md-content .highlight .gu {
-    color: var(--piggy-code-syntax-generic-heading) !important;
-    font-weight: 600;
+  color: var(--piggy-code-syntax-generic-heading) !important;
+  font-weight: 600;
 }
 
 .md-content .highlight .go,
 .md-content .highlight .gp {
-    color: var(--piggy-code-syntax-generic-output) !important;
+  color: var(--piggy-code-syntax-generic-output) !important;
 }
 
 /* Errors */
 .md-content .highlight .err,
 .md-content .highlight .gr,
 .md-content .highlight .gt {
-    color: var(--piggy-code-syntax-error) !important;
+  color: var(--piggy-code-syntax-error) !important;
 }

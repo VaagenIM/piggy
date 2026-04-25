@@ -2,23 +2,23 @@
 |*  PAGE SHELL STYLING  *|
 \************************/
 .main-container {
-    position: relative;
-    min-height: 100vh;
-    color: var(--piggy-text-main);
-    text-shadow: var(--piggy-shadow-text) 3px 3px 5px;
-    font-size: calc(1rem * var(--piggy-font-scale));
-    padding-bottom: 5rem;
+  position: relative;
+  min-height: 100vh;
+  color: var(--piggy-text-main);
+  text-shadow: var(--piggy-shadow-text) 3px 3px 5px;
+  font-size: calc(1rem * var(--piggy-font-scale));
+  padding-bottom: 5rem;
 }
 
 .background-overlay {
-    position: fixed;
-    background: var(--piggy-main);
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
+  position: fixed;
+  background: var(--piggy-main);
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
 }
 
 .content-wrapper {
-    position: relative;
-    z-index: 1;
+  position: relative;
+  z-index: 1;
 }

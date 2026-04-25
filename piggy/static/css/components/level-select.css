@@ -2,126 +2,128 @@
 |*     LEVEL SELECT     *|
 \************************/
 #meta-container {
-    display: flex;
-    align-items: center;
-    background: linear-gradient(90deg,
-            var(--piggy-navbar-start) 0%,
-            var(--piggy-navbar-end) 100%);
-    border-top: 2px solid var(--piggy-card-start);
+  display: flex;
+  align-items: center;
+  background: linear-gradient(
+    90deg,
+    var(--piggy-navbar-start) 0%,
+    var(--piggy-navbar-end) 100%
+  );
+  border-top: 2px solid var(--piggy-card-start);
 }
 
 #level-container {
-    padding: 10px;
-    gap: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    border-left: 1px solid var(--piggy-neutral);
-    position: relative;
+  padding: 10px;
+  gap: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  border-left: 1px solid var(--piggy-neutral);
+  position: relative;
 }
 
 #level-container .snout-button {
-    flex: 1;
-    position: relative;
-    min-width: calc(4rem * var(--piggy-font-scale));
-    max-width: calc(8rem * var(--piggy-font-scale));
-    white-space: nowrap;
-    text-align: center;
+  flex: 1;
+  position: relative;
+  min-width: calc(4rem * var(--piggy-font-scale));
+  max-width: calc(8rem * var(--piggy-font-scale));
+  white-space: nowrap;
+  text-align: center;
 }
 
 /* Tooltip Text */
 #level-container .nav-tooltip {
-    visibility: hidden;
-    width: max-content;
-    white-space: normal;
-    max-width: min(250px, calc(100vw - 16px));
-    background-color: var(--piggy-tooltip);
-    color: var(--piggy-tooltip-text);
-    text-align: center;
-    padding: 5px 10px;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 100000;
+  visibility: hidden;
+  width: max-content;
+  white-space: normal;
+  max-width: min(250px, calc(100vw - 16px));
+  background-color: var(--piggy-tooltip);
+  color: var(--piggy-tooltip-text);
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 100000;
 
-    top: calc(100% + 5px);
-    left: 50%;
-    transform: translateX(calc(-50% + var(--tooltip-shift, 0px)));
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(calc(-50% + var(--tooltip-shift, 0px)));
 
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
 }
 
 /* Tooltip Arrow */
 #level-container .nav-tooltip::after {
-    content: "";
-    position: absolute;
-    top: -9px;
-    left: calc(50% + var(--arrow-shift, 0px));
-    transform: translateX(-50%);
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent var(--piggy-tooltip) transparent;
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: calc(50% + var(--arrow-shift, 0px));
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent var(--piggy-tooltip) transparent;
 }
 
 @media (max-width: 800px) {
-    .level-button-text {
-        display: none;
-    }
+  .level-button-text {
+    display: none;
+  }
 
-    #level-container .snout-button {
-        min-width: 48px;
-        max-width: 48px;
-    }
+  #level-container .snout-button {
+    min-width: 48px;
+    max-width: 48px;
+  }
 }
 
 @media (max-height: 430px) and (orientation: landscape) {
-    .level-button-text {
-        display: none;
-    }
+  .level-button-text {
+    display: none;
+  }
 
-    header {
-        position: relative;
-    }
+  header {
+    position: relative;
+  }
 
-    #level-container {
-        flex-wrap: wrap;
-        gap: 5px;
-    }
+  #level-container {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
 
-    #level-container .snout-button {
-        min-width: 48px;
-        max-width: 48px;
-    }
+  #level-container .snout-button {
+    min-width: 48px;
+    max-width: 48px;
+  }
 }
 
 @media (max-width: 600px) {
-    .level-button-number::before {
-        content: "";
-    }
+  .level-button-number::before {
+    content: "";
+  }
 
-    #level-container .snout-button {
-        min-width: 48px;
-        max-width: 48px;
-    }
+  #level-container .snout-button {
+    min-width: 48px;
+    max-width: 48px;
+  }
 }
 
 /* Show Tooltip on Hover */
 #level-container .snout-button:hover .nav-tooltip {
-    visibility: visible;
-    opacity: 1;
+  visibility: visible;
+  opacity: 1;
 }
 
 /* Not sure if these are needed */
 @media (max-width: 600px) {
-    #level-container {
-        flex-wrap: wrap;
-        gap: 5px;
-    }
+  #level-container {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
 }
 
 .tooltip-diff-image {
-    display: inline;
-    width: 2rem;
+  display: inline;
+  width: 2rem;
 }

@@ -2,58 +2,58 @@
 |*   LANGUAGE SELECTION   *|
 \**************************/
 #language-container {
-    position: relative;
-    margin: 10px;
-    z-index: 1000;
+  position: relative;
+  margin: 10px;
+  z-index: 1000;
 }
 
 #language-container .snout-button {
-    min-width: 125px;
+  min-width: 125px;
 }
 
 #language-container .language-dropdown {
-    width: 100%;
-    display: none;
-    position: absolute;
-    background-color: var(--piggy-menu);
-    white-space: nowrap;
-    box-shadow: 0px 8px 16px 0px var(--piggy-shadow-box);
-    border-radius: 5px;
-    top: 100%;
-    /* Position the dropdown below the button */
-    left: 0;
-    z-index: 1000;
+  width: 100%;
+  display: none;
+  position: absolute;
+  background-color: var(--piggy-menu);
+  white-space: nowrap;
+  box-shadow: 0px 8px 16px 0px var(--piggy-shadow-box);
+  border-radius: 5px;
+  top: 100%;
+  /* Position the dropdown below the button */
+  left: 0;
+  z-index: 1000;
 
-    max-height: calc(100svh - 40svh);
-    overflow-y: auto;
+  max-height: calc(100svh - 40svh);
+  overflow-y: auto;
 }
 
 #language-container .language-dropdown a {
-    color: var(--piggy-menu-text);
-    padding: 5px 10px;
-    text-decoration: none;
-    border-radius: 0px;
-    display: block;
-    border-bottom: 1px solid var(--piggy-main);
-    cursor: pointer;
+  color: var(--piggy-menu-text);
+  padding: 5px 10px;
+  text-decoration: none;
+  border-radius: 0px;
+  display: block;
+  border-bottom: 1px solid var(--piggy-main);
+  cursor: pointer;
 }
 
 #language-container .language-dropdown a:last-child {
-    border-bottom: none;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+  border-bottom: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 #language-container .language-dropdown a:first-child {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 #language-container .language-dropdown a:hover {
-    background-color: var(--piggy-button-hover);
-    color: var(--piggy-text-button);
+  background-color: var(--piggy-button-hover);
+  color: var(--piggy-text-button);
 }
 
 #language-container:hover .language-dropdown {
-    display: block;
+  display: block;
 }

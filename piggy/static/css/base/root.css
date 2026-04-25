@@ -1,12 +1,12 @@
 :root {
-    --piggy-font-scale: 1;
+  --piggy-font-scale: 1;
 
-    font-size: 17px;
+  font-size: 17px;
 
-    font-family: "Noto Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 
-    /* fix theme bug */
-    color-scheme: dark !important;
+  /* fix theme bug */
+  color-scheme: dark !important;
 }

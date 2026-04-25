@@ -2,17 +2,17 @@
 |*    CARD TAGS    *|
 \*******************/
 .tags-container {
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .tag-box {
-    margin: 2px 2px 2px 2px;
-    box-shadow: inset 0px 0px 5px 0 var(--piggy-shadow-box);
-    font-size: calc(0.85rem * var(--piggy-font-scale));
-    color: var(--piggy-text-tag);
-    font-weight: 500;
+  margin: 2px 2px 2px 2px;
+  box-shadow: inset 0px 0px 5px 0 var(--piggy-shadow-box);
+  font-size: calc(0.85rem * var(--piggy-font-scale));
+  color: var(--piggy-text-tag);
+  font-weight: 500;
 }
