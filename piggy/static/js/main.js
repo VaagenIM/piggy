@@ -90,7 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
     callIfFunction("stopOceanShaderAnimation");
     callIfFunction("stopDesertShaderAnimation");
     callIfFunction("stopGoldenShaderAnimation");
-    callIfFunction("stopFrostyShaderAnimation");
   }
 
   function applyTheme(theme) {
@@ -118,9 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
         break;
       case "golden":
         callIfFunction("startGoldenShaderAnimation");
-        break;
-      case "frosty":
-        callIfFunction("startFrostyShaderAnimation");
         break;
     }
   }
