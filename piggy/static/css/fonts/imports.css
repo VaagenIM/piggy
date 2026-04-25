@@ -2,82 +2,79 @@
 |*     FONT IMPORTS     *|
 \************************/
 .language-flag {
-    font-family: "Noto Color Emoji", sans-serif !important;
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Noto Color Emoji", sans-serif !important;
+  font-weight: 400;
+  font-style: normal;
 }
 
 /* Regular */
 @font-face {
-    font-family: "OpenDyslexic";
-    src:
-        url("/static/fonts/OpenDyslexic-Regular.woff2") format("woff2"),
-        url("/static/fonts/OpenDyslexic-Regular.woff") format("woff");
-    font-weight: 400;
-    font-style: normal;
-    letter-spacing: -10px;
+  font-family: "OpenDyslexic";
+  src: url("/static/fonts/OpenDyslexic-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: -10px;
+  font-display: swap;
 }
 
 /* Italic */
 @font-face {
-    font-family: "OpenDyslexic";
-    src:
-        url("/static/fonts/OpenDyslexic-Italic.woff2") format("woff2"),
-        url("/static/fonts/OpenDyslexic-Italic.woff") format("woff");
-    font-weight: 400;
-    font-style: italic;
-    letter-spacing: -10px;
+  font-family: "OpenDyslexic";
+  src: url("/static/fonts/OpenDyslexic-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -10px;
+  font-display: swap;
 }
 
 /* Bold */
 @font-face {
-    font-family: "OpenDyslexic";
-    src:
-        url("/static/fonts/OpenDyslexic-Bold.woff2") format("woff2"),
-        url("/static/fonts/OpenDyslexic-Bold.woff") format("woff");
-    font-weight: 700;
-    font-style: normal;
-    letter-spacing: -10px;
+  font-family: "OpenDyslexic";
+  src: url("/static/fonts/OpenDyslexic-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: -10px;
+  font-display: swap;
 }
 
 /* Bold Italic */
 @font-face {
-    font-family: "OpenDyslexic";
-    src:
-        url("/static/fonts/OpenDyslexic-BoldItalic.woff2") format("woff2"),
-        url("/static/fonts/OpenDyslexic-BoldItalic.woff") format("woff");
-    font-weight: 700;
-    font-style: italic;
-    letter-spacing: -10px;
+  font-family: "OpenDyslexic";
+  src: url("/static/fonts/OpenDyslexic-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -10px;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: "Lexia";
-    src: url("/static/fonts/LEXIA___.ttf") format("TrueType");
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Lexia";
+  src: url("/static/fonts/LEXIA___.ttf") format("TrueType");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: "Lexia";
-    src: url("/static/fonts/LEXIB___.ttf") format("TrueType");
-    font-weight: 700;
-    font-style: normal;
-}
-
-/* Cascadia Code PL (Powerline) */
-@font-face {
-    font-family: "Cascadia Code PL";
-    src: url("/static/fonts/CascadiaCodePL.woff2") format("woff2");
-    font-weight: 200 700;
-    font-style: normal;
-    font-display: swap;
+  font-family: "Lexia";
+  src: url("/static/fonts/LEXIB___.ttf") format("TrueType");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: "Cascadia Code PL";
-    src: url("/static/fonts/CascadiaCodePLItalic.woff2") format("woff2");
-    font-weight: 200 700;
-    font-style: italic;
-    font-display: swap;
+  font-family: "Cascadia Code PL";
+  src: url("/static/fonts/CascadiaCodePL.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cascadia Code PL";
+  src: url("/static/fonts/CascadiaCodePLItalic.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: italic;
+  font-display: swap;
 }

@@ -3,22 +3,37 @@
 
 {# this is just used within layout #}
 {% block styles %}
-{% include "partials/parts/styles.html" %}
+  {% include "partials/parts/styles.html" %}
 {% endblock %}
-
+<!-- prettier-ignore-start -->
 <script>
   window.PIGGY_THEMES = {{ themes | tojson }};
 </script>
+<!-- prettier-ignore-end -->
 
-<script src="{{ url_for('static', filename='js/theme-effects/matrix-effect.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/theme-effects/space-effect.js') }}" defer></script>
+<script
+  src="{{ url_for('static', filename='js/theme-effects/matrix-effect.js') }}"
+  defer></script>
+<script
+  src="{{ url_for('static', filename='js/theme-effects/space-effect.js') }}"
+  defer></script>
 
-<script src="{{ url_for('static', filename='js/theme-effects/webgl-background.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/theme-effects/shaders/desert-shader.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/theme-effects/shaders/ocean-shader.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/theme-effects/shaders/golden-shader.js') }}" defer></script>
+<script
+  src="{{ url_for('static', filename='js/theme-effects/webgl-background.js') }}"
+  defer></script>
+<script
+  src="{{ url_for('static', filename='js/theme-effects/shaders/desert-shader.js') }}"
+  defer></script>
+<script
+  src="{{ url_for('static', filename='js/theme-effects/shaders/ocean-shader.js') }}"
+  defer></script>
+<script
+  src="{{ url_for('static', filename='js/theme-effects/shaders/golden-shader.js') }}"
+  defer></script>
 
 <script src="{{ url_for('static', filename='js/on-load.js') }}"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
 
-<script src="{{ url_for('static', filename='js/markdown-overrides.js') }}" defer></script>
+<script
+  src="{{ url_for('static', filename='js/markdown-overrides.js') }}"
+  defer></script>

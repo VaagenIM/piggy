@@ -17,13 +17,11 @@ so we can decide whether to remove the last path segment from the breadcrumbs.
   <a id="piggy-logo" href="/">
     <img
       id="piggy-logo-icon"
-      src="{{ url_for('static', filename='img/icons/piggy_icon-128.png') }}"
-    />
+      src="{{ url_for('static', filename='img/icons/piggy_icon-128.png') }}" />
     <span id="piggy-logo-text">Piggy</span>
   </a>
   <ol
-    class="flex flex-wrap items-center space-x-1 md:space-x-2 flex-1 overflow-x-auto overflow-y-hidden"
-  >
+    class="flex flex-wrap items-center space-x-1 md:space-x-2 flex-1 overflow-x-auto overflow-y-hidden">
     {# Home element #}
     <li class="inline-flex items-center"></li>
     {# if we are not at home #}
@@ -55,29 +53,25 @@ so we can decide whether to remove the last path segment from the breadcrumbs.
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
-              viewBox="0 0 6 10"
-            >
+              viewBox="0 0 6 10">
               <path
                 stroke="currentColor"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="m1 9 4-4-4-4"
-              />
+                d="m1 9 4-4-4-4" />
             </svg>
           {% endif %}
           {# Check if we need to create a link #}
           {% if not loop.last %}
             <a
               href="{{ url }}"
-              class="piggy-breadcrumb ms-1 text-sm font-medium md:text-base break-words"
-            >
+              class="piggy-breadcrumb ms-1 text-sm font-medium md:text-base break-words">
               {{ p }}
             </a>
           {% else %}
             <span
-              class="piggy-breadcrumb no-hover current ms-1 text-sm font-medium md:text-base break-words"
-            >
+              class="piggy-breadcrumb no-hover current ms-1 text-sm font-medium md:text-base break-words">
               {{ p }}
             </span>
           {% endif %}

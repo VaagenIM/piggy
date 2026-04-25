@@ -1,38 +1,35 @@
 <!doctype html>
 <html lang="en">
-<head>
-  {% block head %}
-    {% include "partials/head.html" | safe %}
-  {% endblock %}
-  {% block extra_head %}
-  {% endblock %}
-</head>
-<body class="main-container" data-font-theme="none">
-<div class="background-overlay"></div>
-<div class="content-wrapper">
-  <header>
-    {% include "partials/parts/breadcrumbs.html" %}
-    {% block header %}
+  <head>
+    {% block head %}
+      {% include "partials/head.html" | safe %}
     {% endblock %}
-  </header>
-  <main
-    dir="{% if current_language %}{{ current_language.direction }}{% endif %}"
-  >
-    {% block base %}
+    {% block extra_head %}
     {% endblock %}
-  </main>
-  <footer>
-    {% block footer %}
-    {% endblock %}
-  </footer>
-</div>
+  </head>
+  <body class="main-container" data-font-theme="none">
+    <div class="background-overlay"></div>
+    <div class="content-wrapper">
+      <header>
+        {% include "partials/parts/breadcrumbs.html" %}
+        {% block header %}
+        {% endblock %}
+      </header>
+      <main
+        dir="{% if current_language %}{{ current_language.direction }}{% endif %}">
+        {% block base %}
+        {% endblock %}
+      </main>
+      <footer>
+        {% block footer %}
+        {% endblock %}
+      </footer>
+    </div>
 
-{% include "partials/post_scripts.html" %}
+    {% include "partials/post_scripts.html" %}
+  </body>
 
-</body>
-
-{% if debug %}
-  {% include "partials/devtools/_devtools.html" %}
-{% endif %}
+  {% if debug %}
+    {% include "partials/devtools/_devtools.html" %}
+  {% endif %}
 </html>
-

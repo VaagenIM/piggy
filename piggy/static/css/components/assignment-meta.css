@@ -2,26 +2,26 @@
 |*      EXTRA META      *|
 \************************/
 .assignment-meta-note {
-    position: relative;
-    box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
-    border: 1px solid var(--piggy-info-box-border);
-    border-radius: 1rem;
-    background: var(--piggy-info-box-background);
-    box-sizing: border-box;
-    width: fit-content;
-    max-width: calc(100% - 2.0rem);
-    overflow-wrap: anywhere;
-    word-break: break-word;
-    padding: 0.75rem;
-    margin: 0.5rem auto 0.5rem auto;
-    font-size: calc(1.1rem * var(--piggy-font-scale));
-    text-align: center;
+  position: relative;
+  box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
+  border: 1px solid var(--piggy-info-box-border);
+  border-radius: 1rem;
+  background: var(--piggy-info-box-background);
+  box-sizing: border-box;
+  width: fit-content;
+  max-width: calc(100% - 2rem);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  padding: 0.75rem;
+  margin: 0.5rem auto 0.5rem auto;
+  font-size: calc(1.1rem * var(--piggy-font-scale));
+  text-align: center;
 }
 
 .assignment-meta-note-icon {
-    fill: var(--piggy-text-main);
-    width: 1.1rem;
-    height: 1.1rem;
-    display: inline;
-    margin: 0.1rem;
+  fill: var(--piggy-text-main);
+  width: 1.1rem;
+  height: 1.1rem;
+  display: inline;
+  margin: 0.1rem;
 }

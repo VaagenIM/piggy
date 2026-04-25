@@ -2,11 +2,12 @@
   {% include path %}
 {% endmacro %}
 
-{% macro include_svg(
-  svg='',
-  class='',
-  style=''
-)
+{%
+  macro include_svg(
+    svg='',
+    class='',
+    style=''
+  )
 %}
   {% set svg_content = _load_path(svg) %}
 

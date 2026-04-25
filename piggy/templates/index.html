@@ -4,21 +4,23 @@
 {% block base %}
   <main class="container mx-auto text-center">
     <h1 class="main-title text-5xl font-extrabold text-center my-6">
-      <img id="piggy-index-icon" src="{{ url_for('static', filename='img/icons/piggy_icon-128.png')}}"> Velkommen til Piggy!
+      <img
+        id="piggy-index-icon"
+        src="{{ url_for('static', filename='img/icons/piggy_icon-128.png') }}" />
+      Velkommen til Piggy!
     </h1>
     <div class="h-4"></div>
 
     {% if piggymap|length > 0 %}
-    <a
-      class="snout-button snout-padding-xl snout-border text-3xl font-bold p-4"
-      href="/{{ ASSIGNMENT_URL_PREFIX }}"
-    >
-      Oppgaver
-    </a>
+      <a
+        class="snout-button snout-padding-xl snout-border text-3xl font-bold p-4"
+        href="/{{ ASSIGNMENT_URL_PREFIX }}">
+        Oppgaver
+      </a>
 
-    <div id="quick-access" class="mt-8">{{ quick_access(piggymap) }}</div>
+      <div id="quick-access" class="mt-8">{{ quick_access(piggymap) }}</div>
     {% else %}
-    Hmm, there seems to be NO content here, please add some to continue! 🐷
+      Hmm, there seems to be NO content here, please add some to continue! 🐷
     {% endif %}
   </main>
 {% endblock %}

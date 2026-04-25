@@ -2,138 +2,137 @@
 |*     SETTINGS MENU     *|
 \*************************/
 #settings-menu {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 0;
-    /* Start closed */
-    height: 100%;
-    background-color: var(--piggy-menu);
-    color: var(--piggy-menu-text);
-    overflow-x: hidden;
-    transition: width 0.5s;
-    z-index: 10000;
-    border-left: 1px solid var(--piggy-neutral);
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 0;
+  /* Start closed */
+  height: 100%;
+  background-color: var(--piggy-menu);
+  color: var(--piggy-menu-text);
+  overflow-x: hidden;
+  transition: width 0.5s;
+  z-index: 10000;
+  border-left: 1px solid var(--piggy-neutral);
 }
 
 #settings-menu.open {
-    width: 300px;
+  width: 300px;
 }
 
 #settings-menu .close-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 36px;
-    text-decoration: none;
-    color: var(--piggy-menu-text);
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 36px;
+  text-decoration: none;
+  color: var(--piggy-menu-text);
 }
 
 /* small screen */
 @media (max-width: 640px) {
-    #settings-button-text {
-        display: none;
-    }
+  #settings-button-text {
+    display: none;
+  }
 }
 
 /* big screen */
 @media (min-width: 640px) {
-    #settings-button-text {
-        display: inline;
-    }
+  #settings-button-text {
+    display: inline;
+  }
 }
 
-
 .settings-content {
-    width: 300px;
-    padding: 60px 20px 20px 20px;
+  width: 300px;
+  padding: 60px 20px 20px 20px;
 }
 
 .custom-select {
-    position: relative;
-    width: 100%;
-    background-color: var(--piggy-light);
-    color: var(--piggy-dark);
-    border: 1px solid var(--piggy-neutral);
-    border-radius: 0.2rem;
-    margin-bottom: 1rem;
-    box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  background-color: var(--piggy-light);
+  color: var(--piggy-dark);
+  border: 1px solid var(--piggy-neutral);
+  border-radius: 0.2rem;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
 }
 
 .custom-select .selected {
-    padding: 0.5rem;
-    cursor: pointer;
-    background-color: var(--piggy-main);
-    color: var(--piggy-text-main);
-    box-sizing: border-box;
-    border-radius: 0.2rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: var(--piggy-main);
+  color: var(--piggy-text-main);
+  box-sizing: border-box;
+  border-radius: 0.2rem;
 }
 
 .custom-select .options-container {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    width: 100%;
-    background-color: var(--piggy-main);
-    color: var(--piggy-text-main);
-    border: 1px solid var(--piggy-card-border);
-    border-radius: 0.2rem;
-    /* Start closed */
-    max-height: 0;
-    overflow-y: auto;
-    opacity: 0;
-    transition:
-        max-height 0.3s ease-out,
-        opacity 0.3s ease-out;
-    z-index: 10001;
-    box-sizing: border-box;
-    padding: 2px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: var(--piggy-main);
+  color: var(--piggy-text-main);
+  border: 1px solid var(--piggy-card-border);
+  border-radius: 0.2rem;
+  /* Start closed */
+  max-height: 0;
+  overflow-y: auto;
+  opacity: 0;
+  transition:
+    max-height 0.3s ease-out,
+    opacity 0.3s ease-out;
+  z-index: 10001;
+  box-sizing: border-box;
+  padding: 2px;
 
-    scrollbar-width: thin;
-    scrollbar-color: var(--piggy-dark);
+  scrollbar-width: thin;
+  scrollbar-color: var(--piggy-dark);
 }
 
 .custom-select.open .options-container::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 .custom-select.open .options-container::-webkit-scrollbar-track {
-    background: #ccc;
-    border-radius: 4px;
+  background: #ccc;
+  border-radius: 4px;
 }
 
 .custom-select.open .options-container::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 4px;
+  background-color: #888;
+  border-radius: 4px;
 }
 
 .custom-select.open .options-container {
-    /* max-height is set dynamically via JS */
-    opacity: 1;
-    overflow-y: auto;
-    z-index: 10002;
-    background-color: var(--piggy-menu) !important;
-    border-radius: 0.2rem;
-    border: 1px solid var(--piggy-menu-text);
+  /* max-height is set dynamically via JS */
+  opacity: 1;
+  overflow-y: auto;
+  z-index: 10002;
+  background-color: var(--piggy-menu) !important;
+  border-radius: 0.2rem;
+  border: 1px solid var(--piggy-menu-text);
 }
 
 .custom-select .option {
-    padding: 0.5rem;
-    cursor: pointer;
-    margin: 5px 2px;
-    border-radius: 0.3rem;
-    box-sizing: border-box;
-    background-color: var(--piggy-button);
-    color: var(--piggy-text-button);
+  padding: 0.5rem;
+  cursor: pointer;
+  margin: 5px 2px;
+  border-radius: 0.3rem;
+  box-sizing: border-box;
+  background-color: var(--piggy-button);
+  color: var(--piggy-text-button);
 }
 
 .custom-select .option:hover {
-    filter: brightness(1.15) saturate(0.75);
-    background-color: var(--piggy-button-hover);
-    border-color: white;
+  filter: brightness(1.15) saturate(0.75);
+  background-color: var(--piggy-button-hover);
+  border-color: white;
 }
 
 .custom-select:not(.open) .options-container {
-    pointer-events: none;
+  pointer-events: none;
 }

@@ -2,73 +2,73 @@
 |*     SEARCH BOX     *|
 \**********************/
 .search-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .search-input-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 700px;
+  position: relative;
+  width: 100%;
+  max-width: 700px;
 }
 
 .search-input {
-    width: 100%;
-    padding: 8px 15px 8px 60px;
-    border: 1px solid var(--piggy-neutral);
-    border-radius: 25px;
-    background-color: var(--piggy-main);
-    color: var(--piggy-text-main);
-    font-size: calc(1rem * var(--piggy-font-scale));
-    outline: none;
-    transition:
-        border-color 0.3s,
-        box-shadow 0.3s;
+  width: 100%;
+  padding: 8px 15px 8px 60px;
+  border: 1px solid var(--piggy-neutral);
+  border-radius: 25px;
+  background-color: var(--piggy-main);
+  color: var(--piggy-text-main);
+  font-size: calc(1rem * var(--piggy-font-scale));
+  outline: none;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
 }
 
 .search-input::placeholder {
-    color: var(--piggy-text-neutral);
+  color: var(--piggy-text-neutral);
 }
 
 .search-input:focus {
-    border-color: var(--piggy-button-hover);
-    box-shadow: 0 0 5px var(--piggy-shadow-glow);
+  border-color: var(--piggy-button-hover);
+  box-shadow: 0 0 5px var(--piggy-shadow-glow);
 }
 
 .search-icon {
-    position: absolute;
-    left: 15px;
-    top: 1px;
-    bottom: 1px;
-    display: flex;
-    align-items: center;
-    padding-right: 20px;
-    color: var(--piggy-text-neutral);
+  position: absolute;
+  left: 15px;
+  top: 1px;
+  bottom: 1px;
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
+  color: var(--piggy-text-neutral);
 }
 
 .search-icon-svg {
-    width: calc(1rem * var(--piggy-font-scale));
-    height: calc(1rem * var(--piggy-font-scale));
+  width: calc(1rem * var(--piggy-font-scale));
+  height: calc(1rem * var(--piggy-font-scale));
 }
 
 .search-icon::after {
-    content: "";
-    display: block;
-    width: 1px;
-    background-color: var(--piggy-neutral);
-    height: 100%;
-    margin-left: 10px;
+  content: "";
+  display: block;
+  width: 1px;
+  background-color: var(--piggy-neutral);
+  height: 100%;
+  margin-left: 10px;
 }
 
 @media screen and (max-width: 800px) {
-    .search-input-wrapper {
-        width: 85%;
-    }
+  .search-input-wrapper {
+    width: 85%;
+  }
 }
 
 @media screen and (max-width: 600px) {
-    .search-input-wrapper {
-        width: 95%;
-    }
+  .search-input-wrapper {
+    width: 95%;
+  }
 }

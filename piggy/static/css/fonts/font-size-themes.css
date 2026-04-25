@@ -2,33 +2,33 @@
 |*     FONT SIZE THEMES     *|
 \****************************/
 :root[data-font-size="xx-small"] {
-    --piggy-font-scale: 0.7;
+  --piggy-font-scale: 0.7;
 }
 
 :root[data-font-size="x-small"] {
-    --piggy-font-scale: 0.85;
+  --piggy-font-scale: 0.85;
 }
 
 :root[data-font-size="small"] {
-    --piggy-font-scale: 1.0;
+  --piggy-font-scale: 1;
 }
 
 :root[data-font-size="default"] {
-    --piggy-font-scale: 1.075;
+  --piggy-font-scale: 1.075;
 }
 
 :root[data-font-size="large"] {
-    --piggy-font-scale: 1.2;
+  --piggy-font-scale: 1.2;
 }
 
 :root[data-font-size="x-large"] {
-    --piggy-font-scale: 1.35;
+  --piggy-font-scale: 1.35;
 }
 
 :root[data-font-size="xx-large"] {
-    --piggy-font-scale: 1.5;
+  --piggy-font-scale: 1.5;
 }
 
 :root[data-font-size="xxx-large"] {
-    --piggy-font-scale: 1.85;
+  --piggy-font-scale: 1.85;
 }

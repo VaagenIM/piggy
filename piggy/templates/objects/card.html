@@ -34,8 +34,7 @@
     data-title="{{ title|lower }}"
     data-description="{{ description|lower }}"
     data-tags="{{ tags|join(' ')|lower }}"
-    data-overlay-text="{{ overlay_text|lower }}"
-  >
+    data-overlay-text="{{ overlay_text|lower }}">
     {% if badge %}
       {{ badge }}
     {% endif %}
@@ -53,8 +52,7 @@
         <img
           class="thumbnail-image w-full object-cover"
           src="{{ thumbnail }}"
-          alt="{{ thumbnail_alt }}"
-        />
+          alt="{{ thumbnail_alt }}" />
 
         {% if show_levels and level_count and level_count > 1 %}
           <div class="level-count-container text-sm">
@@ -66,7 +64,9 @@
           {% if difficulty|int > 5 %}
             {% set difficulty = "5" %}
           {% endif %}
-          <img class="difficulty-icon difficulty-{{ difficulty|string }}" src="{{ url_for('static', filename='img/difficulties/' + difficulty|string + '.png') }}">
+          <img
+            class="difficulty-icon difficulty-{{ difficulty|string }}"
+            src="{{ url_for('static', filename='img/difficulties/' + difficulty|string + '.png') }}" />
         {% endif %}
 
         {% if show_overlay and overlay_text %}
@@ -81,8 +81,7 @@
         {% for tag in tags %}
           <span
             class="tag-box inline-block text-sm px-2 py-1 rounded-full font-semibold"
-            data-tag="{{ tag }}"
-          >
+            data-tag="{{ tag }}">
             {{ tag }}
           </span>
         {% endfor %}

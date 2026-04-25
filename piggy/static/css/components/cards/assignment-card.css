@@ -4,63 +4,66 @@
 
 /* Special assignment card alignment trickery */
 .card-align-assignment {
-    display: grid !important;
-    grid-template-columns: 0fr 5fr 4fr;
-    grid-template-areas:
-        "badge header thumbnail"
-        "badge tags thumbnail"
-        "badge description thumbnail";
-    gap: 0.5rem;
+  display: grid !important;
+  grid-template-columns: 0fr 5fr 4fr;
+  grid-template-areas:
+    "badge header thumbnail"
+    "badge tags thumbnail"
+    "badge description thumbnail";
+  gap: 0.5rem;
 }
 
 .card-align-assignment .card-header {
-    grid-area: header;
+  grid-area: header;
 }
 
 .card-align-assignment .thumbnail-container {
-    grid-area: thumbnail;
+  grid-area: thumbnail;
 }
 
 .card-align-assignment .description-container {
-    grid-area: description;
+  grid-area: description;
 }
 
 .card-align-assignment .tags-container {
-    grid-area: tags;
+  grid-area: tags;
 }
 
 /* horizontal direction becomes vertical on small screen */
 @media (max-width: 640px) {
-    .card-align-assignment {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "header"
-            "thumbnail"
-            "tags"
-            "description";
-    }
+  .card-align-assignment {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "thumbnail"
+      "tags"
+      "description";
+  }
 }
 
 .card-assignment {
-    background: linear-gradient(135deg,
-            var(--piggy-assignment-card-start) 0%,
-            var(--piggy-assignment-card-end) 100%);
-    border: var(--piggy-card-border-width) solid var(--piggy-assignment-card-border);
-    padding: 0.75rem;
+  background: linear-gradient(
+    135deg,
+    var(--piggy-assignment-card-start) 0%,
+    var(--piggy-assignment-card-end) 100%
+  );
+  border: var(--piggy-card-border-width) solid
+    var(--piggy-assignment-card-border);
+  padding: 0.75rem;
 }
 
 .card-assignment:hover {
-    box-shadow: inset 0 0 20px var(--piggy-assignment-shadow-glow);
+  box-shadow: inset 0 0 20px var(--piggy-assignment-shadow-glow);
 }
 
 .card-assignment .description-container {
-    margin-top: 0 !important;
+  margin-top: 0 !important;
 }
 
 .card-assignment .card-header {
-    text-align: left !important;
+  text-align: left !important;
 }
 
 .card-assignment .thumbnail-image {
-    height: 100%;
+  height: 100%;
 }

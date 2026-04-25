@@ -2,7 +2,7 @@
 @import "./base/elements.css";
 @import "./base/utilities.css";
 
-@import "./fonts/imports.css";
+/*@import "./fonts/imports.css"; - Preloaded via partials/head.html*/
 @import "./fonts/font-themes.css";
 @import "./fonts/monospace-themes.css";
 @import "./fonts/font-size-themes.css";

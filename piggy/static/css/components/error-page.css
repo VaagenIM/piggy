@@ -4,22 +4,22 @@
 
 /* small screen */
 @media (max-width: 640px) {
-    .error-container {
-        width: 80%;
-        margin: 0 auto;
-        text-align: center;
-    }
+  .error-container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+  }
 }
 
 /* medium screen */
 @media (min-width: 640px) {
-    .error-container {
-        margin: 0 auto;
-        text-align: center;
-    }
+  .error-container {
+    margin: 0 auto;
+    text-align: center;
+  }
 
-    .error-img {
-        max-width: 640px;
-        margin: 0 auto;
-    }
+  .error-img {
+    max-width: 640px;
+    margin: 0 auto;
+  }
 }
