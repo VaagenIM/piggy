@@ -13,9 +13,6 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
   --piggy-neutral: #7a828a;
   --piggy-dark: rgb(17, 21, 25);
 
-  --piggy-code: #eecf98;
-  --piggy-code-bg: #3a3836;
-
   --piggy-text-main: var(--piggy-light);
   --piggy-text-light: var(--piggy-light);
   --piggy-text-neutral: #aeb3b9;
