@@ -31,13 +31,7 @@
 <link rel="preload" href="{{ gfont }}" as="style" />
 <link href="{{ gfont }}" rel="stylesheet" />
 
-{# Static Fonts (Preload) #}
-<link rel="preconnect" href="{{ url_for('static', filename='fonts/') }}" />
-{% for font in static_fonts_paths %}
-  <link
-    rel="preload"
-    href="{{ url_for('static', filename='fonts/' + font) }}"
-    as="font"
-    type="font/{{ font.split('.')[-1] }}"
-    crossorigin="anonymous" />
-{% endfor %}
+{# Static Fonts #}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/fonts/imports.css') }}" />
