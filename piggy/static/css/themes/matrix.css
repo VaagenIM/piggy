@@ -267,6 +267,14 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   border-color: var(--piggy-assignment-text) !important;
 }
 
+/*****************************\
+|*     MATRIX BACKGROUND     *|
+\*****************************/
+[data-theme="matrix"] .background-overlay canvas#matrix {
+  opacity: 0.9;
+  filter: blur(0.45px) brightness(1.08) contrast(1.08);
+}
+
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/

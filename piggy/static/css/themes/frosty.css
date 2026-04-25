@@ -1,0 +1,249 @@
+/* METADATA
+id: 13
+name: Frosty
+description: A crisp ice-blue theme with snowy panels and cool cyan accents.
+type: light
+preview_style: background: linear-gradient(90deg, #eefaff, #b9e6f5, #dff7ff); color: #102a36; text-shadow: none;
+*/
+
+[data-theme="frosty"] {
+  /* General colors */
+  --piggy-main: #eefaff;
+  --piggy-light: #ffffff;
+  --piggy-neutral: #6f9aaa;
+  --piggy-dark: #082633;
+
+  --piggy-text-main: #082633;
+  --piggy-text-dark: #082633;
+  --piggy-text-neutral: #3f7184;
+  --piggy-text-dark: #102a36;
+
+  --piggy-shadow-text: rgba(255, 255, 255, 0.45);
+  --piggy-shadow-box: rgba(54, 104, 124, 0.18);
+  --piggy-shadow-glow: rgba(112, 219, 255, 0.32);
+
+  /* Card colors */
+  --piggy-card-start: rgba(255, 255, 255, 0.9);
+  --piggy-card-end: rgba(218, 244, 252, 0.85);
+  --piggy-card-border: #6fb8cf;
+  --piggy-text-card: #102a36;
+
+  /* Assignment cards */
+  --piggy-assignment-card-start: rgba(168, 225, 246, 0.65);
+  --piggy-assignment-card-end: rgba(113, 196, 230, 0.45);
+  --piggy-assignment-card-border: #4eaed1;
+  --piggy-assignment-overlay: rgba(68, 174, 215, 0.82);
+  --piggy-assignment-accent: #2d9fc9;
+  --piggy-assignment-shadow-glow: rgba(68, 174, 215, 0.35);
+
+  /* Information cards */
+  --piggy-information-card-start: rgba(190, 238, 255, 0.7);
+  --piggy-information-card-end: rgba(139, 217, 245, 0.45);
+  --piggy-information-card-border: #58bad8;
+  --piggy-information-overlay: rgba(65, 180, 220, 0.86);
+  --piggy-information-accent: #1fa4cf;
+  --piggy-information-shadow-glow: rgba(65, 180, 220, 0.35);
+
+  --piggy-card-border-width: 1px;
+
+  /* Navbar and buttons */
+  --piggy-navbar-start: #dff7ff;
+  --piggy-navbar-end: #c7edf8;
+  --piggy-text-navbar: #102a36;
+
+  --piggy-button: #7cc8df;
+  --piggy-button-hover: #45aeca;
+  --piggy-button-active: #188daf;
+  --piggy-text-button: #082633;
+
+  /* Thumbnails */
+  --piggy-thumbnail-overlay: rgba(239, 251, 255, 0.72);
+  --piggy-text-thumbnail: #102a36;
+
+  /* Text and links */
+  --piggy-text-tag: #185b73;
+  --piggy-text-description: #102a36;
+  --piggy-text-title: #102a36;
+  --piggy-text-breadcrumb: #194d60;
+  --piggy-text-breadcrumb-hover: #2d8db0;
+
+  --piggy-menu: #f7fdff;
+  --piggy-menu-text: #102a36;
+
+  --piggy-tooltip: #102a36;
+  --piggy-tooltip-text: #ffffff;
+
+  --piggy-text-hyperlink: #006f98;
+  --piggy-text-hyperlink-hover: #004f70;
+
+  /* info boxes */
+  --piggy-info-box-background: rgba(90, 204, 235, 0.28);
+  --piggy-info-box-border: #26a6c9;
+
+  /* level container */
+  --piggy-level-container-text: #102a36;
+  --piggy-level-container: #d3f2fb;
+  --piggy-level-container-border: rgba(91, 174, 202, 0.55);
+
+  /* logo */
+  --piggy-logo: #8ce9ff;
+  --piggy-logo-gradient: linear-gradient(45deg, #ffffff, #9cecff, #56c9e8);
+  --piggy-logo-border: rgba(70, 145, 170, 1);
+
+  --piggy-header-border: #ffffff;
+
+  --piggy-content-h1: #0f617c;
+  --piggy-content-h2: #177895;
+  --piggy-content-h3: #298fa9;
+  --piggy-content-h4: #3aa3bb;
+  --piggy-content-h5: #4eadc5;
+  --piggy-content-h6: #6f9aaa;
+
+  --piggy-header-bg-h1: rgba(15, 97, 124, 0.12);
+  --piggy-header-bg-h2: rgba(23, 120, 149, 0.12);
+  --piggy-header-bg-h3: rgba(41, 143, 169, 0.12);
+  --piggy-header-bg-h4: rgba(58, 163, 187, 0.12);
+  --piggy-header-bg-h5: rgba(78, 173, 197, 0.12);
+  --piggy-header-bg-h6: rgba(111, 154, 170, 0.12);
+
+  /* Tables */
+  --piggy-table-bg: #f7fdff;
+  --piggy-table-border: #6fb8cf;
+  --piggy-table-cell-border: #95cbdc;
+
+  --piggy-table-header-start: #d2f0f9;
+  --piggy-table-header-end: #bde5f1;
+  --piggy-table-header-text: #102a36;
+
+  --piggy-table-row-odd: #f8fdff;
+  --piggy-table-row-even: #eaf8fc;
+  --piggy-table-row-hover: #d8f1f8;
+
+  --piggy-table-code-bg: #d7eef6;
+  --piggy-table-code-text: #102a36;
+
+  --piggy-table-shadow: 0 0.25rem 1rem var(--piggy-shadow-box);
+
+  /* code blocks */
+  --piggy-code: #082633;
+  --piggy-code-bg: #d7eef6;
+  --piggy-code-border: #7bbfd3;
+
+  --piggy-code-block-bg: #f6fcff;
+  --piggy-code-block-border: #9fd3e3;
+
+  /* code block extras */
+  --piggy-code-inline-text: #082633;
+  --piggy-code-inline-bg: #d7eef6;
+  --piggy-code-inline-border: #7bbfd3;
+
+  --piggy-code-block-text: #082633;
+  --piggy-code-block-background: #f1fbff;
+  --piggy-code-block-border-color: #74bbd0;
+
+  --piggy-code-block-line-number: #3f7184;
+  --piggy-code-block-line-number-bg: #dff3fa;
+  --piggy-code-block-line-number-border: #95cbdc;
+
+  --piggy-code-clipboard: #2e758c;
+  --piggy-code-clipboard-hover: #082633;
+
+  --piggy-code-selection-bg: #b8ecfb;
+  --piggy-code-selection-text: #102a36;
+
+  /* syntax tokens */
+  --piggy-code-token-comment: #6f8790;
+  --piggy-code-token-keyword: #1d75a3;
+  --piggy-code-token-string: #147d78;
+  --piggy-code-token-number: #735eb5;
+  --piggy-code-token-function: #0d7fa8;
+  --piggy-code-token-class: #8a6a12;
+  --piggy-code-token-variable: #102a36;
+  --piggy-code-token-operator: #218db2;
+  --piggy-code-token-punctuation: #4d7482;
+  --piggy-code-token-builtin: #0d88c0;
+  --piggy-code-token-constant: #8a6a12;
+  --piggy-code-token-attribute: #2c8fa8;
+  --piggy-code-token-tag: #19785c;
+  --piggy-code-token-decorator: #7d61b5;
+  --piggy-code-token-deleted: #b82d45;
+  --piggy-code-token-inserted: #19785c;
+  --piggy-code-token-error: #b82d45;
+
+  /* admonitions, higher contrast */
+  --piggy-admonition-note-bg: #d7f1f8;
+  --piggy-admonition-note-title-bg: #bfe6f1;
+  --piggy-admonition-note-text: #082633;
+  --piggy-admonition-note-icon: #007fa3;
+  --piggy-admonition-note-border: #259abd;
+
+  --piggy-admonition-success-bg: #ddf3e8;
+  --piggy-admonition-success-title-bg: #c2e8d5;
+  --piggy-admonition-success-text: #103525;
+  --piggy-admonition-success-icon: #14784f;
+  --piggy-admonition-success-border: #34976d;
+
+  --piggy-admonition-warning-bg: #fff1c9;
+  --piggy-admonition-warning-title-bg: #ffe09a;
+  --piggy-admonition-warning-text: #49330d;
+  --piggy-admonition-warning-icon: #9a6a00;
+  --piggy-admonition-warning-border: #bd8d18;
+
+  --piggy-admonition-danger-bg: #ffe1e8;
+  --piggy-admonition-danger-title-bg: #ffc8d4;
+  --piggy-admonition-danger-text: #4b1320;
+  --piggy-admonition-danger-icon: #b72545;
+  --piggy-admonition-danger-border: #d84462;
+
+  --piggy-admonition-example-bg: #eae1ff;
+  --piggy-admonition-example-title-bg: #d9caff;
+  --piggy-admonition-example-text: #2b1748;
+  --piggy-admonition-example-icon: #6940a8;
+  --piggy-admonition-example-border: #8965c8;
+
+  --piggy-admonition-quote-bg: #e5f0f4;
+  --piggy-admonition-quote-title-bg: #d2e4eb;
+  --piggy-admonition-quote-text: #082633;
+  --piggy-admonition-quote-icon: #517f91;
+  --piggy-admonition-quote-border: #749dad;
+}
+
+[data-theme="frosty"] .card-container {
+  border-color: #9fd3e3;
+  box-shadow:
+    0 0.35rem 1rem rgba(54, 104, 124, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+[data-theme="frosty"] .thumbnail-image {
+  border-color: #a9ddec !important;
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+[data-theme="frosty"] .md-content {
+  border: 1px solid #9fd3e3;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.82);
+  border-color: #74bbd0;
+  box-shadow:
+    0 0.35rem 1.25rem rgba(54, 104, 124, 0.12),
+    inset 0 0 1.25rem rgba(255, 255, 255, 0.45);
+}
+
+[data-theme="frosty"] .md-content details,
+[data-theme="frosty"] .md-content .tip,
+[data-theme="frosty"] .md-content .admonition {
+  color: var(--piggy-admonition-text, var(--piggy-text-main));
+}
+
+[data-theme="frosty"] .md-content .tabbed-labels::before {
+  border-color: #6bbfd6;
+  background-color: rgba(107, 191, 214, 0.2) !important;
+}
+
+[data-theme="frosty"] .md-content .tabbed-set {
+  background: rgba(255, 255, 255, 0.48);
+  border-color: #b7dce7;
+}

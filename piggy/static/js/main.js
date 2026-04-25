@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const themeSelect = document.getElementById("theme-select");
   const fontSelect = document.getElementById("font-select");
-  const monoSelect = document.getElementById("mono-select")
+  const monoSelect = document.getElementById("mono-select");
   const fontSizeSelect = document.getElementById("font-size-select");
 
   const THEME_STORAGE_KEY = "theme";
@@ -17,7 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const DEFAULT_FONT_SIZE = "default";
 
   function getThemeType(themePath) {
-    const themes = Array.isArray(window.PIGGY_THEMES) ? window.PIGGY_THEMES : [];
+    const themes = Array.isArray(window.PIGGY_THEMES)
+      ? window.PIGGY_THEMES
+      : [];
     const themeData = themes.find((theme) => theme.path === themePath);
 
     return themeData?.type || "dark";
@@ -76,12 +78,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   }
 
+  function callIfFunction(name) {
+    if (typeof window[name] === "function") {
+      window[name]();
+    }
+  }
+
   function stopAllAnimations() {
-    stopMatrixAnimation();
-    stopOceanShaderAnimation();
-    stopDesertShaderAnimation();
-    stopSpaceAnimation();
-    stopGoldenShaderAnimation();
+    callIfFunction("stopMatrixAnimation");
+    callIfFunction("stopSpaceAnimation");
+    callIfFunction("stopOceanShaderAnimation");
+    callIfFunction("stopDesertShaderAnimation");
+    callIfFunction("stopGoldenShaderAnimation");
+    callIfFunction("stopFrostyShaderAnimation");
   }
 
   function applyTheme(theme) {
@@ -96,19 +105,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     switch (theme) {
       case "matrix":
-        startMatrixAnimation();
-        break;
-      case "ocean":
-        startOceanShaderAnimation();
-        break;
-      case "desert":
-        startDesertShaderAnimation();
-        break;
-      case "golden":
-        startGoldenShaderAnimation();
+        callIfFunction("startMatrixAnimation");
         break;
       case "space":
-        startSpaceAnimation();
+        callIfFunction("startSpaceAnimation");
+        break;
+      case "ocean":
+        callIfFunction("startOceanShaderAnimation");
+        break;
+      case "desert":
+        callIfFunction("startDesertShaderAnimation");
+        break;
+      case "golden":
+        callIfFunction("startGoldenShaderAnimation");
+        break;
+      case "frosty":
+        callIfFunction("startFrostyShaderAnimation");
         break;
     }
   }
@@ -179,7 +191,8 @@ document.addEventListener("DOMContentLoaded", () => {
     settingsMenu.classList.remove("open");
   }
 
-  const currentTheme = localStorage.getItem(THEME_STORAGE_KEY) || systemPreferredTheme;
+  const currentTheme =
+    localStorage.getItem(THEME_STORAGE_KEY) || systemPreferredTheme;
   applyTheme(currentTheme);
 
   initializeCustomSelect({
@@ -200,8 +213,8 @@ document.addEventListener("DOMContentLoaded", () => {
     select: monoSelect,
     storageKey: MONO_STORAGE_KEY,
     defaultValue: DEFAULT_MONO_THEME,
-    onChange: applyMonoTheme
-  })
+    onChange: applyMonoTheme,
+  });
 
   initializeCustomSelect({
     select: fontSizeSelect,
