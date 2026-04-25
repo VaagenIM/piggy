@@ -1,32 +1,257 @@
+:root {
+  /* Default / fallback */
+  --piggy-admonition-bg: #26313a;
+  --piggy-admonition-title-bg: #34424d;
+  --piggy-admonition-text: var(--piggy-text-main);
+  --piggy-admonition-icon: var(--piggy-text-main);
+  --piggy-admonition-border: rgba(255, 255, 255, 0.18);
+
+  /* Note / Info / Tip */
+  --piggy-admonition-note-bg: rgba(0, 188, 212, 0.18);
+  --piggy-admonition-note-title-bg: rgba(0, 188, 212, 0.28);
+  --piggy-admonition-note-text: var(--piggy-text-main);
+  --piggy-admonition-note-icon: #00bcd4;
+  --piggy-admonition-note-border: rgba(0, 188, 212, 0.45);
+
+  /* Success / Question */
+  --piggy-admonition-success-bg: rgba(126, 231, 135, 0.16);
+  --piggy-admonition-success-title-bg: rgba(126, 231, 135, 0.26);
+  --piggy-admonition-success-text: var(--piggy-text-main);
+  --piggy-admonition-success-icon: #7ee787;
+  --piggy-admonition-success-border: rgba(126, 231, 135, 0.45);
+
+  /* Warning / Attention */
+  --piggy-admonition-warning-bg: rgba(255, 203, 154, 0.18);
+  --piggy-admonition-warning-title-bg: rgba(255, 203, 154, 0.3);
+  --piggy-admonition-warning-text: var(--piggy-text-main);
+  --piggy-admonition-warning-icon: #ffcb9a;
+  --piggy-admonition-warning-border: rgba(255, 203, 154, 0.5);
+
+  /* Danger / Failure / Bug */
+  --piggy-admonition-danger-bg: rgba(255, 123, 114, 0.18);
+  --piggy-admonition-danger-title-bg: rgba(255, 123, 114, 0.3);
+  --piggy-admonition-danger-text: var(--piggy-text-main);
+  --piggy-admonition-danger-icon: #ff7b72;
+  --piggy-admonition-danger-border: rgba(255, 123, 114, 0.5);
+
+  /* Example */
+  --piggy-admonition-example-bg: rgba(210, 168, 255, 0.18);
+  --piggy-admonition-example-title-bg: rgba(210, 168, 255, 0.28);
+  --piggy-admonition-example-text: var(--piggy-text-main);
+  --piggy-admonition-example-icon: #d2a8ff;
+  --piggy-admonition-example-border: rgba(210, 168, 255, 0.5);
+
+  /* Quote */
+  --piggy-admonition-quote-bg: rgba(174, 179, 185, 0.14);
+  --piggy-admonition-quote-title-bg: rgba(174, 179, 185, 0.22);
+  --piggy-admonition-quote-text: var(--piggy-text-main);
+  --piggy-admonition-quote-icon: #aeb3b9;
+  --piggy-admonition-quote-border: rgba(174, 179, 185, 0.45);
+}
+
 /*********************************\
 |* MARKDOWN ADMONITION OVERRIDES *|
 \*********************************/
-.admonition p:nth-child(2),
-details p:nth-child(2) {
-    margin-top: 0.6rem;
-    margin-bottom: 0.6rem;
+
+/* Main admonition container */
+.md-content :is(.admonition, details) {
+  margin: 1rem 0 !important;
+  padding: 0 !important;
+
+  color: var(--piggy-admonition-text, var(--piggy-text-main)) !important;
+  background: var(--piggy-admonition-bg) !important;
+
+  border: none !important;
+  border-left: 0.25rem solid var(--piggy-admonition-border) !important;
+
+  border-radius: 0.5rem !important;
+  box-shadow: none !important;
+
+  overflow: hidden !important;
 }
 
-.md-content details,
-.md-content .tip,
-.md-content .admonition {
-    border-radius: 5px !important;
+.md-content .admonition > .admonition-title {
+  display: block !important;
+
+  margin: 0 !important;
+  padding: 0.65rem 1rem 0.65rem 2.6rem !important;
+
+  color: var(--piggy-admonition-text, var(--piggy-text-main)) !important;
+  background: var(--piggy-admonition-title-bg) !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+
+  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
 }
 
-.md-content summary {
-    padding-top: 0.6rem !important;
-    padding-bottom: 0.6rem !important;
-    font-size: calc(1rem * var(--piggy-font-scale)) !important;
+.md-content details > summary {
+  display: block !important;
+
+  margin: 0 !important;
+  padding: 0.65rem 1rem 0.65rem 2.6rem !important;
+
+  color: var(--piggy-admonition-text, var(--piggy-text-main)) !important;
+  background: var(--piggy-admonition-title-bg) !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+
+  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+
+  cursor: pointer !important;
 }
 
-details ol li,
-.admonition ol li {
-    font-size: calc(1rem * var(--piggy-font-scale)) !important;
-    list-style: decimal !important;
+.md-content .admonition > p:not(.admonition-title),
+.md-content details > p {
+  margin: 0.75rem 1rem !important;
 }
 
-details ul li,
-.admonition ul li {
-    font-size: calc(1rem * var(--piggy-font-scale)) !important;
-    list-style: disc !important;
+.md-content
+  :is(.admonition, details)
+  > :not(.admonition-title):not(summary):not(p) {
+  margin-left: 1rem !important;
+  margin-right: 1rem !important;
+}
+
+.md-content :is(.admonition, details) > :last-child {
+  margin-bottom: 1rem !important;
+}
+
+.md-content :is(.admonition, details) ol li {
+  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  list-style: decimal !important;
+}
+
+.md-content :is(.admonition, details) ul li {
+  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  list-style: disc !important;
+}
+
+.md-content .admonition > .admonition-title::before,
+.md-content details > summary::before {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+.md-content details > summary::after {
+  top: 50% !important;
+  transform: translateY(-50%) rotate(0deg) !important;
+}
+
+.md-content details[open] > summary::after {
+  transform: translateY(-50%) rotate(180deg) !important;
+}
+
+.md-content details {
+  scroll-margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.md-content details.piggy-details-animating {
+  overflow: hidden !important;
+}
+
+.md-content .admonition > .admonition-title::before,
+.md-content details > summary::before,
+.md-content details > summary::after {
+  top: calc(50% + 1px) !important;
+}
+
+/*********************************\
+|* ADMONITION TYPE MAPPING       *|
+\*********************************/
+
+/* NOTE / INFO / TIP */
+.md-content
+  :is(
+    .admonition.note,
+    details.note,
+    .admonition.info,
+    details.info,
+    .admonition.tip,
+    details.tip
+  ) {
+  --piggy-admonition-bg: var(--piggy-admonition-note-bg);
+  --piggy-admonition-title-bg: var(--piggy-admonition-note-title-bg);
+  --piggy-admonition-text: var(--piggy-admonition-note-text);
+  --piggy-admonition-icon: var(--piggy-admonition-note-icon);
+  --piggy-admonition-border: var(--piggy-admonition-note-border);
+}
+
+/* SUCCESS / QUESTION */
+.md-content
+  :is(
+    .admonition.success,
+    details.success,
+    .admonition.question,
+    details.question
+  ) {
+  --piggy-admonition-bg: var(--piggy-admonition-success-bg);
+  --piggy-admonition-title-bg: var(--piggy-admonition-success-title-bg);
+  --piggy-admonition-text: var(--piggy-admonition-success-text);
+  --piggy-admonition-icon: var(--piggy-admonition-success-icon);
+  --piggy-admonition-border: var(--piggy-admonition-success-border);
+}
+
+/* WARNING / ATTENTION */
+.md-content
+  :is(
+    .admonition.warning,
+    details.warning,
+    .admonition.attention,
+    details.attention
+  ) {
+  --piggy-admonition-bg: var(--piggy-admonition-warning-bg);
+  --piggy-admonition-title-bg: var(--piggy-admonition-warning-title-bg);
+  --piggy-admonition-text: var(--piggy-admonition-warning-text);
+  --piggy-admonition-icon: var(--piggy-admonition-warning-icon);
+  --piggy-admonition-border: var(--piggy-admonition-warning-border);
+}
+
+/* DANGER / FAILURE / BUG */
+.md-content
+  :is(
+    .admonition.danger,
+    details.danger,
+    .admonition.failure,
+    details.failure,
+    .admonition.bug,
+    details.bug
+  ) {
+  --piggy-admonition-bg: var(--piggy-admonition-danger-bg);
+  --piggy-admonition-title-bg: var(--piggy-admonition-danger-title-bg);
+  --piggy-admonition-text: var(--piggy-admonition-danger-text);
+  --piggy-admonition-icon: var(--piggy-admonition-danger-icon);
+  --piggy-admonition-border: var(--piggy-admonition-danger-border);
+}
+
+/* EXAMPLE */
+.md-content :is(.admonition.example, details.example) {
+  --piggy-admonition-bg: var(--piggy-admonition-example-bg);
+  --piggy-admonition-title-bg: var(--piggy-admonition-example-title-bg);
+  --piggy-admonition-text: var(--piggy-admonition-example-text);
+  --piggy-admonition-icon: var(--piggy-admonition-example-icon);
+  --piggy-admonition-border: var(--piggy-admonition-example-border);
+}
+
+/* QUOTE */
+.md-content :is(.admonition.quote, details.quote) {
+  --piggy-admonition-bg: var(--piggy-admonition-quote-bg);
+  --piggy-admonition-title-bg: var(--piggy-admonition-quote-title-bg);
+  --piggy-admonition-text: var(--piggy-admonition-quote-text);
+  --piggy-admonition-icon: var(--piggy-admonition-quote-icon);
+  --piggy-admonition-border: var(--piggy-admonition-quote-border);
+}
+
+.md-content :is(.admonition-title, summary)::before {
+  background-color: var(--piggy-admonition-icon, currentColor) !important;
+}
+
+.md-content details > summary::after {
+  color: var(--piggy-admonition-icon, currentColor) !important;
 }

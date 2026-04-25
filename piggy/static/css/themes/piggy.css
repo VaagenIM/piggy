@@ -164,6 +164,43 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
   --piggy-code-token-deleted: #c72846;
   --piggy-code-token-inserted: #28724f;
   --piggy-code-token-error: #c72846;
+
+  /* admonitions */
+  --piggy-admonition-note-bg: #dff5fb;
+  --piggy-admonition-note-title-bg: #c7ecf7;
+  --piggy-admonition-note-text: #243f48;
+  --piggy-admonition-note-icon: #1689a8;
+  --piggy-admonition-note-border: #45aeca;
+
+  --piggy-admonition-success-bg: #e2f6e8;
+  --piggy-admonition-success-title-bg: #cdefd8;
+  --piggy-admonition-success-text: #213c28;
+  --piggy-admonition-success-icon: #268a44;
+  --piggy-admonition-success-border: #54ad6d;
+
+  --piggy-admonition-warning-bg: #fff0dc;
+  --piggy-admonition-warning-title-bg: #ffe0b7;
+  --piggy-admonition-warning-text: #4f3218;
+  --piggy-admonition-warning-icon: #b86c13;
+  --piggy-admonition-warning-border: #d8923d;
+
+  --piggy-admonition-danger-bg: #ffe0e8;
+  --piggy-admonition-danger-title-bg: #ffc9d6;
+  --piggy-admonition-danger-text: #572030;
+  --piggy-admonition-danger-icon: #c7355b;
+  --piggy-admonition-danger-border: #e05a7d;
+
+  --piggy-admonition-example-bg: #f5e4ff;
+  --piggy-admonition-example-title-bg: #eacfff;
+  --piggy-admonition-example-text: #3f2650;
+  --piggy-admonition-example-icon: #8d45ba;
+  --piggy-admonition-example-border: #b26ed6;
+
+  --piggy-admonition-quote-bg: #fff1f5;
+  --piggy-admonition-quote-title-bg: #ffe1e9;
+  --piggy-admonition-quote-text: #4a2634;
+  --piggy-admonition-quote-icon: #a35a73;
+  --piggy-admonition-quote-border: #d890a8;
 }
 
 /******************************\
@@ -171,13 +208,6 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
 \******************************/
 [data-theme="piggy"] .md-content {
   border-radius: 0.5rem;
-}
-
-[data-theme="piggy"] .md-content details,
-[data-theme="piggy"] .md-content .tip,
-[data-theme="piggy"] .md-content .admonition {
-  background-color: #fff1f5;
-  color: var(--piggy-dark);
 }
 
 [data-theme="piggy"] .md-content .tabbed-labels::before {

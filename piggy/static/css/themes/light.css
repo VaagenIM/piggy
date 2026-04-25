@@ -159,6 +159,43 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
   --piggy-code-token-deleted: #cf222e;
   --piggy-code-token-inserted: #116329;
   --piggy-code-token-error: #cf222e;
+
+  /* admonitions */
+  --piggy-admonition-note-bg: #dff4fb;
+  --piggy-admonition-note-title-bg: #c8eaf5;
+  --piggy-admonition-note-text: #17313a;
+  --piggy-admonition-note-icon: #087ea4;
+  --piggy-admonition-note-border: #27a3c7;
+
+  --piggy-admonition-success-bg: #e2f7e8;
+  --piggy-admonition-success-title-bg: #cdefd7;
+  --piggy-admonition-success-text: #17351f;
+  --piggy-admonition-success-icon: #218a3d;
+  --piggy-admonition-success-border: #39a858;
+
+  --piggy-admonition-warning-bg: #fff1dc;
+  --piggy-admonition-warning-title-bg: #ffe2b8;
+  --piggy-admonition-warning-text: #4a2f0f;
+  --piggy-admonition-warning-icon: #b66a00;
+  --piggy-admonition-warning-border: #d98a22;
+
+  --piggy-admonition-danger-bg: #ffe5e3;
+  --piggy-admonition-danger-title-bg: #ffd1cd;
+  --piggy-admonition-danger-text: #4a1717;
+  --piggy-admonition-danger-icon: #c3312b;
+  --piggy-admonition-danger-border: #df514a;
+
+  --piggy-admonition-example-bg: #f0e7ff;
+  --piggy-admonition-example-title-bg: #e3d2ff;
+  --piggy-admonition-example-text: #2f1d47;
+  --piggy-admonition-example-icon: #7b43b8;
+  --piggy-admonition-example-border: #9c68d8;
+
+  --piggy-admonition-quote-bg: #eceff3;
+  --piggy-admonition-quote-title-bg: #dde3ea;
+  --piggy-admonition-quote-text: #252b31;
+  --piggy-admonition-quote-icon: #5f6b78;
+  --piggy-admonition-quote-border: #8a96a3;
 }
 
 [data-theme="light"] .settings-option {
@@ -170,13 +207,6 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
 \******************************/
 [data-theme="light"] .md-content {
   border-radius: 0.5rem;
-}
-
-[data-theme="light"] .md-content details,
-[data-theme="light"] .md-content .tip,
-[data-theme="light"] .md-content .admonition {
-  background-color: #f4f4f4;
-  color: var(--piggy-dark);
 }
 
 [data-theme="light"] .md-content .tabbed-labels::before {

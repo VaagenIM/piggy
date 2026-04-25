@@ -77,7 +77,12 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
   --piggy-text-hyperlink: #1a8ce3;
   --piggy-text-hyperlink-hover: #798b99;
 
-  --piggy-logo-gradient: linear-gradient(45deg, rgb(255, 123, 0), rgb(255, 153, 58), rgb(255, 196, 161));
+  --piggy-logo-gradient: linear-gradient(
+    45deg,
+    rgb(255, 123, 0),
+    rgb(255, 153, 58),
+    rgb(255, 196, 161)
+  );
   --piggy-logo-border: rgba(0, 0, 0, 0.65);
 
   /* info boxes */
@@ -163,6 +168,43 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
   --piggy-code-token-deleted: #ba2d1f;
   --piggy-code-token-inserted: #4f7a22;
   --piggy-code-token-error: #c62828;
+
+  /* admonitions */
+  --piggy-admonition-note-bg: #d8edf0;
+  --piggy-admonition-note-title-bg: #c0dfe4;
+  --piggy-admonition-note-text: #243c40;
+  --piggy-admonition-note-icon: #287f8a;
+  --piggy-admonition-note-border: #4d9aa3;
+
+  --piggy-admonition-success-bg: #e1ead0;
+  --piggy-admonition-success-title-bg: #ceddb6;
+  --piggy-admonition-success-text: #2f3b1f;
+  --piggy-admonition-success-icon: #5f7d2b;
+  --piggy-admonition-success-border: #7f9844;
+
+  --piggy-admonition-warning-bg: #f5ddae;
+  --piggy-admonition-warning-title-bg: #eac98f;
+  --piggy-admonition-warning-text: #4b3218;
+  --piggy-admonition-warning-icon: #a66a19;
+  --piggy-admonition-warning-border: #b8860b;
+
+  --piggy-admonition-danger-bg: #f0c7bd;
+  --piggy-admonition-danger-title-bg: #e3ad9f;
+  --piggy-admonition-danger-text: #4f211b;
+  --piggy-admonition-danger-icon: #ba2d1f;
+  --piggy-admonition-danger-border: #c6533f;
+
+  --piggy-admonition-example-bg: #ead6e3;
+  --piggy-admonition-example-title-bg: #ddbdd1;
+  --piggy-admonition-example-text: #44273a;
+  --piggy-admonition-example-icon: #9a4f7a;
+  --piggy-admonition-example-border: #b16b93;
+
+  --piggy-admonition-quote-bg: #e6d6bd;
+  --piggy-admonition-quote-title-bg: #d8c39f;
+  --piggy-admonition-quote-text: #342417;
+  --piggy-admonition-quote-icon: #705844;
+  --piggy-admonition-quote-border: #9d744a;
 }
 
 [data-theme="desert"] .level-count-container {
@@ -190,7 +232,6 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
 [data-theme="desert"] .md-content details,
 [data-theme="desert"] .md-content .tip,
 [data-theme="desert"] .md-content .admonition {
-  background-color: #f0e0c0;
   color: var(--piggy-text-dark);
 }
 

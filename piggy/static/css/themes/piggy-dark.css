@@ -163,6 +163,43 @@ preview_style: background: linear-gradient(90deg, #1f1518, #3d2a30); color: #ece
   --piggy-code-token-deleted: #ff7b8a;
   --piggy-code-token-inserted: #9ee6b8;
   --piggy-code-token-error: #ff7b8a;
+
+  /* admonitions */
+  --piggy-admonition-note-bg: #18313a;
+  --piggy-admonition-note-title-bg: #21454f;
+  --piggy-admonition-note-text: #f3dce3;
+  --piggy-admonition-note-icon: #8ed8f0;
+  --piggy-admonition-note-border: #4aa6bd;
+
+  --piggy-admonition-success-bg: #1b3325;
+  --piggy-admonition-success-title-bg: #264936;
+  --piggy-admonition-success-text: #f3dce3;
+  --piggy-admonition-success-icon: #9ee6b8;
+  --piggy-admonition-success-border: #5faf7b;
+
+  --piggy-admonition-warning-bg: #3a2a1d;
+  --piggy-admonition-warning-title-bg: #543d29;
+  --piggy-admonition-warning-text: #fff0f4;
+  --piggy-admonition-warning-icon: #ffd0a8;
+  --piggy-admonition-warning-border: #c68b58;
+
+  --piggy-admonition-danger-bg: #3f1f28;
+  --piggy-admonition-danger-title-bg: #5b2d39;
+  --piggy-admonition-danger-text: #fff0f4;
+  --piggy-admonition-danger-icon: #ff9aa8;
+  --piggy-admonition-danger-border: #d86d7c;
+
+  --piggy-admonition-example-bg: #34253d;
+  --piggy-admonition-example-title-bg: #4b3558;
+  --piggy-admonition-example-text: #f3dce3;
+  --piggy-admonition-example-icon: #caa8ff;
+  --piggy-admonition-example-border: #9f78c7;
+
+  --piggy-admonition-quote-bg: #2d2025;
+  --piggy-admonition-quote-title-bg: #403039;
+  --piggy-admonition-quote-text: #f3dce3;
+  --piggy-admonition-quote-icon: #d9a9b7;
+  --piggy-admonition-quote-border: #9d7b84;
 }
 
 /******************************\
