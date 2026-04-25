@@ -34,3 +34,19 @@ details ul li,
 .md-content details {
   scroll-margin-bottom: 2rem;
 }
+
+/*********************************\
+|*  ADMONITION OPEN ANIMATION    *|
+\*********************************/
+
+.md-content details {
+  overflow: hidden;
+}
+
+.md-content details > summary {
+  cursor: pointer;
+}
+
+.md-content details.piggy-details-animating {
+  overflow: hidden !important;
+}
