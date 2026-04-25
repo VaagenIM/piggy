@@ -77,7 +77,12 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   --piggy-text-hyperlink-hover: #99ffff;
 
   --piggy-logo: rgb(154, 255, 159);
-  --piggy-logo-gradient: linear-gradient(45deg, rgb(137, 255, 216), rgb(0, 255, 85), rgb(30, 255, 0));
+  --piggy-logo-gradient: linear-gradient(
+    45deg,
+    rgb(137, 255, 216),
+    rgb(0, 255, 85),
+    rgb(30, 255, 0)
+  );
   --piggy-logo-border: rgba(0, 0, 0, 0.65);
 
   /* info boxes */
@@ -122,8 +127,7 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   --piggy-table-code-text: #00ffff;
 
   --piggy-table-shadow:
-    0 0.35rem 1.25rem rgba(0, 32, 0, 0.75),
-    0 0 0.9rem rgba(0, 255, 0, 0.12);
+    0 0.35rem 1.25rem rgba(0, 32, 0, 0.75), 0 0 0.9rem rgba(0, 255, 0, 0.12);
 
   /* code blocks */
   --piggy-code: #d8ffd8;
@@ -170,6 +174,43 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   --piggy-code-token-deleted: #ff4444;
   --piggy-code-token-inserted: #00ff66;
   --piggy-code-token-error: #ff4444;
+
+  /* admonitions */
+  --piggy-admonition-note-bg: #001f1f;
+  --piggy-admonition-note-title-bg: #003333;
+  --piggy-admonition-note-text: #d8ffd8;
+  --piggy-admonition-note-icon: #00ffff;
+  --piggy-admonition-note-border: #00ffff;
+
+  --piggy-admonition-success-bg: #001f0f;
+  --piggy-admonition-success-title-bg: #003318;
+  --piggy-admonition-success-text: #d8ffd8;
+  --piggy-admonition-success-icon: #00ff66;
+  --piggy-admonition-success-border: #00ff66;
+
+  --piggy-admonition-warning-bg: #221a00;
+  --piggy-admonition-warning-title-bg: #3a2b00;
+  --piggy-admonition-warning-text: #fff7c2;
+  --piggy-admonition-warning-icon: #ffd75f;
+  --piggy-admonition-warning-border: #ffd75f;
+
+  --piggy-admonition-danger-bg: #220808;
+  --piggy-admonition-danger-title-bg: #3a1010;
+  --piggy-admonition-danger-text: #ffd8d8;
+  --piggy-admonition-danger-icon: #ff4444;
+  --piggy-admonition-danger-border: #ff4444;
+
+  --piggy-admonition-example-bg: #101f00;
+  --piggy-admonition-example-title-bg: #193300;
+  --piggy-admonition-example-text: #e8ffd8;
+  --piggy-admonition-example-icon: #b6ff5f;
+  --piggy-admonition-example-border: #b6ff5f;
+
+  --piggy-admonition-quote-bg: #001100;
+  --piggy-admonition-quote-title-bg: #001d00;
+  --piggy-admonition-quote-text: #d8ffd8;
+  --piggy-admonition-quote-icon: #66cc66;
+  --piggy-admonition-quote-border: #00bb00;
 }
 
 [data-theme="matrix"] .md-content h1 {
@@ -226,6 +267,14 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   border-color: var(--piggy-assignment-text) !important;
 }
 
+/*****************************\
+|*     MATRIX BACKGROUND     *|
+\*****************************/
+[data-theme="matrix"] .background-overlay canvas#matrix {
+  opacity: 0.9;
+  filter: blur(0.45px) brightness(1.08) contrast(1.08);
+}
+
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
@@ -246,7 +295,6 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 [data-theme="matrix"] .md-content details,
 [data-theme="matrix"] .md-content .tip,
 [data-theme="matrix"] .md-content .admonition {
-  background-color: #001100;
   color: #00ff00;
   border-color: rgba(0, 255, 0, 0.45);
   box-shadow: inset 0 0 0.85rem rgba(0, 255, 0, 0.06);
@@ -282,4 +330,16 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 /* fix copy button */
 [data-theme="matrix"] .md-content .md-code__button[data-md-type="copy"] {
   border-radius: 0 0.25rem 0 0.25rem !important;
+}
+
+[data-theme="matrix"] .md-content :is(.admonition, details) {
+  text-shadow: 0 0 0.35rem rgba(0, 255, 80, 0.22);
+  box-shadow:
+    inset 0 0 0.85rem rgba(0, 255, 0, 0.06),
+    0 0 0.45rem rgba(0, 255, 0, 0.08) !important;
+}
+
+[data-theme="matrix"] .md-content .admonition > .admonition-title,
+[data-theme="matrix"] .md-content details > summary {
+  text-shadow: 0 0 0.35rem rgba(0, 255, 120, 0.3);
 }

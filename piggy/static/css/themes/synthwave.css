@@ -29,9 +29,9 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   /* Assignment cards */
   --piggy-assignment-card-start: rgba(155, 49, 0, 0.7);
   --piggy-assignment-card-end: rgba(155, 49, 34, 0.3);
-  --piggy-assignment-card-border: #FF5722;
+  --piggy-assignment-card-border: #ff5722;
   --piggy-assignment-overlay: rgba(255, 87, 34, 0.8);
-  --piggy-assignment-accent: #FF5722;
+  --piggy-assignment-accent: #ff5722;
   --piggy-assignment-shadow-glow: rgba(255, 87, 34, 0.5);
 
   /* Information cards */
@@ -75,7 +75,12 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --grid-line-color: #cc00ffaa;
   --grid-background-color: var(--piggy-dark);
 
-  --piggy-logo-gradient: linear-gradient(45deg, rgb(162, 0, 255), rgb(255, 0, 200), rgb(255, 145, 0));
+  --piggy-logo-gradient: linear-gradient(
+    45deg,
+    rgb(162, 0, 255),
+    rgb(255, 0, 200),
+    rgb(255, 145, 0)
+  );
   --piggy-logo-border: rgba(0, 0, 0, 0.65);
 
   /* info boxes */
@@ -121,8 +126,7 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 
   --piggy-table-shadow:
     0 0.35rem 1.25rem var(--piggy-shadow-box),
-    0 0 0.9rem rgba(204, 0, 255, 0.16),
-    0 0 1.2rem rgba(255, 87, 34, 0.08);
+    0 0 0.9rem rgba(204, 0, 255, 0.16), 0 0 1.2rem rgba(255, 87, 34, 0.08);
 
   /* code blocks */
   --piggy-code: #ffd6c8;
@@ -169,6 +173,43 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --piggy-code-token-deleted: #ff3b3b;
   --piggy-code-token-inserted: #00ff99;
   --piggy-code-token-error: #ff3b3b;
+
+  /* admonitions */
+  --piggy-admonition-note-bg: #102d38;
+  --piggy-admonition-note-title-bg: #164253;
+  --piggy-admonition-note-text: #ffe2d5;
+  --piggy-admonition-note-icon: #00fbff;
+  --piggy-admonition-note-border: #00d9ff;
+
+  --piggy-admonition-success-bg: #102b24;
+  --piggy-admonition-success-title-bg: #173f34;
+  --piggy-admonition-success-text: #ffe2d5;
+  --piggy-admonition-success-icon: #00ff99;
+  --piggy-admonition-success-border: #00ff99;
+
+  --piggy-admonition-warning-bg: #3a2610;
+  --piggy-admonition-warning-title-bg: #563917;
+  --piggy-admonition-warning-text: #ffe2d5;
+  --piggy-admonition-warning-icon: #ffcc66;
+  --piggy-admonition-warning-border: #ff9500;
+
+  --piggy-admonition-danger-bg: #3a1620;
+  --piggy-admonition-danger-title-bg: #551f30;
+  --piggy-admonition-danger-text: #ffe2d5;
+  --piggy-admonition-danger-icon: #ff4f7b;
+  --piggy-admonition-danger-border: #ff3b3b;
+
+  --piggy-admonition-example-bg: #2b173d;
+  --piggy-admonition-example-title-bg: #411f5e;
+  --piggy-admonition-example-text: #ffe2d5;
+  --piggy-admonition-example-icon: #f200ff;
+  --piggy-admonition-example-border: #cc00ff;
+
+  --piggy-admonition-quote-bg: #24182c;
+  --piggy-admonition-quote-title-bg: #352341;
+  --piggy-admonition-quote-text: #ffd27f;
+  --piggy-admonition-quote-icon: #cfa8dc;
+  --piggy-admonition-quote-border: #866997;
 }
 
 [data-theme="synthwave"] .md-content h1 {
@@ -223,14 +264,19 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 
 [data-theme="synthwave"] .background-overlay {
   height: 200%;
-  background-image: linear-gradient(to right,
+  background-image:
+    linear-gradient(
+      to right,
       transparent 0%,
       transparent 98%,
-      var(--grid-line-color) 99%),
-    linear-gradient(to bottom,
+      var(--grid-line-color) 99%
+    ),
+    linear-gradient(
+      to bottom,
       transparent 0%,
       transparent 98%,
-      var(--grid-line-color) 99%);
+      var(--grid-line-color) 99%
+    );
   background-size: 2.5rem 2.5rem;
   transform-origin: top center;
   transform: translateY(2%) perspective(40rem) rotateX(77deg);
@@ -274,7 +320,8 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 
 [data-theme="synthwave"] .card-container:hover {
   border-color: #ff00ff;
-  transform: perspective(1000px) rotateX(-1deg) rotateY(3deg) rotateZ(1deg) scale(98%);
+  transform: perspective(1000px) rotateX(-1deg) rotateY(3deg) rotateZ(1deg)
+    scale(98%);
   box-shadow: 0px 0px 15px 0 #ff00a6;
   animation: boxShadowScroll 2s alternate infinite;
   animation-timing-function: linear;
@@ -304,7 +351,6 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 [data-theme="synthwave"] .md-content details,
 [data-theme="synthwave"] .md-content .tip,
 [data-theme="synthwave"] .md-content .admonition {
-  background-color: #271a1d;
   color: var(--piggy-light);
   border-color: rgba(255, 87, 34, 0.35);
 }
@@ -318,4 +364,11 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 [data-theme="synthwave"] .md-content .tabbed-labels::before {
   border-color: #ff3000;
   background-color: #ff37003a !important;
+}
+
+[data-theme="synthwave"] .md-content :is(.admonition, details) {
+  box-shadow:
+    0 0 0.65rem
+      color-mix(in srgb, var(--piggy-admonition-border) 22%, transparent),
+    inset 0 0 0.75rem rgba(255, 255, 255, 0.03) !important;
 }

@@ -142,6 +142,63 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-code-token-deleted: #ff0000;
   --piggy-code-token-inserted: #00ff00;
   --piggy-code-token-error: #ff0000;
+
+  /* admonition blocks */
+  --piggy-admonition-note-bg: #000000;
+  --piggy-admonition-note-title-bg: #000000;
+  --piggy-admonition-note-text: #ffffff;
+  --piggy-admonition-note-icon: #00ffff;
+  --piggy-admonition-note-border: #00ffff;
+
+  --piggy-admonition-success-bg: #000000;
+  --piggy-admonition-success-title-bg: #000000;
+  --piggy-admonition-success-text: #ffffff;
+  --piggy-admonition-success-icon: #00ff00;
+  --piggy-admonition-success-border: #00ff00;
+
+  --piggy-admonition-warning-bg: #000000;
+  --piggy-admonition-warning-title-bg: #000000;
+  --piggy-admonition-warning-text: #ffffff;
+  --piggy-admonition-warning-icon: #ffff00;
+  --piggy-admonition-warning-border: #ffff00;
+
+  --piggy-admonition-danger-bg: #000000;
+  --piggy-admonition-danger-title-bg: #000000;
+  --piggy-admonition-danger-text: #ffffff;
+  --piggy-admonition-danger-icon: #ff0000;
+  --piggy-admonition-danger-border: #ff0000;
+
+  --piggy-admonition-example-bg: #000000;
+  --piggy-admonition-example-title-bg: #000000;
+  --piggy-admonition-example-text: #ffffff;
+  --piggy-admonition-example-icon: #ff00ff;
+  --piggy-admonition-example-border: #ff00ff;
+
+  --piggy-admonition-quote-bg: #000000;
+  --piggy-admonition-quote-title-bg: #000000;
+  --piggy-admonition-quote-text: #ffffff;
+  --piggy-admonition-quote-icon: #ffffff;
+  --piggy-admonition-quote-border: #ffffff;
+
+  /* additional stuff */
+  --piggy-shadow-box: none;
+  --piggy-shadow-glow: transparent;
+
+  --piggy-level-container-text: #ffffff;
+  --piggy-level-container: #000000;
+  --piggy-level-container-border: #ffffff;
+
+  --piggy-assignment-card-start: #000000;
+  --piggy-assignment-card-end: #000000;
+  --piggy-assignment-overlay: #000000;
+  --piggy-assignment-accent: #ff7b00;
+  --piggy-assignment-shadow-glow: transparent;
+
+  --piggy-information-card-start: #000000;
+  --piggy-information-card-end: #000000;
+  --piggy-information-overlay: #000000;
+  --piggy-information-accent: #00b7ff;
+  --piggy-information-shadow-glow: transparent;
 }
 
 [data-theme="high-contrast"] .card-container {
@@ -240,13 +297,19 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   border-bottom: 1px solid white;
 }
 
-[data-theme="high-contrast"] #language-container .language-dropdown a:last-child {
+[data-theme="high-contrast"]
+  #language-container
+  .language-dropdown
+  a:last-child {
   border-bottom: none;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
 }
 
-[data-theme="high-contrast"] #language-container .language-dropdown a:first-child {
+[data-theme="high-contrast"]
+  #language-container
+  .language-dropdown
+  a:first-child {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
 }
@@ -268,8 +331,7 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
 [data-theme="high-contrast"] .md-content details,
 [data-theme="high-contrast"] .md-content .tip,
 [data-theme="high-contrast"] .md-content .admonition {
-  background-color: #000000;
-  color: #ffffff;
+  color: var(--piggy-admonition-text, #ffffff);
 }
 
 [data-theme="high-contrast"] .md-content .tabbed-set {
@@ -293,114 +355,50 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   border-radius: 0 0.25rem 0 0.25rem !important;
 }
 
-/************************\
-|*     DETAIL BOXES     *|
-\************************/
+/******************************\
+|* HIGH CONTRAST ADMONITIONS   *|
+\******************************/
 
-/* NOTE, ABSTRACT, INFO, TIP - [CYAN] */
-[data-theme="high-contrast"] .md-content :is(details, .admonition) {
-  border: 1px solid !important;
-  border-radius: 5px !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.note, .abstract, .info, .tip) {
-  border-color: #00ffff !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.note, .abstract, .info, .tip) summary {
-  background-color: #00ffff20 !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.note, .abstract, .info, .tip) summary::after {
-  color: #00ffff !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.note, .abstract, .info, .tip) :is(summary, .admonition-title)::before {
-  filter: brightness(0) saturate(100%) invert(94%) sepia(77%) saturate(7497%) hue-rotate(102deg) brightness(109%) contrast(101%);
-}
-
-/* SUCCESS, QUESTION [GREEN] */
-[data-theme="high-contrast"] .md-content :is(.success, .question) {
-  border-color: #00ff00 !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.success, .question) summary {
-  background-color: #00ff0020 !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.success, .question) summary::after {
-  color: #00ff00 !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.success, .question) :is(summary, .admonition-title)::before {
-  filter: brightness(0) saturate(100%) invert(72%) sepia(48%) saturate(7500%) hue-rotate(84deg) brightness(127%) contrast(115%);
-}
-
-/* WARNING, FAILURE [ORANGE] */
-[data-theme="high-contrast"] .md-content :is(.warning, .failure) {
-  border-color: #ff5b00 !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.warning, .failure) summary {
-  background-color: #ff5b0020 !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.warning, .failure) summary::after {
-  color: #ff5b00 !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.warning, .failure) :is(summary, .admonition-title)::before {
-  filter: brightness(0) saturate(100%) invert(38%) sepia(49%) saturate(3030%) hue-rotate(1deg) brightness(103%) contrast(106%);
-}
-
-/* DANGER, BUG [RED] */
-/* WARNING, FAILURE [ORANGE] */
-[data-theme="high-contrast"] .md-content :is(.danger, .bug) {
-  border-color: #ff0000 !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.danger, .bug) summary {
-  background-color: #ff000020 !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.danger, .bug) summary::after {
-  color: #ff0000 !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.danger, .bug) :is(summary, .admonition-title)::before {
-  filter: brightness(0) saturate(100%) invert(16%) sepia(90%) saturate(6855%) hue-rotate(6deg) brightness(101%) contrast(124%);
-}
-
-/* EXAMPLE [MAGENTA] */
-[data-theme="high-contrast"] .md-content :is(.example) {
-  border-color: #ff00ff !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.example) summary {
-  background-color: #ff00ff20 !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.example) summary::after {
-  color: #ff00ff !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.example) :is(summary, .admonition-title)::before {
-  filter: brightness(0) saturate(100%) invert(17%) sepia(75%) saturate(5424%) hue-rotate(294deg) brightness(116%) contrast(122%);
-}
-
-/* QUOTE [WHITE] */
-[data-theme="high-contrast"] .md-content :is(.quote) {
-  border-color: #ffffff !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.quote) summary {
-  background-color: #ffffff20 !important;
-}
-
-[data-theme="high-contrast"] .md-content :is(.quote) summary::after {
+[data-theme="high-contrast"] .md-content :is(.admonition, details) {
   color: #ffffff !important;
+  background: color-mix(
+    in srgb,
+    var(--piggy-admonition-border) 8%,
+    #000000
+  ) !important;
+
+  border: 1px solid var(--piggy-admonition-border) !important;
+  border-left: 0.45rem solid var(--piggy-admonition-border) !important;
+
+  border-radius: 0.25rem 0.25rem 0.25rem 0.25rem !important;
+  box-shadow: none !important;
 }
 
-[data-theme="high-contrast"] .md-content :is(.quote) :is(summary, .admonition-title)::before {
-  filter: grayscale() brightness(2);
+[data-theme="high-contrast"] .md-content .admonition > .admonition-title,
+[data-theme="high-contrast"] .md-content details > summary {
+  color: #ffffff !important;
+  background: color-mix(
+    in srgb,
+    var(--piggy-admonition-border) 18%,
+    #000000
+  ) !important;
+
+  border-bottom: 1px solid var(--piggy-admonition-border) !important;
+  border-radius: 0.25rem 0.25rem 0 0 !important;
+
+  text-decoration: underline;
+  text-decoration-color: var(--piggy-admonition-border);
+  text-underline-offset: 0.18em;
+}
+
+[data-theme="high-contrast"]
+  .md-content
+  .admonition
+  > .admonition-title::before,
+[data-theme="high-contrast"] .md-content details > summary::before {
+  background-color: var(--piggy-admonition-border) !important;
+}
+
+[data-theme="high-contrast"] .md-content details > summary::after {
+  color: var(--piggy-admonition-border) !important;
 }

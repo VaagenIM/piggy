@@ -155,6 +155,43 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-code-token-deleted: #ff6b6b;
   --piggy-code-token-inserted: #7ee787;
   --piggy-code-token-error: #ff6b6b;
+
+  /* admonitions */
+  --piggy-admonition-note-bg: #10272a;
+  --piggy-admonition-note-title-bg: #17383c;
+  --piggy-admonition-note-text: #f7e9c5;
+  --piggy-admonition-note-icon: #00bcd4;
+  --piggy-admonition-note-border: #00bcd4;
+
+  --piggy-admonition-success-bg: #172516;
+  --piggy-admonition-success-title-bg: #223720;
+  --piggy-admonition-success-text: #f7e9c5;
+  --piggy-admonition-success-icon: #7ee787;
+  --piggy-admonition-success-border: #5fae68;
+
+  --piggy-admonition-warning-bg: #2a2312;
+  --piggy-admonition-warning-title-bg: #3e3416;
+  --piggy-admonition-warning-text: #ffe7a0;
+  --piggy-admonition-warning-icon: #ffd86b;
+  --piggy-admonition-warning-border: #d6a149;
+
+  --piggy-admonition-danger-bg: #2c1715;
+  --piggy-admonition-danger-title-bg: #421f1c;
+  --piggy-admonition-danger-text: #ffe0d8;
+  --piggy-admonition-danger-icon: #ff6b6b;
+  --piggy-admonition-danger-border: #d95a4f;
+
+  --piggy-admonition-example-bg: #251b32;
+  --piggy-admonition-example-title-bg: #38264d;
+  --piggy-admonition-example-text: #f7e9c5;
+  --piggy-admonition-example-icon: #d8b4ff;
+  --piggy-admonition-example-border: #ad83d8;
+
+  --piggy-admonition-quote-bg: #17171d;
+  --piggy-admonition-quote-title-bg: #22222a;
+  --piggy-admonition-quote-text: #f7e9c5;
+  --piggy-admonition-quote-icon: #c9b77c;
+  --piggy-admonition-quote-border: #6d5520;
 }
 
 [data-theme="golden"] .level-count-container {
@@ -178,10 +215,10 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 [data-theme="golden"] .md-content details,
 [data-theme="golden"] .md-content .tip,
 [data-theme="golden"] .md-content .admonition {
-  background-color: #15151b;
-  color: var(--piggy-text-main);
-  border-color: #3e3416;
-  box-shadow: 0 0 0.5rem var(--piggy-shadow-glow);
+  color: var(--piggy-admonition-text, var(--piggy-text-main));
+  border-color: var(--piggy-admonition-border, #3e3416);
+  box-shadow: 0 0 0.5rem
+    color-mix(in srgb, var(--piggy-admonition-border) 22%, transparent);
 }
 
 [data-theme="golden"] .md-content .tabbed-labels::before {
