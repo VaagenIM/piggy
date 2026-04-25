@@ -175,6 +175,43 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
   --piggy-code-token-deleted: #ff7b72;
   --piggy-code-token-inserted: #7ee787;
   --piggy-code-token-error: #ff7b72;
+
+  /* admonitions */
+  --piggy-admonition-note-bg: #12343d;
+  --piggy-admonition-note-title-bg: #184a57;
+  --piggy-admonition-note-text: #ffffff;
+  --piggy-admonition-note-icon: #6bc4ff;
+  --piggy-admonition-note-border: #2f86a3;
+
+  --piggy-admonition-success-bg: #16351f;
+  --piggy-admonition-success-title-bg: #214d2e;
+  --piggy-admonition-success-text: #ffffff;
+  --piggy-admonition-success-icon: #7ee787;
+  --piggy-admonition-success-border: #3d9b55;
+
+  --piggy-admonition-warning-bg: #3a2b16;
+  --piggy-admonition-warning-title-bg: #57401f;
+  --piggy-admonition-warning-text: #ffffff;
+  --piggy-admonition-warning-icon: #ffcb9a;
+  --piggy-admonition-warning-border: #b47a35;
+
+  --piggy-admonition-danger-bg: #3d1b1b;
+  --piggy-admonition-danger-title-bg: #5a2828;
+  --piggy-admonition-danger-text: #ffffff;
+  --piggy-admonition-danger-icon: #ff7b72;
+  --piggy-admonition-danger-border: #b84f4a;
+
+  --piggy-admonition-example-bg: #2f2342;
+  --piggy-admonition-example-title-bg: #463363;
+  --piggy-admonition-example-text: #ffffff;
+  --piggy-admonition-example-icon: #d2a8ff;
+  --piggy-admonition-example-border: #8a63bd;
+
+  --piggy-admonition-quote-bg: #252b31;
+  --piggy-admonition-quote-title-bg: #343c44;
+  --piggy-admonition-quote-text: #ffffff;
+  --piggy-admonition-quote-icon: #aeb3b9;
+  --piggy-admonition-quote-border: #66717d;
 }
 
 [data-theme="dark"] .md-content {

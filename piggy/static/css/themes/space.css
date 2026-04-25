@@ -30,9 +30,9 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
 
   --piggy-assignment-card-start: rgba(180, 0, 255, 0.1);
   --piggy-assignment-card-end: rgba(120, 0, 255, 0.1);
-  --piggy-assignment-card-border: #B800FF;
+  --piggy-assignment-card-border: #b800ff;
   --piggy-assignment-overlay: rgba(120, 0, 255, 0.8);
-  --piggy-assignment-accent: #B800FF;
+  --piggy-assignment-accent: #b800ff;
   --piggy-assignment-shadow-glow: rgba(120, 0, 255, 0.5);
 
   --piggy-card-border-width: 1px;
@@ -74,9 +74,14 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
   --piggy-tooltip-text: #ffffff;
 
   --piggy-text-hyperlink: #c739ff;
-  --piggy-text-hyperlink-hover: #8B6B8B;
+  --piggy-text-hyperlink-hover: #8b6b8b;
 
-  --piggy-logo-gradient: linear-gradient(45deg, rgb(255, 255, 255), rgb(0, 162, 255), rgb(0, 110, 255));
+  --piggy-logo-gradient: linear-gradient(
+    45deg,
+    rgb(255, 255, 255),
+    rgb(0, 162, 255),
+    rgb(0, 110, 255)
+  );
   --piggy-logo-border: rgba(0, 0, 0, 0.65);
 
   /* info boxes */
@@ -169,6 +174,43 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
   --piggy-code-token-deleted: #ff5c7a;
   --piggy-code-token-inserted: #9dffb0;
   --piggy-code-token-error: #ff5c7a;
+
+  /* admonitions */
+  --piggy-admonition-note-bg: #102528;
+  --piggy-admonition-note-title-bg: #15353a;
+  --piggy-admonition-note-text: #c9fffb;
+  --piggy-admonition-note-icon: #66fcf1;
+  --piggy-admonition-note-border: #45d6ff;
+
+  --piggy-admonition-success-bg: #14281c;
+  --piggy-admonition-success-title-bg: #1d3a28;
+  --piggy-admonition-success-text: #d8ffe0;
+  --piggy-admonition-success-icon: #9dffb0;
+  --piggy-admonition-success-border: #6ee58a;
+
+  --piggy-admonition-warning-bg: #312813;
+  --piggy-admonition-warning-title-bg: #4a3a19;
+  --piggy-admonition-warning-text: #fff2cc;
+  --piggy-admonition-warning-icon: #ffd166;
+  --piggy-admonition-warning-border: #e6b94f;
+
+  --piggy-admonition-danger-bg: #331622;
+  --piggy-admonition-danger-title-bg: #4b2031;
+  --piggy-admonition-danger-text: #ffe2ea;
+  --piggy-admonition-danger-icon: #ff5c7a;
+  --piggy-admonition-danger-border: #e85070;
+
+  --piggy-admonition-example-bg: #231a3a;
+  --piggy-admonition-example-title-bg: #332554;
+  --piggy-admonition-example-text: #f0e6ff;
+  --piggy-admonition-example-icon: #c792ff;
+  --piggy-admonition-example-border: #a66cff;
+
+  --piggy-admonition-quote-bg: #171d25;
+  --piggy-admonition-quote-title-bg: #222b36;
+  --piggy-admonition-quote-text: #c5c6c7;
+  --piggy-admonition-quote-icon: #8a98a8;
+  --piggy-admonition-quote-border: #566272;
 }
 
 /******************************\
@@ -186,9 +228,8 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
 [data-theme="space"] .md-content details,
 [data-theme="space"] .md-content .tip,
 [data-theme="space"] .md-content .admonition {
-  background-color: #0b0c10;
-  color: var(--piggy-light);
-  border-color: rgba(102, 252, 241, 0.28);
+  color: var(--piggy-admonition-text, var(--piggy-light));
+  border-color: var(--piggy-admonition-border, rgba(102, 252, 241, 0.28));
 }
 
 [data-theme="space"] .md-content .tabbed-labels::before {

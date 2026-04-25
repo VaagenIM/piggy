@@ -156,6 +156,43 @@ preview_style: background: linear-gradient(90deg, #d6c8d5, #ffffff); color: #000
   --piggy-code-token-deleted: #b42335;
   --piggy-code-token-inserted: #2c6e4f;
   --piggy-code-token-error: #b42335;
+
+  /* admonitions */
+  --piggy-admonition-note-bg: #dceff6;
+  --piggy-admonition-note-title-bg: #c5e3ee;
+  --piggy-admonition-note-text: #263942;
+  --piggy-admonition-note-icon: #2f7f9b;
+  --piggy-admonition-note-border: #5ba3b9;
+
+  --piggy-admonition-success-bg: #e1f1e5;
+  --piggy-admonition-success-title-bg: #cce8d3;
+  --piggy-admonition-success-text: #263a2b;
+  --piggy-admonition-success-icon: #3f8a52;
+  --piggy-admonition-success-border: #68a979;
+
+  --piggy-admonition-warning-bg: #f8ecd8;
+  --piggy-admonition-warning-title-bg: #efd9b5;
+  --piggy-admonition-warning-text: #4a321c;
+  --piggy-admonition-warning-icon: #a96b22;
+  --piggy-admonition-warning-border: #c48a43;
+
+  --piggy-admonition-danger-bg: #f4dddd;
+  --piggy-admonition-danger-title-bg: #eac6c6;
+  --piggy-admonition-danger-text: #4a2424;
+  --piggy-admonition-danger-icon: #a84242;
+  --piggy-admonition-danger-border: #c76464;
+
+  --piggy-admonition-example-bg: #eadff3;
+  --piggy-admonition-example-title-bg: #dcc9eb;
+  --piggy-admonition-example-text: #3d2a4a;
+  --piggy-admonition-example-icon: #7d4d9c;
+  --piggy-admonition-example-border: #9b72b6;
+
+  --piggy-admonition-quote-bg: #eee6eb;
+  --piggy-admonition-quote-title-bg: #dfd2da;
+  --piggy-admonition-quote-text: #3e2731;
+  --piggy-admonition-quote-icon: #7f6d76;
+  --piggy-admonition-quote-border: #a9929d;
 }
 
 [data-theme="classic"] .level-count-container {
@@ -173,7 +210,6 @@ preview_style: background: linear-gradient(90deg, #d6c8d5, #ffffff); color: #000
 [data-theme="classic"] .md-content details,
 [data-theme="classic"] .md-content .tip,
 [data-theme="classic"] .md-content .admonition {
-  background-color: #f3e9ef;
   color: var(--piggy-dark);
 }
 
