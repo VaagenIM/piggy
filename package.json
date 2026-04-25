@@ -17,7 +17,12 @@
       {
         "files": "*.html",
         "options": {
-          "parser": "jinja-template"
+          "parser": "jinja-template",
+          "tabWidth": 2,
+          "semi": true,
+          "trailingComma": "es5",
+          "singleQuote": true,
+          "bracketSameLine": true
         }
       }
     ]
