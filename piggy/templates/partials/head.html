@@ -5,10 +5,11 @@
 {% block styles %}
   {% include "partials/parts/styles.html" %}
 {% endblock %}
-
+<!-- prettier-ignore-start -->
 <script>
-  window.PIGGY_THEMES = JSON.parse('{{ themes | tojson | safe }}');
+  window.PIGGY_THEMES = {{ themes | tojson }};
 </script>
+<!-- prettier-ignore-end -->
 
 <script
   src="{{ url_for('static', filename='js/theme-effects/matrix-effect.js') }}"
