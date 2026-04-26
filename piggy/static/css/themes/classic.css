@@ -94,22 +94,22 @@ preview_style: background: linear-gradient(90deg, #d6c8d5, #ffffff); color: #000
   --piggy-header-bg-h6: rgba(174, 179, 185, 0.25);
 
   /* Tables */
-  --piggy-table-bg: #fff8fb;
-  --piggy-table-border: #c5aeb9;
-  --piggy-table-cell-border: #d9c2cd;
+  --piggy-table-bg: rgba(255, 248, 251, 0.78);
+  --piggy-table-border: rgba(90, 70, 82, 0.24);
+  --piggy-table-cell-border: rgba(90, 70, 82, 0.14);
 
-  --piggy-table-header-start: #f0c8d8;
-  --piggy-table-header-end: #ddb0c2;
+  --piggy-table-header-start: rgba(192, 153, 168, 0.22);
+  --piggy-table-header-end: rgba(192, 153, 168, 0.22);
   --piggy-table-header-text: #3e2731;
 
-  --piggy-table-row-odd: #fff4f8;
-  --piggy-table-row-even: #f4e2ea;
-  --piggy-table-row-hover: #ecd1dc;
+  --piggy-table-row-odd: rgba(255, 255, 255, 0.36);
+  --piggy-table-row-even: rgba(192, 153, 168, 0.12);
+  --piggy-table-row-hover: rgba(192, 153, 168, 0.18);
 
-  --piggy-table-code-bg: #e8c5d3;
-  --piggy-table-code-text: #3e2731;
+  --piggy-table-code-bg: var(--piggy-code-inline-bg);
+  --piggy-table-code-text: var(--piggy-code-inline-text);
 
-  --piggy-table-shadow: 0 0.25rem 1rem var(--piggy-shadow-box);
+  --piggy-table-shadow: none;
 
   /* code blocks */
   --piggy-code: #3e2731;
@@ -220,4 +220,108 @@ preview_style: background: linear-gradient(90deg, #d6c8d5, #ffffff); color: #000
 
 [data-theme="classic"] .md-content .tabbed-set {
   background: #0000000a;
+}
+
+/***************************\
+|*     TABLE OVERRIDES     *|
+\***************************/
+
+/* Classic theme: tables inside admonitions */
+[data-theme="classic"] .md-content :is(.admonition, details) {
+  --piggy-table-admonition-accent: rgba(90, 70, 82, 0.3) !important;
+
+  --piggy-table-bg: rgba(255, 255, 255, 0.34);
+  --piggy-table-border: var(--piggy-table-admonition-accent);
+  --piggy-table-cell-border: rgba(62, 39, 49, 0.1);
+
+  --piggy-table-header-start: rgba(255, 255, 255, 0.34);
+  --piggy-table-header-end: rgba(255, 255, 255, 0.34);
+  --piggy-table-header-text: var(--piggy-admonition-text);
+
+  --piggy-table-row-odd: rgba(255, 255, 255, 0.16);
+  --piggy-table-row-even: rgba(255, 255, 255, 0.29);
+  --piggy-table-row-hover: rgba(255, 255, 255, 0.44);
+
+  --piggy-table-code-bg: rgba(255, 255, 255, 0.48);
+  --piggy-table-code-text: var(--piggy-admonition-text);
+}
+
+/* NOTE / INFO / TIP */
+[data-theme="classic"]
+  .md-content
+  :is(
+    .admonition.note,
+    details.note,
+    .admonition.info,
+    details.info,
+    .admonition.tip,
+    details.tip
+  ) {
+  --piggy-table-admonition-accent: rgba(47, 127, 155, 0.25);
+  --piggy-table-header-start: rgba(47, 127, 155, 0.09);
+  --piggy-table-header-end: rgba(47, 127, 155, 0.09);
+  --piggy-table-row-hover: rgba(47, 127, 155, 0.1);
+}
+
+/* SUCCESS / QUESTION */
+[data-theme="classic"]
+  .md-content
+  :is(
+    .admonition.success,
+    details.success,
+    .admonition.question,
+    details.question
+  ) {
+  --piggy-table-admonition-accent: rgba(63, 138, 82, 0.24);
+  --piggy-table-header-start: rgba(63, 138, 82, 0.085);
+  --piggy-table-header-end: rgba(63, 138, 82, 0.085);
+  --piggy-table-row-hover: rgba(63, 138, 82, 0.095);
+}
+
+/* WARNING / ATTENTION */
+[data-theme="classic"]
+  .md-content
+  :is(
+    .admonition.warning,
+    details.warning,
+    .admonition.attention,
+    details.attention
+  ) {
+  --piggy-table-admonition-accent: rgba(169, 107, 34, 0.25);
+  --piggy-table-header-start: rgba(169, 107, 34, 0.085);
+  --piggy-table-header-end: rgba(169, 107, 34, 0.085);
+  --piggy-table-row-hover: rgba(169, 107, 34, 0.095);
+}
+
+/* DANGER / FAILURE / BUG */
+[data-theme="classic"]
+  .md-content
+  :is(
+    .admonition.danger,
+    details.danger,
+    .admonition.failure,
+    details.failure,
+    .admonition.bug,
+    details.bug
+  ) {
+  --piggy-table-admonition-accent: rgba(168, 66, 66, 0.25);
+  --piggy-table-header-start: rgba(168, 66, 66, 0.09);
+  --piggy-table-header-end: rgba(168, 66, 66, 0.09);
+  --piggy-table-row-hover: rgba(168, 66, 66, 0.1);
+}
+
+/* EXAMPLE */
+[data-theme="classic"] .md-content :is(.admonition.example, details.example) {
+  --piggy-table-admonition-accent: rgba(125, 77, 156, 0.25);
+  --piggy-table-header-start: rgba(125, 77, 156, 0.09);
+  --piggy-table-header-end: rgba(125, 77, 156, 0.09);
+  --piggy-table-row-hover: rgba(125, 77, 156, 0.1);
+}
+
+/* QUOTE */
+[data-theme="classic"] .md-content :is(.admonition.quote, details.quote) {
+  --piggy-table-admonition-accent: rgba(127, 109, 118, 0.24);
+  --piggy-table-header-start: rgba(127, 109, 118, 0.085);
+  --piggy-table-header-end: rgba(127, 109, 118, 0.085);
+  --piggy-table-row-hover: rgba(127, 109, 118, 0.095);
 }
