@@ -1,5 +1,5 @@
 /* METADATA
-id: 8
+id: 101
 name: Matrix
 description: A theme inspired by the green hues of "The Matrix" movies.
 type: dark
@@ -10,53 +10,52 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   /* Piggy colors */
   --piggy-main: #000000;
   --piggy-light: #00ff00;
-  --piggy-neutral: #008800;
-  --piggy-dark: #004400;
+  --piggy-neutral: #4fae64;
+  --piggy-dark: #d8ffd8;
 
-  --piggy-text-main: var(--piggy-light);
-  --piggy-text-light: var(--piggy-light);
-  --piggy-text-neutral: var(--piggy-neutral);
-  --piggy-text-dark: var(--piggy-dark);
+  --piggy-text-main: #d8ffd8;
+  --piggy-text-light: #d8ffd8;
+  --piggy-text-neutral: #7bdc8f;
+  --piggy-text-dark: #001a08;
 
   --piggy-shadow-text: #003300;
   --piggy-shadow-box: #002200;
   --piggy-shadow-glow: rgba(0, 255, 0, 0.2);
 
   /* Piggy card colors */
-  --piggy-card-start: rgba(0, 20, 0, 0.7);
-  --piggy-card-end: rgba(0, 40, 0, 0.7);
-  --piggy-card-border: #00bb00;
-  --piggy-text-card: var(--piggy-text-light);
+  --piggy-card-start: rgba(0, 18, 8, 0.82);
+  --piggy-card-end: rgba(0, 35, 12, 0.78);
+  --piggy-card-border: rgba(0, 255, 102, 0.62);
+  --piggy-text-card: #d8ffd8;
 
   /* Assignment cards */
-  --piggy-assignment-card-start: rgba(0, 255, 191, 0.3);
-  --piggy-assignment-card-end: rgba(0, 255, 191, 0.1);
-  --piggy-assignment-card-border: rgb(0, 255, 191);
-  --piggy-assignment-overlay: rgba(0, 255, 191, 0.8);
-  --piggy-assignment-accent: #00ffff;
-  --piggy-assignment-shadow-glow: rgba(47, 58, 58, 0.5);
-
-  --piggy-assignment-text: rgb(111, 255, 219);
+  --piggy-assignment-card-start: rgba(0, 255, 191, 0.24);
+  --piggy-assignment-card-end: rgba(0, 90, 70, 0.34);
+  --piggy-assignment-card-border: rgba(0, 255, 191, 0.62);
+  --piggy-assignment-overlay: rgba(0, 220, 170, 0.82);
+  --piggy-assignment-accent: #00ffbf;
+  --piggy-assignment-shadow-glow: rgba(0, 255, 191, 0.28);
+  --piggy-assignment-text: #baffee;
 
   --piggy-card-border-width: 1px;
 
   /* Information cards */
-  --piggy-information-card-start: rgba(0, 98, 179, 0.384);
-  --piggy-information-card-end: rgba(0, 100, 200, 0.35);
-  --piggy-information-card-border: rgba(0, 156, 255, 0.5);
-  --piggy-information-overlay: rgba(0, 150, 255, 0.9);
-  --piggy-information-accent: #00aaff;
-  --piggy-information-shadow-glow: rgba(0, 150, 255, 0.6);
+  --piggy-information-card-start: rgba(0, 255, 255, 0.2);
+  --piggy-information-card-end: rgba(0, 80, 80, 0.34);
+  --piggy-information-card-border: rgba(0, 255, 255, 0.56);
+  --piggy-information-overlay: rgba(0, 210, 210, 0.84);
+  --piggy-information-accent: #00ffff;
+  --piggy-information-shadow-glow: rgba(0, 255, 255, 0.28);
 
   /* Piggy elements */
   --piggy-navbar-start: #001900;
   --piggy-navbar-end: #001100;
   --piggy-text-navbar: var(--piggy-light);
 
-  --piggy-button: #004400;
-  --piggy-button-hover: #008800;
-  --piggy-button-active: #002200;
-  --piggy-text-button: #00ff00;
+  --piggy-button: #002b12;
+  --piggy-button-hover: #005c28;
+  --piggy-button-active: #00aa55;
+  --piggy-text-button: #d8ffd8;
 
   --piggy-thumbnail-overlay: #00330077;
   --piggy-text-thumbnail: var(--piggy-light);
@@ -94,21 +93,45 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   --piggy-level-container: rgb(0, 0, 0);
   --piggy-level-container-border: rgba(0, 255, 0, 1);
 
-  --piggy-header-border: #ffffff;
+  --piggy-header-border: rgba(0, 255, 102, 0.5);
 
-  --piggy-content-h1: #00ffc3;
-  --piggy-content-h2: #00ffc3;
-  --piggy-content-h3: #00ffc3;
-  --piggy-content-h4: #00ffc3;
-  --piggy-content-h5: #00ffc3;
-  --piggy-content-h6: #00ffc3;
+  --piggy-content-h1: #d8ffd8;
+  --piggy-content-h2: #00ffff;
+  --piggy-content-h3: #00ff66;
+  --piggy-content-h4: #b6ff5f;
+  --piggy-content-h5: #7cff7c;
+  --piggy-content-h6: #66cc66;
 
-  --piggy-header-bg-h1: linear-gradient(to top, #00ffc330, #00000000);
-  --piggy-header-bg-h2: linear-gradient(to top, #00ffc330, #00000000);
-  --piggy-header-bg-h3: linear-gradient(to top, #00ffc330, #00000000);
-  --piggy-header-bg-h4: linear-gradient(to top, #00ffc330, #00000000);
-  --piggy-header-bg-h5: linear-gradient(to top, #00ffc330, #00000000);
-  --piggy-header-bg-h6: linear-gradient(to top, #00ffc330, #00000000);
+  --piggy-header-bg-h1: linear-gradient(
+    to top,
+    rgba(216, 255, 216, 0.12),
+    transparent
+  );
+  --piggy-header-bg-h2: linear-gradient(
+    to top,
+    rgba(0, 255, 255, 0.14),
+    transparent
+  );
+  --piggy-header-bg-h3: linear-gradient(
+    to top,
+    rgba(0, 255, 102, 0.14),
+    transparent
+  );
+  --piggy-header-bg-h4: linear-gradient(
+    to top,
+    rgba(182, 255, 95, 0.12),
+    transparent
+  );
+  --piggy-header-bg-h5: linear-gradient(
+    to top,
+    rgba(124, 255, 124, 0.1),
+    transparent
+  );
+  --piggy-header-bg-h6: linear-gradient(
+    to top,
+    rgba(102, 204, 102, 0.1),
+    transparent
+  );
 
   /* Tables */
   --piggy-table-bg: rgba(0, 0, 0, 0.72);
@@ -270,8 +293,14 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 |*     MATRIX BACKGROUND     *|
 \*****************************/
 [data-theme="matrix"] .background-overlay canvas#matrix {
-  opacity: 0.9;
-  filter: blur(0.45px) brightness(1.08) contrast(1.08);
+  opacity: 0.72;
+  filter: blur(0.35px) brightness(1.04) contrast(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="matrix"] .background-overlay canvas#matrix {
+    display: none !important;
+  }
 }
 
 /******************************\
@@ -311,13 +340,13 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 }
 
 [data-theme="matrix"] .md-content code:not(.md-code__content) {
-  text-shadow: 0 0 0.35rem rgba(0, 255, 255, 0.35);
+  text-shadow: 0 0 0.25rem rgba(0, 255, 255, 0.22);
 }
 
 [data-theme="matrix"] .md-content .highlight,
 [data-theme="matrix"] .md-content .highlighttable,
 [data-theme="matrix"] .md-content .md-code__content {
-  text-shadow: 0 0 0.35rem rgba(0, 255, 80, 0.25);
+  text-shadow: 0 0 0.25rem rgba(0, 255, 80, 0.16);
 }
 
 [data-theme="matrix"] .md-content .highlighttable {

@@ -4,7 +4,6 @@ const COLOR_PRESETS = {
   java: "#4400ff",
 };
 
-// Function to generate a color from a string (tag text)
 function stringToColor(str, transparency = "FF") {
   str = str.toLowerCase();
 

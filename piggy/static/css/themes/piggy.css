@@ -18,38 +18,38 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
   --piggy-shadow-glow: rgba(0, 0, 0, 0.2);
 
   /* Card colors */
-  --piggy-card-start: rgba(255, 220, 229, 1);
-  --piggy-card-end: rgba(255, 220, 229, 1);
-  --piggy-card-border: #ff99cc;
+  --piggy-card-start: #ffe3eb;
+  --piggy-card-end: #fff2f6;
+  --piggy-card-border: #e7a5bb;
   --piggy-text-card: var(--piggy-dark);
 
   /* Assignment cards */
-  --piggy-assignment-card-start: rgba(255, 137, 220, 0.5);
-  --piggy-assignment-card-end: rgba(255, 170, 230, 0.5);
-  --piggy-assignment-card-border: #ff4df0;
-  --piggy-assignment-overlay: rgba(255, 77, 109, 0.8);
-  --piggy-assignment-accent: #ff4d6d;
-  --piggy-assignment-shadow-glow: rgba(255, 77, 109, 0.5);
+  --piggy-assignment-card-start: rgba(255, 196, 215, 0.65);
+  --piggy-assignment-card-end: rgba(255, 169, 197, 0.5);
+  --piggy-assignment-card-border: rgba(203, 86, 127, 0.48);
+  --piggy-assignment-overlay: rgba(203, 86, 127, 0.82);
+  --piggy-assignment-accent: #cb567f;
+  --piggy-assignment-shadow-glow: rgba(203, 86, 127, 0.32);
 
   /* Information cards */
-  --piggy-information-card-start: rgba(138, 203, 255, 0.5);
-  --piggy-information-card-end: rgba(63, 139, 214, 0.5);
-  --piggy-information-card-border: rgba(64, 129, 170, 0.75);
-  --piggy-information-overlay: rgba(0, 150, 255, 0.9);
-  --piggy-information-accent: #00aaff;
-  --piggy-information-shadow-glow: rgba(0, 150, 255, 0.6);
+  --piggy-information-card-start: rgba(205, 231, 249, 0.78);
+  --piggy-information-card-end: rgba(154, 205, 235, 0.55);
+  --piggy-information-card-border: rgba(50, 111, 159, 0.38);
+  --piggy-information-overlay: rgba(50, 111, 159, 0.84);
+  --piggy-information-accent: #326f9f;
+  --piggy-information-shadow-glow: rgba(50, 111, 159, 0.24);
 
   --piggy-card-border-width: 1px;
 
   /* Navbar and buttons */
-  --piggy-navbar-start: #ffccd5;
-  --piggy-navbar-end: #ff99ac;
-  --piggy-text-navbar: #ffffff;
+  --piggy-navbar-start: #ffd6df;
+  --piggy-navbar-end: #ffb3c3;
+  --piggy-text-navbar: #3b1f2a;
 
-  --piggy-button: #ff99ac;
-  --piggy-button-hover: #c97c84;
-  --piggy-button-active: #f86f7d;
-  --piggy-text-button: var(--piggy-dark);
+  --piggy-button: #ffc0cc;
+  --piggy-button-hover: #f3a2b3;
+  --piggy-button-active: #df6f8b;
+  --piggy-text-button: #3b1f2a;
 
   --piggy-thumbnail-overlay: rgba(255, 226, 232, 0.7);
   --piggy-text-thumbnail: var(--piggy-dark);
@@ -68,8 +68,8 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
   --piggy-tooltip: #000000;
   --piggy-tooltip-text: #ffffff;
 
-  --piggy-text-hyperlink: #539cd8;
-  --piggy-text-hyperlink-hover: #316997;
+  --piggy-text-hyperlink: #326f9f;
+  --piggy-text-hyperlink-hover: #214f73;
 
   /* level container */
   --piggy-level-container-text: var(--piggy-dark);
@@ -85,21 +85,22 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
   --piggy-logo-gradient: linear-gradient(45deg, #ffc1d8, #ff5a8f, #c03db9);
   --piggy-logo-border: rgba(0, 0, 0, 0.6);
 
-  --piggy-header-border: #ffffff;
+  /* Headings */
+  --piggy-header-border: rgba(167, 73, 128, 0.22);
 
-  --piggy-content-h1: #a74980;
-  --piggy-content-h2: #a74980;
+  --piggy-content-h1: #743653;
+  --piggy-content-h2: #326f9f;
   --piggy-content-h3: #a74980;
-  --piggy-content-h4: #a74980;
-  --piggy-content-h5: #a74980;
-  --piggy-content-h6: #a74980;
+  --piggy-content-h4: #8a5a2f;
+  --piggy-content-h5: #7a4fa3;
+  --piggy-content-h6: #7a6e72;
 
-  --piggy-header-bg-h1: rgb(167, 73, 128, 0.25);
-  --piggy-header-bg-h2: rgb(167, 73, 128, 0.25);
-  --piggy-header-bg-h3: rgb(167, 73, 128, 0.25);
-  --piggy-header-bg-h4: rgb(167, 73, 128, 0.25);
-  --piggy-header-bg-h5: rgb(167, 73, 128, 0.25);
-  --piggy-header-bg-h6: rgb(167, 73, 128, 0.25);
+  --piggy-header-bg-h1: rgba(116, 54, 83, 0.14);
+  --piggy-header-bg-h2: rgba(50, 111, 159, 0.13);
+  --piggy-header-bg-h3: rgba(167, 73, 128, 0.14);
+  --piggy-header-bg-h4: rgba(138, 90, 47, 0.11);
+  --piggy-header-bg-h5: rgba(122, 79, 163, 0.11);
+  --piggy-header-bg-h6: rgba(122, 110, 114, 0.1);
 
   /* Tables */
   --piggy-table-bg: rgba(255, 246, 249, 0.78);
@@ -154,7 +155,7 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
   --piggy-code-token-function: #7a3db8;
   --piggy-code-token-class: #9a5a00;
   --piggy-code-token-variable: #4a2634;
-  --piggy-code-token-operator: #a74980;
+  --piggy-code-token-operator: #7a6e72;
   --piggy-code-token-punctuation: #7a6e72;
   --piggy-code-token-builtin: #2f6fa3;
   --piggy-code-token-constant: #9a5a00;
