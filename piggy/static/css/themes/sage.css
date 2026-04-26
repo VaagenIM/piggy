@@ -1,0 +1,334 @@
+/* METADATA
+id: 6
+name: Sage
+description: A calm green theme for focused study.
+type: light
+preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3526; text-shadow: none;
+*/
+
+[data-theme="sage"] {
+  --piggy-main: #d8e8c8;
+  --piggy-light: #f7fbf3;
+  --piggy-neutral: #5f7164;
+  --piggy-dark: #1f3526;
+
+  --piggy-text-main: var(--piggy-dark);
+  --piggy-shadow-text: rgba(0, 0, 0, 0);
+  --piggy-shadow-box: rgba(32, 64, 38, 0.14);
+  --piggy-shadow-glow: rgba(63, 127, 90, 0.16);
+
+  /* Card colors */
+  --piggy-card-start: #f3f8ee;
+  --piggy-card-end: #dfeedd;
+  --piggy-card-border: #9fbd9b;
+  --piggy-text-card: var(--piggy-dark);
+
+  /* Assignment cards */
+  --piggy-assignment-card-start: rgba(245, 213, 157, 0.68);
+  --piggy-assignment-card-end: rgba(218, 166, 82, 0.45);
+  --piggy-assignment-card-border: rgba(154, 107, 36, 0.5);
+  --piggy-assignment-overlay: rgba(154, 107, 36, 0.8);
+  --piggy-assignment-accent: #9a6b24;
+  --piggy-assignment-shadow-glow: rgba(154, 107, 36, 0.28);
+
+  /* Information cards */
+  --piggy-information-card-start: rgba(205, 235, 232, 0.82);
+  --piggy-information-card-end: rgba(151, 207, 205, 0.55);
+  --piggy-information-card-border: rgba(47, 127, 134, 0.38);
+  --piggy-information-overlay: rgba(47, 127, 134, 0.84);
+  --piggy-information-accent: #2f7f86;
+  --piggy-information-shadow-glow: rgba(47, 127, 134, 0.24);
+
+  --piggy-card-border-width: 1px;
+
+  /* Navbar and buttons */
+  --piggy-navbar-start: #c8deb9;
+  --piggy-navbar-end: #b7d2ad;
+  --piggy-text-navbar: #1f3526;
+
+  --piggy-button: #bfd9b8;
+  --piggy-button-hover: #a9cfa3;
+  --piggy-button-active: #7fb487;
+  --piggy-text-button: #1f3526;
+
+  --piggy-thumbnail-overlay: rgba(237, 245, 230, 0.74);
+  --piggy-text-thumbnail: var(--piggy-dark);
+
+  --piggy-text-tag: var(--piggy-dark);
+  --piggy-text-description: var(--piggy-dark);
+  --piggy-text-title: var(--piggy-dark);
+  --piggy-text-breadcrumb: var(--piggy-dark);
+  --piggy-text-breadcrumb-hover: #5f7164;
+
+  --piggy-menu: #f7fbf3;
+  --piggy-menu-text: var(--piggy-dark);
+
+  --piggy-tooltip: #1f3526;
+  --piggy-tooltip-text: #f7fbf3;
+
+  --piggy-text-hyperlink: #2f6f9b;
+  --piggy-text-hyperlink-hover: #1f4e70;
+
+  /* Level container */
+  --piggy-level-container-text: #1f3526;
+  --piggy-level-container: #b7d2ad;
+  --piggy-level-container-border: rgba(63, 127, 90, 0.32);
+
+  /* Info boxes */
+  --piggy-info-box-background: rgba(47, 127, 134, 0.18);
+  --piggy-info-box-border: #2f7f86;
+
+  /* Logo */
+  --piggy-logo: #5f9f68;
+  --piggy-logo-gradient: linear-gradient(45deg, #7fb487, #3f7f5a, #2f7f86);
+  --piggy-logo-border: rgba(31, 53, 38, 0.75);
+
+  /* Headings */
+  --piggy-header-border: rgba(63, 127, 90, 0.24);
+
+  --piggy-content-h1: #1f3526;
+  --piggy-content-h2: #2f6f9b;
+  --piggy-content-h3: #3f7f5a;
+  --piggy-content-h4: #8a5f27;
+  --piggy-content-h5: #75629a;
+  --piggy-content-h6: #5f7164;
+
+  --piggy-header-bg-h1: rgba(31, 53, 38, 0.1);
+  --piggy-header-bg-h2: rgba(47, 111, 155, 0.13);
+  --piggy-header-bg-h3: rgba(63, 127, 90, 0.14);
+  --piggy-header-bg-h4: rgba(138, 95, 39, 0.11);
+  --piggy-header-bg-h5: rgba(117, 98, 154, 0.11);
+  --piggy-header-bg-h6: rgba(95, 113, 100, 0.1);
+
+  /* Tables */
+  --piggy-table-bg: rgba(247, 251, 243, 0.82);
+  --piggy-table-border: rgba(63, 127, 90, 0.22);
+  --piggy-table-cell-border: rgba(63, 127, 90, 0.12);
+
+  --piggy-table-header-start: rgba(63, 127, 90, 0.12);
+  --piggy-table-header-end: rgba(63, 127, 90, 0.12);
+  --piggy-table-header-text: #1f3526;
+
+  --piggy-table-row-odd: rgba(255, 255, 255, 0.42);
+  --piggy-table-row-even: rgba(63, 127, 90, 0.075);
+  --piggy-table-row-hover: rgba(47, 127, 134, 0.12);
+
+  --piggy-table-code-bg: var(--piggy-code-inline-bg);
+  --piggy-table-code-text: var(--piggy-code-inline-text);
+
+  --piggy-table-shadow: none;
+
+  /* Code blocks */
+  --piggy-code: #24382b;
+  --piggy-code-bg: #e5efdf;
+  --piggy-code-border: #b7cdb1;
+
+  --piggy-code-block-bg: #f7fbf3;
+  --piggy-code-block-border: #a8c5a2;
+
+  --piggy-code-inline-text: #24382b;
+  --piggy-code-inline-bg: #e5efdf;
+  --piggy-code-inline-border: #b7cdb1;
+
+  --piggy-code-block-text: #24382b;
+  --piggy-code-block-background: #f7fbf3;
+  --piggy-code-block-border-color: #a8c5a2;
+
+  --piggy-code-block-line-number: #6d806f;
+  --piggy-code-block-line-number-bg: #edf5e6;
+  --piggy-code-block-line-number-border: #c7d9c0;
+
+  --piggy-code-clipboard: #5f7164;
+  --piggy-code-clipboard-hover: #1f3526;
+
+  --piggy-code-selection-bg: #c7dfbf;
+  --piggy-code-selection-text: #1f3526;
+
+  /* Syntax tokens */
+  --piggy-code-token-comment: #66786a;
+  --piggy-code-token-keyword: #9f2f54;
+  --piggy-code-token-string: #0d6673;
+  --piggy-code-token-number: #6550a8;
+  --piggy-code-token-function: #75629a;
+  --piggy-code-token-class: #8a5f27;
+  --piggy-code-token-variable: #24382b;
+  --piggy-code-token-operator: #5f7164;
+  --piggy-code-token-punctuation: #5f7164;
+  --piggy-code-token-builtin: #2f6f9b;
+  --piggy-code-token-constant: #8a5f27;
+  --piggy-code-token-attribute: #75629a;
+  --piggy-code-token-tag: #2f7d5c;
+  --piggy-code-token-decorator: #8f4f73;
+  --piggy-code-token-deleted: #b42335;
+  --piggy-code-token-inserted: #2f7d5c;
+  --piggy-code-token-error: #b42335;
+
+  /* Admonitions */
+  --piggy-admonition-note-bg: #dceff1;
+  --piggy-admonition-note-title-bg: #c5e3e6;
+  --piggy-admonition-note-text: #243b3f;
+  --piggy-admonition-note-icon: #2f7f86;
+  --piggy-admonition-note-border: #5ba3a8;
+
+  --piggy-admonition-success-bg: #dff1e2;
+  --piggy-admonition-success-title-bg: #c8e6cf;
+  --piggy-admonition-success-text: #233b29;
+  --piggy-admonition-success-icon: #3f8a52;
+  --piggy-admonition-success-border: #68a979;
+
+  --piggy-admonition-warning-bg: #f8ecd8;
+  --piggy-admonition-warning-title-bg: #efd9b5;
+  --piggy-admonition-warning-text: #4a321c;
+  --piggy-admonition-warning-icon: #a96b22;
+  --piggy-admonition-warning-border: #c48a43;
+
+  --piggy-admonition-danger-bg: #f4dddd;
+  --piggy-admonition-danger-title-bg: #eac6c6;
+  --piggy-admonition-danger-text: #4a2424;
+  --piggy-admonition-danger-icon: #a84242;
+  --piggy-admonition-danger-border: #c76464;
+
+  --piggy-admonition-example-bg: #e8e0f1;
+  --piggy-admonition-example-title-bg: #d9cbea;
+  --piggy-admonition-example-text: #352947;
+  --piggy-admonition-example-icon: #75629a;
+  --piggy-admonition-example-border: #9883bd;
+
+  --piggy-admonition-quote-bg: #e8efe4;
+  --piggy-admonition-quote-title-bg: #d8e3d3;
+  --piggy-admonition-quote-text: #24382b;
+  --piggy-admonition-quote-icon: #5f7164;
+  --piggy-admonition-quote-border: #9fbd9b;
+}
+
+[data-theme="sage"] .level-count-container {
+  color: var(--piggy-dark);
+  background-color: var(--piggy-main);
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+[data-theme="sage"] .md-content {
+  border-radius: 0.5rem;
+}
+
+[data-theme="sage"] .md-content details,
+[data-theme="sage"] .md-content .tip,
+[data-theme="sage"] .md-content .admonition {
+  color: var(--piggy-admonition-text, var(--piggy-dark));
+}
+
+[data-theme="sage"] .md-content .tabbed-labels::before {
+  border-color: var(--piggy-dark);
+  background-color: rgba(63, 127, 90, 0.18) !important;
+}
+
+[data-theme="sage"] .md-content .tabbed-set {
+  background: rgba(255, 255, 255, 0.26);
+  border-color: rgba(63, 127, 90, 0.24);
+}
+
+/***************************\
+|*     TABLE OVERRIDES     *|
+\***************************/
+
+/* Sage theme: tables inside admonitions */
+[data-theme="sage"] .md-content :is(.admonition, details) {
+  --piggy-table-admonition-accent: rgba(63, 127, 90, 0.28) !important;
+
+  --piggy-table-bg: rgba(255, 255, 255, 0.34);
+  --piggy-table-border: var(--piggy-table-admonition-accent);
+  --piggy-table-cell-border: rgba(31, 53, 38, 0.1);
+
+  --piggy-table-header-start: rgba(255, 255, 255, 0.34);
+  --piggy-table-header-end: rgba(255, 255, 255, 0.34);
+  --piggy-table-header-text: var(--piggy-admonition-text);
+
+  --piggy-table-row-odd: rgba(255, 255, 255, 0.16);
+  --piggy-table-row-even: rgba(255, 255, 255, 0.29);
+  --piggy-table-row-hover: rgba(255, 255, 255, 0.44);
+
+  --piggy-table-code-bg: rgba(255, 255, 255, 0.48);
+  --piggy-table-code-text: var(--piggy-admonition-text);
+}
+
+/* NOTE / INFO / TIP */
+[data-theme="sage"]
+  .md-content
+  :is(
+    .admonition.note,
+    details.note,
+    .admonition.info,
+    details.info,
+    .admonition.tip,
+    details.tip
+  ) {
+  --piggy-table-admonition-accent: rgba(47, 127, 134, 0.25);
+  --piggy-table-header-start: rgba(47, 127, 134, 0.09);
+  --piggy-table-header-end: rgba(47, 127, 134, 0.09);
+  --piggy-table-row-hover: rgba(47, 127, 134, 0.1);
+}
+
+/* SUCCESS / QUESTION */
+[data-theme="sage"]
+  .md-content
+  :is(
+    .admonition.success,
+    details.success,
+    .admonition.question,
+    details.question
+  ) {
+  --piggy-table-admonition-accent: rgba(63, 138, 82, 0.24);
+  --piggy-table-header-start: rgba(63, 138, 82, 0.085);
+  --piggy-table-header-end: rgba(63, 138, 82, 0.085);
+  --piggy-table-row-hover: rgba(63, 138, 82, 0.095);
+}
+
+/* WARNING / ATTENTION */
+[data-theme="sage"]
+  .md-content
+  :is(
+    .admonition.warning,
+    details.warning,
+    .admonition.attention,
+    details.attention
+  ) {
+  --piggy-table-admonition-accent: rgba(169, 107, 34, 0.25);
+  --piggy-table-header-start: rgba(169, 107, 34, 0.085);
+  --piggy-table-header-end: rgba(169, 107, 34, 0.085);
+  --piggy-table-row-hover: rgba(169, 107, 34, 0.095);
+}
+
+/* DANGER / FAILURE / BUG */
+[data-theme="sage"]
+  .md-content
+  :is(
+    .admonition.danger,
+    details.danger,
+    .admonition.failure,
+    details.failure,
+    .admonition.bug,
+    details.bug
+  ) {
+  --piggy-table-admonition-accent: rgba(168, 66, 66, 0.25);
+  --piggy-table-header-start: rgba(168, 66, 66, 0.09);
+  --piggy-table-header-end: rgba(168, 66, 66, 0.09);
+  --piggy-table-row-hover: rgba(168, 66, 66, 0.1);
+}
+
+/* EXAMPLE */
+[data-theme="sage"] .md-content :is(.admonition.example, details.example) {
+  --piggy-table-admonition-accent: rgba(117, 98, 154, 0.25);
+  --piggy-table-header-start: rgba(117, 98, 154, 0.09);
+  --piggy-table-header-end: rgba(117, 98, 154, 0.09);
+  --piggy-table-row-hover: rgba(117, 98, 154, 0.1);
+}
+
+/* QUOTE */
+[data-theme="sage"] .md-content :is(.admonition.quote, details.quote) {
+  --piggy-table-admonition-accent: rgba(95, 113, 100, 0.24);
+  --piggy-table-header-start: rgba(95, 113, 100, 0.085);
+  --piggy-table-header-end: rgba(95, 113, 100, 0.085);
+  --piggy-table-row-hover: rgba(95, 113, 100, 0.095);
+}

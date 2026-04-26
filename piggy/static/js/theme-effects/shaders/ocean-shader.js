@@ -38,7 +38,7 @@
   }
 
   void mainImage(out vec4 fragColor, in vec2 fragCoord) {
-    float time = iTime * 1.3;
+    float time = iTime * 0.8;
     vec2 p = fragCoord.xy / iResolution.xy;
     vec2 c1 = p;
     vec2 c2 = p;

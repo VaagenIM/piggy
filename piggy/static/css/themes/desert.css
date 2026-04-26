@@ -1,5 +1,5 @@
 /* METADATA
-id: 9
+id: 102
 name: Desert
 description: A theme inspired by the warm sands and muted tones of the desert.
 type: light
@@ -23,39 +23,39 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
   --piggy-shadow-glow: rgba(166, 124, 82, 0.3);
 
   /* Card colors */
-  --piggy-card-start: rgba(244, 231, 211, 0.8);
-  --piggy-card-end: rgba(229, 204, 175, 0.8);
-  --piggy-card-border: #a67c52;
-  --piggy-text-card: var(--piggy-text-dark);
+  --piggy-card-start: rgba(255, 244, 225, 0.84);
+  --piggy-card-end: rgba(229, 204, 175, 0.82);
+  --piggy-card-border: rgba(126, 91, 56, 0.46);
+  --piggy-text-card: #2d1f11;
 
   /* Assignment cards */
-  --piggy-assignment-card-start: rgba(168, 121, 85, 0.7);
-  --piggy-assignment-card-end: rgba(196, 119, 60, 0.3);
-  --piggy-assignment-card-border: #b37a4e;
-  --piggy-assignment-overlay: rgba(179, 121, 78, 0.85);
-  --piggy-assignment-accent: #b37a4e;
-  --piggy-assignment-shadow-glow: rgba(179, 121, 78, 0.5);
+  --piggy-assignment-card-start: rgba(213, 158, 91, 0.62);
+  --piggy-assignment-card-end: rgba(179, 121, 78, 0.42);
+  --piggy-assignment-card-border: rgba(150, 91, 39, 0.54);
+  --piggy-assignment-overlay: rgba(179, 105, 48, 0.82);
+  --piggy-assignment-accent: #a66a19;
+  --piggy-assignment-shadow-glow: rgba(179, 105, 48, 0.28);
 
   /* Information cards */
-  --piggy-information-card-start: rgba(168, 85, 89, 0.7);
-  --piggy-information-card-end: rgba(196, 60, 78, 0.3);
-  --piggy-information-card-border: #b34e4e;
-  --piggy-information-overlay: rgba(179, 78, 100, 0.85);
-  --piggy-information-accent: #b34e6c;
-  --piggy-information-shadow-glow: rgba(179, 78, 83, 0.5);
+  --piggy-information-card-start: rgba(122, 174, 170, 0.55);
+  --piggy-information-card-end: rgba(68, 128, 126, 0.36);
+  --piggy-information-card-border: rgba(40, 127, 138, 0.48);
+  --piggy-information-overlay: rgba(40, 127, 138, 0.82);
+  --piggy-information-accent: #287f8a;
+  --piggy-information-shadow-glow: rgba(40, 127, 138, 0.28);
 
   --piggy-card-border-width: 1px;
 
   /* Navbar */
-  --piggy-navbar-start: #d2b48c;
-  --piggy-navbar-end: #c2a678;
-  --piggy-text-navbar: var(--piggy-text-dark);
+  --piggy-navbar-start: #d6b889;
+  --piggy-navbar-end: #c29a68;
+  --piggy-text-navbar: #1d140a;
 
   /* Buttons */
-  --piggy-button: #a67c52;
-  --piggy-button-hover: #8c6239;
-  --piggy-button-active: #5f4b32;
-  --piggy-text-button: #ffffff;
+  --piggy-button: #b88a56;
+  --piggy-button-hover: #c9965d;
+  --piggy-button-active: #8c6239;
+  --piggy-text-button: #1d140a;
 
   /* Thumbnails */
   --piggy-thumbnail-overlay: rgba(94, 75, 50, 0.5);
@@ -74,8 +74,8 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
   --piggy-tooltip: #e0c090;
   --piggy-tooltip-text: var(--piggy-text-dark);
 
-  --piggy-text-hyperlink: #1a8ce3;
-  --piggy-text-hyperlink-hover: #798b99;
+  --piggy-text-hyperlink: #1f8f9a;
+  --piggy-text-hyperlink-hover: #145c63;
 
   --piggy-logo-gradient: linear-gradient(
     45deg,
@@ -89,21 +89,22 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
   --piggy-info-box-background: #69a8b4a4;
   --piggy-info-box-border: #007d8d;
 
-  --piggy-header-border: #ffffff;
+  /* Headings */
+  --piggy-header-border: rgba(95, 75, 50, 0.24);
 
-  --piggy-content-h1: #534530;
-  --piggy-content-h2: #534530;
-  --piggy-content-h3: #534530;
-  --piggy-content-h4: #534530;
-  --piggy-content-h5: #534530;
-  --piggy-content-h6: #534530;
+  --piggy-content-h1: #2d1f11;
+  --piggy-content-h2: #287f8a;
+  --piggy-content-h3: #8a5f27;
+  --piggy-content-h4: #a66a19;
+  --piggy-content-h5: #8a566f;
+  --piggy-content-h6: #705844;
 
-  --piggy-header-bg-h1: #53453030;
-  --piggy-header-bg-h2: #53453030;
-  --piggy-header-bg-h3: #53453030;
-  --piggy-header-bg-h4: #53453030;
-  --piggy-header-bg-h5: #53453030;
-  --piggy-header-bg-h6: #53453030;
+  --piggy-header-bg-h1: rgba(45, 31, 17, 0.1);
+  --piggy-header-bg-h2: rgba(40, 127, 138, 0.12);
+  --piggy-header-bg-h3: rgba(138, 95, 39, 0.12);
+  --piggy-header-bg-h4: rgba(166, 106, 25, 0.11);
+  --piggy-header-bg-h5: rgba(138, 86, 111, 0.1);
+  --piggy-header-bg-h6: rgba(112, 88, 68, 0.1);
 
   /* Tables */
   --piggy-table-bg: rgba(245, 231, 209, 0.76);
@@ -134,7 +135,7 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
   /* code block extras */
   --piggy-code-inline-text: #342417;
   --piggy-code-inline-bg: #ead7ba;
-  --piggy-code-inline-border: #b88f62;
+  --piggy-code-inline-border: #a67c52;
 
   --piggy-code-block-text: #342417;
   --piggy-code-block-background: #f4e4cb;
@@ -158,7 +159,7 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
   --piggy-code-token-function: #c06a2c;
   --piggy-code-token-class: #a06a12;
   --piggy-code-token-variable: #342417;
-  --piggy-code-token-operator: #c45a2b;
+  --piggy-code-token-operator: #705844;
   --piggy-code-token-punctuation: #705844;
   --piggy-code-token-builtin: #2b6f9c;
   --piggy-code-token-constant: #b8860b;
@@ -224,9 +225,12 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="desert"] .md-content {
-  border: 1px solid #5f4b32;
+  border: 1px solid rgba(95, 75, 50, 0.36);
   border-radius: 0.5rem;
-  background-color: #e8d4b0;
+  background: rgba(244, 231, 211, 0.75);
+  box-shadow:
+    0 0.45rem 1.25rem rgba(95, 75, 50, 0.18),
+    inset 0 0 1.25rem rgba(255, 248, 238, 0.22);
 }
 
 [data-theme="desert"] .md-content details,
@@ -347,4 +351,10 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
   --piggy-table-header-start: rgba(112, 88, 68, 0.085);
   --piggy-table-header-end: rgba(112, 88, 68, 0.085);
   --piggy-table-row-hover: rgba(112, 88, 68, 0.095);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="desert"] .background-overlay canvas#desertShader {
+    display: none !important;
+  }
 }

@@ -1,5 +1,5 @@
 /* METADATA
-id: 7
+id: 100
 name: Synthwave
 description: Fancy sunset, purple, neon, gradients!
 type: dark
@@ -7,40 +7,40 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 */
 
 [data-theme="synthwave"] {
-  --piggy-main: rgb(0, 0, 0);
-  --piggy-light: #ffd27f;
-  --piggy-neutral: #866997;
-  --piggy-dark: rgb(48, 20, 58);
+  --piggy-main: #05000a;
+  --piggy-light: #fff2dc;
+  --piggy-neutral: #9b78ad;
+  --piggy-dark: #241032;
 
-  --piggy-text-main: #ffcc66;
-  --piggy-text-light: #ff9b9b;
-  --piggy-text-dark: #ffcb91;
+  --piggy-text-main: #ffe8d6;
+  --piggy-text-light: #fff2dc;
+  --piggy-text-dark: #1b1024;
 
   --piggy-shadow-text: #ff8c0018;
   --piggy-shadow-box: #ff00a630;
   --piggy-shadow-glow: rgba(255, 140, 0, 0.4);
 
   /* Card colors */
-  --piggy-card-start: rgba(255, 143, 89, 0.3);
-  --piggy-card-end: rgba(211, 82, 112, 0.3);
-  --piggy-card-border: #ff9b9b;
-  --piggy-text-card: var(--piggy-text-light);
+  --piggy-card-start: rgba(52, 18, 72, 0.72);
+  --piggy-card-end: rgba(22, 8, 34, 0.78);
+  --piggy-card-border: rgba(255, 0, 166, 0.48);
+  --piggy-text-card: #fff2dc;
 
   /* Assignment cards */
-  --piggy-assignment-card-start: rgba(155, 49, 0, 0.7);
-  --piggy-assignment-card-end: rgba(155, 49, 34, 0.3);
-  --piggy-assignment-card-border: #ff5722;
-  --piggy-assignment-overlay: rgba(255, 87, 34, 0.8);
-  --piggy-assignment-accent: #ff5722;
-  --piggy-assignment-shadow-glow: rgba(255, 87, 34, 0.5);
+  --piggy-assignment-card-start: rgba(255, 87, 34, 0.34);
+  --piggy-assignment-card-end: rgba(128, 36, 16, 0.42);
+  --piggy-assignment-card-border: rgba(255, 149, 0, 0.72);
+  --piggy-assignment-overlay: rgba(255, 87, 34, 0.86);
+  --piggy-assignment-accent: #ff9500;
+  --piggy-assignment-shadow-glow: rgba(255, 87, 34, 0.42);
 
   /* Information cards */
-  --piggy-information-card-start: rgba(201, 15, 117, 0.7);
-  --piggy-information-card-end: rgba(180, 0, 105, 0.3);
-  --piggy-information-card-border: #d800b4;
-  --piggy-information-overlay: rgba(188, 0, 245, 0.85);
-  --piggy-information-accent: #d800f5;
-  --piggy-information-shadow-glow: rgba(179, 71, 206, 0.5);
+  --piggy-information-card-start: rgba(0, 217, 255, 0.26);
+  --piggy-information-card-end: rgba(0, 92, 130, 0.34);
+  --piggy-information-card-border: rgba(0, 251, 255, 0.58);
+  --piggy-information-overlay: rgba(0, 217, 255, 0.82);
+  --piggy-information-accent: #00fbff;
+  --piggy-information-shadow-glow: rgba(0, 251, 255, 0.36);
 
   --piggy-card-border-width: 1px;
 
@@ -49,10 +49,10 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --piggy-navbar-end: rgb(34, 18, 48);
   --piggy-text-navbar: var(--piggy-light);
 
-  --piggy-button: #ff6347;
-  --piggy-button-hover: #ff8364;
-  --piggy-button-active: #d33417;
-  --piggy-text-button: #333;
+  --piggy-button: #4a1a66;
+  --piggy-button-hover: #6e2499;
+  --piggy-button-active: #d800f5;
+  --piggy-text-button: #fff2dc;
 
   --piggy-thumbnail-overlay: #00000099;
   --piggy-text-thumbnail: var(--piggy-light);
@@ -69,11 +69,11 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --piggy-tooltip: #000000;
   --piggy-tooltip-text: #ffffff;
 
-  --piggy-text-hyperlink: #3190b6;
-  --piggy-text-hyperlink-hover: #6ab2cf;
+  --piggy-text-hyperlink: #00d9ff;
+  --piggy-text-hyperlink-hover: #8ff3ff;
 
-  --grid-line-color: #cc00ffaa;
-  --grid-background-color: var(--piggy-dark);
+  --grid-line-color: rgba(204, 0, 255, 0.52);
+  --grid-background-color: #241032;
 
   --piggy-logo-gradient: linear-gradient(
     45deg,
@@ -94,19 +94,43 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 
   --piggy-header-border: #ffffff;
 
-  --piggy-content-h1: #ff8400;
-  --piggy-content-h2: #ff4800;
-  --piggy-content-h3: #ff0080;
-  --piggy-content-h4: #f200ff;
-  --piggy-content-h5: #0059ff;
-  --piggy-content-h6: #00fbff;
+  --piggy-content-h1: #fff2dc;
+  --piggy-content-h2: #00fbff;
+  --piggy-content-h3: #ff00a6;
+  --piggy-content-h4: #ff9500;
+  --piggy-content-h5: #d800f5;
+  --piggy-content-h6: #cfa8dc;
 
-  --piggy-header-bg-h1: linear-gradient(to top, #ff840050, #00000000);
-  --piggy-header-bg-h2: linear-gradient(to top, #ff480050, #00000000);
-  --piggy-header-bg-h3: linear-gradient(to top, #ff008050, #00000000);
-  --piggy-header-bg-h4: linear-gradient(to top, #f200ff50, #00000000);
-  --piggy-header-bg-h5: linear-gradient(to top, #0059ff50, #00000000);
-  --piggy-header-bg-h6: linear-gradient(to top, #00fbff50, #00000000);
+  --piggy-header-bg-h1: linear-gradient(
+    to top,
+    rgba(255, 242, 220, 0.14),
+    transparent
+  );
+  --piggy-header-bg-h2: linear-gradient(
+    to top,
+    rgba(0, 251, 255, 0.18),
+    transparent
+  );
+  --piggy-header-bg-h3: linear-gradient(
+    to top,
+    rgba(255, 0, 166, 0.18),
+    transparent
+  );
+  --piggy-header-bg-h4: linear-gradient(
+    to top,
+    rgba(255, 149, 0, 0.16),
+    transparent
+  );
+  --piggy-header-bg-h5: linear-gradient(
+    to top,
+    rgba(216, 0, 245, 0.14),
+    transparent
+  );
+  --piggy-header-bg-h6: linear-gradient(
+    to top,
+    rgba(207, 168, 220, 0.12),
+    transparent
+  );
 
   /* Tables */
   --piggy-table-bg: rgba(17, 6, 17, 0.68);
@@ -150,7 +174,7 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --piggy-code-clipboard: #ffd27f;
   --piggy-code-clipboard-hover: #ff8b65;
 
-  --piggy-code-selection-bg: #ff5722;
+  --piggy-code-selection-bg: #00fbff;
   --piggy-code-selection-text: #120815;
 
   /* syntax tokens */
@@ -161,7 +185,7 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --piggy-code-token-function: #ff8b65;
   --piggy-code-token-class: #ffd27f;
   --piggy-code-token-variable: #ffe2d5;
-  --piggy-code-token-operator: #f200ff;
+  --piggy-code-token-operator: #cfa8dc;
   --piggy-code-token-punctuation: #cfa8dc;
   --piggy-code-token-builtin: #00d9ff;
   --piggy-code-token-constant: #ffcc66;
@@ -281,49 +305,79 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   animation: scrollGrid 10s linear infinite;
 }
 
-[data-theme="synthwave"] .card-container {
-  box-shadow: 2px 2px 15px 0 var(--piggy-shadow-box);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="synthwave"] .background-overlay,
+  [data-theme="synthwave"] .card-container:hover {
+    animation: none !important;
+  }
 }
 
-@keyframes boxShadowScroll {
+[data-theme="synthwave"] .card-container {
+  position: relative;
+  z-index: 0;
+
+  box-shadow: 2px 2px 15px 0 var(--piggy-shadow-box);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+[data-theme="synthwave"] .card-container::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+
+  border-radius: inherit;
+  pointer-events: none;
+
+  opacity: 0;
+
+  box-shadow: 0 0 15px 0 #ff00ff;
+  border: 1px solid #ff00ff;
+
+  animation: synthwaveCardGlow 2s linear infinite;
+  transition: opacity 0.25s ease;
+}
+
+[data-theme="synthwave"] .card-container:hover {
+  transform: perspective(1000px) rotateX(-1deg) rotateY(3deg) rotateZ(1deg)
+    scale(0.98);
+
+  border-color: transparent;
+}
+
+[data-theme="synthwave"] .card-container:hover::after {
+  opacity: 1;
+}
+
+@keyframes synthwaveCardGlow {
   0% {
-    box-shadow: 0px 0px 15px 0 #ff00a6;
-    border-color: #ff00a6;
+    box-shadow: 0 0 15px 0 #ff00ff;
+    border-color: #ff00ff;
   }
 
   25% {
-    box-shadow: 0px 0px 15px 0 #ff9500;
+    box-shadow: 0 0 15px 0 #ff9500;
     border-color: #ff9500;
   }
 
   50% {
-    box-shadow: 0px 0px 15px 0 #00ff33;
-    border-color: #00ff33;
+    box-shadow: 0 0 15px 0 #00ff99;
+    border-color: #00ff99;
   }
 
   75% {
-    box-shadow: 0px 0px 15px 0 #009dff;
-    border-color: #009dff;
+    box-shadow: 0 0 15px 0 #00d9ff;
+    border-color: #00d9ff;
   }
 
   100% {
-    box-shadow: 0px 0px 15px 0 #ff00a6;
-    border-color: #ff00a6;
+    box-shadow: 0 0 15px 0 #ff00ff;
+    border-color: #ff00ff;
   }
-}
-
-[data-theme="synthwave"] .card-container:hover {
-  border-color: #ff00ff;
-  transform: perspective(1000px) rotateX(-1deg) rotateY(3deg) rotateZ(1deg)
-    scale(98%);
-  box-shadow: 0px 0px 15px 0 #ff00a6;
-  animation: boxShadowScroll 2s alternate infinite;
-  animation-timing-function: linear;
-  animation-delay: 0.4s;
 }
 
 [data-theme="synthwave"] .settings-option {

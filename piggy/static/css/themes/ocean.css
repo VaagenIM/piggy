@@ -1,5 +1,5 @@
 /* METADATA
-id: 9
+id: 103
 name: Ocean
 description: A theme inspired by the serene blues and teals of the ocean.
 type: dark
@@ -23,37 +23,37 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-shadow-glow: rgba(136, 192, 208, 0.3);
 
   /* Card colors */
-  --piggy-card-start: rgba(0, 85, 102, 0.5);
-  --piggy-card-end: rgba(0, 115, 135, 0.5);
-  --piggy-card-border: #88c0d0;
-  --piggy-text-card: var(--piggy-text-light);
+  --piggy-card-start: rgba(0, 64, 82, 0.72);
+  --piggy-card-end: rgba(0, 42, 58, 0.78);
+  --piggy-card-border: rgba(136, 192, 208, 0.44);
+  --piggy-text-card: #e6fbff;
 
-  --piggy-assignment-card-start: rgba(255, 127, 80, 0.4);
-  --piggy-assignment-card-end: rgba(255, 99, 71, 0.2);
-  --piggy-assignment-card-border: #ff6347;
-  --piggy-assignment-overlay: rgba(255, 99, 71, 0.8);
-  --piggy-assignment-accent: #ff6347;
-  --piggy-assignment-shadow-glow: rgba(255, 99, 71, 0.5);
+  --piggy-assignment-card-start: rgba(255, 139, 112, 0.32);
+  --piggy-assignment-card-end: rgba(178, 72, 58, 0.34);
+  --piggy-assignment-card-border: rgba(255, 139, 112, 0.5);
+  --piggy-assignment-overlay: rgba(224, 103, 82, 0.82);
+  --piggy-assignment-accent: #ff8b70;
+  --piggy-assignment-shadow-glow: rgba(255, 139, 112, 0.28);
 
   --piggy-card-border-width: 1px;
 
   /* Information cards */
-  --piggy-information-card-start: rgba(0, 98, 179, 0.384);
-  --piggy-information-card-end: rgba(0, 100, 200, 0.35);
-  --piggy-information-card-border: rgba(0, 156, 255, 0.5);
-  --piggy-information-overlay: rgba(0, 150, 255, 0.9);
-  --piggy-information-accent: #00aaff;
-  --piggy-information-shadow-glow: rgba(0, 150, 255, 0.6);
+  --piggy-information-card-start: rgba(0, 190, 210, 0.24);
+  --piggy-information-card-end: rgba(0, 96, 122, 0.38);
+  --piggy-information-card-border: rgba(0, 229, 255, 0.48);
+  --piggy-information-overlay: rgba(0, 180, 210, 0.82);
+  --piggy-information-accent: #00d6f2;
+  --piggy-information-shadow-glow: rgba(0, 229, 255, 0.26);
 
   /* Navbar */
-  --piggy-navbar-start: #003b4d;
-  --piggy-navbar-end: #004f63;
-  --piggy-text-navbar: var(--piggy-light);
+  --piggy-navbar-start: #002b36;
+  --piggy-navbar-end: #003f52;
+  --piggy-text-navbar: #d8f3f8;
 
   /* Buttons */
   --piggy-button: #005f73;
   --piggy-button-hover: #007f9b;
-  --piggy-button-active: #004f63;
+  --piggy-button-active: #00a6c4;
   --piggy-text-button: #ffffff;
 
   /* Thumbnails */
@@ -73,15 +73,10 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-tooltip: #003b4d;
   --piggy-tooltip-text: #ffffff;
 
-  --piggy-text-hyperlink: #4172b2;
-  --piggy-text-hyperlink-hover: #83c1d9;
+  --piggy-text-hyperlink: #4dabff;
+  --piggy-text-hyperlink-hover: #9bdcff;
 
-  --piggy-logo-gradient: linear-gradient(
-    45deg,
-    rgb(255, 143, 231),
-    rgb(80, 162, 255),
-    rgb(0, 38, 255)
-  );
+  --piggy-logo-gradient: linear-gradient(45deg, #e6fbff, #00d6f2, #336b87);
   --piggy-logo-border: rgba(0, 0, 0, 0.65);
 
   /* info boxes */
@@ -93,21 +88,22 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-level-container: rgb(23, 40, 82);
   --piggy-level-container-border: rgba(0, 0, 0, 0);
 
-  --piggy-header-border: #ffffff;
+  /* Headings */
+  --piggy-header-border: rgba(136, 192, 208, 0.3);
 
-  --piggy-content-h1: #7da3ba;
-  --piggy-content-h2: #7da3ba;
-  --piggy-content-h3: #7da3ba;
-  --piggy-content-h4: #7da3ba;
-  --piggy-content-h5: #7da3ba;
-  --piggy-content-h6: #7da3ba;
+  --piggy-content-h1: #e6fbff;
+  --piggy-content-h2: #00e5ff;
+  --piggy-content-h3: #6fffe9;
+  --piggy-content-h4: #ffd166;
+  --piggy-content-h5: #c792ff;
+  --piggy-content-h6: #88c0d0;
 
-  --piggy-header-bg-h1: #7da3ba20;
-  --piggy-header-bg-h2: #7da3ba20;
-  --piggy-header-bg-h3: #7da3ba20;
-  --piggy-header-bg-h4: #7da3ba20;
-  --piggy-header-bg-h5: #7da3ba20;
-  --piggy-header-bg-h6: #7da3ba20;
+  --piggy-header-bg-h1: rgba(230, 251, 255, 0.12);
+  --piggy-header-bg-h2: rgba(0, 229, 255, 0.18);
+  --piggy-header-bg-h3: rgba(111, 255, 233, 0.14);
+  --piggy-header-bg-h4: rgba(255, 209, 102, 0.12);
+  --piggy-header-bg-h5: rgba(199, 146, 255, 0.12);
+  --piggy-header-bg-h6: rgba(136, 192, 208, 0.1);
 
   /* Tables */
   --piggy-table-bg: rgba(0, 37, 48, 0.64);
@@ -120,20 +116,12 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
 
   --piggy-table-row-odd: rgba(230, 251, 255, 0.018);
   --piggy-table-row-even: rgba(0, 229, 255, 0.04);
-  --piggy-table-row-hover: rgba(0, 229, 255, 0.105);
+  --piggy-table-row-hover: rgba(0, 229, 255, 0.09);
 
   --piggy-table-code-bg: var(--piggy-code-inline-bg);
   --piggy-table-code-text: var(--piggy-code-inline-text);
 
   --piggy-table-shadow: none;
-
-  /* code blocks */
-  --piggy-code: #d8f3f8;
-  --piggy-code-bg: #073946;
-  --piggy-code-border: rgba(136, 192, 208, 0.28);
-
-  --piggy-code-block-bg: #001923;
-  --piggy-code-block-border: rgba(136, 192, 208, 0.35);
 
   /* code blocks */
   --piggy-code: #e6fbff;
@@ -223,9 +211,12 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="ocean"] .md-content {
-  border: 1px solid rgba(136, 192, 208, 0.45);
+  border: 1px solid rgba(136, 192, 208, 0.42);
   border-radius: 0.5rem;
-  background-color: #00000044;
+  background: rgba(0, 25, 35, 0.78);
+  box-shadow:
+    0 0.5rem 1.4rem rgba(0, 15, 24, 0.34),
+    inset 0 0 1.25rem rgba(0, 229, 255, 0.04);
 }
 
 [data-theme="ocean"] .md-content details,
@@ -346,4 +337,10 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-table-header-start: rgba(136, 192, 208, 0.055);
   --piggy-table-header-end: rgba(136, 192, 208, 0.055);
   --piggy-table-row-hover: rgba(136, 192, 208, 0.07);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="ocean"] .background-overlay canvas#oceanShader {
+    display: none !important;
+  }
 }

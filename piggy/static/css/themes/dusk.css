@@ -1,0 +1,334 @@
+/* METADATA
+id: 8
+name: Dusk
+description: A calm purple-blue theme for evening study.
+type: dark
+preview_style: background: linear-gradient(90deg, #201d2f, #34304a); color: #edeaf7; text-shadow: none;
+*/
+
+[data-theme="dusk"] {
+  --piggy-main: #201d2f;
+  --piggy-light: #34304a;
+  --piggy-neutral: #9c96b3;
+  --piggy-dark: #edeaf7;
+
+  --piggy-text-main: var(--piggy-dark);
+  --piggy-shadow-text: rgba(0, 0, 0, 0.35);
+  --piggy-shadow-box: rgba(0, 0, 0, 0.28);
+  --piggy-shadow-glow: rgba(140, 200, 255, 0.18);
+
+  /* Card colors */
+  --piggy-card-start: #34304a;
+  --piggy-card-end: #28243a;
+  --piggy-card-border: rgba(171, 164, 205, 0.32);
+  --piggy-text-card: var(--piggy-dark);
+
+  /* Assignment cards */
+  --piggy-assignment-card-start: rgba(214, 154, 82, 0.34);
+  --piggy-assignment-card-end: rgba(126, 83, 42, 0.42);
+  --piggy-assignment-card-border: rgba(240, 199, 155, 0.42);
+  --piggy-assignment-overlay: rgba(180, 111, 50, 0.86);
+  --piggy-assignment-accent: #f0c79b;
+  --piggy-assignment-shadow-glow: rgba(240, 199, 155, 0.28);
+
+  /* Information cards */
+  --piggy-information-card-start: rgba(70, 118, 170, 0.34);
+  --piggy-information-card-end: rgba(39, 74, 115, 0.42);
+  --piggy-information-card-border: rgba(140, 200, 255, 0.38);
+  --piggy-information-overlay: rgba(87, 145, 190, 0.86);
+  --piggy-information-accent: #8cc8ff;
+  --piggy-information-shadow-glow: rgba(140, 200, 255, 0.24);
+
+  --piggy-card-border-width: 1px;
+
+  /* Navbar and buttons */
+  --piggy-navbar-start: #2b273f;
+  --piggy-navbar-end: #242137;
+  --piggy-text-navbar: #edeaf7;
+
+  --piggy-button: #4a4568;
+  --piggy-button-hover: #5f5a83;
+  --piggy-button-active: #7b75a8;
+  --piggy-text-button: #ffffff;
+
+  --piggy-thumbnail-overlay: rgba(20, 17, 31, 0.58);
+  --piggy-text-thumbnail: var(--piggy-dark);
+
+  --piggy-text-tag: #edeaf7;
+  --piggy-text-description: var(--piggy-dark);
+  --piggy-text-title: var(--piggy-dark);
+  --piggy-text-breadcrumb: var(--piggy-dark);
+  --piggy-text-breadcrumb-hover: #b8dcff;
+
+  --piggy-menu: #2b273f;
+  --piggy-menu-text: var(--piggy-dark);
+
+  --piggy-tooltip: #000000;
+  --piggy-tooltip-text: #ffffff;
+
+  --piggy-text-hyperlink: #8cc8ff;
+  --piggy-text-hyperlink-hover: #b8dcff;
+
+  /* Level container */
+  --piggy-level-container-text: #edeaf7;
+  --piggy-level-container: #34304a;
+  --piggy-level-container-border: rgba(171, 164, 205, 0.28);
+
+  /* Info boxes */
+  --piggy-info-box-background: rgba(140, 200, 255, 0.14);
+  --piggy-info-box-border: #8cc8ff;
+
+  /* Logo */
+  --piggy-logo: #c7b6ff;
+  --piggy-logo-gradient: linear-gradient(45deg, #8cc8ff, #c7b6ff, #f0c79b);
+  --piggy-logo-border: rgba(0, 0, 0, 0.5);
+
+  /* Headings */
+  --piggy-header-border: rgba(171, 164, 205, 0.28);
+
+  --piggy-content-h1: #edeaf7;
+  --piggy-content-h2: #8cc8ff;
+  --piggy-content-h3: #c7b6ff;
+  --piggy-content-h4: #f0c79b;
+  --piggy-content-h5: #a9e3d0;
+  --piggy-content-h6: #9c96b3;
+
+  --piggy-header-bg-h1: rgba(237, 234, 247, 0.12);
+  --piggy-header-bg-h2: rgba(140, 200, 255, 0.2);
+  --piggy-header-bg-h3: rgba(199, 182, 255, 0.16);
+  --piggy-header-bg-h4: rgba(240, 199, 155, 0.14);
+  --piggy-header-bg-h5: rgba(169, 227, 208, 0.12);
+  --piggy-header-bg-h6: rgba(156, 150, 179, 0.12);
+
+  /* Tables */
+  --piggy-table-bg: rgba(24, 21, 36, 0.68);
+  --piggy-table-border: rgba(171, 164, 205, 0.22);
+  --piggy-table-cell-border: rgba(171, 164, 205, 0.12);
+
+  --piggy-table-header-start: rgba(140, 200, 255, 0.1);
+  --piggy-table-header-end: rgba(140, 200, 255, 0.1);
+  --piggy-table-header-text: #edeaf7;
+
+  --piggy-table-row-odd: rgba(237, 234, 247, 0.018);
+  --piggy-table-row-even: rgba(237, 234, 247, 0.045);
+  --piggy-table-row-hover: rgba(140, 200, 255, 0.11);
+
+  --piggy-table-code-bg: var(--piggy-code-inline-bg);
+  --piggy-table-code-text: var(--piggy-code-inline-text);
+
+  --piggy-table-shadow: none;
+
+  /* Code blocks */
+  --piggy-code: #edeaf7;
+  --piggy-code-bg: #3a3552;
+  --piggy-code-border: rgba(171, 164, 205, 0.24);
+
+  --piggy-code-block-bg: #181524;
+  --piggy-code-block-border: rgba(171, 164, 205, 0.34);
+
+  --piggy-code-inline-text: #e6ddff;
+  --piggy-code-inline-bg: #3a3552;
+  --piggy-code-inline-border: rgba(171, 164, 205, 0.24);
+
+  --piggy-code-block-text: #edeaf7;
+  --piggy-code-block-background: #181524;
+  --piggy-code-block-border-color: rgba(171, 164, 205, 0.34);
+
+  --piggy-code-block-line-number: #8f89a8;
+  --piggy-code-block-line-number-bg: #12101b;
+  --piggy-code-block-line-number-border: rgba(171, 164, 205, 0.18);
+
+  --piggy-code-clipboard: #b9b2d2;
+  --piggy-code-clipboard-hover: #ffffff;
+
+  --piggy-code-selection-bg: #4d496d;
+  --piggy-code-selection-text: #ffffff;
+
+  /* Syntax tokens */
+  --piggy-code-token-comment: #9c96b3;
+  --piggy-code-token-keyword: #ffaaa8;
+  --piggy-code-token-string: #a8d8ff;
+  --piggy-code-token-number: #a9e3d0;
+  --piggy-code-token-function: #c7b6ff;
+  --piggy-code-token-class: #f0c79b;
+  --piggy-code-token-variable: #edeaf7;
+  --piggy-code-token-operator: #b9b2d2;
+  --piggy-code-token-punctuation: #b9b2d2;
+  --piggy-code-token-builtin: #8cc8ff;
+  --piggy-code-token-constant: #f0c79b;
+  --piggy-code-token-attribute: #c7b6ff;
+  --piggy-code-token-tag: #a9e3d0;
+  --piggy-code-token-decorator: #e7b3d6;
+  --piggy-code-token-deleted: #ff8fa3;
+  --piggy-code-token-inserted: #a9e3d0;
+  --piggy-code-token-error: #ff8fa3;
+
+  /* Admonitions */
+  --piggy-admonition-note-bg: #172f3a;
+  --piggy-admonition-note-title-bg: #204352;
+  --piggy-admonition-note-text: #edeaf7;
+  --piggy-admonition-note-icon: #8cc8ff;
+  --piggy-admonition-note-border: #4d9ec4;
+
+  --piggy-admonition-success-bg: #193228;
+  --piggy-admonition-success-title-bg: #25493b;
+  --piggy-admonition-success-text: #edeaf7;
+  --piggy-admonition-success-icon: #a9e3d0;
+  --piggy-admonition-success-border: #65ad8f;
+
+  --piggy-admonition-warning-bg: #39291d;
+  --piggy-admonition-warning-title-bg: #513c2a;
+  --piggy-admonition-warning-text: #fff4e8;
+  --piggy-admonition-warning-icon: #f0c79b;
+  --piggy-admonition-warning-border: #c68b58;
+
+  --piggy-admonition-danger-bg: #3b202c;
+  --piggy-admonition-danger-title-bg: #562d3f;
+  --piggy-admonition-danger-text: #fff0f5;
+  --piggy-admonition-danger-icon: #ff8fa3;
+  --piggy-admonition-danger-border: #d86d85;
+
+  --piggy-admonition-example-bg: #322846;
+  --piggy-admonition-example-title-bg: #493a65;
+  --piggy-admonition-example-text: #edeaf7;
+  --piggy-admonition-example-icon: #c7b6ff;
+  --piggy-admonition-example-border: #9f84d8;
+
+  --piggy-admonition-quote-bg: #29263a;
+  --piggy-admonition-quote-title-bg: #39354f;
+  --piggy-admonition-quote-text: #edeaf7;
+  --piggy-admonition-quote-icon: #b9b2d2;
+  --piggy-admonition-quote-border: #807999;
+}
+
+[data-theme="dusk"] .level-count-container {
+  color: var(--piggy-dark);
+  background-color: var(--piggy-main);
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+[data-theme="dusk"] .md-content {
+  border-radius: 0.5rem;
+}
+
+[data-theme="dusk"] .md-content details,
+[data-theme="dusk"] .md-content .tip,
+[data-theme="dusk"] .md-content .admonition {
+  color: var(--piggy-admonition-text, var(--piggy-dark));
+}
+
+[data-theme="dusk"] .md-content .tabbed-labels::before {
+  border-color: var(--piggy-dark);
+  background-color: rgba(140, 200, 255, 0.14) !important;
+}
+
+[data-theme="dusk"] .md-content .tabbed-set {
+  background: rgba(237, 234, 247, 0.05);
+  border-color: rgba(171, 164, 205, 0.24);
+}
+
+/***************************\
+|*     TABLE OVERRIDES     *|
+\***************************/
+
+/* Dusk theme: tables inside admonitions */
+[data-theme="dusk"] .md-content :is(.admonition, details) {
+  --piggy-table-admonition-accent: rgba(237, 234, 247, 0.14) !important;
+
+  --piggy-table-bg: rgba(0, 0, 0, 0.13);
+  --piggy-table-border: var(--piggy-table-admonition-accent);
+  --piggy-table-cell-border: rgba(237, 234, 247, 0.07);
+
+  --piggy-table-header-start: rgba(237, 234, 247, 0.045);
+  --piggy-table-header-end: rgba(237, 234, 247, 0.045);
+  --piggy-table-header-text: var(--piggy-admonition-text);
+
+  --piggy-table-row-odd: rgba(237, 234, 247, 0.012);
+  --piggy-table-row-even: rgba(237, 234, 247, 0.028);
+  --piggy-table-row-hover: rgba(237, 234, 247, 0.052);
+
+  --piggy-table-code-bg: rgba(0, 0, 0, 0.18);
+  --piggy-table-code-text: var(--piggy-admonition-text);
+}
+
+/* NOTE / INFO / TIP */
+[data-theme="dusk"]
+  .md-content
+  :is(
+    .admonition.note,
+    details.note,
+    .admonition.info,
+    details.info,
+    .admonition.tip,
+    details.tip
+  ) {
+  --piggy-table-admonition-accent: rgba(140, 200, 255, 0.2);
+  --piggy-table-header-start: rgba(140, 200, 255, 0.065);
+  --piggy-table-header-end: rgba(140, 200, 255, 0.065);
+  --piggy-table-row-hover: rgba(140, 200, 255, 0.08);
+}
+
+/* SUCCESS / QUESTION */
+[data-theme="dusk"]
+  .md-content
+  :is(
+    .admonition.success,
+    details.success,
+    .admonition.question,
+    details.question
+  ) {
+  --piggy-table-admonition-accent: rgba(169, 227, 208, 0.18);
+  --piggy-table-header-start: rgba(169, 227, 208, 0.06);
+  --piggy-table-header-end: rgba(169, 227, 208, 0.06);
+  --piggy-table-row-hover: rgba(169, 227, 208, 0.075);
+}
+
+/* WARNING / ATTENTION */
+[data-theme="dusk"]
+  .md-content
+  :is(
+    .admonition.warning,
+    details.warning,
+    .admonition.attention,
+    details.attention
+  ) {
+  --piggy-table-admonition-accent: rgba(240, 199, 155, 0.18);
+  --piggy-table-header-start: rgba(240, 199, 155, 0.06);
+  --piggy-table-header-end: rgba(240, 199, 155, 0.06);
+  --piggy-table-row-hover: rgba(240, 199, 155, 0.075);
+}
+
+/* DANGER / FAILURE / BUG */
+[data-theme="dusk"]
+  .md-content
+  :is(
+    .admonition.danger,
+    details.danger,
+    .admonition.failure,
+    details.failure,
+    .admonition.bug,
+    details.bug
+  ) {
+  --piggy-table-admonition-accent: rgba(255, 143, 163, 0.19);
+  --piggy-table-header-start: rgba(255, 143, 163, 0.062);
+  --piggy-table-header-end: rgba(255, 143, 163, 0.062);
+  --piggy-table-row-hover: rgba(255, 143, 163, 0.078);
+}
+
+/* EXAMPLE */
+[data-theme="dusk"] .md-content :is(.admonition.example, details.example) {
+  --piggy-table-admonition-accent: rgba(199, 182, 255, 0.19);
+  --piggy-table-header-start: rgba(199, 182, 255, 0.062);
+  --piggy-table-header-end: rgba(199, 182, 255, 0.062);
+  --piggy-table-row-hover: rgba(199, 182, 255, 0.078);
+}
+
+/* QUOTE */
+[data-theme="dusk"] .md-content :is(.admonition.quote, details.quote) {
+  --piggy-table-admonition-accent: rgba(185, 178, 210, 0.18);
+  --piggy-table-header-start: rgba(185, 178, 210, 0.055);
+  --piggy-table-header-end: rgba(185, 178, 210, 0.055);
+  --piggy-table-row-hover: rgba(185, 178, 210, 0.07);
+}
