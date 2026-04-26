@@ -1,0 +1,334 @@
+/* METADATA
+id: 9
+name: Ember
+description: A warm deep-red theme for focused evening study.
+type: dark
+preview_style: background: linear-gradient(90deg, #241313, #4a2020); color: #f6e8df; text-shadow: none;
+*/
+
+[data-theme="ember"] {
+  --piggy-main: #241313;
+  --piggy-light: #4a2020;
+  --piggy-neutral: #b08f8a;
+  --piggy-dark: #f6e8df;
+
+  --piggy-text-main: var(--piggy-dark);
+  --piggy-shadow-text: rgba(0, 0, 0, 0.4);
+  --piggy-shadow-box: rgba(0, 0, 0, 0.3);
+  --piggy-shadow-glow: rgba(220, 92, 72, 0.2);
+
+  /* Card colors */
+  --piggy-card-start: #3a1c1c;
+  --piggy-card-end: #2c1717;
+  --piggy-card-border: rgba(226, 111, 91, 0.34);
+  --piggy-text-card: var(--piggy-dark);
+
+  /* Assignment cards */
+  --piggy-assignment-card-start: rgba(204, 128, 58, 0.34);
+  --piggy-assignment-card-end: rgba(115, 67, 32, 0.42);
+  --piggy-assignment-card-border: rgba(244, 181, 116, 0.42);
+  --piggy-assignment-overlay: rgba(174, 92, 37, 0.86);
+  --piggy-assignment-accent: #f4b574;
+  --piggy-assignment-shadow-glow: rgba(244, 181, 116, 0.28);
+
+  /* Information cards */
+  --piggy-information-card-start: rgba(70, 112, 145, 0.34);
+  --piggy-information-card-end: rgba(39, 69, 94, 0.42);
+  --piggy-information-card-border: rgba(145, 202, 235, 0.36);
+  --piggy-information-overlay: rgba(83, 137, 172, 0.84);
+  --piggy-information-accent: #91caeb;
+  --piggy-information-shadow-glow: rgba(145, 202, 235, 0.22);
+
+  --piggy-card-border-width: 1px;
+
+  /* Navbar and buttons */
+  --piggy-navbar-start: #361919;
+  --piggy-navbar-end: #2a1515;
+  --piggy-text-navbar: #f6e8df;
+
+  --piggy-button: #6f2f2a;
+  --piggy-button-hover: #8a3c34;
+  --piggy-button-active: #b75446;
+  --piggy-text-button: #ffffff;
+
+  --piggy-thumbnail-overlay: rgba(20, 7, 7, 0.58);
+  --piggy-text-thumbnail: var(--piggy-dark);
+
+  --piggy-text-tag: #f6e8df;
+  --piggy-text-description: var(--piggy-dark);
+  --piggy-text-title: var(--piggy-dark);
+  --piggy-text-breadcrumb: var(--piggy-dark);
+  --piggy-text-breadcrumb-hover: #ffd4c4;
+
+  --piggy-menu: #361919;
+  --piggy-menu-text: var(--piggy-dark);
+
+  --piggy-tooltip: #000000;
+  --piggy-tooltip-text: #ffffff;
+
+  --piggy-text-hyperlink: #91caeb;
+  --piggy-text-hyperlink-hover: #bee4f7;
+
+  /* Level container */
+  --piggy-level-container-text: #f6e8df;
+  --piggy-level-container: #4a2020;
+  --piggy-level-container-border: rgba(226, 111, 91, 0.28);
+
+  /* Info boxes */
+  --piggy-info-box-background: rgba(145, 202, 235, 0.13);
+  --piggy-info-box-border: #91caeb;
+
+  /* Logo */
+  --piggy-logo: #e26f5b;
+  --piggy-logo-gradient: linear-gradient(45deg, #f4b574, #e26f5b, #b75446);
+  --piggy-logo-border: rgba(0, 0, 0, 0.5);
+
+  /* Headings */
+  --piggy-header-border: rgba(226, 111, 91, 0.3);
+
+  --piggy-content-h1: #f6e8df;
+  --piggy-content-h2: #91caeb;
+  --piggy-content-h3: #e26f5b;
+  --piggy-content-h4: #f4b574;
+  --piggy-content-h5: #d4a2c7;
+  --piggy-content-h6: #b08f8a;
+
+  --piggy-header-bg-h1: rgba(246, 232, 223, 0.12);
+  --piggy-header-bg-h2: rgba(145, 202, 235, 0.18);
+  --piggy-header-bg-h3: rgba(226, 111, 91, 0.18);
+  --piggy-header-bg-h4: rgba(244, 181, 116, 0.14);
+  --piggy-header-bg-h5: rgba(212, 162, 199, 0.13);
+  --piggy-header-bg-h6: rgba(176, 143, 138, 0.12);
+
+  /* Tables */
+  --piggy-table-bg: rgba(28, 12, 12, 0.68);
+  --piggy-table-border: rgba(226, 111, 91, 0.22);
+  --piggy-table-cell-border: rgba(226, 111, 91, 0.12);
+
+  --piggy-table-header-start: rgba(226, 111, 91, 0.11);
+  --piggy-table-header-end: rgba(226, 111, 91, 0.11);
+  --piggy-table-header-text: #f6e8df;
+
+  --piggy-table-row-odd: rgba(246, 232, 223, 0.018);
+  --piggy-table-row-even: rgba(246, 232, 223, 0.045);
+  --piggy-table-row-hover: rgba(145, 202, 235, 0.1);
+
+  --piggy-table-code-bg: var(--piggy-code-inline-bg);
+  --piggy-table-code-text: var(--piggy-code-inline-text);
+
+  --piggy-table-shadow: none;
+
+  /* Code blocks */
+  --piggy-code: #f6e8df;
+  --piggy-code-bg: #4a2320;
+  --piggy-code-border: rgba(226, 111, 91, 0.24);
+
+  --piggy-code-block-bg: #1a0d0d;
+  --piggy-code-block-border: rgba(226, 111, 91, 0.34);
+
+  --piggy-code-inline-text: #ffd8cc;
+  --piggy-code-inline-bg: #4a2320;
+  --piggy-code-inline-border: rgba(226, 111, 91, 0.24);
+
+  --piggy-code-block-text: #f6e8df;
+  --piggy-code-block-background: #1a0d0d;
+  --piggy-code-block-border-color: rgba(226, 111, 91, 0.34);
+
+  --piggy-code-block-line-number: #a98984;
+  --piggy-code-block-line-number-bg: #120808;
+  --piggy-code-block-line-number-border: rgba(226, 111, 91, 0.18);
+
+  --piggy-code-clipboard: #d8aaa2;
+  --piggy-code-clipboard-hover: #ffffff;
+
+  --piggy-code-selection-bg: #66312c;
+  --piggy-code-selection-text: #ffffff;
+
+  /* Syntax tokens */
+  --piggy-code-token-comment: #b08f8a;
+  --piggy-code-token-keyword: #ff9b8c;
+  --piggy-code-token-string: #a8d8ff;
+  --piggy-code-token-number: #f4b574;
+  --piggy-code-token-function: #d4a2c7;
+  --piggy-code-token-class: #ffd0a0;
+  --piggy-code-token-variable: #f6e8df;
+  --piggy-code-token-operator: #d8aaa2;
+  --piggy-code-token-punctuation: #d8aaa2;
+  --piggy-code-token-builtin: #91caeb;
+  --piggy-code-token-constant: #f4b574;
+  --piggy-code-token-attribute: #d4a2c7;
+  --piggy-code-token-tag: #a9e3c1;
+  --piggy-code-token-decorator: #ffb0c8;
+  --piggy-code-token-deleted: #ff8578;
+  --piggy-code-token-inserted: #a9e3c1;
+  --piggy-code-token-error: #ff8578;
+
+  /* Admonitions */
+  --piggy-admonition-note-bg: #172d36;
+  --piggy-admonition-note-title-bg: #20414c;
+  --piggy-admonition-note-text: #f6e8df;
+  --piggy-admonition-note-icon: #91caeb;
+  --piggy-admonition-note-border: #4d9ec4;
+
+  --piggy-admonition-success-bg: #1b3024;
+  --piggy-admonition-success-title-bg: #274636;
+  --piggy-admonition-success-text: #f6e8df;
+  --piggy-admonition-success-icon: #a9e3c1;
+  --piggy-admonition-success-border: #65ad83;
+
+  --piggy-admonition-warning-bg: #3a2819;
+  --piggy-admonition-warning-title-bg: #553a22;
+  --piggy-admonition-warning-text: #fff3e8;
+  --piggy-admonition-warning-icon: #f4b574;
+  --piggy-admonition-warning-border: #c98645;
+
+  --piggy-admonition-danger-bg: #421c1c;
+  --piggy-admonition-danger-title-bg: #5f2929;
+  --piggy-admonition-danger-text: #fff0ed;
+  --piggy-admonition-danger-icon: #ff8578;
+  --piggy-admonition-danger-border: #d86d63;
+
+  --piggy-admonition-example-bg: #35233a;
+  --piggy-admonition-example-title-bg: #4c3354;
+  --piggy-admonition-example-text: #f6e8df;
+  --piggy-admonition-example-icon: #d4a2c7;
+  --piggy-admonition-example-border: #a978b0;
+
+  --piggy-admonition-quote-bg: #2e1b1b;
+  --piggy-admonition-quote-title-bg: #432727;
+  --piggy-admonition-quote-text: #f6e8df;
+  --piggy-admonition-quote-icon: #d8aaa2;
+  --piggy-admonition-quote-border: #9e7068;
+}
+
+[data-theme="ember"] .level-count-container {
+  color: var(--piggy-dark);
+  background-color: var(--piggy-main);
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+[data-theme="ember"] .md-content {
+  border-radius: 0.5rem;
+}
+
+[data-theme="ember"] .md-content details,
+[data-theme="ember"] .md-content .tip,
+[data-theme="ember"] .md-content .admonition {
+  color: var(--piggy-admonition-text, var(--piggy-dark));
+}
+
+[data-theme="ember"] .md-content .tabbed-labels::before {
+  border-color: var(--piggy-dark);
+  background-color: rgba(226, 111, 91, 0.14) !important;
+}
+
+[data-theme="ember"] .md-content .tabbed-set {
+  background: rgba(246, 232, 223, 0.05);
+  border-color: rgba(226, 111, 91, 0.24);
+}
+
+/***************************\
+|*     TABLE OVERRIDES     *|
+\***************************/
+
+/* Ember theme: tables inside admonitions */
+[data-theme="ember"] .md-content :is(.admonition, details) {
+  --piggy-table-admonition-accent: rgba(246, 232, 223, 0.14) !important;
+
+  --piggy-table-bg: rgba(0, 0, 0, 0.13);
+  --piggy-table-border: var(--piggy-table-admonition-accent);
+  --piggy-table-cell-border: rgba(246, 232, 223, 0.07);
+
+  --piggy-table-header-start: rgba(246, 232, 223, 0.045);
+  --piggy-table-header-end: rgba(246, 232, 223, 0.045);
+  --piggy-table-header-text: var(--piggy-admonition-text);
+
+  --piggy-table-row-odd: rgba(246, 232, 223, 0.012);
+  --piggy-table-row-even: rgba(246, 232, 223, 0.028);
+  --piggy-table-row-hover: rgba(246, 232, 223, 0.052);
+
+  --piggy-table-code-bg: rgba(0, 0, 0, 0.18);
+  --piggy-table-code-text: var(--piggy-admonition-text);
+}
+
+/* NOTE / INFO / TIP */
+[data-theme="ember"]
+  .md-content
+  :is(
+    .admonition.note,
+    details.note,
+    .admonition.info,
+    details.info,
+    .admonition.tip,
+    details.tip
+  ) {
+  --piggy-table-admonition-accent: rgba(145, 202, 235, 0.2);
+  --piggy-table-header-start: rgba(145, 202, 235, 0.065);
+  --piggy-table-header-end: rgba(145, 202, 235, 0.065);
+  --piggy-table-row-hover: rgba(145, 202, 235, 0.08);
+}
+
+/* SUCCESS / QUESTION */
+[data-theme="ember"]
+  .md-content
+  :is(
+    .admonition.success,
+    details.success,
+    .admonition.question,
+    details.question
+  ) {
+  --piggy-table-admonition-accent: rgba(169, 227, 193, 0.18);
+  --piggy-table-header-start: rgba(169, 227, 193, 0.06);
+  --piggy-table-header-end: rgba(169, 227, 193, 0.06);
+  --piggy-table-row-hover: rgba(169, 227, 193, 0.075);
+}
+
+/* WARNING / ATTENTION */
+[data-theme="ember"]
+  .md-content
+  :is(
+    .admonition.warning,
+    details.warning,
+    .admonition.attention,
+    details.attention
+  ) {
+  --piggy-table-admonition-accent: rgba(244, 181, 116, 0.18);
+  --piggy-table-header-start: rgba(244, 181, 116, 0.06);
+  --piggy-table-header-end: rgba(244, 181, 116, 0.06);
+  --piggy-table-row-hover: rgba(244, 181, 116, 0.075);
+}
+
+/* DANGER / FAILURE / BUG */
+[data-theme="ember"]
+  .md-content
+  :is(
+    .admonition.danger,
+    details.danger,
+    .admonition.failure,
+    details.failure,
+    .admonition.bug,
+    details.bug
+  ) {
+  --piggy-table-admonition-accent: rgba(255, 133, 120, 0.19);
+  --piggy-table-header-start: rgba(255, 133, 120, 0.062);
+  --piggy-table-header-end: rgba(255, 133, 120, 0.062);
+  --piggy-table-row-hover: rgba(255, 133, 120, 0.078);
+}
+
+/* EXAMPLE */
+[data-theme="ember"] .md-content :is(.admonition.example, details.example) {
+  --piggy-table-admonition-accent: rgba(212, 162, 199, 0.19);
+  --piggy-table-header-start: rgba(212, 162, 199, 0.062);
+  --piggy-table-header-end: rgba(212, 162, 199, 0.062);
+  --piggy-table-row-hover: rgba(212, 162, 199, 0.078);
+}
+
+/* QUOTE */
+[data-theme="ember"] .md-content :is(.admonition.quote, details.quote) {
+  --piggy-table-admonition-accent: rgba(216, 170, 162, 0.18);
+  --piggy-table-header-start: rgba(216, 170, 162, 0.055);
+  --piggy-table-header-end: rgba(216, 170, 162, 0.055);
+  --piggy-table-row-hover: rgba(216, 170, 162, 0.07);
+}
