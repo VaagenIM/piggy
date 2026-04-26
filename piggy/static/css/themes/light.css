@@ -23,20 +23,20 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
   --piggy-text-card: var(--piggy-dark);
 
   /* Assignment cards */
-  --piggy-assignment-card-start: rgba(255, 210, 142, 0.5);
-  --piggy-assignment-card-end: rgba(255, 128, 0, 0.5);
-  --piggy-assignment-card-border: rgba(223, 125, 27, 0.75);
-  --piggy-assignment-overlay: rgba(245, 124, 0, 0.8);
-  --piggy-assignment-accent: #f57c00;
-  --piggy-assignment-shadow-glow: rgba(245, 124, 0, 0.5);
+  --piggy-assignment-card-start: rgba(255, 223, 173, 0.65);
+  --piggy-assignment-card-end: rgba(232, 171, 92, 0.45);
+  --piggy-assignment-card-border: rgba(184, 119, 34, 0.55);
+  --piggy-assignment-overlay: rgba(211, 132, 42, 0.82);
+  --piggy-assignment-accent: #b8792f;
+  --piggy-assignment-shadow-glow: rgba(184, 119, 34, 0.32);
 
   /* Information cards */
-  --piggy-information-card-start: rgba(138, 203, 255, 0.5);
-  --piggy-information-card-end: rgba(63, 139, 214, 0.5);
-  --piggy-information-card-border: rgba(64, 129, 170, 0.75);
-  --piggy-information-overlay: rgba(0, 150, 255, 0.9);
-  --piggy-information-accent: #00aaff;
-  --piggy-information-shadow-glow: rgba(0, 150, 255, 0.6);
+  --piggy-information-card-start: rgba(198, 229, 250, 0.78);
+  --piggy-information-card-end: rgba(147, 199, 232, 0.55);
+  --piggy-information-card-border: rgba(35, 111, 168, 0.42);
+  --piggy-information-overlay: rgba(35, 111, 168, 0.86);
+  --piggy-information-accent: #236fa8;
+  --piggy-information-shadow-glow: rgba(35, 111, 168, 0.28);
 
   --piggy-card-border-width: 1px;
 
@@ -45,10 +45,10 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
   --piggy-navbar-end: rgb(225, 225, 225);
   --piggy-text-navbar: #333333;
 
-  --piggy-button: rgb(213, 206, 243);
-  --piggy-button-hover: rgb(175, 168, 209);
-  --piggy-button-active: rgb(190, 149, 255);
-  --piggy-text-button: var(--piggy-dark);
+  --piggy-button: #d7e8f5;
+  --piggy-button-hover: #bfd9ec;
+  --piggy-button-active: #90c6ea;
+  --piggy-text-button: #172033;
 
   --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7);
   --piggy-text-thumbnail: var(--piggy-dark);
@@ -65,8 +65,8 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
   --piggy-tooltip: var(--piggy-dark);
   --piggy-tooltip-text: var(--piggy-light);
 
-  --piggy-text-hyperlink: #2885d1;
-  --piggy-text-hyperlink-hover: rgb(39, 80, 114);
+  --piggy-text-hyperlink: #236fa8;
+  --piggy-text-hyperlink-hover: #164c78;
 
   /* level container */
   --piggy-level-container-text: var(--piggy-dark);
@@ -82,21 +82,22 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
   --piggy-logo-gradient: linear-gradient(45deg, #ff72a8, #ff5a8f, #c03db9);
   --piggy-logo-border: rgba(50, 0, 50, 0.5);
 
-  --piggy-header-border: #ffffff;
+  /* Headings */
+  --piggy-header-border: rgba(70, 80, 95, 0.22);
 
-  --piggy-content-h1: #000000;
-  --piggy-content-h2: #925a50;
-  --piggy-content-h3: #823e96;
-  --piggy-content-h4: #997a5d;
-  --piggy-content-h5: #396888;
-  --piggy-content-h6: #6c7074;
+  --piggy-content-h1: #172033;
+  --piggy-content-h2: #236fa8;
+  --piggy-content-h3: #2f7d5c;
+  --piggy-content-h4: #9a641f;
+  --piggy-content-h5: #6f4fb3;
+  --piggy-content-h6: #66717d;
 
-  --piggy-header-bg-h1: rgba(108, 108, 108, 0.25);
-  --piggy-header-bg-h2: rgba(255, 167, 140, 0.25);
-  --piggy-header-bg-h3: rgba(220, 105, 255, 0.25);
-  --piggy-header-bg-h4: rgba(255, 203, 154, 0.25);
-  --piggy-header-bg-h5: rgba(107, 196, 255, 0.25);
-  --piggy-header-bg-h6: rgba(174, 179, 185, 0.25);
+  --piggy-header-bg-h1: rgba(23, 32, 51, 0.1);
+  --piggy-header-bg-h2: rgba(35, 111, 168, 0.16);
+  --piggy-header-bg-h3: rgba(47, 125, 92, 0.13);
+  --piggy-header-bg-h4: rgba(154, 100, 31, 0.12);
+  --piggy-header-bg-h5: rgba(111, 79, 179, 0.12);
+  --piggy-header-bg-h6: rgba(102, 113, 125, 0.1);
 
   /* Tables */
   --piggy-table-bg: rgba(255, 255, 255, 0.82);

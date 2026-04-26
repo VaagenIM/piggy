@@ -1,6 +1,7 @@
 /*****************************\
 |*  MARKDOWN BASE OVERRIDES  *|
 \*****************************/
+
 .md-content {
   padding: 0rem 0.25rem !important;
 }
@@ -9,24 +10,13 @@
   margin: 0rem 0.5rem !important;
 }
 
-.md-container a {
-  color: var(--piggy-text-hyperlink) !important;
-}
-
-.md-container a:hover {
-  color: var(--piggy-text-hyperlink-hover) !important;
-  text-decoration: underline;
-  transition: 0.2s;
-}
-
-.assignment-heading {
-  margin-top: 1em;
-  text-align: center;
-}
-
+/**********************\
+|*     BASE RESET     *|
+\**********************/
 .md-container blockquote,
 .md-container dl,
 .md-container dd,
+.md-container figure,
 .md-container h1,
 .md-container h2,
 .md-container h3,
@@ -34,103 +24,321 @@
 .md-container h5,
 .md-container h6,
 .md-container hr,
-.md-container figure,
+.md-container ol,
 .md-container p,
-.md-container pre {
-  /* Set to standard value */
+.md-container pre,
+.md-container ul {
   margin: initial;
   padding: initial;
 }
 
+/**********************\
+|*   LINK OVERRIDES   *|
+\**********************/
+.md-container a {
+  color: var(--piggy-text-hyperlink) !important;
+}
+
+.md-container a:hover {
+  color: var(--piggy-text-hyperlink-hover) !important;
+  text-decoration: underline;
+  transition:
+    color 0.2s,
+    text-decoration-color 0.2s;
+}
+
+/************************\
+|* TYPOGRAPHY OVERRIDES *|
+\************************/
+.md-content {
+  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content p,
+.md-content li,
+.md-content dd,
+.md-content dt {
+  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content p:not(.admonition-title):not(summary) {
+  margin-top: calc(0.25rem * var(--piggy-font-scale)) !important;
+  margin-bottom: calc(0.9rem * var(--piggy-font-scale)) !important;
+  line-height: calc(1.75rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content strong {
+  font-weight: 700 !important;
+}
+
+.md-content em {
+  font-style: italic !important;
+}
+
+/***********************\
+|*  HEADING OVERRIDES  *|
+\***********************/
+
+/* base */
 .md-content h1,
 .md-content h2,
 .md-content h3,
 .md-content h4,
 .md-content h5,
 .md-content h6 {
-  font-weight: bold !important;
-  margin-top: 2rem !important;
-  margin-bottom: 0.5rem !important;
-  border-bottom: 2px solid !important;
-  padding: 0.35rem 1.25rem 0.1rem 0.5rem !important;
-  width: 100% !important;
+  position: relative !important;
+  margin-bottom: 0.65rem !important;
+  font-weight: 750 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.015em !important;
+  scroll-margin-top: 5rem !important;
 }
 
+.md-content h1 code,
+.md-content h2 code,
+.md-content h3 code,
+.md-content h4 code,
+.md-content h5 code,
+.md-content h6 code {
+  font-size: inherit !important;
+}
+
+/* h1 */
 .md-content h1,
 .md-content h1 code {
-  font-size: calc(2rem * var(--piggy-font-scale)) !important;
+  font-size: calc(2.15rem * var(--piggy-font-scale)) !important;
 }
 
 .md-content h1 {
+  margin-top: 0.75rem !important;
+  margin-bottom: 1.75rem !important;
+  padding: 0 0 0.75rem 0 !important;
+
   color: var(--piggy-content-h1) !important;
-  background-color: var(--piggy-header-bg-h1);
+  background: transparent !important;
+
+  border: none !important;
+  border-bottom: 3px solid var(--piggy-header-bg-h1) !important;
 }
 
+/* h2 */
 .md-content h2,
 .md-content h2 code {
-  font-size: calc(1.75rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1.7rem * var(--piggy-font-scale)) !important;
 }
 
 .md-content h2 {
+  margin-top: 2.75rem !important;
+  margin-bottom: 1rem !important;
+  padding: 0 0 0.45rem 0 !important;
+
   color: var(--piggy-content-h2) !important;
-  background-color: var(--piggy-header-bg-h2);
+  background: transparent !important;
+
+  border: none !important;
+  border-bottom: 2px solid var(--piggy-header-bg-h2) !important;
 }
 
+.md-content h2::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  bottom: -2px !important;
+
+  width: min(8rem, 35%) !important;
+  height: 2px !important;
+
+  background: var(--piggy-content-h2) !important;
+}
+
+/* h3 */
 .md-content h3,
 .md-content h3 code {
   font-size: calc(1.35rem * var(--piggy-font-scale)) !important;
 }
 
 .md-content h3 {
+  margin-top: 2rem !important;
+  margin-bottom: 0.65rem !important;
+  padding: 0.2rem 0 0.2rem 0.75rem !important;
+
   color: var(--piggy-content-h3) !important;
-  background-color: var(--piggy-header-bg-h3);
+  background: transparent !important;
+
+  border: none !important;
+  border-left: 0.25rem solid var(--piggy-content-h3) !important;
 }
 
+/* h4 */
 .md-content h4,
 .md-content h4 code {
   font-size: calc(1.15rem * var(--piggy-font-scale)) !important;
 }
 
 .md-content h4 {
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.45rem !important;
+  padding: 0 !important;
+
   color: var(--piggy-content-h4) !important;
-  background-color: var(--piggy-header-bg-h4);
+  background: transparent !important;
+
+  border: none !important;
+  font-weight: 700 !important;
 }
 
+/* h5 */
 .md-content h5,
 .md-content h5 code {
-  font-size: calc(1.05rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1.02rem * var(--piggy-font-scale)) !important;
 }
 
 .md-content h5 {
+  margin-top: 1.25rem !important;
+  margin-bottom: 0.35rem !important;
+  padding: 0 !important;
+
   color: var(--piggy-content-h5) !important;
-  background-color: var(--piggy-header-bg-h5);
+  background: transparent !important;
+
+  border: none !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.015em !important;
 }
 
+/* h6 */
 .md-content h6,
 .md-content h6 code {
-  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  font-size: calc(0.95rem * var(--piggy-font-scale)) !important;
 }
 
 .md-content h6 {
+  margin-top: 1rem !important;
+  margin-bottom: 0.3rem !important;
+  padding: 0 !important;
+
   color: var(--piggy-content-h6) !important;
-  background-color: var(--piggy-header-bg-h6);
+  background: transparent !important;
+
+  border: none !important;
+  font-weight: 650 !important;
+  opacity: 0.85 !important;
 }
 
-.md-content p {
-  font-size: calc(1rem * var(--piggy-font-scale)) !important;
-}
-
-.md-content p:not(.admonition-title):not(summary) {
-  margin-bottom: calc(0.9rem * var(--piggy-font-scale)) !important;
+/**********************\
+|*   LIST OVERRIDES   *|
+\**********************/
+.md-content ul,
+.md-content ol {
   margin-top: calc(0.25rem * var(--piggy-font-scale)) !important;
+  margin-bottom: calc(0.9rem * var(--piggy-font-scale)) !important;
+  padding-left: calc(1rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content li {
+  margin-bottom: calc(0.25rem * var(--piggy-font-scale)) !important;
   line-height: calc(1.75rem * var(--piggy-font-scale)) !important;
 }
 
-.md-content ul {
-  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+.md-content li > p {
+  margin-top: 0 !important;
+  margin-bottom: calc(0.4rem * var(--piggy-font-scale)) !important;
 }
 
+.md-content li > ul,
+.md-content li > ol {
+  margin-top: calc(0.2rem * var(--piggy-font-scale)) !important;
+  margin-bottom: calc(0.2rem * var(--piggy-font-scale)) !important;
+}
+
+/******************************\
+|* DESCRIPTION LIST OVERRIDES *|
+\******************************/
+.md-content dl {
+  margin-top: calc(0.25rem * var(--piggy-font-scale)) !important;
+  margin-bottom: calc(0.9rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content dt {
+  font-weight: 700 !important;
+}
+
+.md-content dd {
+  margin-left: calc(1.5rem * var(--piggy-font-scale)) !important;
+  margin-bottom: calc(0.5rem * var(--piggy-font-scale)) !important;
+  line-height: calc(1.75rem * var(--piggy-font-scale)) !important;
+}
+
+/************************\
+|* BLOCKQUOTE OVERRIDES *|
+\************************/
 .md-content blockquote {
+  margin: calc(0.75rem * var(--piggy-font-scale)) 0 !important;
+  padding: calc(0.25rem * var(--piggy-font-scale))
+    calc(1rem * var(--piggy-font-scale)) !important;
   color: var(--piggy-neutral) !important;
   border-left: 0.2rem solid var(--piggy-neutral) !important;
+}
+
+.md-content blockquote > :first-child {
+  margin-top: 0 !important;
+}
+
+.md-content blockquote > :last-child {
+  margin-bottom: 0 !important;
+}
+
+/***********************\
+|*   HORIZONTAL RULE   *|
+\***********************/
+.md-content hr {
+  height: 0 !important;
+  margin: calc(2rem * var(--piggy-font-scale)) 0 !important;
+  border: 0 !important;
+  border-top: 2px solid var(--piggy-neutral) !important;
+}
+
+/*************************\
+|*   FIGURES AND MEDIA   *|
+\*************************/
+.md-content figure {
+  margin: calc(1rem * var(--piggy-font-scale)) 0 !important;
+}
+
+.md-content figcaption {
+  margin-top: calc(0.4rem * var(--piggy-font-scale)) !important;
+  font-size: calc(0.9rem * var(--piggy-font-scale)) !important;
+  color: var(--piggy-neutral) !important;
+  text-align: center !important;
+}
+
+.md-content img,
+.md-content svg,
+.md-content video {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/******************\
+|*   TASK LISTS   *|
+\******************/
+.md-content .task-list {
+  list-style: none !important;
+  padding-left: calc(1rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content .task-list-item {
+  list-style: none !important;
+}
+
+.md-content .task-list-item input[type="checkbox"] {
+  margin-right: calc(0.4rem * var(--piggy-font-scale)) !important;
+}
+
+/*********************\
+|*       OTHER       *|
+\*********************/
+.assignment-heading {
+  margin-top: 1em;
+  text-align: center;
 }

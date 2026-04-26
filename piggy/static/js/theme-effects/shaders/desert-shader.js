@@ -43,7 +43,7 @@
       vec2 uv = fragCoord / iResolution.xy * vec2(640.0, 480.0);
 
       float z = 0.0;
-      wave(uv.x, uv.y, z, iTime * 15.0, 17, 1.0);
+      wave(uv.x, uv.y, z, iTime * 8.0, 15, 0.85);
 
       z = (z + 22.0) * 0.018;
 

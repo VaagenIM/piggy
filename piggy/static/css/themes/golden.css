@@ -1,5 +1,5 @@
 /* METADATA
-id: 12
+id: 105
 name: Golden
 description: A gold-on-onyx theme. (Gonna be, gonna be golden!)
 type: dark
@@ -8,34 +8,38 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 
 [data-theme="golden"] {
   --piggy-main: #0b0b0e;
-  --piggy-light: #15151b;
-  --piggy-neutral: #7f7a66;
-  --piggy-dark: #0b0b0e;
+  --piggy-light: #ffd86b;
+  --piggy-neutral: #7f7458;
+  --piggy-dark: #f7e9c5;
 
   --piggy-text-main: #f7e9c5;
+  --piggy-text-light: #fff3cf;
+  --piggy-text-neutral: #c9b77c;
+  --piggy-text-dark: #0b0b0e;
+
   --piggy-shadow-text: rgba(0, 0, 0, 0.35);
   --piggy-shadow-box: rgba(0, 0, 0, 0.5);
   --piggy-shadow-glow: rgba(255, 215, 128, 0.35);
 
-  --piggy-card-start: #141419;
-  --piggy-card-end: #101015;
-  --piggy-card-border: #6d5520;
-  --piggy-text-card: var(--piggy-text-main);
+  --piggy-card-start: rgba(20, 20, 25, 0.82);
+  --piggy-card-end: rgba(10, 10, 14, 0.88);
+  --piggy-card-border: rgba(255, 216, 107, 0.34);
+  --piggy-text-card: #f7e9c5;
 
   /* Assignment cards */
-  --piggy-assignment-card-start: rgba(255, 200, 80, 0.15);
-  --piggy-assignment-card-end: rgba(255, 170, 50, 0.12);
-  --piggy-assignment-card-border: #d6a149;
+  --piggy-assignment-card-start: rgba(255, 216, 107, 0.18);
+  --piggy-assignment-card-end: rgba(180, 120, 35, 0.18);
+  --piggy-assignment-card-border: rgba(255, 216, 107, 0.54);
   --piggy-assignment-overlay: rgba(255, 208, 110, 0.85);
   --piggy-assignment-accent: #ffd86b;
-  --piggy-assignment-shadow-glow: rgba(255, 217, 110, 0.4);
+  --piggy-assignment-shadow-glow: rgba(255, 216, 107, 0.32);
 
-  --piggy-information-card-start: rgba(201, 59, 34, 0.7);
-  --piggy-information-card-end: rgba(180, 51, 0, 0.3);
-  --piggy-information-card-border: #d83d00;
-  --piggy-information-overlay: rgba(245, 37, 0, 0.85);
-  --piggy-information-accent: #f54e00;
-  --piggy-information-shadow-glow: rgba(206, 103, 71, 0.5);
+  --piggy-information-card-start: rgba(0, 188, 212, 0.18);
+  --piggy-information-card-end: rgba(0, 90, 105, 0.28);
+  --piggy-information-card-border: rgba(0, 188, 212, 0.48);
+  --piggy-information-overlay: rgba(0, 188, 212, 0.82);
+  --piggy-information-accent: #00bcd4;
+  --piggy-information-shadow-glow: rgba(0, 188, 212, 0.24);
 
   --piggy-card-border-width: 2px;
 
@@ -44,9 +48,9 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-navbar-end: #1a1a22;
   --piggy-text-navbar: #f6e7c2;
 
-  --piggy-button: #b8891c;
-  --piggy-button-hover: #d1a52b;
-  --piggy-button-active: #f1c54a;
+  --piggy-button: #a87a20;
+  --piggy-button-hover: #d6a149;
+  --piggy-button-active: #ffd86b;
   --piggy-text-button: #0b0b0e;
 
   --piggy-thumbnail-overlay: rgba(0, 0, 0, 0.5);
@@ -64,8 +68,8 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-tooltip: #ffe082;
   --piggy-tooltip-text: #0b0b0e;
 
-  --piggy-text-hyperlink: #ffd86b;
-  --piggy-text-hyperlink-hover: #f0c24a;
+  --piggy-text-hyperlink: #00d7e8;
+  --piggy-text-hyperlink-hover: #8ff6ff;
 
   --piggy-logo-gradient: linear-gradient(45deg, #ffd86b, #d4a634, #8c6a1f);
   --piggy-logo-border: rgba(34, 33, 30, 0.5);
@@ -74,21 +78,22 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-info-box-background: #00414ec0;
   --piggy-info-box-border: #00bcd4;
 
-  --piggy-header-border: #ffffff;
+  /* Headings */
+  --piggy-header-border: rgba(255, 216, 107, 0.34);
 
-  --piggy-content-h1: #f7e9c5;
-  --piggy-content-h2: #f7e9c5;
-  --piggy-content-h3: #f7e9c5;
-  --piggy-content-h4: #f7e9c5;
-  --piggy-content-h5: #f7e9c5;
-  --piggy-content-h6: #f7e9c5;
+  --piggy-content-h1: #fff3cf; /* Golden Honmoon / group */
+  --piggy-content-h2: #ffd86b; /* Golden theme identity */
+  --piggy-content-h3: #c792ff; /* Rumi: lavender-purple */
+  --piggy-content-h4: #ff8f7a; /* Mira: coral-pink */
+  --piggy-content-h5: #7ee7b8; /* Zoey: mint-green / soft teal */
+  --piggy-content-h6: #c9b77c; /* muted gold metadata */
 
-  --piggy-header-bg-h1: #f7e9c520;
-  --piggy-header-bg-h2: #f7e9c520;
-  --piggy-header-bg-h3: #f7e9c520;
-  --piggy-header-bg-h4: #f7e9c520;
-  --piggy-header-bg-h5: #f7e9c520;
-  --piggy-header-bg-h6: #f7e9c520;
+  --piggy-header-bg-h1: rgba(255, 243, 207, 0.12);
+  --piggy-header-bg-h2: rgba(255, 216, 107, 0.16);
+  --piggy-header-bg-h3: rgba(199, 146, 255, 0.13);
+  --piggy-header-bg-h4: rgba(255, 143, 122, 0.12);
+  --piggy-header-bg-h5: rgba(126, 231, 184, 0.11);
+  --piggy-header-bg-h6: rgba(201, 183, 124, 0.1);
 
   /* Tables */
   --piggy-table-bg: rgba(16, 16, 21, 0.68);
@@ -143,7 +148,7 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-code-token-function: #f0c24a;
   --piggy-code-token-class: #ffe082;
   --piggy-code-token-variable: #f7e9c5;
-  --piggy-code-token-operator: #ff9f43;
+  --piggy-code-token-operator: #c9b77c;
   --piggy-code-token-punctuation: #c9b77c;
   --piggy-code-token-builtin: #9ad8ff;
   --piggy-code-token-constant: #ffb86b;
@@ -202,12 +207,12 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="golden"] .md-content {
-  border: 1px solid var(--piggy-button);
+  border: 1px solid rgba(255, 216, 107, 0.38);
   border-radius: 0.5rem;
-  background-color: #000000cc;
+  background: rgba(8, 8, 12, 0.92);
   box-shadow:
-    0 0 0.9rem rgba(255, 216, 107, 0.08),
-    inset 0 0 1.25rem rgba(255, 216, 107, 0.035);
+    0 0 0.9rem rgba(255, 216, 107, 0.1),
+    inset 0 0 1.25rem rgba(255, 216, 107, 0.04);
 }
 
 [data-theme="golden"] .md-content details,
@@ -331,4 +336,10 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-table-header-start: rgba(201, 183, 124, 0.055);
   --piggy-table-header-end: rgba(201, 183, 124, 0.055);
   --piggy-table-row-hover: rgba(201, 183, 124, 0.07);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="golden"] .background-overlay canvas#goldenShader {
+    display: none !important;
+  }
 }
