@@ -219,6 +219,50 @@ def download_site():
         pool.map(_download_media, media_tasks)  # Download media in parallel
 
 
+def api_transform(link: str) -> str | None:
+    # strip query/hash
+    link = link.split("?")[0].split("#")[0]
+    link = link.strip("/")
+
+    if link == "":
+        return "/api"
+    elif not link.startswith("main/"):
+        return None
+
+    link = link[len("main/") :]
+    # remove file extensions
+    link = re.sub(r"\.[a-zA-Z0-9]+$", "", link)
+
+    return f"/api/{link}"
+
+
+def download_api_views():
+    for link in visited:
+        api_path = api_transform(link)
+
+        # skip invalid mappings (like /static)
+        if not api_path:
+            continue
+
+        print(f"Fetching API \33[34m{api_path}\33[0m")
+
+        try:
+            r = requests.get(f"{url}{api_path}", timeout=600)
+        except Exception as e:
+            print(f"WARNING: request failed for {api_path}: {e}")
+            continue
+
+        if not r.ok:
+            print(f"WARNING: failed {api_path} ({r.status_code})")
+            continue
+
+        full_path = f"demo{api_path}/index.json"
+        os.makedirs(os.path.dirname(full_path), exist_ok=True)
+
+        with open(full_path, "wb+") as f:
+            f.write(r.content)
+
+
 def _minify(path, filetype):
     if path.name.endswith(f".min.{filetype}"):
         # Already minified, skip
@@ -243,7 +287,7 @@ def minify_folder(folder):
     for dirpath, _, filenames in os.walk(folder):
         for filename in filenames:
             p = Path(dirpath) / filename
-            suffix = p.suffix.lower().lstrip('.')
+            suffix = p.suffix.lower().lstrip(".")
             if suffix in ["css", "js"]:
                 _minify(p, suffix)
 
@@ -251,6 +295,7 @@ def minify_folder(folder):
 if __name__ == "__main__":
     generate_static_files(static_folder=Path("demo/static").absolute())
     download_site()
+    download_api_views()
     # Since we are in .github/workflows, we need to go up two directories to find the piggy folder
     root_dir = Path(__file__).resolve().parents[2]
     copytree(root_dir / "piggy" / "static", Path("demo/static").absolute(), dirs_exist_ok=True)
