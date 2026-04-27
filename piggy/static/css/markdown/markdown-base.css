@@ -94,6 +94,15 @@
   scroll-margin-top: 5rem !important;
 }
 
+.md-content h1:first-child,
+.md-content h2:first-child,
+.md-content h3:first-child,
+.md-content h4:first-child,
+.md-content h5:first-child,
+.md-content h6:first-child {
+  margin-top: 0.5rem !important;
+}
+
 .md-content h1 code,
 .md-content h2 code,
 .md-content h3 code,

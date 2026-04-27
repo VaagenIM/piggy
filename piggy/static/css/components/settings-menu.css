@@ -22,19 +22,24 @@
 }
 
 #settings-menu.open {
-  width: 300px;
+  width: 350px;
 }
 
 #settings-menu .close-button {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 12px;
+  right: 15px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 2.35rem;
   height: 2.35rem;
   border-radius: 999px;
+  border: 1px solid
+    var(
+      --piggy-button-border,
+      color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+    );
   background: var(--piggy-button);
   color: var(--piggy-text-button);
   font-size: 1.75rem;
@@ -47,7 +52,7 @@
 }
 
 .settings-content {
-  width: 300px;
+  width: 350px;
   padding: 60px 20px 20px 20px;
 }
 
