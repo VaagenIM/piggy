@@ -135,7 +135,7 @@ def process_json_for_api(obj):
         if not thumb:
             thumb = "media/header"
         if not current_path and request:
-            current_path = request.path[len("/api/") :]
+            current_path = request.path.strip("/")
 
         if not isinstance(thumb, str):
             return thumb
