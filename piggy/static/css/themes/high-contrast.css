@@ -240,7 +240,7 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   border-bottom: var(--piggy-card-border-width) solid white;
 }
 
-[data-theme="high-contrast"] #meta-container {
+[data-theme="high-contrast"] .assignment-header {
   border-bottom: var(--piggy-card-border-width) solid white;
 }
 

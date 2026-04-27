@@ -1,0 +1,25 @@
+<div id="language-container" class="language-selector">
+  <button
+    class="snout-button snout-border snout-padding-m"
+    type="button"
+    aria-haspopup="true"
+    aria-controls="lang-dd">
+    <span class="language-flag">{{ current_language.flag }}</span>
+    <span class="language-name">{{ current_language.name }}</span>
+  </button>
+
+  <div class="language-dropdown" id="lang-dd" data-language-dropdown>
+    {% for lang, val in supported_languages.items() %}
+      <a
+        data-lang="{{ lang }}"
+        {% if github_pages %}
+          href="{{ request.path.split('/lang/')[0] }}{{ '/lang/' + lang if lang else '' }}"
+        {% else %}
+          onclick="document.cookie = 'lang={{ lang }}'; location.reload();"
+        {% endif %}>
+        <span class="language-flag">{{ val.flag }}</span>
+        <span class="language-name">{{ val.name }}</span>
+      </a>
+    {% endfor %}
+  </div>
+</div>

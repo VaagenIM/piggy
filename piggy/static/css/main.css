@@ -8,9 +8,11 @@
 @import "./fonts/font-size-themes.css";
 
 @import "./layout/page-shell.css";
+@import "./layout/site-header.css";
 @import "./layout/titles.css";
 
 @import "./components/navigation.css";
+@import "./components/breadcrumbs.css";
 @import "./components/logo.css";
 @import "./components/search.css";
 @import "./components/settings-menu.css";

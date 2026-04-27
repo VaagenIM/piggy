@@ -2,7 +2,14 @@
 |* PIGGY LOGO *|
 \**************/
 #piggy-logo {
-  margin: -0.3rem 0.3rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: max-content;
+  margin: 0 0.3rem;
+  line-height: 1.1;
+  overflow: visible;
+  text-decoration: none;
 }
 
 #piggy-logo:hover {
@@ -13,16 +20,18 @@
 }
 
 #piggy-logo-icon {
-  display: inline;
+  display: block;
   width: calc(2rem * var(--piggy-font-scale));
-  bottom: calc(0.35rem * var(--piggy-font-scale));
-  position: relative;
+  height: auto;
 }
 
 #piggy-logo-text {
+  display: inline-block;
   font-family: "Cherry Bomb One", sans-serif;
   font-weight: 700;
   font-size: calc(1.85rem * var(--piggy-font-scale));
+  line-height: 1.25;
+  padding-block: 0.02em 0.12em;
   color: var(--piggy-logo);
   background: var(--piggy-logo-gradient);
   -webkit-background-clip: text;

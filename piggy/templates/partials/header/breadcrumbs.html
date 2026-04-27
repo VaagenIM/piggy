@@ -1,0 +1,65 @@
+{#
+Determine what type of topic we are on (assignment/info/exercise)
+so we can decide whether to remove the last path segment from the breadcrumbs.
+(We want to hide the topic slug in some cases)
+#}
+{% if not meta %}
+  {% set meta = {} %}
+{% endif %}
+{% set topic_type = "" %}
+{% set remove_last_from_data_with_type = ["information", "exercise"] %}
+{% if meta.topic %}
+  {% set topic_type = meta.topic.type %}
+{% endif %}
+
+<ol class="site-breadcrumbs" aria-label="Breadcrumbs">
+  {% if request.path.strip('/') %}
+    {% set path_segments = request.path.strip('/').split('/') %}
+    {% if path_segments|length >= 2 and "lang" == path_segments[-2] %}
+      {% set path_segments = path_segments[:-2] %}
+    {% endif %}
+    {% if meta.LEVELS_DATA and topic_type in remove_last_from_data_with_type %}
+      {% set path_segments = path_segments[:-1] %}
+    {% endif %}
+
+    {% for p in path_segments %}
+      {% set url = "/" + request.base_url.split(p)[0].split(request.host_url)[1] + p %}
+      {% if p == ASSIGNMENT_URL_PREFIX %}
+        {% set p = "Oppgaver" %}
+      {% elif loop.last %}
+        {% if meta %}{% set p = meta.name or meta.title %}{% endif %}
+      {% else %}
+        {% if meta %}{% set p = meta.get(get_template_name_from_index(loop.index)).name %}{% endif %}
+      {% endif %}
+
+      <li class="site-breadcrumb-item">
+        {% if not loop.first %}
+          <svg
+            class="piggy-breadcrumb no-hover site-breadcrumb-separator"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 6 10">
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 9 4-4-4-4" />
+          </svg>
+        {% endif %}
+
+        {% if not loop.last %}
+          <a href="{{ url }}" class="piggy-breadcrumb site-breadcrumb-link">
+            {{ p }}
+          </a>
+        {% else %}
+          <span
+            class="piggy-breadcrumb no-hover current site-breadcrumb-current">
+            {{ p }}
+          </span>
+        {% endif %}
+      </li>
+    {% endfor %}
+  {% endif %}
+</ol>

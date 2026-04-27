@@ -1,9 +1,12 @@
 /************************\
 |*     LEVEL SELECT     *|
 \************************/
-#meta-container {
+.assignment-header {
   display: flex;
-  align-items: center;
+  align-items: stretch;
+  flex-wrap: nowrap;
+  min-height: calc(3.25rem * var(--piggy-font-scale));
+  overflow: visible;
   background: linear-gradient(
     90deg,
     var(--piggy-navbar-start) 0%,
@@ -12,29 +15,94 @@
   border-top: 2px solid var(--piggy-card-start);
 }
 
-#level-container {
-  padding: 10px;
-  gap: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  border-left: 1px solid var(--piggy-neutral);
-  position: relative;
+.assignment-header .language-selector {
+  flex: 0 0 auto;
 }
 
-#level-container .snout-button {
-  flex: 1;
+.assignment-header .level-select {
+  flex: 1 1 0;
+}
+
+.level-select {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  padding: 10px;
+  gap: 0.75rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  border-left: 1px solid var(--piggy-neutral);
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-color: var(--piggy-neutral) transparent;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.level-select::-webkit-scrollbar {
+  height: 0.55rem;
+}
+
+.level-select::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.level-select::-webkit-scrollbar-thumb {
+  background: var(--piggy-neutral);
+  border-radius: 999px;
+}
+
+.level-select .snout-button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
   position: relative;
   min-width: calc(4rem * var(--piggy-font-scale));
   max-width: calc(8rem * var(--piggy-font-scale));
-  white-space: nowrap;
+  min-height: calc(2.2rem * var(--piggy-font-scale));
+  line-height: 1.25;
+  white-space: normal;
   text-align: center;
+  overflow: visible;
+}
+
+.level-select--compact {
+  gap: 0.45rem;
+}
+
+.level-select--compact .level-button-text {
+  display: none;
+}
+
+.level-select--compact .snout-button {
+  min-width: calc(3rem * var(--piggy-font-scale));
+  max-width: calc(3.75rem * var(--piggy-font-scale));
+}
+
+.level-button-label {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.25rem;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.level-button-text,
+.level-button-number {
+  line-height: 1.2;
 }
 
 /* Tooltip Text */
-#level-container .nav-tooltip {
+.level-select .nav-tooltip {
   visibility: hidden;
+  display: block;
   width: max-content;
   white-space: normal;
   max-width: min(250px, calc(100vw - 16px));
@@ -43,20 +111,22 @@
   text-align: center;
   padding: 5px 10px;
   border-radius: 6px;
-  position: absolute;
+  position: fixed;
   z-index: 100000;
 
-  top: calc(100% + 5px);
-  left: 50%;
-  transform: translateX(calc(-50% + var(--tooltip-shift, 0px)));
+  top: var(--tooltip-top, 0);
+  left: var(--tooltip-left, 0);
+  transform: translateX(-50%);
 
   opacity: 0;
   transition: opacity 0.3s;
   pointer-events: none;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 /* Tooltip Arrow */
-#level-container .nav-tooltip::after {
+.level-select .nav-tooltip::after {
   content: "";
   position: absolute;
   top: -9px;
@@ -67,12 +137,18 @@
   border-color: transparent transparent var(--piggy-tooltip) transparent;
 }
 
+.level-select .nav-tooltip[data-placement="top"]::after {
+  top: auto;
+  bottom: -9px;
+  border-color: var(--piggy-tooltip) transparent transparent transparent;
+}
+
 @media (max-width: 800px) {
   .level-button-text {
     display: none;
   }
 
-  #level-container .snout-button {
+  .level-select .snout-button {
     min-width: 48px;
     max-width: 48px;
   }
@@ -82,17 +158,11 @@
   .level-button-text {
     display: none;
   }
-
-  header {
-    position: relative;
-  }
-
-  #level-container {
-    flex-wrap: wrap;
+  .level-select {
     gap: 5px;
   }
 
-  #level-container .snout-button {
+  .level-select .snout-button {
     min-width: 48px;
     max-width: 48px;
   }
@@ -103,27 +173,28 @@
     content: "";
   }
 
-  #level-container .snout-button {
+  .level-select .snout-button {
     min-width: 48px;
     max-width: 48px;
   }
 }
 
 /* Show Tooltip on Hover */
-#level-container .snout-button:hover .nav-tooltip {
+.level-select .snout-button:hover .nav-tooltip,
+.level-select .snout-button:focus-within .nav-tooltip {
   visibility: visible;
   opacity: 1;
 }
 
-/* Not sure if these are needed */
 @media (max-width: 600px) {
-  #level-container {
-    flex-wrap: wrap;
+  .level-select {
     gap: 5px;
   }
 }
 
 .tooltip-diff-image {
-  display: inline;
+  display: inline-block;
   width: 2rem;
+  height: auto;
+  vertical-align: middle;
 }
