@@ -128,6 +128,24 @@ def get_css_metadata(path: str):
 
 
 def process_json_for_api(obj):
+    def apply_thumbnail(thumb, current_path):
+        """Turn the thumbnail path into an absolute URL"""
+        if not isinstance(thumb, str):
+            return thumb
+
+        if thumb.startswith("/"):
+            return thumb
+
+        thumb = thumb.rsplit(".", 1)[0]
+
+        if current_path:
+            folder = Path(current_path).parent.as_posix()
+            folder = re.sub(r"^[^/]+/", "", folder)
+            folder = normalize_path_to_str(folder, replace_spaces=True, normalize_url=True)
+            return f"/{MEDIA_ROUTE}/{folder}/{thumb}.{IMG_FMT}"
+
+        return f"/{MEDIA_ROUTE}/{thumb}.{IMG_FMT}"
+
     def transform(obj, current_path=None):
         if isinstance(obj, dict):
             if "path" in obj:
@@ -137,7 +155,7 @@ def process_json_for_api(obj):
 
             # We need to iterate through to grab/fix:
             # - URLs for any segments with paths
-            # - Thumbnails
+            # - Thumbnails should be asbolute URLs
             for k, v in obj.items():
                 # If we have a path or system path, we can generate a URL
                 # If we have a system path with no specified thumbnail, we can use the default path
@@ -158,15 +176,24 @@ def process_json_for_api(obj):
                 # Special handling for "meta" keys to transform thumbnail paths
                 if k == "meta" and isinstance(v, dict):
                     meta = transform(v, current_path)
-
-                    thumb = meta.get("thumbnail")
-                    if current_path and isinstance(thumb, str):
-                        folder = Path(current_path).parent.as_posix()
-                        folder = re.sub(r"^[^/]+/", "", folder)
-                        folder = normalize_path_to_str(folder, replace_spaces=True, normalize_url=True)
-                        meta["thumbnail"] = f"/{MEDIA_ROUTE}/{folder}/{thumb}.{IMG_FMT}"
-
+                    meta["thumbnail"] = apply_thumbnail(meta.get("thumbnail"), current_path)
                     new_obj[k] = meta
+                    continue
+
+                if k == "translation_meta" and isinstance(v, dict):
+                    meta_block = {}
+
+                    for lang, lang_meta in v.items():
+                        if isinstance(lang_meta, dict):
+                            lang_meta = transform(lang_meta, current_path)
+                            lang_meta["thumbnail"] = apply_thumbnail(lang_meta.get("thumbnail"), current_path)
+
+                        meta_block[lang] = lang_meta
+
+                    new_obj[k] = meta_block
+                    continue
+
+                if k.startswith("turtletranslate_"):
                     continue
 
                 new_obj[k] = transform(v, current_path)
