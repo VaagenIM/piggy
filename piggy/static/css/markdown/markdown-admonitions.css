@@ -70,7 +70,12 @@
   overflow: hidden !important;
 }
 
-.md-content .admonition > .admonition-title {
+.md-content :is(.admonition, details) :is(.admonition, details) {
+  border: 1px solid color-mix(in srgb, var(--piggy-admonition-border) 50%, transparent) !important;
+  border-left: 0.25rem solid var(--piggy-admonition-border) !important;
+}
+
+.md-content .admonition>.admonition-title {
   display: block !important;
 
   margin: 0 !important;
@@ -87,7 +92,7 @@
   line-height: 1.35 !important;
 }
 
-.md-content details > summary {
+.md-content details>summary {
   display: block !important;
 
   margin: 0 !important;
@@ -106,19 +111,17 @@
   cursor: pointer !important;
 }
 
-.md-content .admonition > p:not(.admonition-title),
-.md-content details > p {
+.md-content .admonition>p:not(.admonition-title),
+.md-content details>p {
   margin: 0.75rem 1rem !important;
 }
 
-.md-content
-  :is(.admonition, details)
-  > :not(.admonition-title):not(summary):not(p) {
+.md-content :is(.admonition, details)> :not(.admonition-title):not(summary):not(p) {
   margin-left: 1rem !important;
   margin-right: 1rem !important;
 }
 
-.md-content :is(.admonition, details) > :last-child {
+.md-content :is(.admonition, details)> :last-child {
   margin-bottom: 1rem !important;
 }
 
@@ -132,18 +135,18 @@
   list-style: disc !important;
 }
 
-.md-content .admonition > .admonition-title::before,
-.md-content details > summary::before {
+.md-content .admonition>.admonition-title::before,
+.md-content details>summary::before {
   top: 50% !important;
   transform: translateY(-50%) !important;
 }
 
-.md-content details > summary::after {
+.md-content details>summary::after {
   top: 50% !important;
   transform: translateY(-50%) rotate(0deg) !important;
 }
 
-.md-content details[open] > summary::after {
+.md-content details[open]>summary::after {
   transform: translateY(-50%) rotate(180deg) !important;
 }
 
@@ -156,9 +159,9 @@
   overflow: hidden !important;
 }
 
-.md-content .admonition > .admonition-title::before,
-.md-content details > summary::before,
-.md-content details > summary::after {
+.md-content .admonition>.admonition-title::before,
+.md-content details>summary::before,
+.md-content details>summary::after {
   top: calc(50% + 1px) !important;
 }
 
@@ -167,15 +170,12 @@
 \*********************************/
 
 /* NOTE / INFO / TIP */
-.md-content
-  :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
-  ) {
+.md-content :is(.admonition.note,
+  details.note,
+  .admonition.info,
+  details.info,
+  .admonition.tip,
+  details.tip) {
   --piggy-admonition-bg: var(--piggy-admonition-note-bg);
   --piggy-admonition-title-bg: var(--piggy-admonition-note-title-bg);
   --piggy-admonition-text: var(--piggy-admonition-note-text);
@@ -184,13 +184,10 @@
 }
 
 /* SUCCESS / QUESTION */
-.md-content
-  :is(
-    .admonition.success,
-    details.success,
-    .admonition.question,
-    details.question
-  ) {
+.md-content :is(.admonition.success,
+  details.success,
+  .admonition.question,
+  details.question) {
   --piggy-admonition-bg: var(--piggy-admonition-success-bg);
   --piggy-admonition-title-bg: var(--piggy-admonition-success-title-bg);
   --piggy-admonition-text: var(--piggy-admonition-success-text);
@@ -199,13 +196,10 @@
 }
 
 /* WARNING / ATTENTION */
-.md-content
-  :is(
-    .admonition.warning,
-    details.warning,
-    .admonition.attention,
-    details.attention
-  ) {
+.md-content :is(.admonition.warning,
+  details.warning,
+  .admonition.attention,
+  details.attention) {
   --piggy-admonition-bg: var(--piggy-admonition-warning-bg);
   --piggy-admonition-title-bg: var(--piggy-admonition-warning-title-bg);
   --piggy-admonition-text: var(--piggy-admonition-warning-text);
@@ -214,15 +208,12 @@
 }
 
 /* DANGER / FAILURE / BUG */
-.md-content
-  :is(
-    .admonition.danger,
-    details.danger,
-    .admonition.failure,
-    details.failure,
-    .admonition.bug,
-    details.bug
-  ) {
+.md-content :is(.admonition.danger,
+  details.danger,
+  .admonition.failure,
+  details.failure,
+  .admonition.bug,
+  details.bug) {
   --piggy-admonition-bg: var(--piggy-admonition-danger-bg);
   --piggy-admonition-title-bg: var(--piggy-admonition-danger-title-bg);
   --piggy-admonition-text: var(--piggy-admonition-danger-text);
@@ -252,6 +243,6 @@
   background-color: var(--piggy-admonition-icon, currentColor) !important;
 }
 
-.md-content details > summary::after {
+.md-content details>summary::after {
   color: var(--piggy-admonition-icon, currentColor) !important;
 }
