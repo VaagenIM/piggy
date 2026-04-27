@@ -11,21 +11,70 @@
 }
 
 .site-navbar {
+  --site-navbar-control-gap: 0.65rem;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--site-navbar-control-gap);
   min-height: calc(3.25rem * var(--piggy-font-scale));
   padding: 0.5rem 0.75rem;
   overflow: visible;
 }
 
-.site-navbar > * {
+.site-navbar-main,
+.site-navbar-controls {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.site-navbar-main {
+  flex: 0 1 auto;
+  gap: 0.75rem;
+}
+
+.site-navbar-controls {
+  flex: 1 1 auto;
+  justify-content: flex-end;
+  gap: var(--site-navbar-control-gap);
+}
+
+.site-navbar-controls > .level-select {
+  flex: 1 1 100%;
+}
+
+.site-navbar-actions {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.site-navbar-actions > .language-selector,
+.site-navbar-actions > #settings-button {
   flex: 0 0 auto;
 }
 
-.site-navbar > .site-breadcrumbs {
-  flex: 1 1 auto;
+.site-nav-menu-button {
+  background: var(--piggy-nav-button, var(--piggy-button));
+  background-color: var(--piggy-nav-button, var(--piggy-button));
+  border-color: var(
+    --piggy-nav-button-border,
+    var(
+      --piggy-button-border,
+      color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+    )
+  );
+  color: var(--piggy-nav-button-text, var(--piggy-text-button));
+  font-weight: 650;
+}
+
+.site-nav-menu-button:not(.no-hover, .active):hover {
+  background: var(--piggy-nav-button-hover, var(--piggy-button-hover));
+  background-color: var(--piggy-nav-button-hover, var(--piggy-button-hover));
+  color: var(--piggy-nav-button-text, var(--piggy-text-button));
 }
 
 .piggy-breadcrumb {
@@ -37,4 +86,35 @@
   color: var(--piggy-text-breadcrumb-hover);
   transition: color 0.2s ease;
   font-size: calc(1rem * var(--piggy-font-scale));
+}
+
+@media (max-width: 760px) {
+  .site-navbar {
+    --site-navbar-control-gap: 0.45rem;
+
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .site-navbar-main,
+  .site-navbar-controls {
+    flex: 1 1 100%;
+  }
+
+  .site-navbar-main {
+    justify-content: space-between;
+  }
+
+  .site-navbar-controls {
+    justify-content: flex-start;
+  }
+
+  .site-navbar-controls > .level-select {
+    flex: 1 1 auto;
+  }
+
+  .site-navbar-actions {
+    gap: 0.35rem;
+  }
 }

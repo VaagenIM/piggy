@@ -37,6 +37,12 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-button-hover: #999;
   --piggy-button-active: #00ffff80;
   --piggy-text-button: #fff;
+  --piggy-button-border: #ffffff;
+  --piggy-button-focus: #ffff00;
+  --piggy-nav-button: #000000;
+  --piggy-nav-button-hover: #333333;
+  --piggy-nav-button-text: #ffffff;
+  --piggy-nav-button-border: #ffffff;
 
   --piggy-thumbnail-overlay: rgba(0, 0, 0, 1);
   --piggy-text-thumbnail: var(--piggy-light);
@@ -52,6 +58,7 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
 
   --piggy-menu: #000000;
   --piggy-menu-text: #ffffff;
+  --piggy-menu-border: #ffffff;
 
   --piggy-tooltip: #000000;
   --piggy-tooltip-text: #ffffff;
@@ -240,11 +247,7 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   border-bottom: var(--piggy-card-border-width) solid white;
 }
 
-[data-theme="high-contrast"] .assignment-header {
-  border-bottom: var(--piggy-card-border-width) solid white;
-}
-
-[data-theme="high-contrast"] .snout-button {
+[data-theme="high-contrast"] :where(.piggy-button, .snout-button) {
   border-width: var(--piggy-card-border-width);
   border-radius: 0px !important;
 }

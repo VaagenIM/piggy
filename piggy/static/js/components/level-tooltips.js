@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+function initializeLevelTooltips() {
   const tips = document.querySelectorAll(".level-select .nav-tooltip");
   if (tips.length === 0) return;
 
@@ -64,6 +64,15 @@ document.addEventListener("DOMContentLoaded", () => {
     tip.style.setProperty("--arrow-shift", `${arrowShift}px`);
   }
 
+  function showTooltip(tip) {
+    positionTooltip(tip);
+    tip.classList.add("is-tooltip-visible");
+  }
+
+  function hideTooltip(tip) {
+    tip.classList.remove("is-tooltip-visible");
+  }
+
   const updateAll = () => tips.forEach(positionTooltip);
 
   window.addEventListener("resize", updateAll, { passive: true });
@@ -90,8 +99,12 @@ document.addEventListener("DOMContentLoaded", () => {
         })
       : null;
 
-  tips.forEach((tip) => {
+  tips.forEach((tip, index) => {
     resizeObserver?.observe(tip);
+
+    if (!tip.id) {
+      tip.id = `level-tooltip-${index + 1}`;
+    }
 
     tip.querySelectorAll("img").forEach((img) => {
       if (!img.complete) {
@@ -104,14 +117,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const trigger = tip.parentElement;
     if (!trigger) return;
 
-    const updateSoon = () => requestAnimationFrame(() => positionTooltip(tip));
+    trigger.setAttribute("aria-describedby", tip.id);
 
-    trigger.addEventListener("pointerenter", updateSoon);
+    const updateSoon = () => requestAnimationFrame(() => positionTooltip(tip));
+    const showSoon = () => requestAnimationFrame(() => showTooltip(tip));
+
+    trigger.addEventListener("pointerenter", showSoon);
+    trigger.addEventListener("pointerleave", () => hideTooltip(tip));
     trigger.addEventListener("pointerdown", updateSoon);
     trigger.addEventListener("click", updateSoon);
-    trigger.addEventListener("focusin", updateSoon);
+    trigger.addEventListener("focusin", showSoon);
+    trigger.addEventListener("focusout", () => hideTooltip(tip));
     trigger.addEventListener("touchstart", updateSoon, { passive: true });
   });
 
   updateAll();
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeLevelTooltips);
+} else {
+  initializeLevelTooltips();
+}

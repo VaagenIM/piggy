@@ -51,10 +51,15 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
   --piggy-text-navbar: var(--piggy-light);
 
   /* Buttons */
-  --piggy-button: #1f5f66;
-  --piggy-button-hover: #2b8a91;
+  --piggy-button: #217884;
+  --piggy-button-hover: #2ba0a9;
   --piggy-button-active: #66fcf1;
   --piggy-text-button: #ffffff;
+  --piggy-button-border: #52d7d0;
+  --piggy-nav-button: #122d3a;
+  --piggy-nav-button-hover: #194152;
+  --piggy-nav-button-text: #e8f3ff;
+  --piggy-nav-button-border: #3e8b95;
 
   /* Thumbnails */
   --piggy-thumbnail-overlay: rgba(11, 12, 16, 0.5);

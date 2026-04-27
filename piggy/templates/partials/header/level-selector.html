@@ -1,4 +1,7 @@
-{% set levels_data = meta.get(AssignmentTemplate.LEVELS_DATA.name) %}
+{% set levels_data = none %}
+{% if meta is defined and meta %}
+  {% set levels_data = meta.get(AssignmentTemplate.LEVELS_DATA.name) %}
+{% endif %}
 
 {% if levels_data %}
   {% if levels_data.meta.type == "assignment" %}
@@ -47,7 +50,7 @@
 
         {% if assignment.level | int == level | int %}
           <div
-            class="snout-button snout-border snout-padding-m active level-diff-{{ level_difficulty }}"
+            class="piggy-button piggy-button--m active level-diff-{{ level_difficulty }}"
             aria-current="page">
             <span class="level-button-label">
               <span class="level-button-text">{{ level_text }}</span>
@@ -60,7 +63,7 @@
         {% else %}
           <a
             href="{{ link }}"
-            class="snout-button snout-border snout-padding-m level-diff-{{ level_difficulty }}">
+            class="piggy-button piggy-button--m level-diff-{{ level_difficulty }}">
             <span class="level-button-label">
               <span class="level-button-text">{{ level_text }}</span>
               <span class="level-button-number"

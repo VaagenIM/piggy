@@ -45,13 +45,6 @@
   transition: 0.2s;
 }
 
-#piggy-index-icon {
-  display: inline;
-  width: 64px;
-  bottom: 8px;
-  position: relative;
-}
-
 /* small screen */
 @media (max-width: 640px) {
   #piggy-logo-text {

@@ -52,6 +52,11 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-button-hover: #d6a149;
   --piggy-button-active: #ffd86b;
   --piggy-text-button: #0b0b0e;
+  --piggy-button-border: #e0b657;
+  --piggy-nav-button: #3a2b11;
+  --piggy-nav-button-hover: #5b4319;
+  --piggy-nav-button-text: #fff3cf;
+  --piggy-nav-button-border: #9a7329;
 
   --piggy-thumbnail-overlay: rgba(0, 0, 0, 0.5);
   --piggy-text-thumbnail: #ffdf85;

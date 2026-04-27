@@ -5,13 +5,12 @@
   {{ content.head | safe }}
 {% endblock %}
 
-{% block header %}
-  {% include "partials/header/assignment-toolbar.html" %}
-{% endblock %}
-
 {% block base %}
-  <h1 class="page-title font-semibold assignment-heading my-6">
-    {{ content.heading }}
-  </h1>
+  <div class="assignment-page-header">
+    <h1 class="page-title font-semibold assignment-heading">
+      {{ content.heading }}
+    </h1>
+  </div>
+
   {{ content.body | safe }}
 {% endblock %}

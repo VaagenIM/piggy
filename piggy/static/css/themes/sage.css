@@ -46,10 +46,15 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
   --piggy-navbar-end: #b7d2ad;
   --piggy-text-navbar: #1f3526;
 
-  --piggy-button: #bfd9b8;
-  --piggy-button-hover: #a9cfa3;
-  --piggy-button-active: #7fb487;
+  --piggy-button: #93bf8f;
+  --piggy-button-hover: #7caf78;
+  --piggy-button-active: #5f9362;
   --piggy-text-button: #1f3526;
+  --piggy-button-border: #4d7d50;
+  --piggy-nav-button: #f7fbf3;
+  --piggy-nav-button-hover: #e8f2e0;
+  --piggy-nav-button-text: #1f3526;
+  --piggy-nav-button-border: #7ea47d;
 
   --piggy-thumbnail-overlay: rgba(237, 245, 230, 0.74);
   --piggy-text-thumbnail: var(--piggy-dark);

@@ -1,11 +1,6 @@
 /************************\
 |*    TITLES STYLING    *|
 \************************/
-.main-title {
-  font-size: calc(3rem * var(--piggy-font-scale));
-  word-wrap: break-word;
-}
-
 .page-title {
   margin-bottom: 0 !important;
   font-size: calc(3rem * var(--piggy-font-scale));

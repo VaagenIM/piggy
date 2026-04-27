@@ -39,3 +39,42 @@
   height: 0.75rem;
   margin-inline: 0.15rem;
 }
+
+.site-back-button {
+  max-width: min(28rem, 48vw);
+  justify-content: flex-start;
+  background: var(--piggy-nav-button, var(--piggy-button));
+  background-color: var(--piggy-nav-button, var(--piggy-button));
+  color: var(--piggy-nav-button-text, var(--piggy-text-button));
+  border-color: var(
+    --piggy-nav-button-border,
+    var(
+      --piggy-button-border,
+      color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+    )
+  );
+  font-weight: 650;
+}
+
+.site-back-button:not(.no-hover, .active):hover {
+  background: var(--piggy-nav-button-hover, var(--piggy-button-hover));
+  background-color: var(--piggy-nav-button-hover, var(--piggy-button-hover));
+  color: var(--piggy-nav-button-text, var(--piggy-text-button));
+}
+
+.site-back-button svg {
+  width: calc(1rem * var(--piggy-font-scale));
+  height: calc(1rem * var(--piggy-font-scale));
+}
+
+.site-back-button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .site-back-button {
+    max-width: calc(100vw - 6rem);
+  }
+}
