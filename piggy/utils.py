@@ -145,6 +145,7 @@ def process_json_for_api(obj):
                     # Remove the first folder and the extension from the path
                     file_path = v.as_posix()
                     p = re.sub(r"^[^/]+/|(\.\w+)$", "", file_path)
+                    p = normalize_path_to_str(p, replace_spaces=True, normalize_url=True)
 
                     url = f"/{ASSIGNMENT_ROUTE}/{p}"
 
@@ -161,6 +162,8 @@ def process_json_for_api(obj):
                     thumb = meta.get("thumbnail")
                     if current_path and isinstance(thumb, str):
                         folder = Path(current_path).parent.as_posix()
+                        folder = re.sub(r"^[^/]+/", "", folder)
+                        folder = normalize_path_to_str(folder, replace_spaces=True, normalize_url=True)
                         meta["thumbnail"] = f"/{MEDIA_ROUTE}/{folder}/{thumb}.{IMG_FMT}"
 
                     new_obj[k] = meta
