@@ -18,10 +18,12 @@
   {% set ns.og_name = meta.title %}
 {% endif %}
 
-{% if meta.summary %}
-  {% set ns.description = meta.summary %}
+{% if translation_meta and translation_meta[current_language.key] and translation_meta[current_language.key].description %}
+  {% set ns.description = translation_meta[current_language.key].description %}
 {% elif meta.description %}
   {% set ns.description = meta.description %}
+{% elif meta.summary %}
+  {% set ns.description = meta.summary %}
 {% endif %}
 
 {% if not media_abspath and meta.thumbnail %}
