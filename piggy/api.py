@@ -1,10 +1,11 @@
 from hashlib import md5
 from html import unescape
 
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 
+from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
 from piggy.thumbnails import create_thumbnail
-from piggy.utils import serve_pil_image
+from piggy.utils import serve_pil_image, lru_cache_wrapper, process_json_for_api
 
 api_routes = Blueprint("api", __name__, url_prefix="/api")
 
@@ -78,3 +79,20 @@ def generate_thumbnail(text: str, request=request):
     # create the thumbnail
     img = create_thumbnail(_text, bg_color, text_color, (width, height)).convert("RGB")
     return serve_pil_image(img)
+
+
+@api_routes.route("/<path:route>")
+@lru_cache_wrapper
+def api_route_json(route):
+    """Return a JSON of metadata and segment for the given route."""
+    # Retrieve metadata and segment using the route
+    meta, segment = get_piggymap_segment_from_path(route, PIGGYMAP)
+    response_data = {"meta": meta, "segment": segment}
+    return jsonify(process_json_for_api(response_data))
+
+
+@api_routes.route("/")
+@lru_cache_wrapper
+def api_piggymap():
+    """Return the entire piggymap."""
+    return jsonify(process_json_for_api(PIGGYMAP))

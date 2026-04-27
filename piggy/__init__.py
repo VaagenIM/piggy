@@ -14,6 +14,7 @@ STATIC_FONTS_PATHS = [
 ASSIGNMENT_ROUTE = "main"
 # Media is on a different prefix to not compete with the assignment routes
 MEDIA_ROUTE = "img"
+IMG_FMT = "webp"
 
 ASSIGNMENTS_TEMPLATE_FOLDER = "assignments"
 ASSIGNMENT_FILENAME_REGEX = re.compile(r"^.*Level[ _](\d+)[ _]-[ _](.+).md$")

@@ -7,7 +7,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup as bs
 from flask import send_file
 
-from piggy import ALLOWED_URL_CHARS_REGEX
+from piggy import ALLOWED_URL_CHARS_REGEX, IMG_FMT, MEDIA_ROUTE, ASSIGNMENT_ROUTE
 from piggy.models import LANGUAGES
 
 
@@ -125,3 +125,54 @@ def get_css_metadata(path: str):
     css_metadata["path"] = css_path.stem
 
     return css_metadata
+
+
+def process_json_for_api(obj):
+    def transform(obj, current_path=None):
+        if isinstance(obj, dict):
+            if "path" in obj:
+                current_path = str(obj["path"])
+
+            new_obj = {}
+
+            # We need to iterate through to grab/fix:
+            # - URLs for any segments with paths
+            # - Thumbnails
+            for k, v in obj.items():
+                # If we have a path or system path, we can generate a URL
+                # If we have a system path with no specified thumbnail, we can use the default path
+                if k in ("path", "system_path") and isinstance(v, Path):
+                    # Remove the first folder and the extension from the path
+                    file_path = v.as_posix()
+                    p = re.sub(r"^[^/]+/|(\.\w+)$", "", file_path)
+
+                    url = f"/{ASSIGNMENT_ROUTE}/{p}"
+
+                    new_obj["file_path"] = file_path
+                    new_obj["url"] = url
+                    if k == "system_path" and "thumbnail" not in new_obj:
+                        new_obj["thumbnail"] = f"/{MEDIA_ROUTE}/{p}/media/header.{IMG_FMT}"
+                    continue
+
+                # Special handling for "meta" keys to transform thumbnail paths
+                if k == "meta" and isinstance(v, dict):
+                    meta = transform(v, current_path)
+
+                    thumb = meta.get("thumbnail")
+                    if current_path and isinstance(thumb, str):
+                        folder = Path(current_path).parent.as_posix()
+                        meta["thumbnail"] = f"/{MEDIA_ROUTE}/{folder}/{thumb}.{IMG_FMT}"
+
+                    new_obj[k] = meta
+                    continue
+
+                new_obj[k] = transform(v, current_path)
+
+            return new_obj
+
+        if isinstance(obj, list):
+            return [transform(i, current_path) for i in obj]
+
+        return obj
+
+    return transform(obj)

@@ -2,13 +2,13 @@ import html
 import os
 from pathlib import Path
 
-from flask import Flask, send_file, request, Blueprint, render_template
+from flask import Flask, send_file, request, Blueprint, render_template, redirect
 from flask_squeeze import Squeeze
 from jinja2 import ChoiceLoader, FileSystemLoader
 from turtleconverter import generate_static_files
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate, STATIC_FONTS_PATHS
+from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate, STATIC_FONTS_PATHS, IMG_FMT
 from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
@@ -56,7 +56,7 @@ def create_app(debug: bool = False) -> Flask:
             "ASSIGNMENT_URL_PREFIX": ASSIGNMENT_ROUTE,
             "MEDIA_URL_PREFIX": MEDIA_ROUTE,
             "piggymap": PIGGYMAP,
-            "img_fmt": "webp",
+            "img_fmt": IMG_FMT,
             "github_pages": use_github_pages,  # Used to determine if we should use lang in URL
             "AssignmentTemplate": AssignmentTemplate,
             "themes": get_themes(),
@@ -115,6 +115,11 @@ def create_app(debug: bool = False) -> Flask:
     def ignored_routes(filename):
         """Ignore requests to .well-known (chrome devtools etc. use this), would raise a lot of 404's"""
         return "", 204
+
+    @app.route("/favicon.ico")
+    def favicon():
+        """Serve the favicon."""
+        return redirect("/static/img/icons/piggy_icon-128.png", code=302)
 
     @assignment_routes.route("/<path:path>")
     @assignment_routes.route("/")
@@ -179,6 +184,8 @@ def create_app(debug: bool = False) -> Flask:
 
     @app.errorhandler(Exception)
     def error(e):
+        print(f"Error occured while processing path: {request.path}")
+        print(f"Error details: {str(e)}")
         if debug:
             raise e
         e = normalize_http_exception(e)
