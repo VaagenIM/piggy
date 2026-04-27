@@ -5,7 +5,7 @@ from io import BytesIO
 from pathlib import Path
 
 from bs4 import BeautifulSoup as bs
-from flask import send_file
+from flask import send_file, request
 
 from piggy import ALLOWED_URL_CHARS_REGEX, IMG_FMT, MEDIA_ROUTE, ASSIGNMENT_ROUTE
 from piggy.models import LANGUAGES
@@ -130,6 +130,13 @@ def get_css_metadata(path: str):
 def process_json_for_api(obj):
     def apply_thumbnail(thumb, current_path):
         """Turn the thumbnail path into an absolute URL"""
+
+        # Best effort guess to generate a thumbnail URL based on the current path and the thumbnail path
+        if not thumb:
+            thumb = "media/header"
+        if not current_path and request:
+            current_path = request.path[len("/api/") :]
+
         if not isinstance(thumb, str):
             return thumb
 
