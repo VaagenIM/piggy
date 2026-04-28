@@ -66,6 +66,8 @@
 .site-back-button span {
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.25;
+  padding-block: 0.05em;
   white-space: nowrap;
 }
 

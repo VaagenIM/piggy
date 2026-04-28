@@ -9,7 +9,7 @@
   flex: 1 1 auto;
   min-width: 0;
   max-width: 100%;
-  padding: 0.25rem 0.75rem 0.45rem;
+  padding: 0.25rem 0.75rem;
   gap: 0.45rem;
   display: flex;
   justify-content: flex-start;
@@ -26,7 +26,7 @@
   scrollbar-color: color-mix(in srgb,
       var(--piggy-button-active) 72%,
       var(--piggy-neutral)) color-mix(in srgb, var(--piggy-menu) 68%, transparent);
-  scrollbar-gutter: stable;
+  scrollbar-gutter: auto;
   scrollbar-width: auto;
   -webkit-overflow-scrolling: touch;
 }
