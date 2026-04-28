@@ -96,7 +96,8 @@
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1;
+  line-height: 1.25;
+  padding-block: 0.05em;
   white-space: nowrap;
 }
 
@@ -187,11 +188,13 @@
 
 .level-menu-link-level {
   font-weight: 750;
+  line-height: 1.35;
 }
 
 .level-menu-link-title {
   overflow-wrap: anywhere;
   font-size: calc(0.85rem * var(--piggy-font-scale));
+  line-height: 1.35;
   opacity: 0.78;
 }
 
