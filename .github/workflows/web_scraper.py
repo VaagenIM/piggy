@@ -14,6 +14,8 @@ from turtleconverter import generate_static_files
 from rjsmin import jsmin
 from rcssmin import cssmin
 
+WORKERS = 16
+
 links = set(["/", "/404"])
 visited = set()
 media_links = set()
@@ -132,6 +134,8 @@ def get_links(html, path=""):
     for link in links:
         if link == "javascript:void(0)":
             continue
+        if link.startswith("/static/"):
+            continue
         link = clean_link(link, path)
         filtered_links.add(link)
     return filtered_links
@@ -147,6 +151,8 @@ def get_media_links(html, path=""):
     filtered_links = set()
     for link in media_links:
         link = clean_link(link, path)
+        if link.startswith("/static/"):
+            continue
         if not link.startswith("/") and path:
             filtered_links.add(f"{path.rsplit('/', 1)[0]}/{link}")
             continue
@@ -190,7 +196,7 @@ def _download_media(link):
 
 def download_site():
     media_tasks = set()
-    with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
+    with multiprocessing.Pool(processes=WORKERS) as pool:
         while visited != links:
             tasks = set(link for link in links if link not in visited)
 
@@ -215,7 +221,7 @@ def download_site():
                     media_tasks.update(new_media_links)
     # A separate pool for media tasks, as we don't want to download multiple media files at once
     # (this appears to happen when we download the media files in parallel with the html files)
-    with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
+    with multiprocessing.Pool(processes=WORKERS) as pool:
         pool.map(_download_media, media_tasks)  # Download media in parallel
 
 
@@ -236,31 +242,35 @@ def api_transform(link: str) -> str | None:
     return f"/api/{link}"
 
 
+def _download_api_view(link):
+    api_path = api_transform(link)
+
+    # skip invalid mappings (like /static)
+    if not api_path:
+        return
+
+    print(f"Fetching API \33[34m{api_path}\33[0m")
+
+    try:
+        r = requests.get(f"{url}{api_path}", timeout=600)
+    except Exception as e:
+        print(f"WARNING: request failed for {api_path}: {e}")
+        return
+
+    if not r.ok:
+        print(f"WARNING: failed {api_path} ({r.status_code})")
+        return
+
+    full_path = f"demo{api_path}/index.json"
+    os.makedirs(os.path.dirname(full_path), exist_ok=True)
+
+    with open(full_path, "wb+") as f:
+        f.write(r.content)
+
+
 def download_api_views():
-    for link in visited:
-        api_path = api_transform(link)
-
-        # skip invalid mappings (like /static)
-        if not api_path:
-            continue
-
-        print(f"Fetching API \33[34m{api_path}\33[0m")
-
-        try:
-            r = requests.get(f"{url}{api_path}", timeout=600)
-        except Exception as e:
-            print(f"WARNING: request failed for {api_path}: {e}")
-            continue
-
-        if not r.ok:
-            print(f"WARNING: failed {api_path} ({r.status_code})")
-            continue
-
-        full_path = f"demo{api_path}/index.json"
-        os.makedirs(os.path.dirname(full_path), exist_ok=True)
-
-        with open(full_path, "wb+") as f:
-            f.write(r.content)
+    with multiprocessing.Pool(processes=WORKERS) as pool:
+        pool.map(_download_api_view, visited)
 
 
 def _minify(path, filetype):
