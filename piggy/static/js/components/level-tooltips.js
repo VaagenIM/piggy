@@ -134,8 +134,133 @@ function initializeLevelTooltips() {
   updateAll();
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initializeLevelTooltips);
-} else {
+function initializeLevelMenus() {
+  function viewportWidth() {
+    return window.visualViewport
+      ? window.visualViewport.width
+      : document.documentElement.clientWidth;
+  }
+
+  function viewportHeight() {
+    return window.visualViewport
+      ? window.visualViewport.height
+      : window.innerHeight;
+  }
+
+  function positionMenu(menu) {
+    const trigger = menu.querySelector(".level-menu-trigger");
+    const dropdown = menu.querySelector(".level-menu-dropdown");
+    if (!trigger || !dropdown) return;
+
+    const padding = 8;
+    const triggerRect = trigger.getBoundingClientRect();
+    const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const top = triggerRect.bottom + 6;
+    const left = Math.max(padding, triggerRect.left);
+    const availableWidth = viewportWidth() - left - padding;
+    const readableWidth = 22 * (Number.isFinite(rem) ? rem : 16);
+    const width = Math.max(
+      0,
+      Math.min(Math.max(triggerRect.width, readableWidth), availableWidth),
+    );
+    const availableHeight = viewportHeight() - top - padding;
+    const lockedHeight = Math.min(viewportHeight() * 0.6, availableHeight);
+
+    dropdown.style.setProperty("--level-menu-dropdown-top", `${top}px`);
+    dropdown.style.setProperty("--level-menu-dropdown-left", `${left}px`);
+    dropdown.style.setProperty("--level-menu-dropdown-width", `${width}px`);
+    dropdown.style.setProperty(
+      "--level-menu-dropdown-max-height",
+      `${Math.max(80, lockedHeight)}px`,
+    );
+  }
+
+  function updateOpenMenus() {
+    document.querySelectorAll(".level-menu[open]").forEach(positionMenu);
+  }
+
+  function closeLevelMenus() {
+    document.querySelectorAll(".level-menu").forEach((menu) => {
+      const trigger = menu.querySelector(".level-menu-trigger");
+      menu.removeAttribute("open");
+      trigger?.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  function closeLanguageMenus() {
+    document.querySelectorAll("[data-language-select]").forEach((select) => {
+      select.classList.remove("is-open");
+      select.removeAttribute("open");
+      select
+        .querySelector("[aria-expanded]")
+        ?.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  window.addEventListener("resize", updateOpenMenus, { passive: true });
+  window.addEventListener("scroll", updateOpenMenus, { passive: true });
+  window.addEventListener("orientationchange", updateOpenMenus, {
+    passive: true,
+  });
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", updateOpenMenus, {
+      passive: true,
+    });
+    window.visualViewport.addEventListener("scroll", updateOpenMenus, {
+      passive: true,
+    });
+  }
+
+  document.querySelectorAll(".level-menu").forEach((menu) => {
+    const trigger = menu.querySelector(".level-menu-trigger");
+    if (!trigger) return;
+
+    function close() {
+      menu.removeAttribute("open");
+      trigger.setAttribute("aria-expanded", "false");
+    }
+
+    menu.addEventListener("toggle", () => {
+      trigger.setAttribute("aria-expanded", String(menu.open));
+      if (menu.open) {
+        closeLanguageMenus();
+        requestAnimationFrame(() => positionMenu(menu));
+      }
+    });
+
+    trigger.addEventListener("pointerdown", () => {
+      requestAnimationFrame(() => positionMenu(menu));
+    });
+
+    document.addEventListener("click", (event) => {
+      if (menu.open && !menu.contains(event.target)) close();
+    });
+
+    menu.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        close();
+        trigger.focus();
+      }
+    });
+  });
+
+  document.querySelectorAll("[data-language-select]").forEach((select) => {
+    select.addEventListener("toggle", () => {
+      if (select.open || select.classList.contains("is-open")) {
+        closeLevelMenus();
+      }
+    });
+  });
+}
+
+function initializeLevelControls() {
   initializeLevelTooltips();
+  initializeLevelMenus();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeLevelControls);
+} else {
+  initializeLevelControls();
 }

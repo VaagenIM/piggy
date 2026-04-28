@@ -30,8 +30,9 @@
 }
 
 .site-navbar-main {
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   gap: 0.75rem;
+  min-width: max-content;
 }
 
 .site-navbar-controls {
@@ -41,6 +42,10 @@
 }
 
 .site-navbar-controls > .level-select {
+  flex: 1 1 100%;
+}
+
+.site-navbar-controls > .level-menu {
   flex: 1 1 100%;
 }
 
@@ -104,17 +109,34 @@
 
   .site-navbar-main {
     justify-content: space-between;
+    min-width: 0;
   }
 
   .site-navbar-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    align-items: center;
     justify-content: flex-start;
   }
 
   .site-navbar-controls > .level-select {
-    flex: 1 1 auto;
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .site-navbar-controls > .level-menu {
+    grid-column: 1;
+    justify-self: start;
+    width: max-content;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .site-navbar-actions {
+    grid-column: 2;
+    justify-self: end;
+    min-width: max-content;
     gap: 0.35rem;
   }
 }
