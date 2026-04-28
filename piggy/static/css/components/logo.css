@@ -41,3 +41,10 @@
   text-shadow: none;
   transition: 0.2s;
 }
+
+/* small screen */
+@media (max-width: 420px) {
+  #piggy-logo-text {
+    display: none;
+  }
+}
