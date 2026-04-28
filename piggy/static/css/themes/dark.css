@@ -56,6 +56,8 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
   --piggy-button-hover: #326b94;
   --piggy-button-active: #24a1b8;
   --piggy-text-button: var(--piggy-light);
+  --piggy-level-menu-active: #176b80;
+  --piggy-level-menu-active-text: #ffffff;
   --piggy-button-border: #4f89ad;
   --piggy-nav-button: #263d4d;
   --piggy-nav-button-hover: #315770;
@@ -251,16 +253,12 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="dark"]
-  .md-content
-  :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
-  ) {
+[data-theme="dark"] .md-content :is(.admonition.note,
+  details.note,
+  .admonition.info,
+  details.info,
+  .admonition.tip,
+  details.tip) {
   --piggy-table-admonition-accent: rgba(107, 196, 255, 0.22);
   --piggy-table-header-start: rgba(107, 196, 255, 0.075);
   --piggy-table-header-end: rgba(107, 196, 255, 0.075);
@@ -268,14 +266,10 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="dark"]
-  .md-content
-  :is(
-    .admonition.success,
-    details.success,
-    .admonition.question,
-    details.question
-  ) {
+[data-theme="dark"] .md-content :is(.admonition.success,
+  details.success,
+  .admonition.question,
+  details.question) {
   --piggy-table-admonition-accent: rgba(126, 231, 135, 0.2);
   --piggy-table-header-start: rgba(126, 231, 135, 0.065);
   --piggy-table-header-end: rgba(126, 231, 135, 0.065);
@@ -283,14 +277,10 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
 }
 
 /* WARNING / ATTENTION */
-[data-theme="dark"]
-  .md-content
-  :is(
-    .admonition.warning,
-    details.warning,
-    .admonition.attention,
-    details.attention
-  ) {
+[data-theme="dark"] .md-content :is(.admonition.warning,
+  details.warning,
+  .admonition.attention,
+  details.attention) {
   --piggy-table-admonition-accent: rgba(255, 203, 154, 0.2);
   --piggy-table-header-start: rgba(255, 203, 154, 0.065);
   --piggy-table-header-end: rgba(255, 203, 154, 0.065);
@@ -298,16 +288,12 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="dark"]
-  .md-content
-  :is(
-    .admonition.danger,
-    details.danger,
-    .admonition.failure,
-    details.failure,
-    .admonition.bug,
-    details.bug
-  ) {
+[data-theme="dark"] .md-content :is(.admonition.danger,
+  details.danger,
+  .admonition.failure,
+  details.failure,
+  .admonition.bug,
+  details.bug) {
   --piggy-table-admonition-accent: rgba(255, 123, 114, 0.2);
   --piggy-table-header-start: rgba(255, 123, 114, 0.065);
   --piggy-table-header-end: rgba(255, 123, 114, 0.065);

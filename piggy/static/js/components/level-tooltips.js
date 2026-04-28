@@ -254,7 +254,83 @@ function initializeLevelMenus() {
   });
 }
 
+function initializeAdaptiveLevelSelectors() {
+  const controls = Array.from(
+    document.querySelectorAll(".site-navbar-controls"),
+  ).filter(
+    (control) =>
+      control.querySelector(".level-select--buttons") &&
+      control.querySelector(".level-menu"),
+  );
+
+  if (controls.length === 0) return;
+
+  let scheduled = false;
+
+  function updateControl(control) {
+    const levelSelect = control.querySelector(".level-select--buttons");
+    const levelMenu = control.querySelector(".level-menu");
+    const levelMenuTrigger = levelMenu?.querySelector(".level-menu-trigger");
+    if (!levelSelect || !levelMenu) return;
+
+    const actions = control.querySelector(".site-navbar-actions");
+    const controlRect = control.getBoundingClientRect();
+    const actionsWidth = actions?.getBoundingClientRect().width ?? 0;
+    const controlStyle = getComputedStyle(control);
+    const controlGap = parseFloat(controlStyle.columnGap || controlStyle.gap);
+    const availableWidth =
+      controlRect.width -
+      actionsWidth -
+      (Number.isFinite(controlGap) ? controlGap : 0);
+    const wasOpen = levelMenu.hasAttribute("open");
+    const needsMenu = levelSelect.scrollWidth > availableWidth + 1;
+    control.classList.toggle("level-selector--menu", needsMenu);
+
+    if (!needsMenu) {
+      levelMenu.removeAttribute("open");
+      levelMenuTrigger?.setAttribute("aria-expanded", "false");
+    } else if (wasOpen) {
+      levelMenu.setAttribute("open", "");
+      levelMenuTrigger?.setAttribute("aria-expanded", "true");
+    }
+  }
+
+  function updateControls() {
+    scheduled = false;
+    controls.forEach(updateControl);
+  }
+
+  function scheduleUpdate() {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(updateControls);
+  }
+
+  window.addEventListener("resize", scheduleUpdate, { passive: true });
+  window.addEventListener("orientationchange", scheduleUpdate, {
+    passive: true,
+  });
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", scheduleUpdate, {
+      passive: true,
+    });
+  }
+
+  if (document.fonts) {
+    document.fonts.ready.then(scheduleUpdate);
+  }
+
+  if ("ResizeObserver" in window) {
+    const resizeObserver = new ResizeObserver(scheduleUpdate);
+    controls.forEach((control) => resizeObserver.observe(control));
+  }
+
+  scheduleUpdate();
+}
+
 function initializeLevelControls() {
+  initializeAdaptiveLevelSelectors();
   initializeLevelTooltips();
   initializeLevelMenus();
 }

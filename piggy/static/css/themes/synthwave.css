@@ -53,11 +53,14 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --piggy-button-hover: #8b2db0;
   --piggy-button-active: #f04fff;
   --piggy-text-button: #fff2dc;
+  --piggy-level-menu-active-text: #240c30;
   --piggy-button-border: #ff5bdc;
   --piggy-nav-button: #4b1d62;
   --piggy-nav-button-hover: #682782;
   --piggy-nav-button-text: #fff2dc;
   --piggy-nav-button-border: #d65bff;
+
+  --piggy-button-border-hover: #ff5100;
 
   --piggy-thumbnail-overlay: #00000099;
   --piggy-text-thumbnail: var(--piggy-light);
@@ -80,12 +83,10 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --grid-line-color: rgba(204, 0, 255, 0.52);
   --grid-background-color: #241032;
 
-  --piggy-logo-gradient: linear-gradient(
-    45deg,
-    rgb(162, 0, 255),
-    rgb(255, 0, 200),
-    rgb(255, 145, 0)
-  );
+  --piggy-logo-gradient: linear-gradient(45deg,
+      rgb(162, 0, 255),
+      rgb(255, 0, 200),
+      rgb(255, 145, 0));
   --piggy-logo-border: rgba(0, 0, 0, 0.65);
 
   /* info boxes */
@@ -106,36 +107,24 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --piggy-content-h5: #d800f5;
   --piggy-content-h6: #cfa8dc;
 
-  --piggy-header-bg-h1: linear-gradient(
-    to top,
-    rgba(255, 242, 220, 0.14),
-    transparent
-  );
-  --piggy-header-bg-h2: linear-gradient(
-    to top,
-    rgba(0, 251, 255, 0.18),
-    transparent
-  );
-  --piggy-header-bg-h3: linear-gradient(
-    to top,
-    rgba(255, 0, 166, 0.18),
-    transparent
-  );
-  --piggy-header-bg-h4: linear-gradient(
-    to top,
-    rgba(255, 149, 0, 0.16),
-    transparent
-  );
-  --piggy-header-bg-h5: linear-gradient(
-    to top,
-    rgba(216, 0, 245, 0.14),
-    transparent
-  );
-  --piggy-header-bg-h6: linear-gradient(
-    to top,
-    rgba(207, 168, 220, 0.12),
-    transparent
-  );
+  --piggy-header-bg-h1: linear-gradient(to top,
+      rgba(255, 242, 220, 0.14),
+      transparent);
+  --piggy-header-bg-h2: linear-gradient(to top,
+      rgba(0, 251, 255, 0.18),
+      transparent);
+  --piggy-header-bg-h3: linear-gradient(to top,
+      rgba(255, 0, 166, 0.18),
+      transparent);
+  --piggy-header-bg-h4: linear-gradient(to top,
+      rgba(255, 149, 0, 0.16),
+      transparent);
+  --piggy-header-bg-h5: linear-gradient(to top,
+      rgba(216, 0, 245, 0.14),
+      transparent);
+  --piggy-header-bg-h6: linear-gradient(to top,
+      rgba(207, 168, 220, 0.12),
+      transparent);
 
   /* Tables */
   --piggy-table-bg: rgba(17, 6, 17, 0.68);
@@ -292,18 +281,14 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 [data-theme="synthwave"] .background-overlay {
   height: 200%;
   background-image:
-    linear-gradient(
-      to right,
+    linear-gradient(to right,
       transparent 0%,
       transparent 98%,
-      var(--grid-line-color) 99%
-    ),
-    linear-gradient(
-      to bottom,
+      var(--grid-line-color) 99%),
+    linear-gradient(to bottom,
       transparent 0%,
       transparent 98%,
-      var(--grid-line-color) 99%
-    );
+      var(--grid-line-color) 99%);
   background-size: 2.5rem 2.5rem;
   transform-origin: top center;
   transform: translateY(2%) perspective(40rem) rotateX(77deg);
@@ -311,6 +296,7 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   [data-theme="synthwave"] .background-overlay,
   [data-theme="synthwave"] .card-container:hover {
     animation: none !important;
@@ -348,8 +334,7 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 }
 
 [data-theme="synthwave"] .card-container:hover {
-  transform: perspective(1000px) rotateX(-1deg) rotateY(3deg) rotateZ(1deg)
-    scale(0.98);
+  transform: perspective(1000px) rotateX(-1deg) rotateY(3deg) rotateZ(1deg) scale(0.98);
 
   border-color: transparent;
 }
@@ -425,8 +410,7 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 
 [data-theme="synthwave"] .md-content :is(.admonition, details) {
   box-shadow:
-    0 0 0.65rem
-      color-mix(in srgb, var(--piggy-admonition-border) 22%, transparent),
+    0 0 0.65rem color-mix(in srgb, var(--piggy-admonition-border) 22%, transparent),
     inset 0 0 0.75rem rgba(255, 255, 255, 0.03) !important;
 }
 
@@ -455,16 +439,12 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="synthwave"]
-  .md-content
-  :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
-  ) {
+[data-theme="synthwave"] .md-content :is(.admonition.note,
+  details.note,
+  .admonition.info,
+  details.info,
+  .admonition.tip,
+  details.tip) {
   --piggy-table-admonition-accent: rgba(0, 251, 255, 0.22);
   --piggy-table-header-start: rgba(0, 251, 255, 0.07);
   --piggy-table-header-end: rgba(0, 251, 255, 0.07);
@@ -472,14 +452,10 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="synthwave"]
-  .md-content
-  :is(
-    .admonition.success,
-    details.success,
-    .admonition.question,
-    details.question
-  ) {
+[data-theme="synthwave"] .md-content :is(.admonition.success,
+  details.success,
+  .admonition.question,
+  details.question) {
   --piggy-table-admonition-accent: rgba(0, 255, 153, 0.2);
   --piggy-table-header-start: rgba(0, 255, 153, 0.065);
   --piggy-table-header-end: rgba(0, 255, 153, 0.065);
@@ -487,14 +463,10 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 }
 
 /* WARNING / ATTENTION */
-[data-theme="synthwave"]
-  .md-content
-  :is(
-    .admonition.warning,
-    details.warning,
-    .admonition.attention,
-    details.attention
-  ) {
+[data-theme="synthwave"] .md-content :is(.admonition.warning,
+  details.warning,
+  .admonition.attention,
+  details.attention) {
   --piggy-table-admonition-accent: rgba(255, 204, 102, 0.22);
   --piggy-table-header-start: rgba(255, 204, 102, 0.07);
   --piggy-table-header-end: rgba(255, 204, 102, 0.07);
@@ -502,16 +474,12 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="synthwave"]
-  .md-content
-  :is(
-    .admonition.danger,
-    details.danger,
-    .admonition.failure,
-    details.failure,
-    .admonition.bug,
-    details.bug
-  ) {
+[data-theme="synthwave"] .md-content :is(.admonition.danger,
+  details.danger,
+  .admonition.failure,
+  details.failure,
+  .admonition.bug,
+  details.bug) {
   --piggy-table-admonition-accent: rgba(255, 79, 123, 0.21);
   --piggy-table-header-start: rgba(255, 79, 123, 0.068);
   --piggy-table-header-end: rgba(255, 79, 123, 0.068);

@@ -9,32 +9,23 @@
   flex: 1 1 auto;
   min-width: 0;
   max-width: 100%;
-  padding: 0.25rem 0.3rem 0.45rem;
-  gap: 0.75rem;
+  padding: 0.25rem 0.75rem 0.45rem;
+  gap: 0.45rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-wrap: nowrap;
-  border-left: 1px solid
-    var(
-      --piggy-menu-border,
-      color-mix(in srgb, var(--piggy-neutral) 30%, transparent)
-    );
-  border-right: 1px solid
-    var(
-      --piggy-menu-border,
-      color-mix(in srgb, var(--piggy-neutral) 30%, transparent)
-    );
+  border-left: 1px solid var(--piggy-menu-border,
+      color-mix(in srgb, var(--piggy-neutral) 30%, transparent));
+  border-right: 1px solid var(--piggy-menu-border,
+      color-mix(in srgb, var(--piggy-neutral) 30%, transparent));
   position: relative;
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
-  scrollbar-color: color-mix(
-      in srgb,
+  scrollbar-color: color-mix(in srgb,
       var(--piggy-button-active) 72%,
-      var(--piggy-neutral)
-    )
-    color-mix(in srgb, var(--piggy-menu) 68%, transparent);
+      var(--piggy-neutral)) color-mix(in srgb, var(--piggy-menu) 68%, transparent);
   scrollbar-gutter: stable;
   scrollbar-width: auto;
   -webkit-overflow-scrolling: touch;
@@ -47,16 +38,13 @@
 .level-select::-webkit-scrollbar-track {
   background: color-mix(in srgb, var(--piggy-menu) 68%, transparent);
   border-radius: 999px;
-  box-shadow: inset 0 0 0 1px
-    color-mix(in srgb, var(--piggy-neutral) 30%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--piggy-neutral) 30%, transparent);
 }
 
 .level-select::-webkit-scrollbar-thumb {
-  background: color-mix(
-    in srgb,
-    var(--piggy-button-active) 72%,
-    var(--piggy-neutral)
-  );
+  background: color-mix(in srgb,
+      var(--piggy-button-active) 72%,
+      var(--piggy-neutral));
   border: 2px solid color-mix(in srgb, var(--piggy-menu) 76%, transparent);
   border-radius: 999px;
 }
@@ -85,13 +73,9 @@
   background: var(--piggy-nav-button, var(--piggy-button));
   background-color: var(--piggy-nav-button, var(--piggy-button));
   color: var(--piggy-nav-button-text, var(--piggy-text-button));
-  border-color: var(
-    --piggy-nav-button-border,
-    var(
-      --piggy-button-border,
-      color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
-    )
-  );
+  border-color: var(--piggy-nav-button-border,
+      var(--piggy-button-border,
+        color-mix(in srgb, var(--piggy-button-active) 34%, transparent)));
   list-style: none;
   line-height: 1;
   white-space: nowrap;
@@ -146,11 +130,8 @@
   overscroll-behavior: contain;
   background-color: var(--piggy-menu);
   color: var(--piggy-menu-text);
-  border: 1px solid
-    var(
-      --piggy-menu-border,
-      color-mix(in srgb, var(--piggy-neutral) 35%, transparent)
-    );
+  border: 1px solid var(--piggy-menu-border,
+      color-mix(in srgb, var(--piggy-neutral) 35%, transparent));
   border-radius: 1rem;
   box-shadow: 0 0.75rem 1.75rem rgba(0, 0, 0, 0.18);
 }
@@ -165,14 +146,43 @@
   line-height: 1.25;
 }
 
+.level-menu-link--with-icon {
+  grid-template-columns: calc(2.25rem * var(--piggy-font-scale)) minmax(0, 1fr);
+  align-items: center;
+  column-gap: 0.6rem;
+}
+
+.level-menu-link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.level-menu-difficulty-image {
+  display: block;
+  width: calc(2rem * var(--piggy-font-scale));
+  height: auto;
+}
+
+.level-menu-link-details {
+  display: grid;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
 .level-menu-link:hover {
   background-color: var(--piggy-button-hover);
   color: var(--piggy-text-button);
 }
 
 .level-menu-link.active {
-  background-color: var(--piggy-button-active);
-  color: var(--piggy-text-button);
+  background-color: var(--piggy-level-menu-active, var(--piggy-button-active));
+  color: var(--piggy-level-menu-active-text, var(--piggy-text-button));
+}
+
+.level-menu-link.active .level-menu-link-title {
+  opacity: 1;
 }
 
 .level-menu-link-level {
@@ -275,66 +285,53 @@
   border-color: var(--piggy-tooltip) transparent transparent transparent;
 }
 
-@media (max-width: 800px) {
-  .level-button-text {
-    display: none;
-  }
-
-  .level-select .piggy-button {
-    min-width: 48px;
-    max-width: 48px;
-  }
+.site-navbar-controls.level-selector--menu {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-@media (max-height: 430px) and (orientation: landscape) {
-  .level-button-text {
-    display: none;
-  }
-  .level-select {
-    gap: 5px;
-  }
-
-  .level-select .piggy-button {
-    min-width: 48px;
-    max-width: 48px;
-  }
+.site-navbar-controls.level-selector--menu>.level-select--buttons {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: max-content;
+  max-width: none;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-@media (max-width: 760px) {
-  .level-select--buttons {
-    display: none;
-  }
-
-  .level-menu {
-    display: block;
-  }
-
-  .level-menu-dropdown {
-    position: fixed;
-    top: var(--level-menu-dropdown-top, 7rem);
-    left: var(--level-menu-dropdown-left, 0.5rem);
-    right: auto;
-    width: var(--level-menu-dropdown-width, calc(100vw - 1rem));
-    min-width: 0;
-    max-width: calc(100vw - 1rem);
-    z-index: 1001;
-  }
-
-  .level-menu-trigger {
-    width: auto;
-    max-width: 100%;
-  }
+.site-navbar-controls.level-selector--menu>.level-menu {
+  grid-column: 1;
+  justify-self: start;
+  display: block;
+  flex: 0 1 auto;
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
 }
 
-@media (max-width: 600px) {
-  .level-button-number::before {
-    content: "";
-  }
+.site-navbar-controls.level-selector--menu>.site-navbar-actions {
+  grid-column: 2;
+  justify-self: end;
+  min-width: max-content;
+}
 
-  .level-select .piggy-button {
-    min-width: 48px;
-    max-width: 48px;
-  }
+.site-navbar-controls.level-selector--menu .level-menu-dropdown {
+  position: fixed;
+  top: var(--level-menu-dropdown-top, 7rem);
+  left: var(--level-menu-dropdown-left, 0.5rem);
+  right: auto;
+  width: var(--level-menu-dropdown-width, calc(100vw - 1rem));
+  min-width: 0;
+  max-width: calc(100vw - 1rem);
+  z-index: 1001;
+}
+
+.site-navbar-controls.level-selector--menu .level-menu-trigger {
+  width: auto;
+  max-width: 100%;
 }
 
 /* Show Tooltip on Hover */
@@ -343,12 +340,6 @@
 .level-select .nav-tooltip.is-tooltip-visible {
   visibility: visible;
   opacity: 1;
-}
-
-@media (max-width: 600px) {
-  .level-select {
-    gap: 5px;
-  }
 }
 
 .tooltip-diff-image {

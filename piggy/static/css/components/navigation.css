@@ -2,11 +2,9 @@
 |*     NAVIGATION MENU     *|
 \***************************/
 .piggy-navbar {
-  background: linear-gradient(
-    90deg,
-    var(--piggy-navbar-start) 0%,
-    var(--piggy-navbar-end) 100%
-  );
+  background: linear-gradient(90deg,
+      var(--piggy-navbar-start) 0%,
+      var(--piggy-navbar-end) 100%);
   vertical-align: middle;
 }
 
@@ -41,11 +39,11 @@
   gap: var(--site-navbar-control-gap);
 }
 
-.site-navbar-controls > .level-select {
+.site-navbar-controls>.level-select {
   flex: 1 1 100%;
 }
 
-.site-navbar-controls > .level-menu {
+.site-navbar-controls>.level-menu {
   flex: 1 1 100%;
 }
 
@@ -57,21 +55,17 @@
   min-width: 0;
 }
 
-.site-navbar-actions > .language-selector,
-.site-navbar-actions > #settings-button {
+.site-navbar-actions>.language-selector,
+.site-navbar-actions>#settings-button {
   flex: 0 0 auto;
 }
 
 .site-nav-menu-button {
   background: var(--piggy-nav-button, var(--piggy-button));
   background-color: var(--piggy-nav-button, var(--piggy-button));
-  border-color: var(
-    --piggy-nav-button-border,
-    var(
-      --piggy-button-border,
-      color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
-    )
-  );
+  border-color: var(--piggy-nav-button-border,
+      var(--piggy-button-border,
+        color-mix(in srgb, var(--piggy-button-active) 34%, transparent)));
   color: var(--piggy-nav-button-text, var(--piggy-text-button));
   font-weight: 650;
 }
@@ -93,7 +87,30 @@
   font-size: calc(1rem * var(--piggy-font-scale));
 }
 
-@media (max-width: 760px) {
+@media (max-width: 1150px) {
+  .site-navbar-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .site-navbar-controls>.level-select {
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .site-navbar-controls>.level-menu {
+    grid-column: 1;
+    justify-self: start;
+    width: max-content;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 860px) {
   .site-navbar {
     --site-navbar-control-gap: 0.45rem;
 
@@ -119,13 +136,13 @@
     justify-content: flex-start;
   }
 
-  .site-navbar-controls > .level-select {
+  .site-navbar-controls>.level-select {
     grid-column: 1;
     width: 100%;
     min-width: 0;
   }
 
-  .site-navbar-controls > .level-menu {
+  .site-navbar-controls>.level-menu {
     grid-column: 1;
     justify-self: start;
     width: max-content;

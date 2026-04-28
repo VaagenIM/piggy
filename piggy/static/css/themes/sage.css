@@ -1,6 +1,6 @@
 /* METADATA
 id: 6
-name: Sage
+name: 🌿 Sage
 description: A calm green theme for focused study.
 type: light
 preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3526; text-shadow: none;
@@ -50,6 +50,7 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
   --piggy-button-hover: #7caf78;
   --piggy-button-active: #5f9362;
   --piggy-text-button: #1f3526;
+  --piggy-level-menu-active-text: #102417;
   --piggy-button-border: #4d7d50;
   --piggy-nav-button: #f7fbf3;
   --piggy-nav-button-hover: #e8f2e0;
@@ -259,16 +260,12 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="sage"]
-  .md-content
-  :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
-  ) {
+[data-theme="sage"] .md-content :is(.admonition.note,
+  details.note,
+  .admonition.info,
+  details.info,
+  .admonition.tip,
+  details.tip) {
   --piggy-table-admonition-accent: rgba(47, 127, 134, 0.25);
   --piggy-table-header-start: rgba(47, 127, 134, 0.09);
   --piggy-table-header-end: rgba(47, 127, 134, 0.09);
@@ -276,14 +273,10 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="sage"]
-  .md-content
-  :is(
-    .admonition.success,
-    details.success,
-    .admonition.question,
-    details.question
-  ) {
+[data-theme="sage"] .md-content :is(.admonition.success,
+  details.success,
+  .admonition.question,
+  details.question) {
   --piggy-table-admonition-accent: rgba(63, 138, 82, 0.24);
   --piggy-table-header-start: rgba(63, 138, 82, 0.085);
   --piggy-table-header-end: rgba(63, 138, 82, 0.085);
@@ -291,14 +284,10 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
 }
 
 /* WARNING / ATTENTION */
-[data-theme="sage"]
-  .md-content
-  :is(
-    .admonition.warning,
-    details.warning,
-    .admonition.attention,
-    details.attention
-  ) {
+[data-theme="sage"] .md-content :is(.admonition.warning,
+  details.warning,
+  .admonition.attention,
+  details.attention) {
   --piggy-table-admonition-accent: rgba(169, 107, 34, 0.25);
   --piggy-table-header-start: rgba(169, 107, 34, 0.085);
   --piggy-table-header-end: rgba(169, 107, 34, 0.085);
@@ -306,16 +295,12 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="sage"]
-  .md-content
-  :is(
-    .admonition.danger,
-    details.danger,
-    .admonition.failure,
-    details.failure,
-    .admonition.bug,
-    details.bug
-  ) {
+[data-theme="sage"] .md-content :is(.admonition.danger,
+  details.danger,
+  .admonition.failure,
+  details.failure,
+  .admonition.bug,
+  details.bug) {
   --piggy-table-admonition-accent: rgba(168, 66, 66, 0.25);
   --piggy-table-header-start: rgba(168, 66, 66, 0.09);
   --piggy-table-header-end: rgba(168, 66, 66, 0.09);
