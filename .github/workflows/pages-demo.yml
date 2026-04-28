@@ -1,0 +1,105 @@
+# Build static develop branch and publish to piggy-edge gh-pages
+
+name: Edge Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ develop ]
+
+concurrency:
+  group: "piggy-edge"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout develop
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Set up npm
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Get piggybank
+        run: |
+          rm -rf piggybank
+          git clone https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank
+
+          cd piggybank
+          git fetch origin output
+          git checkout output
+          git reset --hard origin/output
+          git clean -fd
+
+      - name: Install dependencies
+        run: |
+          uv pip install .
+          npm install --omit=dev
+          echo "GITHUB_PAGES=1" >> $GITHUB_ENV
+          echo "USE_CACHE=0" >> $GITHUB_ENV
+          uv pip install -r .github/workflows/requirements-pages.txt
+
+      - name: Start Piggy server
+        run: |
+          gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers 16 run:app &
+
+      - name: Run web scraper
+        run: python .github/workflows/web_scraper.py
+
+      - name: Add custom domain
+        run: |
+          echo "piglet.iktim.no" > .github/workflows/demo/CNAME
+
+      - name: Deploy to piggy-edge gh-pages
+        run: |
+          rm -rf edge-deploy
+
+          git clone \
+            https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggy-edge.git \
+            edge-deploy
+
+          cd edge-deploy
+
+          # Ensure gh-pages exists
+          if git ls-remote --exit-code --heads origin gh-pages; then
+            git checkout gh-pages
+            git pull origin gh-pages
+          else
+            git checkout --orphan gh-pages
+          fi
+
+          # Remove old site contents except git metadata
+          find . \
+            -mindepth 1 \
+            -not -path "./.git*" \
+            -delete
+
+          cp -R ../.github/workflows/demo/* .
+
+          touch .nojekyll
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add .
+          git commit -m "Deploy develop preview ${GITHUB_SHA}" || echo "No changes"
+
+          git push origin gh-pages --force
