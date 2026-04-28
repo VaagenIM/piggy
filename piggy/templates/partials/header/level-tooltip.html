@@ -1,0 +1,9 @@
+<span class="nav-tooltip" role="tooltip">
+  {% if level_difficulty|int > 0 and level_difficulty|int <= 5 %}
+    <img
+      class="tooltip-diff-image"
+      src="{{ url_for('static', filename='img/difficulties/' +  level_difficulty + '.png') }}"
+      alt="" />
+  {% endif %}
+  <span class="level-tooltip-title">{{ level_meta.title | unescape }}</span>
+</span>

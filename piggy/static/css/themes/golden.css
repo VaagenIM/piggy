@@ -52,6 +52,11 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-button-hover: #d6a149;
   --piggy-button-active: #ffd86b;
   --piggy-text-button: #0b0b0e;
+  --piggy-button-border: #e0b657;
+  --piggy-nav-button: #3a2b11;
+  --piggy-nav-button-hover: #5b4319;
+  --piggy-nav-button-text: #fff3cf;
+  --piggy-nav-button-border: #9a7329;
 
   --piggy-thumbnail-overlay: rgba(0, 0, 0, 0.5);
   --piggy-text-thumbnail: #ffdf85;
@@ -81,12 +86,18 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   /* Headings */
   --piggy-header-border: rgba(255, 216, 107, 0.34);
 
-  --piggy-content-h1: #fff3cf; /* Golden Honmoon / group */
-  --piggy-content-h2: #ffd86b; /* Golden theme identity */
-  --piggy-content-h3: #c792ff; /* Rumi: lavender-purple */
-  --piggy-content-h4: #ff8f7a; /* Mira: coral-pink */
-  --piggy-content-h5: #7ee7b8; /* Zoey: mint-green / soft teal */
-  --piggy-content-h6: #c9b77c; /* muted gold metadata */
+  --piggy-content-h1: #fff3cf;
+  /* Golden Honmoon / group */
+  --piggy-content-h2: #ffd86b;
+  /* Golden theme identity */
+  --piggy-content-h3: #c792ff;
+  /* Rumi: lavender-purple */
+  --piggy-content-h4: #ff8f7a;
+  /* Mira: coral-pink */
+  --piggy-content-h5: #7ee7b8;
+  /* Zoey: mint-green / soft teal */
+  --piggy-content-h6: #c9b77c;
+  /* muted gold metadata */
 
   --piggy-header-bg-h1: rgba(255, 243, 207, 0.12);
   --piggy-header-bg-h2: rgba(255, 216, 107, 0.16);
@@ -220,8 +231,7 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 [data-theme="golden"] .md-content .admonition {
   color: var(--piggy-admonition-text, var(--piggy-text-main));
   border-color: var(--piggy-admonition-border, #3e3416);
-  box-shadow: 0 0 0.5rem
-    color-mix(in srgb, var(--piggy-admonition-border) 22%, transparent);
+  box-shadow: 0 0 0.5rem color-mix(in srgb, var(--piggy-admonition-border) 22%, transparent);
 }
 
 [data-theme="golden"] .md-content .tabbed-labels::before {
@@ -259,16 +269,12 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="golden"]
-  .md-content
-  :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
-  ) {
+[data-theme="golden"] .md-content :is(.admonition.note,
+  details.note,
+  .admonition.info,
+  details.info,
+  .admonition.tip,
+  details.tip) {
   --piggy-table-admonition-accent: rgba(0, 188, 212, 0.21);
   --piggy-table-header-start: rgba(0, 188, 212, 0.068);
   --piggy-table-header-end: rgba(0, 188, 212, 0.068);
@@ -276,14 +282,10 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="golden"]
-  .md-content
-  :is(
-    .admonition.success,
-    details.success,
-    .admonition.question,
-    details.question
-  ) {
+[data-theme="golden"] .md-content :is(.admonition.success,
+  details.success,
+  .admonition.question,
+  details.question) {
   --piggy-table-admonition-accent: rgba(126, 231, 135, 0.19);
   --piggy-table-header-start: rgba(126, 231, 135, 0.062);
   --piggy-table-header-end: rgba(126, 231, 135, 0.062);
@@ -291,14 +293,10 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 }
 
 /* WARNING / ATTENTION */
-[data-theme="golden"]
-  .md-content
-  :is(
-    .admonition.warning,
-    details.warning,
-    .admonition.attention,
-    details.attention
-  ) {
+[data-theme="golden"] .md-content :is(.admonition.warning,
+  details.warning,
+  .admonition.attention,
+  details.attention) {
   --piggy-table-admonition-accent: rgba(255, 216, 107, 0.22);
   --piggy-table-header-start: rgba(255, 216, 107, 0.075);
   --piggy-table-header-end: rgba(255, 216, 107, 0.075);
@@ -306,16 +304,12 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="golden"]
-  .md-content
-  :is(
-    .admonition.danger,
-    details.danger,
-    .admonition.failure,
-    details.failure,
-    .admonition.bug,
-    details.bug
-  ) {
+[data-theme="golden"] .md-content :is(.admonition.danger,
+  details.danger,
+  .admonition.failure,
+  details.failure,
+  .admonition.bug,
+  details.bug) {
   --piggy-table-admonition-accent: rgba(255, 107, 107, 0.2);
   --piggy-table-header-start: rgba(255, 107, 107, 0.065);
   --piggy-table-header-end: rgba(255, 107, 107, 0.065);

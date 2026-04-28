@@ -1,0 +1,100 @@
+/****************\
+|*    BUTTONS   *|
+\****************/
+:where(.piggy-button, .snout-button) {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  box-sizing: border-box;
+  min-height: calc(2.2rem * var(--piggy-font-scale));
+  border: 1px solid var(--piggy-button-border,
+      color-mix(in srgb, var(--piggy-button-active) 34%, transparent));
+  border-radius: 999px;
+  background: var(--piggy-button);
+  background-color: var(--piggy-button);
+  color: var(--piggy-text-button);
+  font: inherit;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+  cursor: pointer;
+  box-shadow: none;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    filter 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+}
+
+:where(.piggy-button, .snout-button):not(.no-hover, .active):hover {
+  background: var(--piggy-button-hover);
+  background-color: var(--piggy-button-hover);
+  color: var(--piggy-text-button);
+  filter: brightness(1.04);
+}
+
+:where(.piggy-button, .snout-button):active {
+  transform: translateY(0);
+}
+
+:where(.piggy-button, .snout-button).active,
+:where(.piggy-button, .snout-button)[aria-current="page"] {
+  background: var(--piggy-button-active);
+  background-color: var(--piggy-button-active);
+  color: var(--piggy-text-button);
+}
+
+:where(.piggy-button, .snout-button):focus-visible {
+  outline: 3px solid var(--piggy-button-focus,
+      color-mix(in srgb, var(--piggy-button-active) 58%, transparent));
+  outline-offset: 2px;
+}
+
+:where(.piggy-button--s, .snout-padding-s) {
+  padding: 0.2rem 0.55rem;
+}
+
+:where(.piggy-button--m, .snout-padding-m) {
+  padding: 0.38rem 0.8rem;
+}
+
+:where(.piggy-button--l, .snout-padding-l) {
+  padding: 0.55rem 1.05rem;
+}
+
+:where(.piggy-button--xl, .snout-padding-xl) {
+  padding: 0.8rem 1.35rem;
+}
+
+:where(.piggy-button--full, .snout-full-width) {
+  width: 100%;
+}
+
+:where(.snout-border) {
+  border-color: var(--piggy-button-border,
+      color-mix(in srgb, var(--piggy-button-active) 34%, transparent));
+}
+
+.piggy-icon-button {
+  width: calc(2.35rem * var(--piggy-font-scale));
+  min-width: calc(2.35rem * var(--piggy-font-scale));
+  height: calc(2.35rem * var(--piggy-font-scale));
+  min-height: calc(2.35rem * var(--piggy-font-scale));
+  padding: 0;
+  border-radius: 999px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--piggy-nav-button-border,
+      var(--piggy-button-border,
+        color-mix(in srgb, var(--piggy-button-active) 34%, transparent)));
+}
+
+.piggy-icon-button svg {
+  width: calc(1.15rem * var(--piggy-font-scale));
+  height: calc(1.15rem * var(--piggy-font-scale));
+  flex: 0 0 auto;
+}

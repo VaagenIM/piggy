@@ -1,0 +1,78 @@
+/************************\
+|*      BREADCRUMBS     *|
+\************************/
+.site-breadcrumbs {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem 0.35rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0.15rem 0;
+  overflow-x: auto;
+  overflow-y: visible;
+  line-height: 1.4;
+  list-style: none;
+}
+
+.site-breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  line-height: 1.4;
+}
+
+.site-breadcrumb-link,
+.site-breadcrumb-current {
+  display: inline-block;
+  max-width: min(24rem, 60vw);
+  padding-block: 0.1rem;
+  overflow-wrap: anywhere;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.site-breadcrumb-separator {
+  flex: 0 0 auto;
+  width: 0.45rem;
+  height: 0.75rem;
+  margin-inline: 0.15rem;
+}
+
+.site-back-button {
+  max-width: min(28rem, 48vw);
+  justify-content: flex-start;
+  background: var(--piggy-nav-button, var(--piggy-button));
+  background-color: var(--piggy-nav-button, var(--piggy-button));
+  color: var(--piggy-nav-button-text, var(--piggy-text-button));
+  border-color: var(--piggy-nav-button-border,
+      var(--piggy-button-border,
+        color-mix(in srgb, var(--piggy-button-active) 34%, transparent)));
+  font-weight: 650;
+}
+
+.site-back-button:not(.no-hover, .active):hover {
+  background: var(--piggy-nav-button-hover, var(--piggy-button-hover));
+  background-color: var(--piggy-nav-button-hover, var(--piggy-button-hover));
+  color: var(--piggy-nav-button-text, var(--piggy-text-button));
+}
+
+.site-back-button svg {
+  width: calc(1rem * var(--piggy-font-scale));
+  height: calc(1.35rem * var(--piggy-font-scale));
+}
+
+.site-back-button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.25;
+  padding-block: 0.05em;
+  white-space: nowrap;
+}
+
+@media (max-width: 860px) {
+  .site-back-button {
+    max-width: calc(100vw - 6rem);
+  }
+}

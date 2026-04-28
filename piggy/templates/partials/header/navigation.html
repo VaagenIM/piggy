@@ -1,0 +1,28 @@
+<nav class="site-navbar piggy-navbar" aria-label="Site navigation">
+  <div class="site-navbar-main">
+    {% include "partials/header/logo.html" %}
+    {% include "partials/header/back-button.html" %}
+  </div>
+
+  <div class="site-navbar-controls">
+    {% if current_language is defined and supported_languages is defined %}
+      {% include "partials/header/level-selector.html" %}
+    {% endif %}
+
+    <div class="site-navbar-actions">
+      {% if current_language is defined and supported_languages is defined %}
+        {% include "partials/header/language-selector.html" %}
+      {% endif %}
+      {% include "partials/parts/settings.html" %}
+    </div>
+  </div>
+
+  {% if current_language is defined and supported_languages is defined %}
+    <script
+      src="{{ url_for('static', filename='js/components/language-selector.js') }}"
+      defer></script>
+    <script
+      src="{{ url_for('static', filename='js/components/level-tooltips.js') }}"
+      defer></script>
+  {% endif %}
+</nav>

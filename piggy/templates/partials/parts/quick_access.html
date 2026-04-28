@@ -1,6 +1,12 @@
 {% macro quick_access(tree) %}
   <div class="quick-access-wrapper">
-    <div class="quick-access-heading">Quick Access</div>
+    <h1 class="quick-access-heading">
+      <img
+        class="quick-access-heading-icon"
+        src="{{ url_for('static', filename='img/icons/piggy_icon-128.png') }}"
+        alt="" />
+      <span>Velkommen til Piggy!</span>
+    </h1>
     <div class="quick-access-columns">
       {% for year_key, year in tree.items() %}
         {% if year.data is defined %}
