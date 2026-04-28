@@ -1,8 +1,10 @@
 # Build static develop branch and publish to piggy-edge gh-pages
 
-name: Edge Pages
+name: Piglet Pages
 
 on:
+  repository_dispatch:
+    types: [ fill_piggybank ]
   workflow_dispatch:
   push:
     branches: [ develop ]
