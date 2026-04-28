@@ -45,10 +45,15 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
   --piggy-navbar-end: rgb(225, 225, 225);
   --piggy-text-navbar: #333333;
 
-  --piggy-button: #d7e8f5;
-  --piggy-button-hover: #bfd9ec;
-  --piggy-button-active: #90c6ea;
+  --piggy-button: #c6dfef;
+  --piggy-button-hover: #a9cce4;
+  --piggy-button-active: #78b3d9;
   --piggy-text-button: #172033;
+  --piggy-button-border: #7faac6;
+  --piggy-nav-button: #ffffff;
+  --piggy-nav-button-hover: #edf6fb;
+  --piggy-nav-button-text: #172033;
+  --piggy-nav-button-border: #9caeb8;
 
   --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7);
   --piggy-text-thumbnail: var(--piggy-dark);
@@ -238,16 +243,12 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="light"]
-  .md-content
-  :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
-  ) {
+[data-theme="light"] .md-content :is(.admonition.note,
+  details.note,
+  .admonition.info,
+  details.info,
+  .admonition.tip,
+  details.tip) {
   --piggy-table-admonition-accent: rgba(8, 126, 164, 0.28);
   --piggy-table-header-start: rgba(8, 126, 164, 0.105);
   --piggy-table-header-end: rgba(8, 126, 164, 0.105);
@@ -255,14 +256,10 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="light"]
-  .md-content
-  :is(
-    .admonition.success,
-    details.success,
-    .admonition.question,
-    details.question
-  ) {
+[data-theme="light"] .md-content :is(.admonition.success,
+  details.success,
+  .admonition.question,
+  details.question) {
   --piggy-table-admonition-accent: rgba(33, 138, 61, 0.26);
   --piggy-table-header-start: rgba(33, 138, 61, 0.095);
   --piggy-table-header-end: rgba(33, 138, 61, 0.095);
@@ -270,14 +267,10 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
 }
 
 /* WARNING / ATTENTION */
-[data-theme="light"]
-  .md-content
-  :is(
-    .admonition.warning,
-    details.warning,
-    .admonition.attention,
-    details.attention
-  ) {
+[data-theme="light"] .md-content :is(.admonition.warning,
+  details.warning,
+  .admonition.attention,
+  details.attention) {
   --piggy-table-admonition-accent: rgba(182, 106, 0, 0.26);
   --piggy-table-header-start: rgba(182, 106, 0, 0.09);
   --piggy-table-header-end: rgba(182, 106, 0, 0.09);
@@ -285,16 +278,12 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="light"]
-  .md-content
-  :is(
-    .admonition.danger,
-    details.danger,
-    .admonition.failure,
-    details.failure,
-    .admonition.bug,
-    details.bug
-  ) {
+[data-theme="light"] .md-content :is(.admonition.danger,
+  details.danger,
+  .admonition.failure,
+  details.failure,
+  .admonition.bug,
+  details.bug) {
   --piggy-table-admonition-accent: rgba(195, 49, 43, 0.26);
   --piggy-table-header-start: rgba(195, 49, 43, 0.09);
   --piggy-table-header-end: rgba(195, 49, 43, 0.09);

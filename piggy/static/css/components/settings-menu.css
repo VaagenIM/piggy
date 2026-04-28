@@ -13,59 +13,70 @@
   overflow-x: hidden;
   transition: width 0.5s;
   z-index: 10000;
-  border-left: 1px solid var(--piggy-neutral);
+  border-left: 1px solid
+    var(
+      --piggy-menu-border,
+      color-mix(in srgb, var(--piggy-neutral) 35%, transparent)
+    );
+  box-shadow: -1rem 0 2rem rgba(0, 0, 0, 0.18);
 }
 
 #settings-menu.open {
-  width: 300px;
+  width: 350px;
 }
 
 #settings-menu .close-button {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 36px;
+  top: 12px;
+  right: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 999px;
+  border: 1px solid
+    var(
+      --piggy-button-border,
+      color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+    );
+  background: var(--piggy-button);
+  color: var(--piggy-text-button);
+  font-size: 1.75rem;
+  line-height: 1;
   text-decoration: none;
-  color: var(--piggy-menu-text);
 }
 
-/* small screen */
-@media (max-width: 640px) {
-  #settings-button-text {
-    display: none;
-  }
-}
-
-/* big screen */
-@media (min-width: 640px) {
-  #settings-button-text {
-    display: inline;
-  }
+#settings-menu .close-button:hover {
+  background: var(--piggy-button-hover);
 }
 
 .settings-content {
-  width: 300px;
+  width: 350px;
   padding: 60px 20px 20px 20px;
 }
 
 .custom-select {
   position: relative;
   width: 100%;
-  background-color: var(--piggy-light);
-  color: var(--piggy-dark);
-  border: 1px solid var(--piggy-neutral);
-  border-radius: 0.2rem;
+  background-color: transparent;
+  color: var(--piggy-menu-text);
+  border: 0;
+  border-radius: 1rem;
   margin-bottom: 1rem;
   box-sizing: border-box;
 }
 
 .custom-select .selected {
-  padding: 0.5rem;
+  padding: 0.65rem 0.85rem;
   cursor: pointer;
-  background-color: var(--piggy-main);
-  color: var(--piggy-text-main);
+  background-color: var(--piggy-button);
+  color: var(--piggy-text-button);
   box-sizing: border-box;
-  border-radius: 0.2rem;
+  border: 1px solid var(--piggy-button-border, transparent);
+  border-radius: 999px;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .custom-select .options-container {
@@ -74,10 +85,14 @@
   left: 0;
   right: 0;
   width: 100%;
-  background-color: var(--piggy-main);
-  color: var(--piggy-text-main);
-  border: 1px solid var(--piggy-card-border);
-  border-radius: 0.2rem;
+  background-color: var(--piggy-menu);
+  color: var(--piggy-menu-text);
+  border: 1px solid
+    var(
+      --piggy-menu-border,
+      color-mix(in srgb, var(--piggy-neutral) 35%, transparent)
+    );
+  border-radius: 1rem;
   /* Start closed */
   max-height: 0;
   overflow-y: auto;
@@ -87,7 +102,8 @@
     opacity 0.3s ease-out;
   z-index: 10001;
   box-sizing: border-box;
-  padding: 2px;
+  padding: 0.35rem;
+  box-shadow: 0 0.75rem 1.75rem rgba(0, 0, 0, 0.18);
 
   scrollbar-width: thin;
   scrollbar-color: var(--piggy-dark);
@@ -113,24 +129,24 @@
   overflow-y: auto;
   z-index: 10002;
   background-color: var(--piggy-menu) !important;
-  border-radius: 0.2rem;
-  border: 1px solid var(--piggy-menu-text);
+  border-radius: 1rem;
 }
 
 .custom-select .option {
-  padding: 0.5rem;
+  padding: 0.55rem 0.75rem;
   cursor: pointer;
-  margin: 5px 2px;
-  border-radius: 0.3rem;
+  margin: 0.2rem 0;
+  border-radius: 999px;
   box-sizing: border-box;
-  background-color: var(--piggy-button);
-  color: var(--piggy-text-button);
+  background-color: transparent;
+  color: var(--piggy-menu-text);
+  font-weight: 600;
 }
 
 .custom-select .option:hover {
-  filter: brightness(1.15) saturate(0.75);
+  filter: none;
   background-color: var(--piggy-button-hover);
-  border-color: white;
+  color: var(--piggy-text-button);
 }
 
 .custom-select:not(.open) .options-container {

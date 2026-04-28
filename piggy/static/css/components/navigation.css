@@ -1,23 +1,79 @@
 /***************************\
 |*     NAVIGATION MENU     *|
 \***************************/
-@media screen and (min-width: 800px) {
-  /* Make header sticky on larger displays */
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0px 0px 5px #00000066;
-  }
+.piggy-navbar {
+  background: linear-gradient(90deg,
+      var(--piggy-navbar-start) 0%,
+      var(--piggy-navbar-end) 100%);
+  vertical-align: middle;
 }
 
-.piggy-navbar {
-  background: linear-gradient(
-    90deg,
-    var(--piggy-navbar-start) 0%,
-    var(--piggy-navbar-end) 100%
-  );
-  vertical-align: middle;
+.site-navbar {
+  --site-navbar-control-gap: 0.65rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--site-navbar-control-gap);
+  min-height: calc(3.25rem * var(--piggy-font-scale));
+  padding: 0.5rem 0.75rem;
+  overflow: visible;
+}
+
+.site-navbar-main,
+.site-navbar-controls {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.site-navbar-main {
+  flex: 0 0 auto;
+  gap: 0.75rem;
+  min-width: max-content;
+}
+
+.site-navbar-controls {
+  flex: 1 1 auto;
+  justify-content: flex-end;
+  gap: var(--site-navbar-control-gap);
+}
+
+.site-navbar-controls>.level-select {
+  flex: 1 1 100%;
+}
+
+.site-navbar-controls>.level-menu {
+  flex: 1 1 100%;
+}
+
+.site-navbar-actions {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.site-navbar-actions>.language-selector,
+.site-navbar-actions>#settings-button {
+  flex: 0 0 auto;
+}
+
+.site-nav-menu-button {
+  background: var(--piggy-nav-button, var(--piggy-button));
+  background-color: var(--piggy-nav-button, var(--piggy-button));
+  border-color: var(--piggy-nav-button-border,
+      var(--piggy-button-border,
+        color-mix(in srgb, var(--piggy-button-active) 34%, transparent)));
+  color: var(--piggy-nav-button-text, var(--piggy-text-button));
+  font-weight: 650;
+}
+
+.site-nav-menu-button:not(.no-hover, .active):hover {
+  background: var(--piggy-nav-button-hover, var(--piggy-button-hover));
+  background-color: var(--piggy-nav-button-hover, var(--piggy-button-hover));
+  color: var(--piggy-nav-button-text, var(--piggy-text-button));
 }
 
 .piggy-breadcrumb {
@@ -29,4 +85,75 @@
   color: var(--piggy-text-breadcrumb-hover);
   transition: color 0.2s ease;
   font-size: calc(1rem * var(--piggy-font-scale));
+}
+
+@media (max-width: 1150px) {
+  .site-navbar-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .site-navbar-controls>.level-select {
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .site-navbar-controls>.level-menu {
+    grid-column: 1;
+    justify-self: start;
+    width: max-content;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 860px) {
+  .site-navbar {
+    --site-navbar-control-gap: 0.45rem;
+
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .site-navbar-main,
+  .site-navbar-controls {
+    flex: 1 1 100%;
+  }
+
+  .site-navbar-main {
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  .site-navbar-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .site-navbar-controls>.level-select {
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .site-navbar-controls>.level-menu {
+    grid-column: 1;
+    justify-self: start;
+    width: max-content;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .site-navbar-actions {
+    grid-column: 2;
+    justify-self: end;
+    min-width: max-content;
+    gap: 0.35rem;
+  }
 }
