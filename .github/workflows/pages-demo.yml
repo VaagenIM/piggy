@@ -61,6 +61,9 @@ jobs:
         run: |
           gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers 16 run:app &
 
+      - name: Modify CNAME in web scraper
+        run: sed -i 's/piggy.iktim.no/piglet.iktim.no/g' .github/workflows/web_scraper.py
+
       - name: Run web scraper
         run: python .github/workflows/web_scraper.py
 
