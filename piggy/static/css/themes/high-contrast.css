@@ -211,6 +211,36 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-information-overlay: #000000;
   --piggy-information-accent: #00b7ff;
   --piggy-information-shadow-glow: transparent;
+
+  /* keyboard keys */
+  --piggy-key-background: #000000;
+  --piggy-key-background-hover: #1a1a1a;
+
+  --piggy-key-text: #ffffff;
+  --piggy-key-text-hover: #ffff00;
+  --piggy-key-separator: #ffffff;
+
+  --piggy-key-border: #ffffff;
+  --piggy-key-border-hover: #ffff00;
+
+  --piggy-key-inner-border: transparent;
+  --piggy-key-inner-border-hover: transparent;
+
+  --piggy-key-shadow: transparent;
+  --piggy-key-shadow-hover: transparent;
+
+  /* keyboard keys inside admonitions */
+  --piggy-key-admonition-background: #000000;
+  --piggy-key-admonition-background-hover: #111111;
+
+  --piggy-key-admonition-border: var(--piggy-admonition-border);
+  --piggy-key-admonition-border-hover: #ffffff;
+
+  --piggy-key-admonition-inner-border: transparent;
+  --piggy-key-admonition-inner-border-hover: transparent;
+
+  --piggy-key-admonition-shadow: transparent;
+  --piggy-key-admonition-shadow-hover: transparent;
 }
 
 [data-theme="high-contrast"] .card-container {
@@ -306,19 +336,13 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   border-bottom: 1px solid white;
 }
 
-[data-theme="high-contrast"]
-  #language-container
-  .language-dropdown
-  a:last-child {
+[data-theme="high-contrast"] #language-container .language-dropdown a:last-child {
   border-bottom: none;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
 }
 
-[data-theme="high-contrast"]
-  #language-container
-  .language-dropdown
-  a:first-child {
+[data-theme="high-contrast"] #language-container .language-dropdown a:first-child {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
 }
@@ -368,11 +392,9 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
 \*****************************/
 [data-theme="high-contrast"] .md-content :is(.admonition, details) {
   color: #ffffff !important;
-  background: color-mix(
-    in srgb,
-    var(--piggy-admonition-border) 8%,
-    #000000
-  ) !important;
+  background: color-mix(in srgb,
+      var(--piggy-admonition-border) 8%,
+      #000000) !important;
 
   border: 1px solid var(--piggy-admonition-border) !important;
   border-left: 0.45rem solid var(--piggy-admonition-border) !important;
@@ -381,14 +403,12 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   box-shadow: none !important;
 }
 
-[data-theme="high-contrast"] .md-content .admonition > .admonition-title,
-[data-theme="high-contrast"] .md-content details > summary {
+[data-theme="high-contrast"] .md-content .admonition>.admonition-title,
+[data-theme="high-contrast"] .md-content details>summary {
   color: #ffffff !important;
-  background: color-mix(
-    in srgb,
-    var(--piggy-admonition-border) 18%,
-    #000000
-  ) !important;
+  background: color-mix(in srgb,
+      var(--piggy-admonition-border) 18%,
+      #000000) !important;
 
   border-bottom: 1px solid var(--piggy-admonition-border) !important;
   border-radius: 0.25rem 0.25rem 0 0 !important;
@@ -398,15 +418,12 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   text-underline-offset: 0.18em;
 }
 
-[data-theme="high-contrast"]
-  .md-content
-  .admonition
-  > .admonition-title::before,
-[data-theme="high-contrast"] .md-content details > summary::before {
+[data-theme="high-contrast"] .md-content .admonition>.admonition-title::before,
+[data-theme="high-contrast"] .md-content details>summary::before {
   background-color: var(--piggy-admonition-border) !important;
 }
 
-[data-theme="high-contrast"] .md-content details > summary::after {
+[data-theme="high-contrast"] .md-content details>summary::after {
   color: var(--piggy-admonition-border) !important;
 }
 
@@ -420,90 +437,64 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-table-border: var(--piggy-table-admonition-accent);
   --piggy-table-cell-border: rgba(255, 255, 255, 0.72);
 
-  --piggy-table-header-start: color-mix(
-    in srgb,
-    var(--piggy-table-admonition-accent) 18%,
-    #000000
-  );
-  --piggy-table-header-end: color-mix(
-    in srgb,
-    var(--piggy-table-admonition-accent) 18%,
-    #000000
-  );
+  --piggy-table-header-start: color-mix(in srgb,
+      var(--piggy-table-admonition-accent) 18%,
+      #000000);
+  --piggy-table-header-end: color-mix(in srgb,
+      var(--piggy-table-admonition-accent) 18%,
+      #000000);
   --piggy-table-header-text: #ffffff;
 
   --piggy-table-row-odd: #000000;
-  --piggy-table-row-even: color-mix(
-    in srgb,
-    var(--piggy-table-admonition-accent) 8%,
-    #000000
-  );
-  --piggy-table-row-hover: color-mix(
-    in srgb,
-    var(--piggy-table-admonition-accent) 16%,
-    #000000
-  );
+  --piggy-table-row-even: color-mix(in srgb,
+      var(--piggy-table-admonition-accent) 8%,
+      #000000);
+  --piggy-table-row-hover: color-mix(in srgb,
+      var(--piggy-table-admonition-accent) 16%,
+      #000000);
 
   --piggy-table-code-bg: #000000;
   --piggy-table-code-text: #ffffff;
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="high-contrast"]
-  .md-content
-  :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
-  ) {
+[data-theme="high-contrast"] .md-content :is(.admonition.note,
+  details.note,
+  .admonition.info,
+  details.info,
+  .admonition.tip,
+  details.tip) {
   --piggy-table-admonition-accent: #00ffff;
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="high-contrast"]
-  .md-content
-  :is(
-    .admonition.success,
-    details.success,
-    .admonition.question,
-    details.question
-  ) {
+[data-theme="high-contrast"] .md-content :is(.admonition.success,
+  details.success,
+  .admonition.question,
+  details.question) {
   --piggy-table-admonition-accent: #00ff00;
 }
 
 /* WARNING / ATTENTION */
-[data-theme="high-contrast"]
-  .md-content
-  :is(
-    .admonition.warning,
-    details.warning,
-    .admonition.attention,
-    details.attention
-  ) {
+[data-theme="high-contrast"] .md-content :is(.admonition.warning,
+  details.warning,
+  .admonition.attention,
+  details.attention) {
   --piggy-table-admonition-accent: #ffff00;
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="high-contrast"]
-  .md-content
-  :is(
-    .admonition.danger,
-    details.danger,
-    .admonition.failure,
-    details.failure,
-    .admonition.bug,
-    details.bug
-  ) {
+[data-theme="high-contrast"] .md-content :is(.admonition.danger,
+  details.danger,
+  .admonition.failure,
+  details.failure,
+  .admonition.bug,
+  details.bug) {
   --piggy-table-admonition-accent: #ff0000;
 }
 
 /* EXAMPLE */
-[data-theme="high-contrast"]
-  .md-content
-  :is(.admonition.example, details.example) {
+[data-theme="high-contrast"] .md-content :is(.admonition.example, details.example) {
   --piggy-table-admonition-accent: #ff00ff;
 }
 
@@ -520,68 +511,53 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   border-radius: 0.25rem !important;
 }
 
-[data-theme="high-contrast"] .md-content .admonition > .admonition-title,
-[data-theme="high-contrast"] .md-content details > summary {
+[data-theme="high-contrast"] .md-content .admonition>.admonition-title,
+[data-theme="high-contrast"] .md-content details>summary {
   border-radius: 0.25rem 0.25rem 0 0 !important;
 }
 
 /* Keep table cell backgrounds from visually squaring off the table corners */
-[data-theme="high-contrast"]
-  .md-content
-  table
-  thead
-  tr:first-child
-  th:first-child,
-[data-theme="high-contrast"]
-  .md-typeset
-  table:not([class])
-  thead
-  tr:first-child
-  th:first-child {
+[data-theme="high-contrast"] .md-content table thead tr:first-child th:first-child,
+[data-theme="high-contrast"] .md-typeset table:not([class]) thead tr:first-child th:first-child {
   border-top-left-radius: 0.25rem !important;
 }
 
-[data-theme="high-contrast"]
-  .md-content
-  table
-  thead
-  tr:first-child
-  th:last-child,
-[data-theme="high-contrast"]
-  .md-typeset
-  table:not([class])
-  thead
-  tr:first-child
-  th:last-child {
+[data-theme="high-contrast"] .md-content table thead tr:first-child th:last-child,
+[data-theme="high-contrast"] .md-typeset table:not([class]) thead tr:first-child th:last-child {
   border-top-right-radius: 0.25rem !important;
 }
 
-[data-theme="high-contrast"]
-  .md-content
-  table
-  tbody
-  tr:last-child
-  td:first-child,
-[data-theme="high-contrast"]
-  .md-typeset
-  table:not([class])
-  tbody
-  tr:last-child
-  td:first-child {
+[data-theme="high-contrast"] .md-content table tbody tr:last-child td:first-child,
+[data-theme="high-contrast"] .md-typeset table:not([class]) tbody tr:last-child td:first-child {
   border-bottom-left-radius: 0.25rem !important;
 }
 
-[data-theme="high-contrast"]
-  .md-content
-  table
-  tbody
-  tr:last-child
-  td:last-child,
-[data-theme="high-contrast"]
-  .md-typeset
-  table:not([class])
-  tbody
-  tr:last-child
-  td:last-child {
+[data-theme="high-contrast"] .md-content table tbody tr:last-child td:last-child,
+[data-theme="high-contrast"] .md-typeset table:not([class]) tbody tr:last-child td:last-child {
   border-bottom-right-radius: 0.25rem !important;
+}
+
+/***************************\
+|* HIGH CONTRAST KEY FIXES  *|
+\***************************/
+
+[data-theme="high-contrast"] .md-content .keys,
+[data-theme="high-contrast"] .md-content kbd {
+  border-width: calc(2px * var(--piggy-font-scale)) !important;
+  border-radius: calc(0.18rem * var(--piggy-font-scale)) !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+[data-theme="high-contrast"] .md-content .keys {
+  border-width: 0 !important;
+}
+
+[data-theme="high-contrast"] .md-content kbd:hover,
+[data-theme="high-contrast"] .md-content .keys kbd:hover {
+  outline:
+    calc(1px * var(--piggy-font-scale)) solid var(--piggy-key-border-hover) !important;
+
+  outline-offset: calc(2px * var(--piggy-font-scale)) !important;
+  box-shadow: none !important;
 }

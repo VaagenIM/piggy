@@ -212,6 +212,36 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-admonition-quote-text: #d8f3f8;
   --piggy-admonition-quote-icon: #88c0d0;
   --piggy-admonition-quote-border: #5f91a3;
+
+  /* keyboard keys */
+  --piggy-key-background: rgba(7, 57, 70, 0.96);
+  --piggy-key-background-hover: rgba(0, 95, 120, 0.98);
+
+  --piggy-key-text: #e6fbff;
+  --piggy-key-text-hover: #ffffff;
+  --piggy-key-separator: #88c0d0;
+
+  --piggy-key-border: rgba(136, 192, 208, 0.34);
+  --piggy-key-border-hover: rgba(0, 229, 255, 0.58);
+
+  --piggy-key-inner-border: rgba(230, 251, 255, 0.055);
+  --piggy-key-inner-border-hover: rgba(230, 251, 255, 0.11);
+
+  --piggy-key-shadow: rgba(0, 15, 24, 0.22);
+  --piggy-key-shadow-hover: rgba(0, 229, 255, 0.18);
+
+  /* keyboard keys inside admonitions */
+  --piggy-key-admonition-background: rgba(0, 0, 0, 0.22);
+  --piggy-key-admonition-background-hover: rgba(230, 251, 255, 0.075);
+
+  --piggy-key-admonition-border: rgba(230, 251, 255, 0.14);
+  --piggy-key-admonition-border-hover: rgba(230, 251, 255, 0.26);
+
+  --piggy-key-admonition-inner-border: rgba(230, 251, 255, 0.045);
+  --piggy-key-admonition-inner-border-hover: rgba(230, 251, 255, 0.09);
+
+  --piggy-key-admonition-shadow: rgba(0, 15, 24, 0.18);
+  --piggy-key-admonition-shadow-hover: rgba(0, 229, 255, 0.16);
 }
 
 /******************************\
@@ -270,16 +300,12 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="ocean"]
-  .md-content
-  :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
-  ) {
+[data-theme="ocean"] .md-content :is(.admonition.note,
+  details.note,
+  .admonition.info,
+  details.info,
+  .admonition.tip,
+  details.tip) {
   --piggy-table-admonition-accent: rgba(0, 229, 255, 0.2);
   --piggy-table-header-start: rgba(0, 229, 255, 0.065);
   --piggy-table-header-end: rgba(0, 229, 255, 0.065);
@@ -287,14 +313,10 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="ocean"]
-  .md-content
-  :is(
-    .admonition.success,
-    details.success,
-    .admonition.question,
-    details.question
-  ) {
+[data-theme="ocean"] .md-content :is(.admonition.success,
+  details.success,
+  .admonition.question,
+  details.question) {
   --piggy-table-admonition-accent: rgba(111, 255, 233, 0.19);
   --piggy-table-header-start: rgba(111, 255, 233, 0.062);
   --piggy-table-header-end: rgba(111, 255, 233, 0.062);
@@ -302,14 +324,10 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
 }
 
 /* WARNING / ATTENTION */
-[data-theme="ocean"]
-  .md-content
-  :is(
-    .admonition.warning,
-    details.warning,
-    .admonition.attention,
-    details.attention
-  ) {
+[data-theme="ocean"] .md-content :is(.admonition.warning,
+  details.warning,
+  .admonition.attention,
+  details.attention) {
   --piggy-table-admonition-accent: rgba(255, 209, 102, 0.19);
   --piggy-table-header-start: rgba(255, 209, 102, 0.062);
   --piggy-table-header-end: rgba(255, 209, 102, 0.062);
@@ -317,16 +335,12 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="ocean"]
-  .md-content
-  :is(
-    .admonition.danger,
-    details.danger,
-    .admonition.failure,
-    details.failure,
-    .admonition.bug,
-    details.bug
-  ) {
+[data-theme="ocean"] .md-content :is(.admonition.danger,
+  details.danger,
+  .admonition.failure,
+  details.failure,
+  .admonition.bug,
+  details.bug) {
   --piggy-table-admonition-accent: rgba(255, 107, 107, 0.2);
   --piggy-table-header-start: rgba(255, 107, 107, 0.065);
   --piggy-table-header-end: rgba(255, 107, 107, 0.065);
@@ -353,4 +367,26 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   [data-theme="ocean"] .background-overlay canvas#oceanShader {
     display: none !important;
   }
+}
+
+/***************************\
+|*   OCEAN KEY OVERRIDES   *|
+\***************************/
+
+[data-theme="ocean"] .md-content .keys,
+[data-theme="ocean"] .md-content kbd {
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-inner-border),
+    0 calc(1px * var(--piggy-font-scale)) calc(4px * var(--piggy-font-scale)) var(--piggy-key-shadow) !important;
+}
+
+[data-theme="ocean"] .md-content .keys {
+  box-shadow: none !important;
+}
+
+[data-theme="ocean"] .md-content kbd:hover,
+[data-theme="ocean"] .md-content .keys kbd:hover {
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-inner-border-hover),
+    0 0 calc(0.55rem * var(--piggy-font-scale)) var(--piggy-key-shadow-hover) !important;
 }

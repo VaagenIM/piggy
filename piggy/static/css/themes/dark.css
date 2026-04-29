@@ -218,6 +218,36 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
   --piggy-admonition-quote-text: #ffffff;
   --piggy-admonition-quote-icon: #aeb3b9;
   --piggy-admonition-quote-border: #66717d;
+
+  /* keyboard keys */
+  --piggy-key-background: rgba(33, 43, 53, 0.96);
+  --piggy-key-background-hover: rgba(42, 55, 67, 0.98);
+
+  --piggy-key-text: #eef5fb;
+  --piggy-key-text-hover: #ffffff;
+  --piggy-key-separator: #8f9aa5;
+
+  --piggy-key-border: rgba(139, 164, 182, 0.28);
+  --piggy-key-border-hover: rgba(139, 200, 255, 0.42);
+
+  --piggy-key-inner-border: rgba(255, 255, 255, 0.055);
+  --piggy-key-inner-border-hover: rgba(255, 255, 255, 0.09);
+
+  --piggy-key-shadow: rgba(0, 0, 0, 0.18);
+  --piggy-key-shadow-hover: rgba(0, 0, 0, 0.24);
+
+  /* keyboard keys inside admonitions */
+  --piggy-key-admonition-background: rgba(0, 0, 0, 0.18);
+  --piggy-key-admonition-background-hover: rgba(255, 255, 255, 0.07);
+
+  --piggy-key-admonition-border: rgba(255, 255, 255, 0.16);
+  --piggy-key-admonition-border-hover: rgba(255, 255, 255, 0.28);
+
+  --piggy-key-admonition-inner-border: rgba(255, 255, 255, 0.05);
+  --piggy-key-admonition-inner-border-hover: rgba(255, 255, 255, 0.09);
+
+  --piggy-key-admonition-shadow: rgba(0, 0, 0, 0.16);
+  --piggy-key-admonition-shadow-hover: rgba(0, 0, 0, 0.22);
 }
 
 [data-theme="dark"] .md-content {
@@ -256,16 +286,12 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="dark"]
-  .md-content
-  :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
-  ) {
+[data-theme="dark"] .md-content :is(.admonition.note,
+  details.note,
+  .admonition.info,
+  details.info,
+  .admonition.tip,
+  details.tip) {
   --piggy-table-admonition-accent: rgba(107, 196, 255, 0.22);
   --piggy-table-header-start: rgba(107, 196, 255, 0.075);
   --piggy-table-header-end: rgba(107, 196, 255, 0.075);
@@ -273,14 +299,10 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="dark"]
-  .md-content
-  :is(
-    .admonition.success,
-    details.success,
-    .admonition.question,
-    details.question
-  ) {
+[data-theme="dark"] .md-content :is(.admonition.success,
+  details.success,
+  .admonition.question,
+  details.question) {
   --piggy-table-admonition-accent: rgba(126, 231, 135, 0.2);
   --piggy-table-header-start: rgba(126, 231, 135, 0.065);
   --piggy-table-header-end: rgba(126, 231, 135, 0.065);
@@ -288,14 +310,10 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
 }
 
 /* WARNING / ATTENTION */
-[data-theme="dark"]
-  .md-content
-  :is(
-    .admonition.warning,
-    details.warning,
-    .admonition.attention,
-    details.attention
-  ) {
+[data-theme="dark"] .md-content :is(.admonition.warning,
+  details.warning,
+  .admonition.attention,
+  details.attention) {
   --piggy-table-admonition-accent: rgba(255, 203, 154, 0.2);
   --piggy-table-header-start: rgba(255, 203, 154, 0.065);
   --piggy-table-header-end: rgba(255, 203, 154, 0.065);
@@ -303,16 +321,12 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="dark"]
-  .md-content
-  :is(
-    .admonition.danger,
-    details.danger,
-    .admonition.failure,
-    details.failure,
-    .admonition.bug,
-    details.bug
-  ) {
+[data-theme="dark"] .md-content :is(.admonition.danger,
+  details.danger,
+  .admonition.failure,
+  details.failure,
+  .admonition.bug,
+  details.bug) {
   --piggy-table-admonition-accent: rgba(255, 123, 114, 0.2);
   --piggy-table-header-start: rgba(255, 123, 114, 0.065);
   --piggy-table-header-end: rgba(255, 123, 114, 0.065);

@@ -208,6 +208,36 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
   --piggy-admonition-quote-text: #4a2634;
   --piggy-admonition-quote-icon: #a35a73;
   --piggy-admonition-quote-border: #d890a8;
+
+  /* keyboard keys */
+  --piggy-key-background: rgba(255, 246, 249, 0.96);
+  --piggy-key-background-hover: rgba(255, 226, 234, 0.98);
+
+  --piggy-key-text: #4a2634;
+  --piggy-key-text-hover: #321724;
+  --piggy-key-separator: #a35a73;
+
+  --piggy-key-border: rgba(167, 73, 128, 0.28);
+  --piggy-key-border-hover: rgba(201, 92, 125, 0.48);
+
+  --piggy-key-inner-border: rgba(255, 255, 255, 0.82);
+  --piggy-key-inner-border-hover: rgba(255, 255, 255, 0.95);
+
+  --piggy-key-shadow: rgba(116, 54, 83, 0.1);
+  --piggy-key-shadow-hover: rgba(201, 92, 125, 0.18);
+
+  /* keyboard keys inside admonitions */
+  --piggy-key-admonition-background: rgba(255, 255, 255, 0.44);
+  --piggy-key-admonition-background-hover: rgba(255, 255, 255, 0.68);
+
+  --piggy-key-admonition-border: rgba(167, 73, 128, 0.2);
+  --piggy-key-admonition-border-hover: rgba(167, 73, 128, 0.34);
+
+  --piggy-key-admonition-inner-border: rgba(255, 255, 255, 0.72);
+  --piggy-key-admonition-inner-border-hover: rgba(255, 255, 255, 0.92);
+
+  --piggy-key-admonition-shadow: rgba(116, 54, 83, 0.08);
+  --piggy-key-admonition-shadow-hover: rgba(116, 54, 83, 0.13);
 }
 
 /******************************\
@@ -253,16 +283,12 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="piggy"]
-  .md-content
-  :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
-  ) {
+[data-theme="piggy"] .md-content :is(.admonition.note,
+  details.note,
+  .admonition.info,
+  details.info,
+  .admonition.tip,
+  details.tip) {
   --piggy-table-admonition-accent: rgba(22, 137, 168, 0.26);
   --piggy-table-header-start: rgba(22, 137, 168, 0.095);
   --piggy-table-header-end: rgba(22, 137, 168, 0.095);
@@ -270,14 +296,10 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="piggy"]
-  .md-content
-  :is(
-    .admonition.success,
-    details.success,
-    .admonition.question,
-    details.question
-  ) {
+[data-theme="piggy"] .md-content :is(.admonition.success,
+  details.success,
+  .admonition.question,
+  details.question) {
   --piggy-table-admonition-accent: rgba(38, 138, 68, 0.24);
   --piggy-table-header-start: rgba(38, 138, 68, 0.09);
   --piggy-table-header-end: rgba(38, 138, 68, 0.09);
@@ -285,14 +307,10 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
 }
 
 /* WARNING / ATTENTION */
-[data-theme="piggy"]
-  .md-content
-  :is(
-    .admonition.warning,
-    details.warning,
-    .admonition.attention,
-    details.attention
-  ) {
+[data-theme="piggy"] .md-content :is(.admonition.warning,
+  details.warning,
+  .admonition.attention,
+  details.attention) {
   --piggy-table-admonition-accent: rgba(184, 108, 19, 0.25);
   --piggy-table-header-start: rgba(184, 108, 19, 0.09);
   --piggy-table-header-end: rgba(184, 108, 19, 0.09);
@@ -300,16 +318,12 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="piggy"]
-  .md-content
-  :is(
-    .admonition.danger,
-    details.danger,
-    .admonition.failure,
-    details.failure,
-    .admonition.bug,
-    details.bug
-  ) {
+[data-theme="piggy"] .md-content :is(.admonition.danger,
+  details.danger,
+  .admonition.failure,
+  details.failure,
+  .admonition.bug,
+  details.bug) {
   --piggy-table-admonition-accent: rgba(199, 53, 91, 0.25);
   --piggy-table-header-start: rgba(199, 53, 91, 0.095);
   --piggy-table-header-end: rgba(199, 53, 91, 0.095);
