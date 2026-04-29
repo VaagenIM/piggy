@@ -206,6 +206,36 @@ preview_style: background: linear-gradient(90deg, #241313, #4a2020); color: #f6e
   --piggy-admonition-quote-text: #f6e8df;
   --piggy-admonition-quote-icon: #d8aaa2;
   --piggy-admonition-quote-border: #9e7068;
+
+  /* keyboard keys */
+  --piggy-key-background: rgba(74, 35, 32, 0.96);
+  --piggy-key-background-hover: rgba(107, 43, 39, 0.98);
+
+  --piggy-key-text: #f6e8df;
+  --piggy-key-text-hover: #ffffff;
+  --piggy-key-separator: #d8aaa2;
+
+  --piggy-key-border: rgba(226, 111, 91, 0.3);
+  --piggy-key-border-hover: rgba(244, 181, 116, 0.48);
+
+  --piggy-key-inner-border: rgba(246, 232, 223, 0.06);
+  --piggy-key-inner-border-hover: rgba(246, 232, 223, 0.11);
+
+  --piggy-key-shadow: rgba(0, 0, 0, 0.23);
+  --piggy-key-shadow-hover: rgba(0, 0, 0, 0.31);
+
+  /* keyboard keys inside admonitions */
+  --piggy-key-admonition-background: rgba(0, 0, 0, 0.2);
+  --piggy-key-admonition-background-hover: rgba(246, 232, 223, 0.075);
+
+  --piggy-key-admonition-border: rgba(246, 232, 223, 0.14);
+  --piggy-key-admonition-border-hover: rgba(246, 232, 223, 0.26);
+
+  --piggy-key-admonition-inner-border: rgba(246, 232, 223, 0.045);
+  --piggy-key-admonition-inner-border-hover: rgba(246, 232, 223, 0.09);
+
+  --piggy-key-admonition-shadow: rgba(0, 0, 0, 0.18);
+  --piggy-key-admonition-shadow-hover: rgba(0, 0, 0, 0.26);
 }
 
 [data-theme="ember"] .level-count-container {

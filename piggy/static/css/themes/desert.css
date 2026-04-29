@@ -211,6 +211,36 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
   --piggy-admonition-quote-text: #342417;
   --piggy-admonition-quote-icon: #705844;
   --piggy-admonition-quote-border: #9d744a;
+
+  /* keyboard keys */
+  --piggy-key-background: rgba(255, 248, 238, 0.96);
+  --piggy-key-background-hover: rgba(241, 214, 173, 0.98);
+
+  --piggy-key-text: #2d1f11;
+  --piggy-key-text-hover: #1d140a;
+  --piggy-key-separator: #705844;
+
+  --piggy-key-border: rgba(126, 91, 56, 0.34);
+  --piggy-key-border-hover: rgba(166, 106, 25, 0.52);
+
+  --piggy-key-inner-border: rgba(255, 255, 255, 0.72);
+  --piggy-key-inner-border-hover: rgba(255, 248, 238, 0.94);
+
+  --piggy-key-shadow: rgba(94, 75, 50, 0.12);
+  --piggy-key-shadow-hover: rgba(166, 124, 82, 0.2);
+
+  /* keyboard keys inside admonitions */
+  --piggy-key-admonition-background: rgba(255, 248, 238, 0.44);
+  --piggy-key-admonition-background-hover: rgba(255, 248, 238, 0.68);
+
+  --piggy-key-admonition-border: rgba(95, 75, 50, 0.22);
+  --piggy-key-admonition-border-hover: rgba(95, 75, 50, 0.36);
+
+  --piggy-key-admonition-inner-border: rgba(255, 255, 255, 0.62);
+  --piggy-key-admonition-inner-border-hover: rgba(255, 248, 238, 0.88);
+
+  --piggy-key-admonition-shadow: rgba(94, 75, 50, 0.08);
+  --piggy-key-admonition-shadow-hover: rgba(94, 75, 50, 0.14);
 }
 
 [data-theme="desert"] .level-count-container {
@@ -365,4 +395,30 @@ preview_style: background: linear-gradient(90deg, #f4e7d3, #a67c52); color: #1d1
   [data-theme="desert"] .background-overlay canvas#desertShader {
     display: none !important;
   }
+}
+
+/***************************\
+|*   DESERT KEY OVERRIDES  *|
+\***************************/
+
+[data-theme="desert"] .md-content .keys,
+[data-theme="desert"] .md-content kbd {
+  border-radius: calc(0.32rem * var(--piggy-font-scale)) !important;
+
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-inner-border),
+    0 calc(1px * var(--piggy-font-scale)) calc(3px * var(--piggy-font-scale))
+      var(--piggy-key-shadow) !important;
+}
+
+[data-theme="desert"] .md-content .keys {
+  box-shadow: none !important;
+}
+
+[data-theme="desert"] .md-content kbd:hover,
+[data-theme="desert"] .md-content .keys kbd:hover {
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-inner-border-hover),
+    0 calc(2px * var(--piggy-font-scale)) calc(6px * var(--piggy-font-scale))
+      var(--piggy-key-shadow-hover) !important;
 }

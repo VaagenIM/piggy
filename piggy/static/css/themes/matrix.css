@@ -240,6 +240,44 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   --piggy-admonition-quote-text: #d8ffd8;
   --piggy-admonition-quote-icon: #66cc66;
   --piggy-admonition-quote-border: #00bb00;
+
+  /* keyboard keys */
+  --piggy-key-background: rgba(0, 26, 12, 0.96);
+  --piggy-key-background-hover: rgba(0, 51, 24, 0.98);
+
+  --piggy-key-text: #d8ffd8;
+  --piggy-key-text-hover: #00ff66;
+  --piggy-key-separator: #00ff66;
+
+  --piggy-key-border: rgba(0, 255, 102, 0.56);
+  --piggy-key-border-hover: rgba(0, 255, 255, 0.78);
+
+  --piggy-key-inner-border: rgba(0, 255, 102, 0.08);
+  --piggy-key-inner-border-hover: rgba(0, 255, 255, 0.14);
+
+  --piggy-key-shadow: rgba(0, 255, 102, 0.18);
+  --piggy-key-shadow-hover: rgba(0, 255, 255, 0.26);
+
+  /* keyboard keys inside admonitions */
+  --piggy-key-admonition-background: rgba(0, 0, 0, 0.28);
+  --piggy-key-admonition-background-hover: rgba(0, 255, 102, 0.075);
+
+  --piggy-key-admonition-border: color-mix(
+    in srgb,
+    var(--piggy-admonition-border) 62%,
+    #d8ffd8 8%
+  );
+  --piggy-key-admonition-border-hover: var(--piggy-admonition-border);
+
+  --piggy-key-admonition-inner-border: rgba(216, 255, 216, 0.055);
+  --piggy-key-admonition-inner-border-hover: rgba(216, 255, 216, 0.11);
+
+  --piggy-key-admonition-shadow: rgba(0, 255, 102, 0.12);
+  --piggy-key-admonition-shadow-hover: color-mix(
+    in srgb,
+    var(--piggy-admonition-border) 28%,
+    transparent
+  );
 }
 
 [data-theme="matrix"] .md-content h1 {
@@ -539,4 +577,46 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   tr:last-child
   td:last-child {
   border-bottom-right-radius: 0.25rem !important;
+}
+
+/***************************\
+|*    MATRIX KEY OVERRIDES *|
+\***************************/
+
+[data-theme="matrix"] .md-content .keys,
+[data-theme="matrix"] .md-content kbd {
+  border-radius: calc(0.25rem * var(--piggy-font-scale)) !important;
+
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-inner-border),
+    0 0 calc(0.38rem * var(--piggy-font-scale)) var(--piggy-key-shadow) !important;
+
+  text-shadow: 0 0 calc(0.32rem * var(--piggy-font-scale))
+    rgba(0, 255, 102, 0.38) !important;
+}
+
+[data-theme="matrix"] .md-content .keys {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+[data-theme="matrix"] .md-content kbd:hover,
+[data-theme="matrix"] .md-content .keys kbd:hover {
+  border-color: var(--piggy-key-border-hover) !important;
+
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-inner-border-hover),
+    0 0 calc(0.55rem * var(--piggy-font-scale)) var(--piggy-key-shadow-hover),
+    0 0 calc(0.95rem * var(--piggy-font-scale)) rgba(0, 255, 102, 0.12) !important;
+
+  text-shadow: 0 0 calc(0.45rem * var(--piggy-font-scale))
+    rgba(0, 255, 255, 0.42) !important;
+}
+
+[data-theme="matrix"] .md-content :is(.admonition, details) kbd,
+[data-theme="matrix"] .md-content :is(.admonition, details) .keys {
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-admonition-inner-border),
+    0 0 calc(0.35rem * var(--piggy-font-scale))
+      var(--piggy-key-admonition-shadow) !important;
 }

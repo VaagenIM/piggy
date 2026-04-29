@@ -1,44 +1,52 @@
 {% if request.path.strip('/') %}
-{% set path_segments = request.path.strip('/').split('/') %}
-{% if path_segments|length >= 2 and "lang" == path_segments[-2] %}
-{% set path_segments = path_segments[:-2] %}
-{% endif %}
+  {% set path_segments = request.path.strip('/').split('/') %}
+  {% if path_segments|length >= 2 and "lang" == path_segments[-2] %}
+    {% set path_segments = path_segments[:-2] %}
+  {% endif %}
 
-{% set current_template_name = get_template_name_from_index(path_segments|length) %}
+  {% set current_template_name = get_template_name_from_index(path_segments|length) %}
 
-{% if path_segments|length > 1 and current_template_name != "class_name" %}
-{% set back_steps = 1 %}
-{% set levels_data = none %}
-{% if meta is defined and meta %}
-{% set levels_data = meta.get(AssignmentTemplate.LEVELS_DATA.name) %}
-{% endif %}
-{% set is_final_content_page = path_segments|length == AssignmentTemplate.ASSIGNMENT.index + 1 %}
-{% if levels_data and is_final_content_page %}
-{% if levels_data.meta.type != "assignment" %}
-{% set back_steps = 2 %}
-{% endif %}
-{% endif %}
+  {% if path_segments|length > 1 and current_template_name != "class_name" %}
+    {% set back_steps = 1 %}
+    {% set levels_data = none %}
+    {% if meta is defined and meta %}
+      {% set levels_data = meta.get(AssignmentTemplate.LEVELS_DATA.name) %}
+    {% endif %}
+    {% set is_final_content_page = path_segments|length == AssignmentTemplate.ASSIGNMENT.index + 1 %}
+    {% if levels_data and is_final_content_page %}
+      {% if levels_data.meta.type != "assignment" %}
+        {% set back_steps = 2 %}
+      {% endif %}
+    {% endif %}
 
-{% set parent_segments = path_segments[:-back_steps] %}
-{% set parent_path = "/" ~ (parent_segments | join("/")) %}
-{% set parent_slug = parent_segments[-1] %}
-{% set parent_label = parent_slug | replace("_", " ") %}
+    {% set parent_segments = path_segments[:-back_steps] %}
+    {% set parent_path = "/" ~ (parent_segments | join("/")) %}
+    {% set parent_slug = parent_segments[-1] %}
+    {% set parent_label = parent_slug | replace("_", " ") %}
 
-{% if parent_slug == ASSIGNMENT_URL_PREFIX %}
-{% set parent_label = "Oppgaver" %}
-{% elif meta is defined and meta %}
-{% set parent_meta = meta.get(get_template_name_from_index(parent_segments|length)) %}
-{% if parent_meta %}
-{% set parent_label = parent_meta.name or parent_meta.title %}
-{% endif %}
-{% endif %}
+    {% if parent_slug == ASSIGNMENT_URL_PREFIX %}
+      {% set parent_label = "Oppgaver" %}
+    {% elif meta is defined and meta %}
+      {% set parent_meta = meta.get(get_template_name_from_index(parent_segments|length)) %}
+      {% if parent_meta %}
+        {% set parent_label = parent_meta.name or parent_meta.title %}
+      {% endif %}
+    {% endif %}
 
-<a href="{{ parent_path }}" class="piggy-button piggy-button--m site-back-button">
-  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-    stroke-linejoin="round">
-    <path d="m15 18-6-6 6-6" />
-  </svg>
-  <span>{{ parent_label }}</span>
-</a>
-{% endif %}
+    <a
+      href="{{ parent_path }}"
+      class="piggy-button piggy-button--m site-back-button">
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6" />
+      </svg>
+      <span>{{ parent_label }}</span>
+    </a>
+  {% endif %}
 {% endif %}

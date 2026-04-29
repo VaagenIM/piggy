@@ -240,6 +240,52 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --piggy-admonition-quote-text: #ffd27f;
   --piggy-admonition-quote-icon: #cfa8dc;
   --piggy-admonition-quote-border: #866997;
+
+  /* keyboard keys */
+  --piggy-key-background: linear-gradient(
+    135deg,
+    rgba(52, 18, 72, 0.98),
+    rgba(58, 22, 32, 0.98)
+  );
+  --piggy-key-background-hover: linear-gradient(
+    135deg,
+    rgba(107, 35, 133, 0.98),
+    rgba(255, 87, 34, 0.22)
+  );
+
+  --piggy-key-text: #fff2dc;
+  --piggy-key-text-hover: #ffffff;
+  --piggy-key-separator: #ffcc66;
+
+  --piggy-key-border: rgba(255, 0, 166, 0.5);
+  --piggy-key-border-hover: rgba(0, 251, 255, 0.72);
+
+  --piggy-key-inner-border: rgba(255, 204, 102, 0.08);
+  --piggy-key-inner-border-hover: rgba(255, 204, 102, 0.16);
+
+  --piggy-key-shadow: rgba(255, 0, 166, 0.22);
+  --piggy-key-shadow-hover: rgba(0, 251, 255, 0.3);
+
+  /* keyboard keys inside admonitions */
+  --piggy-key-admonition-background: rgba(0, 0, 0, 0.24);
+  --piggy-key-admonition-background-hover: rgba(255, 255, 255, 0.075);
+
+  --piggy-key-admonition-border: color-mix(
+    in srgb,
+    var(--piggy-admonition-border) 58%,
+    #ffffff 8%
+  );
+  --piggy-key-admonition-border-hover: var(--piggy-admonition-border);
+
+  --piggy-key-admonition-inner-border: rgba(255, 255, 255, 0.055);
+  --piggy-key-admonition-inner-border-hover: rgba(255, 255, 255, 0.11);
+
+  --piggy-key-admonition-shadow: rgba(0, 0, 0, 0.2);
+  --piggy-key-admonition-shadow-hover: color-mix(
+    in srgb,
+    var(--piggy-admonition-border) 28%,
+    transparent
+  );
 }
 
 [data-theme="synthwave"] .md-content h1 {
@@ -538,4 +584,46 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --piggy-table-header-start: rgba(207, 168, 220, 0.055);
   --piggy-table-header-end: rgba(207, 168, 220, 0.055);
   --piggy-table-row-hover: rgba(207, 168, 220, 0.07);
+}
+
+/***************************\
+|*  SYNTHWAVE KEY OVERRIDES *|
+\***************************/
+
+[data-theme="synthwave"] .md-content .keys,
+[data-theme="synthwave"] .md-content kbd {
+  border-color: var(--piggy-key-border) !important;
+
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-inner-border),
+    0 0 calc(0.35rem * var(--piggy-font-scale)) var(--piggy-key-shadow) !important;
+
+  text-shadow: 0 0 calc(0.35rem * var(--piggy-font-scale))
+    rgba(255, 204, 102, 0.35) !important;
+}
+
+[data-theme="synthwave"] .md-content .keys {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+[data-theme="synthwave"] .md-content kbd:hover,
+[data-theme="synthwave"] .md-content .keys kbd:hover {
+  border-color: var(--piggy-key-border-hover) !important;
+
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-inner-border-hover),
+    0 0 calc(0.55rem * var(--piggy-font-scale)) var(--piggy-key-shadow-hover),
+    0 0 calc(1rem * var(--piggy-font-scale)) rgba(255, 0, 166, 0.18) !important;
+
+  text-shadow: 0 0 calc(0.45rem * var(--piggy-font-scale))
+    rgba(0, 251, 255, 0.46) !important;
+}
+
+[data-theme="synthwave"] .md-content :is(.admonition, details) kbd,
+[data-theme="synthwave"] .md-content :is(.admonition, details) .keys {
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-admonition-inner-border),
+    0 0 calc(0.35rem * var(--piggy-font-scale))
+      var(--piggy-key-admonition-shadow) !important;
 }

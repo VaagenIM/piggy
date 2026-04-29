@@ -206,6 +206,36 @@ preview_style: background: linear-gradient(90deg, #201d2f, #34304a); color: #ede
   --piggy-admonition-quote-text: #edeaf7;
   --piggy-admonition-quote-icon: #b9b2d2;
   --piggy-admonition-quote-border: #807999;
+
+  /* keyboard keys */
+  --piggy-key-background: rgba(58, 53, 82, 0.96);
+  --piggy-key-background-hover: rgba(77, 72, 108, 0.98);
+
+  --piggy-key-text: #edeaf7;
+  --piggy-key-text-hover: #ffffff;
+  --piggy-key-separator: #b9b2d2;
+
+  --piggy-key-border: rgba(171, 164, 205, 0.3);
+  --piggy-key-border-hover: rgba(140, 200, 255, 0.46);
+
+  --piggy-key-inner-border: rgba(237, 234, 247, 0.06);
+  --piggy-key-inner-border-hover: rgba(237, 234, 247, 0.11);
+
+  --piggy-key-shadow: rgba(0, 0, 0, 0.22);
+  --piggy-key-shadow-hover: rgba(0, 0, 0, 0.3);
+
+  /* keyboard keys inside admonitions */
+  --piggy-key-admonition-background: rgba(0, 0, 0, 0.2);
+  --piggy-key-admonition-background-hover: rgba(237, 234, 247, 0.075);
+
+  --piggy-key-admonition-border: rgba(237, 234, 247, 0.14);
+  --piggy-key-admonition-border-hover: rgba(237, 234, 247, 0.26);
+
+  --piggy-key-admonition-inner-border: rgba(237, 234, 247, 0.045);
+  --piggy-key-admonition-inner-border-hover: rgba(237, 234, 247, 0.09);
+
+  --piggy-key-admonition-shadow: rgba(0, 0, 0, 0.18);
+  --piggy-key-admonition-shadow-hover: rgba(0, 0, 0, 0.26);
 }
 
 [data-theme="dusk"] .level-count-container {
