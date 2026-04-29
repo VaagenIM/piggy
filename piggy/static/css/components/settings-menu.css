@@ -27,13 +27,13 @@
 
 #settings-menu .close-button {
   position: absolute;
-  top: 12px;
-  right: 15px;
+  top: calc(0.75rem * var(--piggy-font-scale));
+  right: calc(0.95rem * var(--piggy-font-scale));
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.35rem;
-  height: 2.35rem;
+  width: calc(2.35rem * var(--piggy-font-scale));
+  height: calc(2.35rem * var(--piggy-font-scale));
   border-radius: 999px;
   border: 1px solid
     var(
@@ -42,7 +42,7 @@
     );
   background: var(--piggy-button);
   color: var(--piggy-text-button);
-  font-size: 1.75rem;
+  font-size: calc(1.75rem * var(--piggy-font-scale));
   line-height: 1;
   text-decoration: none;
 }
@@ -53,7 +53,10 @@
 
 .settings-content {
   width: 350px;
-  padding: 60px 20px 20px 20px;
+  padding: calc(3.75rem * var(--piggy-font-scale))
+    calc(1.25rem * var(--piggy-font-scale))
+    calc(1.25rem * var(--piggy-font-scale))
+    calc(1.25rem * var(--piggy-font-scale));
 }
 
 .custom-select {
@@ -68,7 +71,8 @@
 }
 
 .custom-select .selected {
-  padding: 0.65rem 0.85rem;
+  padding: calc(0.65rem * var(--piggy-font-scale))
+    calc(0.85rem * var(--piggy-font-scale));
   cursor: pointer;
   background-color: var(--piggy-button);
   color: var(--piggy-text-button);
@@ -102,7 +106,7 @@
     opacity 0.3s ease-out;
   z-index: 10001;
   box-sizing: border-box;
-  padding: 0.35rem;
+  padding: calc(0.35rem * var(--piggy-font-scale));
   box-shadow: 0 0.75rem 1.75rem rgba(0, 0, 0, 0.18);
 
   scrollbar-width: thin;
@@ -133,9 +137,10 @@
 }
 
 .custom-select .option {
-  padding: 0.55rem 0.75rem;
+  padding: calc(0.55rem * var(--piggy-font-scale))
+    calc(0.75rem * var(--piggy-font-scale));
   cursor: pointer;
-  margin: 0.2rem 0;
+  margin: calc(0.2rem * var(--piggy-font-scale)) 0;
   border-radius: 999px;
   box-sizing: border-box;
   background-color: transparent;

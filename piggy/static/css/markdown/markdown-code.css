@@ -7,6 +7,20 @@
   --piggy-code-block-padding-y: calc(0.85rem * var(--piggy-font-scale));
   --piggy-code-block-line-height: calc(1.45rem * var(--piggy-font-scale));
   --piggy-code-block-font-size: calc(0.875rem * var(--piggy-font-scale));
+  --piggy-code-titlebar-control-space: calc(2.6rem * var(--piggy-font-scale));
+  --piggy-code-copy-reserved-space: calc(3rem * var(--piggy-font-scale));
+  --piggy-code-copy-button-size: calc(2rem * var(--piggy-font-scale));
+  --piggy-code-copy-icon-size: calc(1rem * var(--piggy-font-scale));
+  --piggy-code-copy-button-margin: calc(0.1rem * var(--piggy-font-scale));
+  --piggy-code-tooltip-viewport-padding: calc(2rem * var(--piggy-font-scale));
+  --piggy-code-tooltip-max-width: min(
+    calc(20rem * var(--piggy-font-scale)),
+    calc(100vw - var(--piggy-code-tooltip-viewport-padding))
+  );
+  --piggy-code-tooltip-min-width: min(
+    calc(16rem * var(--piggy-font-scale)),
+    calc(100vw - var(--piggy-code-tooltip-viewport-padding))
+  );
   --piggy-code-block-filename-bg: var(
     --piggy-code-block-line-number-bg,
     color-mix(
@@ -62,7 +76,8 @@
 }
 
 .md-content :not(pre) > code:not(.md-code__content) {
-  padding: 0.05rem 0.25rem !important;
+  padding: calc(0.05rem * var(--piggy-font-scale))
+    calc(0.25rem * var(--piggy-font-scale)) !important;
 
   color: var(--piggy-code-inline-text, var(--piggy-code)) !important;
   background: var(--piggy-code-inline-bg, var(--piggy-code-bg)) !important;
@@ -72,7 +87,7 @@
   ) !important;
 
   border: 1px solid var(--piggy-code-inline-border, var(--piggy-code-border)) !important;
-  border-radius: 0.25rem !important;
+  border-radius: calc(0.25rem * var(--piggy-font-scale)) !important;
 
   font-size: calc(0.875em * var(--piggy-font-scale)) !important;
   line-height: 1.35 !important;
@@ -86,9 +101,10 @@
   display: block !important;
   position: relative !important;
   box-sizing: border-box !important;
-  width: 100% !important;
+  width: auto !important;
+  min-width: 0 !important;
   max-width: 100% !important;
-  margin: 1rem 0 !important;
+  margin: calc(1rem * var(--piggy-font-scale)) 0 !important;
 
   color: var(--piggy-code-block-text, var(--piggy-code)) !important;
   background: var(
@@ -127,84 +143,22 @@
   border-radius: 999px;
 }
 
-.md-content .highlight:has(.md-annotation[data-md-visible]),
 .md-content .highlight:has(.md-tooltip--active) {
   overflow: visible !important;
   z-index: 20 !important;
 }
 
-.md-content
-  .highlight:is(
-    :has(.md-annotation[data-md-visible]),
-    :has(.md-tooltip--active)
-  )
-  .highlighttable,
-.md-content
-  .highlight:is(
-    :has(.md-annotation[data-md-visible]),
-    :has(.md-tooltip--active)
-  )
-  .highlighttable
-  tbody,
-.md-content
-  .highlight:is(
-    :has(.md-annotation[data-md-visible]),
-    :has(.md-tooltip--active)
-  )
-  .highlighttable
-  tr,
-.md-content
-  .highlight:is(
-    :has(.md-annotation[data-md-visible]),
-    :has(.md-tooltip--active)
-  )
-  .highlighttable
-  td,
-.md-content
-  .highlight:is(
-    :has(.md-annotation[data-md-visible]),
-    :has(.md-tooltip--active)
-  )
-  .highlighttable
-  td
-  > div,
-.md-content
-  .highlight:is(
-    :has(.md-annotation[data-md-visible]),
-    :has(.md-tooltip--active)
-  )
-  pre,
-.md-content
-  .highlight:is(
-    :has(.md-annotation[data-md-visible]),
-    :has(.md-tooltip--active)
-  )
-  code,
-.md-content
-  .highlight:is(
-    :has(.md-annotation[data-md-visible]),
-    :has(.md-tooltip--active)
-  )
-  .md-code__content,
-.md-content
-  .highlight:is(
-    :has(.md-annotation[data-md-visible]),
-    :has(.md-tooltip--active)
-  )
-  .md-code__content
-  span,
-.md-content
-  .highlight:is(
-    :has(.md-annotation[data-md-visible]),
-    :has(.md-tooltip--active)
-  )
-  .md-annotation,
-.md-content
-  .highlight:is(
-    :has(.md-annotation[data-md-visible]),
-    :has(.md-tooltip--active)
-  )
-  .md-tooltip {
+.md-content .highlight:has(.md-tooltip--active) .highlighttable,
+.md-content .highlight:has(.md-tooltip--active) .highlighttable tbody,
+.md-content .highlight:has(.md-tooltip--active) .highlighttable tr,
+.md-content .highlight:has(.md-tooltip--active) .highlighttable td,
+.md-content .highlight:has(.md-tooltip--active) .highlighttable td > div,
+.md-content .highlight:has(.md-tooltip--active) pre,
+.md-content .highlight:has(.md-tooltip--active) code,
+.md-content .highlight:has(.md-tooltip--active) .md-code__content,
+.md-content .highlight:has(.md-tooltip--active) .md-code__content span,
+.md-content .highlight:has(.md-tooltip--active) .md-annotation,
+.md-content .highlight:has(.md-tooltip--active) .md-tooltip {
   max-width: none !important;
   overflow: visible !important;
 }
@@ -237,8 +191,10 @@
   tab-size: 2 !important;
 }
 
-.md-content .highlight pre:has(.md-code__nav) {
-  padding-right: calc(var(--piggy-code-block-padding-x) + 3rem) !important;
+.md-content .highlight:not(.piggy-code-titlebar-ready) pre:has(.md-code__nav) {
+  padding-right: calc(
+    var(--piggy-code-block-padding-x) + var(--piggy-code-copy-reserved-space)
+  ) !important;
 }
 
 .md-content .highlight code,
@@ -263,6 +219,107 @@
 .md-content .highlight ::selection {
   color: var(--piggy-code-selection-text) !important;
   background: var(--piggy-code-selection-bg) !important;
+}
+
+/************************\
+|* CODE TITLE BAR       *|
+\************************/
+.md-content .piggy-code-titlebar {
+  display: flex !important;
+  align-items: center !important;
+  gap: calc(0.45rem * var(--piggy-font-scale)) !important;
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 4 !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  min-height: calc(2.2rem * var(--piggy-font-scale)) !important;
+  margin: 0 !important;
+  padding: 0 var(--piggy-code-block-padding-x) !important;
+  padding-right: calc(
+    var(--piggy-code-block-padding-x) + var(--piggy-code-titlebar-control-space)
+  ) !important;
+
+  color: var(--piggy-code-block-text, var(--piggy-code)) !important;
+  background: var(--piggy-code-block-filename-bg) !important;
+  background-color: var(--piggy-code-block-filename-bg) !important;
+
+  border-bottom: 1px solid
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
+  border-radius: calc(var(--piggy-code-block-radius) - 1px)
+    calc(var(--piggy-code-block-radius) - 1px) 0 0 !important;
+
+  font-size: calc(0.76rem * var(--piggy-font-scale)) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.25 !important;
+  white-space: nowrap !important;
+}
+
+.md-content .piggy-code-titlebar-language,
+.md-content .piggy-code-titlebar-title {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-width: 0 !important;
+}
+
+.md-content .piggy-code-titlebar-language {
+  flex: 0 0 auto !important;
+  gap: calc(0.32rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content .piggy-code-titlebar-icon {
+  display: inline-block !important;
+  flex: 0 0 auto !important;
+  width: calc(0.95rem * var(--piggy-font-scale)) !important;
+  height: calc(0.95rem * var(--piggy-font-scale)) !important;
+
+  color: var(--piggy-code-clipboard, currentColor) !important;
+
+  fill: none !important;
+  opacity: 0.78 !important;
+  overflow: visible !important;
+  stroke: currentColor !important;
+  stroke-width: 2.25 !important;
+  transform: translateY(0.02rem) !important;
+}
+
+.md-content .piggy-code-titlebar-label {
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
+  font-size: inherit !important;
+  font-weight: 700 !important;
+  line-height: inherit !important;
+}
+
+.md-content .piggy-code-titlebar-label,
+.md-content .piggy-code-titlebar-title {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.md-content .piggy-code-titlebar-label {
+  max-width: calc(10rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content .piggy-code-titlebar-separator {
+  flex: 0 0 auto !important;
+  color: var(--piggy-code-clipboard, currentColor) !important;
+  opacity: 0.62 !important;
+}
+
+.md-content .piggy-code-titlebar-title {
+  flex: 1 1 auto !important;
+
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
 }
 
 /************************\
@@ -351,9 +408,11 @@
   align-items: center !important;
   width: 100% !important;
   min-width: 100% !important;
-  min-height: 2.2rem !important;
+  min-height: calc(2.2rem * var(--piggy-font-scale)) !important;
   padding: 0 var(--piggy-code-block-padding-x) !important;
-  padding-right: calc(var(--piggy-code-block-padding-x) + 2.6rem) !important;
+  padding-right: calc(
+    var(--piggy-code-block-padding-x) + var(--piggy-code-titlebar-control-space)
+  ) !important;
 
   color: var(--piggy-code-block-text, var(--piggy-code)) !important;
   background: var(--piggy-code-block-filename-bg) !important;
@@ -399,9 +458,9 @@
 
 .md-content .highlighttable th.filename .filename::before {
   content: "" !important;
-  width: 0.72rem !important;
-  height: 0.72rem !important;
-  margin-right: 0.38rem !important;
+  width: calc(0.72rem * var(--piggy-font-scale)) !important;
+  height: calc(0.72rem * var(--piggy-font-scale)) !important;
+  margin-right: calc(0.38rem * var(--piggy-font-scale)) !important;
 
   background: var(--piggy-code-clipboard, currentColor) !important;
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/%3E%3Cpath d='M14 2v6h6'/%3E%3Cpath d='m10 13-2 2 2 2'/%3E%3Cpath d='m14 17 2-2-2-2'/%3E%3C/svg%3E")
@@ -409,6 +468,17 @@
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/%3E%3Cpath d='M14 2v6h6'/%3E%3Cpath d='m10 13-2 2 2 2'/%3E%3Cpath d='m14 17 2-2-2-2'/%3E%3C/svg%3E")
     center / contain no-repeat !important;
   opacity: 0.78 !important;
+}
+
+.md-content
+  .highlight.piggy-code-titlebar-ready
+  .highlighttable
+  tr:has(> th.filename) {
+  display: none !important;
+}
+
+.md-content .highlight.piggy-code-titlebar-ready > .filename {
+  display: none !important;
 }
 
 .md-content .highlighttable td.linenos {
@@ -494,11 +564,11 @@
 \************************/
 .md-content .highlight .hll {
   display: inline !important;
-  margin: 0 0 0 calc(-0.22rem * var(--piggy-font-scale)) !important;
+  margin: 0 !important;
   padding: 0 calc(0.28rem * var(--piggy-font-scale)) !important;
 
   background: var(--piggy-code-block-highlight-bg) !important;
-  border-radius: 0.24rem !important;
+  border-radius: calc(0.24rem * var(--piggy-font-scale)) !important;
   box-shadow: inset 0 0 0 1px
     color-mix(
       in srgb,
@@ -537,48 +607,58 @@
 
 .md-content .md-code__button[data-md-type="copy"] {
   position: relative !important;
-  width: 2.2rem !important;
-  height: 2.2rem !important;
+  width: var(--piggy-code-copy-button-size) !important;
+  height: var(--piggy-code-copy-button-size) !important;
   padding: 0 !important;
-  margin: 0 !important;
+  margin: var(--piggy-code-copy-button-margin)
+    var(--piggy-code-copy-button-margin) 0 0 !important;
 
   color: var(--piggy-code-clipboard) !important;
-  background: var(
-    --piggy-code-block-background,
-    var(--piggy-code-block-bg)
-  ) !important;
-  background-color: var(
-    --piggy-code-block-background,
-    var(--piggy-code-block-bg)
-  ) !important;
+  background: transparent !important;
+  background-color: transparent !important;
 
-  border: 1px solid
-    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
-  border-top-width: 0 !important;
-  border-right-width: 0 !important;
-  border-radius: 0 var(--piggy-code-block-radius) 0
-    var(--piggy-code-block-radius) !important;
+  border: 1px solid transparent !important;
+  border-radius: calc(0.32rem * var(--piggy-font-scale)) !important;
 
   box-shadow: none !important;
   cursor: pointer !important;
-  font-size: 1rem !important;
+  font-size: var(--piggy-code-copy-icon-size) !important;
   line-height: 1 !important;
 }
 
 .md-content .md-code__button[data-md-type="copy"]::after {
-  width: 1rem !important;
-  height: 1rem !important;
+  width: var(--piggy-code-copy-icon-size) !important;
+  height: var(--piggy-code-copy-icon-size) !important;
   background-color: currentColor !important;
-  font-size: 1rem !important;
+  font-size: var(--piggy-code-copy-icon-size) !important;
   line-height: 1 !important;
+}
+
+.md-content
+  .highlight.piggy-code-titlebar-ready
+  .md-code__button[data-md-type="copy"] {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .md-content .md-code__button[data-md-type="copy"]:hover,
 .md-content .md-code__button[data-md-type="copy"]:focus-visible {
   color: var(--piggy-code-clipboard-hover) !important;
-  background: var(--piggy-button, #274f6e) !important;
-  background-color: var(--piggy-button, #274f6e) !important;
-  border-color: var(--piggy-button-hover, #51748d) !important;
+  background: color-mix(
+    in srgb,
+    var(--piggy-code-clipboard-hover) 12%,
+    transparent
+  ) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--piggy-code-clipboard-hover) 12%,
+    transparent
+  ) !important;
+  border-color: color-mix(
+    in srgb,
+    var(--piggy-code-clipboard-hover) 26%,
+    transparent
+  ) !important;
 }
 
 .md-content .md-code__button[data-md-type="copy"]:focus-visible {
@@ -588,7 +668,7 @@
 
 .md-content .md-code__button[data-md-type="copy"],
 .md-content .md-code__button[data-md-type="copy"]::after {
-  --md-icon-size: 1rem !important;
+  --md-icon-size: var(--piggy-code-copy-icon-size) !important;
 }
 
 .md-content .md-code__button[data-md-type="copy"]::before {
@@ -596,18 +676,20 @@
 
   position: absolute !important;
   top: 50% !important;
-  right: calc(100% + 0.45rem) !important;
+  right: calc(100% + 0.45rem * var(--piggy-font-scale)) !important;
   z-index: 10 !important;
-  transform: translateY(-50%) translateX(0.25rem) !important;
+  transform: translateY(-50%)
+    translateX(calc(0.25rem * var(--piggy-font-scale))) !important;
 
-  padding: 0.3rem 0.45rem !important;
+  padding: calc(0.3rem * var(--piggy-font-scale))
+    calc(0.45rem * var(--piggy-font-scale)) !important;
 
   color: var(--piggy-tooltip-text, #ffffff) !important;
   background: var(--piggy-tooltip, #000000) !important;
 
   border: 1px solid
     var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
-  border-radius: 0.3rem !important;
+  border-radius: calc(0.3rem * var(--piggy-font-scale)) !important;
 
   font-size: calc(0.75rem * var(--piggy-font-scale)) !important;
   font-weight: 650 !important;
@@ -659,7 +741,7 @@
   min-width: var(--piggy-code-annotation-min-width) !important;
   height: var(--piggy-code-annotation-size) !important;
   margin: 0 !important;
-  padding: 0 0.28rem !important;
+  padding: 0 calc(0.28rem * var(--piggy-font-scale)) !important;
 
   color: var(--piggy-code-annotation-text) !important;
   background:
@@ -769,17 +851,17 @@
 .md-content .highlight .md-annotation .md-tooltip {
   position: absolute !important;
   top: 50% !important;
-  left: calc(100% + 0.55rem) !important;
-  width: min(20rem, calc(100vw - 2rem)) !important;
-  min-width: min(16rem, calc(100vw - 2rem)) !important;
-  max-width: min(20rem, calc(100vw - 2rem)) !important;
+  left: calc(100% + 0.55rem * var(--piggy-font-scale)) !important;
+  width: var(--piggy-code-tooltip-max-width) !important;
+  min-width: var(--piggy-code-tooltip-min-width) !important;
+  max-width: var(--piggy-code-tooltip-max-width) !important;
 
   color: var(--piggy-code-tooltip-text) !important;
   background: var(--piggy-code-tooltip-bg) !important;
   background-color: var(--piggy-code-tooltip-bg) !important;
 
   border: 1px solid var(--piggy-code-tooltip-border) !important;
-  border-radius: 0.5rem !important;
+  border-radius: calc(0.5rem * var(--piggy-font-scale)) !important;
 
   box-shadow:
     0 0.8rem 2rem rgba(0, 0, 0, 0.24),
@@ -788,7 +870,8 @@
   opacity: 0 !important;
   overflow: visible !important;
   pointer-events: none !important;
-  transform: translate(0.25rem, -50%) scale(0.98) !important;
+  transform: translate(calc(0.25rem * var(--piggy-font-scale)), -50%)
+    scale(0.98) !important;
   transform-origin: left center !important;
   transition:
     opacity 150ms ease,
@@ -813,9 +896,9 @@
   content: "" !important;
   position: absolute !important;
   top: 50% !important;
-  left: -0.36rem !important;
-  width: 0.7rem !important;
-  height: 0.7rem !important;
+  left: calc(-0.36rem * var(--piggy-font-scale)) !important;
+  width: calc(0.7rem * var(--piggy-font-scale)) !important;
+  height: calc(0.7rem * var(--piggy-font-scale)) !important;
 
   background: var(--piggy-code-tooltip-bg) !important;
   border-bottom: 1px solid var(--piggy-code-tooltip-border) !important;
@@ -826,7 +909,8 @@
 .md-content .highlight .md-annotation .md-tooltip__inner {
   box-sizing: border-box !important;
   width: 100% !important;
-  padding: 0.7rem 0.85rem !important;
+  padding: calc(0.7rem * var(--piggy-font-scale))
+    calc(0.85rem * var(--piggy-font-scale)) !important;
 
   color: var(--piggy-code-tooltip-text) !important;
   background: transparent !important;
@@ -855,7 +939,8 @@
   min-width: 0 !important;
   max-width: none !important;
   margin: 0 !important;
-  padding: 0.05rem 0.25rem !important;
+  padding: calc(0.05rem * var(--piggy-font-scale))
+    calc(0.25rem * var(--piggy-font-scale)) !important;
 
   color: var(--piggy-code-inline-text, var(--piggy-code)) !important;
   background: var(--piggy-code-inline-bg, var(--piggy-code-bg)) !important;
@@ -865,7 +950,7 @@
   ) !important;
 
   border: 1px solid var(--piggy-code-inline-border, var(--piggy-code-border)) !important;
-  border-radius: 0.25rem !important;
+  border-radius: calc(0.25rem * var(--piggy-font-scale)) !important;
 
   box-shadow: none !important;
   font-family: var(
