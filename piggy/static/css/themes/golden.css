@@ -264,7 +264,8 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 [data-theme="golden"] .md-content .admonition {
   color: var(--piggy-admonition-text, var(--piggy-text-main));
   border-color: var(--piggy-admonition-border, #3e3416);
-  box-shadow: 0 0 0.5rem color-mix(in srgb, var(--piggy-admonition-border) 22%, transparent);
+  box-shadow: 0 0 0.5rem
+    color-mix(in srgb, var(--piggy-admonition-border) 22%, transparent);
 }
 
 [data-theme="golden"] .md-content .tabbed-labels::before {
@@ -302,12 +303,16 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="golden"] .md-content :is(.admonition.note,
-  details.note,
-  .admonition.info,
-  details.info,
-  .admonition.tip,
-  details.tip) {
+[data-theme="golden"]
+  .md-content
+  :is(
+    .admonition.note,
+    details.note,
+    .admonition.info,
+    details.info,
+    .admonition.tip,
+    details.tip
+  ) {
   --piggy-table-admonition-accent: rgba(0, 188, 212, 0.21);
   --piggy-table-header-start: rgba(0, 188, 212, 0.068);
   --piggy-table-header-end: rgba(0, 188, 212, 0.068);
@@ -315,10 +320,14 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="golden"] .md-content :is(.admonition.success,
-  details.success,
-  .admonition.question,
-  details.question) {
+[data-theme="golden"]
+  .md-content
+  :is(
+    .admonition.success,
+    details.success,
+    .admonition.question,
+    details.question
+  ) {
   --piggy-table-admonition-accent: rgba(126, 231, 135, 0.19);
   --piggy-table-header-start: rgba(126, 231, 135, 0.062);
   --piggy-table-header-end: rgba(126, 231, 135, 0.062);
@@ -326,10 +335,14 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 }
 
 /* WARNING / ATTENTION */
-[data-theme="golden"] .md-content :is(.admonition.warning,
-  details.warning,
-  .admonition.attention,
-  details.attention) {
+[data-theme="golden"]
+  .md-content
+  :is(
+    .admonition.warning,
+    details.warning,
+    .admonition.attention,
+    details.attention
+  ) {
   --piggy-table-admonition-accent: rgba(255, 216, 107, 0.22);
   --piggy-table-header-start: rgba(255, 216, 107, 0.075);
   --piggy-table-header-end: rgba(255, 216, 107, 0.075);
@@ -337,12 +350,16 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="golden"] .md-content :is(.admonition.danger,
-  details.danger,
-  .admonition.failure,
-  details.failure,
-  .admonition.bug,
-  details.bug) {
+[data-theme="golden"]
+  .md-content
+  :is(
+    .admonition.danger,
+    details.danger,
+    .admonition.failure,
+    details.failure,
+    .admonition.bug,
+    details.bug
+  ) {
   --piggy-table-admonition-accent: rgba(255, 107, 107, 0.2);
   --piggy-table-header-start: rgba(255, 107, 107, 0.065);
   --piggy-table-header-end: rgba(255, 107, 107, 0.065);
@@ -383,8 +400,8 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
     inset 0 0 0 1px var(--piggy-key-inner-border),
     0 0 calc(0.42rem * var(--piggy-font-scale)) var(--piggy-key-shadow) !important;
 
-  text-shadow:
-    0 0 calc(0.28rem * var(--piggy-font-scale)) rgba(255, 216, 107, 0.26) !important;
+  text-shadow: 0 0 calc(0.28rem * var(--piggy-font-scale))
+    rgba(255, 216, 107, 0.26) !important;
 }
 
 [data-theme="golden"] .md-content .keys {
@@ -399,6 +416,6 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
     0 0 calc(0.6rem * var(--piggy-font-scale)) var(--piggy-key-shadow-hover),
     0 0 calc(1rem * var(--piggy-font-scale)) rgba(255, 216, 107, 0.1) !important;
 
-  text-shadow:
-    0 0 calc(0.42rem * var(--piggy-font-scale)) rgba(255, 216, 107, 0.42) !important;
+  text-shadow: 0 0 calc(0.42rem * var(--piggy-font-scale))
+    rgba(255, 216, 107, 0.42) !important;
 }

@@ -3,103 +3,106 @@
 \***************************/
 .md-content .keys,
 .md-content kbd {
-    font-family:
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif !important;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif !important;
 
-    font-size: calc(0.82rem * var(--piggy-font-scale)) !important;
-    line-height: calc(1.05rem * var(--piggy-font-scale)) !important;
+  font-size: calc(0.82rem * var(--piggy-font-scale)) !important;
+  line-height: calc(1.05rem * var(--piggy-font-scale)) !important;
 
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 
-    min-width: calc(1.65rem * var(--piggy-font-scale)) !important;
-    min-height: calc(1.55rem * var(--piggy-font-scale)) !important;
+  min-width: calc(1.65rem * var(--piggy-font-scale)) !important;
+  min-height: calc(1.55rem * var(--piggy-font-scale)) !important;
 
-    padding:
-        calc(0.12rem * var(--piggy-font-scale)) calc(0.42rem * var(--piggy-font-scale)) !important;
+  padding: calc(0.12rem * var(--piggy-font-scale))
+    calc(0.42rem * var(--piggy-font-scale)) !important;
 
-    margin:
-        0 calc(0.08rem * var(--piggy-font-scale)) !important;
+  margin: 0 calc(0.08rem * var(--piggy-font-scale)) !important;
 
-    color: var(--piggy-key-text) !important;
-    background: var(--piggy-key-background) !important;
+  color: var(--piggy-key-text) !important;
+  background: var(--piggy-key-background) !important;
 
-    border:
-        calc(1px * var(--piggy-font-scale)) solid var(--piggy-key-border) !important;
+  border: calc(1px * var(--piggy-font-scale)) solid var(--piggy-key-border) !important;
 
-    border-radius: calc(0.42rem * var(--piggy-font-scale)) !important;
+  border-radius: calc(0.42rem * var(--piggy-font-scale)) !important;
 
-    box-shadow:
-        inset 0 0 0 1px var(--piggy-key-inner-border),
-        0 calc(1px * var(--piggy-font-scale)) calc(2px * var(--piggy-font-scale)) var(--piggy-key-shadow) !important;
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-inner-border),
+    0 calc(1px * var(--piggy-font-scale)) calc(2px * var(--piggy-font-scale))
+      var(--piggy-key-shadow) !important;
 
-    text-shadow: none !important;
-    vertical-align: baseline !important;
-    white-space: nowrap !important;
-    letter-spacing: calc(0.01em * var(--piggy-font-scale)) !important;
+  text-shadow: none !important;
+  vertical-align: baseline !important;
+  white-space: nowrap !important;
+  letter-spacing: calc(0.01em * var(--piggy-font-scale)) !important;
 
-    transform: translateY(calc(-0.03rem * var(--piggy-font-scale))) !important;
+  transform: translateY(calc(-0.03rem * var(--piggy-font-scale))) !important;
 }
 
 .md-content .keys {
-    gap: calc(0.22rem * var(--piggy-font-scale)) !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    margin:
-        0 calc(0.08rem * var(--piggy-font-scale)) !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
+  gap: calc(0.22rem * var(--piggy-font-scale)) !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 calc(0.08rem * var(--piggy-font-scale)) !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
 }
 
 .md-content .keys kbd {
-    margin: 0 !important;
+  margin: 0 !important;
 }
 
 .md-content .keys .key,
 .md-content .keys span {
-    color: var(--piggy-key-separator) !important;
+  color: var(--piggy-key-separator) !important;
 }
 
 .md-content kbd:hover,
 .md-content .keys kbd:hover {
-    color: var(--piggy-key-text-hover) !important;
-    background: var(--piggy-key-background-hover) !important;
-    border-color: var(--piggy-key-border-hover) !important;
+  color: var(--piggy-key-text-hover) !important;
+  background: var(--piggy-key-background-hover) !important;
+  border-color: var(--piggy-key-border-hover) !important;
 
-    box-shadow:
-        inset 0 0 0 1px var(--piggy-key-inner-border-hover),
-        0 calc(2px * var(--piggy-font-scale)) calc(5px * var(--piggy-font-scale)) var(--piggy-key-shadow-hover) !important;
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-inner-border-hover),
+    0 calc(2px * var(--piggy-font-scale)) calc(5px * var(--piggy-font-scale))
+      var(--piggy-key-shadow-hover) !important;
 }
 
 .md-content table kbd,
 .md-content table .keys {
-    font-size: calc(0.78rem * var(--piggy-font-scale)) !important;
+  font-size: calc(0.78rem * var(--piggy-font-scale)) !important;
 }
 
 .md-content table kbd {
-    min-width: calc(1.5rem * var(--piggy-font-scale)) !important;
-    min-height: calc(1.42rem * var(--piggy-font-scale)) !important;
+  min-width: calc(1.5rem * var(--piggy-font-scale)) !important;
+  min-height: calc(1.42rem * var(--piggy-font-scale)) !important;
 
-    padding:
-        calc(0.08rem * var(--piggy-font-scale)) calc(0.34rem * var(--piggy-font-scale)) !important;
+  padding: calc(0.08rem * var(--piggy-font-scale))
+    calc(0.34rem * var(--piggy-font-scale)) !important;
 }
 
 .md-content :is(.admonition, details) kbd,
 .md-content :is(.admonition, details) .keys {
-    --piggy-key-background: var(--piggy-key-admonition-background) !important;
-    --piggy-key-background-hover: var(--piggy-key-admonition-background-hover) !important;
-    --piggy-key-border: var(--piggy-key-admonition-border) !important;
-    --piggy-key-border-hover: var(--piggy-key-admonition-border-hover) !important;
-    --piggy-key-inner-border: var(--piggy-key-admonition-inner-border) !important;
-    --piggy-key-inner-border-hover: var(--piggy-key-admonition-inner-border-hover) !important;
-    --piggy-key-shadow: var(--piggy-key-admonition-shadow) !important;
-    --piggy-key-shadow-hover: var(--piggy-key-admonition-shadow-hover) !important;
+  --piggy-key-background: var(--piggy-key-admonition-background) !important;
+  --piggy-key-background-hover: var(
+    --piggy-key-admonition-background-hover
+  ) !important;
+  --piggy-key-border: var(--piggy-key-admonition-border) !important;
+  --piggy-key-border-hover: var(--piggy-key-admonition-border-hover) !important;
+  --piggy-key-inner-border: var(--piggy-key-admonition-inner-border) !important;
+  --piggy-key-inner-border-hover: var(
+    --piggy-key-admonition-inner-border-hover
+  ) !important;
+  --piggy-key-shadow: var(--piggy-key-admonition-shadow) !important;
+  --piggy-key-shadow-hover: var(--piggy-key-admonition-shadow-hover) !important;
 }

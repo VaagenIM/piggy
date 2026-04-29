@@ -34,16 +34,18 @@
   line-height: 1;
 }
 
-.language-trigger>svg:not(.language-chevron) {
+.language-trigger > svg:not(.language-chevron) {
   width: calc(1.05rem * var(--piggy-font-scale));
   height: calc(1.05rem * var(--piggy-font-scale));
   flex: 0 0 auto;
 }
 
 .language-current {
-  color: color-mix(in srgb,
-      var(--piggy-nav-button-text, var(--piggy-text-button)) 82%,
-      transparent);
+  color: color-mix(
+    in srgb,
+    var(--piggy-nav-button-text, var(--piggy-text-button)) 82%,
+    transparent
+  );
   font-size: calc(0.85rem * var(--piggy-font-scale));
   font-weight: 650;
   line-height: 1;
@@ -74,8 +76,11 @@
   background-color: var(--piggy-menu);
   white-space: normal;
   box-shadow: 0 0.75rem 1.75rem rgba(0, 0, 0, 0.18);
-  border: 1px solid var(--piggy-menu-border,
-      color-mix(in srgb, var(--piggy-neutral) 35%, transparent));
+  border: 1px solid
+    var(
+      --piggy-menu-border,
+      color-mix(in srgb, var(--piggy-neutral) 35%, transparent)
+    );
   border-radius: 1rem;
   top: calc(100% + 0.25rem);
   right: 0;
