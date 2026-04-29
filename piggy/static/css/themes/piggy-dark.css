@@ -216,6 +216,9 @@ preview_style: background: linear-gradient(90deg, #1f1518, #3d2a30); color: #ece
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="piggy-dark"] .md-content {
+  --piggy-code-block-highlight-bg: rgba(238, 134, 174, 0.18);
+  --piggy-code-block-highlight-border: rgba(238, 134, 174, 0.4);
+
   border-radius: 0.5rem;
 }
 
@@ -254,12 +257,16 @@ preview_style: background: linear-gradient(90deg, #1f1518, #3d2a30); color: #ece
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="piggy-dark"] .md-content :is(.admonition.note,
-  details.note,
-  .admonition.info,
-  details.info,
-  .admonition.tip,
-  details.tip) {
+[data-theme="piggy-dark"]
+  .md-content
+  :is(
+    .admonition.note,
+    details.note,
+    .admonition.info,
+    details.info,
+    .admonition.tip,
+    details.tip
+  ) {
   --piggy-table-admonition-accent: rgba(142, 216, 240, 0.2);
   --piggy-table-header-start: rgba(142, 216, 240, 0.065);
   --piggy-table-header-end: rgba(142, 216, 240, 0.065);
@@ -267,10 +274,14 @@ preview_style: background: linear-gradient(90deg, #1f1518, #3d2a30); color: #ece
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="piggy-dark"] .md-content :is(.admonition.success,
-  details.success,
-  .admonition.question,
-  details.question) {
+[data-theme="piggy-dark"]
+  .md-content
+  :is(
+    .admonition.success,
+    details.success,
+    .admonition.question,
+    details.question
+  ) {
   --piggy-table-admonition-accent: rgba(158, 230, 184, 0.18);
   --piggy-table-header-start: rgba(158, 230, 184, 0.06);
   --piggy-table-header-end: rgba(158, 230, 184, 0.06);
@@ -278,10 +289,14 @@ preview_style: background: linear-gradient(90deg, #1f1518, #3d2a30); color: #ece
 }
 
 /* WARNING / ATTENTION */
-[data-theme="piggy-dark"] .md-content :is(.admonition.warning,
-  details.warning,
-  .admonition.attention,
-  details.attention) {
+[data-theme="piggy-dark"]
+  .md-content
+  :is(
+    .admonition.warning,
+    details.warning,
+    .admonition.attention,
+    details.attention
+  ) {
   --piggy-table-admonition-accent: rgba(255, 208, 168, 0.18);
   --piggy-table-header-start: rgba(255, 208, 168, 0.06);
   --piggy-table-header-end: rgba(255, 208, 168, 0.06);
@@ -289,12 +304,16 @@ preview_style: background: linear-gradient(90deg, #1f1518, #3d2a30); color: #ece
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="piggy-dark"] .md-content :is(.admonition.danger,
-  details.danger,
-  .admonition.failure,
-  details.failure,
-  .admonition.bug,
-  details.bug) {
+[data-theme="piggy-dark"]
+  .md-content
+  :is(
+    .admonition.danger,
+    details.danger,
+    .admonition.failure,
+    details.failure,
+    .admonition.bug,
+    details.bug
+  ) {
   --piggy-table-admonition-accent: rgba(255, 154, 168, 0.19);
   --piggy-table-header-start: rgba(255, 154, 168, 0.062);
   --piggy-table-header-end: rgba(255, 154, 168, 0.062);
@@ -302,7 +321,9 @@ preview_style: background: linear-gradient(90deg, #1f1518, #3d2a30); color: #ece
 }
 
 /* EXAMPLE */
-[data-theme="piggy-dark"] .md-content :is(.admonition.example, details.example) {
+[data-theme="piggy-dark"]
+  .md-content
+  :is(.admonition.example, details.example) {
   --piggy-table-admonition-accent: rgba(202, 168, 255, 0.19);
   --piggy-table-header-start: rgba(202, 168, 255, 0.062);
   --piggy-table-header-end: rgba(202, 168, 255, 0.062);
