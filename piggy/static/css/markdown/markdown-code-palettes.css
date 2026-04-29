@@ -61,6 +61,11 @@
   --piggy-code-token-error: #cf222e;
 }
 
+[data-theme-type="light"] .md-content {
+  --piggy-code-block-highlight-bg: rgba(9, 105, 218, 0.11);
+  --piggy-code-block-highlight-border: rgba(9, 105, 218, 0.28);
+}
+
 /***************\
 |* DARK THEMES *|
 \***************/
@@ -111,4 +116,9 @@
   --piggy-code-token-deleted: #ff7b72;
   --piggy-code-token-inserted: #7ee787;
   --piggy-code-token-error: #ff7b72;
+}
+
+[data-theme-type="dark"] .md-content {
+  --piggy-code-block-highlight-bg: rgba(121, 192, 255, 0.16);
+  --piggy-code-block-highlight-border: rgba(121, 192, 255, 0.34);
 }
