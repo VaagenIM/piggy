@@ -1,42 +1,73 @@
 /***************************\
 |*  MONOSPACE FONT THEMES  *|
 \***************************/
-[data-mono-theme="default"] code {
-  font-family: "Cascadia Code PL", monospace !important;
+[data-mono-theme="default"] {
+  --piggy-monospace-font-family: "Cascadia Code PL", monospace;
 }
 
-[data-mono-theme="fira-code"] code {
-  font-family: "Fira Code", monospace !important;
+[data-mono-theme="fira-code"] {
+  --piggy-monospace-font-family: "Fira Code", monospace;
 }
 
-[data-mono-theme="roboto-mono"] code {
-  font-family: "Roboto Mono", monospace !important;
+[data-mono-theme="roboto-mono"] {
+  --piggy-monospace-font-family: "Roboto Mono", monospace;
 }
 
-[data-mono-theme="jetbrains-mono"] code {
-  font-family: "JetBrains Mono", monospace !important;
+[data-mono-theme="jetbrains-mono"] {
+  --piggy-monospace-font-family: "JetBrains Mono", monospace;
 }
 
-[data-mono-theme="dm-mono"] code {
-  font-family: "DM Mono", monospace !important;
+[data-mono-theme="dm-mono"] {
+  --piggy-monospace-font-family: "DM Mono", monospace;
+}
+
+[data-mono-theme="ubuntu-mono"] {
+  --piggy-monospace-font-family: "Ubuntu Mono", monospace;
+}
+
+[data-mono-theme="kode-mono"] {
+  --piggy-monospace-font-family: "Kode Mono", monospace;
+}
+
+[data-mono-theme="lucida"] {
+  --piggy-monospace-font-family: "Lucida Console", monospace;
+}
+
+[data-mono-theme="courier"] {
+  --piggy-monospace-font-family: "Courier New", monospace;
+}
+
+[data-mono-theme]
+  :is(
+    code,
+    .md-content .highlighttable .filename,
+    .md-content .highlighttable .linenos,
+    .md-content .linenodiv pre,
+    .md-content .linenos .normal
+  ) {
+  font-family: var(--piggy-monospace-font-family) !important;
+}
+
+[data-mono-theme="dm-mono"]
+  :is(
+    code,
+    .md-content .highlighttable .filename,
+    .md-content .highlighttable .linenos,
+    .md-content .linenodiv pre,
+    .md-content .linenos .normal
+  ) {
   font-weight: 400;
   font-style: normal;
 }
 
-[data-mono-theme="ubuntu-mono"] code {
-  font-family: "Ubuntu Mono", monospace !important;
+[data-mono-theme="ubuntu-mono"]
+  :is(
+    code,
+    .md-content .highlighttable .filename,
+    .md-content .highlighttable .linenos,
+    .md-content .linenodiv pre,
+    .md-content .linenos .normal
+  ) {
   font-weight: 400;
   font-style: normal;
-}
-
-[data-mono-theme="kode-mono"] code {
-  font-family: "Kode Mono", monospace !important;
-}
-
-[data-mono-theme="lucida"] code {
-  font-family: "Lucida Console", monospace !important;
-}
-
-[data-mono-theme="courier"] code {
-  font-family: "Courier New", monospace !important;
 }

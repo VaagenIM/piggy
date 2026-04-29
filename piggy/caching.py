@@ -62,6 +62,15 @@ def cache_directory(
             cache_directory(value.get("data", {}), fn=fn, _path=f"{_path}/{key}")
 
 
+def _mdfile_to_sections_with_retry(path: Path) -> dict:
+    try:
+        return mdfile_to_sections(path)
+    except FileNotFoundError:
+        # TurtleConverter occasionally removes its temporary copy before
+        # cleanup on the first render after app startup. A second build succeeds.
+        return mdfile_to_sections(path)
+
+
 @lru_cache_wrapper
 def _render_assignment(p: Path, extra_metadata=None) -> Response:
     """Render an assignment from a Path object."""
@@ -71,7 +80,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
     if not p.exists():
         raise PiggyHTTPException("Assignment not found", status_code=404)
     try:
-        sections = mdfile_to_sections(p)
+        sections = _mdfile_to_sections_with_retry(p)
         print("Rendering:", p)
     except ConversionError:
         raise PiggyHTTPException("Error: Could not render assignment", status_code=500)
