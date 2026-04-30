@@ -3,6 +3,13 @@ id: 103
 name: Ocean
 description: A theme inspired by the serene blues and teals of the ocean.
 type: dark
+category: animated
+tags: animated, cool, calm
+preview.background: #002b36
+preview.surface: #002b36
+preview.text: #a7d8e6
+preview.accent: #00c0dc
+preview.border: #29b8cf
 preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d8e6; text-shadow: none;
 */
 

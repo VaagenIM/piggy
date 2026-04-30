@@ -3,6 +3,13 @@ id: 1
 name: Light
 description: The default light theme.
 type: light
+category: standard
+tags: default, bright
+preview.background: #f7f7f7
+preview.surface: #ffffff
+preview.text: #171717
+preview.accent: #78b3d9
+preview.border: #7faac6
 preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); color: rgb(23, 23, 23); text-shadow: none;
 */
 
@@ -232,10 +239,6 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
 
   --piggy-key-admonition-shadow: rgba(23, 32, 51, 0.08);
   --piggy-key-admonition-shadow-hover: rgba(23, 32, 51, 0.12);
-}
-
-[data-theme="light"] .settings-option {
-  color: var(--piggy-dark);
 }
 
 /******************************\

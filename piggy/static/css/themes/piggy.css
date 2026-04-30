@@ -3,6 +3,13 @@ id: 2
 name: Piggy
 description: Relaxing pastel pink theme.
 type: light
+category: playful
+tags: pastel, soft, light
+preview.background: #ffe6e9
+preview.surface: #ffccd5
+preview.text: #141414
+preview.accent: #c95c7d
+preview.border: #b94d70
 preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(20, 20, 20); text-shadow: none;
 */
 

@@ -16,6 +16,19 @@
 <script>
   const scrollToTopBtn = document.getElementById('scroll-to-top-btn');
 
+  function piggyShouldReduceScrollMotion() {
+    const preference = document.documentElement.getAttribute(
+      'data-reader-reduce-motion'
+    );
+
+    if (preference === 'reduce') return true;
+    if (preference === 'allow') return false;
+
+    return Boolean(
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    );
+  }
+
   window.addEventListener('scroll', () => {
     if (window.scrollY > 150) {
       scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
@@ -27,6 +40,9 @@
   });
 
   scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({
+      top: 0,
+      behavior: piggyShouldReduceScrollMotion() ? 'auto' : 'smooth',
+    });
   });
 </script>

@@ -3,6 +3,13 @@ id: 3
 name: Piggy (Dark)
 description: A dark pink theme.
 type: dark
+category: playful
+tags: pastel, dark, pink
+preview.background: #1b1218
+preview.surface: #31212b
+preview.text: #f3e7ec
+preview.accent: #ee86ae
+preview.border: #d980a2
 preview_style: background: linear-gradient(90deg, #1f1518, #3d2a30); color: #ece2e4; text-shadow: none;
 */
 

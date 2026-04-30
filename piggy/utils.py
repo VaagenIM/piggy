@@ -81,16 +81,18 @@ def get_themes():
 
         theme_output.append(theme_data)
 
-    return sorted(theme_output, key=lambda d: int(d["id"]))
+    return sorted(theme_output, key=lambda d: int(d.get("id", 9999)))
 
 
-# quick and dirty state_machine to read CSS metadata
+# Lightweight state machine to read CSS metadata blocks. Theme CSS stays the
+# source of truth for colors, while metadata gives the settings UI richer cards.
 class ParserState:
     INIT = 1
     READ = 2
 
 
 CSS_META_IDENTIFIER = "/* METADATA"
+CSS_META_LIST_KEYS = {"tags", "recommended_for", "features"}
 
 
 @lru_cache_wrapper
@@ -101,30 +103,72 @@ def get_css_metadata(path: str):
     if css_path.suffix != ".css":
         return None
 
-    valid = True
     state = ParserState.INIT
 
-    with css_path.open() as file:
-        while valid:
-            line = file.readline()
+    with css_path.open(encoding="utf-8") as file:
+        for raw_line in file:
+            line = raw_line.strip().lstrip("\ufeff")
 
-            match state:
-                case ParserState.INIT:
-                    if str(line).startswith(CSS_META_IDENTIFIER):
-                        state = ParserState.READ
-                    else:
-                        valid = False
-                case ParserState.READ:
-                    meta_item = line.split(":", 1)
+            if state == ParserState.INIT:
+                if not line:
+                    continue
 
-                    if len(meta_item) < 2:
-                        valid = False
-                    else:
-                        css_metadata[meta_item[0].strip()] = meta_item[1].strip()
+                if line.startswith(CSS_META_IDENTIFIER):
+                    state = ParserState.READ
+                    continue
+
+                return None
+
+            if line.startswith("*/"):
+                break
+
+            if not line or line.startswith("#"):
+                continue
+
+            meta_item = line.split(":", 1)
+            if len(meta_item) < 2:
+                continue
+
+            key = meta_item[0].strip()
+            value = parse_css_metadata_value(key, meta_item[1].strip())
+            set_css_metadata_value(css_metadata, key, value)
+
+    if state == ParserState.INIT or not css_metadata:
+        return None
 
     css_metadata["path"] = css_path.stem
 
     return css_metadata
+
+
+def parse_css_metadata_value(key: str, value: str):
+    metadata_key = key.rsplit(".", 1)[-1]
+
+    if metadata_key in CSS_META_LIST_KEYS:
+        return [item.strip() for item in value.split(",") if item.strip()]
+
+    if metadata_key == "id" and value.isdigit():
+        return int(value)
+
+    normalized_value = value.lower()
+    if normalized_value in {"true", "false"}:
+        return normalized_value == "true"
+
+    return value
+
+
+def set_css_metadata_value(metadata: dict, key: str, value):
+    parts = [part.strip() for part in key.split(".") if part.strip()]
+    if not parts:
+        return
+
+    current = metadata
+    for part in parts[:-1]:
+        if not isinstance(current.get(part), dict):
+            current[part] = {}
+        current = current[part]
+
+    current[parts[-1]] = value
 
 
 def process_json_for_api(obj):

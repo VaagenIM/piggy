@@ -1,34 +1,46 @@
 /****************************\
 |*     FONT SIZE THEMES     *|
 \****************************/
+:root {
+  --piggy-reader-font-scale: var(--piggy-font-scale);
+}
+
+:root[data-reader-font-size="xx-small"],
 :root[data-font-size="xx-small"] {
-  --piggy-font-scale: 0.7;
+  --piggy-reader-font-scale: 0.7;
 }
 
+:root[data-reader-font-size="x-small"],
 :root[data-font-size="x-small"] {
-  --piggy-font-scale: 0.85;
+  --piggy-reader-font-scale: 0.85;
 }
 
+:root[data-reader-font-size="small"],
 :root[data-font-size="small"] {
-  --piggy-font-scale: 1;
+  --piggy-reader-font-scale: 1;
 }
 
+:root[data-reader-font-size="default"],
 :root[data-font-size="default"] {
-  --piggy-font-scale: 1.075;
+  --piggy-reader-font-scale: 1.075;
 }
 
+:root[data-reader-font-size="large"],
 :root[data-font-size="large"] {
-  --piggy-font-scale: 1.2;
+  --piggy-reader-font-scale: 1.2;
 }
 
+:root[data-reader-font-size="x-large"],
 :root[data-font-size="x-large"] {
-  --piggy-font-scale: 1.35;
+  --piggy-reader-font-scale: 1.35;
 }
 
+:root[data-reader-font-size="xx-large"],
 :root[data-font-size="xx-large"] {
-  --piggy-font-scale: 1.5;
+  --piggy-reader-font-scale: 1.5;
 }
 
+:root[data-reader-font-size="xxx-large"],
 :root[data-font-size="xxx-large"] {
-  --piggy-font-scale: 1.85;
+  --piggy-reader-font-scale: 1.85;
 }

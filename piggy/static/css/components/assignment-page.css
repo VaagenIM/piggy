@@ -13,6 +13,7 @@
 .assignment-page-header .assignment-heading {
   min-width: 0;
   margin: 0;
+  font-size: calc(2.5rem * var(--piggy-reader-font-scale));
   overflow-wrap: anywhere;
 }
 

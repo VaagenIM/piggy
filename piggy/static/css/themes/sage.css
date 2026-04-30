@@ -3,6 +3,13 @@ id: 6
 name: Sage
 description: A calm green theme for focused study.
 type: light
+category: calm
+tags: low glare, calm, green
+preview.background: #d8e8c8
+preview.surface: #f7fbf3
+preview.text: #1f3526
+preview.accent: #5f9362
+preview.border: #4d7d50
 preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3526; text-shadow: none;
 */
 

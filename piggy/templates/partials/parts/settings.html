@@ -2,7 +2,10 @@
   id="settings-button"
   class="piggy-button piggy-icon-button site-nav-menu-button"
   type="button"
-  title="Settings">
+  title="Settings"
+  aria-haspopup="dialog"
+  aria-expanded="false"
+  aria-controls="settings-menu">
   <svg
     aria-hidden="true"
     viewBox="0 0 24 24"
@@ -18,18 +21,208 @@
   <span class="visually-hidden">Settings</span>
 </button>
 
-<!-- Settings Menu -->
-<div id="settings-menu">
-  <!-- Close Button -->
-  <a href="javascript:void(0)" class="close-button">&times;</a>
+<div id="settings-backdrop" class="settings-backdrop" hidden></div>
+
+<aside
+  id="settings-menu"
+  class="settings-panel"
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
+  aria-labelledby="settings-title"
+  inert>
+  <header class="settings-panel-header">
+    <div class="settings-heading-group">
+      <p class="settings-eyebrow">Reader</p>
+      <h2 id="settings-title">Settings</h2>
+    </div>
+    <button
+      class="piggy-button piggy-icon-button settings-close-button"
+      type="button"
+      aria-label="Close settings">
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </svg>
+    </button>
+  </header>
+
   <div class="settings-content">
-    <br />
-    <h2>🎨 Themes & Colors</h2>
-    {% include 'partials/parts/settings/theme.html' %}
-    <br />
-    <h2>🗛 Text options</h2>
-    {% include 'partials/parts/settings/font-size.html' %}
-    {% include 'partials/parts/settings/font.html' %}
-    {% include 'partials/parts/settings/monospace-font.html' %}
+    <div class="settings-preview-column">
+      <section
+        class="settings-preview"
+        aria-labelledby="settings-preview-title">
+        <h3 id="settings-preview-title">Preview</h3>
+        <div class="settings-preview-card">
+          <div class="assignment-page-header settings-preview-header">
+            <p class="settings-preview-level">Assignment 5</p>
+            <h4 class="settings-preview-title">Loops and decisions</h4>
+          </div>
+
+          <article
+            class="settings-reader-preview md-content"
+            aria-label="Reader preview">
+            <h2>Plan the program</h2>
+            <p>
+              A program is easier to read when each idea has enough room. First
+              describe the goal, then test one small part at a time.
+            </p>
+            <p>
+              Use names that explain the value, such as
+              <code>total_score</code> or <code>current_level</code>.
+            </p>
+
+            <h3>Try the loop</h3>
+            <ul>
+              <li>Start with a short list of values.</li>
+              <li>Print one result before adding more logic.</li>
+              <li>Check the output after every change.</li>
+            </ul>
+
+            <div class="highlight">
+              <pre><code class="language-python md-code__content">scores = [3, 5, 8]
+total_score = 0
+
+for score in scores:
+    total_score += score
+
+print(total_score)</code></pre>
+            </div>
+
+            <div class="admonition note">
+              <p class="admonition-title">Remember</p>
+              <p>
+                Keep the loop small at first, then add one new rule when the
+                output looks correct.
+              </p>
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Concept</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Loop</td>
+                  <td>Repeats the same step</td>
+                </tr>
+                <tr>
+                  <td>Condition</td>
+                  <td>Chooses one path</td>
+                </tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <div class="settings-controls-column">
+      <section
+        class="settings-section"
+        aria-labelledby="settings-presets-title">
+        <div class="settings-section-heading">
+          <h3 id="settings-presets-title">Presets</h3>
+          <button
+            id="settings-reset-button"
+            class="piggy-button piggy-button--s settings-secondary-button"
+            type="button">
+            Reset
+          </button>
+        </div>
+        <div
+          class="settings-card-grid settings-card-grid--presets"
+          data-settings-render="presets"></div>
+      </section>
+
+      <section class="settings-section" aria-labelledby="settings-theme-title">
+        <div class="settings-section-heading">
+          <h3 id="settings-theme-title">Theme</h3>
+        </div>
+        <div
+          class="settings-control-group"
+          data-settings-render="contrast"></div>
+        <div
+          class="settings-card-grid settings-card-grid--themes"
+          data-settings-render="themes"></div>
+      </section>
+
+      <section class="settings-section" aria-labelledby="settings-text-title">
+        <div class="settings-section-heading">
+          <h3 id="settings-text-title">Text</h3>
+        </div>
+        <div class="settings-control-stack">
+          <div data-settings-render="readerFont"></div>
+          <div data-settings-render="codeFont"></div>
+          <div data-settings-render="readerFontSize"></div>
+        </div>
+
+        <details class="settings-disclosure">
+          <summary>Advanced text layout</summary>
+          <div class="settings-control-stack">
+            <div data-settings-render="readerLineHeight"></div>
+            <div data-settings-render="readerLetterSpacing"></div>
+            <div data-settings-render="readerWordSpacing"></div>
+            <div data-settings-render="readerParagraphSpacing"></div>
+            <div data-settings-render="readerWidth"></div>
+          </div>
+        </details>
+      </section>
+
+      <section class="settings-section" aria-labelledby="settings-focus-title">
+        <div class="settings-section-heading">
+          <h3 id="settings-focus-title">Focus</h3>
+        </div>
+        <div class="settings-control-stack">
+          <div data-settings-render="focusMode"></div>
+          <div data-settings-render="readingRuler"></div>
+          <div data-settings-render="hideDecorations"></div>
+          <div data-settings-render="reduceMotion"></div>
+        </div>
+      </section>
+
+      <section
+        class="settings-section"
+        aria-labelledby="settings-support-title">
+        <div class="settings-section-heading">
+          <h3 id="settings-support-title">Support</h3>
+        </div>
+        <div class="settings-control-stack">
+          <div data-settings-render="rememberPosition"></div>
+          <div class="settings-support-actions">
+            <button
+              id="settings-bookmark-button"
+              class="piggy-button piggy-button--m settings-action-button"
+              type="button"
+              aria-pressed="false">
+              Bookmark page
+            </button>
+            <button
+              id="settings-complete-button"
+              class="piggy-button piggy-button--m settings-action-button"
+              type="button"
+              aria-pressed="false">
+              Mark complete
+            </button>
+          </div>
+          <nav class="settings-outline" aria-label="Page outline">
+            <h4>Outline</h4>
+            <div data-settings-render="outline"></div>
+          </nav>
+        </div>
+      </section>
+    </div>
   </div>
-</div>
+</aside>
+
+<div id="reader-ruler" class="reader-ruler" aria-hidden="true"></div>

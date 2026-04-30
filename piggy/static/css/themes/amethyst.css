@@ -3,6 +3,13 @@ id: 7
 name: Amethyst
 description: A soft purple theme for creative study.
 type: light
+category: creative
+tags: creative, soft, purple
+preview.background: #e0d2f3
+preview.surface: #fbf8ff
+preview.text: #2d243b
+preview.accent: #8164ba
+preview.border: #7357a8
 preview_style: background: linear-gradient(90deg, #e0d2f3, #bba7df); color: #2d243b; text-shadow: none;
 */
 

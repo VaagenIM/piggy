@@ -3,6 +3,13 @@ id: 8
 name: Dusk
 description: A calm purple-blue theme for evening study.
 type: dark
+category: focus
+tags: evening, focus, calm
+preview.background: #201d2f
+preview.surface: #2b273f
+preview.text: #edeaf7
+preview.accent: #938bc4
+preview.border: #8f88b8
 preview_style: background: linear-gradient(90deg, #201d2f, #34304a); color: #edeaf7; text-shadow: none;
 */
 

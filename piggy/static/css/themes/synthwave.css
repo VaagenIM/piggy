@@ -3,6 +3,13 @@ id: 100
 name: Synthwave
 description: Fancy sunset, purple, neon, gradients!
 type: dark
+category: animated
+tags: animated, neon, high energy
+preview.background: #05000a
+preview.surface: #241032
+preview.text: #ffe8d6
+preview.accent: #f04fff
+preview.border: #ff5bdc
 preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF5722, #ffcc66); color: #ffffff; text-shadow: none;
 */
 
@@ -432,14 +439,6 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
     box-shadow: 0 0 15px 0 #ff00ff;
     border-color: #ff00ff;
   }
-}
-
-[data-theme="synthwave"] .settings-option {
-  color: var(--piggy-light);
-}
-
-[data-theme="synthwave"] #settings-btn {
-  color: var(--piggy-light);
 }
 
 /******************************\

@@ -3,6 +3,13 @@ id: 104
 name: Space
 description: A theme inspired by the infinite cosmos and deep space, featuring deep blacks, electric cyan accents, and cosmic highlights.
 type: dark
+category: animated
+tags: animated, high contrast, cool
+preview.background: #070910
+preview.surface: #070910
+preview.text: #e8f3ff
+preview.accent: #66fcf1
+preview.border: #52d7d0
 preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
 */
 
