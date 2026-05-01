@@ -1,6 +1,6 @@
 (function () {
   const STORE_KEY = "piggy.readerPreferences.v1";
-  const STORE_VERSION = 4;
+  const STORE_VERSION = 5;
   const LEGACY_KEYS = {
     theme: "theme",
     readerFont: "fontTheme",
@@ -471,7 +471,14 @@
     },
   };
 
+  const PREFERENCE_VALUE_KEYS = [
+    ...new Set(
+      Object.values(PRESETS).flatMap((preset) => Object.keys(preset.values)),
+    ),
+  ];
+
   let currentPreferences = null;
+  let currentCustomValues = null;
 
   function getThemeList() {
     return Array.isArray(window.PIGGY_THEMES) ? window.PIGGY_THEMES : [];
@@ -575,16 +582,33 @@
     }
   }
 
-  function getStoredPreferenceValues() {
+  function getStoredPreferenceRecord() {
     const stored = safeParse(safeGetItem(STORE_KEY));
-    if (!stored) return {};
+    if (!stored) {
+      return {
+        version: 0,
+        values: {},
+        customValues: null,
+      };
+    }
 
     if (stored.values && typeof stored.values === "object") {
-      return migrateStoredPreferenceValues(stored.values, stored.version);
+      return {
+        version: stored.version || 0,
+        values: migrateStoredPreferenceValues(stored.values, stored.version),
+        customValues: migrateStoredCustomValues(
+          stored.customValues,
+          stored.version,
+        ),
+      };
     }
 
     const { version, ...values } = stored;
-    return migrateStoredPreferenceValues(values, version);
+    return {
+      version: version || 0,
+      values: migrateStoredPreferenceValues(values, version),
+      customValues: null,
+    };
   }
 
   function migrateStoredPreferenceValues(values, version = 0) {
@@ -613,6 +637,14 @@
     return migratedValues;
   }
 
+  function migrateStoredCustomValues(values, version = 0) {
+    if (!values || typeof values !== "object") return null;
+
+    const migratedValues = migrateStoredPreferenceValues(values, version);
+    delete migratedValues.readerPreset;
+    return migratedValues;
+  }
+
   function getLegacyPreferences() {
     const preferences = {};
 
@@ -631,12 +663,18 @@
   function loadPreferences() {
     const defaults = getDefaultPreferences();
     const legacy = getLegacyPreferences();
-    const stored = getStoredPreferenceValues();
+    const storedRecord = getStoredPreferenceRecord();
+    const stored = storedRecord.values;
     const preferences = { ...defaults, ...legacy, ...stored };
 
     Object.keys(SETTINGS).forEach((key) => {
       preferences[key] = normalizePreference(key, preferences[key]);
     });
+
+    currentCustomValues = normalizeCustomValues(
+      storedRecord.customValues,
+      preferences,
+    );
 
     return preferences;
   }
@@ -647,8 +685,18 @@
       JSON.stringify({
         version: STORE_VERSION,
         values: preferences,
+        customValues: getPersistedCustomValues(preferences),
       }),
     );
+  }
+
+  function getPersistedCustomValues(preferences) {
+    if (currentCustomValues) return { ...currentCustomValues };
+    if (preferences.readerPreset === "custom") {
+      return getPreferenceValues(preferences);
+    }
+
+    return null;
   }
 
   function applyPreferences(preferences) {
@@ -698,12 +746,20 @@
 
   function setPreference(key, value, options = {}) {
     if (!SETTINGS[key]) return getPreferences();
+    if (key === "readerPreset" && value === "custom") {
+      return applyPreset("custom");
+    }
 
     const preferences = getPreferences();
     preferences[key] = normalizePreference(key, value);
+    const changesPresetValue = PREFERENCE_VALUE_KEYS.includes(key);
 
-    if (key !== "readerPreset" && options.keepPreset !== true) {
+    if (changesPresetValue && options.keepPreset !== true) {
       preferences.readerPreset = "custom";
+    }
+
+    if (changesPresetValue && preferences.readerPreset === "custom") {
+      currentCustomValues = getPreferenceValues(preferences);
     }
 
     currentPreferences = preferences;
@@ -716,6 +772,9 @@
 
   function setPreferences(values, options = {}) {
     const preferences = getPreferences();
+    const changesPresetValue = Object.keys(values).some((key) =>
+      PREFERENCE_VALUE_KEYS.includes(key),
+    );
 
     Object.entries(values).forEach(([key, value]) => {
       if (!SETTINGS[key]) return;
@@ -724,8 +783,12 @@
 
     if (options.preset) {
       preferences.readerPreset = options.preset;
-    } else if (options.keepPreset !== true) {
+    } else if (changesPresetValue && options.keepPreset !== true) {
       preferences.readerPreset = "custom";
+    }
+
+    if (changesPresetValue && preferences.readerPreset === "custom") {
+      currentCustomValues = getPreferenceValues(preferences);
     }
 
     currentPreferences = preferences;
@@ -737,6 +800,15 @@
   }
 
   function applyPreset(presetId) {
+    if (presetId === "custom") {
+      const values =
+        currentCustomValues || getPreferenceValues(getPreferences());
+      return setPreferences(values, {
+        preset: "custom",
+        changedKey: "readerPreset",
+      });
+    }
+
     const preset = PRESETS[presetId];
     if (!preset) return getPreferences();
 
@@ -759,6 +831,33 @@
 
   function getOptions(key) {
     return VALUE_OPTIONS[key] ? [...VALUE_OPTIONS[key]] : [];
+  }
+
+  function getPreferenceValues(preferences) {
+    return Object.fromEntries(
+      PREFERENCE_VALUE_KEYS.map((key) => [
+        key,
+        normalizePreference(key, preferences[key]),
+      ]),
+    );
+  }
+
+  function normalizeCustomValues(values, preferences) {
+    const source =
+      values && typeof values === "object"
+        ? values
+        : preferences.readerPreset === "custom"
+          ? preferences
+          : null;
+
+    if (!source) return null;
+
+    return Object.fromEntries(
+      PREFERENCE_VALUE_KEYS.map((key) => [
+        key,
+        normalizePreference(key, source[key] ?? preferences[key]),
+      ]),
+    );
   }
 
   window.PiggyPreferences = {

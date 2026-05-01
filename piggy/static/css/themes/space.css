@@ -61,6 +61,7 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
   --piggy-button: #217884;
   --piggy-button-hover: #2ba0a9;
   --piggy-button-active: #66fcf1;
+  --piggy-button-active-text: #061014;
   --piggy-text-button: #ffffff;
   --piggy-level-menu-active-text: #0b0c10;
   --piggy-button-border: #52d7d0;

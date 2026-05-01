@@ -178,7 +178,7 @@
 }
 
 .settings-tab-button[aria-selected="true"] {
-  color: var(--piggy-text-button);
+  color: var(--piggy-button-active-text, var(--piggy-text-button));
   background: var(--piggy-button-active);
   border-color: var(--piggy-button-border, var(--piggy-button-active));
 }
@@ -303,7 +303,7 @@
 
 .settings-option-card[aria-pressed="true"],
 .theme-card[aria-pressed="true"] {
-  color: var(--piggy-text-button);
+  color: var(--piggy-button-active-text, var(--piggy-text-button));
   background: var(--piggy-button-active);
   border-color: var(--piggy-button-border, var(--piggy-button-active));
 }
@@ -527,7 +527,7 @@
 
 .settings-segmented-button[aria-pressed="true"],
 .settings-toggle[aria-pressed="true"] {
-  color: var(--piggy-text-button);
+  color: var(--piggy-button-active-text, var(--piggy-text-button));
   background: var(--piggy-button-active);
   border-color: var(--piggy-button-border, var(--piggy-button-active));
 }
