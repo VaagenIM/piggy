@@ -146,15 +146,25 @@ def get_media_links(html, path=""):
     media_href_regex = r'href="((?!#|https?://)[^"]+\.(' + "|".join(media_link_filetypes) + r'))"'
     media_links_regex = re.compile(rf"{media_src_regex}|{media_href_regex}")
 
-    media_links = media_links_regex.findall(html)
-    media_links = [link[0] or link[1] for link in media_links]
+    _media_links = media_links_regex.findall(html)
+    _media_links = [link[0] or link[1] for link in _media_links]
     filtered_links = set()
-    for link in media_links:
+    for link in _media_links:
         link = clean_link(link, path)
         if link.startswith("/static/"):
             continue
         if not link.startswith("/") and path:
             filtered_links.add(f"{path.rsplit('/', 1)[0]}/{link}")
+            continue
+        if "?" in link and any(
+            (
+                link.split("?")[0] in [l.split("?")[0] for l in media_links],
+                link.split("?")[0] in [l.split("?")[0] for l in filtered_links],
+            )
+        ):
+            print(
+                f"Skipping {link} because it has a query string and the base link is already in media_links or filtered_links"
+            )
             continue
         filtered_links.add(link)
 
