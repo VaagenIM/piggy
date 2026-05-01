@@ -4,8 +4,12 @@
 
 <a
   id="settings-button"
-  class="piggy-button piggy-button--m site-nav-menu-button site-settings-button{% if is_settings_page %} site-settings-button--back{% endif %}"
+  class="piggy-button piggy-button--m site-nav-menu-button site-settings-button{% if is_settings_page %}site-settings-button--back{% endif %}"
   href="{{ settings_button_href|e }}"
+  data-settings-open-label="Settings"
+  data-settings-close-label="Back"
+  data-settings-open-title="Settings"
+  data-settings-close-title="Back to page"
   title="{{ 'Back to page' if is_settings_page else 'Settings' }}"
   aria-label="{{ 'Back to page' if is_settings_page else 'Settings' }}">
   <svg
@@ -16,13 +20,14 @@
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round">
-    {% if is_settings_page %}
+    <g data-settings-icon="back" {% if not is_settings_page %}hidden{% endif %}>
       <path d="m15 18-6-6 6-6" />
-    {% else %}
+    </g>
+    <g data-settings-icon="settings" {% if is_settings_page %}hidden{% endif %}>
       <path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z" />
       <path
         d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 8.92 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.16.62.66 1.09 1.28 1.09H21a2 2 0 0 1 0 4h-.32c-.62 0-1.12.47-1.28.91Z" />
-    {% endif %}
+    </g>
   </svg>
   <span class="site-settings-button-label">
     {{ "Back" if is_settings_page else "Settings" }}

@@ -4,7 +4,13 @@
   let preferencesApi = null;
   let settingsPage = null;
   let settingsTabs = null;
+  let settingsHost = null;
+  let pageContent = null;
+  let settingsButton = null;
   let settingsSourceContext = null;
+  let inlineSettingsActive = false;
+  let storedPageScrollY = 0;
+  let preferenceAnimationTimeout = null;
   let initializedApi = null;
 
   function initialize(nextPreferencesApi) {
@@ -12,37 +18,62 @@
 
     preferencesApi = nextPreferencesApi;
     settingsPage = document.getElementById("settings-page");
-    settingsTabs = settingsPage?.querySelector("[data-settings-tabs]");
+    settingsTabs = settingsPage?.querySelector("[data-settings-tabs]") || null;
+    settingsHost = settingsPage?.closest("[data-settings-host]") || null;
+    pageContent = document.querySelector("[data-reader-page-content]");
+    settingsButton = document.getElementById("settings-button");
     settingsSourceContext = getSettingsSourceContext();
 
-    const settingsButton = document.getElementById("settings-button");
     const resetButton = document.getElementById("settings-reset-button");
+    const returnLink = document.getElementById("settings-return-link");
+
+    if (settingsButton && !settingsButton.dataset.settingsOpenHref) {
+      settingsButton.dataset.settingsOpenHref =
+        settingsButton.getAttribute("href") || "";
+    }
 
     initializeSettingsTabs();
     window.PiggySettingsControls?.render(settingsPage, preferencesApi);
     updateSettingsControls(preferencesApi.getPreferences());
     updateReturnLink();
+    updateSettingsButtonState(isSettingsActive());
 
-    settingsButton?.addEventListener("click", captureSettingsSource);
+    settingsButton?.addEventListener("click", handleSettingsButtonClick);
+    returnLink?.addEventListener("click", handleReturnLinkClick);
     resetButton?.addEventListener("click", () =>
       preferencesApi.applyPreset("default"),
     );
 
     settingsPage?.addEventListener("click", handleSettingsClick);
     settingsPage?.addEventListener("change", handleSettingsChange);
+    document.addEventListener("keydown", handleDocumentKeydown);
 
     document.addEventListener("piggy:preferenceschange", (event) => {
       updateSettingsControls(event.detail.preferences);
+      animateSettingsPreferenceChange();
     });
 
     initializedApi = {
-      isSettingsPage: Boolean(settingsPage),
+      isSettingsPage: isDirectSettingsPage(),
+      isSettingsActive,
       getSourceContext() {
         return settingsSourceContext;
       },
     };
 
     return initializedApi;
+  }
+
+  function isInlineSettingsPage() {
+    return settingsPage?.dataset.settingsInline === "true";
+  }
+
+  function isDirectSettingsPage() {
+    return Boolean(settingsPage) && !isInlineSettingsPage();
+  }
+
+  function isSettingsActive() {
+    return isDirectSettingsPage() || inlineSettingsActive;
   }
 
   function initializeSettingsTabs() {
@@ -53,7 +84,7 @@
         ?.dataset.settingsTab ||
       settingsTabs.querySelector("[data-settings-tab]")?.dataset.settingsTab;
 
-    activateSettingsTab(selectedTab);
+    activateSettingsTab(selectedTab, { animate: false });
     settingsTabs.addEventListener("keydown", handleSettingsTabKeydown);
   }
 
@@ -76,12 +107,24 @@
     });
 
     panels.forEach((panel) => {
-      panel.hidden = panel.dataset.settingsPanel !== activeTabId;
+      const isActive = panel.dataset.settingsPanel === activeTabId;
+      panel.hidden = !isActive;
+      panel.classList.toggle("settings-tab-panel--active", isActive);
+
+      if (isActive && options.animate !== false) {
+        restartPanelAnimation(panel);
+      }
     });
 
     if (options.focus) {
       targetTab.focus();
     }
+  }
+
+  function restartPanelAnimation(panel) {
+    panel.classList.remove("settings-tab-panel--entering");
+    void panel.offsetWidth;
+    panel.classList.add("settings-tab-panel--entering");
   }
 
   function handleSettingsTabKeydown(event) {
@@ -121,6 +164,37 @@
     activateSettingsTab(tabs[nextIndex].dataset.settingsTab, { focus: true });
   }
 
+  function handleSettingsButtonClick(event) {
+    if (!isInlineSettingsPage()) {
+      if (!isDirectSettingsPage()) {
+        captureSettingsSource();
+      }
+      return;
+    }
+
+    event.preventDefault();
+
+    if (inlineSettingsActive) {
+      closeInlineSettings({ focusButton: true });
+    } else {
+      openInlineSettings();
+    }
+  }
+
+  function handleReturnLinkClick(event) {
+    if (!isInlineSettingsPage()) return;
+
+    event.preventDefault();
+    closeInlineSettings({ focusButton: true });
+  }
+
+  function handleDocumentKeydown(event) {
+    if (event.key !== "Escape" || !inlineSettingsActive) return;
+
+    event.preventDefault();
+    closeInlineSettings({ focusButton: true });
+  }
+
   function handleSettingsClick(event) {
     const tab = event.target.closest("[data-settings-tab]");
     if (tab && settingsTabs?.contains(tab)) {
@@ -146,6 +220,17 @@
       return;
     }
 
+    if (prefId === "reduceMotion") {
+      preferencesApi.setPreferences(
+        {
+          reduceMotion: prefValue,
+          hideDecorations: prefValue === "reduce" ? "on" : "off",
+        },
+        { changedKey: "reduceMotion" },
+      );
+      return;
+    }
+
     preferencesApi.setPreference(prefId, prefValue);
   }
 
@@ -156,6 +241,80 @@
     preferencesApi.setPreference(select.dataset.prefSelect, select.value);
   }
 
+  function openInlineSettings() {
+    if (!settingsPage || !settingsHost || !pageContent) {
+      captureSettingsSource();
+      const fallbackHref =
+        settingsButton?.dataset.settingsOpenHref || settingsButton?.href;
+      if (fallbackHref) {
+        window.location.assign(fallbackHref);
+      }
+      return;
+    }
+
+    settingsSourceContext = getCurrentPageContext();
+    storedPageScrollY = settingsSourceContext.scrollY;
+    window.PiggyStorage?.writeSessionValue(
+      SETTINGS_SOURCE_KEY,
+      settingsSourceContext,
+    );
+
+    pageContent.hidden = true;
+    settingsHost.hidden = false;
+    inlineSettingsActive = true;
+
+    document.body.classList.add("settings-inline-active");
+    settingsPage.classList.remove("settings-page--leaving");
+    settingsPage.classList.add("settings-page--entering");
+
+    window.requestAnimationFrame(() => {
+      settingsPage.classList.add("settings-page--active");
+    });
+
+    window.setTimeout(() => {
+      settingsPage.classList.remove("settings-page--entering");
+    }, 260);
+
+    updateReturnLink();
+    updateSettingsButtonState(true);
+    window.scrollTo({
+      top: 0,
+      behavior: shouldReduceMotion() ? "auto" : "smooth",
+    });
+  }
+
+  function closeInlineSettings(options = {}) {
+    if (!inlineSettingsActive) return;
+
+    settingsPage?.classList.add("settings-page--leaving");
+    settingsPage?.classList.remove("settings-page--active");
+    document.body.classList.remove("settings-inline-active");
+    updateSettingsButtonState(false);
+
+    const finishClose = () => {
+      inlineSettingsActive = false;
+      if (settingsHost) settingsHost.hidden = true;
+      if (pageContent) pageContent.hidden = false;
+      settingsPage?.classList.remove(
+        "settings-page--entering",
+        "settings-page--leaving",
+      );
+
+      window.requestAnimationFrame(() => {
+        window.scrollTo({ top: storedPageScrollY, behavior: "auto" });
+        if (options.focusButton) {
+          settingsButton?.focus();
+        }
+      });
+    };
+
+    if (shouldReduceMotion()) {
+      finishClose();
+    } else {
+      window.setTimeout(finishClose, 150);
+    }
+  }
+
   function updateSettingsControls(preferences) {
     window.PiggySettingsControls?.update(
       settingsPage,
@@ -164,9 +323,20 @@
     );
   }
 
-  function captureSettingsSource() {
-    if (settingsPage) return;
+  function animateSettingsPreferenceChange() {
+    if (!settingsPage || shouldReduceMotion()) return;
 
+    window.clearTimeout(preferenceAnimationTimeout);
+    settingsPage.classList.remove("settings-page--preference-changing");
+    void settingsPage.offsetWidth;
+    settingsPage.classList.add("settings-page--preference-changing");
+
+    preferenceAnimationTimeout = window.setTimeout(() => {
+      settingsPage?.classList.remove("settings-page--preference-changing");
+    }, 260);
+  }
+
+  function captureSettingsSource() {
     window.PiggyStorage?.writeSessionValue(
       SETTINGS_SOURCE_KEY,
       getCurrentPageContext(),
@@ -183,7 +353,43 @@
     const label = returnLink.querySelector("span");
     if (label) {
       label.textContent =
-        sourceContext.pageKey === getCurrentPageKey() ? "Back" : "Back to page";
+        isInlineSettingsPage() || sourceContext.pageKey === getCurrentPageKey()
+          ? "Back"
+          : "Back to page";
+    }
+  }
+
+  function updateSettingsButtonState(active) {
+    if (!settingsButton) return;
+
+    const showBack = isDirectSettingsPage() || active;
+    const label = settingsButton.querySelector(".site-settings-button-label");
+    const backIcon = settingsButton.querySelector(
+      '[data-settings-icon="back"]',
+    );
+    const settingsIcon = settingsButton.querySelector(
+      '[data-settings-icon="settings"]',
+    );
+    const text = showBack
+      ? settingsButton.dataset.settingsCloseLabel || "Back"
+      : settingsButton.dataset.settingsOpenLabel || "Settings";
+    const title = showBack
+      ? settingsButton.dataset.settingsCloseTitle || "Back to page"
+      : settingsButton.dataset.settingsOpenTitle || "Settings";
+
+    if (label) label.textContent = text;
+    if (backIcon) backIcon.hidden = !showBack;
+    if (settingsIcon) settingsIcon.hidden = showBack;
+
+    settingsButton.classList.toggle("site-settings-button--back", showBack);
+    settingsButton.title = title;
+    settingsButton.setAttribute("aria-label", title);
+
+    if (isInlineSettingsPage()) {
+      settingsButton.setAttribute("aria-expanded", String(active));
+      settingsButton.href = active
+        ? settingsSourceContext?.path || getCurrentPagePath()
+        : settingsButton.dataset.settingsOpenHref || settingsButton.href;
     }
   }
 
@@ -198,7 +404,7 @@
   }
 
   function getSettingsSourceContext() {
-    if (!settingsPage) {
+    if (!settingsPage || isInlineSettingsPage()) {
       return getCurrentPageContext();
     }
 
@@ -261,6 +467,16 @@
       document.querySelector("main .assignment-heading")?.textContent.trim() ||
       document.title ||
       window.location.pathname
+    );
+  }
+
+  function shouldReduceMotion() {
+    const preferences = preferencesApi?.getPreferences?.() || {};
+    if (preferences.reduceMotion === "reduce") return true;
+
+    return (
+      preferences.reduceMotion === "system" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
     );
   }
 

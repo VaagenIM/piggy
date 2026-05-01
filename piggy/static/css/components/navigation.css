@@ -64,13 +64,23 @@
 
 .site-settings-button {
   min-width: calc(7.35rem * var(--piggy-font-scale));
-  min-height: calc(2.45rem * var(--piggy-font-scale));
+  min-height: calc(2.25rem * var(--piggy-font-scale));
+  padding-block: calc(0.3rem * var(--piggy-font-scale));
   padding-inline: calc(0.75rem * var(--piggy-font-scale))
     calc(0.9rem * var(--piggy-font-scale));
   font-weight: 800;
   box-shadow:
-    0 0 0 2px color-mix(in srgb, var(--piggy-nav-button-border, currentColor) 38%, transparent),
+    0 0 0 2px
+      color-mix(
+        in srgb,
+        var(--piggy-nav-button-border, currentColor) 38%,
+        transparent
+      ),
     0 0.22rem 0.7rem rgba(0, 0, 0, 0.16);
+}
+
+.site-settings-button [hidden] {
+  display: none;
 }
 
 .site-settings-button svg {

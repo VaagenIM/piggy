@@ -3,7 +3,8 @@
   class="settings-page"
   aria-labelledby="settings-title"
   data-settings-return-to="{{ settings_return_to|default('/')|e }}"
-  data-settings-has-return-to="{{ 'true' if settings_has_return_to|default(false) else 'false' }}">
+  data-settings-has-return-to="{{ 'true' if settings_has_return_to|default(false) else 'false' }}"
+  data-settings-inline="{{ 'true' if settings_inline|default(false) else 'false' }}">
   <header class="settings-panel-header settings-page-header">
     <div class="settings-heading-group">
       <p class="settings-eyebrow">Reader</p>
@@ -107,24 +108,14 @@ print(total_score)</code></pre>
           role="tablist"
           aria-label="Settings categories">
           <button
-            id="settings-tab-presets"
+            id="settings-tab-main"
             class="settings-tab-button"
             type="button"
             role="tab"
             aria-selected="true"
-            aria-controls="settings-panel-presets"
-            data-settings-tab="presets">
-            Presets
-          </button>
-          <button
-            id="settings-tab-theme"
-            class="settings-tab-button"
-            type="button"
-            role="tab"
-            aria-selected="false"
-            aria-controls="settings-panel-theme"
-            data-settings-tab="theme">
-            Theme
+            aria-controls="settings-panel-main"
+            data-settings-tab="main">
+            Main
           </button>
           <button
             id="settings-tab-text"
@@ -160,13 +151,13 @@ print(total_score)</code></pre>
 
         <div class="settings-tab-panels">
           <section
-            id="settings-panel-presets"
+            id="settings-panel-main"
             class="settings-section settings-tab-panel"
             role="tabpanel"
-            aria-labelledby="settings-tab-presets"
-            data-settings-panel="presets">
+            aria-labelledby="settings-tab-main"
+            data-settings-panel="main">
             <div class="settings-section-heading">
-              <h2 id="settings-presets-title">Presets</h2>
+              <h2 id="settings-main-title">Presets and themes</h2>
               <button
                 id="settings-reset-button"
                 class="piggy-button piggy-button--s settings-secondary-button"
@@ -174,27 +165,24 @@ print(total_score)</code></pre>
                 Reset
               </button>
             </div>
-            <div
-              class="settings-card-grid settings-card-grid--presets"
-              data-settings-render="presets"></div>
-          </section>
-
-          <section
-            id="settings-panel-theme"
-            class="settings-section settings-tab-panel"
-            role="tabpanel"
-            aria-labelledby="settings-tab-theme"
-            data-settings-panel="theme"
-            hidden>
-            <div class="settings-section-heading">
-              <h2 id="settings-theme-title">Theme</h2>
+            <div class="settings-control-stack">
+              <section
+                class="settings-subsection"
+                aria-labelledby="settings-presets-title">
+                <h3 id="settings-presets-title">Presets</h3>
+                <div
+                  class="settings-card-grid settings-card-grid--presets"
+                  data-settings-render="presets"></div>
+              </section>
+              <section
+                class="settings-subsection"
+                aria-labelledby="settings-theme-title">
+                <h3 id="settings-theme-title">Themes</h3>
+                <div
+                  class="settings-card-grid settings-card-grid--themes"
+                  data-settings-render="themes"></div>
+              </section>
             </div>
-            <div
-              class="settings-control-group"
-              data-settings-render="contrast"></div>
-            <div
-              class="settings-card-grid settings-card-grid--themes"
-              data-settings-render="themes"></div>
           </section>
 
           <section
@@ -240,10 +228,24 @@ print(total_score)</code></pre>
               <h2 id="settings-focus-title">Focus</h2>
             </div>
             <div class="settings-control-stack">
-              <div data-settings-render="focusMode"></div>
-              <div data-settings-render="readingRuler"></div>
-              <div data-settings-render="hideDecorations"></div>
-              <div data-settings-render="reduceMotion"></div>
+              <section
+                class="settings-subsection"
+                aria-labelledby="settings-motion-title">
+                <h3 id="settings-motion-title">Motion</h3>
+                <div class="settings-control-stack">
+                  <div data-settings-render="contrast"></div>
+                  <div data-settings-render="reduceMotion"></div>
+                </div>
+              </section>
+              <section
+                class="settings-subsection"
+                aria-labelledby="settings-focus-switches-title">
+                <h3 id="settings-focus-switches-title">Focus switches</h3>
+                <div class="settings-toggle-grid">
+                  <div data-settings-render="focusMode"></div>
+                  <div data-settings-render="readingRuler"></div>
+                </div>
+              </section>
             </div>
           </section>
 

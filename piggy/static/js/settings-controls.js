@@ -11,15 +11,13 @@
     readerWidth: "Reading width",
     focusMode: "Focus mode",
     readingRuler: "Reading ruler",
-    hideDecorations: "Quiet page",
-    reduceMotion: "Motion",
+    reduceMotion: "Motion and effects",
     rememberPosition: "Remember position",
   };
 
   const TOGGLE_LABELS = {
     focusMode: "Dim navigation while reading",
     readingRuler: "Show reading ruler",
-    hideDecorations: "Hide animated backgrounds",
     rememberPosition: "Remember where you stopped reading",
   };
 
@@ -32,6 +30,7 @@
     lowGlare: "moon",
     focus: "target",
     compact: "rows",
+    randomized: "shuffle",
     custom: "sliders",
   };
 
@@ -56,6 +55,13 @@
     settings: [
       "M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z",
       "M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 8.92 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.16.62.66 1.09 1.28 1.09H21a2 2 0 0 1 0 4h-.32c-.62 0-1.12.47-1.28.91Z",
+    ],
+    shuffle: [
+      "M16 3h5v5",
+      "M4 20 21 3",
+      "M21 16v5h-5",
+      "M15 15l6 6",
+      "M4 4l5 5",
     ],
     sliders: [
       "M4 6h8",
@@ -130,7 +136,6 @@
 
     renderToggleControl("focusMode", getRenderTarget("focusMode"));
     renderToggleControl("readingRuler", getRenderTarget("readingRuler"));
-    renderToggleControl("hideDecorations", getRenderTarget("hideDecorations"));
     renderSegmentedControl("reduceMotion", getRenderTarget("reduceMotion"));
     renderToggleControl(
       "rememberPosition",
@@ -169,6 +174,11 @@
     settingsRoot.querySelectorAll("[data-pref-current]").forEach((element) => {
       const id = element.dataset.prefCurrent;
       element.textContent = getOptionLabel(id, preferences[id]);
+    });
+
+    settingsRoot.querySelectorAll("[data-pref-detail]").forEach((element) => {
+      const id = element.dataset.prefDetail;
+      element.textContent = getOptionDetail(id, preferences[id]);
     });
 
     settingsRoot.querySelectorAll("[data-pref-preview]").forEach((element) => {
@@ -236,19 +246,14 @@
       titleRow.className = "theme-card-title-row";
       titleRow.append(createSettingsIcon(getThemeIconName(theme)), title);
 
-      const meta = document.createElement("span");
-      meta.className = "theme-card-meta";
-      meta.textContent = getThemeMetaText(theme);
-
-      const description = document.createElement("span");
-      description.className = "theme-card-description";
-      description.textContent = theme.description || "";
-
-      const tags = createThemeTags(theme);
       const body = document.createElement("span");
       body.className = "theme-card-body";
-      body.append(titleRow, meta, description, tags);
+      body.append(titleRow);
 
+      button.title = theme.description
+        ? `${theme.name}: ${theme.description}`
+        : `${theme.name} (${getThemeMetaText(theme)})`;
+      button.setAttribute("aria-label", button.title);
       button.append(preview, body);
       container.append(button);
     });
@@ -411,38 +416,17 @@
   }
 
   function getThemeMetaText(theme) {
-    const labels = [capitalize(theme.type || "theme")];
+    const labels = [formatThemeLabel(theme.type || "theme")];
 
     if (theme.category && theme.category !== "standard") {
-      labels.push(theme.category);
+      labels.push(formatThemeLabel(theme.category));
     } else if (theme.path === "high-contrast") {
-      labels.push("accessible");
+      labels.push("Accessible");
     } else if (Number(theme.id) >= 100) {
-      labels.push("animated");
+      labels.push("Animated");
     }
 
     return labels.join(" / ");
-  }
-
-  function createThemeTags(theme) {
-    const tags = document.createElement("span");
-    tags.className = "theme-card-tags";
-
-    const tagValues = [
-      ...(Array.isArray(theme.tags) ? theme.tags : []),
-      ...(Array.isArray(theme.recommended_for) ? theme.recommended_for : []),
-      theme.category && theme.category !== "standard" ? theme.category : "",
-      Number(theme.id) >= 100 ? "animated" : "",
-    ].filter(Boolean);
-
-    [...new Set(tagValues)].slice(0, 3).forEach((tag) => {
-      const tagElement = document.createElement("span");
-      tagElement.className = "theme-card-tag";
-      tagElement.textContent = tag;
-      tags.append(tagElement);
-    });
-
-    return tags;
   }
 
   function renderSelectControl(id, container) {
@@ -469,17 +453,21 @@
       const optionElement = document.createElement("option");
       optionElement.value = option.value;
       optionElement.textContent = option.detail
-        ? `${option.label} - ${option.detail}`
+        ? `${option.label} (${option.detail})`
         : option.label;
       optionElement.style.fontFamily = getFontSampleFamily(id, option.value);
       select.append(optionElement);
     });
 
+    const detail = document.createElement("span");
+    detail.className = "settings-select-detail";
+    detail.dataset.prefDetail = id;
+
     const preview = document.createElement("span");
     preview.className = "settings-select-preview";
     preview.dataset.prefPreview = id;
 
-    field.append(label, select, preview);
+    field.append(label, select, detail, preview);
     container.replaceChildren(field);
   }
 
@@ -550,11 +538,18 @@
   }
 
   function getOptionLabel(id, value) {
-    const option = preferencesApi
+    const option = getOption(id, value);
+    return option?.label || value;
+  }
+
+  function getOptionDetail(id, value) {
+    return getOption(id, value)?.detail || "";
+  }
+
+  function getOption(id, value) {
+    return preferencesApi
       .getOptions(id)
       .find((candidate) => candidate.value === value);
-
-    return option?.label || value;
   }
 
   function createSettingOptionPreview(id, value) {
@@ -602,7 +597,11 @@
         break;
       case "reduceMotion":
         preview.textContent =
-          value === "reduce" ? "Still" : value === "allow" ? "Moves" : "System";
+          value === "reduce"
+            ? "Quiet"
+            : value === "allow"
+              ? "Animated"
+              : "System";
         break;
       default:
         preview.textContent = getOptionLabel(id, value);
@@ -619,8 +618,10 @@
     element.style.fontSize = "";
 
     if (id === "readerFont" || id === "codeFont") {
+      const option = getOption(id, value);
       element.textContent =
-        id === "codeFont" ? "const answer = 42;" : "A clearer reading sample";
+        option?.sample ||
+        (id === "codeFont" ? "const answer = 42;" : "A clearer reading sample");
       element.style.fontFamily = getFontSampleFamily(id, value);
       return;
     }
@@ -750,9 +751,13 @@
     return families[value] || "inherit";
   }
 
-  function capitalize(value) {
+  function formatThemeLabel(value) {
     if (!value) return "";
-    return value.charAt(0).toUpperCase() + value.slice(1);
+    return String(value)
+      .split(/[-_\s]+/)
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
   }
 
   window.PiggySettingsControls = {

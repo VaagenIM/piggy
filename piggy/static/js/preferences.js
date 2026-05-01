@@ -1,6 +1,6 @@
 (function () {
   const STORE_KEY = "piggy.readerPreferences.v1";
-  const STORE_VERSION = 5;
+  const STORE_VERSION = 8;
   const LEGACY_KEYS = {
     theme: "theme",
     readerFont: "fontTheme",
@@ -125,12 +125,12 @@
       {
         value: "projector",
         label: "Projector",
-        detail: "Large, crisp classroom display",
+        detail: "Large classroom display",
       },
       {
         value: "lowGlare",
         label: "Low glare",
-        detail: "Softer colors and less motion",
+        detail: "Dimmer colors and less motion",
       },
       {
         value: "focus",
@@ -140,7 +140,12 @@
       {
         value: "compact",
         label: "Compact",
-        detail: "More text on screen",
+        detail: "Dense notes view",
+      },
+      {
+        value: "randomized",
+        label: "Randomized",
+        detail: "A fresh mix of theme and text",
       },
       {
         value: "custom",
@@ -197,7 +202,7 @@
     ],
     reduceMotion: [
       { value: "system", label: "System" },
-      { value: "reduce", label: "Reduced" },
+      { value: "reduce", label: "Quiet" },
       { value: "allow", label: "Animated" },
     ],
     focusMode: [
@@ -400,11 +405,11 @@
         contrast: "standard",
         readerFont: "verdana",
         codeFont: "atkinson-mono",
-        readerFontSize: "x-large",
-        readerLineHeight: "comfortable",
+        readerFontSize: "xx-large",
+        readerLineHeight: "spacious",
         readerLetterSpacing: "default",
-        readerWordSpacing: "wide",
-        readerParagraphSpacing: "comfortable",
+        readerWordSpacing: "default",
+        readerParagraphSpacing: "spacious",
         readerWidth: "wide",
         reduceMotion: "reduce",
         focusMode: "off",
@@ -415,7 +420,7 @@
     lowGlare: {
       label: "Low glare",
       values: {
-        theme: preferTheme("sage", "dark"),
+        theme: preferTheme("dark", "dusk"),
         contrast: "soft",
         readerFont: "default",
         codeFont: "default",
@@ -462,7 +467,7 @@
         readerLetterSpacing: "default",
         readerWordSpacing: "default",
         readerParagraphSpacing: "compact",
-        readerWidth: "wide",
+        readerWidth: "full",
         reduceMotion: "system",
         focusMode: "off",
         readingRuler: "off",
@@ -475,6 +480,17 @@
     ...new Set(
       Object.values(PRESETS).flatMap((preset) => Object.keys(preset.values)),
     ),
+  ];
+  const RANDOMIZED_VALUE_KEYS = [
+    "theme",
+    "readerFont",
+    "codeFont",
+    "readerFontSize",
+    "readerLineHeight",
+    "readerLetterSpacing",
+    "readerWordSpacing",
+    "readerParagraphSpacing",
+    "readerWidth",
   ];
 
   let currentPreferences = null;
@@ -665,11 +681,18 @@
     const legacy = getLegacyPreferences();
     const storedRecord = getStoredPreferenceRecord();
     const stored = storedRecord.values;
-    const preferences = { ...defaults, ...legacy, ...stored };
+    const shouldRefreshPreset = Object.prototype.hasOwnProperty.call(
+      stored,
+      "readerPreset",
+    );
+    let preferences = { ...defaults, ...legacy, ...stored };
 
     Object.keys(SETTINGS).forEach((key) => {
       preferences[key] = normalizePreference(key, preferences[key]);
     });
+
+    preferences = refreshPresetPreferences(preferences, shouldRefreshPreset);
+    preferences = syncEffectPreferences(preferences);
 
     currentCustomValues = normalizeCustomValues(
       storedRecord.customValues,
@@ -677,6 +700,24 @@
     );
 
     return preferences;
+  }
+
+  function refreshPresetPreferences(preferences, shouldRefresh) {
+    const presetId = preferences.readerPreset;
+    if (
+      !shouldRefresh ||
+      !presetId ||
+      presetId === "custom" ||
+      !PRESETS[presetId]
+    ) {
+      return preferences;
+    }
+
+    return {
+      ...preferences,
+      ...getPresetValues(presetId),
+      readerPreset: presetId,
+    };
   }
 
   function persistPreferences(preferences) {
@@ -753,6 +794,7 @@
     const preferences = getPreferences();
     preferences[key] = normalizePreference(key, value);
     const changesPresetValue = PREFERENCE_VALUE_KEYS.includes(key);
+    syncEffectPreferences(preferences);
 
     if (changesPresetValue && options.keepPreset !== true) {
       preferences.readerPreset = "custom";
@@ -780,6 +822,7 @@
       if (!SETTINGS[key]) return;
       preferences[key] = normalizePreference(key, resolveValue(value));
     });
+    syncEffectPreferences(preferences);
 
     if (options.preset) {
       preferences.readerPreset = options.preset;
@@ -809,17 +852,17 @@
       });
     }
 
+    if (presetId === "randomized") {
+      return setPreferences(getRandomizedPresetValues(), {
+        preset: "randomized",
+        changedKey: "readerPreset",
+      });
+    }
+
     const preset = PRESETS[presetId];
     if (!preset) return getPreferences();
 
-    const values = Object.fromEntries(
-      Object.entries(preset.values).map(([key, value]) => [
-        key,
-        resolveValue(value),
-      ]),
-    );
-
-    return setPreferences(values, {
+    return setPreferences(getPresetValues(presetId), {
       preset: presetId,
       changedKey: "readerPreset",
     });
@@ -842,6 +885,47 @@
     );
   }
 
+  function getPresetValues(presetId) {
+    const preset = PRESETS[presetId];
+    if (!preset) return {};
+
+    return Object.fromEntries(
+      Object.entries(preset.values).map(([key, value]) => [
+        key,
+        normalizePreference(key, resolveValue(value)),
+      ]),
+    );
+  }
+
+  function getRandomizedPresetValues() {
+    return Object.fromEntries(
+      RANDOMIZED_VALUE_KEYS.map((key) => [key, getRandomizedValue(key)]),
+    );
+  }
+
+  function getRandomizedValue(key) {
+    if (key === "theme") {
+      const themes = getThemeList()
+        .map((theme) => theme.path)
+        .filter(Boolean);
+      return chooseRandom(themes) || getSystemPreferredTheme();
+    }
+
+    const values = getValidValues(SETTINGS[key]) || [];
+    return chooseRandom(values) || resolveValue(SETTINGS[key]?.defaultValue);
+  }
+
+  function chooseRandom(values) {
+    if (!Array.isArray(values) || values.length === 0) return null;
+    return values[Math.floor(Math.random() * values.length)];
+  }
+
+  function syncEffectPreferences(preferences) {
+    preferences.hideDecorations =
+      preferences.reduceMotion === "reduce" ? "on" : "off";
+    return preferences;
+  }
+
   function normalizeCustomValues(values, preferences) {
     const source =
       values && typeof values === "object"
@@ -852,11 +936,13 @@
 
     if (!source) return null;
 
-    return Object.fromEntries(
-      PREFERENCE_VALUE_KEYS.map((key) => [
-        key,
-        normalizePreference(key, source[key] ?? preferences[key]),
-      ]),
+    return syncEffectPreferences(
+      Object.fromEntries(
+        PREFERENCE_VALUE_KEYS.map((key) => [
+          key,
+          normalizePreference(key, source[key] ?? preferences[key]),
+        ]),
+      ),
     );
   }
 

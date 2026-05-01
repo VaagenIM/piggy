@@ -35,7 +35,7 @@
 
       updateThemeEffects(nextPreferences, changedKey);
 
-      if (changedKey === "rememberPosition" && settingsPage) {
+      if (changedKey === "rememberPosition" && isSettingsCurrentlyActive()) {
         saveSourceScrollPosition();
       } else if (changedKey === "rememberPosition") {
         saveScrollPosition();
@@ -49,7 +49,7 @@
     window.addEventListener(
       "scroll",
       () => {
-        if (settingsPage) return;
+        if (isSettingsCurrentlyActive()) return;
         if (preferencesApi.getPreferences().rememberPosition !== "on") return;
 
         window.clearTimeout(scrollSaveTimeout);
@@ -59,7 +59,7 @@
     );
 
     window.addEventListener("pagehide", () => {
-      if (!settingsPage) saveScrollPosition();
+      if (!isSettingsCurrentlyActive()) saveScrollPosition();
     });
   }
 
@@ -147,6 +147,7 @@
     const updateRuler = (clientY) => {
       if (preferencesApi.getPreferences().readingRuler !== "on") return;
 
+      syncReaderRulerBounds();
       document.documentElement.style.setProperty(
         "--piggy-reader-ruler-top",
         `${clientY}px`,
@@ -174,12 +175,31 @@
     document.addEventListener("piggy:preferenceschange", (event) => {
       if (event.detail.preferences.readingRuler !== "on") {
         readerRuler.classList.remove("is-visible");
+        return;
       }
+
+      syncReaderRulerBounds();
     });
+
+    window.addEventListener("resize", syncReaderRulerBounds);
+  }
+
+  function syncReaderRulerBounds() {
+    if (!markdownContent) return;
+
+    const rect = markdownContent.getBoundingClientRect();
+    document.documentElement.style.setProperty(
+      "--piggy-reader-ruler-left",
+      `${Math.max(0, rect.left)}px`,
+    );
+    document.documentElement.style.setProperty(
+      "--piggy-reader-ruler-width",
+      `${Math.max(0, rect.width)}px`,
+    );
   }
 
   function initializeRememberedPosition() {
-    if (settingsPage) return;
+    if (isDirectSettingsPage()) return;
 
     if (preferencesApi.getPreferences().rememberPosition === "on") {
       restoreScrollPosition();
@@ -230,6 +250,18 @@
 
   function getCurrentPageKey() {
     return `${window.location.pathname}${window.location.search}`;
+  }
+
+  function isDirectSettingsPage() {
+    return (
+      Boolean(settingsPage) && settingsPage.dataset.settingsInline !== "true"
+    );
+  }
+
+  function isSettingsCurrentlyActive() {
+    return (
+      Boolean(settingsPageApi?.isSettingsActive?.()) || isDirectSettingsPage()
+    );
   }
 
   window.PiggyReaderRuntime = {
