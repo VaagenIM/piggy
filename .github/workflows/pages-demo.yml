@@ -40,6 +40,12 @@ jobs:
         with:
           node-version: 24
 
+      - name: Cleanup earlier runs
+        run: |
+          rm -rf piggybank
+          pkill -f gunicorn || true
+          pkill -f python || true
+
       - name: Checkout piggybank
         uses: actions/checkout@v4
         with:
