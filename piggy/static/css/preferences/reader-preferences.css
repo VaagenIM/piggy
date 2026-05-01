@@ -113,6 +113,50 @@
   filter: saturate(0.95);
 }
 
+:root[data-reader-contrast="soft"] .md-container a {
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+}
+
+:root[data-reader-contrast="soft"] .md-content :is(table, blockquote) {
+  border-color: color-mix(in srgb, currentColor 62%, transparent) !important;
+}
+
+:root[data-reader-contrast="soft"] .md-content .highlight,
+:root[data-reader-contrast="soft"] .md-content .highlighttable {
+  border-width: 1.5px !important;
+  border-color: color-mix(
+    in srgb,
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) 70%,
+    var(--piggy-code-block-text, var(--piggy-code)) 30%
+  ) !important;
+}
+
+:root[data-reader-contrast="soft"] .md-content .piggy-code-titlebar,
+:root[data-reader-contrast="soft"] .md-content .highlighttable th.filename,
+:root[data-reader-contrast="soft"] .md-content .highlighttable td.linenos {
+  border-color: color-mix(
+    in srgb,
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) 70%,
+    var(--piggy-code-block-text, var(--piggy-code)) 30%
+  ) !important;
+}
+
+:root[data-reader-contrast="soft"] .md-content :is(.admonition, details) {
+  border: 1px solid
+    color-mix(in srgb, var(--piggy-admonition-border) 78%, transparent) !important;
+  border-left-width: 0.35rem !important;
+}
+
+:root[data-reader-contrast="soft"]
+  .md-content
+  :is(.admonition, details)
+  > :is(.admonition-title, summary) {
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--piggy-admonition-border) 68%, transparent) !important;
+}
+
 :root[data-reader-contrast="strong"] .md-container a {
   text-decoration: underline;
   text-decoration-thickness: 0.12em;
@@ -121,6 +165,38 @@
 
 :root[data-reader-contrast="strong"] .md-content :is(table, blockquote) {
   border-color: currentColor !important;
+}
+
+:root[data-reader-contrast="strong"] .md-content .highlight,
+:root[data-reader-contrast="strong"] .md-content .highlighttable {
+  border-width: 2px !important;
+  border-color: color-mix(
+    in srgb,
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) 55%,
+    var(--piggy-code-block-text, var(--piggy-code)) 45%
+  ) !important;
+}
+
+:root[data-reader-contrast="strong"] .md-content .piggy-code-titlebar,
+:root[data-reader-contrast="strong"] .md-content .highlighttable th.filename,
+:root[data-reader-contrast="strong"] .md-content .highlighttable td.linenos {
+  border-color: color-mix(
+    in srgb,
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) 55%,
+    var(--piggy-code-block-text, var(--piggy-code)) 45%
+  ) !important;
+}
+
+:root[data-reader-contrast="strong"] .md-content :is(.admonition, details) {
+  border: 2px solid var(--piggy-admonition-border) !important;
+  border-left-width: 0.45rem !important;
+}
+
+:root[data-reader-contrast="strong"]
+  .md-content
+  :is(.admonition, details)
+  > :is(.admonition-title, summary) {
+  border-bottom: 1px solid var(--piggy-admonition-border) !important;
 }
 
 :root[data-reader-hide-decorations="on"] .background-overlay canvas,
@@ -139,7 +215,7 @@
 
 :root[data-reader-focus-mode="on"] .site-header:hover,
 :root[data-reader-focus-mode="on"] .site-header:focus-within,
-:root[data-reader-focus-mode="on"]:has(#settings-menu.open) .site-header {
+:root[data-reader-focus-mode="on"]:has(#settings-page) .site-header {
   opacity: 1;
 }
 

@@ -2,18 +2,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const preferencesApi = window.PiggyPreferences;
   if (!preferencesApi) return;
 
-  const settingsMenu = document.getElementById("settings-menu");
+  const settingsPage = document.getElementById("settings-page");
+  const settingsTabs = settingsPage?.querySelector("[data-settings-tabs]");
   const settingsButton = document.getElementById("settings-button");
-  const settingsBackdrop = document.getElementById("settings-backdrop");
-  const closeButton = settingsMenu?.querySelector(".settings-close-button");
+  const returnLink = document.getElementById("settings-return-link");
   const resetButton = document.getElementById("settings-reset-button");
-  const bookmarkButton = document.getElementById("settings-bookmark-button");
-  const completeButton = document.getElementById("settings-complete-button");
   const readerRuler = document.getElementById("reader-ruler");
-  const markdownContent = document.querySelector("main .md-content");
+  const markdownContent = document.querySelector(
+    "main .md-content:not(.settings-reader-preview)",
+  );
 
-  const BOOKMARKS_KEY = "piggy.readerBookmarks.v1";
-  const PROGRESS_KEY = "piggy.readerProgress.v1";
+  const SETTINGS_SOURCE_KEY = "piggy.settingsSource.v1";
   const SCROLL_KEY = "piggy.readerScrollPositions.v1";
 
   const CONTROL_LABELS = {
@@ -37,39 +36,100 @@ document.addEventListener("DOMContentLoaded", () => {
     focusMode: "Dim navigation while reading",
     readingRuler: "Show reading ruler",
     hideDecorations: "Hide animated backgrounds",
-    rememberPosition: "Resume this page",
+    rememberPosition: "Remember where you stopped reading",
+  };
+
+  const PRESET_ICONS = {
+    default: "settings",
+    balanced: "scale",
+    dyslexia: "book",
+    lowVision: "eye",
+    projector: "monitor",
+    lowGlare: "moon",
+    focus: "target",
+    compact: "rows",
+    custom: "sliders",
+  };
+
+  const ICON_PATHS = {
+    book: [
+      "M2 6.5A2.5 2.5 0 0 1 4.5 4H10a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4.5A2.5 2.5 0 0 0 2 20.5Z",
+      "M22 6.5A2.5 2.5 0 0 0 19.5 4H14a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h5.5a2.5 2.5 0 0 1 2.5 2.5Z",
+    ],
+    code: ["m16 18 6-6-6-6", "m8 6-6 6 6 6"],
+    eye: [
+      "M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z",
+      "M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z",
+    ],
+    leaf: [
+      "M5 21c8 0 14-6 14-14V3h-4C7 3 3 7 3 15c0 2.2.8 4.1 2 6Z",
+      "M3 21c4-7 8-10 16-14",
+    ],
+    monitor: ["M4 5h16v11H4Z", "M8 21h8", "M12 16v5"],
+    moon: ["M21 12.8A8.5 8.5 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"],
+    rows: ["M4 6h16", "M4 12h16", "M4 18h16"],
+    scale: ["M12 3v18", "M5 6h14", "M6 6l-3 7h6Z", "M18 6l-3 7h6Z"],
+    settings: [
+      "M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z",
+      "M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 8.92 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.16.62.66 1.09 1.28 1.09H21a2 2 0 0 1 0 4h-.32c-.62 0-1.12.47-1.28.91Z",
+    ],
+    sliders: [
+      "M4 6h8",
+      "M16 6h4",
+      "M14 4v4",
+      "M4 12h4",
+      "M12 12h8",
+      "M10 10v4",
+      "M4 18h10",
+      "M18 18h2",
+      "M16 16v4",
+    ],
+    sparkle: [
+      "M12 3l1.6 5.2L19 10l-5.4 1.8L12 17l-1.6-5.2L5 10l5.4-1.8Z",
+      "M19 15l.7 2.3L22 18l-2.3.7L19 21l-.7-2.3L16 18l2.3-.7Z",
+    ],
+    sun: [
+      "M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z",
+      "M12 2v2",
+      "M12 20v2",
+      "M4.93 4.93l1.41 1.41",
+      "M17.66 17.66l1.41 1.41",
+      "M2 12h2",
+      "M20 12h2",
+      "M6.34 17.66l-1.41 1.41",
+      "M19.07 4.93l-1.41 1.41",
+    ],
+    target: [
+      "M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z",
+      "M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z",
+      "M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z",
+    ],
+    waves: [
+      "M2 8c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2",
+      "M2 14c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2",
+    ],
   };
 
   let lastPreferences = preferencesApi.getPreferences();
-  let lastFocusedElement = null;
-  let previousBodyOverflow = "";
   let scrollSaveTimeout = null;
+  let settingsSourceContext = null;
 
+  settingsSourceContext = getSettingsSourceContext();
+  initializeSettingsTabs();
   renderSettingsControls();
   updateSettingsControls(lastPreferences);
   updateThemeEffects(lastPreferences);
-  updateSupportButtons();
+  updateReturnLink();
   initializeReaderRuler();
   initializeRememberedPosition();
 
-  settingsButton?.addEventListener("click", openSettingsMenu);
-  closeButton?.addEventListener("click", closeSettingsMenu);
-  settingsBackdrop?.addEventListener("click", closeSettingsMenu);
+  settingsButton?.addEventListener("click", captureSettingsSource);
   resetButton?.addEventListener("click", () =>
     preferencesApi.applyPreset("default"),
   );
-  bookmarkButton?.addEventListener("click", toggleBookmark);
-  completeButton?.addEventListener("click", toggleComplete);
 
-  settingsMenu?.addEventListener("click", handleSettingsClick);
-  settingsMenu?.addEventListener("change", handleSettingsChange);
-  settingsMenu?.addEventListener("keydown", handleSettingsKeydown);
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && settingsMenu?.classList.contains("open")) {
-      closeSettingsMenu();
-    }
-  });
+  settingsPage?.addEventListener("click", handleSettingsClick);
+  settingsPage?.addEventListener("change", handleSettingsChange);
 
   document.addEventListener("piggy:preferenceschange", (event) => {
     const nextPreferences = event.detail.preferences;
@@ -78,7 +138,9 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSettingsControls(nextPreferences);
     updateThemeEffects(nextPreferences, changedKey);
 
-    if (changedKey === "rememberPosition") {
+    if (changedKey === "rememberPosition" && settingsPage) {
+      saveSourceScrollPosition();
+    } else if (changedKey === "rememberPosition") {
       saveScrollPosition();
     }
 
@@ -88,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener(
     "scroll",
     () => {
+      if (settingsPage) return;
       if (preferencesApi.getPreferences().rememberPosition !== "on") return;
 
       window.clearTimeout(scrollSaveTimeout);
@@ -95,7 +158,9 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     { passive: true },
   );
-  window.addEventListener("pagehide", saveScrollPosition);
+  window.addEventListener("pagehide", () => {
+    if (!settingsPage) saveScrollPosition();
+  });
 
   window
     .matchMedia?.("(prefers-reduced-motion: reduce)")
@@ -138,12 +203,10 @@ document.addEventListener("DOMContentLoaded", () => {
       "rememberPosition",
       getRenderTarget("rememberPosition"),
     );
-
-    renderPageOutline(getRenderTarget("outline"));
   }
 
   function getRenderTarget(name) {
-    return settingsMenu?.querySelector(`[data-settings-render="${name}"]`);
+    return settingsPage?.querySelector(`[data-settings-render="${name}"]`);
   }
 
   function renderPresetCards(container) {
@@ -159,6 +222,9 @@ document.addEventListener("DOMContentLoaded", () => {
       button.dataset.prefValue = preset.value;
       button.setAttribute("aria-pressed", "false");
 
+      const header = document.createElement("span");
+      header.className = "settings-option-header";
+
       const title = document.createElement("span");
       title.className = "settings-option-title";
       title.textContent = preset.label;
@@ -167,7 +233,8 @@ document.addEventListener("DOMContentLoaded", () => {
       detail.className = "settings-option-detail";
       detail.textContent = preset.detail;
 
-      button.append(title, detail);
+      header.append(createSettingsIcon(PRESET_ICONS[preset.value]), title);
+      button.append(header, detail);
       container.append(button);
     });
   }
@@ -194,6 +261,10 @@ document.addEventListener("DOMContentLoaded", () => {
       title.className = "theme-card-title";
       title.textContent = theme.name;
 
+      const titleRow = document.createElement("span");
+      titleRow.className = "theme-card-title-row";
+      titleRow.append(createSettingsIcon(getThemeIconName(theme)), title);
+
       const meta = document.createElement("span");
       meta.className = "theme-card-meta";
       meta.textContent = getThemeMetaText(theme);
@@ -205,11 +276,62 @@ document.addEventListener("DOMContentLoaded", () => {
       const tags = createThemeTags(theme);
       const body = document.createElement("span");
       body.className = "theme-card-body";
-      body.append(title, meta, description, tags);
+      body.append(titleRow, meta, description, tags);
 
       button.append(preview, body);
       container.append(button);
     });
+  }
+
+  function createSettingsIcon(name) {
+    const iconName = ICON_PATHS[name] ? name : "settings";
+    const icon = document.createElement("span");
+    icon.className = "settings-card-icon";
+    icon.setAttribute("aria-hidden", "true");
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("fill", "none");
+    svg.setAttribute("stroke", "currentColor");
+    svg.setAttribute("stroke-width", "2");
+    svg.setAttribute("stroke-linecap", "round");
+    svg.setAttribute("stroke-linejoin", "round");
+
+    ICON_PATHS[iconName].forEach((pathData) => {
+      const path = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "path",
+      );
+      path.setAttribute("d", pathData);
+      svg.append(path);
+    });
+
+    icon.append(svg);
+    return icon;
+  }
+
+  function getThemeIconName(theme) {
+    const path = theme.path || "";
+    const tags = [
+      path,
+      theme.type,
+      theme.category,
+      ...(Array.isArray(theme.tags) ? theme.tags : []),
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    if (path === "light" || tags.includes("bright")) return "sun";
+    if (path === "ocean" || tags.includes("ocean")) return "waves";
+    if (path === "matrix" || tags.includes("code")) return "code";
+    if (path === "sage" || path === "readable" || tags.includes("calm")) {
+      return "leaf";
+    }
+    if (path === "high-contrast" || tags.includes("contrast")) return "eye";
+    if (Number(theme.id) >= 100 || tags.includes("animated")) return "sparkle";
+    if (theme.type === "light") return "sun";
+    return "moon";
   }
 
   function createThemePreview(theme) {
@@ -453,54 +575,89 @@ document.addEventListener("DOMContentLoaded", () => {
     container.replaceChildren(button);
   }
 
-  function renderPageOutline(container) {
-    if (!container) return;
+  function initializeSettingsTabs() {
+    if (!settingsTabs) return;
 
-    container.replaceChildren();
+    const selectedTab =
+      settingsTabs.querySelector('[data-settings-tab][aria-selected="true"]')
+        ?.dataset.settingsTab ||
+      settingsTabs.querySelector("[data-settings-tab]")?.dataset.settingsTab;
 
-    const pageRoot = document.querySelector("main") || document;
-    const headings = [
-      ...pageRoot.querySelectorAll(".md-content h2, .md-content h3"),
-    ].filter((heading) => heading.textContent.trim());
+    activateSettingsTab(selectedTab);
+    settingsTabs.addEventListener("keydown", handleSettingsTabKeydown);
+  }
 
-    if (headings.length === 0) {
-      const empty = document.createElement("p");
-      empty.className = "settings-outline-empty";
-      empty.textContent = "No sections on this page";
-      container.append(empty);
-      return;
-    }
+  function activateSettingsTab(tabId, options = {}) {
+    if (!settingsTabs || !tabId) return;
 
-    const list = document.createElement("div");
-    list.className = "settings-outline-list";
-    const usedIds = new Set(
-      [...document.querySelectorAll("[id]")].map((element) => element.id),
-    );
+    const tabs = [...settingsTabs.querySelectorAll("[data-settings-tab]")];
+    const panels = [...settingsTabs.querySelectorAll("[data-settings-panel]")];
+    const targetTab =
+      tabs.find((tab) => tab.dataset.settingsTab === tabId) || tabs[0];
 
-    headings.forEach((heading) => {
-      if (!heading.id) {
-        heading.id = createUniqueSlug(heading.textContent, usedIds);
-      } else {
-        usedIds.add(heading.id);
-      }
+    if (!targetTab) return;
 
-      const link = document.createElement("a");
-      link.className = "settings-outline-link";
-      if (heading.tagName.toLowerCase() === "h3") {
-        link.classList.add("settings-outline-link--child");
-      }
-      link.href = `#${heading.id}`;
-      link.textContent = heading.textContent.trim();
-      link.addEventListener("click", () => {
-        window.setTimeout(closeSettingsMenu, 80);
-      });
-      list.append(link);
+    const activeTabId = targetTab.dataset.settingsTab;
+
+    tabs.forEach((tab) => {
+      const isSelected = tab.dataset.settingsTab === activeTabId;
+      tab.setAttribute("aria-selected", String(isSelected));
+      tab.tabIndex = isSelected ? 0 : -1;
     });
 
-    container.append(list);
+    panels.forEach((panel) => {
+      panel.hidden = panel.dataset.settingsPanel !== activeTabId;
+    });
+
+    if (options.focus) {
+      targetTab.focus();
+    }
+  }
+
+  function handleSettingsTabKeydown(event) {
+    if (!settingsTabs) return;
+
+    const navigationKeys = [
+      "ArrowLeft",
+      "ArrowRight",
+      "ArrowUp",
+      "ArrowDown",
+      "Home",
+      "End",
+    ];
+
+    if (!navigationKeys.includes(event.key)) return;
+
+    const tabs = [...settingsTabs.querySelectorAll("[data-settings-tab]")];
+    const currentTab = event.target.closest("[data-settings-tab]");
+    const currentIndex = tabs.indexOf(currentTab);
+
+    if (currentIndex === -1) return;
+
+    event.preventDefault();
+
+    let nextIndex = currentIndex;
+
+    if (event.key === "Home") {
+      nextIndex = 0;
+    } else if (event.key === "End") {
+      nextIndex = tabs.length - 1;
+    } else if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+      nextIndex = (currentIndex + 1) % tabs.length;
+    } else {
+      nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    }
+
+    activateSettingsTab(tabs[nextIndex].dataset.settingsTab, { focus: true });
   }
 
   function handleSettingsClick(event) {
+    const tab = event.target.closest("[data-settings-tab]");
+    if (tab && settingsTabs?.contains(tab)) {
+      activateSettingsTab(tab.dataset.settingsTab);
+      return;
+    }
+
     const toggle = event.target.closest("[data-pref-toggle]");
     if (toggle) {
       const id = toggle.dataset.prefToggle;
@@ -532,7 +689,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateSettingsControls(preferences) {
-    settingsMenu
+    settingsPage
       ?.querySelectorAll("[data-pref-id][data-pref-value]")
       .forEach((control) => {
         const { prefId, prefValue } = control.dataset;
@@ -542,12 +699,12 @@ document.addEventListener("DOMContentLoaded", () => {
         );
       });
 
-    settingsMenu?.querySelectorAll("[data-pref-select]").forEach((select) => {
+    settingsPage?.querySelectorAll("[data-pref-select]").forEach((select) => {
       const id = select.dataset.prefSelect;
       select.value = preferences[id];
     });
 
-    settingsMenu?.querySelectorAll("[data-pref-toggle]").forEach((toggle) => {
+    settingsPage?.querySelectorAll("[data-pref-toggle]").forEach((toggle) => {
       const id = toggle.dataset.prefToggle;
       toggle.setAttribute(
         "aria-pressed",
@@ -555,91 +712,33 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
 
-    settingsMenu?.querySelectorAll("[data-pref-current]").forEach((element) => {
+    settingsPage?.querySelectorAll("[data-pref-current]").forEach((element) => {
       const id = element.dataset.prefCurrent;
       element.textContent = getOptionLabel(id, preferences[id]);
     });
 
-    settingsMenu?.querySelectorAll("[data-pref-preview]").forEach((element) => {
+    settingsPage?.querySelectorAll("[data-pref-preview]").forEach((element) => {
       updateSettingPreview(element, element.dataset.prefPreview, preferences);
     });
   }
 
-  function openSettingsMenu() {
-    if (!settingsMenu || !settingsButton) return;
+  function captureSettingsSource() {
+    if (settingsPage) return;
 
-    lastFocusedElement = document.activeElement;
-    if (settingsBackdrop) {
-      settingsBackdrop.hidden = false;
-    }
-    previousBodyOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    settingsMenu.removeAttribute("inert");
-    settingsMenu.setAttribute("aria-hidden", "false");
-    settingsButton.setAttribute("aria-expanded", "true");
-
-    window.requestAnimationFrame(() => {
-      settingsBackdrop?.classList.add("open");
-      settingsMenu.classList.add("open");
-      closeButton?.focus();
-    });
+    writeSessionValue(SETTINGS_SOURCE_KEY, getCurrentPageContext());
   }
 
-  function closeSettingsMenu() {
-    if (!settingsMenu || !settingsButton) return;
+  function updateReturnLink() {
+    if (!returnLink || !settingsPage) return;
 
-    settingsBackdrop?.classList.remove("open");
-    settingsMenu.classList.remove("open");
-    settingsMenu.setAttribute("aria-hidden", "true");
-    settingsMenu.setAttribute("inert", "");
-    settingsButton.setAttribute("aria-expanded", "false");
-    document.body.style.overflow = previousBodyOverflow;
+    const sourceContext = settingsSourceContext || getSettingsSourceContext();
+    returnLink.href = sourceContext.path || "/";
 
-    window.setTimeout(() => {
-      if (!settingsMenu.classList.contains("open") && settingsBackdrop) {
-        settingsBackdrop.hidden = true;
-      }
-    }, 220);
-
-    if (lastFocusedElement instanceof HTMLElement) {
-      lastFocusedElement.focus();
+    const label = returnLink.querySelector("span");
+    if (label) {
+      label.textContent =
+        sourceContext.pageKey === getCurrentPageKey() ? "Back" : "Back to page";
     }
-  }
-
-  function handleSettingsKeydown(event) {
-    if (event.key !== "Tab") return;
-
-    const focusableElements = getFocusableElements(settingsMenu);
-    if (focusableElements.length === 0) return;
-
-    const firstElement = focusableElements[0];
-    const lastElement = focusableElements[focusableElements.length - 1];
-
-    if (event.shiftKey && document.activeElement === firstElement) {
-      event.preventDefault();
-      lastElement.focus();
-    } else if (!event.shiftKey && document.activeElement === lastElement) {
-      event.preventDefault();
-      firstElement.focus();
-    }
-  }
-
-  function getFocusableElements(root) {
-    if (!root) return [];
-
-    return [
-      ...root.querySelectorAll(
-        'a[href], button:not([disabled]), select:not([disabled]), textarea:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      ),
-    ].filter((element) => {
-      const closedDetails = element.closest("details:not([open])");
-      if (closedDetails && element.tagName.toLowerCase() !== "summary") {
-        return false;
-      }
-
-      const style = window.getComputedStyle(element);
-      return style.display !== "none" && style.visibility !== "hidden";
-    });
   }
 
   function updateThemeEffects(preferences, changedKey = "") {
@@ -750,6 +849,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function initializeRememberedPosition() {
+    if (settingsPage) return;
+
     if (preferencesApi.getPreferences().rememberPosition === "on") {
       restoreScrollPosition();
     }
@@ -759,7 +860,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (window.location.hash) return;
 
     const positions = readStorageMap(SCROLL_KEY);
-    const savedPosition = positions[getPageKey()];
+    const savedPosition = positions[getCurrentPageKey()];
 
     if (!Number.isFinite(savedPosition) || savedPosition <= 0) return;
 
@@ -777,64 +878,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (preferencesApi.getPreferences().rememberPosition !== "on") return;
 
     const positions = readStorageMap(SCROLL_KEY);
-    positions[getPageKey()] = Math.max(0, Math.round(window.scrollY));
+    positions[getCurrentPageKey()] = Math.max(0, Math.round(window.scrollY));
     writeStorageMap(SCROLL_KEY, positions);
   }
 
-  function toggleBookmark() {
-    const bookmarks = readStorageMap(BOOKMARKS_KEY);
-    const pageKey = getPageKey();
+  function saveSourceScrollPosition() {
+    if (preferencesApi.getPreferences().rememberPosition !== "on") return;
+    if (!settingsSourceContext?.pageKey) return;
+    if (!settingsSourceContext.capturedAt) return;
+    if (!Number.isFinite(settingsSourceContext.scrollY)) return;
 
-    if (bookmarks[pageKey]) {
-      delete bookmarks[pageKey];
-    } else {
-      bookmarks[pageKey] = {
-        title: getPageTitle(),
-        path: window.location.pathname,
-        updatedAt: new Date().toISOString(),
-      };
-    }
-
-    writeStorageMap(BOOKMARKS_KEY, bookmarks);
-    updateSupportButtons();
-  }
-
-  function toggleComplete() {
-    const progress = readStorageMap(PROGRESS_KEY);
-    const pageKey = getPageKey();
-
-    if (progress[pageKey]) {
-      delete progress[pageKey];
-    } else {
-      progress[pageKey] = {
-        title: getPageTitle(),
-        path: window.location.pathname,
-        completedAt: new Date().toISOString(),
-      };
-    }
-
-    writeStorageMap(PROGRESS_KEY, progress);
-    updateSupportButtons();
-  }
-
-  function updateSupportButtons() {
-    const pageKey = getPageKey();
-    const bookmarks = readStorageMap(BOOKMARKS_KEY);
-    const progress = readStorageMap(PROGRESS_KEY);
-
-    if (bookmarkButton) {
-      const isBookmarked = Boolean(bookmarks[pageKey]);
-      bookmarkButton.setAttribute("aria-pressed", String(isBookmarked));
-      bookmarkButton.textContent = isBookmarked
-        ? "Bookmarked"
-        : "Bookmark page";
-    }
-
-    if (completeButton) {
-      const isComplete = Boolean(progress[pageKey]);
-      completeButton.setAttribute("aria-pressed", String(isComplete));
-      completeButton.textContent = isComplete ? "Completed" : "Mark complete";
-    }
+    const positions = readStorageMap(SCROLL_KEY);
+    positions[settingsSourceContext.pageKey] = Math.max(
+      0,
+      Math.round(settingsSourceContext.scrollY),
+    );
+    writeStorageMap(SCROLL_KEY, positions);
   }
 
   function readStorageMap(key) {
@@ -850,6 +909,25 @@ document.addEventListener("DOMContentLoaded", () => {
   function writeStorageMap(key, value) {
     try {
       window.localStorage?.setItem(key, JSON.stringify(value));
+    } catch {
+      return false;
+    }
+
+    return true;
+  }
+
+  function readSessionValue(key) {
+    try {
+      const rawValue = window.sessionStorage?.getItem(key);
+      return rawValue ? JSON.parse(rawValue) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function writeSessionValue(key, value) {
+    try {
+      window.sessionStorage?.setItem(key, JSON.stringify(value));
     } catch {
       return false;
     }
@@ -1062,29 +1140,72 @@ document.addEventListener("DOMContentLoaded", () => {
     return families[value] || "inherit";
   }
 
-  function createUniqueSlug(value, usedIds) {
-    const baseSlug = value
-      .trim()
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-
-    const fallback = Math.random().toString(36).slice(2);
-    const stem = `section-${baseSlug || fallback}`;
-    let candidate = stem;
-    let count = 2;
-
-    while (usedIds.has(candidate)) {
-      candidate = `${stem}-${count}`;
-      count += 1;
-    }
-
-    usedIds.add(candidate);
-    return candidate;
+  function getCurrentPageContext() {
+    return {
+      pageKey: getCurrentPageKey(),
+      path: getCurrentPagePath(),
+      title: getPageTitle(),
+      scrollY: Math.max(0, Math.round(window.scrollY)),
+      capturedAt: new Date().toISOString(),
+    };
   }
 
-  function getPageKey() {
+  function getSettingsSourceContext() {
+    if (!settingsPage) {
+      return getCurrentPageContext();
+    }
+
+    const returnPath = getSettingsReturnPath();
+    const storedContext = readSessionValue(SETTINGS_SOURCE_KEY);
+    if (
+      storedContext?.pageKey &&
+      storedContext.pageKey === getPageKeyFromPath(returnPath)
+    ) {
+      return storedContext;
+    }
+
+    if (
+      storedContext?.pageKey &&
+      settingsPage.dataset.settingsHasReturnTo !== "true"
+    ) {
+      return storedContext;
+    }
+
+    return {
+      pageKey: getPageKeyFromPath(returnPath),
+      path: returnPath,
+      title: "the previous page",
+      scrollY: 0,
+    };
+  }
+
+  function getSettingsReturnPath() {
+    return normalizeInternalPath(settingsPage?.dataset.settingsReturnTo) || "/";
+  }
+
+  function normalizeInternalPath(value) {
+    if (!value || typeof value !== "string") return "";
+
+    try {
+      const url = new URL(value, window.location.origin);
+      if (url.origin !== window.location.origin) return "";
+      return `${url.pathname}${url.search}`;
+    } catch {
+      return "";
+    }
+  }
+
+  function getPageKeyFromPath(path) {
+    const normalizedPath = normalizeInternalPath(path) || "/";
+    return normalizedPath.split("#")[0];
+  }
+
+  function getCurrentPagePath() {
     return `${window.location.pathname}${window.location.search}`;
+  }
+
+  function getCurrentPageKey() {
+    return getCurrentPagePath();
   }
 
   function getPageTitle() {

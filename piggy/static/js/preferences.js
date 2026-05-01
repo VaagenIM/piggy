@@ -1,6 +1,6 @@
 (function () {
   const STORE_KEY = "piggy.readerPreferences.v1";
-  const STORE_VERSION = 3;
+  const STORE_VERSION = 4;
   const LEGACY_KEYS = {
     theme: "theme",
     readerFont: "fontTheme",
@@ -121,6 +121,11 @@
         value: "lowVision",
         label: "Low vision",
         detail: "Large text and strong contrast",
+      },
+      {
+        value: "projector",
+        label: "Projector",
+        detail: "Large, crisp classroom display",
       },
       {
         value: "lowGlare",
@@ -388,6 +393,25 @@
         hideDecorations: "on",
       },
     },
+    projector: {
+      label: "Projector",
+      values: {
+        theme: preferTheme("light", "readable"),
+        contrast: "standard",
+        readerFont: "verdana",
+        codeFont: "atkinson-mono",
+        readerFontSize: "x-large",
+        readerLineHeight: "comfortable",
+        readerLetterSpacing: "default",
+        readerWordSpacing: "wide",
+        readerParagraphSpacing: "comfortable",
+        readerWidth: "wide",
+        reduceMotion: "reduce",
+        focusMode: "off",
+        readingRuler: "off",
+        hideDecorations: "on",
+      },
+    },
     lowGlare: {
       label: "Low glare",
       values: {
@@ -576,6 +600,14 @@
       (!migratedValues.codeFont || migratedValues.codeFont === "default")
     ) {
       migratedValues.codeFont = "atkinson-mono";
+    }
+
+    if (
+      version < 4 &&
+      migratedValues.readerPreset === "projector" &&
+      migratedValues.contrast === "strong"
+    ) {
+      migratedValues.contrast = "standard";
     }
 
     return migratedValues;
