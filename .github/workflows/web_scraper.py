@@ -71,20 +71,17 @@ def get_html(link) -> tuple[str, set[str], set[str]]:
     else:
         html = r.text
 
-    # Before normalizing, extract the og:image URL for THIS page's own header.
-    # It carries the canonical ?title= from meta.json (set server-side from meta.name),
-    # which is more meaningful than the raw folder name the server would fall back to.
-    # We use this to re-inject a single, correctly-titled header URL after stripping
-    # all other ?title= variants, so every section header is downloaded exactly once
-    # with its proper title — no race condition.
+    # Before normalizing, extract the og:image URL for THIS page's own section header.
+    # It carries the canonical ?title= from meta.json, which is more meaningful than
+    # the raw folder name the server falls back to when no ?title= is provided.
+    # NOTE: must run BEFORE the cname substitution below — og:image still has the local server URL here.
     og_image_match = re.search(
         r'content="' + re.escape(url) + r'(/[^"?]*/media/header\.[^"?]+\?title=[^"]*)"',
         html,
     )
 
-    # Normalize dynamic URLs BEFORE collecting links so all ?title= variants for the
-    # same header path collapse to a single deduplicated entry in media_tasks.
-    # TODO: these subs are a hack. hopefully temporary.
+    # TODO: this is a hack. hopefully temporary.
+    # Strip ?title= from all header/thumbnail refs so src/href attrs collapse to one URL per path.
     html = re.sub(r"""/api/generate_thumbnail/([^?]*)(\?[^"]*)""", r"/api/generate_thumbnail/\1.webp", html)
     html = re.sub(r"/media/header\..+\?title=[^\"]*", r"/media/header.webp", html)
 
@@ -94,14 +91,11 @@ def get_html(link) -> tuple[str, set[str], set[str]]:
     new_media_links = set()
     if "/lang/" not in link:
         new_media_links = get_media_links(html, path=link.strip("/"))
-
-        # Swap the bare header URL for this page's own section with the og:image
-        # version that carries the correct meta.json title.
+        # Add back the canonical titled URL for this page's own section header.
+        # download_site() will consolidate the global media_tasks set afterwards,
+        # discarding bare duplicates wherever a titled version exists.
         if og_image_match:
-            own_header_with_title = og_image_match.group(1)  # e.g. /img/VG1/IM/media/header.webp?title=IM
-            bare_header = own_header_with_title.split("?")[0]  # e.g. /img/VG1/IM/media/header.webp
-            new_media_links.discard(bare_header)
-            new_media_links.add(own_header_with_title)
+            new_media_links.add(og_image_match.group(1))
 
     # Replace all content (og) links with the cname
     html = re.sub(rf"content=\"({url})([^\"/]*)", rf'content="{cname}\2', html)
@@ -244,6 +238,13 @@ def download_site():
                     media_tasks.update(new_media_links)
     # A separate pool for media tasks, as we don't want to download multiple media files at once
     # (this appears to happen when we download the media files in parallel with the html files)
+
+    # Consolidate header URLs: wherever a titled version (?title=...) was collected from a
+    # section's own og:image, discard the bare version that parent/sibling pages added.
+    # This ensures each section header is downloaded exactly once, with the correct title.
+    titled_headers = {t.split("?")[0] for t in media_tasks if "/media/header" in t and "?title=" in t}
+    media_tasks = {t for t in media_tasks if not ("/media/header" in t and "?title=" not in t and t in titled_headers)}
+
     with multiprocessing.Pool(processes=WORKERS) as pool:
         pool.map(_download_media, media_tasks)  # Download media in parallel
 
