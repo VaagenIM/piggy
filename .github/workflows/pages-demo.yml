@@ -57,6 +57,11 @@ jobs:
           echo "USE_CACHE=0" >> $GITHUB_ENV
           uv pip install -r .github/workflows/requirements-pages.txt
 
+      - name: Kill old processes
+        run: |
+          pkill -f gunicorn || true
+          pkill -f python || true
+
       - name: Start Piggy server
         run: |
           gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers 16 run:app &
