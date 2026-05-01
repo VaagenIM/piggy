@@ -40,10 +40,14 @@ jobs:
         with:
           node-version: 24
 
-      - name: Get piggybank
-        run: |
-          rm -rf piggybank
-          git clone --branch output --single-branch https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank
+      - name: Checkout piggybank
+        uses: actions/checkout@v4
+        with:
+          repository: VaagenIM/piggybank
+          ref: output
+          token: ${{ secrets.PIGGYPAT }}
+          path: piggybank
+          fetch-depth: 0
 
       - name: Install dependencies
         run: |
