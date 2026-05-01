@@ -71,6 +71,23 @@ def get_html(link) -> tuple[str, set[str], set[str]]:
     else:
         html = r.text
 
+    # Before normalizing, extract the og:image URL for THIS page's own header.
+    # It carries the canonical ?title= from meta.json (set server-side from meta.name),
+    # which is more meaningful than the raw folder name the server would fall back to.
+    # We use this to re-inject a single, correctly-titled header URL after stripping
+    # all other ?title= variants, so every section header is downloaded exactly once
+    # with its proper title — no race condition.
+    og_image_match = re.search(
+        r'content="' + re.escape(url) + r'(/[^"?]*/media/header\.[^"?]+\?title=[^"]*)"',
+        html,
+    )
+
+    # Normalize dynamic URLs BEFORE collecting links so all ?title= variants for the
+    # same header path collapse to a single deduplicated entry in media_tasks.
+    # TODO: these subs are a hack. hopefully temporary.
+    html = re.sub(r"""/api/generate_thumbnail/([^?]*)(\?[^"]*)""", r"/api/generate_thumbnail/\1.webp", html)
+    html = re.sub(r"/media/header\..+\?title=[^\"]*", r"/media/header.webp", html)
+
     new_links = get_links(html, path=link.strip("/"))
 
     # Get media links as long as we are not in the lang folder
@@ -78,9 +95,13 @@ def get_html(link) -> tuple[str, set[str], set[str]]:
     if "/lang/" not in link:
         new_media_links = get_media_links(html, path=link.strip("/"))
 
-    # TODO: this is a hack. hopefully temporary.
-    html = re.sub(r"""/api/generate_thumbnail/([^?]*)(\?[^"]*)""", r"/api/generate_thumbnail/\1.webp", html)
-    html = re.sub(r"/media/header\..+\?title=[^\"]*", r"/media/header.webp", html)
+        # Swap the bare header URL for this page's own section with the og:image
+        # version that carries the correct meta.json title.
+        if og_image_match:
+            own_header_with_title = og_image_match.group(1)  # e.g. /img/VG1/IM/media/header.webp?title=IM
+            bare_header = own_header_with_title.split("?")[0]  # e.g. /img/VG1/IM/media/header.webp
+            new_media_links.discard(bare_header)
+            new_media_links.add(own_header_with_title)
 
     # Replace all content (og) links with the cname
     html = re.sub(rf"content=\"({url})([^\"/]*)", rf'content="{cname}\2', html)
@@ -169,17 +190,14 @@ def _write_html(html, path):
 
 def _download_media(link):
     print(f"Downloading \33[34m{link}\33[0m")
-    path = link.strip("/").split("#")[0]
-    r = requests.get(f"{url}/{path}", allow_redirects=True)
-    try:
-        os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
-    except (NotADirectoryError, OSError):
-        print(f"WARNING: Could not create directory for {path}. Skipping download.")
-        return
-    path = unquote_path(path)
+    # Pass the full link (including any ?title= query param) to the server so it
+    # generates the correct thumbnail, but derive the save path without the query string.
+    r = requests.get(f"{url}/{link.strip('/').split('#')[0]}", allow_redirects=True)
+    path = unquote_path(link.strip("/").split("#")[0].split("?")[0])
+
     # TODO: this is a hack. hopefully temporary.
     if "/api/generate_thumbnail/" in link:
-        path = path.rsplit("?")[0] + ".webp"
+        path = path + ".webp"
 
     if not path or not r.ok:
         print(f"WARNING: Could not download {link}")
@@ -189,7 +207,12 @@ def _download_media(link):
         print("WARNING: Cannot download file with name longer than 255 characters")
         return
 
-    path = path.rsplit("?")[0]
+    try:
+        os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
+    except (NotADirectoryError, OSError):
+        print(f"WARNING: Could not create directory for {path}. Skipping download.")
+        return
+
     with open(f"demo/{path}", "wb+") as f:
         f.write(r.content)
 
