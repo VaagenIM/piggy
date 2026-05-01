@@ -40,6 +40,12 @@ jobs:
         with:
           node-version: 24
 
+      - name: Cleanup earlier runs
+        run: |
+          rm -rf piggybank
+          pkill -f gunicorn || true
+          pkill -f python || true
+
       - name: Checkout piggybank
         uses: actions/checkout@v4
         with:
@@ -56,11 +62,6 @@ jobs:
           echo "GITHUB_PAGES=1" >> $GITHUB_ENV
           echo "USE_CACHE=0" >> $GITHUB_ENV
           uv pip install -r .github/workflows/requirements-pages.txt
-
-      - name: Kill old processes
-        run: |
-          pkill -f gunicorn || true
-          pkill -f python || true
 
       - name: Start Piggy server
         run: |
