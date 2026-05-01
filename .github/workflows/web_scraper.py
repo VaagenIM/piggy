@@ -200,8 +200,12 @@ def _download_media(link):
         return
 
     path = path.rsplit("?")[0]
-    with open(f"demo/{path}", "wb+") as f:
-        f.write(r.content)
+    try:
+        os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
+        with open(f"demo/{path}", "wb+") as f:
+            f.write(r.content)
+    except Exception as e:
+        print(f"WARNING: Could not write file {path}: {e}")
 
 
 def download_site():
