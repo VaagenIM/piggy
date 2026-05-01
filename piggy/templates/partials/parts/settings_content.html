@@ -1,0 +1,274 @@
+<section
+  id="settings-page"
+  class="settings-page"
+  aria-labelledby="settings-title"
+  data-settings-return-to="{{ settings_return_to|default('/')|e }}"
+  data-settings-has-return-to="{{ 'true' if settings_has_return_to|default(false) else 'false' }}"
+  data-settings-inline="{{ 'true' if settings_inline|default(false) else 'false' }}">
+  <header class="settings-panel-header settings-page-header">
+    <div class="settings-heading-group">
+      <p class="settings-eyebrow">Reader</p>
+      <h1 id="settings-title">Settings</h1>
+    </div>
+    <a
+      id="settings-return-link"
+      class="piggy-button piggy-button--m settings-return-button"
+      href="{{ settings_return_to|default('/')|e }}">
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6" />
+      </svg>
+      <span>Back to page</span>
+    </a>
+  </header>
+
+  <div class="settings-content">
+    <div class="settings-preview-column">
+      <section
+        class="settings-preview"
+        aria-labelledby="settings-preview-title">
+        <h2 id="settings-preview-title">Preview</h2>
+        <div class="settings-preview-card">
+          <div class="assignment-page-header settings-preview-header">
+            <p class="settings-preview-level">Assignment 5</p>
+            <h3 class="settings-preview-title">Loops and decisions</h3>
+          </div>
+
+          <article
+            class="settings-reader-preview md-content"
+            aria-label="Reader preview">
+            <h2>Plan the program</h2>
+            <p>
+              A program is easier to read when each idea has enough room. First
+              describe the goal, then test one small part at a time.
+            </p>
+            <p>
+              Use names that explain the value, such as
+              <code>total_score</code> or <code>current_level</code>.
+            </p>
+
+            <h3>Try the loop</h3>
+            <ul>
+              <li>Start with a short list of values.</li>
+              <li>Print one result before adding more logic.</li>
+              <li>Check the output after every change.</li>
+            </ul>
+
+            <div class="highlight">
+              <pre><code class="language-python md-code__content">scores = [3, 5, 8]
+total_score = 0
+
+for score in scores:
+    total_score += score
+
+print(total_score)</code></pre>
+            </div>
+
+            <div class="admonition note">
+              <p class="admonition-title">Remember</p>
+              <p>
+                Keep the loop small at first, then add one new rule when the
+                output looks correct.
+              </p>
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Concept</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Loop</td>
+                  <td>Repeats the same step</td>
+                </tr>
+                <tr>
+                  <td>Condition</td>
+                  <td>Chooses one path</td>
+                </tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <div class="settings-controls-column">
+      <div class="settings-tabs" data-settings-tabs>
+        <div
+          class="settings-tab-list"
+          role="tablist"
+          aria-label="Settings categories">
+          <button
+            id="settings-tab-main"
+            class="settings-tab-button"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="settings-panel-main"
+            data-settings-tab="main">
+            Main
+          </button>
+          <button
+            id="settings-tab-text"
+            class="settings-tab-button"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="settings-panel-text"
+            data-settings-tab="text">
+            Text
+          </button>
+          <button
+            id="settings-tab-focus"
+            class="settings-tab-button"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="settings-panel-focus"
+            data-settings-tab="focus">
+            Focus
+          </button>
+          <button
+            id="settings-tab-support"
+            class="settings-tab-button"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="settings-panel-support"
+            data-settings-tab="support">
+            Support
+          </button>
+        </div>
+
+        <div class="settings-tab-panels">
+          <section
+            id="settings-panel-main"
+            class="settings-section settings-tab-panel"
+            role="tabpanel"
+            aria-labelledby="settings-tab-main"
+            data-settings-panel="main">
+            <div class="settings-section-heading">
+              <h2 id="settings-main-title">Presets and themes</h2>
+              <button
+                id="settings-reset-button"
+                class="piggy-button piggy-button--s settings-secondary-button"
+                type="button">
+                Reset
+              </button>
+            </div>
+            <div class="settings-control-stack">
+              <section
+                class="settings-subsection"
+                aria-labelledby="settings-presets-title">
+                <h3 id="settings-presets-title">Presets</h3>
+                <div
+                  class="settings-card-grid settings-card-grid--presets"
+                  data-settings-render="presets"></div>
+              </section>
+              <section
+                class="settings-subsection"
+                aria-labelledby="settings-theme-title">
+                <h3 id="settings-theme-title">Themes</h3>
+                <div
+                  class="settings-card-grid settings-card-grid--themes"
+                  data-settings-render="themes"></div>
+              </section>
+            </div>
+          </section>
+
+          <section
+            id="settings-panel-text"
+            class="settings-section settings-tab-panel"
+            role="tabpanel"
+            aria-labelledby="settings-tab-text"
+            data-settings-panel="text"
+            hidden>
+            <div class="settings-section-heading">
+              <h2 id="settings-text-title">Text</h2>
+            </div>
+            <div class="settings-control-stack">
+              <div class="settings-font-grid">
+                <div data-settings-render="readerFont"></div>
+                <div data-settings-render="codeFont"></div>
+              </div>
+              <div
+                class="settings-font-size-control"
+                data-settings-render="readerFontSize"></div>
+            </div>
+
+            <details class="settings-disclosure">
+              <summary>Advanced text layout</summary>
+              <div class="settings-control-stack">
+                <div data-settings-render="readerLineHeight"></div>
+                <div data-settings-render="readerLetterSpacing"></div>
+                <div data-settings-render="readerWordSpacing"></div>
+                <div data-settings-render="readerParagraphSpacing"></div>
+                <div data-settings-render="readerWidth"></div>
+              </div>
+            </details>
+          </section>
+
+          <section
+            id="settings-panel-focus"
+            class="settings-section settings-tab-panel"
+            role="tabpanel"
+            aria-labelledby="settings-tab-focus"
+            data-settings-panel="focus"
+            hidden>
+            <div class="settings-section-heading">
+              <h2 id="settings-focus-title">Focus</h2>
+            </div>
+            <div class="settings-control-stack">
+              <section
+                class="settings-subsection"
+                aria-labelledby="settings-motion-title">
+                <h3 id="settings-motion-title">Motion</h3>
+                <div class="settings-control-stack">
+                  <div data-settings-render="contrast"></div>
+                  <div data-settings-render="reduceMotion"></div>
+                </div>
+              </section>
+              <section
+                class="settings-subsection"
+                aria-labelledby="settings-focus-switches-title">
+                <h3 id="settings-focus-switches-title">Focus switches</h3>
+                <div class="settings-toggle-grid">
+                  <div data-settings-render="focusMode"></div>
+                  <div data-settings-render="readingRuler"></div>
+                </div>
+              </section>
+            </div>
+          </section>
+
+          <section
+            id="settings-panel-support"
+            class="settings-section settings-tab-panel"
+            role="tabpanel"
+            aria-labelledby="settings-tab-support"
+            data-settings-panel="support"
+            hidden>
+            <div class="settings-section-heading">
+              <h2 id="settings-support-title">Support</h2>
+            </div>
+            <div class="settings-control-stack">
+              <div data-settings-render="rememberPosition"></div>
+              <p class="settings-support-copy">
+                Stores your scroll position for each page on this browser, so
+                Piggy can return you close to where you stopped reading.
+              </p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

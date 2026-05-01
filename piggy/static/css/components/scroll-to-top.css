@@ -26,11 +26,6 @@
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-body:has(#settings-menu.open) #scroll-to-top-btn {
-  opacity: 0;
-  pointer-events: none;
-}
-
 #scroll-to-top-btn svg {
   width: calc(1.75rem * var(--piggy-font-scale));
   height: calc(1.75rem * var(--piggy-font-scale));

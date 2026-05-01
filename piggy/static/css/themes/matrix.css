@@ -3,6 +3,13 @@ id: 101
 name: Matrix
 description: A theme inspired by the green hues of "The Matrix" movies.
 type: dark
+category: animated
+tags: animated, high energy, green
+preview.background: #000000
+preview.surface: #000000
+preview.text: #d8ffd8
+preview.accent: #00c766
+preview.border: #00a84f
 preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00ff00; text-shadow: none;
 */
 

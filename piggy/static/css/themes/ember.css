@@ -3,6 +3,13 @@ id: 9
 name: Ember
 description: A warm deep-red theme for focused evening study.
 type: dark
+category: focus
+tags: warm, evening, focus
+preview.background: #241313
+preview.surface: #361919
+preview.text: #f6e8df
+preview.accent: #d05d4e
+preview.border: #bd685e
 preview_style: background: linear-gradient(90deg, #241313, #4a2020); color: #f6e8df; text-shadow: none;
 */
 

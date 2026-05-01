@@ -1,0 +1,7 @@
+/********************************\
+|*   SETTINGS LATE OVERRIDES    *|
+\********************************/
+
+.settings-reader-preview.md-content {
+  padding: clamp(1.25rem, 2.4vw, 1.8rem) !important;
+}

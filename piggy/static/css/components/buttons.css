@@ -48,7 +48,7 @@
 :where(.piggy-button, .snout-button)[aria-current="page"] {
   background: var(--piggy-button-active);
   background-color: var(--piggy-button-active);
-  color: var(--piggy-text-button);
+  color: var(--piggy-button-active-text, var(--piggy-text-button));
 }
 
 :where(.piggy-button, .snout-button):focus-visible {

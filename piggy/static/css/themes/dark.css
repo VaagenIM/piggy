@@ -3,6 +3,13 @@ id: 0
 name: Dark
 description: The default dark theme.
 type: dark
+category: standard
+tags: default, low light
+preview.background: #181d22
+preview.surface: #1c232a
+preview.text: #f4f6f8
+preview.accent: #24a1b8
+preview.border: #4f89ad
 preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); color: #ffffff; text-shadow: none;
 */
 

@@ -3,6 +3,13 @@ id: 105
 name: Golden
 description: A gold-on-onyx theme. (Gonna be, gonna be golden!)
 type: dark
+category: animated
+tags: animated, dark, gold
+preview.background: #0b0b0e
+preview.surface: #16161c
+preview.text: #f7e9c5
+preview.accent: #ffd86b
+preview.border: #e0b657
 preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd86b;
 */
 

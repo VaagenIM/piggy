@@ -21,6 +21,12 @@ document.addEventListener(
 );
 
 function piggyOpenDetails(details, summary) {
+  if (piggyShouldReduceMotion()) {
+    details.open = true;
+    piggyScrollDetailsIntoView(details);
+    return;
+  }
+
   details.dataset.piggyAnimating = "true";
   details.classList.add("piggy-details-animating");
 
@@ -55,6 +61,11 @@ function piggyOpenDetails(details, summary) {
 }
 
 function piggyCloseDetails(details, summary) {
+  if (piggyShouldReduceMotion()) {
+    details.open = false;
+    return;
+  }
+
   details.dataset.piggyAnimating = "true";
   details.classList.add("piggy-details-animating");
 
@@ -83,6 +94,19 @@ function piggyCloseDetails(details, summary) {
     details.classList.remove("piggy-details-animating");
     delete details.dataset.piggyAnimating;
   };
+}
+
+function piggyShouldReduceMotion() {
+  const preference = document.documentElement.getAttribute(
+    "data-reader-reduce-motion",
+  );
+
+  if (preference === "reduce") return true;
+  if (preference === "allow") return false;
+
+  return Boolean(
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches,
+  );
 }
 
 function piggyScrollDetailsIntoView(details) {
@@ -268,7 +292,7 @@ function piggyCreateCodeTitlebar(language, title) {
       const separator = document.createElement("span");
       separator.className = "piggy-code-titlebar-separator";
       separator.setAttribute("aria-hidden", "true");
-      separator.textContent = "·";
+      separator.textContent = "/";
 
       titlebar.append(separator);
     }

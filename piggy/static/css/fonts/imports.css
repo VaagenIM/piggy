@@ -13,7 +13,6 @@
   src: url("/static/fonts/OpenDyslexic-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
-  letter-spacing: -10px;
   font-display: swap;
 }
 
@@ -23,7 +22,6 @@
   src: url("/static/fonts/OpenDyslexic-Italic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
-  letter-spacing: -10px;
   font-display: swap;
 }
 
@@ -33,7 +31,6 @@
   src: url("/static/fonts/OpenDyslexic-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
-  letter-spacing: -10px;
   font-display: swap;
 }
 
@@ -43,7 +40,6 @@
   src: url("/static/fonts/OpenDyslexic-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
-  letter-spacing: -10px;
   font-display: swap;
 }
 

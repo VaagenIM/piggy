@@ -3,6 +3,13 @@ id: 4
 name: High Contrast
 description: High contrast theme for maximum visibility.
 type: dark
+category: accessible
+tags: high contrast, visibility, accessible
+preview.background: #000000
+preview.surface: #000000
+preview.text: #ffffff
+preview.accent: #00ffff
+preview.border: #ffffff
 preview_style: background-color: #000000; color: #ffffff; border: 1px solid #ffffff;
 */
 [data-theme="high-contrast"] {
@@ -296,23 +303,9 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   background-color: #000;
 }
 
-[data-theme="high-contrast"] #settings-menu {
+[data-theme="high-contrast"] .settings-page {
   background-color: black;
-  border-left: 4px solid white;
-}
-
-[data-theme="high-contrast"] #theme-select option {
-  background-color: black;
-}
-
-[data-theme="high-contrast"] .settings-option {
-  border-width: 3px;
-  border-radius: 0px;
-}
-
-[data-theme="high-contrast"] #settings-btn {
-  border-radius: 0;
-  border-width: 3px;
+  border: 4px solid white;
 }
 
 /* Tooltip Text */

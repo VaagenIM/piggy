@@ -51,20 +51,24 @@
 |* TYPOGRAPHY OVERRIDES *|
 \************************/
 .md-content {
-  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1rem * var(--piggy-reader-font-scale)) !important;
 }
 
 .md-content p,
 .md-content li,
 .md-content dd,
 .md-content dt {
-  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1rem * var(--piggy-reader-font-scale)) !important;
 }
 
 .md-content p:not(.admonition-title):not(summary) {
-  margin-top: calc(0.25rem * var(--piggy-font-scale)) !important;
-  margin-bottom: calc(0.9rem * var(--piggy-font-scale)) !important;
-  line-height: calc(1.75rem * var(--piggy-font-scale)) !important;
+  margin-top: calc(0.25rem * var(--piggy-reader-font-scale)) !important;
+  margin-bottom: calc(
+    var(--piggy-reader-paragraph-gap) * var(--piggy-reader-font-scale)
+  ) !important;
+  line-height: calc(
+    var(--piggy-reader-line-height) * 1rem * var(--piggy-reader-font-scale)
+  ) !important;
 }
 
 .md-content strong {
@@ -90,7 +94,7 @@
   margin-bottom: 0.65rem !important;
   font-weight: 750 !important;
   line-height: 1.2 !important;
-  letter-spacing: -0.015em !important;
+  letter-spacing: 0 !important;
   scroll-margin-top: 5rem !important;
 }
 
@@ -115,7 +119,7 @@
 /* h1 */
 .md-content h1,
 .md-content h1 code {
-  font-size: calc(2.15rem * var(--piggy-font-scale)) !important;
+  font-size: calc(2.15rem * var(--piggy-reader-font-scale)) !important;
 }
 
 .md-content h1 {
@@ -133,7 +137,7 @@
 /* h2 */
 .md-content h2,
 .md-content h2 code {
-  font-size: calc(1.7rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1.7rem * var(--piggy-reader-font-scale)) !important;
 }
 
 .md-content h2 {
@@ -163,7 +167,7 @@
 /* h3 */
 .md-content h3,
 .md-content h3 code {
-  font-size: calc(1.35rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1.35rem * var(--piggy-reader-font-scale)) !important;
 }
 
 .md-content h3 {
@@ -181,7 +185,7 @@
 /* h4 */
 .md-content h4,
 .md-content h4 code {
-  font-size: calc(1.15rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1.15rem * var(--piggy-reader-font-scale)) !important;
 }
 
 .md-content h4 {
@@ -199,7 +203,7 @@
 /* h5 */
 .md-content h5,
 .md-content h5 code {
-  font-size: calc(1.02rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1.02rem * var(--piggy-reader-font-scale)) !important;
 }
 
 .md-content h5 {
@@ -218,7 +222,7 @@
 /* h6 */
 .md-content h6,
 .md-content h6 code {
-  font-size: calc(0.95rem * var(--piggy-font-scale)) !important;
+  font-size: calc(0.95rem * var(--piggy-reader-font-scale)) !important;
 }
 
 .md-content h6 {
@@ -239,33 +243,41 @@
 \**********************/
 .md-content ul,
 .md-content ol {
-  margin-top: calc(0.25rem * var(--piggy-font-scale)) !important;
-  margin-bottom: calc(0.9rem * var(--piggy-font-scale)) !important;
-  padding-left: calc(1rem * var(--piggy-font-scale)) !important;
+  margin-top: calc(0.25rem * var(--piggy-reader-font-scale)) !important;
+  margin-bottom: calc(
+    var(--piggy-reader-paragraph-gap) * var(--piggy-reader-font-scale)
+  ) !important;
+  padding-left: calc(1rem * var(--piggy-reader-font-scale)) !important;
 }
 
 .md-content li {
-  margin-bottom: calc(0.25rem * var(--piggy-font-scale)) !important;
-  line-height: calc(1.75rem * var(--piggy-font-scale)) !important;
+  margin-bottom: calc(
+    var(--piggy-reader-list-gap) * var(--piggy-reader-font-scale)
+  ) !important;
+  line-height: calc(
+    var(--piggy-reader-line-height) * 1rem * var(--piggy-reader-font-scale)
+  ) !important;
 }
 
 .md-content li > p {
   margin-top: 0 !important;
-  margin-bottom: calc(0.4rem * var(--piggy-font-scale)) !important;
+  margin-bottom: calc(0.4rem * var(--piggy-reader-font-scale)) !important;
 }
 
 .md-content li > ul,
 .md-content li > ol {
-  margin-top: calc(0.2rem * var(--piggy-font-scale)) !important;
-  margin-bottom: calc(0.2rem * var(--piggy-font-scale)) !important;
+  margin-top: calc(0.2rem * var(--piggy-reader-font-scale)) !important;
+  margin-bottom: calc(0.2rem * var(--piggy-reader-font-scale)) !important;
 }
 
 /******************************\
 |* DESCRIPTION LIST OVERRIDES *|
 \******************************/
 .md-content dl {
-  margin-top: calc(0.25rem * var(--piggy-font-scale)) !important;
-  margin-bottom: calc(0.9rem * var(--piggy-font-scale)) !important;
+  margin-top: calc(0.25rem * var(--piggy-reader-font-scale)) !important;
+  margin-bottom: calc(
+    var(--piggy-reader-paragraph-gap) * var(--piggy-reader-font-scale)
+  ) !important;
 }
 
 .md-content dt {
@@ -273,18 +285,20 @@
 }
 
 .md-content dd {
-  margin-left: calc(1.5rem * var(--piggy-font-scale)) !important;
-  margin-bottom: calc(0.5rem * var(--piggy-font-scale)) !important;
-  line-height: calc(1.75rem * var(--piggy-font-scale)) !important;
+  margin-left: calc(1.5rem * var(--piggy-reader-font-scale)) !important;
+  margin-bottom: calc(0.5rem * var(--piggy-reader-font-scale)) !important;
+  line-height: calc(
+    var(--piggy-reader-line-height) * 1rem * var(--piggy-reader-font-scale)
+  ) !important;
 }
 
 /************************\
 |* BLOCKQUOTE OVERRIDES *|
 \************************/
 .md-content blockquote {
-  margin: calc(0.75rem * var(--piggy-font-scale)) 0 !important;
-  padding: calc(0.25rem * var(--piggy-font-scale))
-    calc(1rem * var(--piggy-font-scale)) !important;
+  margin: calc(0.75rem * var(--piggy-reader-font-scale)) 0 !important;
+  padding: calc(0.25rem * var(--piggy-reader-font-scale))
+    calc(1rem * var(--piggy-reader-font-scale)) !important;
   color: var(--piggy-neutral) !important;
   border-left: 0.2rem solid var(--piggy-neutral) !important;
 }
@@ -302,7 +316,7 @@
 \***********************/
 .md-content hr {
   height: 0 !important;
-  margin: calc(2rem * var(--piggy-font-scale)) 0 !important;
+  margin: calc(2rem * var(--piggy-reader-font-scale)) 0 !important;
   border: 0 !important;
   border-top: 2px solid var(--piggy-neutral) !important;
 }
@@ -311,12 +325,12 @@
 |*   FIGURES AND MEDIA   *|
 \*************************/
 .md-content figure {
-  margin: calc(1rem * var(--piggy-font-scale)) 0 !important;
+  margin: calc(1rem * var(--piggy-reader-font-scale)) 0 !important;
 }
 
 .md-content figcaption {
-  margin-top: calc(0.4rem * var(--piggy-font-scale)) !important;
-  font-size: calc(0.9rem * var(--piggy-font-scale)) !important;
+  margin-top: calc(0.4rem * var(--piggy-reader-font-scale)) !important;
+  font-size: calc(0.9rem * var(--piggy-reader-font-scale)) !important;
   color: var(--piggy-neutral) !important;
   text-align: center !important;
 }
@@ -333,7 +347,7 @@
 \******************/
 .md-content .task-list {
   list-style: none !important;
-  padding-left: calc(1rem * var(--piggy-font-scale)) !important;
+  padding-left: calc(1rem * var(--piggy-reader-font-scale)) !important;
 }
 
 .md-content .task-list-item {
@@ -341,7 +355,7 @@
 }
 
 .md-content .task-list-item input[type="checkbox"] {
-  margin-right: calc(0.4rem * var(--piggy-font-scale)) !important;
+  margin-right: calc(0.4rem * var(--piggy-reader-font-scale)) !important;
 }
 
 /*********************\
