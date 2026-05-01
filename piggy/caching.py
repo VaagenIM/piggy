@@ -9,6 +9,7 @@ from piggy import (
     ASSIGNMENT_ROUTE,
     MEDIA_ROUTE,
     AssignmentTemplate,
+    PIGGYBANK_FOLDER,
 )
 from piggy.exceptions import PiggyHTTPException, PiggyErrorException
 from piggy.models import LANGUAGES
@@ -62,13 +63,20 @@ def cache_directory(
             cache_directory(value.get("data", {}), fn=fn, _path=f"{_path}/{key}")
 
 
-def _mdfile_to_sections_with_retry(path: Path) -> dict:
+def _mdfile_to_sections_with_retry(path: Path, retries=0) -> dict:
+    if retries > 1:
+        raise PiggyErrorException(f"Could not render assignment after {retries} retries: {path}")
     try:
-        return mdfile_to_sections(path)
+        return mdfile_to_sections(
+            path,
+            docs_folder=PIGGYBANK_FOLDER,
+            leading_url=f"/{ASSIGNMENT_ROUTE}",
+            normalize_urls=True,
+        )
     except FileNotFoundError:
         # TurtleConverter occasionally removes its temporary copy before
         # cleanup on the first render after app startup. A second build succeeds.
-        return mdfile_to_sections(path)
+        return _mdfile_to_sections_with_retry(path, retries=retries + 1)
 
 
 @lru_cache_wrapper
