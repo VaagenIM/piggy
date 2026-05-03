@@ -10,10 +10,10 @@
     {% endif %}
 
     <div class="site-navbar-actions">
+      {% include "partials/parts/settings/search-button.html" %}
       {% if current_language is defined and supported_languages is defined %}
         {% include "partials/header/language-selector.html" %}
       {% endif %}
-      {% include "partials/parts/settings/search-button.html" %}
       {% include "partials/parts/settings.html" %}
     </div>
   </div>
