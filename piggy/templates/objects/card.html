@@ -49,10 +49,14 @@
 
     {% if show_thumbnail %}
       <div class="thumbnail-container">
+        <div class="thumbnail-loader" aria-hidden="true">
+          <div class="loader"></div>
+        </div>
         <img
           class="thumbnail-image w-full object-cover"
           src="{{ thumbnail }}"
-          alt="{{ thumbnail_alt }}" />
+          alt="{{ thumbnail_alt }}"
+          loading="lazy" />
 
         {% if show_levels and level_count and level_count > 1 %}
           <div class="level-count-container text-sm">

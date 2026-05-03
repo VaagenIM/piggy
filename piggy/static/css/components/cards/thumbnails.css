@@ -10,6 +10,8 @@
   width: 100%;
   border-radius: 0.65rem;
   box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
+  position: relative;
+  z-index: 2;
 }
 
 .thumbnail-text-overlay {

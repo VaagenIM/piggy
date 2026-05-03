@@ -25,10 +25,17 @@
                       <a
                         href="/{{ subj.meta.system_path | string | replace('piggybank', 'main') }}"
                         class="quick-access-subject-button">
-                        <img
-                          class="quick-access-thumbnail"
-                          src="/{{ subj.meta.system_path | string | replace('piggybank', 'img') }}/media/header.webp"
-                          alt="{{ subj.meta.name }}" />
+                        <div
+                          class="thumbnail-container quick-access-thumbnail-container">
+                          <div class="thumbnail-loader" aria-hidden="true">
+                            <div class="loader"></div>
+                          </div>
+                          <img
+                            class="quick-access-thumbnail"
+                            src="/{{ subj.meta.system_path | string | replace('piggybank', 'img') }}/media/header.webp"
+                            alt="{{ subj.meta.name }}"
+                            loading="lazy" />
+                        </div>
                       </a>
                     {% endfor %}
                   </div>
