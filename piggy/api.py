@@ -3,6 +3,7 @@ from html import unescape
 
 from flask import Blueprint, request, jsonify
 
+from piggy import ASSIGNMENT_ROUTE
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
 from piggy.thumbnails import create_thumbnail
 from piggy.utils import serve_pil_image, lru_cache_wrapper, process_json_for_api
@@ -96,3 +97,76 @@ def api_route_json(route):
 def api_piggymap():
     """Return the entire piggymap."""
     return jsonify(process_json_for_api(PIGGYMAP))
+
+
+@api_routes.route("/search-data")
+@lru_cache_wrapper
+def api_search_index():
+    """Return a flat list of all assignments for use with lunr search."""
+    results = []
+
+    def _get_body_snippet(file_path: str, max_chars: int = 400) -> str:
+        """Read the markdown body (after frontmatter), strip markup, return a short snippet."""
+        import re as _re
+
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                lines = f.readlines()
+        except OSError:
+            return ""
+        # Skip frontmatter block
+        body_lines = []
+        in_front = False
+        i = 0
+        if lines and lines[0].strip() == "---":
+            in_front = True
+            i = 1
+        while i < len(lines):
+            if in_front:
+                if lines[i].strip() == "---":
+                    in_front = False
+                i += 1
+                continue
+            body_lines.append(lines[i])
+            i += 1
+        body = "".join(body_lines)
+        # Strip markdown: callouts/blockquotes, headings, bold/italic, links, images, code blocks, html tags
+        body = _re.sub(r"```.*?```", " ", body, flags=_re.DOTALL)
+        body = _re.sub(r"`[^`]+`", " ", body)
+        body = _re.sub(r"^>.*$", "", body, flags=_re.MULTILINE)
+        body = _re.sub(r"!\[.*?\]\(.*?\)", " ", body)
+        body = _re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", body)
+        body = _re.sub(r"<[^>]+>", " ", body)
+        body = _re.sub(r"^#{1,6}\s+", "", body, flags=_re.MULTILINE)
+        body = _re.sub(r"[*_~`|]+", "", body)
+        body = _re.sub(r"\s+", " ", body).strip()
+        return body[:max_chars]
+
+    def _walk(node: dict, path_parts: list):
+        for key, value in node.items():
+            if key == "meta":
+                continue
+            if not isinstance(value, dict):
+                continue
+            # Leaf node: has a "path" key (it's an assignment file entry)
+            if "path" in value:
+                meta = value.get("meta", {})
+                url_path = "/".join(path_parts + [key])
+                file_path = value.get("path", "")
+                content = _get_body_snippet(str(file_path)) if file_path else ""
+                results.append(
+                    {
+                        "id": url_path,
+                        "title": value.get("level_name") or value.get("heading") or key,
+                        "description": meta.get("description", ""),
+                        "tags": meta.get("tags", ""),
+                        "content": content,
+                        "url": f"/{ASSIGNMENT_ROUTE}/{url_path}",
+                    }
+                )
+            else:
+                data = value.get("data", {k: v for k, v in value.items() if k != "meta"})
+                _walk(data, path_parts + [key])
+
+    _walk(dict(PIGGYMAP), [])
+    return jsonify(results)

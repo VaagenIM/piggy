@@ -16,7 +16,7 @@ from rcssmin import cssmin
 
 WORKERS = 16
 
-links = set(["/", "/404"])
+links = set(["/", "/404", "/api/search-data"])
 visited = set()
 media_links = set()
 url = "http://127.0.0.1:55555"  # The URL of the website we are scraping

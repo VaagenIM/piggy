@@ -58,7 +58,8 @@
 }
 
 .site-navbar-actions > .language-selector,
-.site-navbar-actions > #settings-button {
+.site-navbar-actions > #settings-button,
+.site-navbar-actions > #search-button {
   flex: 0 0 auto;
 }
 
@@ -95,6 +96,27 @@
 
 .site-settings-button--back {
   min-width: calc(5.8rem * var(--piggy-font-scale));
+}
+
+.site-search-button {
+  min-height: calc(2.25rem * var(--piggy-font-scale));
+  padding-block: calc(0.3rem * var(--piggy-font-scale));
+  padding-inline: calc(0.55rem * var(--piggy-font-scale));
+  font-weight: 800;
+  box-shadow:
+    0 0 0 2px
+      color-mix(
+        in srgb,
+        var(--piggy-nav-button-border, currentColor) 38%,
+        transparent
+      ),
+    0 0.22rem 0.7rem rgba(0, 0, 0, 0.16);
+}
+
+.site-search-button svg {
+  width: calc(1.08rem * var(--piggy-font-scale));
+  height: calc(1.08rem * var(--piggy-font-scale));
+  flex: 0 0 auto;
 }
 
 .site-nav-menu-button {

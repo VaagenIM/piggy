@@ -1,0 +1,48 @@
+{# Search overlay – included once in layout.html #}
+<div
+  id="search-overlay"
+  class="search-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Søk"
+  aria-hidden="true"
+  hidden>
+  <div class="search-overlay-inner">
+    <div class="search-overlay-header">
+      <div class="search-overlay-input-wrapper">
+        <svg
+          aria-hidden="true"
+          class="search-overlay-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input
+          id="search-overlay-input"
+          class="search-overlay-input"
+          type="search"
+          placeholder="Søk i oppgaver…"
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="Søk i oppgaver" />
+      </div>
+      <button
+        id="search-overlay-close"
+        class="piggy-button piggy-button--m search-overlay-close"
+        aria-label="Lukk søk"
+        type="button">
+        Lukk
+      </button>
+    </div>
+    <ul
+      id="search-results"
+      class="search-results"
+      role="listbox"
+      aria-label="Søkeresultater"></ul>
+  </div>
+</div>
