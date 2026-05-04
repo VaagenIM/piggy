@@ -18,12 +18,31 @@
   {% set ns.og_name = meta.title %}
 {% endif %}
 
-{% if translation_meta and translation_meta[current_language.key] and translation_meta[current_language.key].description %}
-  {% set ns.description = translation_meta[current_language.key].description %}
-{% elif meta.description %}
-  {% set ns.description = meta.description %}
-{% elif meta.summary %}
-  {% set ns.description = meta.summary %}
+{# Description priority: description > oinkdata.summary > summary
+   For translations, try the translation fields first, then fall back to the main meta fields. #}
+{% set ns_trans = translation_meta[current_language.key] if (translation_meta and translation_meta[current_language.key]) else None %}
+{% if ns_trans %}
+  {% if ns_trans.description %}
+    {% set ns.description = ns_trans.description %}
+  {% elif ns_trans.oinkdata and ns_trans.oinkdata.summary %}
+    {% set ns.description = ns_trans.oinkdata.summary %}
+  {% elif ns_trans.summary %}
+    {% set ns.description = ns_trans.summary %}
+  {% elif meta.description %}
+    {% set ns.description = meta.description %}
+  {% elif meta.oinkdata and meta.oinkdata.summary %}
+    {% set ns.description = meta.oinkdata.summary %}
+  {% elif meta.summary %}
+    {% set ns.description = meta.summary %}
+  {% endif %}
+{% else %}
+  {% if meta.description %}
+    {% set ns.description = meta.description %}
+  {% elif meta.oinkdata and meta.oinkdata.summary %}
+    {% set ns.description = meta.oinkdata.summary %}
+  {% elif meta.summary %}
+    {% set ns.description = meta.summary %}
+  {% endif %}
 {% endif %}
 
 {% if not media_abspath and meta.thumbnail %}
