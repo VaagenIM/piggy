@@ -57,7 +57,7 @@ def parse_body(file_path: str) -> tuple[str, str]:
 
     # -- snippet: strip code blocks entirely for safe display --
     snippet = re.sub(r"```.*?```", " ", raw, flags=re.DOTALL)
-    snippet = re.sub(r"`[^`]+`", " ", snippet)
+    snippet = re.sub(r"`{1}", "", snippet)
     snippet = re.sub(r"^>.*$", "", snippet, flags=re.MULTILINE)  # blockquotes/callouts
     snippet = re.sub(r"^\|.*\|.*$", "", snippet, flags=re.MULTILINE)  # table rows
     snippet = re.sub(r"^[-|: ]+$", "", snippet, flags=re.MULTILINE)  # table separators / horizontal rules
@@ -66,6 +66,8 @@ def parse_body(file_path: str) -> tuple[str, str]:
     snippet = re.sub(r"^\s*\d+\.\s+.*$", "", snippet, flags=re.MULTILINE)  # ordered lists
     snippet = re.sub(r"!\[.*?]\(.*?\)", " ", snippet)  # images
     snippet = re.sub(r"\[([^]]+)]\([^)]+\)", r"\1", snippet)  # links: keep label
+    snippet = re.sub(r"\[\[([^|\]]+)\|([^\]]+)]]", r"\2", snippet)  # wikilinks with display text
+    snippet = re.sub(r"\[\[([^\]]+)]]", r"\1", snippet)  # wikilinks without display text
     snippet = re.sub(r"<[^>]+>", " ", snippet)  # html tags
     snippet = re.sub(r"[*_~]+", "", snippet)  # inline bold/italic/strikethrough
     snippet = re.sub(r"\\+", "", snippet)  # backslashes
@@ -76,6 +78,8 @@ def parse_body(file_path: str) -> tuple[str, str]:
     body = re.sub(r"`([^`]+)`", r"\1", body)
     body = re.sub(r"!\[.*?]\(.*?\)", " ", body)  # remove images (path noise)
     body = re.sub(r"\[([^]]+)]\([^)]+\)", r"\1", body)  # links: keep label only
+    body = re.sub(r"\[\[([^|\]]+)\|([^\]]+)]]", r"\2", body)  # wikilinks with display text
+    body = re.sub(r"\[\[([^\]]+)]]", r"\1", body)  # wikilinks without display text
     body = re.sub(r"<[^>]+>", " ", body)
     body = re.sub(r"[*_~|#>!`\[\]()\-]+", " ", body)
     body = body.lower()
@@ -119,7 +123,6 @@ def build_search_index(piggymap: dict, assignment_route: str) -> list[dict]:
                     {
                         "id": url_path,
                         "title": value.get("level_name") or value.get("heading") or key,
-                        "description": meta.get("description", ""),
                         "tags": meta.get("tags", ""),
                         "content": snippet,
                         "body": body,

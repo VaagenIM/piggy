@@ -78,7 +78,6 @@
           this.ref("id");
           this.field("title", { boost: 10 });
           this.field("tags", { boost: 6 });
-          this.field("description", { boost: 4 });
           this.field("content", { boost: 2 });
           this.field("body", { boost: 1 });
           docs.forEach((doc) => this.add(doc));
@@ -194,7 +193,7 @@
         if (!doc) return "";
         const title = escapeHtml(decodeEntities(doc.title));
         const breadcrumb = getBreadcrumb(doc.id);
-        const snippetSource = doc.description || doc.content || "";
+        const snippetSource = doc.content || "";
         const snippet = getSnippet(snippetSource, query);
         const tags =
           doc.tags && doc.tags.trim()
