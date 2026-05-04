@@ -176,7 +176,8 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
         assignment_path = Path(f"{path}/{item}")
 
         frontmatter = get_frontmatter_from_file(assignment_path)
-        frontmatter.update(load_oink_file(assignment_path))
+        assignment_oink = load_oink_file(assignment_path)
+        frontmatter.update(assignment_oink)
 
         # Default thumbnail to the assignment group's header image if not specified
         if "thumbnail" not in frontmatter:
@@ -189,7 +190,10 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
                 continue
             translation_path = Path(f"{path}/translations/{lang}/{item}")
             trans_frontmatter = get_frontmatter_from_file(translation_path)
-            trans_frontmatter.update(load_oink_file(translation_path))
+            trans_oink = load_oink_file(translation_path)
+            if not trans_oink and assignment_oink:
+                trans_oink = {**assignment_oink, "oinkdata": {}}
+            trans_frontmatter.update(trans_oink)
             translation_meta[lang] = trans_frontmatter
 
         assignment_key = normalize_path_to_str(i, replace_spaces=True, normalize_url=True, remove_ext=True)
