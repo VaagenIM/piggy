@@ -59,6 +59,7 @@ def parse_body(file_path: str) -> tuple[str, str]:
     snippet = re.sub(r"```.*?```", " ", raw, flags=re.DOTALL)
     snippet = re.sub(r"`{1}", "", snippet)
     snippet = re.sub(r"^>.*$", "", snippet, flags=re.MULTILINE)  # blockquotes/callouts
+    snippet = re.sub(r"^\s*={3}.*$", "", snippet, flags=re.MULTILINE)  # content blocks headings
     snippet = re.sub(r"^\|.*\|.*$", "", snippet, flags=re.MULTILINE)  # table rows
     snippet = re.sub(r"^[-|: ]+$", "", snippet, flags=re.MULTILINE)  # table separators / horizontal rules
     snippet = re.sub(r"^#+\s+.*$", "", snippet, flags=re.MULTILINE)  # headings
@@ -107,22 +108,25 @@ def build_search_index(piggymap: dict, assignment_route: str) -> list[dict]:
     """Walk the piggymap and return a flat list of search index documents."""
     results = []
 
-    def _walk(node: dict, path_parts: list):
+    def _walk(node: dict, path_parts: list, label_parts: list):
         for key, value in node.items():
             if key == "meta":
                 continue
             if not isinstance(value, dict):
                 continue
-            # Leaf node: has a "path" key (it's an assignment file entry)
             if "path" in value:
+                # Leaf: assignment file
                 meta = value.get("meta", {})
                 url_path = "/".join(path_parts + [key])
                 file_path = value.get("path", "")
                 snippet, body = parse_body(str(file_path)) if file_path else ("", "")
+                title = value.get("level_name") or value.get("heading") or key
+                # Build breadcrumb as a flat label array — JS reconstructs URLs from the id
                 results.append(
                     {
                         "id": url_path,
-                        "title": value.get("level_name") or value.get("heading") or key,
+                        "title": title,
+                        "breadcrumb": label_parts,
                         "tags": meta.get("tags", ""),
                         "content": snippet,
                         "body": body,
@@ -130,8 +134,11 @@ def build_search_index(piggymap: dict, assignment_route: str) -> list[dict]:
                     }
                 )
             else:
+                # Directory node: prefer meta.json "name" over raw key
+                node_meta = value.get("meta", {})
+                label = node_meta.get("name") or key.replace("_", " ")
                 data = value.get("data", {k: v for k, v in value.items() if k != "meta"})
-                _walk(data, path_parts + [key])
+                _walk(data, path_parts + [key], label_parts + [label])
 
-    _walk(dict(piggymap), [])
+    _walk(dict(piggymap), [], [])
     return results

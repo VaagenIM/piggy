@@ -192,7 +192,16 @@
         const doc = documents[r.ref];
         if (!doc) return "";
         const title = escapeHtml(decodeEntities(doc.title));
-        const breadcrumb = getBreadcrumb(doc.id);
+        const idParts = doc.id.split("/");
+        const breadcrumb =
+          Array.isArray(doc.breadcrumb) && doc.breadcrumb.length
+            ? doc.breadcrumb
+                .map((label, i) => {
+                  const href = "/" + idParts.slice(0, i + 1).join("/");
+                  return `<a class="search-result-breadcrumb-link" href="${escapeHtml(href)}">${escapeHtml(decodeEntities(label))}</a>`;
+                })
+                .join('<span class="search-result-breadcrumb-sep"> › </span>')
+            : getBreadcrumb(doc.id);
         const snippetSource = doc.content || "";
         const snippet = getSnippet(snippetSource, query);
         const tags =
