@@ -116,7 +116,6 @@ def build_search_index(piggymap: dict) -> list[dict]:
                 continue
             if "path" in value:
                 # Leaf: assignment file
-                meta = value.get("meta", {})
                 url_path = "/".join(path_parts + [key])
                 file_path = value.get("path", "")
                 snippet, body = parse_body(str(file_path)) if file_path else ("", "")
