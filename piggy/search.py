@@ -60,15 +60,14 @@ def parse_body(file_path: str) -> tuple[str, str]:
     snippet = re.sub(r"`[^`]+`", " ", snippet)
     snippet = re.sub(r"^>.*$", "", snippet, flags=re.MULTILINE)  # blockquotes/callouts
     snippet = re.sub(r"^\|.*\|.*$", "", snippet, flags=re.MULTILINE)  # table rows
-    snippet = re.sub(r"^[-| :]+$", "", snippet, flags=re.MULTILINE)  # table separator lines
+    snippet = re.sub(r"^[-|: ]+$", "", snippet, flags=re.MULTILINE)  # table separators / horizontal rules
     snippet = re.sub(r"^#+\s+.*$", "", snippet, flags=re.MULTILINE)  # headings
-    snippet = re.sub(r"^#{2,6}\s+", "", snippet, flags=re.MULTILINE)  # h2-h6: strip marker, keep text
-    snippet = re.sub(r"^[\-\*\+]\s+.*$", "", snippet, flags=re.MULTILINE)  # unordered lists
-    snippet = re.sub(r"^\d+\.\s+.*$", "", snippet, flags=re.MULTILINE)  # ordered lists
-    snippet = re.sub(r"!\[.*?]\(.*?\)", " ", snippet)
-    snippet = re.sub(r"\[([^]]+)]\([^)]+\)", r"\1", snippet)
-    snippet = re.sub(r"<[^>]+>", " ", snippet)
-    snippet = re.sub(r"[*_~|]+", "", snippet)
+    snippet = re.sub(r"^\s*[-*+]\s+.*$", "", snippet, flags=re.MULTILINE)  # unordered lists
+    snippet = re.sub(r"^\s*\d+\.\s+.*$", "", snippet, flags=re.MULTILINE)  # ordered lists
+    snippet = re.sub(r"!\[.*?]\(.*?\)", " ", snippet)  # images
+    snippet = re.sub(r"\[([^]]+)]\([^)]+\)", r"\1", snippet)  # links: keep label
+    snippet = re.sub(r"<[^>]+>", " ", snippet)  # html tags
+    snippet = re.sub(r"[*_~]+", "", snippet)  # inline bold/italic/strikethrough
     snippet = re.sub(r"\\+", "", snippet)  # backslashes
     snippet = re.sub(r"\s+", " ", snippet).strip()
 
