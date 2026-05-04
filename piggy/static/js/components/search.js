@@ -79,7 +79,8 @@
           this.field("title", { boost: 10 });
           this.field("tags", { boost: 6 });
           this.field("description", { boost: 4 });
-          this.field("content", { boost: 1 });
+          this.field("content", { boost: 2 });
+          this.field("body", { boost: 1 });
           docs.forEach((doc) => this.add(doc));
         });
         // Re-run if the user already typed while we were loading
@@ -156,7 +157,22 @@
 
     let raw;
     try {
-      raw = lunrIndex.search(query + "~1 " + query + "*");
+      // Build a per-term query: exact match + fuzzy edit distance based on word length + wildcard prefix
+      const terms = query
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .map((t) => t.replace(/[~*^+\-:]/g, ""));
+      const built = terms
+        .map((t) => {
+          // Short words: only ~1 fuzz to avoid too many false positives
+          // Longer words: ~2 to catch typos/variants
+          const fuzz = t.length <= 5 ? "~1" : "~2";
+          return `${t}${fuzz} ${t}*`;
+        })
+        .join(" ");
+
+      raw = lunrIndex.search(built);
     } catch (_) {
       try {
         raw = lunrIndex.search(query);
