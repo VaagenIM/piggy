@@ -56,14 +56,13 @@ def parse_body(file_path: str) -> tuple[str, str]:
         raw = raw[end + 4 :] if end != -1 else raw
 
     # -- snippet: strip code blocks entirely for safe display --
-    snippet = re.sub(r"```.*?```", " ", raw, flags=re.DOTALL)
+    snippet = re.sub(r"\s*```.*?```", " ", raw, flags=re.DOTALL)
     snippet = re.sub(r"`{1}", "", snippet)
-    snippet = re.sub(r"^>.*$", "", snippet, flags=re.MULTILINE)  # blockquotes/callouts
+    snippet = re.sub(r"^\s*>.*$", "", snippet, flags=re.MULTILINE)  # blockquotes/callouts
     snippet = re.sub(r"^\s*={3}.*$", "", snippet, flags=re.MULTILINE)  # content blocks headings
-    snippet = re.sub(r"^\|.*\|.*$", "", snippet, flags=re.MULTILINE)  # table rows
-    snippet = re.sub(r"^[-|: ]+$", "", snippet, flags=re.MULTILINE)  # table separators / horizontal rules
-    snippet = re.sub(r"^#+\s+.*$", "", snippet, flags=re.MULTILINE)  # headings
-    snipper = re.sub(r"#", "", snippet)  # remove remaining # from headings that were stripped of their text
+    snippet = re.sub(r"^\s*\|.*\|.*$", "", snippet, flags=re.MULTILINE)  # table rows
+    snippet = re.sub(r"^\s*[-|: ]+$", "", snippet, flags=re.MULTILINE)  # table separators / horizontal rules
+    snippet = re.sub(r"^\s*#+\s+.*$", "", snippet, flags=re.MULTILINE)  # headings
     snippet = re.sub(r"^\s*[-*+]\s+.*$", "", snippet, flags=re.MULTILINE)  # unordered lists
     snippet = re.sub(r"^\s*\d+\.\s+.*$", "", snippet, flags=re.MULTILINE)  # ordered lists
     snippet = re.sub(r"!\[.*?]\(.*?\)", " ", snippet)  # images
