@@ -104,7 +104,7 @@ def parse_body(file_path: str) -> tuple[str, str]:
     return snippet[:400], " ".join(token_parts)
 
 
-def build_search_index(piggymap: dict, assignment_route: str) -> list[dict]:
+def build_search_index(piggymap: dict) -> list[dict]:
     """Walk the piggymap and return a flat list of search index documents."""
     results = []
 
@@ -127,10 +127,8 @@ def build_search_index(piggymap: dict, assignment_route: str) -> list[dict]:
                         "id": url_path,
                         "title": title,
                         "breadcrumb": label_parts,
-                        "tags": meta.get("tags", ""),
                         "content": snippet,
                         "body": body,
-                        "url": f"/{assignment_route}/{url_path}",
                     }
                 )
             else:

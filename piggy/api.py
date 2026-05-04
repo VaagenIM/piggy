@@ -3,7 +3,6 @@ from html import unescape
 
 from flask import Blueprint, request, jsonify
 
-from piggy import ASSIGNMENT_ROUTE
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
 from piggy.thumbnails import create_thumbnail
 from piggy.utils import serve_pil_image, lru_cache_wrapper, process_json_for_api
@@ -104,4 +103,4 @@ def api_piggymap():
 @lru_cache_wrapper
 def api_search_index():
     """Return a flat list of all assignments for use with lunr search."""
-    return jsonify(build_search_index(PIGGYMAP, ASSIGNMENT_ROUTE))
+    return jsonify(build_search_index(PIGGYMAP))

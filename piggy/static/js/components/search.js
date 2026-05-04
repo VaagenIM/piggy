@@ -77,7 +77,6 @@
         lunrIndex = window.lunr(function () {
           this.ref("id");
           this.field("title", { boost: 10 });
-          this.field("tags", { boost: 6 });
           this.field("content", { boost: 2 });
           this.field("body", { boost: 1 });
           docs.forEach((doc) => this.add(doc));
@@ -197,30 +196,20 @@
           Array.isArray(doc.breadcrumb) && doc.breadcrumb.length
             ? doc.breadcrumb
                 .map((label, i) => {
-                  const href = "/" + idParts.slice(0, i + 1).join("/");
+                  const href = "/main/" + idParts.slice(0, i + 1).join("/");
                   return `<a class="search-result-breadcrumb-link" href="${escapeHtml(href)}">${escapeHtml(decodeEntities(label))}</a>`;
                 })
                 .join('<span class="search-result-breadcrumb-sep"> › </span>')
             : getBreadcrumb(doc.id);
         const snippetSource = doc.content || "";
         const snippet = getSnippet(snippetSource, query);
-        const tags =
-          doc.tags && doc.tags.trim()
-            ? doc.tags
-                .split(",")
-                .map(
-                  (t) =>
-                    `<span class="search-result-tag">${escapeHtml(t.trim())}</span>`,
-                )
-                .join("")
-            : "";
+        const url = "/main/" + doc.id;
 
         return `<li class="search-result-item">
           ${breadcrumb ? `<span class="search-result-breadcrumb">${breadcrumb}</span>` : ""}
-          <a class="search-result-link" href="${escapeHtml(doc.url)}">
+          <a class="search-result-link" href="${escapeHtml(url)}">
             <span class="search-result-title">${title}</span>
             ${snippet ? `<span class="search-result-desc">${snippet}</span>` : ""}
-            ${tags ? `<span class="search-result-tags">${tags}</span>` : ""}
           </a>
         </li>`;
       })
