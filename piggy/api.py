@@ -4,9 +4,9 @@ from html import unescape
 from flask import Blueprint, request, jsonify
 
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
+from piggy.search import build_search_index
 from piggy.thumbnails import create_thumbnail
 from piggy.utils import serve_pil_image, lru_cache_wrapper, process_json_for_api
-from piggy.search import build_search_index
 
 api_routes = Blueprint("api", __name__, url_prefix="/api")
 
@@ -88,8 +88,11 @@ def api_route_json(route):
     """Return a JSON of metadata and segment for the given route."""
     # Retrieve metadata and segment using the route
     meta, segment = get_piggymap_segment_from_path(route, PIGGYMAP)
-    response_data = {"meta": meta, "segment": segment}
-    return jsonify(process_json_for_api(response_data))
+    response_data = {
+        **process_json_for_api({"meta": meta}),
+        "segment": process_json_for_api(segment, exclude_keys={"translation_meta"}),
+    }
+    return jsonify(response_data)
 
 
 @api_routes.route("/")

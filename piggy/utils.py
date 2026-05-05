@@ -171,7 +171,7 @@ def set_css_metadata_value(metadata: dict, key: str, value):
     current[parts[-1]] = value
 
 
-def process_json_for_api(obj):
+def process_json_for_api(obj, exclude_keys=None):
     def apply_thumbnail(thumb, current_path):
         """Turn the thumbnail path into an absolute URL"""
 
@@ -231,17 +231,7 @@ def process_json_for_api(obj):
                     new_obj[k] = meta
                     continue
 
-                if k == "translation_meta" and isinstance(v, dict):
-                    meta_block = {}
-
-                    for lang, lang_meta in v.items():
-                        if isinstance(lang_meta, dict):
-                            lang_meta = transform(lang_meta, current_path)
-                            lang_meta["thumbnail"] = apply_thumbnail(lang_meta.get("thumbnail"), current_path)
-
-                        meta_block[lang] = lang_meta
-
-                    new_obj[k] = meta_block
+                if exclude_keys and k in exclude_keys:
                     continue
 
                 if k.startswith("turtletranslate_"):
