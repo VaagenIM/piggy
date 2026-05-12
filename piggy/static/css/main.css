@@ -50,3 +50,6 @@
 
 @import "./animations/keyframes.css";
 @import "./animations/loader.css";
+
+@import "./base/print.css";
+
