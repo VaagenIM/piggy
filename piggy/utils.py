@@ -85,8 +85,8 @@ def get_themes():
 
 
 @lru_cache_wrapper
-def load_print_css(static_folder: Path) -> str:
-    css_folder = Path(static_folder) / "css"
+def load_print_css() -> str:
+    css_folder = Path(__file__).parent / "static" / "css"
     with (css_folder / "base" / "print.css").open("r", encoding="utf-8") as f:
         css = f.read()
 

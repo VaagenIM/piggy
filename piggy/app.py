@@ -148,8 +148,7 @@ def create_app(debug: bool = False) -> Flask:
     @lru_cache_wrapper
     def print_css():
         """Serve the print.css + light.css file with the light theme inlined for print."""
-        css = load_print_css(Path(app.root_path) / app.static_folder)
-        return css, 200, {"Content-Type": "text/css; charset=utf-8"}
+        return load_print_css(), 200, {"Content-Type": "text/css; charset=utf-8"}
 
     @app.route("/.well-known/<path:filename>")
     @app.route("/static/turtleconvert/javascripts/output/<path:filename>")  # Unused
