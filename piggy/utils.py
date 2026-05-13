@@ -265,6 +265,17 @@ def process_json_for_api(obj, exclude_keys=None):
     return transform(obj)
 
 
+def delete_turtleconverter_stylesheets():
+    """No longer used, might as well save a couple bytes."""
+    stylesheets_path = Path(__file__).parent / "static" / "turtleconvert" / "stylesheets"
+    if stylesheets_path.exists() and stylesheets_path.is_dir():
+        for file in stylesheets_path.iterdir():
+            if file.is_file():
+                file.unlink()
+        stylesheets_path.rmdir()
+
+
 def startup_tasks():
     generate_static_files(static_folder=Path(os.path.dirname(Path(__file__).absolute())) / "static")
+    # delete_turtleconverter_stylesheets()
     generate_print_css()

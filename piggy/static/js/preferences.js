@@ -13,73 +13,61 @@
       value: "default",
       label: "Noto Sans",
       detail: "Original site font",
-      sample: "Clear textbook text",
     },
     {
       value: "atkinson",
       label: "Atkinson Hyperlegible",
       detail: "Readable letter shapes",
-      sample: "Clear textbook text",
     },
     {
       value: "lexend",
       label: "Lexend",
-      detail: "Spacious reader",
-      sample: "Clear textbook text",
+      detail: "Spacious text",
     },
     {
       value: "lexia",
       label: "Lexia",
       detail: "Dyslexia friendly",
-      sample: "Clear textbook text",
     },
     {
       value: "open-dyslexic",
       label: "OpenDyslexic",
       detail: "Dyslexia friendly",
-      sample: "Clear textbook text",
     },
     {
       value: "nunito",
       label: "Nunito",
       detail: "Rounded sans",
-      sample: "Clear textbook text",
     },
     {
       value: "lato",
       label: "Lato",
       detail: "Humanist sans",
-      sample: "Clear textbook text",
     },
     {
       value: "quicksand",
       label: "Quicksand",
       detail: "Soft rounded",
-      sample: "Clear textbook text",
     },
     {
       value: "arial",
       label: "Arial",
       detail: "System",
-      sample: "Clear textbook text",
     },
     {
       value: "verdana",
       label: "Verdana",
       detail: "Wide",
-      sample: "Clear textbook text",
     },
     {
       value: "bitter",
       label: "Bitter",
       detail: "Serif",
-      sample: "Clear textbook text",
     },
     {
       value: "georgia",
       label: "Georgia",
       detail: "Serif",
-      sample: "Clear textbook text",
     },
   ];
 
@@ -110,7 +98,7 @@
       {
         value: "balanced",
         label: "Balanced",
-        detail: "Comfortable modern reader",
+        detail: "Comfortable modern text",
       },
       {
         value: "dyslexia",
@@ -171,8 +159,8 @@
       { value: "xxx-large", label: "Gigantic" },
     ],
     fontSizeAffectsUi: [
-      { value: "off", label: "Reader only" },
-      { value: "on", label: "Reader and UI" },
+      { value: "off", label: "Content only" },
+      { value: "on", label: "Content and UI" },
     ],
     readerLineHeight: [
       { value: "original", label: "Original" },

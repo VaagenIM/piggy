@@ -3,13 +3,7 @@
 \***************************/
 .md-content .keys,
 .md-content kbd {
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif !important;
+  font-family: var(--piggy-site-font-family) !important;
 
   font-size: calc(
     0.82rem * var(--piggy-reader-component-font-scale)

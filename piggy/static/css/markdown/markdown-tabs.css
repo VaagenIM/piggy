@@ -19,7 +19,7 @@
   background-color: #0000003a !important;
 }
 
-.md-content .tabbed-labels a {
+.md-content .tabbed-labels :is(a, label) {
   font-size: calc(0.9rem * var(--piggy-reader-component-font-scale)) !important;
   color: var(--piggy-text-main) !important;
 }

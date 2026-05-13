@@ -4,17 +4,21 @@
   data-settings-inline="{{ 'true' if settings_inline|default(false) else 'false' }}">
   <header class="settings-panel-header settings-page-header">
     <div class="settings-heading-group">
-      <p class="settings-eyebrow">Reader</p>
       <h1 id="settings-title">Settings</h1>
     </div>
-    <a id="settings-return-link" class="piggy-button piggy-button--m settings-return-button"
-      href="{{ settings_return_to|default('/')|e }}">
-      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round">
-        <path d="m15 18-6-6 6-6" />
-      </svg>
-      <span>Back to page</span>
-    </a>
+    <div class="settings-header-actions">
+      <button id="settings-reset-button" class="piggy-button piggy-button--m settings-secondary-button" type="button">
+        Reset
+      </button>
+      <a id="settings-return-link" class="piggy-button piggy-button--m settings-return-button"
+        href="{{ settings_return_to|default('/')|e }}">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+        <span>Back to page</span>
+      </a>
+    </div>
   </header>
 
   <div class="settings-content">
@@ -27,7 +31,7 @@
             <h3 class="settings-preview-title">Loops and decisions</h3>
           </div>
 
-          <article class="settings-reader-preview md-content" aria-label="Reader preview">
+          <article class="settings-reader-preview md-content" aria-label="Settings preview">
             <h2>Plan the program</h2>
             <p>
               A program is easier to read when each idea has enough room. First
@@ -111,13 +115,6 @@
         <div class="settings-tab-panels">
           <section id="settings-panel-main" class="settings-section settings-tab-panel" role="tabpanel"
             aria-labelledby="settings-tab-main" data-settings-panel="main">
-            <div class="settings-section-heading">
-              <h2 id="settings-main-title">Presets and themes</h2>
-              <button id="settings-reset-button" class="piggy-button piggy-button--s settings-secondary-button"
-                type="button">
-                Reset
-              </button>
-            </div>
             <div class="settings-control-stack">
               <section class="settings-subsection" aria-labelledby="settings-presets-title">
                 <h3 id="settings-presets-title">Presets</h3>
@@ -132,9 +129,6 @@
 
           <section id="settings-panel-text" class="settings-section settings-tab-panel" role="tabpanel"
             aria-labelledby="settings-tab-text" data-settings-panel="text" hidden>
-            <div class="settings-section-heading">
-              <h2 id="settings-text-title">Text</h2>
-            </div>
             <div class="settings-control-stack">
               <div class="settings-font-grid">
                 <div data-settings-render="readerFont"></div>
@@ -158,9 +152,6 @@
 
           <section id="settings-panel-focus" class="settings-section settings-tab-panel" role="tabpanel"
             aria-labelledby="settings-tab-focus" data-settings-panel="focus" hidden>
-            <div class="settings-section-heading">
-              <h2 id="settings-focus-title">Focus</h2>
-            </div>
             <div class="settings-control-stack">
               <section class="settings-subsection" aria-labelledby="settings-motion-title">
                 <h3 id="settings-motion-title">Motion</h3>
@@ -181,9 +172,6 @@
 
           <section id="settings-panel-support" class="settings-section settings-tab-panel" role="tabpanel"
             aria-labelledby="settings-tab-support" data-settings-panel="support" hidden>
-            <div class="settings-section-heading">
-              <h2 id="settings-support-title">Support</h2>
-            </div>
             <div class="settings-control-stack">
               <div data-settings-render="rememberPosition"></div>
               <p class="settings-support-copy">
