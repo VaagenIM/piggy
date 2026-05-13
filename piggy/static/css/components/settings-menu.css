@@ -121,6 +121,30 @@ body.settings-inline-active .settings-page[data-settings-inline="true"] {
   }
 }
 
+@keyframes settings-details-open {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem) scaleY(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes settings-details-close {
+  from {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-0.2rem) scaleY(0.98);
+  }
+}
+
 .settings-panel-header {
   display: flex;
   align-items: center;
@@ -144,6 +168,14 @@ body.settings-inline-active .settings-page[data-settings-inline="true"] {
   display: grid;
   gap: 0.1rem;
   min-width: 0;
+}
+
+.settings-header-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.55rem;
 }
 
 .settings-eyebrow {
@@ -279,7 +311,9 @@ body.settings-inline-active .settings-controls-column {
 }
 
 .settings-tab-list {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(max-content, 1fr);
   align-items: center;
   min-width: 0;
   gap: 0.35rem;
@@ -298,7 +332,7 @@ body.settings-inline-active .settings-controls-column {
 .settings-tab-button {
   appearance: none;
   min-height: calc(2.25rem * var(--piggy-font-scale));
-  flex: 1 0 auto;
+  width: 100%;
   padding: 0.45rem 0.8rem;
   color: var(--piggy-menu-text);
   white-space: nowrap;
@@ -407,7 +441,7 @@ body.settings-inline-active .settings-tab-panels {
 .settings-preview-title {
   margin: 0;
   color: var(--piggy-content-h1, var(--piggy-text-main)) !important;
-  font-family: var(--piggy-reader-font-family);
+  font-family: var(--piggy-site-font-family);
   font-size: calc(1.65rem * var(--piggy-reader-font-scale));
   font-weight: 750;
   line-height: 1.15;
@@ -740,7 +774,8 @@ body.settings-inline-active .settings-tab-panels {
     .settings-segmented-button,
     .settings-toggle,
     .settings-select,
-    .settings-select-preview,
+    .settings-font-select-summary,
+    .settings-font-option,
     .settings-current-value
   ) {
   animation: settings-option-change 0.22s ease;
@@ -762,8 +797,7 @@ body.settings-inline-active .settings-tab-panels {
   display: block;
 }
 
-.settings-option-preview,
-.settings-select-preview {
+.settings-option-preview {
   display: block;
   max-width: 100%;
   color: color-mix(in srgb, currentColor 72%, transparent);
@@ -771,14 +805,6 @@ body.settings-inline-active .settings-tab-panels {
   font-weight: 650;
   line-height: 1.2;
   overflow-wrap: anywhere;
-}
-
-.settings-select-preview {
-  padding: 0.55rem 0.65rem;
-  color: var(--piggy-menu-text);
-  background: color-mix(in srgb, var(--piggy-menu) 90%, var(--piggy-menu-text));
-  border: 1px solid color-mix(in srgb, var(--piggy-menu-text) 16%, transparent);
-  border-radius: 8px;
 }
 
 .settings-select-detail {
@@ -885,6 +911,199 @@ body.settings-inline-active .settings-tab-panels {
   gap: 0.4rem;
 }
 
+.settings-font-select-field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.settings-font-select {
+  display: grid;
+  position: relative;
+  gap: 0.35rem;
+}
+
+.settings-font-select > summary {
+  list-style: none;
+}
+
+.settings-font-select > summary::marker {
+  content: "";
+}
+
+.settings-font-select > summary::-webkit-details-marker {
+  display: none;
+}
+
+.settings-font-select-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: calc(2.8rem * var(--piggy-font-scale));
+  align-items: center;
+  gap: 0.8rem;
+  padding: calc(0.52rem * var(--piggy-font-scale))
+    calc(0.7rem * var(--piggy-font-scale));
+  color: var(--piggy-menu-text);
+  background:
+    linear-gradient(
+        color-mix(in srgb, var(--piggy-button-active) 8%, transparent),
+        color-mix(in srgb, var(--piggy-button-active) 8%, transparent)
+      )
+      padding-box,
+    color-mix(in srgb, var(--piggy-menu) 90%, var(--piggy-menu-text));
+  border: 1px solid color-mix(in srgb, var(--piggy-menu-text) 34%, transparent);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--piggy-menu-text) 12%, transparent),
+    0 0.25rem 0.75rem rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.settings-font-select-summary:hover,
+.settings-font-select[open] > .settings-font-select-summary {
+  background:
+    linear-gradient(
+        color-mix(in srgb, var(--piggy-button-active) 14%, transparent),
+        color-mix(in srgb, var(--piggy-button-active) 14%, transparent)
+      )
+      padding-box,
+    color-mix(in srgb, var(--piggy-menu) 84%, var(--piggy-menu-text));
+  border-color: color-mix(in srgb, var(--piggy-button-active) 55%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--piggy-menu-text) 14%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--piggy-button-active) 18%, transparent);
+}
+
+.settings-font-select-summary:focus-visible {
+  outline: 2px solid var(--piggy-button-active);
+  outline-offset: 2px;
+}
+
+.settings-font-select-chevron {
+  display: inline-flex;
+  width: calc(1.05rem * var(--piggy-font-scale));
+  height: calc(1.05rem * var(--piggy-font-scale));
+  align-items: center;
+  justify-content: center;
+  color: color-mix(in srgb, var(--piggy-menu-text) 74%, transparent);
+  transition: transform 0.18s ease;
+}
+
+.settings-font-select-chevron::before {
+  display: block;
+  width: calc(0.42rem * var(--piggy-font-scale));
+  height: calc(0.42rem * var(--piggy-font-scale));
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  content: "";
+  transform: rotate(45deg) translate(-10%, -10%);
+}
+
+.settings-font-select[open] .settings-font-select-chevron {
+  transform: rotate(180deg);
+}
+
+.settings-font-select-menu {
+  display: grid;
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  left: 0;
+  max-height: min(22rem, 48vh);
+  overflow-y: auto;
+  gap: 0.25rem;
+  padding: 0.35rem;
+  background: color-mix(in srgb, var(--piggy-menu) 94%, var(--piggy-menu-text));
+  border: 1px solid color-mix(in srgb, var(--piggy-menu-text) 24%, transparent);
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0
+    color-mix(in srgb, var(--piggy-menu-text) 10%, transparent);
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--piggy-menu-text) 42%, transparent)
+    transparent;
+}
+
+.settings-font-select[open] .settings-font-select-menu,
+.settings-disclosure[open] > .settings-control-stack {
+  transform-origin: top;
+  animation: settings-details-open 0.16s ease;
+}
+
+.settings-font-select.settings-details-closing .settings-font-select-menu,
+.settings-disclosure.settings-details-closing > .settings-control-stack {
+  pointer-events: none;
+  animation: settings-details-close 0.14s ease forwards;
+}
+
+.settings-font-option {
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: calc(0.48rem * var(--piggy-font-scale))
+    calc(0.6rem * var(--piggy-font-scale));
+  color: var(--piggy-menu-text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.settings-font-option:hover,
+.settings-font-option:focus-visible {
+  background: color-mix(in srgb, var(--piggy-button-hover) 34%, transparent);
+  border-color: color-mix(in srgb, var(--piggy-menu-text) 22%, transparent);
+  outline: none;
+}
+
+.settings-font-option[aria-selected="true"] {
+  color: var(--piggy-button-active-text, var(--piggy-text-button));
+  background: var(--piggy-button-active);
+  border-color: var(--piggy-button-border, var(--piggy-button-active));
+}
+
+.settings-font-option-row {
+  display: grid;
+  grid-template-columns: minmax(8.5rem, 1fr) minmax(7rem, 0.85fr);
+  align-items: baseline;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.settings-font-option-name,
+.settings-font-option-detail {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.settings-font-option-name {
+  font-size: calc(0.96rem * var(--piggy-font-scale));
+  font-weight: 800;
+  line-height: 1.12;
+}
+
+.settings-font-option-detail {
+  padding-left: 0.75rem;
+  border-left: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+  color: color-mix(in srgb, currentColor 74%, transparent);
+  font-family: var(--piggy-site-font-family) !important;
+  font-size: calc(0.74rem * var(--piggy-font-scale));
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.settings-font-option-row--current .settings-font-option-name {
+  font-size: calc(1rem * var(--piggy-font-scale));
+}
+
 .settings-select {
   width: 100%;
   min-height: calc(2.35rem * var(--piggy-font-scale));
@@ -924,14 +1143,14 @@ body.settings-inline-active .settings-tab-panels {
 .settings-secondary-button {
   flex: 0 0 auto;
   min-width: calc(4.6rem * var(--piggy-font-scale));
-  min-height: calc(2.05rem * var(--piggy-font-scale));
-  padding: calc(0.34rem * var(--piggy-font-scale))
-    calc(0.78rem * var(--piggy-font-scale));
+  min-height: calc(2.2rem * var(--piggy-font-scale));
+  padding: calc(0.38rem * var(--piggy-font-scale))
+    calc(0.8rem * var(--piggy-font-scale));
   color: var(--piggy-menu-text);
   background: color-mix(in srgb, var(--piggy-menu) 88%, var(--piggy-menu-text));
   border-color: color-mix(in srgb, var(--piggy-menu-text) 28%, transparent);
   box-shadow: none;
-  line-height: 1.1;
+  line-height: 1.2;
 }
 
 .settings-secondary-button:not(.no-hover, .active):hover {
@@ -1035,8 +1254,16 @@ body.settings-inline-active .settings-tab-panels {
     flex-direction: column;
   }
 
-  .settings-return-button {
+  .settings-header-actions {
     width: 100%;
+  }
+
+  .settings-header-actions > .piggy-button {
+    flex: 1 1 0;
+  }
+
+  .settings-return-button {
+    width: auto;
   }
 
   .settings-card-grid--presets,
@@ -1047,6 +1274,16 @@ body.settings-inline-active .settings-tab-panels {
 
   .settings-font-grid {
     grid-template-columns: 1fr;
+  }
+
+  .settings-font-option-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.16rem;
+  }
+
+  .settings-font-option-detail {
+    padding-left: 0;
+    border-left: 0;
   }
 
   .theme-card {
@@ -1073,7 +1310,10 @@ body.settings-inline-active .settings-tab-panels {
       .settings-segmented-button,
       .settings-toggle,
       .settings-select,
-      .settings-select-preview,
+      .settings-font-select-summary,
+      .settings-font-option,
+      .settings-font-select-menu,
+      .settings-disclosure > .settings-control-stack,
       .settings-current-value
     ) {
     animation: none;

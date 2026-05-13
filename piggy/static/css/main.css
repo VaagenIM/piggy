@@ -39,6 +39,7 @@
 @import "./components/cards/assignment-card.css";
 @import "./components/cards/information-card.css";
 
+@import "./markdown/markdown-material-compat.css";
 @import "./markdown/markdown-base.css";
 @import "./markdown/markdown-code.css";
 @import "./markdown/markdown-code-palettes.css";

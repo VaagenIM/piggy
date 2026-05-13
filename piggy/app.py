@@ -127,7 +127,7 @@ def create_app(debug: bool = False) -> Flask:
             "settings.html",
             meta={
                 "name": "Settings",
-                "description": "Reader settings for Piggy.",
+                "description": "Site settings for Piggy.",
                 "thumbnail": url_for(
                     "static",
                     filename="img/icons/piggy_icon.png",

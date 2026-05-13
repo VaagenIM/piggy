@@ -27,7 +27,7 @@
   max-width: 680px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
   overflow: hidden;
-  font-family: var(--piggy-reader-font-family);
+  font-family: var(--piggy-site-font-family);
 }
 
 .search-overlay-header {
@@ -58,7 +58,7 @@
   border: none;
   outline: none;
   color: var(--piggy-text-main);
-  font-family: var(--piggy-reader-font-family);
+  font-family: var(--piggy-site-font-family);
   font-size: calc(1rem * var(--piggy-font-scale));
   padding: 0.25rem 0;
   caret-color: var(--piggy-button-hover);
