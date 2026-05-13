@@ -41,7 +41,7 @@
   text-shadow: none !important;
   vertical-align: baseline !important;
   white-space: nowrap !important;
-  letter-spacing: calc(0.01em * var(--piggy-font-scale)) !important;
+  letter-spacing: 0.01em !important;
 
   transform: translateY(calc(-0.03rem * var(--piggy-font-scale))) !important;
 }

@@ -89,7 +89,7 @@
   border: 1px solid var(--piggy-code-inline-border, var(--piggy-code-border)) !important;
   border-radius: calc(0.25rem * var(--piggy-font-scale)) !important;
 
-  font-size: calc(0.875em * var(--piggy-font-scale)) !important;
+  font-size: 0.875em !important;
   line-height: 1.35 !important;
   white-space: normal !important;
 }

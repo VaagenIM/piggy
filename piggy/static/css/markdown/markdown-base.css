@@ -50,7 +50,11 @@
 /************************\
 |* TYPOGRAPHY OVERRIDES *|
 \************************/
-.md-content {
+.md-content,
+.md-typeset,
+.md-content__inner {
+  --piggy-font-scale: var(--piggy-reader-font-scale);
+
   font-size: calc(1rem * var(--piggy-reader-font-scale)) !important;
 }
 
