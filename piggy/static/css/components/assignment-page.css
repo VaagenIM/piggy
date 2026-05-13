@@ -6,8 +6,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.65rem;
-  margin: 1.5rem 0;
+  gap: calc(0.65rem * var(--piggy-reader-space-scale));
+  margin: calc(1.5rem * var(--piggy-reader-space-scale)) 0;
 }
 
 .assignment-page-header .assignment-heading {
@@ -19,6 +19,6 @@
 
 @media (max-width: 640px) {
   .assignment-page-header {
-    gap: 0.5rem;
+    gap: calc(0.5rem * var(--piggy-reader-space-scale));
   }
 }

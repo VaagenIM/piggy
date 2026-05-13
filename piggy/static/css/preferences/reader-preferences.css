@@ -149,7 +149,7 @@
 :root[data-reader-contrast="soft"] .md-content :is(.admonition, details) {
   border: 1px solid
     color-mix(in srgb, var(--piggy-admonition-border) 58%, transparent) !important;
-  border-left-width: 0.3rem !important;
+  border-left-width: calc(0.3rem * var(--piggy-reader-space-scale)) !important;
 }
 
 :root[data-reader-contrast="soft"]
@@ -192,7 +192,7 @@
 
 :root[data-reader-contrast="strong"] .md-content :is(.admonition, details) {
   border: 2px solid var(--piggy-admonition-border) !important;
-  border-left-width: 0.45rem !important;
+  border-left-width: calc(0.45rem * var(--piggy-reader-space-scale)) !important;
 }
 
 :root[data-reader-contrast="strong"]

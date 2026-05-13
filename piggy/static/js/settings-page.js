@@ -4,6 +4,10 @@
   let preferencesApi = null;
   let settingsPage = null;
   let settingsTabs = null;
+  let settingsContent = null;
+  let settingsPreviewColumn = null;
+  let settingsControlsColumn = null;
+  let settingsTabPanels = null;
   let settingsHost = null;
   let pageContent = null;
   let settingsButton = null;
@@ -19,6 +23,13 @@
     preferencesApi = nextPreferencesApi;
     settingsPage = document.getElementById("settings-page");
     settingsTabs = settingsPage?.querySelector("[data-settings-tabs]") || null;
+    settingsContent = settingsPage?.querySelector(".settings-content") || null;
+    settingsPreviewColumn =
+      settingsPage?.querySelector(".settings-preview-column") || null;
+    settingsControlsColumn =
+      settingsPage?.querySelector(".settings-controls-column") || null;
+    settingsTabPanels =
+      settingsPage?.querySelector(".settings-tab-panels") || null;
     settingsHost = settingsPage?.closest("[data-settings-host]") || null;
     pageContent = document.querySelector("[data-reader-page-content]");
     settingsButton = document.getElementById("settings-button");
@@ -47,9 +58,15 @@
     settingsPage?.addEventListener("click", handleSettingsClick);
     settingsPage?.addEventListener("change", handleSettingsChange);
     document.addEventListener("keydown", handleDocumentKeydown);
+    window.addEventListener("resize", updateInlineSettingsOffset);
+    window.visualViewport?.addEventListener(
+      "resize",
+      updateInlineSettingsOffset,
+    );
 
     document.addEventListener("piggy:preferenceschange", (event) => {
       updateSettingsControls(event.detail.preferences);
+      window.requestAnimationFrame(updateInlineSettingsOffset);
       animateSettingsPreferenceChange();
     });
 
@@ -74,6 +91,38 @@
 
   function isSettingsActive() {
     return isDirectSettingsPage() || inlineSettingsActive;
+  }
+
+  function updateInlineSettingsOffset() {
+    if (!settingsHost) return;
+
+    const shouldSitBelowHeader = window.matchMedia(
+      "(min-width: 800px) and (min-height: 431px)",
+    ).matches;
+
+    if (!shouldSitBelowHeader) {
+      settingsHost.style.setProperty("--piggy-settings-inline-top", "0px");
+      return;
+    }
+
+    const header = document.querySelector(".site-header");
+    const headerBottom = header?.getBoundingClientRect().bottom || 0;
+    settingsHost.style.setProperty(
+      "--piggy-settings-inline-top",
+      `${Math.max(0, Math.round(headerBottom))}px`,
+    );
+  }
+
+  function resetSettingsScroll() {
+    [
+      settingsContent,
+      settingsPreviewColumn,
+      settingsControlsColumn,
+      settingsTabPanels,
+      settingsPage,
+    ].forEach((element) => {
+      element?.scrollTo?.({ top: 0, left: 0, behavior: "auto" });
+    });
   }
 
   function initializeSettingsTabs() {
@@ -119,6 +168,10 @@
     if (options.focus) {
       targetTab.focus();
     }
+
+    if (options.resetScroll) {
+      resetSettingsScroll();
+    }
   }
 
   function restartPanelAnimation(panel) {
@@ -161,7 +214,10 @@
       nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
     }
 
-    activateSettingsTab(tabs[nextIndex].dataset.settingsTab, { focus: true });
+    activateSettingsTab(tabs[nextIndex].dataset.settingsTab, {
+      focus: true,
+      resetScroll: true,
+    });
   }
 
   function handleSettingsButtonClick(event) {
@@ -198,7 +254,7 @@
   function handleSettingsClick(event) {
     const tab = event.target.closest("[data-settings-tab]");
     if (tab && settingsTabs?.contains(tab)) {
-      activateSettingsTab(tab.dataset.settingsTab);
+      activateSettingsTab(tab.dataset.settingsTab, { resetScroll: true });
       return;
     }
 
@@ -263,6 +319,8 @@
     settingsHost.hidden = false;
     inlineSettingsActive = true;
 
+    updateInlineSettingsOffset();
+    resetSettingsScroll();
     document.body.classList.add("settings-inline-active");
     settingsPage.classList.remove("settings-page--leaving");
     settingsPage.classList.add("settings-page--entering");
@@ -277,10 +335,6 @@
 
     updateReturnLink();
     updateSettingsButtonState(true);
-    window.scrollTo({
-      top: 0,
-      behavior: shouldReduceMotion() ? "auto" : "smooth",
-    });
   }
 
   function closeInlineSettings(options = {}) {
@@ -288,13 +342,13 @@
 
     settingsPage?.classList.add("settings-page--leaving");
     settingsPage?.classList.remove("settings-page--active");
-    document.body.classList.remove("settings-inline-active");
     updateSettingsButtonState(false);
 
     const finishClose = () => {
       inlineSettingsActive = false;
       if (settingsHost) settingsHost.hidden = true;
       if (pageContent) pageContent.hidden = false;
+      document.body.classList.remove("settings-inline-active");
       settingsPage?.classList.remove(
         "settings-page--entering",
         "settings-page--leaving",

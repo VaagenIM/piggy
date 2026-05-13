@@ -1,6 +1,6 @@
 (function () {
   const STORE_KEY = "piggy.readerPreferences.v1";
-  const STORE_VERSION = 8;
+  const STORE_VERSION = 9;
   const LEGACY_KEYS = {
     theme: "theme",
     readerFont: "fontTheme",
@@ -170,6 +170,10 @@
       { value: "xx-large", label: "Massive" },
       { value: "xxx-large", label: "Gigantic" },
     ],
+    fontSizeAffectsUi: [
+      { value: "off", label: "Reader only" },
+      { value: "on", label: "Reader and UI" },
+    ],
     readerLineHeight: [
       { value: "original", label: "Original" },
       { value: "compact", label: "Compact" },
@@ -269,6 +273,11 @@
       legacyKey: LEGACY_KEYS.readerFontSize,
       options: VALUE_OPTIONS.readerFontSize,
     },
+    fontSizeAffectsUi: {
+      defaultValue: "off",
+      attribute: "data-reader-font-size-affects-ui",
+      options: VALUE_OPTIONS.fontSizeAffectsUi,
+    },
     readerLineHeight: {
       defaultValue: "original",
       attribute: "data-reader-line-height",
@@ -330,6 +339,7 @@
         readerFont: "default",
         codeFont: "default",
         readerFontSize: "default",
+        fontSizeAffectsUi: "off",
         readerLineHeight: "original",
         readerLetterSpacing: "default",
         readerWordSpacing: "default",
@@ -349,6 +359,7 @@
         readerFont: "default",
         codeFont: "default",
         readerFontSize: "default",
+        fontSizeAffectsUi: "off",
         readerLineHeight: "comfortable",
         readerLetterSpacing: "default",
         readerWordSpacing: "default",
@@ -368,6 +379,7 @@
         readerFont: "atkinson",
         codeFont: "atkinson-mono",
         readerFontSize: "large",
+        fontSizeAffectsUi: "off",
         readerLineHeight: "spacious",
         readerLetterSpacing: "wide",
         readerWordSpacing: "wide",
@@ -387,6 +399,7 @@
         readerFont: "verdana",
         codeFont: "atkinson-mono",
         readerFontSize: "xx-large",
+        fontSizeAffectsUi: "off",
         readerLineHeight: "spacious",
         readerLetterSpacing: "wide",
         readerWordSpacing: "wide",
@@ -406,6 +419,7 @@
         readerFont: "verdana",
         codeFont: "atkinson-mono",
         readerFontSize: "xx-large",
+        fontSizeAffectsUi: "off",
         readerLineHeight: "spacious",
         readerLetterSpacing: "default",
         readerWordSpacing: "default",
@@ -425,6 +439,7 @@
         readerFont: "default",
         codeFont: "default",
         readerFontSize: "default",
+        fontSizeAffectsUi: "off",
         readerLineHeight: "comfortable",
         readerLetterSpacing: "default",
         readerWordSpacing: "default",
@@ -444,6 +459,7 @@
         readerFont: "default",
         codeFont: "default",
         readerFontSize: "default",
+        fontSizeAffectsUi: "off",
         readerLineHeight: "comfortable",
         readerLetterSpacing: "default",
         readerWordSpacing: "default",
@@ -463,6 +479,7 @@
         readerFont: "default",
         codeFont: "default",
         readerFontSize: "small",
+        fontSizeAffectsUi: "off",
         readerLineHeight: "compact",
         readerLetterSpacing: "default",
         readerWordSpacing: "default",
@@ -898,9 +915,12 @@
   }
 
   function getRandomizedPresetValues() {
-    return Object.fromEntries(
-      RANDOMIZED_VALUE_KEYS.map((key) => [key, getRandomizedValue(key)]),
-    );
+    return {
+      ...Object.fromEntries(
+        RANDOMIZED_VALUE_KEYS.map((key) => [key, getRandomizedValue(key)]),
+      ),
+      fontSizeAffectsUi: "off",
+    };
   }
 
   function getRandomizedValue(key) {

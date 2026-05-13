@@ -3,11 +3,11 @@
 \*****************************/
 
 .md-content {
-  padding: 0rem 0.25rem !important;
+  padding: 0 calc(0.25rem * var(--piggy-reader-space-scale)) !important;
 }
 
 .md-content article {
-  margin: 0rem 0.5rem !important;
+  margin: 0 calc(0.5rem * var(--piggy-reader-space-scale)) !important;
 }
 
 /**********************\
@@ -50,7 +50,12 @@
 /************************\
 |* TYPOGRAPHY OVERRIDES *|
 \************************/
-.md-content {
+.md-content,
+.md-typeset,
+.md-content__inner {
+  --piggy-font-scale: var(--piggy-reader-space-scale);
+  --piggy-reader-component-font-scale: var(--piggy-reader-font-scale);
+
   font-size: calc(1rem * var(--piggy-reader-font-scale)) !important;
 }
 
@@ -62,9 +67,9 @@
 }
 
 .md-content p:not(.admonition-title):not(summary) {
-  margin-top: calc(0.25rem * var(--piggy-reader-font-scale)) !important;
+  margin-top: calc(0.25rem * var(--piggy-reader-space-scale)) !important;
   margin-bottom: calc(
-    var(--piggy-reader-paragraph-gap) * var(--piggy-reader-font-scale)
+    var(--piggy-reader-paragraph-gap) * var(--piggy-reader-space-scale)
   ) !important;
   line-height: calc(
     var(--piggy-reader-line-height) * 1rem * var(--piggy-reader-font-scale)
@@ -91,11 +96,11 @@
 .md-content h5,
 .md-content h6 {
   position: relative !important;
-  margin-bottom: 0.65rem !important;
+  margin-bottom: calc(0.65rem * var(--piggy-reader-space-scale)) !important;
   font-weight: 750 !important;
   line-height: 1.2 !important;
   letter-spacing: 0 !important;
-  scroll-margin-top: 5rem !important;
+  scroll-margin-top: calc(5rem * var(--piggy-reader-space-scale)) !important;
 }
 
 .md-content h1:first-child,
@@ -104,7 +109,7 @@
 .md-content h4:first-child,
 .md-content h5:first-child,
 .md-content h6:first-child {
-  margin-top: 0.5rem !important;
+  margin-top: calc(0.5rem * var(--piggy-reader-space-scale)) !important;
 }
 
 .md-content h1 code,
@@ -123,9 +128,9 @@
 }
 
 .md-content h1 {
-  margin-top: 0.75rem !important;
-  margin-bottom: 1.75rem !important;
-  padding: 0 0 0.75rem 0 !important;
+  margin-top: calc(0.75rem * var(--piggy-reader-space-scale)) !important;
+  margin-bottom: calc(1.75rem * var(--piggy-reader-space-scale)) !important;
+  padding: 0 0 calc(0.75rem * var(--piggy-reader-space-scale)) 0 !important;
 
   color: var(--piggy-content-h1) !important;
   background: transparent !important;
@@ -141,9 +146,9 @@
 }
 
 .md-content h2 {
-  margin-top: 2.75rem !important;
-  margin-bottom: 1rem !important;
-  padding: 0 0 0.45rem 0 !important;
+  margin-top: calc(2.75rem * var(--piggy-reader-space-scale)) !important;
+  margin-bottom: calc(1rem * var(--piggy-reader-space-scale)) !important;
+  padding: 0 0 calc(0.45rem * var(--piggy-reader-space-scale)) 0 !important;
 
   color: var(--piggy-content-h2) !important;
   background: transparent !important;
@@ -171,15 +176,18 @@
 }
 
 .md-content h3 {
-  margin-top: 2rem !important;
-  margin-bottom: 0.65rem !important;
-  padding: 0.2rem 0 0.2rem 0.75rem !important;
+  margin-top: calc(2rem * var(--piggy-reader-space-scale)) !important;
+  margin-bottom: calc(0.65rem * var(--piggy-reader-space-scale)) !important;
+  padding: calc(0.2rem * var(--piggy-reader-space-scale)) 0
+    calc(0.2rem * var(--piggy-reader-space-scale))
+    calc(0.75rem * var(--piggy-reader-space-scale)) !important;
 
   color: var(--piggy-content-h3) !important;
   background: transparent !important;
 
   border: none !important;
-  border-left: 0.25rem solid var(--piggy-content-h3) !important;
+  border-left: calc(0.25rem * var(--piggy-reader-space-scale)) solid
+    var(--piggy-content-h3) !important;
 }
 
 /* h4 */
@@ -189,8 +197,8 @@
 }
 
 .md-content h4 {
-  margin-top: 1.5rem !important;
-  margin-bottom: 0.45rem !important;
+  margin-top: calc(1.5rem * var(--piggy-reader-space-scale)) !important;
+  margin-bottom: calc(0.45rem * var(--piggy-reader-space-scale)) !important;
   padding: 0 !important;
 
   color: var(--piggy-content-h4) !important;
@@ -207,8 +215,8 @@
 }
 
 .md-content h5 {
-  margin-top: 1.25rem !important;
-  margin-bottom: 0.35rem !important;
+  margin-top: calc(1.25rem * var(--piggy-reader-space-scale)) !important;
+  margin-bottom: calc(0.35rem * var(--piggy-reader-space-scale)) !important;
   padding: 0 !important;
 
   color: var(--piggy-content-h5) !important;
@@ -226,8 +234,8 @@
 }
 
 .md-content h6 {
-  margin-top: 1rem !important;
-  margin-bottom: 0.3rem !important;
+  margin-top: calc(1rem * var(--piggy-reader-space-scale)) !important;
+  margin-bottom: calc(0.3rem * var(--piggy-reader-space-scale)) !important;
   padding: 0 !important;
 
   color: var(--piggy-content-h6) !important;
@@ -243,16 +251,16 @@
 \**********************/
 .md-content ul,
 .md-content ol {
-  margin-top: calc(0.25rem * var(--piggy-reader-font-scale)) !important;
+  margin-top: calc(0.25rem * var(--piggy-reader-space-scale)) !important;
   margin-bottom: calc(
-    var(--piggy-reader-paragraph-gap) * var(--piggy-reader-font-scale)
+    var(--piggy-reader-paragraph-gap) * var(--piggy-reader-space-scale)
   ) !important;
-  padding-left: calc(1rem * var(--piggy-reader-font-scale)) !important;
+  padding-left: calc(1rem * var(--piggy-reader-space-scale)) !important;
 }
 
 .md-content li {
   margin-bottom: calc(
-    var(--piggy-reader-list-gap) * var(--piggy-reader-font-scale)
+    var(--piggy-reader-list-gap) * var(--piggy-reader-space-scale)
   ) !important;
   line-height: calc(
     var(--piggy-reader-line-height) * 1rem * var(--piggy-reader-font-scale)
@@ -261,22 +269,22 @@
 
 .md-content li > p {
   margin-top: 0 !important;
-  margin-bottom: calc(0.4rem * var(--piggy-reader-font-scale)) !important;
+  margin-bottom: calc(0.4rem * var(--piggy-reader-space-scale)) !important;
 }
 
 .md-content li > ul,
 .md-content li > ol {
-  margin-top: calc(0.2rem * var(--piggy-reader-font-scale)) !important;
-  margin-bottom: calc(0.2rem * var(--piggy-reader-font-scale)) !important;
+  margin-top: calc(0.2rem * var(--piggy-reader-space-scale)) !important;
+  margin-bottom: calc(0.2rem * var(--piggy-reader-space-scale)) !important;
 }
 
 /******************************\
 |* DESCRIPTION LIST OVERRIDES *|
 \******************************/
 .md-content dl {
-  margin-top: calc(0.25rem * var(--piggy-reader-font-scale)) !important;
+  margin-top: calc(0.25rem * var(--piggy-reader-space-scale)) !important;
   margin-bottom: calc(
-    var(--piggy-reader-paragraph-gap) * var(--piggy-reader-font-scale)
+    var(--piggy-reader-paragraph-gap) * var(--piggy-reader-space-scale)
   ) !important;
 }
 
@@ -285,8 +293,8 @@
 }
 
 .md-content dd {
-  margin-left: calc(1.5rem * var(--piggy-reader-font-scale)) !important;
-  margin-bottom: calc(0.5rem * var(--piggy-reader-font-scale)) !important;
+  margin-left: calc(1.5rem * var(--piggy-reader-space-scale)) !important;
+  margin-bottom: calc(0.5rem * var(--piggy-reader-space-scale)) !important;
   line-height: calc(
     var(--piggy-reader-line-height) * 1rem * var(--piggy-reader-font-scale)
   ) !important;
@@ -296,11 +304,12 @@
 |* BLOCKQUOTE OVERRIDES *|
 \************************/
 .md-content blockquote {
-  margin: calc(0.75rem * var(--piggy-reader-font-scale)) 0 !important;
-  padding: calc(0.25rem * var(--piggy-reader-font-scale))
-    calc(1rem * var(--piggy-reader-font-scale)) !important;
+  margin: calc(0.75rem * var(--piggy-reader-space-scale)) 0 !important;
+  padding: calc(0.25rem * var(--piggy-reader-space-scale))
+    calc(1rem * var(--piggy-reader-space-scale)) !important;
   color: var(--piggy-neutral) !important;
-  border-left: 0.2rem solid var(--piggy-neutral) !important;
+  border-left: calc(0.2rem * var(--piggy-reader-space-scale)) solid
+    var(--piggy-neutral) !important;
 }
 
 .md-content blockquote > :first-child {
@@ -316,7 +325,7 @@
 \***********************/
 .md-content hr {
   height: 0 !important;
-  margin: calc(2rem * var(--piggy-reader-font-scale)) 0 !important;
+  margin: calc(2rem * var(--piggy-reader-space-scale)) 0 !important;
   border: 0 !important;
   border-top: 2px solid var(--piggy-neutral) !important;
 }
@@ -325,11 +334,11 @@
 |*   FIGURES AND MEDIA   *|
 \*************************/
 .md-content figure {
-  margin: calc(1rem * var(--piggy-reader-font-scale)) 0 !important;
+  margin: calc(1rem * var(--piggy-reader-space-scale)) 0 !important;
 }
 
 .md-content figcaption {
-  margin-top: calc(0.4rem * var(--piggy-reader-font-scale)) !important;
+  margin-top: calc(0.4rem * var(--piggy-reader-space-scale)) !important;
   font-size: calc(0.9rem * var(--piggy-reader-font-scale)) !important;
   color: var(--piggy-neutral) !important;
   text-align: center !important;
@@ -347,7 +356,7 @@
 \******************/
 .md-content .task-list {
   list-style: none !important;
-  padding-left: calc(1rem * var(--piggy-reader-font-scale)) !important;
+  padding-left: calc(1rem * var(--piggy-reader-space-scale)) !important;
 }
 
 .md-content .task-list-item {
@@ -355,7 +364,7 @@
 }
 
 .md-content .task-list-item input[type="checkbox"] {
-  margin-right: calc(0.4rem * var(--piggy-reader-font-scale)) !important;
+  margin-right: calc(0.4rem * var(--piggy-reader-space-scale)) !important;
 }
 
 /*********************\

@@ -55,16 +55,36 @@
 
 /* Main admonition container */
 .md-content :is(.admonition, details) {
-  margin: 1rem 0 !important;
+  --piggy-admonition-title-icon-left: calc(
+    0.78rem * var(--piggy-reader-space-scale)
+  );
+  --piggy-admonition-title-icon-gap: calc(
+    0.55rem * var(--piggy-reader-space-scale)
+  );
+  --piggy-admonition-title-icon-size: calc(
+    1rem * var(--piggy-reader-component-font-scale)
+  );
+  --piggy-admonition-title-padding-left: calc(
+    var(--piggy-admonition-title-icon-left) +
+      var(--piggy-admonition-title-icon-size) +
+      var(--piggy-admonition-title-icon-gap)
+  );
+  --piggy-admonition-title-padding-y: calc(
+    0.65rem * var(--piggy-reader-space-scale)
+  );
+  --piggy-admonition-padding-x: calc(1rem * var(--piggy-reader-space-scale));
+
+  margin: calc(1rem * var(--piggy-reader-space-scale)) 0 !important;
   padding: 0 !important;
 
   color: var(--piggy-admonition-text, var(--piggy-text-main)) !important;
   background: var(--piggy-admonition-bg) !important;
 
   border: none !important;
-  border-left: 0.25rem solid var(--piggy-admonition-border) !important;
+  border-left: calc(0.25rem * var(--piggy-reader-space-scale)) solid
+    var(--piggy-admonition-border) !important;
 
-  border-radius: 0.5rem !important;
+  border-radius: calc(0.5rem * var(--piggy-reader-space-scale)) !important;
   box-shadow: none !important;
 
   overflow: hidden !important;
@@ -73,14 +93,18 @@
 .md-content :is(.admonition, details) :is(.admonition, details) {
   border: 1px solid
     color-mix(in srgb, var(--piggy-admonition-border) 50%, transparent) !important;
-  border-left: 0.25rem solid var(--piggy-admonition-border) !important;
+  border-left: calc(0.25rem * var(--piggy-reader-space-scale)) solid
+    var(--piggy-admonition-border) !important;
 }
 
 .md-content .admonition > .admonition-title {
   display: block !important;
+  position: relative !important;
 
   margin: 0 !important;
-  padding: 0.65rem 1rem 0.65rem 2.6rem !important;
+  padding: var(--piggy-admonition-title-padding-y)
+    var(--piggy-admonition-padding-x) var(--piggy-admonition-title-padding-y)
+    var(--piggy-admonition-title-padding-left) !important;
 
   color: var(--piggy-admonition-text, var(--piggy-text-main)) !important;
   background: var(--piggy-admonition-title-bg) !important;
@@ -88,16 +112,20 @@
   border: none !important;
   border-radius: 0 !important;
 
-  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
   font-weight: 700 !important;
   line-height: 1.35 !important;
 }
 
 .md-content details > summary {
   display: block !important;
+  position: relative !important;
 
   margin: 0 !important;
-  padding: 0.65rem 1rem 0.65rem 2.6rem !important;
+  padding: var(--piggy-admonition-title-padding-y)
+    calc(2.35rem * var(--piggy-reader-space-scale))
+    var(--piggy-admonition-title-padding-y)
+    var(--piggy-admonition-title-padding-left) !important;
 
   color: var(--piggy-admonition-text, var(--piggy-text-main)) !important;
   background: var(--piggy-admonition-title-bg) !important;
@@ -105,7 +133,7 @@
   border: none !important;
   border-radius: 0 !important;
 
-  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
   font-weight: 700 !important;
   line-height: 1.35 !important;
 
@@ -114,38 +142,49 @@
 
 .md-content .admonition > p:not(.admonition-title),
 .md-content details > p {
-  margin: 0.75rem 1rem !important;
+  margin: calc(0.75rem * var(--piggy-reader-space-scale))
+    var(--piggy-admonition-padding-x) !important;
 }
 
 .md-content
   :is(.admonition, details)
   > :not(.admonition-title):not(summary):not(p) {
-  margin-left: 1rem !important;
-  margin-right: 1rem !important;
+  margin-left: var(--piggy-admonition-padding-x) !important;
+  margin-right: var(--piggy-admonition-padding-x) !important;
 }
 
 .md-content :is(.admonition, details) > :last-child {
-  margin-bottom: 1rem !important;
+  margin-bottom: calc(1rem * var(--piggy-reader-space-scale)) !important;
 }
 
 .md-content :is(.admonition, details) ol li {
-  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
   list-style: decimal !important;
 }
 
 .md-content :is(.admonition, details) ul li {
-  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
   list-style: disc !important;
 }
 
 .md-content .admonition > .admonition-title::before,
 .md-content details > summary::before {
+  position: absolute !important;
   top: 50% !important;
+  left: var(--piggy-admonition-title-icon-left) !important;
+  width: var(--piggy-admonition-title-icon-size) !important;
+  height: var(--piggy-admonition-title-icon-size) !important;
+  margin: 0 !important;
   transform: translateY(-50%) !important;
 }
 
 .md-content details > summary::after {
+  position: absolute !important;
   top: 50% !important;
+  right: calc(0.78rem * var(--piggy-reader-space-scale)) !important;
+  width: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
+  height: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
+  margin: 0 !important;
   transform: translateY(-50%) rotate(0deg) !important;
 }
 
@@ -154,7 +193,7 @@
 }
 
 .md-content details {
-  scroll-margin-bottom: 2rem;
+  scroll-margin-bottom: calc(2rem * var(--piggy-reader-space-scale));
   overflow: hidden;
 }
 

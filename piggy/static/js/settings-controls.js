@@ -4,6 +4,7 @@
     readerFont: "Reading font",
     codeFont: "Code font",
     readerFontSize: "Text size",
+    fontSizeAffectsUi: "Text size scope",
     readerLineHeight: "Line height",
     readerLetterSpacing: "Letter spacing",
     readerWordSpacing: "Word spacing",
@@ -17,6 +18,7 @@
 
   const TOGGLE_LABELS = {
     focusMode: "Dim navigation while reading",
+    fontSizeAffectsUi: "Apply text size to app UI",
     readingRuler: "Show reading ruler",
     rememberPosition: "Remember where you stopped reading",
   };
@@ -115,6 +117,10 @@
     renderSelectControl("readerFont", getRenderTarget("readerFont"));
     renderSelectControl("codeFont", getRenderTarget("codeFont"));
     renderSegmentedControl("readerFontSize", getRenderTarget("readerFontSize"));
+    renderToggleControl(
+      "fontSizeAffectsUi",
+      getRenderTarget("fontSizeAffectsUi"),
+    );
 
     renderSegmentedControl(
       "readerLineHeight",
