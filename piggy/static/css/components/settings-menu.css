@@ -996,7 +996,7 @@ body.settings-inline-active .settings-tab-panels {
 @media (max-width: 799px), (max-height: 430px) {
   body.settings-inline-active .settings-inline-host {
     inset: 0;
-    z-index: 110;
+    z-index: 1200;
     display: block;
     padding: 0;
   }

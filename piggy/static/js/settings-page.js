@@ -125,6 +125,24 @@
     });
   }
 
+  function closeHeaderMenus() {
+    document
+      .querySelectorAll(
+        ".site-header .language-selector, .site-header .level-menu",
+      )
+      .forEach((menu) => {
+        menu.classList.remove("is-open");
+        menu.removeAttribute("open");
+        menu
+          .querySelector("[aria-expanded]")
+          ?.setAttribute("aria-expanded", "false");
+      });
+
+    document
+      .querySelectorAll(".site-header .is-tooltip-visible")
+      .forEach((tooltip) => tooltip.classList.remove("is-tooltip-visible"));
+  }
+
   function initializeSettingsTabs() {
     if (!settingsTabs) return;
 
@@ -319,6 +337,7 @@
     settingsHost.hidden = false;
     inlineSettingsActive = true;
 
+    closeHeaderMenus();
     updateInlineSettingsOffset();
     resetSettingsScroll();
     document.body.classList.add("settings-inline-active");
