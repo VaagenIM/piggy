@@ -10,6 +10,15 @@
   margin: 0 calc(0.5rem * var(--piggy-reader-space-scale)) !important;
 }
 
+.md-main__inner {
+  display: block !important;
+}
+
+.md-header--shadow {
+  box-shadow: none !important;
+  transition: none !important;
+}
+
 /**********************\
 |*     BASE RESET     *|
 \**********************/
@@ -84,6 +93,20 @@
   font-style: italic !important;
 }
 
+.md-content mark,
+.md-typeset mark {
+  padding: 2px !important;
+  border-radius: 10px 5px !important;
+}
+
+.md-annotation span::before {
+  content: "\00a0" !important;
+}
+
+.md-annotation *::after {
+  right: 0.1ch !important;
+}
+
 /***********************\
 |*  HEADING OVERRIDES  *|
 \***********************/
@@ -146,6 +169,7 @@
 }
 
 .md-content h2 {
+  display: flow-root !important;
   margin-top: calc(2.75rem * var(--piggy-reader-space-scale)) !important;
   margin-bottom: calc(1rem * var(--piggy-reader-space-scale)) !important;
   padding: 0 0 calc(0.45rem * var(--piggy-reader-space-scale)) 0 !important;
@@ -176,6 +200,7 @@
 }
 
 .md-content h3 {
+  width: fit-content !important;
   margin-top: calc(2rem * var(--piggy-reader-space-scale)) !important;
   margin-bottom: calc(0.65rem * var(--piggy-reader-space-scale)) !important;
   padding: calc(0.2rem * var(--piggy-reader-space-scale)) 0

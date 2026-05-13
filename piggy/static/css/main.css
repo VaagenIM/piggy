@@ -49,6 +49,8 @@
 @import "./markdown/markdown-keys.css";
 @import "./markdown/markdown-tables.css";
 
+@import "./vendor/katex.css";
+@import "./vendor/glightbox.css";
+
 @import "./animations/keyframes.css";
 @import "./animations/loader.css";
-
