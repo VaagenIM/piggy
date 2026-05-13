@@ -20,4 +20,11 @@
         width: 0 !important;
         display: none !important;
     }
+
+    .md-content {
+        border: none !important;
+    }
+
+    /* Auto generated print styles for light theme. Do not edit after this point. */
+    /* LIGHT_THEME_PLACEHOLDER */
 }

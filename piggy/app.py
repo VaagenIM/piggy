@@ -15,7 +15,7 @@ from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
-from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes
+from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes, load_print_css
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
@@ -143,6 +143,13 @@ def create_app(debug: bool = False) -> Flask:
     def service_worker():
         """Serve the service worker file."""
         return "TBA", 204
+
+    @app.route("/static/css/base/print.css")
+    @lru_cache_wrapper
+    def print_css():
+        """Serve the print.css + light.css file with the light theme inlined for print."""
+        css = load_print_css(Path(app.root_path) / app.static_folder)
+        return css, 200, {"Content-Type": "text/css; charset=utf-8"}
 
     @app.route("/.well-known/<path:filename>")
     @app.route("/static/turtleconvert/javascripts/output/<path:filename>")  # Unused

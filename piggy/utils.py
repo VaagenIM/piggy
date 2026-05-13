@@ -84,6 +84,19 @@ def get_themes():
     return sorted(theme_output, key=lambda d: int(d.get("id", 9999)))
 
 
+@lru_cache_wrapper
+def load_print_css(static_folder: Path) -> str:
+    css_folder = Path(static_folder) / "css"
+    with (css_folder / "base" / "print.css").open("r", encoding="utf-8") as f:
+        css = f.read()
+
+    with (css_folder / "themes" / "light.css").open("r", encoding="utf-8") as f:
+        light_css = f.read()
+        light_css = re.sub(r'\[\s*data-theme\s*=\s*["\']light["\']\s*\]', ":root" * 3, light_css)
+
+    return css.replace("/* LIGHT_THEME_PLACEHOLDER */", light_css)
+
+
 # Lightweight state machine to read CSS metadata blocks. Theme CSS stays the
 # source of truth for colors, while metadata gives the settings UI richer cards.
 class ParserState:
