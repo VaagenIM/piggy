@@ -144,7 +144,7 @@ def create_app(debug: bool = False) -> Flask:
         """Serve the service worker file."""
         return "TBA", 204
 
-    @app.route("/static/css/base/print.css")
+    @app.route("/print.css")
     @lru_cache_wrapper
     def print_css():
         """Serve the print.css + light.css file with the light theme inlined for print."""
