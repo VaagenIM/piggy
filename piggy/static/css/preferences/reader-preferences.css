@@ -257,6 +257,93 @@
   display: block;
 }
 
+.reader-audio-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:root[data-reader-audio="on"] [data-reader-audio-root] {
+  --piggy-reader-audio-highlight: color-mix(
+    in srgb,
+    var(--piggy-button-active) 20%,
+    transparent
+  );
+  --piggy-reader-audio-outline: color-mix(
+    in srgb,
+    var(--piggy-button-active) 72%,
+    transparent
+  );
+  --piggy-reader-audio-missing: color-mix(
+    in srgb,
+    #ff6b6b 78%,
+    var(--piggy-button-active) 22%
+  );
+}
+
+:root[data-reader-audio="on"]
+  [data-reader-audio-root]
+  :is(
+    [data-reader-audio-sentence],
+    [data-reader-audio-paragraph],
+    [data-reader-audio-section]
+  ) {
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    background-color 0.14s ease,
+    box-shadow 0.14s ease,
+    outline-color 0.14s ease;
+}
+
+:root[data-reader-audio="on"]
+  [data-reader-audio-root]
+  [data-reader-audio-sentence] {
+  border-radius: 4px;
+}
+
+:root[data-reader-audio="on"]
+  [data-reader-audio-root]
+  :is(
+    [data-reader-audio-sentence],
+    [data-reader-audio-paragraph],
+    [data-reader-audio-section]
+  ):hover,
+:root[data-reader-audio="on"]
+  [data-reader-audio-root]
+  :is(
+    [data-reader-audio-sentence],
+    [data-reader-audio-paragraph],
+    [data-reader-audio-section]
+  ):focus-visible {
+  background: var(--piggy-reader-audio-highlight);
+  outline: 2px solid var(--piggy-reader-audio-outline);
+  outline-offset: 3px;
+}
+
+:root[data-reader-audio="on"]
+  [data-reader-audio-root]
+  [data-reader-audio-state="playing"] {
+  background: var(--piggy-reader-audio-highlight);
+  box-shadow: 0 0 0 2px var(--piggy-reader-audio-outline);
+}
+
+:root[data-reader-audio="on"]
+  [data-reader-audio-root]
+  [data-reader-audio-state="missing"] {
+  text-decoration: underline;
+  text-decoration-color: var(--piggy-reader-audio-missing);
+  text-decoration-style: wavy;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
 :root[data-reader-reduce-motion="reduce"] *,
 :root[data-reader-reduce-motion="reduce"] *::before,
 :root[data-reader-reduce-motion="reduce"] *::after {

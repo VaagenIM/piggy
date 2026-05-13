@@ -6,11 +6,19 @@
 {% endblock %}
 
 {% block base %}
-  <div class="assignment-page-header">
-    <h1 class="page-title font-semibold assignment-heading">
-      {{ content.heading }}
-    </h1>
-  </div>
+  {% set reader_audio_base_path = request.path.split('/lang/')[0].rstrip('/') %}
+  {% set reader_audio_language = current_language.key if current_language else '' %}
+  <div
+    class="assignment-reader-page"
+    data-reader-audio-root
+    data-reader-audio-base-url="{{ reader_audio_base_path }}/reader-audio"
+    data-reader-audio-language="{{ reader_audio_language }}">
+    <div class="assignment-page-header">
+      <h1 class="page-title font-semibold assignment-heading">
+        {{ content.heading }}
+      </h1>
+    </div>
 
-  {{ content.body | safe }}
+    {{ content.body | safe }}
+  </div>
 {% endblock %}

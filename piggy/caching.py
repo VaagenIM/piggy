@@ -1,3 +1,4 @@
+import inspect
 import re
 from pathlib import Path
 from typing import Callable, Optional
@@ -38,6 +39,7 @@ TURTLECONVERTER_STYLESHEET_RE = re.compile(
     """,
     re.IGNORECASE | re.VERBOSE,
 )
+MDFILE_TO_SECTIONS_PARAMS = set(inspect.signature(mdfile_to_sections).parameters)
 
 
 def remove_turtleconverter_stylesheets(head: str) -> str:
@@ -98,17 +100,24 @@ def _mdfile_to_sections_with_retry(path: Path, retries=0) -> dict:
         )
 
     try:
+        if "docs_folder" in MDFILE_TO_SECTIONS_PARAMS:
+            return mdfile_to_sections(
+                path,
+                docs_folder=PIGGYBANK_FOLDER,
+                leading_url=f"/{ASSIGNMENT_ROUTE}",
+                normalize_urls=True,
+                template=(
+                    Path(__file__).parent
+                    / "templates"
+                    / "assignments"
+                    / "tconvert_assignment_base.html"
+                ),
+            )
+
         return mdfile_to_sections(
             path,
-            docs_folder=PIGGYBANK_FOLDER,
-            leading_url=f"/{ASSIGNMENT_ROUTE}",
-            normalize_urls=True,
-            template=(
-                Path(__file__).parent
-                / "templates"
-                / "assignments"
-                / "tconvert_assignment_base.html"
-            ),
+            static_folder=Path("static"),
+            assets_folder=Path("turtleconvert"),
         )
 
     except FileNotFoundError:

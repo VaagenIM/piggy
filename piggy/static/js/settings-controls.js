@@ -14,6 +14,7 @@
     readingRuler: "Ruler",
     reduceMotion: "Motion and effects",
     rememberPosition: "Remember position",
+    audioReader: "Audio reader",
   };
 
   const TOGGLE_LABELS = {
@@ -21,6 +22,7 @@
     fontSizeAffectsUi: "Apply text size to app UI",
     readingRuler: "Show ruler",
     rememberPosition: "Remember where you stopped reading",
+    audioReader: "Click text to play recorded audio",
   };
 
   const PRESET_ICONS = {
@@ -150,6 +152,7 @@
       "rememberPosition",
       getRenderTarget("rememberPosition"),
     );
+    renderToggleControl("audioReader", getRenderTarget("audioReader"));
   }
 
   function update(root, nextPreferencesApi, preferences) {

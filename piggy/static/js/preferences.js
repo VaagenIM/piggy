@@ -1,6 +1,6 @@
 (function () {
   const STORE_KEY = "piggy.readerPreferences.v1";
-  const STORE_VERSION = 9;
+  const STORE_VERSION = 10;
   const LEGACY_KEYS = {
     theme: "theme",
     readerFont: "fontTheme",
@@ -213,6 +213,10 @@
       { value: "off", label: "Off" },
       { value: "on", label: "On" },
     ],
+    audioReader: [
+      { value: "off", label: "Off" },
+      { value: "on", label: "On" },
+    ],
   };
 
   const SETTINGS = {
@@ -315,6 +319,11 @@
       defaultValue: "off",
       attribute: "data-reader-remember-position",
       options: VALUE_OPTIONS.rememberPosition,
+    },
+    audioReader: {
+      defaultValue: "off",
+      attribute: "data-reader-audio",
+      options: VALUE_OPTIONS.audioReader,
     },
   };
 

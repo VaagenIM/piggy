@@ -1,5 +1,6 @@
 import html
 import os
+import re
 from pathlib import Path
 from urllib.parse import quote, urlsplit
 
@@ -13,6 +14,7 @@ from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
+from piggy.models import LANGUAGES
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes, startup_tasks
 
@@ -21,6 +23,16 @@ os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
 
 
 # TODO: Logging
+
+READER_AUDIO_ALLOWED_SUFFIXES = {
+    ".mp3": "audio/mpeg",
+    ".m4a": "audio/mp4",
+    ".ogg": "audio/ogg",
+    ".opus": "audio/ogg",
+    ".wav": "audio/wav",
+    ".webm": "audio/webm",
+}
+READER_AUDIO_ID_RE = re.compile(r"^(?:s|p|sec)-\d{3,5}-[a-z0-9]{6,12}$")
 
 
 def create_app(debug: bool = False) -> Flask:
@@ -153,6 +165,73 @@ def create_app(debug: bool = False) -> Flask:
     def favicon():
         """Serve the favicon."""
         return redirect("/static/img/icons/piggy_icon-128.png", code=302)
+
+    @assignment_routes.route("/<path:wildcard>/reader-audio/<reader_file>")
+    def get_assignment_reader_audio(wildcard, reader_file):
+        """
+        Stream assignment reader audio from the assignment-local audio folder.
+
+        The reader exposes deterministic IDs in the rendered page. This route only accepts
+        those safe IDs and resolves files inside the current assignment's audio directory.
+        """
+        wildcard = normalize_path_to_str(wildcard.strip("/"), replace_spaces=True)
+        lang = request.args.get("lang", "").strip()
+        audio_root = get_reader_audio_root(wildcard, lang)
+
+        for audio_path, mimetype in get_reader_audio_candidates(audio_root, reader_file):
+            if audio_path.exists() and audio_path.is_file():
+                return send_file(
+                    audio_path,
+                    mimetype=mimetype,
+                    conditional=True,
+                    etag=True,
+                    max_age=3600,
+                )
+
+        raise PiggyHTTPException("Reader audio not found", status_code=404)
+
+    def get_reader_audio_root(wildcard: str, lang: str) -> Path:
+        if len([part for part in wildcard.split("/") if part]) != AssignmentTemplate.ASSIGNMENT.index:
+            raise PiggyHTTPException("Reader audio not found", status_code=404)
+
+        if lang and lang not in LANGUAGES:
+            raise PiggyHTTPException("Reader audio not found", status_code=404)
+
+        _, assignment_segment = get_piggymap_segment_from_path(wildcard, PIGGYMAP)
+        assignment_path = assignment_segment.get("path", Path())
+
+        if not assignment_path:
+            raise PiggyHTTPException("Reader audio not found", status_code=404)
+
+        if lang:
+            return (assignment_path.parent / "translations" / lang / "audio").resolve()
+
+        return (assignment_path.parent / "audio").resolve()
+
+    def get_reader_audio_candidates(audio_root: Path, reader_file: str):
+        if "/" in reader_file or "\\" in reader_file or ".." in reader_file:
+            raise PiggyHTTPException("Reader audio not found", status_code=404)
+
+        requested_path = Path(reader_file)
+        suffix = requested_path.suffix.lower()
+        stem = requested_path.stem if suffix else reader_file
+
+        if suffix and suffix not in READER_AUDIO_ALLOWED_SUFFIXES:
+            raise PiggyHTTPException("Reader audio not found", status_code=404)
+
+        if not READER_AUDIO_ID_RE.match(stem):
+            raise PiggyHTTPException("Reader audio not found", status_code=404)
+
+        suffixes = [suffix] if suffix else READER_AUDIO_ALLOWED_SUFFIXES.keys()
+        root = audio_root.resolve()
+
+        for candidate_suffix in suffixes:
+            candidate = (root / f"{stem}{candidate_suffix}").resolve()
+
+            if root != candidate.parent:
+                raise PiggyHTTPException("Reader audio not found", status_code=404)
+
+            yield candidate, READER_AUDIO_ALLOWED_SUFFIXES[candidate_suffix]
 
     @assignment_routes.route("/<path:path>")
     @assignment_routes.route("/")
