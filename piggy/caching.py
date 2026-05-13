@@ -72,6 +72,7 @@ def _mdfile_to_sections_with_retry(path: Path, retries=0) -> dict:
             docs_folder=PIGGYBANK_FOLDER,
             leading_url=f"/{ASSIGNMENT_ROUTE}",
             normalize_urls=True,
+            template=(Path(__file__).parent / "templates" / "assignments" / "tconvert_assignment_base.html"),
         )
     except FileNotFoundError:
         # TurtleConverter occasionally removes its temporary copy before
