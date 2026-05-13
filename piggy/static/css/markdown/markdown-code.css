@@ -2,11 +2,15 @@
 |*  MARKDOWN CODE OVERRIDES  *|
 \*****************************/
 .md-content {
-  --piggy-code-block-radius: 0.55rem;
+  --piggy-code-block-radius: calc(0.55rem * var(--piggy-font-scale));
   --piggy-code-block-padding-x: calc(1rem * var(--piggy-font-scale));
   --piggy-code-block-padding-y: calc(0.85rem * var(--piggy-font-scale));
-  --piggy-code-block-line-height: calc(1.45rem * var(--piggy-font-scale));
-  --piggy-code-block-font-size: calc(0.875rem * var(--piggy-font-scale));
+  --piggy-code-block-line-height: calc(
+    1.45rem * var(--piggy-reader-component-font-scale)
+  );
+  --piggy-code-block-font-size: calc(
+    0.875rem * var(--piggy-reader-component-font-scale)
+  );
   --piggy-code-titlebar-control-space: calc(2.6rem * var(--piggy-font-scale));
   --piggy-code-copy-reserved-space: calc(3rem * var(--piggy-font-scale));
   --piggy-code-copy-button-size: calc(2rem * var(--piggy-font-scale));
@@ -59,9 +63,15 @@
     var(--piggy-code-block-background, var(--piggy-code-block-bg))
   );
   --piggy-code-annotation-text: var(--piggy-code-block-text, var(--piggy-code));
-  --piggy-code-annotation-size: calc(0.95rem * var(--piggy-font-scale));
-  --piggy-code-annotation-min-width: calc(1.32rem * var(--piggy-font-scale));
-  --piggy-code-annotation-font-size: calc(0.58rem * var(--piggy-font-scale));
+  --piggy-code-annotation-size: calc(
+    0.95rem * var(--piggy-reader-component-font-scale)
+  );
+  --piggy-code-annotation-min-width: calc(
+    1.32rem * var(--piggy-reader-component-font-scale)
+  );
+  --piggy-code-annotation-font-size: calc(
+    0.58rem * var(--piggy-reader-component-font-scale)
+  );
   --piggy-code-annotation-radius: calc(0.34rem * var(--piggy-font-scale));
   --piggy-code-annotation-offset-y: -1.25px;
   --piggy-code-tooltip-bg: var(
@@ -250,7 +260,9 @@
   border-radius: calc(var(--piggy-code-block-radius) - 1px)
     calc(var(--piggy-code-block-radius) - 1px) 0 0 !important;
 
-  font-size: calc(0.76rem * var(--piggy-font-scale)) !important;
+  font-size: calc(
+    0.76rem * var(--piggy-reader-component-font-scale)
+  ) !important;
   font-weight: 700 !important;
   letter-spacing: 0 !important;
   line-height: 1.25 !important;
@@ -423,7 +435,9 @@
   border-radius: calc(var(--piggy-code-block-radius) - 1px)
     calc(var(--piggy-code-block-radius) - 1px) 0 0 !important;
 
-  font-size: calc(0.76rem * var(--piggy-font-scale)) !important;
+  font-size: calc(
+    0.76rem * var(--piggy-reader-component-font-scale)
+  ) !important;
   font-weight: 700 !important;
   letter-spacing: 0 !important;
   line-height: 1.25 !important;
@@ -691,7 +705,9 @@
     var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
   border-radius: calc(0.3rem * var(--piggy-font-scale)) !important;
 
-  font-size: calc(0.75rem * var(--piggy-font-scale)) !important;
+  font-size: calc(
+    0.75rem * var(--piggy-reader-component-font-scale)
+  ) !important;
   font-weight: 650 !important;
   line-height: 1 !important;
   white-space: nowrap !important;
@@ -915,7 +931,9 @@
   color: var(--piggy-code-tooltip-text) !important;
   background: transparent !important;
 
-  font-size: calc(0.82rem * var(--piggy-font-scale)) !important;
+  font-size: calc(
+    0.82rem * var(--piggy-reader-component-font-scale)
+  ) !important;
   line-height: 1.45 !important;
   max-width: none !important;
   overflow: visible !important;

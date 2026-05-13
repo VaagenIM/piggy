@@ -1,0 +1,389 @@
+@media print {
+    @page {
+        margin: 0;
+        zoom: 75%;
+    }
+
+    .site-header,
+    .background-overlay {
+        display: none !important;
+    }
+
+    body, * {
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .md-typeset summary::after {
+        width: 0 !important;
+        display: none !important;
+    }
+
+    .md-content {
+        border: none !important;
+    }
+
+    /* Auto generated print styles for light theme. Do not edit after this point. */
+    /* METADATA
+id: 1
+name: Light
+description: The default light theme.
+type: light
+category: standard
+tags: default, bright
+preview.background: #f7f7f7
+preview.surface: #ffffff
+preview.text: #171717
+preview.accent: #78b3d9
+preview.border: #7faac6
+preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); color: rgb(23, 23, 23); text-shadow: none;
+*/
+
+:root:root:root {
+  --piggy-main: rgb(247, 247, 247);
+  --piggy-light: rgb(255, 255, 255);
+  --piggy-neutral: #757575;
+  --piggy-dark: rgb(23, 23, 23);
+
+  --piggy-text-main: var(--piggy-dark);
+  --piggy-shadow-text: rgba(0, 0, 0, 0);
+  --piggy-shadow-box: #00000015;
+  --piggy-shadow-glow: rgba(0, 0, 0, 0.1);
+
+  --piggy-card-start: rgb(255, 255, 255);
+  --piggy-card-end: rgb(240, 240, 240);
+  --piggy-card-border: #b1b1b1;
+  --piggy-text-card: var(--piggy-dark);
+
+  /* Assignment cards */
+  --piggy-assignment-card-start: rgba(255, 223, 173, 0.65);
+  --piggy-assignment-card-end: rgba(232, 171, 92, 0.45);
+  --piggy-assignment-card-border: rgba(184, 119, 34, 0.55);
+  --piggy-assignment-overlay: rgba(211, 132, 42, 0.82);
+  --piggy-assignment-accent: #b8792f;
+  --piggy-assignment-shadow-glow: rgba(184, 119, 34, 0.32);
+
+  /* Information cards */
+  --piggy-information-card-start: rgba(198, 229, 250, 0.78);
+  --piggy-information-card-end: rgba(147, 199, 232, 0.55);
+  --piggy-information-card-border: rgba(35, 111, 168, 0.42);
+  --piggy-information-overlay: rgba(35, 111, 168, 0.86);
+  --piggy-information-accent: #236fa8;
+  --piggy-information-shadow-glow: rgba(35, 111, 168, 0.28);
+
+  --piggy-card-border-width: 1px;
+
+  /* Navbar and buttons */
+  --piggy-navbar-start: rgb(225, 225, 225);
+  --piggy-navbar-end: rgb(225, 225, 225);
+  --piggy-text-navbar: #333333;
+
+  --piggy-button: #c6dfef;
+  --piggy-button-hover: #a9cce4;
+  --piggy-button-active: #78b3d9;
+  --piggy-text-button: #172033;
+  --piggy-button-border: #7faac6;
+  --piggy-nav-button: #ffffff;
+  --piggy-nav-button-hover: #edf6fb;
+  --piggy-nav-button-text: #172033;
+  --piggy-nav-button-border: #9caeb8;
+
+  --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7);
+  --piggy-text-thumbnail: var(--piggy-dark);
+
+  --piggy-text-tag: var(--piggy-dark);
+  --piggy-text-description: var(--piggy-dark);
+  --piggy-text-title: var(--piggy-dark);
+  --piggy-text-breadcrumb: var(--piggy-dark);
+  --piggy-text-breadcrumb-hover: #757575;
+
+  --piggy-menu: var(--piggy-light);
+  --piggy-menu-text: var(--piggy-dark);
+
+  --piggy-tooltip: var(--piggy-dark);
+  --piggy-tooltip-text: var(--piggy-light);
+
+  --piggy-text-hyperlink: #236fa8;
+  --piggy-text-hyperlink-hover: #164c78;
+
+  /* level container */
+  --piggy-level-container-text: var(--piggy-dark);
+  --piggy-level-container: rgb(168, 190, 233);
+  --piggy-level-container-border: rgba(0, 0, 0, 0);
+
+  /* info boxes */
+  --piggy-info-box-background: #00a3c255;
+  --piggy-info-box-border: #00bcd4;
+
+  /* logo */
+  --piggy-logo: #ff9abc;
+  --piggy-logo-gradient: linear-gradient(45deg, #ff72a8, #ff5a8f, #c03db9);
+  --piggy-logo-border: rgba(50, 0, 50, 0.5);
+
+  /* Headings */
+  --piggy-header-border: rgba(70, 80, 95, 0.22);
+
+  --piggy-content-h1: #172033;
+  --piggy-content-h2: #236fa8;
+  --piggy-content-h3: #2f7d5c;
+  --piggy-content-h4: #9a641f;
+  --piggy-content-h5: #6f4fb3;
+  --piggy-content-h6: #66717d;
+
+  --piggy-header-bg-h1: rgba(23, 32, 51, 0.1);
+  --piggy-header-bg-h2: rgba(35, 111, 168, 0.16);
+  --piggy-header-bg-h3: rgba(47, 125, 92, 0.13);
+  --piggy-header-bg-h4: rgba(154, 100, 31, 0.12);
+  --piggy-header-bg-h5: rgba(111, 79, 179, 0.12);
+  --piggy-header-bg-h6: rgba(102, 113, 125, 0.1);
+
+  /* Tables */
+  --piggy-table-bg: rgba(255, 255, 255, 0.82);
+  --piggy-table-border: rgba(70, 80, 95, 0.22);
+  --piggy-table-cell-border: rgba(70, 80, 95, 0.13);
+
+  --piggy-table-header-start: rgba(80, 100, 135, 0.13);
+  --piggy-table-header-end: rgba(80, 100, 135, 0.13);
+  --piggy-table-header-text: #252539;
+
+  --piggy-table-row-odd: rgba(255, 255, 255, 0.62);
+  --piggy-table-row-even: rgba(80, 100, 135, 0.055);
+  --piggy-table-row-hover: rgba(40, 133, 209, 0.12);
+
+  --piggy-table-code-bg: var(--piggy-code-inline-bg);
+  --piggy-table-code-text: var(--piggy-code-inline-text);
+
+  --piggy-table-shadow: none;
+
+  /* code blocks */
+  --piggy-code: #24292f;
+  --piggy-code-bg: #eef1f5;
+  --piggy-code-border: #c9d1d9;
+
+  --piggy-code-block-bg: #f6f8fa;
+  --piggy-code-block-border: #d0d7de;
+
+  --piggy-code-block-text: #24292f;
+  --piggy-code-block-background: #f6f8fa;
+  --piggy-code-block-border-color: #d0d7de;
+
+  --piggy-code-inline-text: #24292f;
+  --piggy-code-inline-bg: #eef1f5;
+  --piggy-code-inline-border: #c9d1d9;
+
+  --piggy-code-block-line-number: #6e7781;
+  --piggy-code-block-line-number-bg: #eef1f5;
+  --piggy-code-block-line-number-border: #d0d7de;
+
+  --piggy-code-clipboard: #57606a;
+  --piggy-code-clipboard-hover: #24292f;
+
+  --piggy-code-selection-bg: #b6d7ff;
+  --piggy-code-selection-text: #24292f;
+
+  --piggy-code-token-comment: #6e7781;
+  --piggy-code-token-keyword: #b42318;
+  --piggy-code-token-string: #0a5c86;
+  --piggy-code-token-number: #0550ae;
+  --piggy-code-token-function: #6f42c1;
+  --piggy-code-token-class: #9a6700;
+  --piggy-code-token-variable: #24292f;
+  --piggy-code-token-operator: #8250df;
+  --piggy-code-token-punctuation: #57606a;
+  --piggy-code-token-builtin: #0969da;
+  --piggy-code-token-constant: #9a6700;
+  --piggy-code-token-attribute: #8250df;
+  --piggy-code-token-tag: #116329;
+  --piggy-code-token-decorator: #bf3989;
+  --piggy-code-token-deleted: #cf222e;
+  --piggy-code-token-inserted: #116329;
+  --piggy-code-token-error: #cf222e;
+
+  /* admonitions */
+  --piggy-admonition-note-bg: #dff4fb;
+  --piggy-admonition-note-title-bg: #c8eaf5;
+  --piggy-admonition-note-text: #17313a;
+  --piggy-admonition-note-icon: #087ea4;
+  --piggy-admonition-note-border: #27a3c7;
+
+  --piggy-admonition-success-bg: #e2f7e8;
+  --piggy-admonition-success-title-bg: #cdefd7;
+  --piggy-admonition-success-text: #17351f;
+  --piggy-admonition-success-icon: #218a3d;
+  --piggy-admonition-success-border: #39a858;
+
+  --piggy-admonition-warning-bg: #fff1dc;
+  --piggy-admonition-warning-title-bg: #ffe2b8;
+  --piggy-admonition-warning-text: #4a2f0f;
+  --piggy-admonition-warning-icon: #b66a00;
+  --piggy-admonition-warning-border: #d98a22;
+
+  --piggy-admonition-danger-bg: #ffe5e3;
+  --piggy-admonition-danger-title-bg: #ffd1cd;
+  --piggy-admonition-danger-text: #4a1717;
+  --piggy-admonition-danger-icon: #c3312b;
+  --piggy-admonition-danger-border: #df514a;
+
+  --piggy-admonition-example-bg: #f0e7ff;
+  --piggy-admonition-example-title-bg: #e3d2ff;
+  --piggy-admonition-example-text: #2f1d47;
+  --piggy-admonition-example-icon: #7b43b8;
+  --piggy-admonition-example-border: #9c68d8;
+
+  --piggy-admonition-quote-bg: #eceff3;
+  --piggy-admonition-quote-title-bg: #dde3ea;
+  --piggy-admonition-quote-text: #252b31;
+  --piggy-admonition-quote-icon: #5f6b78;
+  --piggy-admonition-quote-border: #8a96a3;
+
+  /* keyboard keys */
+  --piggy-key-background: rgba(255, 255, 255, 0.96);
+  --piggy-key-background-hover: rgba(237, 246, 251, 0.98);
+
+  --piggy-key-text: #172033;
+  --piggy-key-text-hover: #0f1726;
+  --piggy-key-separator: #6b7682;
+
+  --piggy-key-border: rgba(70, 80, 95, 0.28);
+  --piggy-key-border-hover: rgba(35, 111, 168, 0.42);
+
+  --piggy-key-inner-border: rgba(255, 255, 255, 0.85);
+  --piggy-key-inner-border-hover: rgba(255, 255, 255, 0.95);
+
+  --piggy-key-shadow: rgba(23, 32, 51, 0.1);
+  --piggy-key-shadow-hover: rgba(35, 111, 168, 0.18);
+
+  /* keyboard keys inside admonitions */
+  --piggy-key-admonition-background: rgba(255, 255, 255, 0.42);
+  --piggy-key-admonition-background-hover: rgba(255, 255, 255, 0.68);
+
+  --piggy-key-admonition-border: rgba(70, 80, 95, 0.22);
+  --piggy-key-admonition-border-hover: rgba(70, 80, 95, 0.34);
+
+  --piggy-key-admonition-inner-border: rgba(255, 255, 255, 0.72);
+  --piggy-key-admonition-inner-border-hover: rgba(255, 255, 255, 0.92);
+
+  --piggy-key-admonition-shadow: rgba(23, 32, 51, 0.08);
+  --piggy-key-admonition-shadow-hover: rgba(23, 32, 51, 0.12);
+}
+
+/******************************\
+|*     MARKDOWN OVERRIDES     *|
+\******************************/
+:root:root:root .md-content {
+  --piggy-code-block-highlight-bg: rgba(9, 105, 218, 0.1);
+  --piggy-code-block-highlight-border: rgba(9, 105, 218, 0.26);
+
+  border-radius: 0.5rem;
+}
+
+:root:root:root .md-content .tabbed-labels::before {
+  border-color: var(--piggy-dark);
+  background-color: #8888883a !important;
+}
+
+/***************************\
+|*     TABLE OVERRIDES     *|
+\***************************/
+:root:root:root .md-content :is(.admonition, details) {
+  --piggy-table-admonition-accent: rgba(70, 80, 95, 0.4) !important;
+
+  --piggy-table-bg: rgba(255, 255, 255, 0.34);
+  --piggy-table-border: var(--piggy-table-admonition-accent);
+  --piggy-table-cell-border: rgba(70, 80, 95, 0.1);
+
+  --piggy-table-header-start: rgba(255, 255, 255, 0.34);
+  --piggy-table-header-end: rgba(255, 255, 255, 0.34);
+  --piggy-table-header-text: var(--piggy-admonition-text);
+
+  --piggy-table-row-odd: rgba(255, 255, 255, 0.18);
+  --piggy-table-row-even: rgba(255, 255, 255, 0.32);
+  --piggy-table-row-hover: rgba(255, 255, 255, 0.5);
+
+  --piggy-table-code-bg: rgba(255, 255, 255, 0.45);
+  --piggy-table-code-text: var(--piggy-admonition-text);
+}
+
+/* NOTE / INFO / TIP */
+:root:root:root
+  .md-content
+  :is(
+    .admonition.note,
+    details.note,
+    .admonition.info,
+    details.info,
+    .admonition.tip,
+    details.tip
+  ) {
+  --piggy-table-admonition-accent: rgba(8, 126, 164, 0.28);
+  --piggy-table-header-start: rgba(8, 126, 164, 0.105);
+  --piggy-table-header-end: rgba(8, 126, 164, 0.105);
+  --piggy-table-row-hover: rgba(8, 126, 164, 0.115);
+}
+
+/* SUCCESS / QUESTION */
+:root:root:root
+  .md-content
+  :is(
+    .admonition.success,
+    details.success,
+    .admonition.question,
+    details.question
+  ) {
+  --piggy-table-admonition-accent: rgba(33, 138, 61, 0.26);
+  --piggy-table-header-start: rgba(33, 138, 61, 0.095);
+  --piggy-table-header-end: rgba(33, 138, 61, 0.095);
+  --piggy-table-row-hover: rgba(33, 138, 61, 0.105);
+}
+
+/* WARNING / ATTENTION */
+:root:root:root
+  .md-content
+  :is(
+    .admonition.warning,
+    details.warning,
+    .admonition.attention,
+    details.attention
+  ) {
+  --piggy-table-admonition-accent: rgba(182, 106, 0, 0.26);
+  --piggy-table-header-start: rgba(182, 106, 0, 0.09);
+  --piggy-table-header-end: rgba(182, 106, 0, 0.09);
+  --piggy-table-row-hover: rgba(182, 106, 0, 0.105);
+}
+
+/* DANGER / FAILURE / BUG */
+:root:root:root
+  .md-content
+  :is(
+    .admonition.danger,
+    details.danger,
+    .admonition.failure,
+    details.failure,
+    .admonition.bug,
+    details.bug
+  ) {
+  --piggy-table-admonition-accent: rgba(195, 49, 43, 0.26);
+  --piggy-table-header-start: rgba(195, 49, 43, 0.09);
+  --piggy-table-header-end: rgba(195, 49, 43, 0.09);
+  --piggy-table-row-hover: rgba(195, 49, 43, 0.105);
+}
+
+/* EXAMPLE */
+:root:root:root .md-content :is(.admonition.example, details.example) {
+  --piggy-table-admonition-accent: rgba(123, 67, 184, 0.26);
+  --piggy-table-header-start: rgba(123, 67, 184, 0.095);
+  --piggy-table-header-end: rgba(123, 67, 184, 0.095);
+  --piggy-table-row-hover: rgba(123, 67, 184, 0.105);
+}
+
+/* QUOTE */
+:root:root:root .md-content :is(.admonition.quote, details.quote) {
+  --piggy-table-admonition-accent: rgba(95, 107, 120, 0.24);
+  --piggy-table-header-start: rgba(95, 107, 120, 0.085);
+  --piggy-table-header-end: rgba(95, 107, 120, 0.085);
+  --piggy-table-row-hover: rgba(95, 107, 120, 0.095);
+}
+
+}

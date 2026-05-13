@@ -12,16 +12,16 @@
   max-width: calc(100% - 2rem);
   overflow-wrap: anywhere;
   word-break: break-word;
-  padding: calc(0.75rem * var(--piggy-font-scale));
-  margin: calc(0.5rem * var(--piggy-font-scale)) auto;
-  font-size: calc(1.1rem * var(--piggy-font-scale));
+  padding: calc(0.75rem * var(--piggy-reader-space-scale));
+  margin: calc(0.5rem * var(--piggy-reader-space-scale)) auto;
+  font-size: calc(1.1rem * var(--piggy-reader-font-scale));
   text-align: center;
 }
 
 .assignment-meta-note-icon {
   fill: var(--piggy-text-main);
-  width: calc(1.1rem * var(--piggy-font-scale));
-  height: calc(1.1rem * var(--piggy-font-scale));
+  width: calc(1.1rem * var(--piggy-reader-font-scale));
+  height: calc(1.1rem * var(--piggy-reader-font-scale));
   display: inline;
-  margin: calc(0.1rem * var(--piggy-font-scale));
+  margin: calc(0.1rem * var(--piggy-reader-space-scale));
 }

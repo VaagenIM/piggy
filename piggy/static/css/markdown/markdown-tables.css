@@ -21,7 +21,7 @@
   overflow-x: auto !important;
   overflow-y: hidden !important;
 
-  border-radius: 0.35rem !important;
+  border-radius: calc(0.35rem * var(--piggy-font-scale)) !important;
   background: transparent !important;
 
   box-sizing: border-box !important;
@@ -29,11 +29,19 @@
 }
 
 .md-content :is(.admonition, details) > .md-typeset__table {
-  display: block !important;
-  width: calc(100% - 2rem) !important;
-  max-width: calc(100% - 2rem) !important;
+  --piggy-table-admonition-margin: calc(1rem * var(--piggy-font-scale));
 
-  margin: 1rem !important;
+  display: block !important;
+  width: calc(
+    100% - var(--piggy-table-admonition-margin) -
+      var(--piggy-table-admonition-margin)
+  ) !important;
+  max-width: calc(
+    100% - var(--piggy-table-admonition-margin) -
+      var(--piggy-table-admonition-margin)
+  ) !important;
+
+  margin: var(--piggy-table-admonition-margin) !important;
   box-sizing: border-box !important;
 }
 
@@ -68,12 +76,14 @@
   color: var(--piggy-text-main) !important;
 
   border: 1px solid var(--piggy-table-border) !important;
-  border-radius: 0.35rem !important;
+  border-radius: calc(0.35rem * var(--piggy-font-scale)) !important;
 
   box-shadow: none !important;
 
-  font-size: calc(0.9rem * var(--piggy-font-scale)) !important;
-  line-height: calc(1.25rem * var(--piggy-font-scale)) !important;
+  font-size: calc(0.9rem * var(--piggy-reader-component-font-scale)) !important;
+  line-height: calc(
+    1.25rem * var(--piggy-reader-component-font-scale)
+  ) !important;
 }
 
 .md-content table th,
@@ -183,7 +193,8 @@
   color: var(--piggy-table-code-text) !important;
 
   border-radius: 0.25rem !important;
-  padding: 0.08rem 0.25rem !important;
+  padding: calc(0.08rem * var(--piggy-font-scale))
+    calc(0.25rem * var(--piggy-font-scale)) !important;
 }
 
 .md-content table thead,
