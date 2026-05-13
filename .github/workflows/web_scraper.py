@@ -19,7 +19,7 @@ WORKERS = 16
 links = {"/", "/404"}
 api_links = {"/api/search-data"}
 visited = set()
-media_links = {"/print.css"}
+media_links = set()
 url = "http://127.0.0.1:55555"  # The URL of the website we are scraping
 cname = "https://piggy.iktim.no"  # The CNAME of the website we will push the demo to
 

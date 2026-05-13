@@ -9,6 +9,7 @@ from flask import send_file, request
 
 from piggy import ALLOWED_URL_CHARS_REGEX, IMG_FMT, MEDIA_ROUTE, ASSIGNMENT_ROUTE
 from piggy.models import LANGUAGES
+from turtleconverter import generate_static_files
 
 
 def lru_cache_wrapper(func):
@@ -84,8 +85,7 @@ def get_themes():
     return sorted(theme_output, key=lambda d: int(d.get("id", 9999)))
 
 
-@lru_cache_wrapper
-def load_print_css() -> str:
+def generate_print_css():
     css_folder = Path(__file__).parent / "static" / "css"
     with (css_folder / "base" / "print.css").open("r", encoding="utf-8") as f:
         css = f.read()
@@ -94,7 +94,10 @@ def load_print_css() -> str:
         light_css = f.read()
         light_css = re.sub(r'\[\s*data-theme\s*=\s*["\']light["\']\s*\]', ":root" * 3, light_css)
 
-    return css.replace("/* LIGHT_THEME_PLACEHOLDER */", light_css)
+    css = css.replace("/* LIGHT_THEME_PLACEHOLDER */", light_css)
+
+    with (css_folder / "base" / "print_overrides.css").open("w+", encoding="utf-8") as f:
+        f.write(css)
 
 
 # Lightweight state machine to read CSS metadata blocks. Theme CSS stays the
@@ -260,3 +263,8 @@ def process_json_for_api(obj, exclude_keys=None):
         return obj
 
     return transform(obj)
+
+
+def startup_tasks():
+    generate_static_files(static_folder=Path(os.path.dirname(Path(__file__).absolute())) / "static")
+    generate_print_css()

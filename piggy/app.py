@@ -6,7 +6,6 @@ from urllib.parse import quote, urlsplit
 from flask import Flask, send_file, request, Blueprint, render_template, redirect, url_for
 from flask_squeeze import Squeeze
 from jinja2 import ChoiceLoader, FileSystemLoader
-from turtleconverter import generate_static_files
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate, STATIC_FONTS_PATHS, IMG_FMT
@@ -15,7 +14,7 @@ from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
-from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes, load_print_css
+from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes, startup_tasks
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
@@ -46,7 +45,7 @@ def create_app(debug: bool = False) -> Flask:
     assignment_routes = Blueprint(ASSIGNMENT_ROUTE, __name__, url_prefix=f"/{ASSIGNMENT_ROUTE}")
     media_routes = Blueprint(MEDIA_ROUTE, __name__, url_prefix=f"/{MEDIA_ROUTE}")
 
-    generate_static_files(static_folder=Path(os.path.dirname(Path(__file__).absolute())) / "static")
+    startup_tasks()
 
     use_github_pages = os.environ.get("GITHUB_PAGES", False)
 
@@ -143,12 +142,6 @@ def create_app(debug: bool = False) -> Flask:
     def service_worker():
         """Serve the service worker file."""
         return "TBA", 204
-
-    @app.route("/print.css")
-    @lru_cache_wrapper
-    def print_css():
-        """Serve the print.css + light.css file with the light theme inlined for print."""
-        return load_print_css(), 200, {"Content-Type": "text/css; charset=utf-8"}
 
     @app.route("/.well-known/<path:filename>")
     @app.route("/static/turtleconvert/javascripts/output/<path:filename>")  # Unused

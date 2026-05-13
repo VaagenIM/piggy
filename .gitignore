@@ -11,6 +11,7 @@ uv.lock
 .env
 
 tailwind.css
+print_overrides.css
 
 turtleconvert/
 

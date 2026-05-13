@@ -2,6 +2,7 @@
 @import "./base/elements.css";
 @import "./base/utilities.css";
 @import "./base/text-effects.css";
+@import "./base/print_overrides.css";
 
 /*@import "./fonts/imports.css"; - Preloaded via partials/head.html*/
 @import "./fonts/font-themes.css";
@@ -50,6 +51,4 @@
 
 @import "./animations/keyframes.css";
 @import "./animations/loader.css";
-
-@import "/print.css"; /* prettier-ignore */
 
