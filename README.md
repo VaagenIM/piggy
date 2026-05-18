@@ -7,4 +7,4 @@ Install `pip install .` + `npm install --omit=dev`
 
 Install dev `pip install .[dev]` + `npm install`
 
-🚧 Construction in progress. 🚧
+> Note: You need access to the `piggybank` submodule for this to work (for now).
