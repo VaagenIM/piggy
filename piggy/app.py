@@ -9,18 +9,17 @@ from jinja2 import ChoiceLoader, FileSystemLoader
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate, STATIC_FONTS_PATHS, IMG_FMT
-from piggy.api import api_routes
-from piggy.api import generate_thumbnail
+from piggy.api import api_routes, generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
 from piggy.models import LANGUAGES
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
+from piggy.tts_indexing import tts_routes
 from piggy.reader_audio import READER_AUDIO_ALLOWED_SUFFIXES, READER_AUDIO_ID_RE
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes, startup_tasks
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
-
 
 # TODO: Logging
 
@@ -296,6 +295,7 @@ def create_app(debug: bool = False) -> Flask:
     app.register_blueprint(assignment_routes)
     app.register_blueprint(media_routes)
     app.register_blueprint(api_routes)
+    app.register_blueprint(tts_routes)
 
     # Cache all assignment related pages if not in debug mode
     if os.environ.get("USE_CACHE", "1") == "1":
