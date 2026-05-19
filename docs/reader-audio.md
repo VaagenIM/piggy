@@ -101,7 +101,7 @@ start with `s-` and export files named exactly `<id>.<extension>`.
 The browser exposes the same reader inventory for debugging:
 
 ```js
-PiggyAudioReader.getInventory()
+PiggyAudioReader.getInventory();
 ```
 
 To copy only the sentence list from an open assignment:
@@ -109,11 +109,13 @@ To copy only the sentence list from an open assignment:
 ```js
 copy(
   JSON.stringify(
-    PiggyAudioReader.getInventory().items.filter((item) => item.kind === "sentence"),
+    PiggyAudioReader.getInventory().items.filter(
+      (item) => item.kind === "sentence",
+    ),
     null,
     2,
   ),
-)
+);
 ```
 
 The API is preferred for recording and generation because it does not require
@@ -129,6 +131,38 @@ reading order.
 Inline links contribute their visible text to the sentence that should be
 recorded, but Piggy does not wrap the link text as an audio click target. This
 keeps links clickable while preserving complete spoken sentences.
+
+Inline code is made more speech-friendly in the audio map. Common code-like
+tokens are still recognizable, but they avoid awkward punctuation readings:
+
+- `index.html` becomes `index dot html`.
+- `.html` becomes `dot html`.
+- `<!DOCTYPE html>` becomes `DOCTYPE html`.
+- `<head>` becomes `head`.
+- `print()` becomes `print function`.
+- `text[::-1]` becomes `text reverse slice`.
+- `graph[i]` becomes `graph index i`.
+- `$1` becomes `argument 1`.
+
+Common math and algorithm notation is also normalized:
+
+- `O(n!)` becomes `O of n factorial`.
+- `5! = 5 \cdot 4` becomes `5 factorial equals 5 times 4`.
+- `n^2` inside function-style notation becomes `n to the power of 2`.
+- `0 -> 1` becomes `0 to 1`.
+- `x != y`, `x == y`, `x >= y`, and `x <= y` become readable comparison
+  phrases.
+
+List-like examples and reference labels are cleaned up for generation:
+
+- `[4, 7, 1]` becomes `4, 7, 1`.
+- `[]` becomes `empty list`.
+- Link labels such as `[a]` are removed when they are only citation markers.
+
+Sentence splitting is punctuation-aware. Piggy avoids splitting inside HTML-like
+tags, filenames, common file extensions, decimals, spaced initials, ellipses,
+factorial notation, and common abbreviations such as `f.eks.`, `dvs.`, `e.g.`,
+and `i.e.`.
 
 If assignment text changes, regenerate the audio map. Existing sentence IDs stay
 stable when text is edited without changing the rendered sentence order. Adding,
