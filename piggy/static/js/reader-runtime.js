@@ -9,6 +9,15 @@
     "td",
     "th",
   ].join(",");
+  const AUDIO_NESTED_CONTAINER_SELECTOR = [
+    "p",
+    "ul",
+    "ol",
+    "table",
+    "pre",
+    "details",
+    ".highlight",
+  ].join(",");
   const AUDIO_HEADING_SELECTOR = "h1, h2, h3, h4, h5, h6";
   const AUDIO_SKIP_SELECTOR = [
     "a",
@@ -18,7 +27,6 @@
     "pre",
     ".highlight",
     ".MathJax",
-    ".arithmatex",
     ".md-code__nav",
   ].join(",");
   const AUDIO_TEXT_SKIP_SELECTOR = [
@@ -28,7 +36,6 @@
     "pre",
     ".highlight",
     ".MathJax",
-    ".arithmatex",
     ".md-code__nav",
   ].join(",");
   const AUDIO_INTERACTIVE_SELECTOR = [
@@ -41,6 +48,123 @@
     "summary",
     "[contenteditable='true']",
   ].join(",");
+  const SENTENCE_BOUNDARY_CHARS = ".!?";
+  const SENTENCE_CLOSING_CHARS = "\"')]}»”’";
+  const ABBREVIATIONS = new Set([
+    "adm",
+    "bl.a",
+    "ca",
+    "dvs",
+    "e.g",
+    "etc",
+    "f.eks",
+    "fig",
+    "i.e",
+    "kap",
+    "m.m",
+    "mr",
+    "mrs",
+    "ms",
+    "nr",
+    "osv",
+    "prof",
+    "st",
+    "vs",
+  ]);
+  const CODE_FILE_EXTENSIONS = new Set([
+    "bat",
+    "c",
+    "cpp",
+    "cs",
+    "css",
+    "csv",
+    "db",
+    "env",
+    "gif",
+    "go",
+    "html",
+    "java",
+    "jpeg",
+    "jpg",
+    "js",
+    "json",
+    "jsx",
+    "log",
+    "m4a",
+    "md",
+    "mp3",
+    "ogg",
+    "opus",
+    "pdf",
+    "php",
+    "png",
+    "py",
+    "rb",
+    "rs",
+    "sh",
+    "sql",
+    "svg",
+    "toml",
+    "ts",
+    "tsx",
+    "txt",
+    "wav",
+    "webm",
+    "webp",
+    "yaml",
+    "yml",
+    "zip",
+  ]);
+  const DOCTYPE_PATTERN = /^<!\s*doctype\s+html\s*>$/i;
+  const DOCTYPE_TEXT_PATTERN = /<!\s*doctype\s+html\s*>/gi;
+  const HTML_TAG_PATTERN = /^<\s*(\/)?\s*([a-zA-Z][\w:-]*)(?:\s+[^<>]*)?>$/;
+  const HTML_TAG_TEXT_PATTERN = /<\s*(\/)?\s*([a-zA-Z][\w:-]*)(?:\s+[^<>]*)?>/g;
+  const LATEX_INLINE_PATTERN = /\\\((.*?)\\\)|\\\[(.*?)\\\]/g;
+  const LATEX_COMMAND_REPLACEMENTS = [
+    ["\\cdot", " times "],
+    ["\\times", " times "],
+    ["\\lfloor", "floor of "],
+    ["\\rfloor", ""],
+    ["\\left", ""],
+    ["\\right", ""],
+  ];
+  const LATEX_BACKSLASH_COMMAND_PATTERN = /\\([A-Za-z]+)/g;
+  const FUNCTION_CALL_PATTERN = /\b([A-Za-z_][\w-]*)\s*\(\)/g;
+  const FUNCTION_ARGS_PATTERN = /\b([A-Za-z_][\w-]*)\(\s*([^()]{1,32})\s*\)/g;
+  const SHELL_POSITIONAL_ARG_PATTERN = /\$(\d+)/g;
+  const PYTHON_REVERSE_SLICE_PATTERN =
+    /\b([A-Za-z_][\w-]*)\s*\[\s*::\s*-1\s*\]/g;
+  const INDEX_ACCESS_PATTERN =
+    /\b([A-Za-z_][\w-]*)\[\s*([A-Za-z_][\w-]*|\d+)\s*\]/g;
+  const EMPTY_BRACKETS_PATTERN = /\[\s*\]/g;
+  const BRACKETED_LIST_PATTERN = /\[([^[\]]*,[^[\]]*)\]/g;
+  const CITATION_LABEL_PATTERN = /\s*\[[A-Za-z]\]\s*/g;
+  const SIMPLE_BRACKETS_PATTERN = /\[([^[\]]{1,48})\]/g;
+  const QUOTED_CODE_TOKEN_PATTERN = /["“”']([A-Za-z0-9_]+)["“”']/g;
+  const SPACE_BEFORE_PUNCTUATION_PATTERN = /\s+([,.;:!?])/g;
+  const DUPLICATE_COMMA_PATTERN = /,\s*,+/g;
+  const FILE_EXTENSION_PATTERN =
+    /\b([A-Za-z0-9][A-Za-z0-9_-]*)\.([A-Za-z0-9]{1,8})\b/g;
+  const STANDALONE_EXTENSION_PATTERN = /(^|[^\w.])\.([A-Za-z0-9]{1,8})\b/g;
+  const SPACED_ASCII_ARROW_PATTERN = /\s+-\s+>\s*/g;
+  const INLINE_ARROW_PATTERN = /(?<=\S)\s*(?:->|→|⇒|⟶)\s*(?=\S)/g;
+  const LEADING_ARROW_PATTERN = /(^|\s)(?:->|→|⇒|⟶)\s*/g;
+  const COMPARISON_REPLACEMENTS = [
+    [/!=/g, " is not equal to "],
+    [/==/g, " equals "],
+    [/>=/g, " greater than or equal to "],
+    [/<=/g, " less than or equal to "],
+    [/(?<=\S)\s+>\s+(?=\S)/g, " greater than "],
+    [/(?<=\S)\s+<\s+(?=\S)/g, " less than "],
+  ];
+  const SPACED_MULTIPLY_PATTERN = /\s+\*\s+/g;
+  const SPACED_PLUS_PATTERN = /\s+\+\s+/g;
+  const SPACED_EQUALS_PATTERN = /\s+=\s+/g;
+  const SPACED_NUMERIC_MINUS_PATTERN = /(?<=\d)\s+-\s+(?=\d)/g;
+  const NUMERIC_FACTORIAL_PATTERN =
+    /(?<=\d)!(?=\s*(?:$|=|,|\)|\]|}|\*|·|times))/g;
+  const EMOJI_PATTERN =
+    /[\u2600-\u27bf\ufe0f]|\ud83c[\udf00-\udfff]|\ud83d[\udc00-\udeff]|\ud83e[\udd00-\uddff]/g;
 
   let preferencesApi = null;
   let settingsPageApi = null;
@@ -352,17 +476,12 @@
 
   function isReadableAudioBlock(element) {
     if (!(element instanceof HTMLElement)) return false;
-    if (!normalizeReaderText(element.textContent)) return false;
+    if (!getElementAudioText(element, { includeNestedContainers: false })) {
+      return false;
+    }
     if (element.closest(".settings-reader-preview")) return false;
     if (element.closest(AUDIO_SKIP_SELECTOR)) return false;
     if (element.matches(AUDIO_HEADING_SELECTOR)) return false;
-    if (
-      element.querySelector(
-        ":scope > p, :scope > ul, :scope > ol, :scope > table, :scope > pre, :scope > details, :scope > .highlight",
-      )
-    ) {
-      return false;
-    }
 
     return true;
   }
@@ -370,7 +489,9 @@
   function prepareAudioBlock(block) {
     if (block.dataset.readerAudioPrepared === "true") return;
 
-    const textEntries = getAudioTextEntries(block);
+    const textEntries = getAudioTextEntries(block, {
+      includeNestedContainers: false,
+    });
     const readableText = textEntries.map((entry) => entry.text).join("");
     const normalizedBlockText = normalizeReaderText(readableText);
 
@@ -380,23 +501,30 @@
       .map((segment) => ({
         ...segment,
         text: normalizeReaderText(segment.text),
+        audioText: prepareSentenceAudioText(segment.text),
       }))
-      .filter((segment) => segment.text);
+      .filter((segment) => segment.text && segment.audioText);
 
     if (!sentenceSegments.length) {
-      sentenceSegments.push({
-        start: 0,
-        end: readableText.length,
-        text: normalizedBlockText,
-      });
+      const audioText = prepareSentenceAudioText(normalizedBlockText);
+      if (audioText) {
+        sentenceSegments.push({
+          start: 0,
+          end: readableText.length,
+          text: normalizedBlockText,
+          audioText,
+        });
+      }
     }
+
+    if (!sentenceSegments.length) return;
 
     sentenceSegments.forEach((segment) => {
       segment.id = createAudioId("s", ++sentenceCounter);
       audioItems.set(segment.id, {
         id: segment.id,
         kind: "sentence",
-        text: segment.text,
+        text: segment.audioText,
       });
     });
 
@@ -420,11 +548,17 @@
     });
   }
 
-  function getAudioTextEntries(root) {
+  function getAudioTextEntries(root, options = {}) {
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
         if (!node.nodeValue) return NodeFilter.FILTER_REJECT;
         if (node.parentElement?.closest(AUDIO_TEXT_SKIP_SELECTOR)) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        if (
+          options.includeNestedContainers === false &&
+          isInsideNestedAudioContainer(node, root)
+        ) {
           return NodeFilter.FILTER_REJECT;
         }
         return NodeFilter.FILTER_ACCEPT;
@@ -449,6 +583,19 @@
     }
 
     return entries;
+  }
+
+  function isInsideNestedAudioContainer(node, root) {
+    let current = node.parentElement;
+
+    while (current && current !== root) {
+      if (current.matches(AUDIO_NESTED_CONTAINER_SELECTOR)) {
+        return true;
+      }
+      current = current.parentElement;
+    }
+
+    return false;
   }
 
   function wrapAudioTextEntries(textEntries, sentenceSegments) {
@@ -584,7 +731,7 @@
     const headingText = getElementAudioText(heading);
     const ids = headingText
       ? splitReaderSentences(headingText)
-          .map((segment) => normalizeReaderText(segment.text))
+          .map((segment) => prepareSentenceAudioText(segment.text))
           .filter(Boolean)
           .map((text) => {
             const id = createAudioId("s", ++sentenceCounter);
@@ -601,9 +748,9 @@
     return ids;
   }
 
-  function getElementAudioText(element) {
+  function getElementAudioText(element, options = {}) {
     return normalizeReaderText(
-      getAudioTextEntries(element)
+      getAudioTextEntries(element, options)
         .map((entry) => entry.text)
         .join(""),
     );
@@ -915,25 +1062,277 @@
     if (!text) return [];
 
     const segments = [];
-    const sentencePattern = /[^.!?]+(?:[.!?]+["')\]]*)?|\S+/g;
-    let match = sentencePattern.exec(text);
+    let start = 0;
+    let index = 0;
 
-    while (match) {
-      segments.push({
-        start: match.index,
-        end: match.index + match[0].length,
-        text: match[0],
-      });
-      match = sentencePattern.exec(text);
+    while (index < text.length) {
+      const boundaryEnd = getSentenceBoundaryEnd(text, index);
+      if (boundaryEnd === -1) {
+        index += 1;
+        continue;
+      }
+
+      appendSentenceSegment(segments, text, start, boundaryEnd);
+      start = skipWhitespace(text, boundaryEnd);
+      index = start;
     }
 
-    return segments.filter((segment) => normalizeReaderText(segment.text));
+    appendSentenceSegment(segments, text, start, text.length);
+    return segments;
+  }
+
+  function appendSentenceSegment(segments, text, start, end) {
+    const normalized = normalizeReaderText(text.slice(start, end));
+    if (!normalized) return;
+
+    segments.push({
+      start,
+      end,
+      text: normalized,
+    });
+  }
+
+  function getSentenceBoundaryEnd(text, index) {
+    const char = text[index];
+    if (!SENTENCE_BOUNDARY_CHARS.includes(char)) return -1;
+    if (isInsideAngleToken(text, index)) return -1;
+    if (isInsideFunctionToken(text, index)) return -1;
+    if (char === "!" && isFactorialMarker(text, index)) return -1;
+    if (char === "." && !isPeriodSentenceBoundary(text, index)) return -1;
+    if ((char === "!" || char === "?") && text[index - 1] === "<") return -1;
+
+    let end = index + 1;
+    while (end < text.length && SENTENCE_BOUNDARY_CHARS.includes(text[end])) {
+      end += 1;
+    }
+
+    while (end < text.length && SENTENCE_CLOSING_CHARS.includes(text[end])) {
+      end += 1;
+    }
+
+    if (end >= text.length) return end;
+    if (!/\s/.test(text[end])) return -1;
+
+    return end;
+  }
+
+  function isPeriodSentenceBoundary(text, index) {
+    const previousChar = index > 0 ? text[index - 1] : "";
+    const nextChar = index + 1 < text.length ? text[index + 1] : "";
+
+    if (previousChar === "." || nextChar === ".") {
+      return nextChar !== ".";
+    }
+
+    if (isDigit(previousChar) && isDigit(nextChar)) return false;
+    if (isAlphaNumeric(previousChar) && isAlphaNumeric(nextChar)) return false;
+    if (isSpacedInitialPeriod(text, index)) return false;
+    if (isKnownAbbreviation(text, index)) return false;
+
+    return true;
+  }
+
+  function isSpacedInitialPeriod(text, index) {
+    let tokenStart = index;
+    while (tokenStart > 0 && isAlpha(text[tokenStart - 1])) {
+      tokenStart -= 1;
+    }
+
+    const token = text.slice(tokenStart, index);
+    if (token.length !== 1 || !isAlpha(token)) return false;
+
+    const nextIndex = skipWhitespace(text, index + 1);
+    if (
+      nextIndex + 1 < text.length &&
+      isAlpha(text[nextIndex]) &&
+      text[nextIndex + 1] === "."
+    ) {
+      return true;
+    }
+
+    let previousIndex = tokenStart - 1;
+    while (previousIndex >= 0 && /\s/.test(text[previousIndex])) {
+      previousIndex -= 1;
+    }
+
+    if (previousIndex < 0 || text[previousIndex] !== ".") return false;
+
+    const previousTokenEnd = previousIndex;
+    let previousTokenStart = previousTokenEnd;
+    while (previousTokenStart > 0 && isAlpha(text[previousTokenStart - 1])) {
+      previousTokenStart -= 1;
+    }
+
+    const previousToken = text.slice(previousTokenStart, previousTokenEnd);
+    return previousToken.length === 1 && isAlpha(previousToken);
+  }
+
+  function isKnownAbbreviation(text, index) {
+    let tokenStart = index;
+    while (tokenStart > 0 && isAbbreviationTokenChar(text[tokenStart - 1])) {
+      tokenStart -= 1;
+    }
+
+    const token = text
+      .slice(tokenStart, index)
+      .replace(/^\.+|\.+$/g, "")
+      .toLowerCase();
+    if (ABBREVIATIONS.has(token)) return true;
+
+    const parts = token.split(".").filter(Boolean);
+    return (
+      parts.length > 1 &&
+      parts.every((part) => part.length === 1 && isAlpha(part))
+    );
+  }
+
+  function isInsideAngleToken(text, index) {
+    const tokenStart = text.lastIndexOf("<", index);
+    if (tokenStart === -1) return false;
+
+    const previousClose = text.lastIndexOf(">", index);
+    if (previousClose > tokenStart) return false;
+
+    const tokenEnd = text.indexOf(">", index + 1);
+    if (tokenEnd === -1) return false;
+
+    const token = text.slice(tokenStart, tokenEnd + 1);
+    return DOCTYPE_PATTERN.test(token) || HTML_TAG_PATTERN.test(token);
+  }
+
+  function isInsideFunctionToken(text, index) {
+    const tokenStart = text.lastIndexOf("(", index);
+    if (tokenStart <= 0) return false;
+
+    const previousClose = text.lastIndexOf(")", index);
+    if (previousClose > tokenStart) return false;
+
+    const tokenEnd = text.indexOf(")", index + 1);
+    if (tokenEnd === -1) return false;
+    if (!/[\w-]/.test(text[tokenStart - 1])) return false;
+
+    const tokenPrefix =
+      text.slice(0, tokenStart).trimEnd().split(/\s+/).pop() || "";
+    return /^[A-Za-z_][\w-]*$/.test(tokenPrefix);
+  }
+
+  function isFactorialMarker(text, index) {
+    if (index <= 0 || !/[\w)]/.test(text[index - 1])) return false;
+
+    const nextIndex = skipWhitespace(text, index + 1);
+    if (nextIndex >= text.length) return false;
+
+    return ["=", ",", ")", "]", "}", "·", "*"].includes(text[nextIndex]);
+  }
+
+  function skipWhitespace(text, index) {
+    while (index < text.length && /\s/.test(text[index])) {
+      index += 1;
+    }
+
+    return index;
   }
 
   function normalizeReaderText(text) {
     return String(text || "")
       .replace(/\s+/g, " ")
       .trim();
+  }
+
+  function prepareSentenceAudioText(text) {
+    return normalizeLatexAudioText(normalizeReaderText(text))
+      .replace(EMOJI_PATTERN, "")
+      .replace(DOCTYPE_TEXT_PATTERN, "DOCTYPE html")
+      .replace(HTML_TAG_TEXT_PATTERN, formatHtmlTagForAudio)
+      .replace(SHELL_POSITIONAL_ARG_PATTERN, "argument $1")
+      .replace(PYTHON_REVERSE_SLICE_PATTERN, "$1 reverse slice")
+      .replace(INDEX_ACCESS_PATTERN, "$1 index $2")
+      .replace(EMPTY_BRACKETS_PATTERN, "empty list")
+      .replace(BRACKETED_LIST_PATTERN, "$1")
+      .replace(CITATION_LABEL_PATTERN, " ")
+      .replace(SIMPLE_BRACKETS_PATTERN, "$1")
+      .replace(QUOTED_CODE_TOKEN_PATTERN, "$1")
+      .replace(FUNCTION_CALL_PATTERN, "$1 function")
+      .replace(FUNCTION_ARGS_PATTERN, formatFunctionArgsForAudio)
+      .replace(FILE_EXTENSION_PATTERN, formatFileExtensionForAudio)
+      .replace(STANDALONE_EXTENSION_PATTERN, formatStandaloneExtensionForAudio)
+      .replace(SPACED_ASCII_ARROW_PATTERN, ", ")
+      .replace(INLINE_ARROW_PATTERN, " to ")
+      .replace(LEADING_ARROW_PATTERN, "$1")
+      .replace(COMPARISON_REPLACEMENTS[0][0], COMPARISON_REPLACEMENTS[0][1])
+      .replace(COMPARISON_REPLACEMENTS[1][0], COMPARISON_REPLACEMENTS[1][1])
+      .replace(COMPARISON_REPLACEMENTS[2][0], COMPARISON_REPLACEMENTS[2][1])
+      .replace(COMPARISON_REPLACEMENTS[3][0], COMPARISON_REPLACEMENTS[3][1])
+      .replace(COMPARISON_REPLACEMENTS[4][0], COMPARISON_REPLACEMENTS[4][1])
+      .replace(COMPARISON_REPLACEMENTS[5][0], COMPARISON_REPLACEMENTS[5][1])
+      .replace(NUMERIC_FACTORIAL_PATTERN, " factorial")
+      .replace(SPACED_MULTIPLY_PATTERN, " times ")
+      .replace(SPACED_PLUS_PATTERN, " plus ")
+      .replace(SPACED_EQUALS_PATTERN, " equals ")
+      .replace(SPACED_NUMERIC_MINUS_PATTERN, " minus ")
+      .replace(DUPLICATE_COMMA_PATTERN, ",")
+      .replace(SPACE_BEFORE_PUNCTUATION_PATTERN, "$1")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function normalizeLatexAudioText(text) {
+    let output = String(text || "").replace(
+      LATEX_INLINE_PATTERN,
+      (match, inlineMath, displayMath) => inlineMath || displayMath || "",
+    );
+
+    LATEX_COMMAND_REPLACEMENTS.forEach(([source, replacement]) => {
+      output = output.replaceAll(source, replacement);
+    });
+
+    return output.replace(LATEX_BACKSLASH_COMMAND_PATTERN, "$1");
+  }
+
+  function formatHtmlTagForAudio(match, closingSlash, tagName) {
+    const readableTag = String(tagName || "").replace(/-/g, " ");
+    return closingSlash ? `closing ${readableTag}` : readableTag;
+  }
+
+  function formatFileExtensionForAudio(match, stem, extension) {
+    if (!CODE_FILE_EXTENSIONS.has(String(extension || "").toLowerCase())) {
+      return match;
+    }
+
+    return `${stem} dot ${extension}`;
+  }
+
+  function formatFunctionArgsForAudio(match, functionName, args) {
+    const readableArgs = normalizeReaderText(
+      String(args || "")
+        .replace(/!/g, " factorial")
+        .replace(/\^/g, " to the power of "),
+    );
+    return `${functionName} of ${readableArgs}`;
+  }
+
+  function formatStandaloneExtensionForAudio(match, prefix, extension) {
+    if (!CODE_FILE_EXTENSIONS.has(String(extension || "").toLowerCase())) {
+      return match;
+    }
+
+    return `${prefix}dot ${extension}`;
+  }
+
+  function isDigit(char) {
+    return /^[0-9]$/.test(char);
+  }
+
+  function isAlpha(char) {
+    return /^[A-Za-z]$/.test(char);
+  }
+
+  function isAlphaNumeric(char) {
+    return /^[A-Za-z0-9]$/.test(char);
+  }
+
+  function isAbbreviationTokenChar(char) {
+    return /^[A-Za-z0-9_.]$/.test(char);
   }
 
   function createAudioId(kind, index) {

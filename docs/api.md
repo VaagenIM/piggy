@@ -106,6 +106,18 @@ Sentence audio files are resolved by ID, for example `s-01-0001.mp3`. The first
 number is the assignment level padded to two digits. The second number is the
 sentence, paragraph, or section sequence padded to four digits.
 
+Sentence `text` is normalized for audio generation. Inline links keep their
+visible text, emoji are removed, and common code/math notation is made more
+speech-friendly. Examples include `index.html` -> `index dot html`,
+`<!DOCTYPE html>` -> `DOCTYPE html`, `print()` -> `print function`,
+`text[::-1]` -> `text reverse slice`, `O(n!)` -> `O of n factorial`,
+`5! = 5 \cdot 4` -> `5 factorial equals 5 times 4`, `0 -> 1` -> `0 to 1`,
+`[4, 7, 1]` -> `4, 7, 1`, `[]` -> `empty list`, and `$1` -> `argument 1`.
+
+The splitter avoids breaking on punctuation inside filenames, HTML-like tags,
+decimals, spaced initials, ellipses, factorial notation, and common
+abbreviations.
+
 For generator workflows:
 
 1. Request the audio map for the assignment and language.
