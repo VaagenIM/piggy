@@ -22,6 +22,7 @@ from piggy.piggybank import (
     get_piggymap_segment_from_path,
     get_assignment_data_from_path,
 )
+from piggy.reader_audio import format_audio_level
 from piggy.utils import (
     get_supported_languages,
     generate_summary_from_mkdocs_html,
@@ -179,6 +180,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
         content=sections,
         meta=all_metadata,
         current_language=current_language,
+        reader_audio_level=format_audio_level(assignment_data.get("level", 0)),
         supported_languages=get_supported_languages(assignment_path=assignment_path),
         media_abspath=f"/{MEDIA_ROUTE}/{p.parent}",
         abspath=f"/{ASSIGNMENT_ROUTE}/{p}",

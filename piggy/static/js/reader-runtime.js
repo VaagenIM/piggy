@@ -21,6 +21,16 @@
     ".arithmatex",
     ".md-code__nav",
   ].join(",");
+  const AUDIO_TEXT_SKIP_SELECTOR = [
+    "button",
+    "script",
+    "style",
+    "pre",
+    ".highlight",
+    ".MathJax",
+    ".arithmatex",
+    ".md-code__nav",
+  ].join(",");
   const AUDIO_INTERACTIVE_SELECTOR = [
     "a",
     "button",
@@ -40,6 +50,7 @@
   let audioReaderRoot = null;
   let audioReaderBaseUrl = "";
   let audioReaderLanguage = "";
+  let audioReaderLevel = "00";
   let lastPreferences = null;
   let scrollSaveTimeout = null;
   let initialized = false;
@@ -68,6 +79,9 @@
     audioReaderRoot = document.querySelector("[data-reader-audio-root]");
     audioReaderBaseUrl = audioReaderRoot?.dataset.readerAudioBaseUrl || "";
     audioReaderLanguage = audioReaderRoot?.dataset.readerAudioLanguage || "";
+    audioReaderLevel = formatAudioLevel(
+      audioReaderRoot?.dataset.readerAudioLevel || "0",
+    );
     lastPreferences = preferencesApi.getPreferences();
 
     updateThemeEffects(lastPreferences);
@@ -298,14 +312,42 @@
     paragraphCounter = 0;
     sectionCounter = 0;
 
-    getReadableAudioBlocks(markdownContent).forEach(prepareAudioBlock);
+    const pageHeading = audioReaderRoot.querySelector(".assignment-heading");
+    if (pageHeading) {
+      getHeadingSentenceIds(pageHeading);
+    }
+
+    getReadableAudioTargets(markdownContent).forEach((element) => {
+      if (element.matches(AUDIO_HEADING_SELECTOR)) {
+        getHeadingSentenceIds(element);
+        return;
+      }
+
+      prepareAudioBlock(element);
+    });
+
     prepareAudioSections();
   }
 
-  function getReadableAudioBlocks(root) {
-    return [...root.querySelectorAll(AUDIO_BLOCK_SELECTOR)].filter(
-      isReadableAudioBlock,
+  function getReadableAudioTargets(root) {
+    return [
+      ...root.querySelectorAll(
+        `${AUDIO_HEADING_SELECTOR}, ${AUDIO_BLOCK_SELECTOR}`,
+      ),
+    ].filter((element) =>
+      element.matches(AUDIO_HEADING_SELECTOR)
+        ? isReadableAudioHeading(element)
+        : isReadableAudioBlock(element),
     );
+  }
+
+  function isReadableAudioHeading(element) {
+    if (!(element instanceof HTMLElement)) return false;
+    if (!normalizeReaderText(element.textContent)) return false;
+    if (element.closest(".settings-reader-preview")) return false;
+    if (element.closest(AUDIO_SKIP_SELECTOR)) return false;
+
+    return true;
   }
 
   function isReadableAudioBlock(element) {
@@ -350,7 +392,7 @@
     }
 
     sentenceSegments.forEach((segment) => {
-      segment.id = createAudioId("s", ++sentenceCounter, segment.text);
+      segment.id = createAudioId("s", ++sentenceCounter);
       audioItems.set(segment.id, {
         id: segment.id,
         kind: "sentence",
@@ -360,11 +402,7 @@
 
     wrapAudioTextEntries(textEntries, sentenceSegments);
 
-    const paragraphId = createAudioId(
-      "p",
-      ++paragraphCounter,
-      normalizedBlockText,
-    );
+    const paragraphId = createAudioId("p", ++paragraphCounter);
     const sentenceIds = sentenceSegments.map((segment) => segment.id);
 
     block.dataset.readerAudioPrepared = "true";
@@ -383,19 +421,15 @@
   }
 
   function getAudioTextEntries(root) {
-    const walker = document.createTreeWalker(
-      root,
-      NodeFilter.SHOW_TEXT,
-      {
-        acceptNode(node) {
-          if (!node.nodeValue) return NodeFilter.FILTER_REJECT;
-          if (node.parentElement?.closest(AUDIO_SKIP_SELECTOR)) {
-            return NodeFilter.FILTER_REJECT;
-          }
-          return NodeFilter.FILTER_ACCEPT;
-        },
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (!node.nodeValue) return NodeFilter.FILTER_REJECT;
+        if (node.parentElement?.closest(AUDIO_TEXT_SKIP_SELECTOR)) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return NodeFilter.FILTER_ACCEPT;
       },
-    );
+    });
 
     const entries = [];
     let offset = 0;
@@ -408,6 +442,7 @@
         text,
         start: offset,
         end: offset + text.length,
+        wrappable: !node.parentElement?.closest(AUDIO_INTERACTIVE_SELECTOR),
       });
       offset += text.length;
       node = walker.nextNode();
@@ -418,6 +453,8 @@
 
   function wrapAudioTextEntries(textEntries, sentenceSegments) {
     textEntries.forEach((entry) => {
+      if (!entry.wrappable) return;
+
       const fragment = document.createDocumentFragment();
       let localOffset = 0;
 
@@ -468,7 +505,9 @@
 
   function prepareAudioSections() {
     const pageHeading = audioReaderRoot.querySelector(".assignment-heading");
-    const headings = [...markdownContent.querySelectorAll(AUDIO_HEADING_SELECTOR)];
+    const headings = [
+      ...markdownContent.querySelectorAll(AUDIO_HEADING_SELECTOR),
+    ];
 
     if (pageHeading) {
       getHeadingSentenceIds(pageHeading);
@@ -494,7 +533,7 @@
 
     if (!sequence.length) return;
 
-    const sectionId = createAudioId("sec", ++sectionCounter, headingText);
+    const sectionId = createAudioId("sec", ++sectionCounter);
 
     heading.dataset.readerAudioSection = sectionId;
     heading.dataset.readerAudioSequence = sequence.join(" ");
@@ -548,7 +587,7 @@
           .map((segment) => normalizeReaderText(segment.text))
           .filter(Boolean)
           .map((text) => {
-            const id = createAudioId("s", ++sentenceCounter, text);
+            const id = createAudioId("s", ++sentenceCounter);
             audioItems.set(id, {
               id,
               kind: "sentence",
@@ -592,7 +631,9 @@
           return;
         }
 
-        output.push(...splitAudioSequence(element.dataset.readerAudioSentenceIds));
+        output.push(
+          ...splitAudioSequence(element.dataset.readerAudioSentenceIds),
+        );
       });
   }
 
@@ -793,7 +834,8 @@
       }
     }
 
-    activeAudioSource = sourceElement instanceof HTMLElement ? sourceElement : null;
+    activeAudioSource =
+      sourceElement instanceof HTMLElement ? sourceElement : null;
 
     if (activeAudioSource) {
       activeAudioSource.dataset.readerAudioState = "playing";
@@ -872,20 +914,6 @@
   function splitReaderSentences(text) {
     if (!text) return [];
 
-    if (window.Intl?.Segmenter) {
-      const segmenter = new Intl.Segmenter(undefined, {
-        granularity: "sentence",
-      });
-
-      return [...segmenter.segment(text)]
-        .map((segment) => ({
-          start: segment.index,
-          end: segment.index + segment.segment.length,
-          text: segment.segment,
-        }))
-        .filter((segment) => normalizeReaderText(segment.text));
-    }
-
     const segments = [];
     const sentencePattern = /[^.!?]+(?:[.!?]+["')\]]*)?|\S+/g;
     let match = sentencePattern.exec(text);
@@ -908,20 +936,18 @@
       .trim();
   }
 
-  function createAudioId(kind, index, text) {
-    return `${kind}-${String(index).padStart(3, "0")}-${hashReaderText(text)}`;
+  function createAudioId(kind, index) {
+    return `${kind}-${audioReaderLevel}-${String(index).padStart(4, "0")}`;
   }
 
-  function hashReaderText(text) {
-    const normalized = normalizeReaderText(text).toLowerCase();
-    let hash = 2166136261;
-
-    for (let i = 0; i < normalized.length; i += 1) {
-      hash ^= normalized.charCodeAt(i);
-      hash = Math.imul(hash, 16777619);
+  function formatAudioLevel(value) {
+    const parsed = Number.parseInt(String(value || "").trim(), 10);
+    if (Number.isFinite(parsed)) {
+      return String(Math.max(0, parsed)).padStart(2, "0");
     }
 
-    return (hash >>> 0).toString(36).padStart(7, "0").slice(0, 9);
+    const digits = String(value || "").replace(/\D+/g, "");
+    return digits ? digits.padStart(2, "0") : "00";
   }
 
   function getAudioInventory() {

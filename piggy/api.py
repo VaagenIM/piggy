@@ -1,12 +1,18 @@
 from hashlib import md5
 from html import unescape
+from pathlib import Path
 
 from flask import Blueprint, request, jsonify
 
+from piggy import ASSIGNMENT_ROUTE, AssignmentTemplate
+from piggy.caching import _mdfile_to_sections_with_retry
+from piggy.exceptions import PiggyHTTPException
+from piggy.models import LANGUAGES
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
+from piggy.reader_audio import build_reader_audio_map
 from piggy.search import build_search_index
 from piggy.thumbnails import create_thumbnail
-from piggy.utils import serve_pil_image, lru_cache_wrapper, process_json_for_api
+from piggy.utils import serve_pil_image, lru_cache_wrapper, process_json_for_api, normalize_path_to_str
 
 api_routes = Blueprint("api", __name__, url_prefix="/api")
 
@@ -80,6 +86,59 @@ def generate_thumbnail(text: str, request=request):
     # create the thumbnail
     img = create_thumbnail(_text, bg_color, text_color, (width, height)).convert("RGB")
     return serve_pil_image(img)
+
+
+@api_routes.route("/get-audio-map/<path:route>", strict_slashes=False)
+def api_reader_audio_map(route):
+    """Return the reader audio IDs and text for an assignment."""
+    lang = request.args.get("lang", "").strip()
+    route, lang = normalize_audio_map_route(route, lang)
+    return jsonify(get_reader_audio_map_from_route(route, lang))
+
+
+def normalize_audio_map_route(route: str, lang: str = "") -> tuple[str, str]:
+    route = normalize_path_to_str(route.strip("/"), replace_spaces=True)
+
+    if route.startswith(f"{ASSIGNMENT_ROUTE}/"):
+        route = route.removeprefix(f"{ASSIGNMENT_ROUTE}/")
+
+    parts = [part for part in route.split("/") if part]
+    if len(parts) >= 2 and parts[-2] == "lang":
+        lang = lang or parts[-1]
+        parts = parts[:-2]
+
+    return "/".join(parts), lang
+
+
+@lru_cache_wrapper
+def get_reader_audio_map_from_route(route: str, lang: str = ""):
+    if lang and lang not in LANGUAGES:
+        raise PiggyHTTPException("Audio map not found", status_code=404)
+
+    route = normalize_path_to_str(route, replace_spaces=True)
+    if len([part for part in route.split("/") if part]) != AssignmentTemplate.ASSIGNMENT.index:
+        raise PiggyHTTPException("Audio map not found", status_code=404)
+
+    _, segment = get_piggymap_segment_from_path(route, PIGGYMAP)
+    assignment_path = segment.get("path", Path())
+
+    if not assignment_path:
+        raise PiggyHTTPException("Audio map not found", status_code=404)
+
+    render_path = assignment_path
+    if lang:
+        render_path = assignment_path.parent / "translations" / lang / assignment_path.name
+        if not render_path.exists():
+            raise PiggyHTTPException("Audio map not found", status_code=404)
+
+    sections = _mdfile_to_sections_with_retry(render_path)
+    level = segment.get("level", 0)
+
+    return build_reader_audio_map(
+        sections.get("body", ""),
+        sections.get("heading", ""),
+        level,
+    )
 
 
 @api_routes.route("/<path:route>")

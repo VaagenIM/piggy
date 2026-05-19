@@ -1,6 +1,5 @@
 import html
 import os
-import re
 from pathlib import Path
 from urllib.parse import quote, urlsplit
 
@@ -16,6 +15,7 @@ from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
 from piggy.models import LANGUAGES
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
+from piggy.reader_audio import READER_AUDIO_ALLOWED_SUFFIXES, READER_AUDIO_ID_RE
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes, startup_tasks
 
 # Ensure the working directory is the root of the project
@@ -23,17 +23,6 @@ os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
 
 
 # TODO: Logging
-
-READER_AUDIO_ALLOWED_SUFFIXES = {
-    ".mp3": "audio/mpeg",
-    ".m4a": "audio/mp4",
-    ".ogg": "audio/ogg",
-    ".opus": "audio/ogg",
-    ".wav": "audio/wav",
-    ".webm": "audio/webm",
-}
-READER_AUDIO_ID_RE = re.compile(r"^(?:s|p|sec)-\d{3,5}-[a-z0-9]{6,12}$")
-
 
 def create_app(debug: bool = False) -> Flask:
     app = Flask(__name__, static_folder="static")
