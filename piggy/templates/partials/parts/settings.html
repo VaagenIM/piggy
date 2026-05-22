@@ -1,11 +1,10 @@
 {% set settings_source_path = settings_return_to if settings_return_to is defined else request.full_path.rstrip('?') %}
 {% set is_settings_page = request.endpoint == "settings_page" %}
-{% set settings_button_href = settings_source_path if is_settings_page else url_for('settings_page', return_to=settings_source_path) %}
 
 <a
   id="settings-button"
   class="piggy-button piggy-button--m site-nav-menu-button site-settings-button{% if is_settings_page %}site-settings-button--back{% endif %}"
-  href="{{ settings_button_href|e }}"
+  href="#settings"
   data-settings-open-label="Settings"
   data-settings-close-label="Back"
   data-settings-open-title="Settings"

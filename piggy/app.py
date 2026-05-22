@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 from urllib.parse import quote, urlsplit
 
-from flask import Flask, send_file, request, Blueprint, render_template, redirect, url_for
+from flask import Flask, send_file, request, Blueprint, render_template, redirect
 from flask_squeeze import Squeeze
 from jinja2 import ChoiceLoader, FileSystemLoader
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -116,27 +116,6 @@ def create_app(debug: bool = False) -> Flask:
         path = quote(parts.path or "/", safe="/%:@-._~")
         query = quote(parts.query, safe="=&%:@/?-._~")
         return f"{path}?{query}" if query else path
-
-    @app.route("/settings")
-    def settings_page():
-        raw_return_to = request.args.get("return_to", "/")
-        has_return_to = "return_to" in request.args
-        return_to = sanitize_internal_return_path(raw_return_to)
-
-        return render_template(
-            "settings.html",
-            meta={
-                "name": "Settings",
-                "description": "Site settings for Piggy.",
-                "thumbnail": url_for(
-                    "static",
-                    filename="img/icons/piggy_icon.png",
-                    _external=True,
-                ),
-            },
-            settings_return_to=return_to,
-            settings_has_return_to=has_return_to,
-        )
 
     @app.route("/service-worker.js")
     def service_worker():
