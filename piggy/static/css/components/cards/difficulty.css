@@ -19,6 +19,7 @@
   height: max-content;
   white-space: nowrap;
   font-size: calc(0.85rem * var(--piggy-font-scale));
+  line-height: calc(1.25 / 0.875);
 }
 
 .difficulty-icon {

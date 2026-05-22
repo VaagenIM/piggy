@@ -37,7 +37,10 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: 0.65px;
-  filter: drop-shadow(1px 0 0 var(--piggy-logo-border)) drop-shadow(-1px 0 0 var(--piggy-logo-border)) drop-shadow(0 1px 0 var(--piggy-logo-border)) drop-shadow(0 -1px 0 var(--piggy-logo-border));
+  filter: drop-shadow(1px 0 0 var(--piggy-logo-border))
+    drop-shadow(-1px 0 0 var(--piggy-logo-border))
+    drop-shadow(0 1px 0 var(--piggy-logo-border))
+    drop-shadow(0 -1px 0 var(--piggy-logo-border));
   text-shadow: none;
   transition: 0.2s;
 }

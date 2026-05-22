@@ -3,6 +3,7 @@
 \*****************/
 .card-container {
   position: relative;
+  display: block;
   background: linear-gradient(
     45deg,
     var(--piggy-card-start) 0%,
@@ -14,8 +15,11 @@
     box-shadow 0.1s ease;
   box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
   border-color: var(--piggy-card-border);
+  border-style: solid;
   border-width: var(--piggy-card-border-width);
   border-radius: 1rem;
+  padding: 0.75rem;
+  text-decoration: none;
 }
 
 .card-container:hover {
@@ -28,8 +32,11 @@
 .card-title {
   color: var(--piggy-text-title);
   font-size: calc(1.25rem * var(--piggy-font-scale));
+  font-weight: 800;
+  line-height: calc(2 / 1.5);
   width: 100%;
   text-align: center;
+  padding-bottom: 0.25rem;
 }
 
 .card-header {
@@ -39,5 +46,7 @@
 .description-container {
   color: var(--piggy-text-description);
   border-top: 1px solid var(--piggy-text-description);
+  margin-top: 0.5rem;
   padding-top: 10px;
+  font-weight: 600;
 }

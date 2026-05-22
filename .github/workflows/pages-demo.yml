@@ -36,11 +36,6 @@ jobs:
       - name: Set up Python
         run: uv python install
 
-      - name: Set up npm
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-
       - name: Cleanup earlier runs
         run: |
           rm -rf piggybank
@@ -59,7 +54,6 @@ jobs:
       - name: Install dependencies
         run: |
           uv pip install .
-          npm install --omit=dev
           echo "GITHUB_PAGES=1" >> $GITHUB_ENV
           echo "USE_CACHE=0" >> $GITHUB_ENV
           uv pip install -r .github/workflows/requirements-pages.txt

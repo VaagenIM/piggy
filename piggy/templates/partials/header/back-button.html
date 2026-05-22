@@ -3,7 +3,6 @@
   {% if path_segments|length >= 2 and "lang" == path_segments[-2] %}
     {% set path_segments = path_segments[:-2] %}
   {% endif %}
-
   {% set current_template_name = get_template_name_from_index(path_segments|length) %}
 
   {% if path_segments|length > 1 and current_template_name != "class_name" %}
@@ -18,7 +17,6 @@
         {% set back_steps = 2 %}
       {% endif %}
     {% endif %}
-
     {% set parent_segments = path_segments[:-back_steps] %}
     {% set parent_path = "/" ~ (parent_segments | join("/")) %}
     {% set parent_slug = parent_segments[-1] %}
