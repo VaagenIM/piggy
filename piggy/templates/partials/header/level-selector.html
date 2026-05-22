@@ -11,7 +11,6 @@
   {% else %}
     {% set level_text = "Level" %}
   {% endif %}
-
   {% set levels = levels_data.data.items() | sort_by_level %}
 
   {% if levels|length > 1 %}
@@ -117,7 +116,6 @@
           {% else %}
             {% set level_difficulty = "-1" %}
           {% endif %}
-
           {% set level_title = level_meta.title or level_meta.name %}
           {% set level_has_difficulty = level_difficulty|int > 0 and level_difficulty|int <= 5 %}
 

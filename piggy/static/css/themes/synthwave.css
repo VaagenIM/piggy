@@ -347,8 +347,7 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 
 [data-theme="synthwave"] .background-overlay {
   height: 200%;
-  background-image:
-    linear-gradient(
+  background-image: linear-gradient(
       to right,
       transparent 0%,
       transparent 98%,

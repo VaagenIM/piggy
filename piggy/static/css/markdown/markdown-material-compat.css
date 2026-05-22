@@ -98,12 +98,12 @@
   --md-admonition-bg-color: var(--piggy-admonition-bg);
   --md-warning-fg-color: var(--piggy-text-main);
   --md-warning-bg-color: var(--piggy-admonition-warning-bg);
-  --md-shadow-z1:
-    0 0.2rem 0.5rem rgba(0, 0, 0, 0.05), 0 0 0.05rem rgba(0, 0, 0, 0.1);
-  --md-shadow-z2:
-    0 0.2rem 0.5rem rgba(0, 0, 0, 0.1), 0 0 0.05rem rgba(0, 0, 0, 0.25);
-  --md-shadow-z3:
-    0 0.2rem 0.5rem rgba(0, 0, 0, 0.2), 0 0 0.05rem rgba(0, 0, 0, 0.35);
+  --md-shadow-z1: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05),
+    0 0 0.05rem rgba(0, 0, 0, 0.1);
+  --md-shadow-z2: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1),
+    0 0 0.05rem rgba(0, 0, 0, 0.25);
+  --md-shadow-z3: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2),
+    0 0 0.05rem rgba(0, 0, 0, 0.35);
 }
 
 :root {
