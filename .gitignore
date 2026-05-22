@@ -10,7 +10,6 @@ uv.lock
 .vscode/
 .env
 
-tailwind.css
 print_overrides.css
 
 turtleconvert/
