@@ -27,72 +27,53 @@ textarea {
   font-family: var(--piggy-site-font-family) !important;
 }
 
-:root[data-reader-font="default"],
-:root[data-font-theme="default"] {
+:root:is([data-reader-font="default"], [data-font-theme="default"]) {
   --piggy-site-font-family: "Noto Sans", sans-serif;
 }
 
-:root[data-reader-font="atkinson"],
-:root[data-font-theme="atkinson"] {
+:root:is([data-reader-font="atkinson"], [data-font-theme="atkinson"]) {
   --piggy-site-font-family: "Atkinson Hyperlegible", Arial, sans-serif;
 }
 
-:root[data-reader-font="lexend"],
-:root[data-font-theme="lexend"] {
+:root:is([data-reader-font="lexend"], [data-font-theme="lexend"]) {
   --piggy-site-font-family: "Lexend", "Noto Sans", sans-serif;
 }
 
-:root[data-reader-font="bitter"],
-:root[data-font-theme="bitter"] {
+:root:is([data-reader-font="bitter"], [data-font-theme="bitter"]) {
   --piggy-site-font-family: "Bitter", serif;
 }
 
-:root[data-reader-font="nunito"],
-:root[data-font-theme="nunito"] {
+:root:is([data-reader-font="nunito"], [data-font-theme="nunito"]) {
   --piggy-site-font-family: "Nunito", "Noto Sans", sans-serif;
 }
 
-:root[data-reader-font="lato"],
-:root[data-font-theme="lato"] {
+:root:is([data-reader-font="lato"], [data-font-theme="lato"]) {
   --piggy-site-font-family: "Lato", "Noto Sans", sans-serif;
 }
 
-:root[data-reader-font="quicksand"],
-:root[data-font-theme="quicksand"] {
+:root:is([data-reader-font="quicksand"], [data-font-theme="quicksand"]) {
   --piggy-site-font-family: "Quicksand", sans-serif;
 }
 
-:root[data-reader-font="arial"],
-:root[data-font-theme="arial"] {
+:root:is([data-reader-font="arial"], [data-font-theme="arial"]) {
   --piggy-site-font-family: Arial, Helvetica, sans-serif;
 }
 
-:root[data-reader-font="lexia"],
-:root[data-font-theme="lexia"] {
+:root:is([data-reader-font="lexia"], [data-font-theme="lexia"]) {
   --piggy-site-font-family: "Lexia", "Comic Sans MS", sans-serif;
 }
 
-:root[data-reader-font="open-dyslexic"],
-:root[data-font-theme="open-dyslexic"] {
+:root:is(
+  [data-reader-font="open-dyslexic"],
+  [data-font-theme="open-dyslexic"]
+) {
   --piggy-site-font-family: "OpenDyslexic", "Comic Sans MS", sans-serif;
 }
 
-:root[data-reader-font="times"],
-:root[data-font-theme="times"] {
-  --piggy-site-font-family: "Times New Roman", Times, serif;
-}
-
-:root[data-reader-font="courier"],
-:root[data-font-theme="courier"] {
-  --piggy-site-font-family: "Courier New", Courier, monospace;
-}
-
-:root[data-reader-font="georgia"],
-:root[data-font-theme="georgia"] {
+:root:is([data-reader-font="georgia"], [data-font-theme="georgia"]) {
   --piggy-site-font-family: Georgia, serif;
 }
 
-:root[data-reader-font="verdana"],
-:root[data-font-theme="verdana"] {
+:root:is([data-reader-font="verdana"], [data-font-theme="verdana"]) {
   --piggy-site-font-family: Verdana, Geneva, sans-serif;
 }

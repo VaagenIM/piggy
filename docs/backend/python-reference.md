@@ -232,6 +232,7 @@ Handles cache warming and assignment rendering.
 | Function | Purpose |
 | --- | --- |
 | `remove_turtleconverter_stylesheets(head)` | Removes generated TurtleConverter stylesheet links from assignment head HTML. |
+| `simplify_turtleconverter_body(body)` | Keeps TurtleConverter's rendered markdown article but removes the invisible Material page shell around it. |
 | `cache_directory(segment, fn, _path="")` | Recursively calls the assignment render function for folders, assignments, and available translations. |
 | `_mdfile_to_sections_with_retry(path, retries=0)` | Calls TurtleConverter `mdfile_to_sections()` and retries once for a known temporary-file startup race. |
 | `_render_assignment(p, extra_metadata=None)` | Converts one markdown file to HTML, builds metadata, language data, media paths, and renders the final assignment template. |
@@ -393,4 +394,3 @@ Project exceptions and HTTP normalization.
 ## `piggy/devtools.py`
 
 `inject_devtools(app)` registers an `after_request` hook that inserts the livereload script before `</body>` for successful HTML responses. It is only used by `run.py` in direct development mode.
-

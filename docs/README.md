@@ -55,8 +55,8 @@ At request time:
 | Group | Files | Where documented |
 | --- | ---: | --- |
 | Python | 11 project modules plus `run.py` | [Python Reference](backend/python-reference.md) |
-| HTML/Jinja | 44 templates/partials/macros | [Templates](frontend/templates.md) |
-| CSS | 70 CSS files, including vendor CSS | [CSS Reference](frontend/css.md) |
+| HTML/Jinja | 41 templates/partials/macros | [Templates](frontend/templates.md) |
+| CSS | 69 CSS files, including vendor CSS | [CSS Reference](frontend/css.md) |
 | JavaScript | 19 JS files, including vendor/minified Lunr | [JavaScript Reference](frontend/javascript.md) |
 | Content | Markdown, JSON metadata, media, translations | [Content Authoring](backend/content-authoring.md) |
 | Tooling/config | Docker, pyproject, package, workflows, ignores | [Tooling and Deployment](backend/tooling-deployment.md) |
@@ -106,4 +106,3 @@ Docker Compose exposes the app on port `5000` and mounts local `./piggybank` int
 - Frontend settings are driven by `data-*` attributes on `document.documentElement`; CSS reacts to those attributes.
 - Theme metadata lives in CSS comment blocks and is parsed by Python at startup.
 - Generated/dependency folders are not source of truth: `.venv/`, `node_modules/`, `build/`, caches, `__pycache__/`, `piggy/static/turtleconvert/`, and generated `print_overrides.css`.
-

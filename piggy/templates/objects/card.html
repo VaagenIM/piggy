@@ -1,9 +1,9 @@
 {%
   macro card(
-      overlay_text,
-      difficulty,
-      tags,
-      level_count,
+      overlay_text='',
+      difficulty=none,
+      tags=none,
+      level_count=0,
       extra_classes='',
       abspath='',
       item='',
@@ -12,7 +12,6 @@
       description='description',
       thumbnail='',
       thumbnail_alt='thumbnail alt',
-      card_type='',
       show_title=true,
       show_levels=true,
       show_difficulty=true,
@@ -22,23 +21,9 @@
       show_thumbnail=true
   )
 %}
-  {% if card_type == 'information' %}
-    {% set badge = '' %}
-  {% else %}
-    {% set badge = '' %}
-  {% endif %}
-
   <a
     href="{{ abspath }}/{{ item }}"
-    class="card card-container {{ extra_classes }} {{ wrapper_classes }}"
-    data-title="{{ title|lower }}"
-    data-description="{{ description|lower }}"
-    data-tags="{{ tags|join(' ')|lower }}"
-    data-overlay-text="{{ overlay_text|lower }}">
-    {% if badge %}
-      {{ badge }}
-    {% endif %}
-
+    class="card card-container {{ extra_classes }}">
     {% if show_title and title %}
       <div class="card-header">
         <div class="card-title">{{ title }}</div>

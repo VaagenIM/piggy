@@ -1,66 +1,51 @@
 /***************************\
 |*  MONOSPACE FONT THEMES  *|
 \***************************/
-:root[data-code-font="default"],
-[data-mono-theme="default"] {
+:root:is([data-code-font="default"], [data-mono-theme="default"]) {
   --piggy-monospace-font-family: "Cascadia Code PL", monospace;
 }
 
-:root[data-code-font="fira-code"],
-[data-mono-theme="fira-code"] {
+:root:is([data-code-font="fira-code"], [data-mono-theme="fira-code"]) {
   --piggy-monospace-font-family: "Fira Code", monospace;
 }
 
-:root[data-code-font="atkinson-mono"],
-[data-mono-theme="atkinson-mono"] {
+:root:is([data-code-font="atkinson-mono"], [data-mono-theme="atkinson-mono"]) {
   --piggy-monospace-font-family:
     "Atkinson Hyperlegible Mono", "Cascadia Code PL", monospace;
 }
 
-:root[data-code-font="roboto-mono"],
-[data-mono-theme="roboto-mono"] {
+:root:is([data-code-font="roboto-mono"], [data-mono-theme="roboto-mono"]) {
   --piggy-monospace-font-family: "Roboto Mono", monospace;
 }
 
-:root[data-code-font="jetbrains-mono"],
-[data-mono-theme="jetbrains-mono"] {
+:root:is(
+  [data-code-font="jetbrains-mono"],
+  [data-mono-theme="jetbrains-mono"]
+) {
   --piggy-monospace-font-family: "JetBrains Mono", monospace;
 }
 
-:root[data-code-font="dm-mono"],
-[data-mono-theme="dm-mono"] {
+:root:is([data-code-font="dm-mono"], [data-mono-theme="dm-mono"]) {
   --piggy-monospace-font-family: "DM Mono", monospace;
 }
 
-:root[data-code-font="ubuntu-mono"],
-[data-mono-theme="ubuntu-mono"] {
+:root:is([data-code-font="ubuntu-mono"], [data-mono-theme="ubuntu-mono"]) {
   --piggy-monospace-font-family: "Ubuntu Mono", monospace;
 }
 
-:root[data-code-font="kode-mono"],
-[data-mono-theme="kode-mono"] {
+:root:is([data-code-font="kode-mono"], [data-mono-theme="kode-mono"]) {
   --piggy-monospace-font-family: "Kode Mono", monospace;
 }
 
-:root[data-code-font="lucida"],
-[data-mono-theme="lucida"] {
+:root:is([data-code-font="lucida"], [data-mono-theme="lucida"]) {
   --piggy-monospace-font-family: "Lucida Console", monospace;
 }
 
-:root[data-code-font="courier"],
-[data-mono-theme="courier"] {
+:root:is([data-code-font="courier"], [data-mono-theme="courier"]) {
   --piggy-monospace-font-family: "Courier New", monospace;
 }
 
-[data-code-font]
-  :is(
-    code,
-    .md-content .highlighttable .filename,
-    .md-content .highlighttable .linenos,
-    .md-content .linenodiv pre,
-    .md-content .linenos .normal
-  ),
-[data-mono-theme]
+:root:is([data-code-font], [data-mono-theme])
   :is(
     code,
     .md-content .highlighttable .filename,
@@ -71,15 +56,7 @@
   font-family: var(--piggy-monospace-font-family) !important;
 }
 
-:root[data-code-font="dm-mono"]
-  :is(
-    code,
-    .md-content .highlighttable .filename,
-    .md-content .highlighttable .linenos,
-    .md-content .linenodiv pre,
-    .md-content .linenos .normal
-  ),
-[data-mono-theme="dm-mono"]
+:root:is([data-code-font="dm-mono"], [data-mono-theme="dm-mono"])
   :is(
     code,
     .md-content .highlighttable .filename,
@@ -91,15 +68,7 @@
   font-style: normal;
 }
 
-:root[data-code-font="ubuntu-mono"]
-  :is(
-    code,
-    .md-content .highlighttable .filename,
-    .md-content .highlighttable .linenos,
-    .md-content .linenodiv pre,
-    .md-content .linenos .normal
-  ),
-[data-mono-theme="ubuntu-mono"]
+:root:is([data-code-font="ubuntu-mono"], [data-mono-theme="ubuntu-mono"])
   :is(
     code,
     .md-content .highlighttable .filename,

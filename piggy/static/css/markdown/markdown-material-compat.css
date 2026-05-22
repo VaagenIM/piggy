@@ -2,8 +2,7 @@
 |* MKDOCS / MATERIAL COMPATIBILITY LAYER  *|
 \*******************************************/
 
-:root,
-[data-md-color-scheme] {
+:root {
   --md-hue: 225deg;
   --md-primary-fg-color: var(--piggy-button-active);
   --md-primary-fg-color--light: var(--piggy-button-hover);
@@ -127,38 +126,11 @@
   --md-tasklist-icon--checked: var(--md-tasklist-icon);
 }
 
-.md-toggle,
-.md-option {
-  position: absolute;
-  width: 0;
-  height: 0;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.md-overlay,
-.md-skip,
-.md-dialog {
-  display: none !important;
-}
-
-.md-container,
-.md-main,
 .md-main__inner,
 .md-grid,
 .md-content,
 .md-content__inner {
   min-width: 0;
-}
-
-.md-main {
-  flex-grow: 1;
-}
-
-.md-container {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
 }
 
 .md-grid {
@@ -174,18 +146,6 @@
 
 .md-content__inner {
   margin: 0;
-}
-
-.md-ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.md-icon svg {
-  display: block;
-  width: 1.2rem;
-  height: 1.2rem;
-  fill: currentColor;
 }
 
 .md-typeset {

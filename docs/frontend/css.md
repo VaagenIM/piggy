@@ -134,7 +134,6 @@ The values are applied by `preferences.js` before most scripts run. CSS should r
 | `css/layout/page-shell.css` | Page background, `.main-container`, `.background-overlay`, `.content-wrapper`, and main page framing. |
 | `css/layout/site-header.css` | Header and navbar layout. |
 | `css/layout/titles.css` | Title treatment for folder and assignment pages. |
-| `css/layout/responsive.css` | Present but not imported by `main.css`; currently reserved for future responsive rules. |
 
 The layout CSS assumes `templates/layout.html` as the outer structure:
 
@@ -267,4 +266,3 @@ When changing CSS:
 4. Confirm data-attribute selectors match `preferences.js`.
 5. Check assignment pages and card grids, because they share many variables.
 6. Check print behavior if the change affects markdown content or page layout.
-

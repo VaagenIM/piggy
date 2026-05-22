@@ -63,7 +63,7 @@ The renderer passes:
 | `heading` | Assignment title shown above body. |
 | `meta` | Converted markdown metadata, including title when present. |
 
-Piggy strips generated TurtleConverter stylesheet links from `head` so the local CSS system remains in control.
+Piggy strips generated TurtleConverter stylesheet links from `head` so the local CSS system remains in control. It also simplifies `body` before rendering: the hidden Material drawer/search/skip shell is removed, while the visible markdown wrapper classes (`md-main__inner`, `md-grid`, `md-content`, `md-content__inner`, `md-typeset`) are kept so layout and markdown CSS preserve the same appearance.
 
 ### Metadata Merge Order
 
@@ -248,4 +248,3 @@ Non-debug errors are normalized and rendered through `error.html`.
 | Unknown exception | Converted to 500. |
 
 The error template always starts with the base 404 image and switches to a theme-specific image for selected themes by watching `data-theme` on `<html>`.
-

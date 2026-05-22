@@ -2,6 +2,7 @@ import re
 from pathlib import Path
 from typing import Callable, Optional
 
+from bs4 import BeautifulSoup as bs
 from flask import Response, render_template
 from frozendict import deepfreeze
 from turtleconverter import mdfile_to_sections, ConversionError
@@ -43,6 +44,29 @@ TURTLECONVERTER_STYLESHEET_RE = re.compile(
 def remove_turtleconverter_stylesheets(head: str) -> str:
     """Drop generated turtleconverter CSS links from converted assignment heads."""
     return TURTLECONVERTER_STYLESHEET_RE.sub("", head)
+
+
+def simplify_turtleconverter_body(body: str) -> str:
+    """Keep rendered markdown content, but remove TurtleConverter's page shell."""
+    soup = bs(body, "html.parser")
+    article = soup.find("article", class_="md-content__inner")
+
+    if not article:
+        return body
+
+    article.extract()
+
+    grid = soup.new_tag("div")
+    grid["class"] = ["md-main__inner", "md-grid"]
+
+    content = soup.new_tag("div")
+    content["class"] = ["md-content"]
+    content["data-md-component"] = "content"
+
+    content.append(article)
+    grid.append(content)
+
+    return str(grid)
 
 
 def cache_directory(
@@ -129,6 +153,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
     try:
         sections = _mdfile_to_sections_with_retry(p)
         sections["head"] = remove_turtleconverter_stylesheets(sections["head"])
+        sections["body"] = simplify_turtleconverter_body(sections["body"])
         print("Rendering:", p)
 
     except ConversionError:

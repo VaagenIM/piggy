@@ -14,29 +14,11 @@
   display: block !important;
 }
 
-.md-header--shadow {
-  box-shadow: none !important;
-  transition: none !important;
-}
-
 /**********************\
 |*     BASE RESET     *|
 \**********************/
-.md-container blockquote,
-.md-container dl,
-.md-container dd,
-.md-container figure,
-.md-container h1,
-.md-container h2,
-.md-container h3,
-.md-container h4,
-.md-container h5,
-.md-container h6,
-.md-container hr,
-.md-container ol,
-.md-container p,
-.md-container pre,
-.md-container ul {
+.md-content
+  :is(blockquote, dl, dd, figure, h1, h2, h3, h4, h5, h6, hr, ol, p, pre, ul) {
   margin: initial;
   padding: initial;
 }
@@ -44,11 +26,11 @@
 /**********************\
 |*   LINK OVERRIDES   *|
 \**********************/
-.md-container a {
+.md-content a {
   color: var(--piggy-text-hyperlink) !important;
 }
 
-.md-container a:hover {
+.md-content a:hover {
   color: var(--piggy-text-hyperlink-hover) !important;
   text-decoration: underline;
   transition:
@@ -97,14 +79,6 @@
 .md-typeset mark {
   padding: 2px !important;
   border-radius: 10px 5px !important;
-}
-
-.md-annotation span::before {
-  content: "\00a0" !important;
-}
-
-.md-annotation *::after {
-  right: 0.1ch !important;
 }
 
 /***********************\

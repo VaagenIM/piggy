@@ -4,7 +4,7 @@
 
 /* Special assignment card alignment trickery */
 .card-align-assignment {
-  display: grid !important;
+  display: grid;
   grid-template-columns: 0fr 5fr 4fr;
   grid-template-areas:
     "badge header thumbnail"
@@ -57,11 +57,11 @@
 }
 
 .card-assignment .description-container {
-  margin-top: 0 !important;
+  margin-top: 0;
 }
 
 .card-assignment .card-header {
-  text-align: left !important;
+  text-align: left;
 }
 
 .card-assignment .thumbnail-image {
