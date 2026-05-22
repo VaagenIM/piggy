@@ -8,6 +8,7 @@
 
 .md-content .arithmatex,
 .md-content .MJX-TEX {
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif !important;
+  font-family:
+    Cambria, Cochin, Georgia, Times, "Times New Roman", serif !important;
   font-size: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
 }

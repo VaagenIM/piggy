@@ -13,8 +13,8 @@
 
 :root[data-code-font="atkinson-mono"],
 [data-mono-theme="atkinson-mono"] {
-  --piggy-monospace-font-family: "Atkinson Hyperlegible Mono",
-    "Cascadia Code PL", monospace;
+  --piggy-monospace-font-family:
+    "Atkinson Hyperlegible Mono", "Cascadia Code PL", monospace;
 }
 
 :root[data-code-font="roboto-mono"],
