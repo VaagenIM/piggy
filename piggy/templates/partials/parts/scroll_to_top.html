@@ -1,7 +1,6 @@
-<button id="scroll-to-top-btn" class="opacity-0 pointer-events-none">
+<button id="scroll-to-top-btn">
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    class="h-6 w-6"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor">
@@ -31,11 +30,9 @@
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 150) {
-      scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
-      scrollToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+      scrollToTopBtn.classList.add('is-visible');
     } else {
-      scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none');
-      scrollToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+      scrollToTopBtn.classList.remove('is-visible');
     }
   });
 

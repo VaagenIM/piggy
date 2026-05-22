@@ -30,7 +30,7 @@
 
   <a
     href="{{ abspath }}/{{ item }}"
-    class="card card-container p-3 block {{ extra_classes }} {{ wrapper_classes }}"
+    class="card card-container {{ extra_classes }} {{ wrapper_classes }}"
     data-title="{{ title|lower }}"
     data-description="{{ description|lower }}"
     data-tags="{{ tags|join(' ')|lower }}"
@@ -41,9 +41,7 @@
 
     {% if show_title and title %}
       <div class="card-header">
-        <div class="card-title text-2xl font-extrabold text-center pb-1">
-          {{ title }}
-        </div>
+        <div class="card-title">{{ title }}</div>
       </div>
     {% endif %}
 
@@ -53,13 +51,13 @@
           <div class="loader"></div>
         </div>
         <img
-          class="thumbnail-image w-full object-cover"
+          class="thumbnail-image"
           src="{{ thumbnail }}"
           alt="{{ thumbnail_alt }}"
           loading="lazy" />
 
         {% if show_levels and level_count and level_count > 1 %}
-          <div class="level-count-container text-sm">
+          <div class="level-count-container">
             {{ level_count }} Level{{ 's' if level_count != 1 }}
           </div>
         {% endif %}
@@ -81,21 +79,15 @@
 
     {# Card Tags #}
     {% if show_tags and tags %}
-      <div class="tags-container mt-2">
+      <div class="tags-container">
         {% for tag in tags %}
-          <span
-            class="tag-box inline-block text-sm px-2 py-1 rounded-full font-semibold"
-            data-tag="{{ tag }}">
-            {{ tag }}
-          </span>
+          <span class="tag-box" data-tag="{{ tag }}"> {{ tag }} </span>
         {% endfor %}
       </div>
     {% endif %}
 
     {% if show_description and description %}
-      <div class="description-container mt-2 font-semibold">
-        {{ description }}
-      </div>
+      <div class="description-container">{{ description }}</div>
     {% endif %}
   </a>
 {% endmacro %}

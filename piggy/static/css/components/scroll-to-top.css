@@ -18,6 +18,13 @@
   justify-content: center;
   width: calc(3rem * var(--piggy-font-scale));
   height: calc(3rem * var(--piggy-font-scale));
+  opacity: 0;
+  pointer-events: none;
+}
+
+#scroll-to-top-btn.is-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 #scroll-to-top-btn:hover {

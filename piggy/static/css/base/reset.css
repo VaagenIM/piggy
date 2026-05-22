@@ -1,0 +1,80 @@
+/**********************\
+|*     BASE RESET     *|
+\**********************/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid;
+}
+
+:where(html) {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(body) {
+  line-height: inherit;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+:where(a) {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+:where(b, strong) {
+  font-weight: bolder;
+}
+
+:where(button, input, select, textarea) {
+  font: inherit;
+  color: inherit;
+  border-radius: 0;
+  background-color: transparent;
+  opacity: 1;
+}
+
+:where(button, input:where([type="button"], [type="reset"], [type="submit"])) {
+  appearance: button;
+}
+
+:where(textarea) {
+  resize: vertical;
+}
+
+:where(table) {
+  border-collapse: collapse;
+  border-color: inherit;
+  text-indent: 0;
+}
+
+:where(ol, ul, menu) {
+  list-style: none;
+}
+
+:where(img, svg, video, canvas, audio, iframe, embed, object) {
+  display: block;
+  vertical-align: middle;
+}
+
+:where(img, video) {
+  max-width: 100%;
+  height: auto;
+}
+
+:where(summary) {
+  display: list-item;
+}
+
+[hidden]:where(:not([hidden="until-found"])) {
+  display: none !important;
+}
