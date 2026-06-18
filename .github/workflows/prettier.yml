@@ -1,26 +1,24 @@
 name: Prettier
 
-on: [ push, pull_request ]
+on:
+  push:
+  pull_request:
+
 jobs:
   prettier:
     name: Prettier Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - name: Install Packages
-        run: npm install
-
-      - name: Run Prettier
-        id: prettier-run
-        uses: rutajdash/prettier-cli-action@v1.0.2
+      - name: Set up npm
+        uses: actions/setup-node@v6
         with:
-          config_path: ./package.json
+          node-version: 24
 
-      - name: Prettier Output
-        if: ${{ failure() }}
-        shell: bash
-        run: |
-          echo "The following files are not formatted:"
-          echo "${{steps.prettier-run.outputs.prettier_output}}"
+      - name: Install Dependencies
+        run: npm i
+
+      - name: Run Prettier Check
+        run: npx prettier . --check

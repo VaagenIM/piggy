@@ -7,7 +7,7 @@
     {% block extra_head %}
     {% endblock %}
   </head>
-  <body class="main-container" data-font-theme="none">
+  <body class="main-container">
     <div class="background-overlay"></div>
     <div class="content-wrapper">
       <header class="site-header">
@@ -17,15 +17,31 @@
       </header>
       <main
         dir="{% if current_language %}{{ current_language.direction }}{% endif %}">
-        {% block base %}
-        {% endblock %}
+        <div data-reader-page-content>
+          {% block base %}
+          {% endblock %}
+        </div>
+        {% if request.endpoint != "settings_page" %}
+          {% set settings_return_to = request.full_path.rstrip('?') %}
+          {% set settings_has_return_to = false %}
+          {% set settings_inline = true %}
+          <div
+            id="settings-inline-host"
+            class="settings-inline-host"
+            data-settings-host
+            hidden>
+            {% include "partials/parts/settings_content.html" %}
+          </div>
+        {% endif %}
       </main>
       <footer>
         {% block footer %}
         {% endblock %}
       </footer>
     </div>
+    <div id="reader-ruler" class="reader-ruler" aria-hidden="true"></div>
 
+    {% include "partials/parts/search_overlay.html" %}
     {% include "partials/post_scripts.html" %}
   </body>
 

@@ -3,6 +3,13 @@ id: 101
 name: Matrix
 description: A theme inspired by the green hues of "The Matrix" movies.
 type: dark
+category: animated
+tags: animated, high energy, green
+preview.background: #000000
+preview.surface: #000000
+preview.text: #d8ffd8
+preview.accent: #00c766
+preview.border: #00a84f
 preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00ff00; text-shadow: none;
 */
 
@@ -83,10 +90,12 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   --piggy-text-hyperlink-hover: #99ffff;
 
   --piggy-logo: rgb(154, 255, 159);
-  --piggy-logo-gradient: linear-gradient(45deg,
-      rgb(137, 255, 216),
-      rgb(0, 255, 85),
-      rgb(30, 255, 0));
+  --piggy-logo-gradient: linear-gradient(
+    45deg,
+    rgb(137, 255, 216),
+    rgb(0, 255, 85),
+    rgb(30, 255, 0)
+  );
   --piggy-logo-border: rgba(0, 0, 0, 0.65);
 
   /* info boxes */
@@ -107,24 +116,36 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   --piggy-content-h5: #7cff7c;
   --piggy-content-h6: #66cc66;
 
-  --piggy-header-bg-h1: linear-gradient(to top,
-      rgba(216, 255, 216, 0.12),
-      transparent);
-  --piggy-header-bg-h2: linear-gradient(to top,
-      rgba(0, 255, 255, 0.14),
-      transparent);
-  --piggy-header-bg-h3: linear-gradient(to top,
-      rgba(0, 255, 102, 0.14),
-      transparent);
-  --piggy-header-bg-h4: linear-gradient(to top,
-      rgba(182, 255, 95, 0.12),
-      transparent);
-  --piggy-header-bg-h5: linear-gradient(to top,
-      rgba(124, 255, 124, 0.1),
-      transparent);
-  --piggy-header-bg-h6: linear-gradient(to top,
-      rgba(102, 204, 102, 0.1),
-      transparent);
+  --piggy-header-bg-h1: linear-gradient(
+    to top,
+    rgba(216, 255, 216, 0.12),
+    transparent
+  );
+  --piggy-header-bg-h2: linear-gradient(
+    to top,
+    rgba(0, 255, 255, 0.14),
+    transparent
+  );
+  --piggy-header-bg-h3: linear-gradient(
+    to top,
+    rgba(0, 255, 102, 0.14),
+    transparent
+  );
+  --piggy-header-bg-h4: linear-gradient(
+    to top,
+    rgba(182, 255, 95, 0.12),
+    transparent
+  );
+  --piggy-header-bg-h5: linear-gradient(
+    to top,
+    rgba(124, 255, 124, 0.1),
+    transparent
+  );
+  --piggy-header-bg-h6: linear-gradient(
+    to top,
+    rgba(102, 204, 102, 0.1),
+    transparent
+  );
 
   /* Tables */
   --piggy-table-bg: rgba(0, 0, 0, 0.72);
@@ -226,6 +247,44 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   --piggy-admonition-quote-text: #d8ffd8;
   --piggy-admonition-quote-icon: #66cc66;
   --piggy-admonition-quote-border: #00bb00;
+
+  /* keyboard keys */
+  --piggy-key-background: rgba(0, 26, 12, 0.96);
+  --piggy-key-background-hover: rgba(0, 51, 24, 0.98);
+
+  --piggy-key-text: #d8ffd8;
+  --piggy-key-text-hover: #00ff66;
+  --piggy-key-separator: #00ff66;
+
+  --piggy-key-border: rgba(0, 255, 102, 0.56);
+  --piggy-key-border-hover: rgba(0, 255, 255, 0.78);
+
+  --piggy-key-inner-border: rgba(0, 255, 102, 0.08);
+  --piggy-key-inner-border-hover: rgba(0, 255, 255, 0.14);
+
+  --piggy-key-shadow: rgba(0, 255, 102, 0.18);
+  --piggy-key-shadow-hover: rgba(0, 255, 255, 0.26);
+
+  /* keyboard keys inside admonitions */
+  --piggy-key-admonition-background: rgba(0, 0, 0, 0.28);
+  --piggy-key-admonition-background-hover: rgba(0, 255, 102, 0.075);
+
+  --piggy-key-admonition-border: color-mix(
+    in srgb,
+    var(--piggy-admonition-border) 62%,
+    #d8ffd8 8%
+  );
+  --piggy-key-admonition-border-hover: var(--piggy-admonition-border);
+
+  --piggy-key-admonition-inner-border: rgba(216, 255, 216, 0.055);
+  --piggy-key-admonition-inner-border-hover: rgba(216, 255, 216, 0.11);
+
+  --piggy-key-admonition-shadow: rgba(0, 255, 102, 0.12);
+  --piggy-key-admonition-shadow-hover: color-mix(
+    in srgb,
+    var(--piggy-admonition-border) 28%,
+    transparent
+  );
 }
 
 [data-theme="matrix"] .md-content h1 {
@@ -305,6 +364,9 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 }
 
 [data-theme="matrix"] .md-content {
+  --piggy-code-block-highlight-bg: rgba(0, 255, 102, 0.18);
+  --piggy-code-block-highlight-border: rgba(0, 255, 102, 0.42);
+
   border: 1px solid #00ff00;
   border-radius: 0.5rem !important;
   background-color: #000000ee;
@@ -360,8 +422,8 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
     0 0 0.45rem rgba(0, 255, 0, 0.08) !important;
 }
 
-[data-theme="matrix"] .md-content .admonition>.admonition-title,
-[data-theme="matrix"] .md-content details>summary {
+[data-theme="matrix"] .md-content .admonition > .admonition-title,
+[data-theme="matrix"] .md-content details > summary {
   text-shadow: 0 0 0.35rem rgba(0, 255, 120, 0.3);
 }
 
@@ -390,12 +452,16 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="matrix"] .md-content :is(.admonition.note,
-  details.note,
-  .admonition.info,
-  details.info,
-  .admonition.tip,
-  details.tip) {
+[data-theme="matrix"]
+  .md-content
+  :is(
+    .admonition.note,
+    details.note,
+    .admonition.info,
+    details.info,
+    .admonition.tip,
+    details.tip
+  ) {
   --piggy-table-admonition-accent: rgba(0, 255, 255, 0.22);
   --piggy-table-header-start: rgba(0, 255, 255, 0.07);
   --piggy-table-header-end: rgba(0, 255, 255, 0.07);
@@ -403,10 +469,14 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="matrix"] .md-content :is(.admonition.success,
-  details.success,
-  .admonition.question,
-  details.question) {
+[data-theme="matrix"]
+  .md-content
+  :is(
+    .admonition.success,
+    details.success,
+    .admonition.question,
+    details.question
+  ) {
   --piggy-table-admonition-accent: rgba(0, 255, 102, 0.22);
   --piggy-table-header-start: rgba(0, 255, 102, 0.07);
   --piggy-table-header-end: rgba(0, 255, 102, 0.07);
@@ -414,10 +484,14 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 }
 
 /* WARNING / ATTENTION */
-[data-theme="matrix"] .md-content :is(.admonition.warning,
-  details.warning,
-  .admonition.attention,
-  details.attention) {
+[data-theme="matrix"]
+  .md-content
+  :is(
+    .admonition.warning,
+    details.warning,
+    .admonition.attention,
+    details.attention
+  ) {
   --piggy-table-admonition-accent: rgba(255, 215, 95, 0.22);
   --piggy-table-header-start: rgba(255, 215, 95, 0.07);
   --piggy-table-header-end: rgba(255, 215, 95, 0.07);
@@ -425,12 +499,16 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="matrix"] .md-content :is(.admonition.danger,
-  details.danger,
-  .admonition.failure,
-  details.failure,
-  .admonition.bug,
-  details.bug) {
+[data-theme="matrix"]
+  .md-content
+  :is(
+    .admonition.danger,
+    details.danger,
+    .admonition.failure,
+    details.failure,
+    .admonition.bug,
+    details.bug
+  ) {
   --piggy-table-admonition-accent: rgba(255, 68, 68, 0.22);
   --piggy-table-header-start: rgba(255, 68, 68, 0.07);
   --piggy-table-header-end: rgba(255, 68, 68, 0.07);
@@ -462,28 +540,90 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   border-radius: 0.25rem !important;
 }
 
-[data-theme="matrix"] .md-content .admonition>.admonition-title,
-[data-theme="matrix"] .md-content details>summary {
+[data-theme="matrix"] .md-content .admonition > .admonition-title,
+[data-theme="matrix"] .md-content details > summary {
   border-radius: 0.25rem 0.25rem 0 0 !important;
 }
 
 /* border overrides */
 [data-theme="matrix"] .md-content table thead tr:first-child th:first-child,
-[data-theme="matrix"] .md-typeset table:not([class]) thead tr:first-child th:first-child {
+[data-theme="matrix"]
+  .md-typeset
+  table:not([class])
+  thead
+  tr:first-child
+  th:first-child {
   border-top-left-radius: 0.25rem !important;
 }
 
 [data-theme="matrix"] .md-content table thead tr:first-child th:last-child,
-[data-theme="matrix"] .md-typeset table:not([class]) thead tr:first-child th:last-child {
+[data-theme="matrix"]
+  .md-typeset
+  table:not([class])
+  thead
+  tr:first-child
+  th:last-child {
   border-top-right-radius: 0.25rem !important;
 }
 
 [data-theme="matrix"] .md-content table tbody tr:last-child td:first-child,
-[data-theme="matrix"] .md-typeset table:not([class]) tbody tr:last-child td:first-child {
+[data-theme="matrix"]
+  .md-typeset
+  table:not([class])
+  tbody
+  tr:last-child
+  td:first-child {
   border-bottom-left-radius: 0.25rem !important;
 }
 
 [data-theme="matrix"] .md-content table tbody tr:last-child td:last-child,
-[data-theme="matrix"] .md-typeset table:not([class]) tbody tr:last-child td:last-child {
+[data-theme="matrix"]
+  .md-typeset
+  table:not([class])
+  tbody
+  tr:last-child
+  td:last-child {
   border-bottom-right-radius: 0.25rem !important;
+}
+
+/***************************\
+|*    MATRIX KEY OVERRIDES *|
+\***************************/
+
+[data-theme="matrix"] .md-content .keys,
+[data-theme="matrix"] .md-content kbd {
+  border-radius: calc(0.25rem * var(--piggy-font-scale)) !important;
+
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-inner-border),
+    0 0 calc(0.38rem * var(--piggy-font-scale)) var(--piggy-key-shadow) !important;
+
+  text-shadow: 0 0 calc(0.32rem * var(--piggy-font-scale))
+    rgba(0, 255, 102, 0.38) !important;
+}
+
+[data-theme="matrix"] .md-content .keys {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+[data-theme="matrix"] .md-content kbd:hover,
+[data-theme="matrix"] .md-content .keys kbd:hover {
+  border-color: var(--piggy-key-border-hover) !important;
+
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-inner-border-hover),
+    0 0 calc(0.55rem * var(--piggy-font-scale)) var(--piggy-key-shadow-hover),
+    0 0 calc(0.95rem * var(--piggy-font-scale)) rgba(0, 255, 102, 0.12) !important;
+
+  text-shadow: 0 0 calc(0.45rem * var(--piggy-font-scale))
+    rgba(0, 255, 255, 0.42) !important;
+}
+
+[data-theme="matrix"] .md-content :is(.admonition, details) kbd,
+[data-theme="matrix"] .md-content :is(.admonition, details) .keys {
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-admonition-inner-border),
+    0 0 calc(0.35rem * var(--piggy-font-scale))
+      var(--piggy-key-admonition-shadow) !important;
 }

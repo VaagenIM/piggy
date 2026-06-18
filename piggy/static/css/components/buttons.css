@@ -9,8 +9,11 @@
   gap: 0.4rem;
   box-sizing: border-box;
   min-height: calc(2.2rem * var(--piggy-font-scale));
-  border: 1px solid var(--piggy-button-border,
-      color-mix(in srgb, var(--piggy-button-active) 34%, transparent));
+  border: 1px solid
+    var(
+      --piggy-button-border,
+      color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+    );
   border-radius: 999px;
   background: var(--piggy-button);
   background-color: var(--piggy-button);
@@ -27,7 +30,7 @@
     color 0.18s ease,
     filter 0.18s ease,
     transform 0.18s ease,
-    box-shadow 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
 :where(.piggy-button, .snout-button):not(.no-hover, .active):hover {
@@ -45,12 +48,15 @@
 :where(.piggy-button, .snout-button)[aria-current="page"] {
   background: var(--piggy-button-active);
   background-color: var(--piggy-button-active);
-  color: var(--piggy-text-button);
+  color: var(--piggy-button-active-text, var(--piggy-text-button));
 }
 
 :where(.piggy-button, .snout-button):focus-visible {
-  outline: 3px solid var(--piggy-button-focus,
-      color-mix(in srgb, var(--piggy-button-active) 58%, transparent));
+  outline: 3px solid
+    var(
+      --piggy-button-focus,
+      color-mix(in srgb, var(--piggy-button-active) 58%, transparent)
+    );
   outline-offset: 2px;
 }
 
@@ -75,8 +81,10 @@
 }
 
 :where(.snout-border) {
-  border-color: var(--piggy-button-border,
-      color-mix(in srgb, var(--piggy-button-active) 34%, transparent));
+  border-color: var(
+    --piggy-button-border,
+    color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+  );
 }
 
 .piggy-icon-button {
@@ -88,9 +96,13 @@
   border-radius: 999px;
   border-width: 1px;
   border-style: solid;
-  border-color: var(--piggy-nav-button-border,
-      var(--piggy-button-border,
-        color-mix(in srgb, var(--piggy-button-active) 34%, transparent)));
+  border-color: var(
+    --piggy-nav-button-border,
+    var(
+      --piggy-button-border,
+      color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+    )
+  );
 }
 
 .piggy-icon-button svg {

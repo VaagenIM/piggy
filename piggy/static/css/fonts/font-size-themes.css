@@ -1,34 +1,60 @@
 /****************************\
 |*     FONT SIZE THEMES     *|
 \****************************/
+:root {
+  --piggy-font-size-theme-scale: 1;
+  --piggy-reader-font-scale: var(--piggy-font-size-theme-scale);
+  --piggy-reader-space-scale: 1;
+}
+
+:root[data-reader-font-size="xx-small"],
 :root[data-font-size="xx-small"] {
-  --piggy-font-scale: 0.7;
+  --piggy-font-size-theme-scale: 0.7;
+  --piggy-reader-space-scale: 0.82;
 }
 
+:root[data-reader-font-size="x-small"],
 :root[data-font-size="x-small"] {
-  --piggy-font-scale: 0.85;
+  --piggy-font-size-theme-scale: 0.85;
+  --piggy-reader-space-scale: 0.9;
 }
 
+:root[data-reader-font-size="small"],
 :root[data-font-size="small"] {
-  --piggy-font-scale: 1;
+  --piggy-font-size-theme-scale: 1;
+  --piggy-reader-space-scale: 0.96;
 }
 
+:root[data-reader-font-size="default"],
 :root[data-font-size="default"] {
-  --piggy-font-scale: 1.075;
+  --piggy-font-size-theme-scale: 1.075;
+  --piggy-reader-space-scale: 1;
 }
 
+:root[data-reader-font-size="large"],
 :root[data-font-size="large"] {
-  --piggy-font-scale: 1.2;
+  --piggy-font-size-theme-scale: 1.2;
+  --piggy-reader-space-scale: 1.08;
 }
 
+:root[data-reader-font-size="x-large"],
 :root[data-font-size="x-large"] {
-  --piggy-font-scale: 1.35;
+  --piggy-font-size-theme-scale: 1.35;
+  --piggy-reader-space-scale: 1.16;
 }
 
+:root[data-reader-font-size="xx-large"],
 :root[data-font-size="xx-large"] {
-  --piggy-font-scale: 1.5;
+  --piggy-font-size-theme-scale: 1.5;
+  --piggy-reader-space-scale: 1.24;
 }
 
+:root[data-reader-font-size="xxx-large"],
 :root[data-font-size="xxx-large"] {
-  --piggy-font-scale: 1.85;
+  --piggy-font-size-theme-scale: 1.85;
+  --piggy-reader-space-scale: 1.35;
+}
+
+:root[data-reader-font-size-affects-ui="on"] {
+  --piggy-font-scale: var(--piggy-font-size-theme-scale);
 }

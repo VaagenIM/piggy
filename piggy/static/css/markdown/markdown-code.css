@@ -1,76 +1,611 @@
 /*****************************\
 |*  MARKDOWN CODE OVERRIDES  *|
 \*****************************/
-.md-content code,
-.md-content summary,
-.md-content .linenos {
-  font-size: calc(0.875rem * var(--piggy-font-scale)) !important;
-  line-height: calc(1rem * var(--piggy-font-scale)) !important;
+.md-content {
+  --piggy-code-block-radius: calc(0.55rem * var(--piggy-font-scale));
+  --piggy-code-block-padding-x: calc(1rem * var(--piggy-font-scale));
+  --piggy-code-block-padding-y: calc(0.85rem * var(--piggy-font-scale));
+  --piggy-code-block-line-height: calc(
+    1.45rem * var(--piggy-reader-component-font-scale)
+  );
+  --piggy-code-block-font-size: calc(
+    0.875rem * var(--piggy-reader-component-font-scale)
+  );
+  --piggy-code-titlebar-control-space: calc(2.6rem * var(--piggy-font-scale));
+  --piggy-code-copy-reserved-space: calc(3rem * var(--piggy-font-scale));
+  --piggy-code-copy-button-size: calc(2rem * var(--piggy-font-scale));
+  --piggy-code-copy-icon-size: calc(1rem * var(--piggy-font-scale));
+  --piggy-code-copy-button-margin: calc(0.1rem * var(--piggy-font-scale));
+  --piggy-code-tooltip-viewport-padding: calc(2rem * var(--piggy-font-scale));
+  --piggy-code-tooltip-max-width: min(
+    calc(20rem * var(--piggy-font-scale)),
+    calc(100vw - var(--piggy-code-tooltip-viewport-padding))
+  );
+  --piggy-code-tooltip-min-width: min(
+    calc(16rem * var(--piggy-font-scale)),
+    calc(100vw - var(--piggy-code-tooltip-viewport-padding))
+  );
+  --piggy-code-block-filename-bg: var(
+    --piggy-code-block-line-number-bg,
+    color-mix(
+      in srgb,
+      var(--piggy-code-block-background) 86%,
+      var(--piggy-button-active)
+    )
+  );
+  --piggy-code-block-highlight-bg: color-mix(
+    in srgb,
+    var(--piggy-button-active) 18%,
+    transparent
+  );
+  --piggy-code-block-highlight-border: color-mix(
+    in srgb,
+    var(--piggy-button-active) 68%,
+    transparent
+  );
+  --piggy-code-annotation-bg: var(
+    --piggy-code-block-background,
+    var(--piggy-code-block-bg)
+  );
+  --piggy-code-annotation-hover-bg: color-mix(
+    in srgb,
+    var(--piggy-code-block-background, var(--piggy-code-block-bg)) 74%,
+    var(--piggy-button-active)
+  );
+  --piggy-code-annotation-border: color-mix(
+    in srgb,
+    var(--piggy-button-active) 72%,
+    var(--piggy-code-block-text, var(--piggy-code))
+  );
+  --piggy-code-annotation-ring: color-mix(
+    in srgb,
+    var(--piggy-button-active) 72%,
+    var(--piggy-code-block-background, var(--piggy-code-block-bg))
+  );
+  --piggy-code-annotation-text: var(--piggy-code-block-text, var(--piggy-code));
+  --piggy-code-annotation-size: calc(
+    0.95rem * var(--piggy-reader-component-font-scale)
+  );
+  --piggy-code-annotation-min-width: calc(
+    1.32rem * var(--piggy-reader-component-font-scale)
+  );
+  --piggy-code-annotation-font-size: calc(
+    0.58rem * var(--piggy-reader-component-font-scale)
+  );
+  --piggy-code-annotation-radius: calc(0.34rem * var(--piggy-font-scale));
+  --piggy-code-annotation-offset-y: -1.25px;
+  --piggy-code-tooltip-bg: var(
+    --piggy-code-block-background,
+    var(--piggy-code-block-bg)
+  );
+  --piggy-code-tooltip-border: var(
+    --piggy-code-block-border-color,
+    var(--piggy-code-block-border)
+  );
+  --piggy-code-tooltip-text: var(--piggy-code-block-text, var(--piggy-code));
 }
 
-.md-content code:not(.md-code__content) {
-  padding: 0 0.2rem !important;
+.md-content :not(pre) > code:not(.md-code__content) {
+  padding: calc(0.05rem * var(--piggy-font-scale))
+    calc(0.25rem * var(--piggy-font-scale)) !important;
 
-  color: var(--piggy-code) !important;
-  background-color: var(--piggy-code-bg) !important;
+  color: var(--piggy-code-inline-text, var(--piggy-code)) !important;
+  background: var(--piggy-code-inline-bg, var(--piggy-code-bg)) !important;
+  background-color: var(
+    --piggy-code-inline-bg,
+    var(--piggy-code-bg)
+  ) !important;
 
-  border: 1px solid var(--piggy-code-border) !important;
-  border-radius: 0.25rem !important;
+  border: 1px solid var(--piggy-code-inline-border, var(--piggy-code-border)) !important;
+  border-radius: calc(0.25rem * var(--piggy-font-scale)) !important;
+
+  font-size: 0.875em !important;
+  line-height: 1.35 !important;
+  white-space: normal !important;
+}
+
+/************************\
+|*  CODE BLOCK SHELL    *|
+\************************/
+.md-content .highlight {
+  display: block !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  margin: calc(1rem * var(--piggy-font-scale)) 0 !important;
+
+  color: var(--piggy-code-block-text, var(--piggy-code)) !important;
+  background: var(
+    --piggy-code-block-background,
+    var(--piggy-code-block-bg)
+  ) !important;
+  background-color: var(
+    --piggy-code-block-background,
+    var(--piggy-code-block-bg)
+  ) !important;
+
+  border: 1px solid
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
+  border-radius: var(--piggy-code-block-radius) !important;
+
+  overflow: auto !important;
+  overscroll-behavior: contain !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--piggy-code-block-line-number)
+    var(--piggy-code-block-background, var(--piggy-code-block-bg)) !important;
+}
+
+.md-content .highlight::-webkit-scrollbar {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.md-content .highlight::-webkit-scrollbar-track {
+  background: var(--piggy-code-block-background, var(--piggy-code-block-bg));
+}
+
+.md-content .highlight::-webkit-scrollbar-thumb {
+  background: var(--piggy-code-block-line-number);
+  border: 0.2rem solid
+    var(--piggy-code-block-background, var(--piggy-code-block-bg));
+  border-radius: 999px;
+}
+
+.md-content .highlight:has(.md-tooltip--active) {
+  overflow: visible !important;
+  z-index: 20 !important;
+}
+
+.md-content .highlight:has(.md-tooltip--active) .highlighttable,
+.md-content .highlight:has(.md-tooltip--active) .highlighttable tbody,
+.md-content .highlight:has(.md-tooltip--active) .highlighttable tr,
+.md-content .highlight:has(.md-tooltip--active) .highlighttable td,
+.md-content .highlight:has(.md-tooltip--active) .highlighttable td > div,
+.md-content .highlight:has(.md-tooltip--active) pre,
+.md-content .highlight:has(.md-tooltip--active) code,
+.md-content .highlight:has(.md-tooltip--active) .md-code__content,
+.md-content .highlight:has(.md-tooltip--active) .md-code__content span,
+.md-content .highlight:has(.md-tooltip--active) .md-annotation,
+.md-content .highlight:has(.md-tooltip--active) .md-tooltip {
+  max-width: none !important;
+  overflow: visible !important;
+}
+
+.md-content .highlight pre,
+.md-content .highlight code,
+.md-content .highlight .md-code__content {
+  color: var(--piggy-code-block-text, var(--piggy-code)) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.md-content .highlight pre {
+  position: static !important;
+  box-sizing: border-box !important;
+  min-width: max-content !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: var(--piggy-code-block-padding-y) var(--piggy-code-block-padding-x) !important;
+
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
+  font-size: var(--piggy-code-block-font-size) !important;
+  line-height: var(--piggy-code-block-line-height) !important;
+  tab-size: 2 !important;
+}
+
+.md-content .highlight:not(.piggy-code-titlebar-ready) pre:has(.md-code__nav) {
+  padding-right: calc(
+    var(--piggy-code-block-padding-x) + var(--piggy-code-copy-reserved-space)
+  ) !important;
+}
+
+.md-content .highlight code,
+.md-content .highlight .md-code__content {
+  display: block !important;
+  min-width: max-content !important;
+  padding: 0 !important;
+
+  font-size: inherit !important;
+  line-height: inherit !important;
+  white-space: pre !important;
+}
+
+.md-content .md-code__content span {
+  max-width: none !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+  white-space: pre !important;
+}
+
+.md-content .highlight ::selection {
+  color: var(--piggy-code-selection-text) !important;
+  background: var(--piggy-code-selection-bg) !important;
+}
+
+/************************\
+|* CODE TITLE BAR       *|
+\************************/
+.md-content .piggy-code-titlebar {
+  display: flex !important;
+  align-items: center !important;
+  gap: calc(0.45rem * var(--piggy-font-scale)) !important;
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 4 !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  min-height: calc(2.2rem * var(--piggy-font-scale)) !important;
+  margin: 0 !important;
+  padding: 0 var(--piggy-code-block-padding-x) !important;
+  padding-right: calc(
+    var(--piggy-code-block-padding-x) + var(--piggy-code-titlebar-control-space)
+  ) !important;
+
+  color: var(--piggy-code-block-text, var(--piggy-code)) !important;
+  background: var(--piggy-code-block-filename-bg) !important;
+  background-color: var(--piggy-code-block-filename-bg) !important;
+
+  border-bottom: 1px solid
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
+  border-radius: calc(var(--piggy-code-block-radius) - 1px)
+    calc(var(--piggy-code-block-radius) - 1px) 0 0 !important;
+
+  font-size: calc(
+    0.76rem * var(--piggy-reader-component-font-scale)
+  ) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.25 !important;
+  white-space: nowrap !important;
+}
+
+.md-content .piggy-code-titlebar-language,
+.md-content .piggy-code-titlebar-title {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-width: 0 !important;
+}
+
+.md-content .piggy-code-titlebar-language {
+  flex: 0 0 auto !important;
+  gap: calc(0.32rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content .piggy-code-titlebar-icon {
+  display: inline-block !important;
+  flex: 0 0 auto !important;
+  width: calc(0.95rem * var(--piggy-font-scale)) !important;
+  height: calc(0.95rem * var(--piggy-font-scale)) !important;
+
+  color: var(--piggy-code-clipboard, currentColor) !important;
+
+  fill: none !important;
+  opacity: 0.78 !important;
+  overflow: visible !important;
+  stroke: currentColor !important;
+  stroke-width: 2.25 !important;
+  transform: translateY(0.02rem) !important;
+}
+
+.md-content .piggy-code-titlebar-label {
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
+  font-size: inherit !important;
+  font-weight: 700 !important;
+  line-height: inherit !important;
+}
+
+.md-content .piggy-code-titlebar-label,
+.md-content .piggy-code-titlebar-title {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.md-content .piggy-code-titlebar-label {
+  max-width: calc(10rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content .piggy-code-titlebar-separator {
+  flex: 0 0 auto !important;
+  color: var(--piggy-code-clipboard, currentColor) !important;
+  opacity: 0.62 !important;
+}
+
+.md-content .piggy-code-titlebar-title {
+  flex: 1 1 auto !important;
+
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
+}
+
+/************************\
+|* FEATURE CODE TABLES  *|
+\************************/
+.md-content .highlighttable {
+  display: block !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+
+  color: var(--piggy-code-block-text, var(--piggy-code)) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+
+  border: 0 !important;
+  border-collapse: collapse !important;
+  border-radius: 0 !important;
+  border-spacing: 0 !important;
+  box-shadow: none !important;
+  table-layout: auto !important;
+}
+
+.md-content .highlighttable tbody {
+  display: block !important;
+  width: 100% !important;
+  min-width: 100% !important;
+
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.md-content .highlighttable tr {
+  display: grid !important;
+  grid-template-columns: max-content minmax(0, 1fr) !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  min-width: 100% !important;
+
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.md-content .highlighttable tr:has(> th.filename) {
+  display: block !important;
+}
+
+.md-content .highlighttable tbody tr:nth-child(odd) td,
+.md-content .highlighttable tbody tr:nth-child(even) td,
+.md-content .highlighttable tbody tr:hover td {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.md-content .highlighttable th,
+.md-content .highlighttable td {
+  display: block !important;
+  box-sizing: border-box !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  color: inherit !important;
+  background: transparent !important;
+  background-color: transparent !important;
+
+  border: 0 !important;
+  line-height: var(--piggy-code-block-line-height) !important;
+  vertical-align: top !important;
+  white-space: nowrap !important;
+}
+
+.md-content .highlight .highlighttable,
+.md-content .highlight .highlighttable tbody,
+.md-content .highlight .highlighttable tr,
+.md-content .highlight .highlighttable th,
+.md-content .highlight .highlighttable td {
+  max-width: none !important;
+  overflow: visible !important;
+}
+
+.md-content .highlighttable th.filename {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  min-height: calc(2.2rem * var(--piggy-font-scale)) !important;
+  padding: 0 var(--piggy-code-block-padding-x) !important;
+  padding-right: calc(
+    var(--piggy-code-block-padding-x) + var(--piggy-code-titlebar-control-space)
+  ) !important;
+
+  color: var(--piggy-code-block-text, var(--piggy-code)) !important;
+  background: var(--piggy-code-block-filename-bg) !important;
+  background-color: var(--piggy-code-block-filename-bg) !important;
+
+  border-bottom: 1px solid
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
+  border-radius: calc(var(--piggy-code-block-radius) - 1px)
+    calc(var(--piggy-code-block-radius) - 1px) 0 0 !important;
+
+  font-size: calc(
+    0.76rem * var(--piggy-reader-component-font-scale)
+  ) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.25 !important;
+  text-align: left !important;
+}
+
+.md-content .highlighttable th.filename .filename {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+
+  color: inherit !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
+  font-size: inherit !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  line-height: inherit !important;
+  text-decoration: none !important;
+}
+
+.md-content .highlighttable th.filename .filename::before {
+  content: "" !important;
+  width: calc(0.72rem * var(--piggy-font-scale)) !important;
+  height: calc(0.72rem * var(--piggy-font-scale)) !important;
+  margin-right: calc(0.38rem * var(--piggy-font-scale)) !important;
+
+  background: var(--piggy-code-clipboard, currentColor) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/%3E%3Cpath d='M14 2v6h6'/%3E%3Cpath d='m10 13-2 2 2 2'/%3E%3Cpath d='m14 17 2-2-2-2'/%3E%3C/svg%3E")
+    center / contain no-repeat !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/%3E%3Cpath d='M14 2v6h6'/%3E%3Cpath d='m10 13-2 2 2 2'/%3E%3Cpath d='m14 17 2-2-2-2'/%3E%3C/svg%3E")
+    center / contain no-repeat !important;
+  opacity: 0.78 !important;
+}
+
+.md-content
+  .highlight.piggy-code-titlebar-ready
+  .highlighttable
+  tr:has(> th.filename) {
+  display: none !important;
+}
+
+.md-content .highlight.piggy-code-titlebar-ready > .filename {
+  display: none !important;
+}
+
+.md-content .highlighttable td.linenos {
+  grid-column: 1 !important;
+  width: auto !important;
+  min-width: calc(2.3rem * var(--piggy-font-scale)) !important;
+
+  color: var(--piggy-code-block-line-number) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+
+  border-right: 0 !important;
+  user-select: none !important;
+}
+
+.md-content .highlighttable tbody tr:nth-child(odd) td.linenos,
+.md-content .highlighttable tbody tr:nth-child(even) td.linenos,
+.md-content .highlighttable tbody tr:hover td.linenos {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
 }
 
 .md-content .linenodiv {
-  margin-top: 0.1rem;
-  margin-bottom: -0.1rem;
+  margin: 0 !important;
+  padding: var(--piggy-code-block-padding-y)
+    calc(0.65rem * var(--piggy-font-scale)) var(--piggy-code-block-padding-y)
+    calc(0.75rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content .linenodiv pre {
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
+  min-width: 3ch !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: right !important;
 }
 
 .md-content .linenos .normal {
-  color: var(--piggy-text-main) !important;
+  display: inline-block !important;
+  min-width: 3ch !important;
+
+  color: var(--piggy-code-block-line-number) !important;
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
+  font-size: var(--piggy-code-block-font-size) !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-variant-numeric: tabular-nums !important;
+  line-height: var(--piggy-code-block-line-height) !important;
+  text-align: right !important;
 }
 
-.md-content code {
-  line-height: 1.1rem;
+.md-content .highlighttable td.code {
+  grid-column: 2 !important;
+  width: auto !important;
+  min-width: 0 !important;
+  overflow: visible !important;
 }
 
-.md-content .highlighttable {
-  border-radius: 0.5rem !important;
-  border: 1px solid var(--piggy-code-block-border) !important;
-  overflow: hidden !important;
+.md-content .highlighttable td.code > div {
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.md-code__content span {
-  max-width: 100% !important;
-  overflow-anchor: auto !important;
-  overflow: hidden !important;
-  white-space: pre-wrap !important;
-  word-wrap: break-word !important;
-  padding-top: calc(0.25rem * var(--piggy-font-scale)) !important;
-  padding-bottom: calc(0.25rem * var(--piggy-font-scale)) !important;
-  font-size: calc(0.85rem * var(--piggy-font-scale)) !important;
+.md-content .highlighttable td.code pre,
+.md-content .highlighttable td.code code,
+.md-content .highlighttable td.code .md-code__content {
+  width: 100% !important;
 }
 
-code.md-code__content,
-.md-content .md-code__content {
-  background-color: var(--piggy-code-block-bg) !important;
-  color: var(--piggy-code) !important;
-  border: 1px solid var(--piggy-code-block-border) !important;
-  border-radius: 0.5rem !important;
+/************************\
+|* HIGHLIGHTED LINES    *|
+\************************/
+.md-content .highlight .hll {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 calc(0.28rem * var(--piggy-font-scale)) !important;
+
+  background: var(--piggy-code-block-highlight-bg) !important;
+  border-radius: calc(0.24rem * var(--piggy-font-scale)) !important;
+  box-shadow: inset 0 0 0 1px
+    color-mix(
+      in srgb,
+      var(--piggy-code-block-highlight-border) 24%,
+      transparent
+    ) !important;
+  box-decoration-break: clone !important;
+  -webkit-box-decoration-break: clone !important;
+  line-height: inherit !important;
+  white-space: pre !important;
 }
 
-.md-clipboard {
-  color: var(--piggy-code-clipboard) !important;
-}
+.md-content .highlight .hll:not(:has(*)) {
+  margin: 0 !important;
+  padding: 0 !important;
 
-.md-clipboard:hover {
-  color: var(--piggy-code-clipboard-hover) !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 /**********************\
 |*  CODE COPY BUTTON  *|
 \**********************/
-.md-content .highlight {
-  position: relative !important;
-}
-
 .md-content .md-code__nav {
   position: absolute !important;
   top: 0 !important;
@@ -85,59 +620,69 @@ code.md-code__content,
 }
 
 .md-content .md-code__button[data-md-type="copy"] {
-  width: 2.2rem !important;
-  height: 2.2rem !important;
+  position: relative !important;
+  width: var(--piggy-code-copy-button-size) !important;
+  height: var(--piggy-code-copy-button-size) !important;
   padding: 0 !important;
-  margin: 0 !important;
+  margin: var(--piggy-code-copy-button-margin)
+    var(--piggy-code-copy-button-margin) 0 0 !important;
 
   color: var(--piggy-code-clipboard) !important;
-  background: var(
-    --piggy-code-block-background,
-    var(--piggy-code-block-bg)
-  ) !important;
+  background: transparent !important;
+  background-color: transparent !important;
 
-  border: 1px solid
-    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
-
-  border-radius: 0 0.5rem 0 0.5rem !important;
+  border: 1px solid transparent !important;
+  border-radius: calc(0.32rem * var(--piggy-font-scale)) !important;
 
   box-shadow: none !important;
+  cursor: pointer !important;
+  font-size: var(--piggy-code-copy-icon-size) !important;
+  line-height: 1 !important;
 }
 
 .md-content .md-code__button[data-md-type="copy"]::after {
+  width: var(--piggy-code-copy-icon-size) !important;
+  height: var(--piggy-code-copy-icon-size) !important;
   background-color: currentColor !important;
+  font-size: var(--piggy-code-copy-icon-size) !important;
+  line-height: 1 !important;
+}
+
+.md-content
+  .highlight.piggy-code-titlebar-ready
+  .md-code__button[data-md-type="copy"] {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .md-content .md-code__button[data-md-type="copy"]:hover,
 .md-content .md-code__button[data-md-type="copy"]:focus-visible {
   color: var(--piggy-code-clipboard-hover) !important;
-  background: var(--piggy-button, #274f6e) !important;
-  border-color: var(--piggy-button-hover, #51748d) !important;
+  background: color-mix(
+    in srgb,
+    var(--piggy-code-clipboard-hover) 12%,
+    transparent
+  ) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--piggy-code-clipboard-hover) 12%,
+    transparent
+  ) !important;
+  border-color: color-mix(
+    in srgb,
+    var(--piggy-code-clipboard-hover) 26%,
+    transparent
+  ) !important;
 }
 
-.md-content .md-code__button[data-md-type="copy"] {
-  font-size: 1rem !important;
-  line-height: 1 !important;
-}
-
-.md-content .md-code__button[data-md-type="copy"]::after {
-  width: 1rem !important;
-  height: 1rem !important;
-
-  font-size: 1rem !important;
-  line-height: 1 !important;
-
-  background-color: currentColor !important;
+.md-content .md-code__button[data-md-type="copy"]:focus-visible {
+  outline: 2px solid var(--piggy-button-focus, var(--piggy-button-active)) !important;
+  outline-offset: 2px !important;
 }
 
 .md-content .md-code__button[data-md-type="copy"],
 .md-content .md-code__button[data-md-type="copy"]::after {
-  --md-icon-size: 1rem !important;
-}
-
-/* tooltip for code copy */
-.md-content .md-code__button[data-md-type="copy"] {
-  position: relative !important;
+  --md-icon-size: var(--piggy-code-copy-icon-size) !important;
 }
 
 .md-content .md-code__button[data-md-type="copy"]::before {
@@ -145,19 +690,25 @@ code.md-code__content,
 
   position: absolute !important;
   top: 50% !important;
-  right: calc(100% + 0.45rem) !important;
-  transform: translateY(-50%) translateX(0.25rem) !important;
+  right: calc(100% + 0.45rem * var(--piggy-font-scale)) !important;
+  z-index: 10 !important;
+  transform: translateY(-50%)
+    translateX(calc(0.25rem * var(--piggy-font-scale))) !important;
 
-  padding: 0.3rem 0.45rem !important;
+  padding: calc(0.3rem * var(--piggy-font-scale))
+    calc(0.45rem * var(--piggy-font-scale)) !important;
 
   color: var(--piggy-tooltip-text, #ffffff) !important;
   background: var(--piggy-tooltip, #000000) !important;
 
   border: 1px solid
     var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
-  border-radius: 0.3rem !important;
+  border-radius: calc(0.3rem * var(--piggy-font-scale)) !important;
 
-  font-size: 0.75rem !important;
+  font-size: calc(
+    0.75rem * var(--piggy-reader-component-font-scale)
+  ) !important;
+  font-weight: 650 !important;
   line-height: 1 !important;
   white-space: nowrap !important;
 
@@ -167,12 +718,278 @@ code.md-code__content,
   transition:
     opacity 140ms ease,
     transform 140ms ease !important;
-
-  z-index: 10 !important;
 }
 
 .md-content .md-code__button[data-md-type="copy"]:hover::before,
 .md-content .md-code__button[data-md-type="copy"]:focus-visible::before {
   opacity: 1 !important;
   transform: translateY(-50%) translateX(0) !important;
+}
+
+/************************\
+|* CODE ANNOTATIONS     *|
+\************************/
+.md-content .highlight .md-annotation {
+  all: unset !important;
+  display: inline-block !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+  width: auto !important;
+  min-width: var(--piggy-code-annotation-min-width) !important;
+  height: var(--piggy-code-annotation-size) !important;
+  margin: 0 0.14em !important;
+
+  color: var(--piggy-code-annotation-text) !important;
+  font: inherit !important;
+  line-height: 1 !important;
+  transform: none !important;
+  vertical-align: middle !important;
+}
+
+.md-content .highlight .md-annotation__index {
+  all: unset !important;
+  appearance: none !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+  width: auto !important;
+  min-width: var(--piggy-code-annotation-min-width) !important;
+  height: var(--piggy-code-annotation-size) !important;
+  margin: 0 !important;
+  padding: 0 calc(0.28rem * var(--piggy-font-scale)) !important;
+
+  color: var(--piggy-code-annotation-text) !important;
+  background:
+    linear-gradient(
+        var(--piggy-code-annotation-bg),
+        var(--piggy-code-annotation-bg)
+      )
+      padding-box,
+    linear-gradient(
+        135deg,
+        var(--piggy-code-annotation-border),
+        var(--piggy-code-annotation-ring)
+      )
+      border-box !important;
+
+  border: 1px solid transparent !important;
+  border-radius: var(--piggy-code-annotation-radius) !important;
+
+  box-shadow:
+    0 0 0 1px
+      color-mix(
+        in srgb,
+        var(--piggy-code-block-background, #000000) 64%,
+        transparent
+      ),
+    inset 0 1px 0
+      color-mix(in srgb, var(--piggy-code-annotation-text) 18%, transparent) !important;
+  cursor: pointer !important;
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
+  font-size: var(--piggy-code-annotation-font-size) !important;
+  font-style: normal !important;
+  font-weight: 800 !important;
+  font-variant-numeric: tabular-nums !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+  transform: translateY(var(--piggy-code-annotation-offset-y)) !important;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    color 140ms ease,
+    transform 140ms ease !important;
+}
+
+.md-content .highlight .md-annotation::before,
+.md-content .highlight .md-annotation::after,
+.md-content .highlight .md-annotation__index::before,
+.md-content .highlight .md-annotation__index::after,
+.md-content .highlight .md-annotation__index [data-md-annotation-id]::after {
+  content: none !important;
+  display: none !important;
+}
+
+.md-content .highlight .md-annotation__index [data-md-annotation-id] {
+  display: inline-block !important;
+  position: relative !important;
+  z-index: 1 !important;
+  min-width: 1ch !important;
+  color: inherit !important;
+  font: inherit !important;
+  line-height: 1 !important;
+}
+
+.md-content .highlight .md-annotation__index [data-md-annotation-id]::before {
+  content: attr(data-md-annotation-id) !important;
+}
+
+.md-content .highlight .md-annotation:hover .md-annotation__index,
+.md-content .highlight .md-annotation:focus-visible .md-annotation__index,
+.md-content .highlight .md-annotation__index:hover,
+.md-content .highlight .md-annotation__index:focus-visible {
+  color: var(--piggy-code-annotation-text) !important;
+  background:
+    linear-gradient(
+        var(--piggy-code-annotation-hover-bg),
+        var(--piggy-code-annotation-hover-bg)
+      )
+      padding-box,
+    linear-gradient(
+        135deg,
+        var(--piggy-code-annotation-text),
+        var(--piggy-code-annotation-border)
+      )
+      border-box !important;
+
+  box-shadow:
+    0 0 0 2px
+      color-mix(in srgb, var(--piggy-code-annotation-ring) 26%, transparent),
+    inset 0 1px 0
+      color-mix(in srgb, var(--piggy-code-annotation-text) 22%, transparent) !important;
+  filter: none !important;
+  text-decoration: none !important;
+  transform: translateY(var(--piggy-code-annotation-offset-y)) !important;
+}
+
+.md-content .highlight .md-annotation:focus-visible,
+.md-content .highlight .md-annotation__index:focus-visible {
+  outline: none !important;
+}
+
+.md-content .highlight .md-annotation .md-tooltip {
+  position: absolute !important;
+  top: 50% !important;
+  left: calc(100% + 0.55rem * var(--piggy-font-scale)) !important;
+  width: var(--piggy-code-tooltip-max-width) !important;
+  min-width: var(--piggy-code-tooltip-min-width) !important;
+  max-width: var(--piggy-code-tooltip-max-width) !important;
+
+  color: var(--piggy-code-tooltip-text) !important;
+  background: var(--piggy-code-tooltip-bg) !important;
+  background-color: var(--piggy-code-tooltip-bg) !important;
+
+  border: 1px solid var(--piggy-code-tooltip-border) !important;
+  border-radius: calc(0.5rem * var(--piggy-font-scale)) !important;
+
+  box-shadow:
+    0 0.8rem 2rem rgba(0, 0, 0, 0.24),
+    0 0 0 1px
+      color-mix(in srgb, var(--piggy-code-annotation-ring) 20%, transparent) !important;
+  opacity: 0 !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+  transform: translate(calc(0.25rem * var(--piggy-font-scale)), -50%)
+    scale(0.98) !important;
+  transform-origin: left center !important;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease,
+    z-index 0ms linear 150ms !important;
+  white-space: normal !important;
+  z-index: 0 !important;
+}
+
+.md-content .highlight .md-annotation .md-tooltip--active {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translate(0, -50%) scale(1) !important;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease,
+    z-index 0ms !important;
+  z-index: 1000 !important;
+}
+
+.md-content .highlight .md-annotation .md-tooltip::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: calc(-0.36rem * var(--piggy-font-scale)) !important;
+  width: calc(0.7rem * var(--piggy-font-scale)) !important;
+  height: calc(0.7rem * var(--piggy-font-scale)) !important;
+
+  background: var(--piggy-code-tooltip-bg) !important;
+  border-bottom: 1px solid var(--piggy-code-tooltip-border) !important;
+  border-left: 1px solid var(--piggy-code-tooltip-border) !important;
+  transform: translateY(-50%) rotate(45deg) !important;
+}
+
+.md-content .highlight .md-annotation .md-tooltip__inner {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  padding: calc(0.7rem * var(--piggy-font-scale))
+    calc(0.85rem * var(--piggy-font-scale)) !important;
+
+  color: var(--piggy-code-tooltip-text) !important;
+  background: transparent !important;
+
+  font-size: calc(
+    0.82rem * var(--piggy-reader-component-font-scale)
+  ) !important;
+  line-height: 1.45 !important;
+  max-width: none !important;
+  overflow: visible !important;
+  overflow-wrap: anywhere !important;
+  white-space: normal !important;
+  word-break: normal !important;
+}
+
+.md-content .highlight .md-annotation .md-tooltip__inner * {
+  max-width: 100% !important;
+  white-space: normal !important;
+}
+
+.md-content .md-tooltip__inner > code:not(.md-code__content),
+.md-content
+  .md-tooltip__inner
+  :where(p, li, dd, dt, span, strong, em, a, small, mark)
+  > code:not(.md-code__content) {
+  display: inline !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: calc(0.05rem * var(--piggy-font-scale))
+    calc(0.25rem * var(--piggy-font-scale)) !important;
+
+  color: var(--piggy-code-inline-text, var(--piggy-code)) !important;
+  background: var(--piggy-code-inline-bg, var(--piggy-code-bg)) !important;
+  background-color: var(
+    --piggy-code-inline-bg,
+    var(--piggy-code-bg)
+  ) !important;
+
+  border: 1px solid var(--piggy-code-inline-border, var(--piggy-code-border)) !important;
+  border-radius: calc(0.25rem * var(--piggy-font-scale)) !important;
+
+  box-shadow: none !important;
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
+  font-size: 0.9em !important;
+  line-height: 1.35 !important;
+  vertical-align: baseline !important;
+  white-space: normal !important;
+}
+
+.md-content .highlight .md-annotation .md-tooltip__inner > :first-child {
+  margin-top: 0 !important;
+}
+
+.md-content .highlight .md-annotation .md-tooltip__inner > :last-child {
+  margin-bottom: 0 !important;
+}
+
+.md-content .md-annotation__list {
+  margin-top: 0.75rem !important;
 }

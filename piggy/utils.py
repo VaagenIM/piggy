@@ -9,6 +9,7 @@ from flask import send_file, request
 
 from piggy import ALLOWED_URL_CHARS_REGEX, IMG_FMT, MEDIA_ROUTE, ASSIGNMENT_ROUTE
 from piggy.models import LANGUAGES
+from turtleconverter import generate_static_files
 
 
 def lru_cache_wrapper(func):
@@ -81,16 +82,33 @@ def get_themes():
 
         theme_output.append(theme_data)
 
-    return sorted(theme_output, key=lambda d: int(d["id"]))
+    return sorted(theme_output, key=lambda d: int(d.get("id", 9999)))
 
 
-# quick and dirty state_machine to read CSS metadata
+def generate_print_css():
+    css_folder = Path(__file__).parent / "static" / "css"
+    with (css_folder / "base" / "print.css").open("r", encoding="utf-8") as f:
+        css = f.read()
+
+    with (css_folder / "themes" / "light.css").open("r", encoding="utf-8") as f:
+        light_css = f.read()
+        light_css = re.sub(r'\[\s*data-theme\s*=\s*["\']light["\']\s*\]', ":root" * 3, light_css)
+
+    css = css.replace("/* LIGHT_THEME_PLACEHOLDER */", light_css)
+
+    with (css_folder / "base" / "print_overrides.css").open("w+", encoding="utf-8") as f:
+        f.write(css)
+
+
+# Lightweight state machine to read CSS metadata blocks. Theme CSS stays the
+# source of truth for colors, while metadata gives the settings UI richer cards.
 class ParserState:
     INIT = 1
     READ = 2
 
 
 CSS_META_IDENTIFIER = "/* METADATA"
+CSS_META_LIST_KEYS = {"tags", "recommended_for", "features"}
 
 
 @lru_cache_wrapper
@@ -101,33 +119,75 @@ def get_css_metadata(path: str):
     if css_path.suffix != ".css":
         return None
 
-    valid = True
     state = ParserState.INIT
 
-    with css_path.open() as file:
-        while valid:
-            line = file.readline()
+    with css_path.open(encoding="utf-8") as file:
+        for raw_line in file:
+            line = raw_line.strip().lstrip("\ufeff")
 
-            match state:
-                case ParserState.INIT:
-                    if str(line).startswith(CSS_META_IDENTIFIER):
-                        state = ParserState.READ
-                    else:
-                        valid = False
-                case ParserState.READ:
-                    meta_item = line.split(":", 1)
+            if state == ParserState.INIT:
+                if not line:
+                    continue
 
-                    if len(meta_item) < 2:
-                        valid = False
-                    else:
-                        css_metadata[meta_item[0].strip()] = meta_item[1].strip()
+                if line.startswith(CSS_META_IDENTIFIER):
+                    state = ParserState.READ
+                    continue
+
+                return None
+
+            if line.startswith("*/"):
+                break
+
+            if not line or line.startswith("#"):
+                continue
+
+            meta_item = line.split(":", 1)
+            if len(meta_item) < 2:
+                continue
+
+            key = meta_item[0].strip()
+            value = parse_css_metadata_value(key, meta_item[1].strip())
+            set_css_metadata_value(css_metadata, key, value)
+
+    if state == ParserState.INIT or not css_metadata:
+        return None
 
     css_metadata["path"] = css_path.stem
 
     return css_metadata
 
 
-def process_json_for_api(obj):
+def parse_css_metadata_value(key: str, value: str):
+    metadata_key = key.rsplit(".", 1)[-1]
+
+    if metadata_key in CSS_META_LIST_KEYS:
+        return [item.strip() for item in value.split(",") if item.strip()]
+
+    if metadata_key == "id" and value.isdigit():
+        return int(value)
+
+    normalized_value = value.lower()
+    if normalized_value in {"true", "false"}:
+        return normalized_value == "true"
+
+    return value
+
+
+def set_css_metadata_value(metadata: dict, key: str, value):
+    parts = [part.strip() for part in key.split(".") if part.strip()]
+    if not parts:
+        return
+
+    current = metadata
+    for part in parts[:-1]:
+        if not isinstance(current.get(part), dict):
+            current[part] = {}
+        current = current[part]
+
+    current[parts[-1]] = value
+
+
+def process_json_for_api(obj, exclude_keys=None):
     def apply_thumbnail(thumb, current_path):
         """Turn the thumbnail path into an absolute URL"""
 
@@ -187,17 +247,7 @@ def process_json_for_api(obj):
                     new_obj[k] = meta
                     continue
 
-                if k == "translation_meta" and isinstance(v, dict):
-                    meta_block = {}
-
-                    for lang, lang_meta in v.items():
-                        if isinstance(lang_meta, dict):
-                            lang_meta = transform(lang_meta, current_path)
-                            lang_meta["thumbnail"] = apply_thumbnail(lang_meta.get("thumbnail"), current_path)
-
-                        meta_block[lang] = lang_meta
-
-                    new_obj[k] = meta_block
+                if exclude_keys and k in exclude_keys:
                     continue
 
                 if k.startswith("turtletranslate_"):
@@ -213,3 +263,19 @@ def process_json_for_api(obj):
         return obj
 
     return transform(obj)
+
+
+def delete_turtleconverter_stylesheets():
+    """No longer used, might as well save a couple bytes."""
+    stylesheets_path = Path(__file__).parent / "static" / "turtleconvert" / "stylesheets"
+    if stylesheets_path.exists() and stylesheets_path.is_dir():
+        for file in stylesheets_path.iterdir():
+            if file.is_file():
+                file.unlink()
+        stylesheets_path.rmdir()
+
+
+def startup_tasks():
+    generate_static_files(static_folder=Path(os.path.dirname(Path(__file__).absolute())) / "static")
+    # delete_turtleconverter_stylesheets()
+    generate_print_css()

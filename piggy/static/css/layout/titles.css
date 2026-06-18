@@ -4,6 +4,8 @@
 .page-title {
   margin-bottom: 0 !important;
   font-size: calc(3rem * var(--piggy-font-scale));
+  font-weight: 800;
+  text-align: center;
   color: var(--piggy-content-h1) !important;
   word-wrap: break-word;
   max-width: 1006px;

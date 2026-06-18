@@ -3,6 +3,13 @@ id: 6
 name: Sage
 description: A calm green theme for focused study.
 type: light
+category: calm
+tags: low glare, calm, green
+preview.background: #d8e8c8
+preview.surface: #f7fbf3
+preview.text: #1f3526
+preview.accent: #5f9362
+preview.border: #4d7d50
 preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3526; text-shadow: none;
 */
 
@@ -205,6 +212,36 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
   --piggy-admonition-quote-text: #24382b;
   --piggy-admonition-quote-icon: #5f7164;
   --piggy-admonition-quote-border: #9fbd9b;
+
+  /* keyboard keys */
+  --piggy-key-background: rgba(247, 251, 243, 0.96);
+  --piggy-key-background-hover: rgba(232, 242, 224, 0.98);
+
+  --piggy-key-text: #1f3526;
+  --piggy-key-text-hover: #102417;
+  --piggy-key-separator: #5f7164;
+
+  --piggy-key-border: rgba(63, 127, 90, 0.28);
+  --piggy-key-border-hover: rgba(95, 147, 98, 0.46);
+
+  --piggy-key-inner-border: rgba(255, 255, 255, 0.78);
+  --piggy-key-inner-border-hover: rgba(255, 255, 255, 0.94);
+
+  --piggy-key-shadow: rgba(32, 64, 38, 0.09);
+  --piggy-key-shadow-hover: rgba(63, 127, 90, 0.16);
+
+  /* keyboard keys inside admonitions */
+  --piggy-key-admonition-background: rgba(255, 255, 255, 0.42);
+  --piggy-key-admonition-background-hover: rgba(255, 255, 255, 0.66);
+
+  --piggy-key-admonition-border: rgba(63, 127, 90, 0.2);
+  --piggy-key-admonition-border-hover: rgba(63, 127, 90, 0.34);
+
+  --piggy-key-admonition-inner-border: rgba(255, 255, 255, 0.7);
+  --piggy-key-admonition-inner-border-hover: rgba(255, 255, 255, 0.9);
+
+  --piggy-key-admonition-shadow: rgba(32, 64, 38, 0.07);
+  --piggy-key-admonition-shadow-hover: rgba(32, 64, 38, 0.12);
 }
 
 [data-theme="sage"] .level-count-container {
@@ -216,6 +253,9 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="sage"] .md-content {
+  --piggy-code-block-highlight-bg: rgba(95, 147, 98, 0.15);
+  --piggy-code-block-highlight-border: rgba(95, 147, 98, 0.34);
+
   border-radius: 0.5rem;
 }
 
@@ -260,12 +300,16 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="sage"] .md-content :is(.admonition.note,
-  details.note,
-  .admonition.info,
-  details.info,
-  .admonition.tip,
-  details.tip) {
+[data-theme="sage"]
+  .md-content
+  :is(
+    .admonition.note,
+    details.note,
+    .admonition.info,
+    details.info,
+    .admonition.tip,
+    details.tip
+  ) {
   --piggy-table-admonition-accent: rgba(47, 127, 134, 0.25);
   --piggy-table-header-start: rgba(47, 127, 134, 0.09);
   --piggy-table-header-end: rgba(47, 127, 134, 0.09);
@@ -273,10 +317,14 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="sage"] .md-content :is(.admonition.success,
-  details.success,
-  .admonition.question,
-  details.question) {
+[data-theme="sage"]
+  .md-content
+  :is(
+    .admonition.success,
+    details.success,
+    .admonition.question,
+    details.question
+  ) {
   --piggy-table-admonition-accent: rgba(63, 138, 82, 0.24);
   --piggy-table-header-start: rgba(63, 138, 82, 0.085);
   --piggy-table-header-end: rgba(63, 138, 82, 0.085);
@@ -284,10 +332,14 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
 }
 
 /* WARNING / ATTENTION */
-[data-theme="sage"] .md-content :is(.admonition.warning,
-  details.warning,
-  .admonition.attention,
-  details.attention) {
+[data-theme="sage"]
+  .md-content
+  :is(
+    .admonition.warning,
+    details.warning,
+    .admonition.attention,
+    details.attention
+  ) {
   --piggy-table-admonition-accent: rgba(169, 107, 34, 0.25);
   --piggy-table-header-start: rgba(169, 107, 34, 0.085);
   --piggy-table-header-end: rgba(169, 107, 34, 0.085);
@@ -295,12 +347,16 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="sage"] .md-content :is(.admonition.danger,
-  details.danger,
-  .admonition.failure,
-  details.failure,
-  .admonition.bug,
-  details.bug) {
+[data-theme="sage"]
+  .md-content
+  :is(
+    .admonition.danger,
+    details.danger,
+    .admonition.failure,
+    details.failure,
+    .admonition.bug,
+    details.bug
+  ) {
   --piggy-table-admonition-accent: rgba(168, 66, 66, 0.25);
   --piggy-table-header-start: rgba(168, 66, 66, 0.09);
   --piggy-table-header-end: rgba(168, 66, 66, 0.09);

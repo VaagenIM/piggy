@@ -18,17 +18,19 @@
   justify-content: center;
   width: calc(3rem * var(--piggy-font-scale));
   height: calc(3rem * var(--piggy-font-scale));
+  opacity: 0;
+  pointer-events: none;
+}
+
+#scroll-to-top-btn.is-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 #scroll-to-top-btn:hover {
   transform: scale(1.1);
   background-color: var(--piggy-button-hover);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-}
-
-body:has(#settings-menu.open) #scroll-to-top-btn {
-  opacity: 0;
-  pointer-events: none;
 }
 
 #scroll-to-top-btn svg {

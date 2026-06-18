@@ -46,9 +46,13 @@
   background: var(--piggy-nav-button, var(--piggy-button));
   background-color: var(--piggy-nav-button, var(--piggy-button));
   color: var(--piggy-nav-button-text, var(--piggy-text-button));
-  border-color: var(--piggy-nav-button-border,
-      var(--piggy-button-border,
-        color-mix(in srgb, var(--piggy-button-active) 34%, transparent)));
+  border-color: var(
+    --piggy-nav-button-border,
+    var(
+      --piggy-button-border,
+      color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+    )
+  );
   font-weight: 650;
 }
 

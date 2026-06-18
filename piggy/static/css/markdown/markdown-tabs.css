@@ -6,7 +6,7 @@
   border-style: solid;
   border-color: var(--piggy-dark);
   margin: 0 !important;
-  padding: 0rem 0.5rem 0rem 0.5rem !important;
+  padding: 0 calc(0.5rem * var(--piggy-font-scale)) !important;
   flex-wrap: wrap;
 }
 
@@ -19,17 +19,17 @@
   background-color: #0000003a !important;
 }
 
-.md-content .tabbed-labels a {
-  font-size: calc(0.9rem * var(--piggy-font-scale)) !important;
+.md-content .tabbed-labels :is(a, label) {
+  font-size: calc(0.9rem * var(--piggy-reader-component-font-scale)) !important;
   color: var(--piggy-text-main) !important;
 }
 
 .md-content .tabbed-set {
   border: 1px solid var(--piggy-neutral);
-  border-radius: 5px !important;
+  border-radius: calc(0.3rem * var(--piggy-font-scale)) !important;
   background: #0000000a;
 }
 
 .md-content .tabbed-content {
-  padding: 0rem 1rem 0rem 1rem;
+  padding: 0 calc(1rem * var(--piggy-font-scale));
 }

@@ -1,12 +1,15 @@
 @import "./base/root.css";
+@import "./base/reset.css";
 @import "./base/elements.css";
 @import "./base/utilities.css";
 @import "./base/text-effects.css";
+@import "./base/print_overrides.css";
 
 /*@import "./fonts/imports.css"; - Preloaded via partials/head.html*/
 @import "./fonts/font-themes.css";
 @import "./fonts/monospace-themes.css";
 @import "./fonts/font-size-themes.css";
+@import "./preferences/reader-preferences.css";
 
 @import "./layout/page-shell.css";
 @import "./layout/site-header.css";
@@ -37,6 +40,7 @@
 @import "./components/cards/assignment-card.css";
 @import "./components/cards/information-card.css";
 
+@import "./markdown/markdown-material-compat.css";
 @import "./markdown/markdown-base.css";
 @import "./markdown/markdown-code.css";
 @import "./markdown/markdown-code-palettes.css";
@@ -44,6 +48,11 @@
 @import "./markdown/markdown-admonitions.css";
 @import "./markdown/markdown-tabs.css";
 @import "./markdown/markdown-math.css";
+@import "./markdown/markdown-keys.css";
 @import "./markdown/markdown-tables.css";
 
+@import "./vendor/katex.css";
+@import "./vendor/glightbox.css";
+
 @import "./animations/keyframes.css";
+@import "./animations/loader.css";

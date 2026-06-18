@@ -47,6 +47,14 @@
   --piggy-admonition-quote-text: var(--piggy-text-main);
   --piggy-admonition-quote-icon: #aeb3b9;
   --piggy-admonition-quote-border: rgba(174, 179, 185, 0.45);
+
+  /* Turtleconverter custom callouts */
+  --md-admonition-icon--video: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M384 112v288c0 26.51-21.49 48-48 48h-288c-26.51 0-48-21.49-48-48v-288c0-26.51 21.49-48 48-48h288C362.5 64 384 85.49 384 112zM576 127.5v256.9c0 25.5-29.17 40.39-50.39 25.79L416 334.7V177.3l109.6-75.56C546.9 87.13 576 102.1 576 127.5z"/></svg>');
+  --md-admonition-color-video: 5, 247, 203;
+  --md-admonition-icon--code: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M414.8 40.79L286.8 488.8C281.9 505.8 264.2 515.6 247.2 510.8C230.2 505.9 220.4 488.2 225.2 471.2L353.2 23.21C358.1 6.216 375.8-3.624 392.8 1.232C409.8 6.087 419.6 23.8 414.8 40.79H414.8zM518.6 121.4L630.6 233.4C643.1 245.9 643.1 266.1 630.6 278.6L518.6 390.6C506.1 403.1 485.9 403.1 473.4 390.6C460.9 378.1 460.9 357.9 473.4 345.4L562.7 256L473.4 166.6C460.9 154.1 460.9 133.9 473.4 121.4C485.9 108.9 506.1 108.9 518.6 121.4V121.4zM166.6 166.6L77.25 256L166.6 345.4C179.1 357.9 179.1 378.1 166.6 390.6C154.1 403.1 133.9 403.1 121.4 390.6L9.372 278.6C-3.124 266.1-3.124 245.9 9.372 233.4L121.4 121.4C133.9 108.9 154.1 108.9 166.6 121.4C179.1 133.9 179.1 154.1 166.6 166.6V166.6z"/></svg>');
+  --md-admonition-color-code: 5, 247, 73;
+  --md-admonition-icon--tech: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M160 352h192V160H160V352zM448 176h48C504.8 176 512 168.8 512 160s-7.162-16-16-16H448V128c0-35.35-28.65-64-64-64h-16V16C368 7.164 360.8 0 352 0c-8.836 0-16 7.164-16 16V64h-64V16C272 7.164 264.8 0 256 0C247.2 0 240 7.164 240 16V64h-64V16C176 7.164 168.8 0 160 0C151.2 0 144 7.164 144 16V64H128C92.65 64 64 92.65 64 128v16H16C7.164 144 0 151.2 0 160s7.164 16 16 16H64v64H16C7.164 240 0 247.2 0 256s7.164 16 16 16H64v64H16C7.164 336 0 343.2 0 352s7.164 16 16 16H64V384c0 35.35 28.65 64 64 64h16v48C144 504.8 151.2 512 160 512c8.838 0 16-7.164 16-16V448h64v48c0 8.836 7.164 16 16 16c8.838 0 16-7.164 16-16V448h64v48c0 8.836 7.164 16 16 16c8.838 0 16-7.164 16-16V448H384c35.35 0 64-28.65 64-64v-16h48c8.838 0 16-7.164 16-16s-7.162-16-16-16H448v-64h48C504.8 272 512 264.8 512 256s-7.162-16-16-16H448V176zM384 368c0 8.836-7.162 16-16 16h-224C135.2 384 128 376.8 128 368v-224C128 135.2 135.2 128 144 128h224C376.8 128 384 135.2 384 144V368z"/></svg>');
+  --md-admonition-color-tech: 146, 247, 5;
 }
 
 /*********************************\
@@ -55,31 +63,56 @@
 
 /* Main admonition container */
 .md-content :is(.admonition, details) {
-  margin: 1rem 0 !important;
+  --piggy-admonition-title-icon-left: calc(
+    0.78rem * var(--piggy-reader-space-scale)
+  );
+  --piggy-admonition-title-icon-gap: calc(
+    0.55rem * var(--piggy-reader-space-scale)
+  );
+  --piggy-admonition-title-icon-size: calc(
+    1rem * var(--piggy-reader-component-font-scale)
+  );
+  --piggy-admonition-title-padding-left: calc(
+    var(--piggy-admonition-title-icon-left) +
+      var(--piggy-admonition-title-icon-size) +
+      var(--piggy-admonition-title-icon-gap)
+  );
+  --piggy-admonition-title-padding-y: calc(
+    0.65rem * var(--piggy-reader-space-scale)
+  );
+  --piggy-admonition-padding-x: calc(1rem * var(--piggy-reader-space-scale));
+
+  margin: calc(1rem * var(--piggy-reader-space-scale)) 0 !important;
   padding: 0 !important;
 
   color: var(--piggy-admonition-text, var(--piggy-text-main)) !important;
   background: var(--piggy-admonition-bg) !important;
 
   border: none !important;
-  border-left: 0.25rem solid var(--piggy-admonition-border) !important;
+  border-left: calc(0.25rem * var(--piggy-reader-space-scale)) solid
+    var(--piggy-admonition-border) !important;
 
-  border-radius: 0.5rem !important;
+  border-radius: calc(0.5rem * var(--piggy-reader-space-scale)) !important;
   box-shadow: none !important;
 
   overflow: hidden !important;
 }
 
 .md-content :is(.admonition, details) :is(.admonition, details) {
-  border: 1px solid color-mix(in srgb, var(--piggy-admonition-border) 50%, transparent) !important;
-  border-left: 0.25rem solid var(--piggy-admonition-border) !important;
+  border: 1px solid
+    color-mix(in srgb, var(--piggy-admonition-border) 50%, transparent) !important;
+  border-left: calc(0.25rem * var(--piggy-reader-space-scale)) solid
+    var(--piggy-admonition-border) !important;
 }
 
-.md-content .admonition>.admonition-title {
+.md-content .admonition > .admonition-title {
   display: block !important;
+  position: relative !important;
 
   margin: 0 !important;
-  padding: 0.65rem 1rem 0.65rem 2.6rem !important;
+  padding: var(--piggy-admonition-title-padding-y)
+    var(--piggy-admonition-padding-x) var(--piggy-admonition-title-padding-y)
+    var(--piggy-admonition-title-padding-left) !important;
 
   color: var(--piggy-admonition-text, var(--piggy-text-main)) !important;
   background: var(--piggy-admonition-title-bg) !important;
@@ -87,16 +120,20 @@
   border: none !important;
   border-radius: 0 !important;
 
-  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
   font-weight: 700 !important;
   line-height: 1.35 !important;
 }
 
-.md-content details>summary {
+.md-content details > summary {
   display: block !important;
+  position: relative !important;
 
   margin: 0 !important;
-  padding: 0.65rem 1rem 0.65rem 2.6rem !important;
+  padding: var(--piggy-admonition-title-padding-y)
+    calc(2.35rem * var(--piggy-reader-space-scale))
+    var(--piggy-admonition-title-padding-y)
+    var(--piggy-admonition-title-padding-left) !important;
 
   color: var(--piggy-admonition-text, var(--piggy-text-main)) !important;
   background: var(--piggy-admonition-title-bg) !important;
@@ -104,54 +141,67 @@
   border: none !important;
   border-radius: 0 !important;
 
-  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
   font-weight: 700 !important;
   line-height: 1.35 !important;
 
   cursor: pointer !important;
 }
 
-.md-content .admonition>p:not(.admonition-title),
-.md-content details>p {
-  margin: 0.75rem 1rem !important;
+.md-content .admonition > p:not(.admonition-title),
+.md-content details > p {
+  margin: calc(0.75rem * var(--piggy-reader-space-scale))
+    var(--piggy-admonition-padding-x) !important;
 }
 
-.md-content :is(.admonition, details)> :not(.admonition-title):not(summary):not(p) {
-  margin-left: 1rem !important;
-  margin-right: 1rem !important;
+.md-content
+  :is(.admonition, details)
+  > :not(.admonition-title):not(summary):not(p) {
+  margin-left: var(--piggy-admonition-padding-x) !important;
+  margin-right: var(--piggy-admonition-padding-x) !important;
 }
 
-.md-content :is(.admonition, details)> :last-child {
-  margin-bottom: 1rem !important;
+.md-content :is(.admonition, details) > :last-child {
+  margin-bottom: calc(1rem * var(--piggy-reader-space-scale)) !important;
 }
 
 .md-content :is(.admonition, details) ol li {
-  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
   list-style: decimal !important;
 }
 
 .md-content :is(.admonition, details) ul li {
-  font-size: calc(1rem * var(--piggy-font-scale)) !important;
+  font-size: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
   list-style: disc !important;
 }
 
-.md-content .admonition>.admonition-title::before,
-.md-content details>summary::before {
+.md-content .admonition > .admonition-title::before,
+.md-content details > summary::before {
+  position: absolute !important;
   top: 50% !important;
+  left: var(--piggy-admonition-title-icon-left) !important;
+  width: var(--piggy-admonition-title-icon-size) !important;
+  height: var(--piggy-admonition-title-icon-size) !important;
+  margin: 0 !important;
   transform: translateY(-50%) !important;
 }
 
-.md-content details>summary::after {
+.md-content details > summary::after {
+  position: absolute !important;
   top: 50% !important;
+  right: calc(0.78rem * var(--piggy-reader-space-scale)) !important;
+  width: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
+  height: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
+  margin: 0 !important;
   transform: translateY(-50%) rotate(0deg) !important;
 }
 
-.md-content details[open]>summary::after {
+.md-content details[open] > summary::after {
   transform: translateY(-50%) rotate(180deg) !important;
 }
 
 .md-content details {
-  scroll-margin-bottom: 2rem;
+  scroll-margin-bottom: calc(2rem * var(--piggy-reader-space-scale));
   overflow: hidden;
 }
 
@@ -159,9 +209,9 @@
   overflow: hidden !important;
 }
 
-.md-content .admonition>.admonition-title::before,
-.md-content details>summary::before,
-.md-content details>summary::after {
+.md-content .admonition > .admonition-title::before,
+.md-content details > summary::before,
+.md-content details > summary::after {
   top: calc(50% + 1px) !important;
 }
 
@@ -170,12 +220,15 @@
 \*********************************/
 
 /* NOTE / INFO / TIP */
-.md-content :is(.admonition.note,
-  details.note,
-  .admonition.info,
-  details.info,
-  .admonition.tip,
-  details.tip) {
+.md-content
+  :is(
+    .admonition.note,
+    details.note,
+    .admonition.info,
+    details.info,
+    .admonition.tip,
+    details.tip
+  ) {
   --piggy-admonition-bg: var(--piggy-admonition-note-bg);
   --piggy-admonition-title-bg: var(--piggy-admonition-note-title-bg);
   --piggy-admonition-text: var(--piggy-admonition-note-text);
@@ -184,10 +237,13 @@
 }
 
 /* SUCCESS / QUESTION */
-.md-content :is(.admonition.success,
-  details.success,
-  .admonition.question,
-  details.question) {
+.md-content
+  :is(
+    .admonition.success,
+    details.success,
+    .admonition.question,
+    details.question
+  ) {
   --piggy-admonition-bg: var(--piggy-admonition-success-bg);
   --piggy-admonition-title-bg: var(--piggy-admonition-success-title-bg);
   --piggy-admonition-text: var(--piggy-admonition-success-text);
@@ -196,10 +252,13 @@
 }
 
 /* WARNING / ATTENTION */
-.md-content :is(.admonition.warning,
-  details.warning,
-  .admonition.attention,
-  details.attention) {
+.md-content
+  :is(
+    .admonition.warning,
+    details.warning,
+    .admonition.attention,
+    details.attention
+  ) {
   --piggy-admonition-bg: var(--piggy-admonition-warning-bg);
   --piggy-admonition-title-bg: var(--piggy-admonition-warning-title-bg);
   --piggy-admonition-text: var(--piggy-admonition-warning-text);
@@ -208,12 +267,15 @@
 }
 
 /* DANGER / FAILURE / BUG */
-.md-content :is(.admonition.danger,
-  details.danger,
-  .admonition.failure,
-  details.failure,
-  .admonition.bug,
-  details.bug) {
+.md-content
+  :is(
+    .admonition.danger,
+    details.danger,
+    .admonition.failure,
+    details.failure,
+    .admonition.bug,
+    details.bug
+  ) {
   --piggy-admonition-bg: var(--piggy-admonition-danger-bg);
   --piggy-admonition-title-bg: var(--piggy-admonition-danger-title-bg);
   --piggy-admonition-text: var(--piggy-admonition-danger-text);
@@ -243,6 +305,30 @@
   background-color: var(--piggy-admonition-icon, currentColor) !important;
 }
 
-.md-content details>summary::after {
+.md-content .video > .admonition-title::before,
+.md-content .video > summary::before,
+.md-typeset .video > .admonition-title::before,
+.md-typeset .video > summary::before {
+  -webkit-mask-image: var(--md-admonition-icon--video) !important;
+  mask-image: var(--md-admonition-icon--video) !important;
+}
+
+.md-content .code > .admonition-title::before,
+.md-content .code > summary::before,
+.md-typeset .code > .admonition-title::before,
+.md-typeset .code > summary::before {
+  -webkit-mask-image: var(--md-admonition-icon--code) !important;
+  mask-image: var(--md-admonition-icon--code) !important;
+}
+
+.md-content .tech > .admonition-title::before,
+.md-content .tech > summary::before,
+.md-typeset .tech > .admonition-title::before,
+.md-typeset .tech > summary::before {
+  -webkit-mask-image: var(--md-admonition-icon--tech) !important;
+  mask-image: var(--md-admonition-icon--tech) !important;
+}
+
+.md-content details > summary::after {
   color: var(--piggy-admonition-icon, currentColor) !important;
 }

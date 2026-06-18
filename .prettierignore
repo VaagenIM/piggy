@@ -1,1 +1,7 @@
+*
+!piggy/
+!piggy/**
+
 **/devtools/*.html
+**/js/modules/**/*.js
+**/css/vendor/**/*.css

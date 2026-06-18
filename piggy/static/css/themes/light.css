@@ -3,6 +3,13 @@ id: 1
 name: Light
 description: The default light theme.
 type: light
+category: standard
+tags: default, bright
+preview.background: #f7f7f7
+preview.surface: #ffffff
+preview.text: #171717
+preview.accent: #78b3d9
+preview.border: #7faac6
 preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); color: rgb(23, 23, 23); text-shadow: none;
 */
 
@@ -202,16 +209,45 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
   --piggy-admonition-quote-text: #252b31;
   --piggy-admonition-quote-icon: #5f6b78;
   --piggy-admonition-quote-border: #8a96a3;
-}
 
-[data-theme="light"] .settings-option {
-  color: var(--piggy-dark);
+  /* keyboard keys */
+  --piggy-key-background: rgba(255, 255, 255, 0.96);
+  --piggy-key-background-hover: rgba(237, 246, 251, 0.98);
+
+  --piggy-key-text: #172033;
+  --piggy-key-text-hover: #0f1726;
+  --piggy-key-separator: #6b7682;
+
+  --piggy-key-border: rgba(70, 80, 95, 0.28);
+  --piggy-key-border-hover: rgba(35, 111, 168, 0.42);
+
+  --piggy-key-inner-border: rgba(255, 255, 255, 0.85);
+  --piggy-key-inner-border-hover: rgba(255, 255, 255, 0.95);
+
+  --piggy-key-shadow: rgba(23, 32, 51, 0.1);
+  --piggy-key-shadow-hover: rgba(35, 111, 168, 0.18);
+
+  /* keyboard keys inside admonitions */
+  --piggy-key-admonition-background: rgba(255, 255, 255, 0.42);
+  --piggy-key-admonition-background-hover: rgba(255, 255, 255, 0.68);
+
+  --piggy-key-admonition-border: rgba(70, 80, 95, 0.22);
+  --piggy-key-admonition-border-hover: rgba(70, 80, 95, 0.34);
+
+  --piggy-key-admonition-inner-border: rgba(255, 255, 255, 0.72);
+  --piggy-key-admonition-inner-border-hover: rgba(255, 255, 255, 0.92);
+
+  --piggy-key-admonition-shadow: rgba(23, 32, 51, 0.08);
+  --piggy-key-admonition-shadow-hover: rgba(23, 32, 51, 0.12);
 }
 
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="light"] .md-content {
+  --piggy-code-block-highlight-bg: rgba(9, 105, 218, 0.1);
+  --piggy-code-block-highlight-border: rgba(9, 105, 218, 0.26);
+
   border-radius: 0.5rem;
 }
 
@@ -243,12 +279,16 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="light"] .md-content :is(.admonition.note,
-  details.note,
-  .admonition.info,
-  details.info,
-  .admonition.tip,
-  details.tip) {
+[data-theme="light"]
+  .md-content
+  :is(
+    .admonition.note,
+    details.note,
+    .admonition.info,
+    details.info,
+    .admonition.tip,
+    details.tip
+  ) {
   --piggy-table-admonition-accent: rgba(8, 126, 164, 0.28);
   --piggy-table-header-start: rgba(8, 126, 164, 0.105);
   --piggy-table-header-end: rgba(8, 126, 164, 0.105);
@@ -256,10 +296,14 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="light"] .md-content :is(.admonition.success,
-  details.success,
-  .admonition.question,
-  details.question) {
+[data-theme="light"]
+  .md-content
+  :is(
+    .admonition.success,
+    details.success,
+    .admonition.question,
+    details.question
+  ) {
   --piggy-table-admonition-accent: rgba(33, 138, 61, 0.26);
   --piggy-table-header-start: rgba(33, 138, 61, 0.095);
   --piggy-table-header-end: rgba(33, 138, 61, 0.095);
@@ -267,10 +311,14 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
 }
 
 /* WARNING / ATTENTION */
-[data-theme="light"] .md-content :is(.admonition.warning,
-  details.warning,
-  .admonition.attention,
-  details.attention) {
+[data-theme="light"]
+  .md-content
+  :is(
+    .admonition.warning,
+    details.warning,
+    .admonition.attention,
+    details.attention
+  ) {
   --piggy-table-admonition-accent: rgba(182, 106, 0, 0.26);
   --piggy-table-header-start: rgba(182, 106, 0, 0.09);
   --piggy-table-header-end: rgba(182, 106, 0, 0.09);
@@ -278,12 +326,16 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="light"] .md-content :is(.admonition.danger,
-  details.danger,
-  .admonition.failure,
-  details.failure,
-  .admonition.bug,
-  details.bug) {
+[data-theme="light"]
+  .md-content
+  :is(
+    .admonition.danger,
+    details.danger,
+    .admonition.failure,
+    details.failure,
+    .admonition.bug,
+    details.bug
+  ) {
   --piggy-table-admonition-accent: rgba(195, 49, 43, 0.26);
   --piggy-table-header-start: rgba(195, 49, 43, 0.09);
   --piggy-table-header-end: rgba(195, 49, 43, 0.09);

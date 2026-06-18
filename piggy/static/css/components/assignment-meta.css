@@ -12,16 +12,16 @@
   max-width: calc(100% - 2rem);
   overflow-wrap: anywhere;
   word-break: break-word;
-  padding: 0.75rem;
-  margin: 0.5rem auto 0.5rem auto;
-  font-size: calc(1.1rem * var(--piggy-font-scale));
+  padding: calc(0.75rem * var(--piggy-reader-space-scale));
+  margin: calc(0.5rem * var(--piggy-reader-space-scale)) auto;
+  font-size: calc(1.1rem * var(--piggy-reader-font-scale));
   text-align: center;
 }
 
 .assignment-meta-note-icon {
   fill: var(--piggy-text-main);
-  width: 1.1rem;
-  height: 1.1rem;
+  width: calc(1.1rem * var(--piggy-reader-font-scale));
+  height: calc(1.1rem * var(--piggy-reader-font-scale));
   display: inline;
-  margin: 0.1rem;
+  margin: calc(0.1rem * var(--piggy-reader-space-scale));
 }

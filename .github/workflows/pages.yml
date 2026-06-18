@@ -25,39 +25,38 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: main
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: "3.12"
           enable-cache: true
+          activate-environment: true
 
       - name: Set up Python
         run: uv python install
 
-      - name: Set up npm
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-
-      - name: Get piggybank
+      - name: Cleanup earlier runs
         run: |
           rm -rf piggybank
-          git clone https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggybank piggybank
-          
-          cd piggybank
-          git fetch origin output
-          git checkout output
-          git reset --hard origin/output
-          git clean -fd
+          pkill -f gunicorn || true
+          pkill -f python || true
+
+      - name: Checkout piggybank
+        uses: actions/checkout@v6
+        with:
+          repository: VaagenIM/piggybank
+          ref: output
+          token: ${{ secrets.PIGGYPAT }}
+          path: piggybank
+          fetch-depth: 0
 
       - name: Install dependencies
         run: |
           uv pip install .
-          npm install --omit=dev
           echo "GITHUB_PAGES=1" >> $GITHUB_ENV
           echo "USE_CACHE=0" >> $GITHUB_ENV
           uv pip install -r .github/workflows/requirements-pages.txt
@@ -70,11 +69,11 @@ jobs:
         run: python .github/workflows/web_scraper.py
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           name: github-pages
           path: ./.github/workflows/demo
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

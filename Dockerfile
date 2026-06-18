@@ -1,23 +1,15 @@
 FROM python:3.12 AS builder
 
-ARG CACHE_BUST
-
-RUN apt-get update && apt-get install -y nodejs npm && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 WORKDIR /app
 
 COPY pyproject.toml .
-COPY package.json .
 
 RUN pip install -U pip && \
     python -m venv venv && \
     . venv/bin/activate && \
     pip install --upgrade pip && \
-    pip install . && \
-    npm install --omit=dev
+    pip install .
 COPY piggy .
-RUN npx tailwindcss -c piggy/tailwind.config.js -o tailwind.css
 
 FROM python:3.12-slim AS runner
 
@@ -36,7 +28,6 @@ WORKDIR /app
 COPY --from=builder /app/venv /app/venv
 
 COPY . /app
-COPY --from=builder /app/tailwind.css /app/piggy/static/css/tailwind.css
 
 EXPOSE 5000/tcp
 CMD ["/bin/bash", "entrypoint.sh"]

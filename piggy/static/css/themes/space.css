@@ -3,6 +3,13 @@ id: 104
 name: Space
 description: A theme inspired by the infinite cosmos and deep space, featuring deep blacks, electric cyan accents, and cosmic highlights.
 type: dark
+category: animated
+tags: animated, high contrast, cool
+preview.background: #070910
+preview.surface: #070910
+preview.text: #e8f3ff
+preview.accent: #66fcf1
+preview.border: #52d7d0
 preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
 */
 
@@ -54,6 +61,7 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
   --piggy-button: #217884;
   --piggy-button-hover: #2ba0a9;
   --piggy-button-active: #66fcf1;
+  --piggy-button-active-text: #061014;
   --piggy-text-button: #ffffff;
   --piggy-level-menu-active-text: #0b0c10;
   --piggy-button-border: #52d7d0;
@@ -82,11 +90,13 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
   --piggy-text-hyperlink: #66fcf1;
   --piggy-text-hyperlink-hover: #b8fff9;
 
-  --piggy-logo-gradient: linear-gradient(45deg,
-      #e8f3ff,
-      #66fcf1,
-      #8ab4ff,
-      #c792ff);
+  --piggy-logo-gradient: linear-gradient(
+    45deg,
+    #e8f3ff,
+    #66fcf1,
+    #8ab4ff,
+    #c792ff
+  );
   --piggy-logo-border: rgba(0, 0, 0, 0.65);
 
   /* info boxes */
@@ -215,12 +225,45 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
   --piggy-admonition-quote-text: #c5c6c7;
   --piggy-admonition-quote-icon: #8a98a8;
   --piggy-admonition-quote-border: #566272;
+
+  /* keyboard keys */
+  --piggy-key-background: rgba(16, 37, 40, 0.96);
+  --piggy-key-background-hover: rgba(18, 45, 58, 0.98);
+
+  --piggy-key-text: #c9fffb;
+  --piggy-key-text-hover: #ffffff;
+  --piggy-key-separator: #66fcf1;
+
+  --piggy-key-border: rgba(102, 252, 241, 0.34);
+  --piggy-key-border-hover: rgba(199, 146, 255, 0.58);
+
+  --piggy-key-inner-border: rgba(201, 255, 251, 0.055);
+  --piggy-key-inner-border-hover: rgba(201, 255, 251, 0.11);
+
+  --piggy-key-shadow: rgba(102, 252, 241, 0.14);
+  --piggy-key-shadow-hover: rgba(199, 146, 255, 0.24);
+
+  /* keyboard keys inside admonitions */
+  --piggy-key-admonition-background: rgba(0, 0, 0, 0.24);
+  --piggy-key-admonition-background-hover: rgba(201, 255, 251, 0.075);
+
+  --piggy-key-admonition-border: rgba(201, 255, 251, 0.14);
+  --piggy-key-admonition-border-hover: rgba(201, 255, 251, 0.26);
+
+  --piggy-key-admonition-inner-border: rgba(201, 255, 251, 0.045);
+  --piggy-key-admonition-inner-border-hover: rgba(201, 255, 251, 0.09);
+
+  --piggy-key-admonition-shadow: rgba(0, 0, 0, 0.18);
+  --piggy-key-admonition-shadow-hover: rgba(102, 252, 241, 0.18);
 }
 
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="space"] .md-content {
+  --piggy-code-block-highlight-bg: rgba(102, 252, 241, 0.16);
+  --piggy-code-block-highlight-border: rgba(102, 252, 241, 0.38);
+
   border: 1px solid rgba(102, 252, 241, 0.42);
   border-radius: 0.5rem;
   background: rgba(5, 8, 18, 0.84);
@@ -271,12 +314,16 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
 }
 
 /* NOTE / INFO / TIP */
-[data-theme="space"] .md-content :is(.admonition.note,
-  details.note,
-  .admonition.info,
-  details.info,
-  .admonition.tip,
-  details.tip) {
+[data-theme="space"]
+  .md-content
+  :is(
+    .admonition.note,
+    details.note,
+    .admonition.info,
+    details.info,
+    .admonition.tip,
+    details.tip
+  ) {
   --piggy-table-admonition-accent: rgba(102, 252, 241, 0.21);
   --piggy-table-header-start: rgba(102, 252, 241, 0.068);
   --piggy-table-header-end: rgba(102, 252, 241, 0.068);
@@ -284,10 +331,14 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
 }
 
 /* SUCCESS / QUESTION */
-[data-theme="space"] .md-content :is(.admonition.success,
-  details.success,
-  .admonition.question,
-  details.question) {
+[data-theme="space"]
+  .md-content
+  :is(
+    .admonition.success,
+    details.success,
+    .admonition.question,
+    details.question
+  ) {
   --piggy-table-admonition-accent: rgba(157, 255, 176, 0.19);
   --piggy-table-header-start: rgba(157, 255, 176, 0.062);
   --piggy-table-header-end: rgba(157, 255, 176, 0.062);
@@ -295,10 +346,14 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
 }
 
 /* WARNING / ATTENTION */
-[data-theme="space"] .md-content :is(.admonition.warning,
-  details.warning,
-  .admonition.attention,
-  details.attention) {
+[data-theme="space"]
+  .md-content
+  :is(
+    .admonition.warning,
+    details.warning,
+    .admonition.attention,
+    details.attention
+  ) {
   --piggy-table-admonition-accent: rgba(255, 209, 102, 0.19);
   --piggy-table-header-start: rgba(255, 209, 102, 0.062);
   --piggy-table-header-end: rgba(255, 209, 102, 0.062);
@@ -306,12 +361,16 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
 }
 
 /* DANGER / FAILURE / BUG */
-[data-theme="space"] .md-content :is(.admonition.danger,
-  details.danger,
-  .admonition.failure,
-  details.failure,
-  .admonition.bug,
-  details.bug) {
+[data-theme="space"]
+  .md-content
+  :is(
+    .admonition.danger,
+    details.danger,
+    .admonition.failure,
+    details.failure,
+    .admonition.bug,
+    details.bug
+  ) {
   --piggy-table-admonition-accent: rgba(255, 92, 122, 0.2);
   --piggy-table-header-start: rgba(255, 92, 122, 0.065);
   --piggy-table-header-end: rgba(255, 92, 122, 0.065);
@@ -332,4 +391,34 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
   --piggy-table-header-start: rgba(138, 152, 168, 0.055);
   --piggy-table-header-end: rgba(138, 152, 168, 0.055);
   --piggy-table-row-hover: rgba(138, 152, 168, 0.07);
+}
+
+/***************************\
+|*   SPACE KEY OVERRIDES   *|
+\***************************/
+
+[data-theme="space"] .md-content .keys,
+[data-theme="space"] .md-content kbd {
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-inner-border),
+    0 0 calc(0.42rem * var(--piggy-font-scale)) var(--piggy-key-shadow) !important;
+
+  text-shadow: 0 0 calc(0.3rem * var(--piggy-font-scale))
+    rgba(102, 252, 241, 0.28) !important;
+}
+
+[data-theme="space"] .md-content .keys {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+[data-theme="space"] .md-content kbd:hover,
+[data-theme="space"] .md-content .keys kbd:hover {
+  box-shadow:
+    inset 0 0 0 1px var(--piggy-key-inner-border-hover),
+    0 0 calc(0.58rem * var(--piggy-font-scale)) var(--piggy-key-shadow-hover),
+    0 0 calc(1rem * var(--piggy-font-scale)) rgba(102, 252, 241, 0.12) !important;
+
+  text-shadow: 0 0 calc(0.45rem * var(--piggy-font-scale))
+    rgba(199, 146, 255, 0.42) !important;
 }

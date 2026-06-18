@@ -1,0 +1,252 @@
+/* METADATA
+id: 5
+name: Readable
+description: Warm low-glare theme with clear contrast for longer reading.
+type: light
+category: accessible
+tags: dyslexia, low glare, warm
+preview.background: #f1ead2
+preview.surface: #fff9e8
+preview.text: #25251f
+preview.accent: #2f6f73
+preview.border: #b59d6d
+*/
+
+[data-theme="readable"] {
+  --piggy-main: #f1ead2;
+  --piggy-light: #fff9e8;
+  --piggy-neutral: #6e6657;
+  --piggy-dark: #25251f;
+
+  --piggy-text-main: var(--piggy-dark);
+  --piggy-shadow-text: rgba(0, 0, 0, 0);
+  --piggy-shadow-box: rgba(70, 58, 32, 0.14);
+  --piggy-shadow-glow: rgba(99, 82, 45, 0.14);
+
+  --piggy-card-start: #fff9e8;
+  --piggy-card-end: #f7efd5;
+  --piggy-card-border: #bda978;
+  --piggy-text-card: var(--piggy-dark);
+
+  --piggy-assignment-card-start: rgba(238, 205, 143, 0.72);
+  --piggy-assignment-card-end: rgba(210, 172, 98, 0.48);
+  --piggy-assignment-card-border: rgba(132, 100, 44, 0.48);
+  --piggy-assignment-overlay: rgba(132, 100, 44, 0.84);
+  --piggy-assignment-accent: #84642c;
+  --piggy-assignment-shadow-glow: rgba(132, 100, 44, 0.24);
+
+  --piggy-information-card-start: rgba(206, 231, 226, 0.84);
+  --piggy-information-card-end: rgba(151, 205, 199, 0.58);
+  --piggy-information-card-border: rgba(47, 111, 115, 0.38);
+  --piggy-information-overlay: rgba(47, 111, 115, 0.84);
+  --piggy-information-accent: #2f6f73;
+  --piggy-information-shadow-glow: rgba(47, 111, 115, 0.22);
+
+  --piggy-card-border-width: 1px;
+
+  --piggy-navbar-start: #dfd1a8;
+  --piggy-navbar-end: #d2bf8d;
+  --piggy-text-navbar: #25251f;
+
+  --piggy-button: #c9b97f;
+  --piggy-button-hover: #b7a466;
+  --piggy-button-active: #7f6f3c;
+  --piggy-text-button: #25251f;
+  --piggy-level-menu-active-text: #fff9e8;
+  --piggy-button-border: #7f6f3c;
+  --piggy-nav-button: #fff9e8;
+  --piggy-nav-button-hover: #f5eccf;
+  --piggy-nav-button-text: #25251f;
+  --piggy-nav-button-border: #a9945a;
+
+  --piggy-thumbnail-overlay: rgba(255, 249, 232, 0.76);
+  --piggy-text-thumbnail: var(--piggy-dark);
+
+  --piggy-text-tag: var(--piggy-dark);
+  --piggy-text-description: var(--piggy-dark);
+  --piggy-text-title: var(--piggy-dark);
+  --piggy-text-breadcrumb: var(--piggy-dark);
+  --piggy-text-breadcrumb-hover: #6e6657;
+
+  --piggy-menu: #fff9e8;
+  --piggy-menu-text: var(--piggy-dark);
+  --piggy-menu-border: #bda978;
+
+  --piggy-tooltip: #25251f;
+  --piggy-tooltip-text: #fff9e8;
+
+  --piggy-text-hyperlink: #2f6f73;
+  --piggy-text-hyperlink-hover: #214f52;
+
+  --piggy-level-container-text: #25251f;
+  --piggy-level-container: #dfd1a8;
+  --piggy-level-container-border: rgba(127, 111, 60, 0.34);
+
+  --piggy-info-box-background: rgba(47, 111, 115, 0.16);
+  --piggy-info-box-border: #2f6f73;
+
+  --piggy-logo: #9c7f36;
+  --piggy-logo-gradient: linear-gradient(45deg, #d2b35d, #7f6f3c, #2f6f73);
+  --piggy-logo-border: rgba(37, 37, 31, 0.72);
+
+  --piggy-header-border: rgba(127, 111, 60, 0.28);
+
+  --piggy-content-h1: #25251f;
+  --piggy-content-h2: #2f6f73;
+  --piggy-content-h3: #7f6f3c;
+  --piggy-content-h4: #84642c;
+  --piggy-content-h5: #675489;
+  --piggy-content-h6: #6e6657;
+
+  --piggy-header-bg-h1: rgba(37, 37, 31, 0.1);
+  --piggy-header-bg-h2: rgba(47, 111, 115, 0.13);
+  --piggy-header-bg-h3: rgba(127, 111, 60, 0.14);
+  --piggy-header-bg-h4: rgba(132, 100, 44, 0.11);
+  --piggy-header-bg-h5: rgba(103, 84, 137, 0.11);
+  --piggy-header-bg-h6: rgba(110, 102, 87, 0.1);
+
+  --piggy-table-bg: rgba(255, 249, 232, 0.84);
+  --piggy-table-border: rgba(127, 111, 60, 0.24);
+  --piggy-table-cell-border: rgba(127, 111, 60, 0.13);
+  --piggy-table-header-start: rgba(127, 111, 60, 0.12);
+  --piggy-table-header-end: rgba(127, 111, 60, 0.12);
+  --piggy-table-header-text: #25251f;
+  --piggy-table-row-odd: rgba(255, 255, 255, 0.36);
+  --piggy-table-row-even: rgba(127, 111, 60, 0.07);
+  --piggy-table-row-hover: rgba(47, 111, 115, 0.11);
+  --piggy-table-code-bg: var(--piggy-code-inline-bg);
+  --piggy-table-code-text: var(--piggy-code-inline-text);
+  --piggy-table-shadow: none;
+
+  --piggy-code: #2d2b24;
+  --piggy-code-bg: #eadfbd;
+  --piggy-code-border: #bda978;
+  --piggy-code-block-bg: #fff9e8;
+  --piggy-code-block-border: #bda978;
+  --piggy-code-inline-text: #2d2b24;
+  --piggy-code-inline-bg: #eadfbd;
+  --piggy-code-inline-border: #bda978;
+  --piggy-code-block-text: #2d2b24;
+  --piggy-code-block-background: #fff9e8;
+  --piggy-code-block-border-color: #bda978;
+  --piggy-code-block-line-number: #776c56;
+  --piggy-code-block-line-number-bg: #f4ecd1;
+  --piggy-code-block-line-number-border: #d2bf8d;
+  --piggy-code-clipboard: #6e6657;
+  --piggy-code-clipboard-hover: #25251f;
+  --piggy-code-selection-bg: #d9c78e;
+  --piggy-code-selection-text: #25251f;
+
+  --piggy-code-token-comment: #746b59;
+  --piggy-code-token-keyword: #9f2f54;
+  --piggy-code-token-string: #0d6673;
+  --piggy-code-token-number: #6550a8;
+  --piggy-code-token-function: #675489;
+  --piggy-code-token-class: #84642c;
+  --piggy-code-token-variable: #2d2b24;
+  --piggy-code-token-operator: #6e6657;
+  --piggy-code-token-punctuation: #6e6657;
+  --piggy-code-token-builtin: #2f6f73;
+  --piggy-code-token-constant: #84642c;
+  --piggy-code-token-attribute: #675489;
+  --piggy-code-token-tag: #2f6f73;
+  --piggy-code-token-decorator: #8f4f73;
+  --piggy-code-token-deleted: #b42335;
+  --piggy-code-token-inserted: #2f7d5c;
+  --piggy-code-token-error: #b42335;
+
+  --piggy-admonition-note-bg: #dceff1;
+  --piggy-admonition-note-title-bg: #c5e3e6;
+  --piggy-admonition-note-text: #243b3f;
+  --piggy-admonition-note-icon: #2f6f73;
+  --piggy-admonition-note-border: #5ba3a8;
+  --piggy-admonition-success-bg: #dff1e2;
+  --piggy-admonition-success-title-bg: #c8e6cf;
+  --piggy-admonition-success-text: #233b29;
+  --piggy-admonition-success-icon: #3f8a52;
+  --piggy-admonition-success-border: #68a979;
+  --piggy-admonition-warning-bg: #f8ecd8;
+  --piggy-admonition-warning-title-bg: #efd9b5;
+  --piggy-admonition-warning-text: #4a321c;
+  --piggy-admonition-warning-icon: #a96b22;
+  --piggy-admonition-warning-border: #c48a43;
+  --piggy-admonition-danger-bg: #f4dddd;
+  --piggy-admonition-danger-title-bg: #eac6c6;
+  --piggy-admonition-danger-text: #4a2424;
+  --piggy-admonition-danger-icon: #a84242;
+  --piggy-admonition-danger-border: #c76464;
+  --piggy-admonition-example-bg: #e8e0f1;
+  --piggy-admonition-example-title-bg: #d9cbea;
+  --piggy-admonition-example-text: #352947;
+  --piggy-admonition-example-icon: #675489;
+  --piggy-admonition-example-border: #9883bd;
+  --piggy-admonition-quote-bg: #ede7d2;
+  --piggy-admonition-quote-title-bg: #e3d7b7;
+  --piggy-admonition-quote-text: #2d2b24;
+  --piggy-admonition-quote-icon: #6e6657;
+  --piggy-admonition-quote-border: #bda978;
+
+  --piggy-key-background: rgba(255, 249, 232, 0.96);
+  --piggy-key-background-hover: rgba(245, 236, 207, 0.98);
+  --piggy-key-text: #25251f;
+  --piggy-key-text-hover: #171713;
+  --piggy-key-separator: #6e6657;
+  --piggy-key-border: rgba(127, 111, 60, 0.3);
+  --piggy-key-border-hover: rgba(127, 111, 60, 0.48);
+  --piggy-key-inner-border: rgba(255, 255, 255, 0.72);
+  --piggy-key-inner-border-hover: rgba(255, 255, 255, 0.9);
+  --piggy-key-shadow: rgba(70, 58, 32, 0.08);
+  --piggy-key-shadow-hover: rgba(99, 82, 45, 0.14);
+  --piggy-key-admonition-background: rgba(255, 255, 255, 0.42);
+  --piggy-key-admonition-background-hover: rgba(255, 255, 255, 0.66);
+  --piggy-key-admonition-border: rgba(127, 111, 60, 0.2);
+  --piggy-key-admonition-border-hover: rgba(127, 111, 60, 0.34);
+  --piggy-key-admonition-inner-border: rgba(255, 255, 255, 0.68);
+  --piggy-key-admonition-inner-border-hover: rgba(255, 255, 255, 0.88);
+  --piggy-key-admonition-shadow: rgba(70, 58, 32, 0.06);
+  --piggy-key-admonition-shadow-hover: rgba(70, 58, 32, 0.11);
+}
+
+[data-theme="readable"] .level-count-container {
+  color: var(--piggy-dark);
+  background-color: var(--piggy-main);
+}
+
+[data-theme="readable"] .md-content {
+  --piggy-code-block-highlight-bg: rgba(127, 111, 60, 0.15);
+  --piggy-code-block-highlight-border: rgba(127, 111, 60, 0.34);
+
+  border-radius: 0.5rem;
+  background: rgba(255, 249, 232, 0.42);
+}
+
+[data-theme="readable"] .md-content details,
+[data-theme="readable"] .md-content .tip,
+[data-theme="readable"] .md-content .admonition {
+  color: var(--piggy-admonition-text, var(--piggy-dark));
+}
+
+[data-theme="readable"] .md-content .tabbed-labels::before {
+  border-color: var(--piggy-dark);
+  background-color: rgba(127, 111, 60, 0.16) !important;
+}
+
+[data-theme="readable"] .md-content .tabbed-set {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: rgba(127, 111, 60, 0.24);
+}
+
+[data-theme="readable"] .md-content :is(.admonition, details) {
+  --piggy-table-admonition-accent: rgba(127, 111, 60, 0.26) !important;
+  --piggy-table-bg: rgba(255, 255, 255, 0.32);
+  --piggy-table-border: var(--piggy-table-admonition-accent);
+  --piggy-table-cell-border: rgba(37, 37, 31, 0.1);
+  --piggy-table-header-start: rgba(255, 255, 255, 0.34);
+  --piggy-table-header-end: rgba(255, 255, 255, 0.34);
+  --piggy-table-header-text: var(--piggy-admonition-text);
+  --piggy-table-row-odd: rgba(255, 255, 255, 0.16);
+  --piggy-table-row-even: rgba(255, 255, 255, 0.29);
+  --piggy-table-row-hover: rgba(255, 255, 255, 0.44);
+  --piggy-table-code-bg: rgba(255, 255, 255, 0.48);
+  --piggy-table-code-text: var(--piggy-admonition-text);
+}

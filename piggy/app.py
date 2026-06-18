@@ -1,11 +1,11 @@
 import html
 import os
 from pathlib import Path
+from urllib.parse import quote, urlsplit
 
 from flask import Flask, send_file, request, Blueprint, render_template, redirect
 from flask_squeeze import Squeeze
 from jinja2 import ChoiceLoader, FileSystemLoader
-from turtleconverter import generate_static_files
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate, STATIC_FONTS_PATHS, IMG_FMT
@@ -14,7 +14,7 @@ from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
-from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes
+from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes, startup_tasks
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
@@ -45,7 +45,7 @@ def create_app(debug: bool = False) -> Flask:
     assignment_routes = Blueprint(ASSIGNMENT_ROUTE, __name__, url_prefix=f"/{ASSIGNMENT_ROUTE}")
     media_routes = Blueprint(MEDIA_ROUTE, __name__, url_prefix=f"/{MEDIA_ROUTE}")
 
-    generate_static_files(static_folder=Path(os.path.dirname(Path(__file__).absolute())) / "static")
+    startup_tasks()
 
     use_github_pages = os.environ.get("GITHUB_PAGES", False)
 
@@ -104,6 +104,18 @@ def create_app(debug: bool = False) -> Flask:
     @lru_cache_wrapper
     def index():
         return render_template("index.html")
+
+    def sanitize_internal_return_path(value):
+        if not value or not value.startswith("/") or value.startswith("//"):
+            return "/"
+
+        parts = urlsplit(value)
+        if parts.scheme or parts.netloc:
+            return "/"
+
+        path = quote(parts.path or "/", safe="/%:@-._~")
+        query = quote(parts.query, safe="=&%:@/?-._~")
+        return f"{path}?{query}" if query else path
 
     @app.route("/service-worker.js")
     def service_worker():

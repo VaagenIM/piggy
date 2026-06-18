@@ -16,7 +16,8 @@ from rcssmin import cssmin
 
 WORKERS = 16
 
-links = set(["/", "/404"])
+links = {"/", "/404"}
+api_links = {"/api/search-data"}
 visited = set()
 media_links = set()
 url = "http://127.0.0.1:55555"  # The URL of the website we are scraping
@@ -146,15 +147,25 @@ def get_media_links(html, path=""):
     media_href_regex = r'href="((?!#|https?://)[^"]+\.(' + "|".join(media_link_filetypes) + r'))"'
     media_links_regex = re.compile(rf"{media_src_regex}|{media_href_regex}")
 
-    media_links = media_links_regex.findall(html)
-    media_links = [link[0] or link[1] for link in media_links]
+    _media_links = media_links_regex.findall(html)
+    _media_links = [link[0] or link[1] for link in _media_links]
     filtered_links = set()
-    for link in media_links:
+    for link in _media_links:
         link = clean_link(link, path)
         if link.startswith("/static/"):
             continue
         if not link.startswith("/") and path:
             filtered_links.add(f"{path.rsplit('/', 1)[0]}/{link}")
+            continue
+        if "?" in link and any(
+            (
+                link.split("?")[0] in [l.split("?")[0] for l in media_links],
+                link.split("?")[0] in [l.split("?")[0] for l in filtered_links],
+            )
+        ):
+            print(
+                f"Skipping {link} because it has a query string and the base link is already in media_links or filtered_links"
+            )
             continue
         filtered_links.add(link)
 
@@ -190,8 +201,12 @@ def _download_media(link):
         return
 
     path = path.rsplit("?")[0]
-    with open(f"demo/{path}", "wb+") as f:
-        f.write(r.content)
+    try:
+        os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
+        with open(f"demo/{path}", "wb+") as f:
+            f.write(r.content)
+    except Exception as e:
+        print(f"WARNING: Could not write file {path}: {e}")
 
 
 def download_site():
@@ -268,9 +283,29 @@ def _download_api_view(link):
         f.write(r.content)
 
 
+def _download_direct_api(link):
+    """Download an /api/ link directly, saving it as index.json under demo/."""
+    link = link.split("?")[0].split("#")[0]
+    api_path = "/" + link.strip("/")
+    print(f"Fetching API \33[34m{api_path}\33[0m")
+    try:
+        r = requests.get(f"{url}{api_path}", timeout=600)
+    except Exception as e:
+        print(f"WARNING: request failed for {api_path}: {e}")
+        return
+    if not r.ok:
+        print(f"WARNING: failed {api_path} ({r.status_code})")
+        return
+    full_path = f"demo{api_path}/index.json"
+    os.makedirs(os.path.dirname(full_path), exist_ok=True)
+    with open(full_path, "wb+") as f:
+        f.write(r.content)
+
+
 def download_api_views():
     with multiprocessing.Pool(processes=WORKERS) as pool:
         pool.map(_download_api_view, visited)
+        pool.map(_download_direct_api, api_links)
 
 
 def _minify(path, filetype):

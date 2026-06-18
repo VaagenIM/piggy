@@ -92,6 +92,21 @@ def get_template_from_path(path: str) -> str:
     return t
 
 
+def load_oink_file(path: Path) -> dict:
+    """Load an .oink file (YAML) adjacent to a .md file, if it exists. Returns an empty dict if not found."""
+    oink_path = path.with_suffix(".oink")
+    if not oink_path.exists():
+        return {}
+    try:
+        with open(oink_path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+        if isinstance(data, dict):
+            return data
+    except yaml.YAMLError:
+        print(f"Error parsing oink file {oink_path}")
+    return {}
+
+
 def get_frontmatter_from_file(path: Path) -> dict:
     data = ""
     frontmatter = {}
@@ -161,6 +176,8 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
         assignment_path = Path(f"{path}/{item}")
 
         frontmatter = get_frontmatter_from_file(assignment_path)
+        assignment_oink = load_oink_file(assignment_path)
+        frontmatter.update(assignment_oink)
 
         # Default thumbnail to the assignment group's header image if not specified
         if "thumbnail" not in frontmatter:
@@ -171,7 +188,13 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0):
         for lang in os.listdir(f"{path}/translations") if os.path.isdir(f"{path}/translations") else []:
             if not os.path.exists(f"{path}/translations/{lang}/{item}"):
                 continue
-            translation_meta[lang] = get_frontmatter_from_file(Path(f"{path}/translations/{lang}/{item}"))
+            translation_path = Path(f"{path}/translations/{lang}/{item}")
+            trans_frontmatter = get_frontmatter_from_file(translation_path)
+            trans_oink = load_oink_file(translation_path)
+            if not trans_oink and assignment_oink:
+                trans_oink = {**assignment_oink, "oinkdata": {}}
+            trans_frontmatter.update(trans_oink)
+            translation_meta[lang] = trans_frontmatter
 
         assignment_key = normalize_path_to_str(i, replace_spaces=True, normalize_url=True, remove_ext=True)
         piggymap[assignment_key] = {

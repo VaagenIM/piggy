@@ -1,138 +1,169 @@
 {% set levels_data = none %}
 {% if meta is defined and meta %}
-{% set levels_data = meta.get(AssignmentTemplate.LEVELS_DATA.name) %}
+  {% set levels_data = meta.get(AssignmentTemplate.LEVELS_DATA.name) %}
 {% endif %}
 
 {% if levels_data %}
-{% if levels_data.meta.type == "assignment" %}
-{% set level_text = "Oppgave" %}
-{% elif levels_data.meta.type == "information" %}
-{% set level_text = "Tema" %}
-{% else %}
-{% set level_text = "Level" %}
-{% endif %}
-
-{% set levels = levels_data.data.items() | sort_by_level %}
-
-{% if levels|length > 1 %}
-{% set level_select_classes = "level-select level-select--buttons" %}
-
-<nav id="level-container" class="{{ level_select_classes }}" data-level-count="{{ levels|length }}"
-  aria-label="{{ level_text }}">
-  {% for link, assignment in levels %}
-  {% if current_language.key and current_language.key in assignment.translation_meta %}
-  {% set level_meta = assignment.translation_meta[current_language.key] %}
-  {% if "/lang/" in request.path %}
-  {%
-  set link = request.path.split('/lang/')[0].split('/')[0:-1] | join('/') ~ "/" ~ link ~ "/lang/" ~
-  current_language.key
-  %}
-  {% endif %}
+  {% if levels_data.meta.type == "assignment" %}
+    {% set level_text = "Oppgave" %}
+  {% elif levels_data.meta.type == "information" %}
+    {% set level_text = "Tema" %}
   {% else %}
-  {% set level_meta = assignment.meta %}
-  {# GitHub Pages only: If a translation doesn't exist for the level, link to the default language #}
-  {% if "/lang/" in request.path %}
-  {% set link = request.path.split('/lang/')[0].split('/')[0:-1] | join('/') ~ "/" ~ link %}
+    {% set level_text = "Level" %}
   {% endif %}
+  {% set levels = levels_data.data.items() | sort_by_level %}
+
+  {% if levels|length > 1 %}
+    {% set level_select_classes = "level-select level-select--buttons" %}
+
+    <nav
+      id="level-container"
+      class="{{ level_select_classes }}"
+      data-level-count="{{ levels|length }}"
+      aria-label="{{ level_text }}">
+      {% for link, assignment in levels %}
+        {% if current_language.key and current_language.key in assignment.translation_meta %}
+          {% set level_meta = assignment.translation_meta[current_language.key] %}
+          {% if "/lang/" in request.path %}
+            {%
+              set link = request.path.split('/lang/')[0].split('/')[0:-1] | join('/') ~ "/" ~ link ~ "/lang/" ~
+              current_language.key
+            %}
+          {% endif %}
+        {% else %}
+          {% set level_meta = assignment.meta %}
+          {# GitHub Pages only: If a translation doesn't exist for the level, link to the default language #}
+          {% if "/lang/" in request.path %}
+            {% set link = request.path.split('/lang/')[0].split('/')[0:-1] | join('/') ~ "/" ~ link %}
+          {% endif %}
+        {% endif %}
+
+        {% if assignment.meta.difficulty %}
+          {% set level_difficulty = assignment.meta.difficulty %}
+        {% else %}
+          {% set level_difficulty = "-1" %}
+        {% endif %}
+
+        {% if assignment.level | int == level | int %}
+          <div
+            class="piggy-button piggy-button--m active level-diff-{{ level_difficulty }}"
+            aria-current="page">
+            <span class="level-button-label">
+              <span class="level-button-text">{{ level_text }}</span>
+              <span class="level-button-number"
+                >{{ assignment.level | int }}</span
+              >
+            </span>
+            {% include "partials/header/level-tooltip.html" %}
+          </div>
+        {% else %}
+          <a
+            href="{{ link }}"
+            class="piggy-button piggy-button--m level-diff-{{ level_difficulty }}">
+            <span class="level-button-label">
+              <span class="level-button-text">{{ level_text }}</span>
+              <span class="level-button-number"
+                >{{ assignment.level | int }}</span
+              >
+            </span>
+            {% include "partials/header/level-tooltip.html" %}
+          </a>
+        {% endif %}
+      {% endfor %}
+    </nav>
+
+    <details id="level-menu" class="level-menu" aria-label="{{ level_text }}">
+      <summary
+        class="piggy-button piggy-button--m level-menu-trigger"
+        aria-expanded="false">
+        <span class="level-menu-trigger-label">
+          <span>{{ level_text }}</span>
+          <span>{{ level | int }}</span>
+        </span>
+        <svg
+          class="level-menu-chevron"
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </summary>
+
+      <div class="level-menu-dropdown">
+        {% for link, assignment in levels %}
+          {% if current_language.key and current_language.key in assignment.translation_meta %}
+            {% set level_meta = assignment.translation_meta[current_language.key] %}
+            {% if "/lang/" in request.path %}
+              {%
+                set link = request.path.split('/lang/')[0].split('/')[0:-1] | join('/') ~ "/" ~ link ~ "/lang/" ~
+                current_language.key
+              %}
+            {% endif %}
+          {% else %}
+            {% set level_meta = assignment.meta %}
+            {# GitHub Pages only: If a translation doesn't exist for the level, link to the default language #}
+            {% if "/lang/" in request.path %}
+              {% set link = request.path.split('/lang/')[0].split('/')[0:-1] | join('/') ~ "/" ~ link %}
+            {% endif %}
+          {% endif %}
+
+          {% if assignment.meta.difficulty %}
+            {% set level_difficulty = assignment.meta.difficulty %}
+          {% else %}
+            {% set level_difficulty = "-1" %}
+          {% endif %}
+          {% set level_title = level_meta.title or level_meta.name %}
+          {% set level_has_difficulty = level_difficulty|int > 0 and level_difficulty|int <= 5 %}
+
+          {% if assignment.level | int == level | int %}
+            <span
+              class="level-menu-link{% if level_has_difficulty %}level-menu-link--with-icon{% endif %} active level-diff-{{ level_difficulty }}"
+              aria-current="page">
+              {% if level_has_difficulty %}
+                <span class="level-menu-link-icon" aria-hidden="true">
+                  <img
+                    class="level-menu-difficulty-image"
+                    src="{{ url_for('static', filename='img/difficulties/' +  level_difficulty + '.png') }}"
+                    alt="" />
+                </span>
+              {% endif %}
+              <span class="level-menu-link-details">
+                <span class="level-menu-link-level"
+                  >{{ level_text }} {{ assignment.level | int }}</span
+                >
+                <span class="level-menu-link-title"
+                  >{{ level_title | unescape }}</span
+                >
+              </span>
+            </span>
+          {% else %}
+            <a
+              href="{{ link }}"
+              class="level-menu-link{% if level_has_difficulty %}level-menu-link--with-icon{% endif %} level-diff-{{ level_difficulty }}">
+              {% if level_has_difficulty %}
+                <span class="level-menu-link-icon" aria-hidden="true">
+                  <img
+                    class="level-menu-difficulty-image"
+                    src="{{ url_for('static', filename='img/difficulties/' +  level_difficulty + '.png') }}"
+                    alt="" />
+                </span>
+              {% endif %}
+              <span class="level-menu-link-details">
+                <span class="level-menu-link-level"
+                  >{{ level_text }} {{ assignment.level | int }}</span
+                >
+                <span class="level-menu-link-title"
+                  >{{ level_title | unescape }}</span
+                >
+              </span>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </details>
   {% endif %}
-
-  {% if assignment.meta.difficulty %}
-  {% set level_difficulty = assignment.meta.difficulty %}
-  {% else %}
-  {% set level_difficulty = "-1" %}
-  {% endif %}
-
-  {% if assignment.level | int == level | int %}
-  <div class="piggy-button piggy-button--m active level-diff-{{ level_difficulty }}" aria-current="page">
-    <span class="level-button-label">
-      <span class="level-button-text">{{ level_text }}</span>
-      <span class="level-button-number">{{ assignment.level | int }}</span>
-    </span>
-    {% include "partials/header/level-tooltip.html" %}
-  </div>
-  {% else %}
-  <a href="{{ link }}" class="piggy-button piggy-button--m level-diff-{{ level_difficulty }}">
-    <span class="level-button-label">
-      <span class="level-button-text">{{ level_text }}</span>
-      <span class="level-button-number">{{ assignment.level | int }}</span>
-    </span>
-    {% include "partials/header/level-tooltip.html" %}
-  </a>
-  {% endif %}
-  {% endfor %}
-</nav>
-
-<details id="level-menu" class="level-menu" aria-label="{{ level_text }}">
-  <summary class="piggy-button piggy-button--m level-menu-trigger" aria-expanded="false">
-    <span class="level-menu-trigger-label">
-      <span>{{ level_text }}</span>
-      <span>{{ level | int }}</span>
-    </span>
-    <svg class="level-menu-chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="m6 9 6 6 6-6" />
-    </svg>
-  </summary>
-
-  <div class="level-menu-dropdown">
-    {% for link, assignment in levels %}
-    {% if current_language.key and current_language.key in assignment.translation_meta %}
-    {% set level_meta = assignment.translation_meta[current_language.key] %}
-    {% if "/lang/" in request.path %}
-    {%
-    set link = request.path.split('/lang/')[0].split('/')[0:-1] | join('/') ~ "/" ~ link ~ "/lang/" ~
-    current_language.key
-    %}
-    {% endif %}
-    {% else %}
-    {% set level_meta = assignment.meta %}
-    {# GitHub Pages only: If a translation doesn't exist for the level, link to the default language #}
-    {% if "/lang/" in request.path %}
-    {% set link = request.path.split('/lang/')[0].split('/')[0:-1] | join('/') ~ "/" ~ link %}
-    {% endif %}
-    {% endif %}
-
-    {% if assignment.meta.difficulty %}
-    {% set level_difficulty = assignment.meta.difficulty %}
-    {% else %}
-    {% set level_difficulty = "-1" %}
-    {% endif %}
-
-    {% set level_title = level_meta.title or level_meta.name %}
-    {% set level_has_difficulty = level_difficulty|int > 0 and level_difficulty|int <= 5 %}
-
-    {% if assignment.level | int == level | int %}
-    <span
-      class="level-menu-link{% if level_has_difficulty %} level-menu-link--with-icon{% endif %} active level-diff-{{ level_difficulty }}"
-      aria-current="page">
-      {% if level_has_difficulty %}
-      <span class="level-menu-link-icon" aria-hidden="true">
-        <img class="level-menu-difficulty-image"
-          src="{{ url_for('static', filename='img/difficulties/' +  level_difficulty + '.png') }}" alt="" />
-      </span>
-      {% endif %}
-      <span class="level-menu-link-details">
-        <span class="level-menu-link-level">{{ level_text }} {{ assignment.level | int }}</span>
-        <span class="level-menu-link-title">{{ level_title | unescape }}</span>
-      </span>
-    </span>
-    {% else %}
-    <a href="{{ link }}"
-      class="level-menu-link{% if level_has_difficulty %} level-menu-link--with-icon{% endif %} level-diff-{{ level_difficulty }}">
-      {% if level_has_difficulty %}
-      <span class="level-menu-link-icon" aria-hidden="true">
-        <img class="level-menu-difficulty-image"
-          src="{{ url_for('static', filename='img/difficulties/' +  level_difficulty + '.png') }}" alt="" />
-      </span>
-      {% endif %}
-      <span class="level-menu-link-details">
-        <span class="level-menu-link-level">{{ level_text }} {{ assignment.level | int }}</span>
-        <span class="level-menu-link-title">{{ level_title | unescape }}</span>
-      </span>
-    </a>
-    {% endif %}
-    {% endfor %}
-  </div>
-</details>
-{% endif %}
 {% endif %}
