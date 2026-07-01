@@ -25,7 +25,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
 
@@ -46,7 +46,7 @@ jobs:
           pkill -f python || true
 
       - name: Checkout piggybank
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: VaagenIM/piggybank
           ref: output
