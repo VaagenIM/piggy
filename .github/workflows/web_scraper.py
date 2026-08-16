@@ -14,7 +14,7 @@ from turtleconverter import generate_static_files
 from rjsmin import jsmin
 from rcssmin import cssmin
 
-WORKERS = 16
+WORKERS = max(1, multiprocessing.cpu_count() - 1)
 
 links = {"/", "/404"}
 api_links = {"/api/search-data"}
