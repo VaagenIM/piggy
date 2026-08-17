@@ -14,7 +14,7 @@ from turtleconverter import generate_static_files
 from rjsmin import jsmin
 from rcssmin import cssmin
 
-WORKERS = 16
+WORKERS = max(1, multiprocessing.cpu_count() - 1)
 
 links = {"/", "/404"}
 api_links = {"/api/search-data"}
@@ -249,6 +249,9 @@ def api_transform(link: str) -> str | None:
         return "/api"
     elif not link.startswith("main/"):
         return None
+    # Skip URLs that are translated, as they are (currently) not part of the API
+    elif "/lang/" in link:
+        return None
 
     link = link[len("main/") :]
     # remove file extensions
@@ -260,7 +263,7 @@ def api_transform(link: str) -> str | None:
 def _download_api_view(link):
     api_path = api_transform(link)
 
-    # skip invalid mappings (like /static)
+    # skip invalid mappings (like /static or /lang/)
     if not api_path:
         return
 
