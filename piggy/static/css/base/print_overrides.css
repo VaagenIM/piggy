@@ -1,36 +1,37 @@
 @media print {
-    @page {
-        margin: 0;
-        zoom: 75%;
-    }
+  @page {
+    margin: 0;
+    zoom: 75%;
+  }
 
-    .site-header,
-    .background-overlay {
-        display: none !important;
-    }
+  .site-header,
+  .background-overlay {
+    display: none !important;
+  }
 
-    body, * {
-        margin: 0 !important;
-        padding: 0 !important;
-        box-shadow: none !important;
-        text-shadow: none !important;
-    }
+  body,
+  * {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
 
-    .md-typeset summary::after {
-        width: 0 !important;
-        display: none !important;
-    }
+  .md-typeset summary::after {
+    width: 0 !important;
+    display: none !important;
+  }
 
-    .md-content {
-        border: none !important;
-    }
+  .md-content {
+    border: none !important;
+  }
 
-    button#scroll-to-top-btn {
-        display: none !important;
-    }
+  button#scroll-to-top-btn {
+    display: none !important;
+  }
 
-    /* Auto generated print styles for light theme. Do not edit after this point. */
-    /* METADATA
+  /* Auto generated print styles for light theme. Do not edit after this point. */
+  /* METADATA
 id: 1
 name: Light
 description: The default light theme.
