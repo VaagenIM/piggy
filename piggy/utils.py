@@ -3,6 +3,7 @@ import re
 from functools import lru_cache
 from io import BytesIO
 from pathlib import Path
+from typing import Optional
 
 from bs4 import BeautifulSoup as bs
 from flask import send_file, request
@@ -109,6 +110,30 @@ class ParserState:
 
 CSS_META_IDENTIFIER = "/* METADATA"
 CSS_META_LIST_KEYS = {"tags", "recommended_for", "features"}
+
+
+# Note: only used when IMG_FMT is set to "auto", which is not the case for production.
+@lru_cache_wrapper
+def resolve_image_filename(fp: Path) -> str:
+    """Find the image format of a file in a given path."""
+    for ext in ["jpg", "png", "webp", "jpeg"]:
+        if fp.with_suffix(f".{ext}").exists():
+            return f"{fp.stem}.{ext}"
+    return fp.name
+
+
+@lru_cache_wrapper
+def get_mimetype(filename: str) -> Optional[str]:
+    """Guess the mimetype of a file based on its extension."""
+    MIME_TYPES = {
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".png": "image/png",
+        ".webp": "image/webp",
+        ".gif": "image/gif",
+        ".svg": "image/svg+xml",
+    }
+    return MIME_TYPES.get(Path(filename).suffix.lower(), None)
 
 
 @lru_cache_wrapper

@@ -8,13 +8,20 @@ from flask_squeeze import Squeeze
 from jinja2 import ChoiceLoader, FileSystemLoader
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate, STATIC_FONTS_PATHS, IMG_FMT
+from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate, STATIC_FONTS_PATHS, IMG_FMT, PIGGYBANK_FOLDER
 from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
-from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_themes, startup_tasks
+from piggy.utils import (
+    normalize_path_to_str,
+    lru_cache_wrapper,
+    get_themes,
+    startup_tasks,
+    resolve_image_filename,
+    get_mimetype,
+)
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
@@ -55,6 +62,7 @@ def create_app(debug: bool = False) -> Flask:
         return {
             "ASSIGNMENT_URL_PREFIX": ASSIGNMENT_ROUTE,
             "MEDIA_URL_PREFIX": MEDIA_ROUTE,
+            "PIGGYBANK_FOLDER": PIGGYBANK_FOLDER.as_posix(),
             "piggymap": PIGGYMAP,
             "img_fmt": IMG_FMT,
             "github_pages": use_github_pages,  # Used to determine if we should use lang in URL
@@ -183,7 +191,9 @@ def create_app(debug: bool = False) -> Flask:
         else:
             folder = "attachments"
         try:
-            return send_file(Path(system_path / folder / filename).absolute())
+            if filename.endswith(".auto"):
+                filename = resolve_image_filename(system_path / folder / filename)
+            return send_file(Path(system_path / folder / filename).absolute(), mimetype=get_mimetype(filename))
         except FileNotFoundError:
             if folder == "media":
                 # if there is no /, we are at the root folder and should repeat the name
