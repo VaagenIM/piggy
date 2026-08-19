@@ -21,7 +21,7 @@ def cleanup():
 
 
 def checkout_branch():
-    branch = os.environ.get("PIGGYBANK_BRANCH", "test_output")
+    branch = os.environ.get("PIGGYBANK_BRANCH", "test-output")
     print("Checking out branch: " + branch)
     if "piggybank" in branch:
         cmd = f"cd piggybank && git fetch && git checkout {branch}"
