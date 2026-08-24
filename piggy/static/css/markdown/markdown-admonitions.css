@@ -165,13 +165,16 @@
   margin-bottom: calc(1rem * var(--piggy-reader-space-scale)) !important;
 }
 
-.md-content :is(.admonition, details) ol li {
+.md-content :is(.admonition, details) ol li,
+.md-content :is(.admonition, details) ul li {
   font-size: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
+}
+
+.md-content :is(.admonition, details) ol li:not(.task-list-item) {
   list-style: decimal !important;
 }
 
-.md-content :is(.admonition, details) ul li {
-  font-size: calc(1rem * var(--piggy-reader-component-font-scale)) !important;
+.md-content :is(.admonition, details) ul li:not(.task-list-item) {
   list-style: disc !important;
 }
 

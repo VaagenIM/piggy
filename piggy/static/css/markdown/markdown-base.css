@@ -283,6 +283,14 @@
   padding-left: calc(1rem * var(--piggy-reader-space-scale)) !important;
 }
 
+.md-content ul li:not(.task-list-item) {
+  list-style: disc !important;
+}
+
+.md-content ol li:not(.task-list-item) {
+  list-style: decimal !important;
+}
+
 .md-content li {
   margin-bottom: calc(
     var(--piggy-reader-list-gap) * var(--piggy-reader-space-scale)
