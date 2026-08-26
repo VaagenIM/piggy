@@ -23,7 +23,7 @@
                   <div class="quick-access-subjects">
                     {% for subj_key, subj in sd.data.items() %}
                       <a
-                        href="/{{ subj.meta.system_path | string | replace('piggybank', 'main') }}"
+                        href="/{{ subj.meta.system_path | string | replace('\\', '/') | replace(PIGGYBANK_FOLDER, 'main') }}"
                         class="quick-access-subject-button">
                         <div
                           class="thumbnail-container quick-access-thumbnail-container">
@@ -32,7 +32,7 @@
                           </div>
                           <img
                             class="quick-access-thumbnail"
-                            src="/{{ subj.meta.system_path | string | replace('piggybank', 'img') }}/media/header.webp"
+                            src="/{{ subj.meta.system_path | string | replace('\\', '/') | replace(PIGGYBANK_FOLDER, 'img') }}/media/header.{{ img_fmt }}"
                             alt="{{ subj.meta.name }}"
                             loading="lazy" />
                         </div>

@@ -74,7 +74,7 @@ def get_assignment_data_from_path(path: str or Path, piggymap: dict) -> dict:
     path = normalize_path_to_str(path, replace_spaces=True, normalize_url=True, remove_ext=True)
     segment = piggymap.copy()
     for i, p in enumerate(path.split("/")):
-        if i == 0:
+        if i <= PIGGYBANK_FOLDER.as_posix().count("/"):
             continue
         if i == len(path.split("/")) - 1:
             segment = segment.get(p, {})

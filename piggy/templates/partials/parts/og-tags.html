@@ -49,7 +49,9 @@
   {% set ns.image = meta.thumbnail %}
 {% elif media_abspath and meta.thumbnail %}
   {# TODO: This is a bit of a hack and probably unintended... Not sure why "piggybank" is here... #}
-  {% set ns.image = request.host_url.rstrip('/') + media_abspath.replace("/piggybank", "").replace(" ","_") + "/" + meta.thumbnail + "." + img_fmt + "?title=" + ns.og_name %}
+  {% set media_path = media_abspath.replace('\\', '/').replace(PIGGYBANK_FOLDER, '') %}
+  {% set image_path = media_path.replace(' ', '_') + '/' + meta.thumbnail + '.' + img_fmt %}
+  {% set ns.image = request.host_url.rstrip('/') + image_path + '?title=' + ns.og_name %}
 {% elif level_name %}
   {% set ns.image = url_for('api.generate_thumbnail', text=level_name, _external=True)+'?c=' + meta.topic.name %}
 {% elif ns.meta_exists %}
@@ -57,6 +59,7 @@
 {% else %}
   {% set ns.image = url_for('static', filename='img/icons/piggy_icon.png', _external=True) %}
 {% endif %}
+{% set ns.image = ns.image.replace('//', '/') %}
 
 <meta property="og:title" content="{{ ns.og_name }}" />
 <meta property="og:type" content="website" />

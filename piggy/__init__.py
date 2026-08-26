@@ -20,6 +20,11 @@ ASSIGNMENTS_TEMPLATE_FOLDER = "assignments"
 ASSIGNMENT_FILENAME_REGEX = re.compile(r"^.*Level[ _](\d+)[ _]-[ _](.+).md$")
 ALLOWED_URL_CHARS_REGEX = re.compile(r"[a-zA-Z0-9\.\-\_\/æøåÆØÅ]")
 
+# TESTING ONLY - piggybank branch is used for testing, needs a different approach than prod
+if "piggybank" in os.environ.get("PIGGYBANK_BRANCH", "test-output"):
+    PIGGYBANK_FOLDER = Path("piggybank") / "piggybank"
+    IMG_FMT = "auto"
+
 
 class AssignmentTemplate(Enum):
     ROOT = {"index": 0, "name": "assignments_root"}

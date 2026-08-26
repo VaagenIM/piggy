@@ -2,7 +2,14 @@ import atexit
 import os
 import subprocess
 
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
 subprocesses = []
+
+PORT = os.environ.get("PIGGY_PORT", 5001)
 
 
 @atexit.register
@@ -13,8 +20,14 @@ def cleanup():
         p.wait()
 
 
-def checkout_branch(branch):
-    os.system(f"cd piggybank && git stash && git fetch && git checkout {branch} && git pull && cd ..")
+def checkout_branch():
+    branch = os.environ.get("PIGGYBANK_BRANCH", "test-output")
+    print("Checking out branch: " + branch)
+    if "piggybank" in branch:
+        cmd = f"cd piggybank && git fetch && git checkout {branch}"
+    else:
+        cmd = f"cd piggybank && git stash && git fetch && git checkout {branch} && git pull"
+    subprocess.run(cmd, shell=True, check=True)
 
 
 if __name__ == "__main__":
@@ -32,9 +45,9 @@ if __name__ == "__main__":
     # Run these once on the first run
     if os.environ.get("WERKZEUG_RUN_MAIN") != "true":
         # This code will run only once, not in the reloaded processes
-        checkout_branch("output")
+        checkout_branch()
         subprocesses.append(subprocess.Popen("npx livereload piggy,piggybank -e html,css,js,md", shell=True))
-        print("Houston, we have lift-off! (http://localhost:5001)")
+        print(f"Houston, we have lift-off! (http://localhost:{PORT})")
     # Import after setting the environment variables for testing
     from piggy.app import create_app
     from piggy.devtools import inject_devtools
@@ -42,7 +55,7 @@ if __name__ == "__main__":
     app = create_app(debug=os.environ.get("FLASK_DEBUG", False) == "1")
     inject_devtools(app)
 
-    app.run(port=5001)
+    app.run(port=PORT)
 else:
     # Production
     from piggy.app import create_app

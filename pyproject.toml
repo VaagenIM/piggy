@@ -13,6 +13,7 @@ dependencies = [
     "frozendict==2.4.7",
     "flask-squeeze==3.5.0",
     "MarkupSafe==3.0.3",
+    "python-dotenv>=1.2.3",
 ]
 
 [build-system]
