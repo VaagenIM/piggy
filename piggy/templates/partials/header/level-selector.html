@@ -4,13 +4,18 @@
 {% endif %}
 
 {% if levels_data %}
-  {% if levels_data.meta.type == "assignment" %}
-    {% set level_text = "Oppgave" %}
-  {% elif levels_data.meta.type == "information" %}
-    {% set level_text = "Tema" %}
+  {% if levels_data.meta.level_name %}
+    {% set level_text = levels_data.meta.level_name %}
   {% else %}
-    {% set level_text = "Level" %}
+    {% if levels_data.meta.type == "assignment" %}
+      {% set level_text = "Oppgave" %}
+    {% elif levels_data.meta.type == "information" %}
+      {% set level_text = "Tema" %}
+    {% else %}
+      {% set level_text = "Level" %}
+    {% endif %}
   {% endif %}
+
   {% set levels = levels_data.data.items() | sort_by_level %}
 
   {% if levels|length > 1 %}
@@ -118,8 +123,10 @@
           {% endif %}
           {% set level_title = level_meta.title or level_meta.name %}
           {% set level_has_difficulty = level_difficulty|int > 0 and level_difficulty|int <= 5 %}
-
-          {% if assignment.level | int == level | int %}
+          {%
+            if assignment.level |
+            int==level | int
+          %}
             <span
               class="level-menu-link{% if level_has_difficulty %}level-menu-link--with-icon{% endif %} active level-diff-{{ level_difficulty }}"
               aria-current="page">
