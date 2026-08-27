@@ -21,4 +21,9 @@ else
   echo "Warning: npm not found, skipping. Install Node.js for live-reload during development." >&2
 fi
 
+if [ ! -f .env ]; then
+  echo "Creating .env with defaults..."
+  cp .env.example .env
+fi
+
 echo "Done! Run ./run.sh to start piggy."
