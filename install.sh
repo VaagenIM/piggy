@@ -9,7 +9,7 @@ if ! command -v uv >/dev/null 2>&1; then
 fi
 
 echo "Installing Python dependencies with uv..."
-uv sync --all-extras
+uv sync --all-extras --upgrade
 
 echo "Fetching piggybank submodule..."
 git submodule update --init --recursive
