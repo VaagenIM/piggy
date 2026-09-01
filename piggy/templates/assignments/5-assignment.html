@@ -8,6 +8,8 @@
 {% block base %}
   <div class="assignment-page-header">
     <h1 class="page-title assignment-heading">{{ content.heading }}</h1>
+
+    {% include "partials/parts/relevant_pages.html" %}
   </div>
 
   {{ content.body | safe }}

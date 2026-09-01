@@ -24,7 +24,7 @@ def checkout_branch():
     branch = os.environ.get("PIGGYBANK_BRANCH", "test-output")
     print("Checking out branch: " + branch)
     if "piggybank" in branch:
-        cmd = f"cd piggybank && git fetch && git checkout {branch}"
+        cmd = f"cd piggybank && git fetch && git checkout {branch} --"
     else:
         cmd = f"cd piggybank && git stash && git fetch && git checkout {branch} && git pull"
     subprocess.run(cmd, shell=True, check=True)
