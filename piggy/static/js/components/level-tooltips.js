@@ -266,8 +266,11 @@ function initializeAdaptiveLevelSelectors() {
   if (controls.length === 0) return;
 
   let scheduled = false;
+  const pressedControls = new Set();
 
   function updateControl(control) {
+    if (pressedControls.has(control)) return;
+
     const levelSelect = control.querySelector(".level-select--buttons");
     const levelMenu = control.querySelector(".level-menu");
     const levelMenuTrigger = levelMenu?.querySelector(".level-menu-trigger");
@@ -325,6 +328,16 @@ function initializeAdaptiveLevelSelectors() {
     const resizeObserver = new ResizeObserver(scheduleUpdate);
     controls.forEach((control) => resizeObserver.observe(control));
   }
+
+  controls.forEach((control) => {
+    const release = () => {
+      pressedControls.delete(control);
+      scheduleUpdate();
+    };
+    control.addEventListener("pointerdown", () => pressedControls.add(control));
+    control.addEventListener("pointerup", release);
+    control.addEventListener("pointercancel", release);
+  });
 
   scheduleUpdate();
 }
