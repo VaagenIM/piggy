@@ -149,9 +149,6 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
     # Set the title to the assignment's title
     if "title" in sections["meta"]:
         all_metadata["title"] = sections["meta"]["title"]
-    # Add the new relevant_pages to the metadata if it exists
-    if "relevant_pages" in sections["meta"]:
-        all_metadata["relevant_pages"] = sections["meta"]["relevant_pages"]
 
     render = render_template(
         AssignmentTemplate.ASSIGNMENT.template,
