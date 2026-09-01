@@ -94,11 +94,17 @@ def create_app(debug: bool = False) -> Flask:
         """Jinja filter: unescape HTML entities."""
         return html.unescape(s).replace("<", "&lt;").replace(">", "&gt;")
 
+    @app.template_filter("split_md_links")
+    def split_md_links(md_links: list[str]) -> list[tuple[str, str]]:
+        """Split a list of markdown links into a list of tuples (text, url)."""
+        return [(link.split("](")[0][1:], link.split("](")[1][:-1]) for link in md_links if "](" in link]
+
     @app.context_processor
     def utilities():
         """Add utility functions to the context."""
         return {
             "unfreeze": unfreeze,
+            "split_md_links": split_md_links,
         }
 
     @app.template_global()

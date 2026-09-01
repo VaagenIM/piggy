@@ -7,4 +7,9 @@ Install `pip install .`
 
 Install dev `pip install .[dev]` + `npm install`
 
+## Documentation
+
+- [Folder `meta.json` reference](docs/METADATA.md)
+- [Assignment frontmatter reference](docs/ASSIGNMENT_FRONTMATTER.md)
+
 🚧 Construction in progress. 🚧

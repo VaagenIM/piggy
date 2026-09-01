@@ -59,13 +59,7 @@ def cache_directory(
         if len(_path.split("/")) == AssignmentTemplate.ASSIGNMENT.index - 1:
             for assignment, assignment_data in value.get("data", {}).items():
                 # Get the path of the assignment Path object
-                assignment_path_obj = (
-                    segment
-                    .get(key, {})
-                    .get("data", {})
-                    .get(assignment, {})
-                    .get("path", Path(""))
-                )
+                assignment_path_obj = segment.get(key, {}).get("data", {}).get(assignment, {}).get("path", Path(""))
 
                 # Set the assignment path to a string with the right url format
                 assignment_path = str(f"{_path}/{key}/{assignment}")
@@ -78,9 +72,7 @@ def cache_directory(
                 [
                     fn(f"{assignment_path}", lang)
                     for lang in LANGUAGES.keys()
-                    if Path(
-                        f"{assignment_path_obj.parent}/translations/{lang}/{assignment}.md"
-                    ).exists()
+                    if Path(f"{assignment_path_obj.parent}/translations/{lang}/{assignment}.md").exists()
                 ]
 
         # If we are at the assignment level, we are done
@@ -93,9 +85,7 @@ def cache_directory(
 
 def _mdfile_to_sections_with_retry(path: Path, retries=0) -> dict:
     if retries > 1:
-        raise PiggyErrorException(
-            f"Could not render assignment after {retries} retries: {path}"
-        )
+        raise PiggyErrorException(f"Could not render assignment after {retries} retries: {path}")
 
     try:
         return mdfile_to_sections(
@@ -103,12 +93,7 @@ def _mdfile_to_sections_with_retry(path: Path, retries=0) -> dict:
             docs_folder=PIGGYBANK_FOLDER,
             leading_url=f"/{ASSIGNMENT_ROUTE}",
             normalize_urls=True,
-            template=(
-                Path(__file__).parent
-                / "templates"
-                / "assignments"
-                / "tconvert_assignment_base.html"
-            ),
+            template=(Path(__file__).parent / "templates" / "assignments" / "tconvert_assignment_base.html"),
         )
 
     except FileNotFoundError:
