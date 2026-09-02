@@ -51,7 +51,7 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-card-border-width: 2px;
 
   /* Navbar and buttons */
-  --piggy-navbar-start: #141419;
+  --piggy-navbar-start: #181820;
   --piggy-navbar-end: #1a1a22;
   --piggy-text-navbar: #f6e7c2;
 
@@ -249,6 +249,11 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   color: #0b0b0e;
   background-color: #ffd86b;
   box-shadow: 0 0 0.5rem var(--piggy-shadow-glow);
+}
+
+[data-theme="golden"] .level-tab.active {
+  background: #000000;
+  border-bottom-color: #000000;
 }
 
 /******************************\

@@ -48,8 +48,8 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
   --piggy-card-border-width: 1px;
 
   /* Navbar and buttons */
-  --piggy-navbar-start: rgb(225, 225, 225);
-  --piggy-navbar-end: rgb(225, 225, 225);
+  --piggy-navbar-start: rgb(215, 215, 215);
+  --piggy-navbar-end: rgb(215, 215, 215);
   --piggy-text-navbar: #333333;
 
   --piggy-button: #c6dfef;

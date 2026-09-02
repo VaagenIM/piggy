@@ -80,6 +80,17 @@ def create_app(debug: bool = False) -> Flask:
         """
         return sorted(item_list, key=lambda kv: int(kv[1]["level"]))
 
+    @app.template_filter("sort_by_language_preference")
+    def sort_by_language_preference(item_list):
+        """
+        Jinja filter: given an iterable of (lang_code, language) tuples,
+        return it sorted by a preferred display order, unlisted codes last.
+        """
+        preferred = ["", "nno", "eng", "ukr"]
+        rank = {code: i for i, code in enumerate(preferred)}
+        fallback_rank = len(preferred)
+        return sorted(item_list, key=lambda kv: (rank.get(kv[0], fallback_rank), kv[0]))
+
     @app.template_filter("list_difference")
     def list_difference(original_list, lists):
         """
