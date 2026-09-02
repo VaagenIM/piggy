@@ -1,0 +1,385 @@
+/************************\
+|*   DROPDOWN (SHARED)  *|
+\************************/
+:root {
+  --piggy-dropdown-z: 1050;
+}
+
+.piggy-dropdown {
+  position: relative;
+}
+
+.piggy-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  cursor: pointer;
+}
+
+.piggy-dropdown-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.piggy-dropdown-trigger::marker {
+  content: "";
+}
+
+.piggy-dropdown-chevron {
+  flex: 0 0 auto;
+  width: calc(0.85rem * var(--piggy-font-scale));
+  height: calc(0.85rem * var(--piggy-font-scale));
+  fill: currentColor;
+  transition: transform 0.18s ease;
+}
+
+.piggy-dropdown[open] .piggy-dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+.piggy-dropdown-panel {
+  display: grid;
+  gap: 0.25rem;
+  position: absolute;
+  z-index: var(--piggy-dropdown-z, 1050);
+  top: calc(100% + 0.35rem);
+  left: 0;
+  box-sizing: border-box;
+  min-width: max-content;
+  max-width: min(22rem, calc(100vw - 1rem));
+  max-height: min(22rem, calc(100svh - 40svh));
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding: 0.35rem;
+  background-color: var(--piggy-menu);
+  color: var(--piggy-menu-text);
+  border: 1px solid
+    var(
+      --piggy-menu-border,
+      color-mix(in srgb, var(--piggy-neutral) 35%, transparent)
+    );
+  border-radius: 1rem;
+  box-shadow: 0 0.75rem 1.75rem rgba(0, 0, 0, 0.18);
+}
+
+.piggy-dropdown-panel--flip-up {
+  top: auto;
+  bottom: calc(100% + 0.35rem);
+}
+
+/* style="pill" -- reuses .piggy-button visual language */
+.piggy-dropdown--pill .piggy-dropdown-trigger {
+  min-height: calc(2.2rem * var(--piggy-font-scale));
+  padding: calc(0.3rem * var(--piggy-font-scale))
+    calc(0.85rem * var(--piggy-font-scale));
+  background: var(--piggy-nav-button, var(--piggy-button));
+  color: var(--piggy-nav-button-text, var(--piggy-text-button));
+  border: 1px solid
+    var(
+      --piggy-nav-button-border,
+      var(
+        --piggy-button-border,
+        color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+      )
+    );
+  border-radius: 999px;
+}
+
+.piggy-dropdown--pill .piggy-dropdown-trigger:hover {
+  background: var(--piggy-nav-button-hover, var(--piggy-button-hover));
+}
+
+/* style="rounded" -- reuses the settings font-select trigger look */
+.piggy-dropdown--rounded .piggy-dropdown-trigger {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  width: max-content;
+  max-width: 100%;
+  min-height: calc(2.8rem * var(--piggy-font-scale));
+  padding: calc(0.52rem * var(--piggy-font-scale))
+    calc(0.7rem * var(--piggy-font-scale));
+  background:
+    linear-gradient(
+        color-mix(in srgb, var(--piggy-button-active) 8%, transparent),
+        color-mix(in srgb, var(--piggy-button-active) 8%, transparent)
+      )
+      padding-box,
+    color-mix(in srgb, var(--piggy-menu) 90%, var(--piggy-menu-text));
+  border: 1px solid color-mix(in srgb, var(--piggy-menu-text) 34%, transparent);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--piggy-menu-text) 12%, transparent),
+    0 0.25rem 0.75rem rgba(0, 0, 0, 0.08);
+}
+
+.piggy-dropdown--rounded .piggy-dropdown-trigger:hover,
+.piggy-dropdown--rounded[open] .piggy-dropdown-trigger {
+  background:
+    linear-gradient(
+        color-mix(in srgb, var(--piggy-button-active) 14%, transparent),
+        color-mix(in srgb, var(--piggy-button-active) 14%, transparent)
+      )
+      padding-box,
+    color-mix(in srgb, var(--piggy-menu) 84%, var(--piggy-menu-text));
+  border-color: color-mix(in srgb, var(--piggy-button-active) 55%, transparent);
+}
+
+.piggy-dropdown--rounded .piggy-dropdown-panel {
+  border-radius: 8px;
+}
+
+/* Rows: 1 = plain label, 2 = left | right, 3 = icon + (left | right) */
+.piggy-dropdown-row {
+  display: grid;
+  gap: 0.12rem;
+  padding: 0.55rem 0.75rem;
+  color: var(--piggy-menu-text);
+  text-decoration: none;
+  border-radius: 0.8rem;
+  line-height: 1.25;
+}
+
+.piggy-dropdown-row:hover {
+  background-color: var(--piggy-button-hover);
+  color: var(--piggy-text-button);
+}
+
+.piggy-dropdown-row.active {
+  background-color: var(--piggy-level-menu-active, var(--piggy-button-active));
+  color: var(--piggy-level-menu-active-text, var(--piggy-text-button));
+}
+
+.piggy-dropdown-row--cols-3 {
+  grid-template-columns: calc(2.25rem * var(--piggy-font-scale)) minmax(0, 1fr);
+  align-items: center;
+  column-gap: 0.6rem;
+}
+
+.piggy-dropdown-row-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.piggy-dropdown-row-icon-svg {
+  width: calc(1rem * var(--piggy-font-scale));
+  height: calc(1rem * var(--piggy-font-scale));
+  fill: currentColor;
+}
+
+.piggy-dropdown-row-text {
+  display: grid;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.piggy-dropdown-row--cols-2 .piggy-dropdown-row-text {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.piggy-dropdown-row-left {
+  overflow-wrap: anywhere;
+  font-weight: 750;
+}
+
+.piggy-dropdown-row-right {
+  overflow-wrap: anywhere;
+  font-size: calc(0.85rem * var(--piggy-font-scale));
+  opacity: 0.78;
+}
+
+.piggy-dropdown-row.active .piggy-dropdown-row-right {
+  opacity: 1;
+}
+
+/* Open/close animation, gated by the `animation` macro param */
+@keyframes piggy-dropdown-open {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem) scaleY(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes piggy-dropdown-close {
+  from {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-0.2rem) scaleY(0.98);
+  }
+}
+
+.piggy-dropdown:not(.piggy-dropdown--no-animation)[open] .piggy-dropdown-panel {
+  transform-origin: top;
+  animation: piggy-dropdown-open 0.16s ease;
+}
+
+.piggy-dropdown:not(
+    .piggy-dropdown--no-animation
+  ).piggy-dropdown-panel--flip-up[open]
+  .piggy-dropdown-panel,
+.piggy-dropdown:not(.piggy-dropdown--no-animation)[open]
+  .piggy-dropdown-panel--flip-up {
+  transform-origin: bottom;
+}
+
+.piggy-dropdown:not(.piggy-dropdown--no-animation).piggy-dropdown-closing
+  .piggy-dropdown-panel {
+  pointer-events: none;
+  animation: piggy-dropdown-close 0.14s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .piggy-dropdown-trigger,
+  .piggy-dropdown-panel,
+  .piggy-dropdown-chevron {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/*******************************\
+|*  ADAPTIVE OVERFLOW (SHARED) *|
+\*******************************/
+[data-adaptive-tier] {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: max-content;
+  max-width: none;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+[data-adaptive-overflow]:not([data-active-tier]) > [data-adaptive-tier="0"] {
+  position: static;
+  width: auto;
+  max-width: 100%;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+[data-adaptive-tier].is-active {
+  position: static;
+  width: auto;
+  max-width: 100%;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.piggy-dropdown[data-adaptive-tier].is-active,
+[data-adaptive-overflow]:not([data-active-tier])
+  > .piggy-dropdown[data-adaptive-tier="0"] {
+  position: relative;
+}
+
+/*******************************\
+|*    LEVEL TABS (BROWSER-TAB  *|
+\*******************************/
+.level-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.3rem;
+  min-width: 0;
+  height: calc(2.05rem * var(--piggy-font-scale));
+}
+
+.level-tab {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding-top: calc(0.25rem * var(--piggy-font-scale) + 3px);
+  padding-right: calc(0.75rem * var(--piggy-font-scale));
+  padding-bottom: calc(0.25rem * var(--piggy-font-scale) + 3px);
+  padding-left: calc(0.75rem * var(--piggy-font-scale));
+  line-height: 1.2;
+  background: color-mix(
+    in srgb,
+    var(--piggy-nav-button, var(--piggy-button)) 55%,
+    var(--piggy-navbar-start)
+  );
+  color: var(--piggy-nav-button-text, var(--piggy-text-button));
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(
+          --piggy-nav-button-border,
+          var(
+            --piggy-button-border,
+            color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+          )
+        )
+        65%,
+      var(--piggy-navbar-start)
+    );
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+.level-tab:hover {
+  background: color-mix(
+    in srgb,
+    var(--piggy-nav-button-hover, var(--piggy-button-hover)) 70%,
+    var(--piggy-navbar-start)
+  );
+}
+
+.level-tab.active {
+  background: var(--piggy-main);
+  color: var(--piggy-text-main);
+  border-color: var(--site-navbar-boundary-line);
+  border-bottom-color: var(--piggy-main);
+  border-width: 1.5px;
+  border-radius: calc(1.025rem * var(--piggy-font-scale))
+    calc(1.025rem * var(--piggy-font-scale)) 0 0;
+  padding-bottom: calc(1rem);
+}
+
+.level-tab .piggy-dropdown-row-text {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.level-tab.active .piggy-dropdown-row-text {
+  position: relative;
+}
+
+.level-tab.active .piggy-dropdown-row-text::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(-0.25rem * var(--piggy-font-scale) - 4.5px);
+  height: 1px;
+  background: var(--site-navbar-boundary-line);
+}
+
+.level-tab .piggy-dropdown-row-right {
+  opacity: 0.78;
+  border-left: 1px solid var(--site-navbar-boundary-line);
+  padding-left: 0.5rem;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.level-tab.active .piggy-dropdown-row-right {
+  opacity: 1;
+}

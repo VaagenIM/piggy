@@ -53,7 +53,7 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
   --piggy-information-shadow-glow: rgba(102, 252, 241, 0.24);
 
   /* Navbar */
-  --piggy-navbar-start: #0b0c10;
+  --piggy-navbar-start: #141822;
   --piggy-navbar-end: #1f2833;
   --piggy-text-navbar: var(--piggy-light);
 

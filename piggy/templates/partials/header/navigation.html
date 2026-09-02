@@ -18,12 +18,16 @@
     </div>
   </div>
 
+  <script
+    src="{{ url_for('static', filename='js/components/dropdown.js') }}"
+    defer></script>
+  <script
+    src="{{ url_for('static', filename='js/components/adaptive-overflow.js') }}"
+    defer></script>
+
   {% if current_language is defined and supported_languages is defined %}
     <script
       src="{{ url_for('static', filename='js/components/language-selector.js') }}"
-      defer></script>
-    <script
-      src="{{ url_for('static', filename='js/components/level-tooltips.js') }}"
       defer></script>
   {% endif %}
 </nav>

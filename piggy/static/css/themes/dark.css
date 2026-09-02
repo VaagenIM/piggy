@@ -54,8 +54,8 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
   --piggy-card-border-width: 1.5px;
 
   /* piggy elements */
-  --piggy-navbar-start: rgb(30, 35, 40);
-  --piggy-navbar-end: rgb(30, 35, 40);
+  --piggy-navbar-start: rgb(38, 44, 50);
+  --piggy-navbar-end: rgb(38, 44, 50);
   --piggy-text-navbar: var(--piggy-light);
 
   /* buttons */
@@ -255,6 +255,10 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
 
   --piggy-key-admonition-shadow: rgba(0, 0, 0, 0.16);
   --piggy-key-admonition-shadow-hover: rgba(0, 0, 0, 0.22);
+}
+
+[data-theme="dark"] .site-navbar {
+  --site-navbar-boundary-line: #5a6570;
 }
 
 [data-theme="dark"] .md-content {

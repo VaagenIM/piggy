@@ -11,14 +11,18 @@
 }
 
 .site-navbar {
-  --site-navbar-control-gap: 0.65rem;
-
+  --site-navbar-control-gap: 0.5rem;
+  --site-navbar-boundary-line: var(
+    --piggy-nav-button-border,
+    var(--piggy-button-border, var(--piggy-button-active))
+  );
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--site-navbar-control-gap);
-  min-height: calc(3.25rem * var(--piggy-font-scale));
-  padding: 0.5rem 0.75rem;
+  min-height: calc(2.85rem * var(--piggy-font-scale));
+  padding: 0.35rem 0.75rem;
+  border-bottom: 1px solid var(--site-navbar-boundary-line);
   overflow: visible;
 }
 
@@ -37,24 +41,27 @@
 
 .site-navbar-controls {
   flex: 1 1 auto;
+  align-self: stretch;
   justify-content: flex-end;
   gap: var(--site-navbar-control-gap);
-}
-
-.site-navbar-controls > .level-select {
-  flex: 1 1 100%;
+  border-left: 1px solid var(--site-navbar-boundary-line);
+  padding-left: 0.6rem;
 }
 
 .site-navbar-controls > .level-menu {
   flex: 1 1 100%;
+  min-width: 0;
 }
 
 .site-navbar-actions {
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: 0.45rem;
+  align-self: stretch;
+  gap: 0.35rem;
   min-width: 0;
+  border-left: 1px solid var(--site-navbar-boundary-line);
+  padding-left: 0.6rem;
 }
 
 .site-navbar-actions > .language-selector,
@@ -65,8 +72,8 @@
 
 .site-settings-button {
   min-width: calc(7.35rem * var(--piggy-font-scale));
-  padding-inline: calc(0.75rem * var(--piggy-font-scale))
-    calc(0.9rem * var(--piggy-font-scale));
+  padding-inline: calc(0.6rem * var(--piggy-font-scale))
+    calc(0.75rem * var(--piggy-font-scale));
 }
 
 .site-settings-button [hidden] {
@@ -99,8 +106,8 @@
   );
   color: var(--piggy-nav-button-text, var(--piggy-text-button));
   font-weight: 800;
-  min-height: calc(2.25rem * var(--piggy-font-scale));
-  padding-block: calc(0.3rem * var(--piggy-font-scale));
+  min-height: calc(2.05rem * var(--piggy-font-scale));
+  padding-block: calc(0.25rem * var(--piggy-font-scale));
   box-shadow:
     0 0 0 2px
       color-mix(
@@ -145,18 +152,8 @@
     justify-content: flex-start;
   }
 
-  .site-navbar-controls > .level-select {
-    grid-column: 1;
-    width: 100%;
-    min-width: 0;
-  }
-
   .site-navbar-controls > .level-menu {
     grid-column: 1;
-    justify-self: start;
-    width: max-content;
-    max-width: 100%;
-    min-width: 0;
   }
 }
 
@@ -186,18 +183,8 @@
     justify-content: flex-start;
   }
 
-  .site-navbar-controls > .level-select {
-    grid-column: 1;
-    width: 100%;
-    min-width: 0;
-  }
-
   .site-navbar-controls > .level-menu {
     grid-column: 1;
-    justify-self: start;
-    width: max-content;
-    max-width: 100%;
-    min-width: 0;
   }
 
   .site-navbar-actions {

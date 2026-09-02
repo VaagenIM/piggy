@@ -104,14 +104,14 @@
 
   let settingsRoot = null;
   let preferencesApi = null;
-  let fontSelectEventsBound = false;
+  let disclosureEventsBound = false;
   const detailsCloseTimers = new WeakMap();
 
   function render(root, nextPreferencesApi) {
     settingsRoot = root;
     preferencesApi = nextPreferencesApi;
     if (!settingsRoot || !preferencesApi) return;
-    bindFontSelectEvents();
+    bindDisclosureEvents();
 
     renderPresetCards(getRenderTarget("presets"));
     renderThemeCards(getRenderTarget("themes"));
@@ -497,11 +497,16 @@
     label.textContent = labelText;
 
     const details = document.createElement("details");
-    details.className = "settings-font-select";
+    details.className =
+      "piggy-dropdown piggy-dropdown--rounded settings-font-select";
+    details.dataset.dropdown = "";
     details.dataset.fontSelect = id;
+    details.setAttribute("aria-label", labelText);
 
     const summary = document.createElement("summary");
-    summary.className = "settings-font-select-summary";
+    summary.className = "piggy-dropdown-trigger settings-font-select-summary";
+    summary.setAttribute("aria-haspopup", "true");
+    summary.setAttribute("aria-expanded", "false");
     summary.setAttribute("aria-labelledby", labelId);
 
     const currentRow = document.createElement("span");
@@ -517,13 +522,15 @@
     summary.append(currentRow, chevron);
 
     const menu = document.createElement("div");
-    menu.className = "settings-font-select-menu";
+    menu.className =
+      "piggy-dropdown-panel piggy-dropdown-panel--cols-2 settings-font-select-menu";
     menu.setAttribute("role", "listbox");
     menu.setAttribute("aria-labelledby", labelId);
 
     options.forEach((option) => {
       const button = document.createElement("button");
-      button.className = "settings-font-option";
+      button.className =
+        "piggy-dropdown-row piggy-dropdown-row--cols-2 settings-font-option";
       button.type = "button";
       button.dataset.prefId = id;
       button.dataset.prefValue = option.value;
@@ -536,6 +543,8 @@
     details.append(summary, menu);
     field.append(label, details);
     container.replaceChildren(field);
+
+    window.PiggyDropdown?.register(details);
   }
 
   function renderSegmentedControl(id, container) {
@@ -726,25 +735,16 @@
     );
   }
 
-  function bindFontSelectEvents() {
-    if (fontSelectEventsBound) return;
+  function bindDisclosureEvents() {
+    if (disclosureEventsBound) return;
 
-    document.addEventListener("click", handleFontSelectDocumentClick);
-    document.addEventListener("keydown", handleFontSelectDocumentKeydown);
-    fontSelectEventsBound = true;
+    document.addEventListener("click", handleDisclosureDocumentClick);
+    document.addEventListener("keydown", handleDisclosureDocumentKeydown);
+    disclosureEventsBound = true;
   }
 
-  function handleFontSelectDocumentClick(event) {
+  function handleDisclosureDocumentClick(event) {
     if (!settingsRoot) return;
-
-    const fontSummary = event.target.closest(".settings-font-select-summary");
-    if (fontSummary && settingsRoot.contains(fontSummary)) {
-      event.preventDefault();
-      const select = fontSummary.closest("[data-font-select]");
-      closeSiblingFontSelects(select);
-      toggleAnimatedDetails(select);
-      return;
-    }
 
     const disclosureSummary = event.target.closest(
       ".settings-disclosure > summary",
@@ -752,29 +752,13 @@
     if (disclosureSummary && settingsRoot.contains(disclosureSummary)) {
       event.preventDefault();
       toggleAnimatedDetails(disclosureSummary.closest(".settings-disclosure"));
-      return;
     }
-
-    const clickedSelect = event.target.closest("[data-font-select]");
-    const clickedOption = event.target.closest(".settings-font-option");
-
-    settingsRoot
-      .querySelectorAll("[data-font-select][open]")
-      .forEach((select) => {
-        if (!clickedSelect || select !== clickedSelect || clickedOption) {
-          closeAnimatedDetails(select);
-        }
-      });
   }
 
-  function handleFontSelectDocumentKeydown(event) {
+  function handleDisclosureDocumentKeydown(event) {
     if (!settingsRoot) return;
 
-    const activeSelect = event.target.closest("[data-font-select]");
-
-    const summary = event.target.closest(
-      ".settings-font-select-summary, .settings-disclosure > summary",
-    );
+    const summary = event.target.closest(".settings-disclosure > summary");
 
     if (
       summary &&
@@ -782,83 +766,8 @@
       (event.key === "Enter" || event.key === " ")
     ) {
       event.preventDefault();
-      const details = summary.closest("details");
-      if (details?.matches("[data-font-select]")) {
-        closeSiblingFontSelects(details);
-      }
-      toggleAnimatedDetails(details);
-      return;
+      toggleAnimatedDetails(summary.closest(".settings-disclosure"));
     }
-
-    if (event.key === "Escape") {
-      const openSelects = settingsRoot.querySelectorAll(
-        "[data-font-select][open]",
-      );
-      if (!openSelects.length) return;
-
-      event.preventDefault();
-      openSelects.forEach((select) => {
-        closeAnimatedDetails(select, { focusSummary: select === activeSelect });
-      });
-      return;
-    }
-
-    if (!activeSelect) return;
-
-    const options = [...activeSelect.querySelectorAll(".settings-font-option")];
-    if (!options.length) return;
-
-    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-      event.preventDefault();
-      closeSiblingFontSelects(activeSelect);
-      openAnimatedDetails(activeSelect);
-
-      const currentIndex = options.indexOf(document.activeElement);
-      const selectedIndex = getSelectedFontOptionIndex(options);
-      let nextIndex = currentIndex === -1 ? selectedIndex : currentIndex;
-
-      if (event.key === "ArrowDown") {
-        nextIndex = currentIndex === -1 ? nextIndex : nextIndex + 1;
-      } else {
-        nextIndex = currentIndex === -1 ? nextIndex : nextIndex - 1;
-      }
-
-      options[wrapIndex(nextIndex, options.length)]?.focus();
-      return;
-    }
-
-    if (event.key === "Home" || event.key === "End") {
-      if (
-        !activeSelect.open ||
-        !event.target.closest(".settings-font-option")
-      ) {
-        return;
-      }
-
-      event.preventDefault();
-      options[event.key === "Home" ? 0 : options.length - 1]?.focus();
-    }
-  }
-
-  function getSelectedFontOptionIndex(options) {
-    const selectedIndex = options.findIndex(
-      (option) => option.getAttribute("aria-selected") === "true",
-    );
-    return selectedIndex === -1 ? 0 : selectedIndex;
-  }
-
-  function wrapIndex(index, length) {
-    return ((index % length) + length) % length;
-  }
-
-  function closeSiblingFontSelects(currentSelect) {
-    settingsRoot
-      ?.querySelectorAll("[data-font-select][open]")
-      .forEach((select) => {
-        if (select !== currentSelect) {
-          closeAnimatedDetails(select);
-        }
-      });
   }
 
   function toggleAnimatedDetails(details) {
@@ -935,10 +844,6 @@
   }
 
   function getAnimatedDetailsElement(details) {
-    if (details.matches("[data-font-select]")) {
-      return details.querySelector(".settings-font-select-menu");
-    }
-
     return details.querySelector(":scope > .settings-control-stack");
   }
 

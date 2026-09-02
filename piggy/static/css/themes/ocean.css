@@ -53,8 +53,8 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-information-shadow-glow: rgba(0, 229, 255, 0.26);
 
   /* Navbar */
-  --piggy-navbar-start: #002b36;
-  --piggy-navbar-end: #003f52;
+  --piggy-navbar-start: #003b48;
+  --piggy-navbar-end: #00506a;
   --piggy-text-navbar: #d8f3f8;
 
   /* Buttons */
