@@ -49,8 +49,8 @@ preview_style: background: linear-gradient(90deg, #201d2f, #34304a); color: #ede
   --piggy-card-border-width: 1px;
 
   /* Navbar and buttons */
-  --piggy-navbar-start: #2b273f;
-  --piggy-navbar-end: #242137;
+  --piggy-navbar-start: #322d4c;
+  --piggy-navbar-end: #2a2640;
   --piggy-text-navbar: #edeaf7;
 
   --piggy-button: #5b557e;

@@ -284,9 +284,20 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   border-bottom: var(--piggy-card-border-width) solid white;
 }
 
-[data-theme="high-contrast"] :where(.piggy-button, .snout-button) {
-  border-width: var(--piggy-card-border-width);
+[data-theme="high-contrast"]
+  :where(.piggy-button, .snout-button, .level-tab, .piggy-dropdown-trigger) {
+  border-width: var(--piggy-card-border-width) !important;
   border-radius: 0px !important;
+}
+
+[data-theme="high-contrast"] .level-tab {
+  border-color: var(--piggy-nav-button-border) !important;
+  padding-bottom: calc(0.25rem * var(--piggy-font-scale) - 1px) !important;
+}
+
+[data-theme="high-contrast"] .level-tab.active {
+  border-bottom-color: var(--piggy-main) !important;
+  padding-bottom: calc(1rem - 1px) !important;
 }
 
 [data-theme="high-contrast"] .level-button {

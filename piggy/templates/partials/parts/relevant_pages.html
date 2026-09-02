@@ -1,62 +1,41 @@
 {% from 'macros/include.html' import include_svg %}
+{% from 'macros/dropdown.html' import dropdown, dropdown_row %}
 
-{#
-  Each entry in `relevant_pages` is either a plain path string, or a mapping
-  with `path` plus an optional `title` override, e.g.:
-
-    relevant_pages:
-      - /main/VG1/.../GitHub_Desktop_Level_1_-_Installasjon
-      - path: /main/VG1/.../uv_Level_1_-_Installasjon
-        title: uv (pakkehåndterer)
-#}
 {% if content.meta.relevant_pages %}
-  <div class="assignment-relevant-pages">
-    <span class="assignment-relevant-pages-label">Andre relevante sider</span>
-    <div class="assignment-relevant-pages-pills">
-      {% for item in content.meta.relevant_pages %}
-        {% if item is mapping %}
-          {% set raw_path = item.get("path", "") %}
-          {% set custom_title = item.get("title") %}
-        {% else %}
-          {% set raw_path = item %}
-          {% set custom_title = none %}
-        {% endif %}
-
-        {% set path = raw_path.strip() %}
-        {% set prefix = "/" + ASSIGNMENT_URL_PREFIX + "/" %}
-        {% if path.startswith(prefix) %}
-          {% set path = path.split(prefix, 1)[1] %}
-        {% endif %}
-        {% set path = path.strip("/").replace(" ", "_") %}
-
-        {#
-          Walk the already-loaded piggymap by hand (mirrors
-          piggy.piggybank.get_piggymap_segment_from_path) since Jinja's
-          `set` doesn't carry a plain loop variable across iterations.
-        #}
-        {% set ns = namespace(segment=piggymap, meta={}, found=true) %}
-        {% for part in path.split("/") if part %}
-          {% if ns.found %}
-            {% if part in ns.segment %}
-              {% set piggy_entry = ns.segment[part] %}
-              {% set ns.meta = piggy_entry.get("meta", {}) %}
-              {% set ns.segment = piggy_entry.get("data", piggy_entry) %}
-            {% else %}
-              {% set ns.found = false %}
-            {% endif %}
-          {% endif %}
-        {% endfor %}
-
-        {% if ns.found %}
-          <a
-            class="assignment-relevant-page-pill"
-            href="/{{ ASSIGNMENT_URL_PREFIX }}/{{ path }}"
-            {% if ns.meta.description %}title="{{ ns.meta.description }}"{% endif %}>
+  {% set links = split_md_links(content.meta.relevant_pages) %}
+  <div class="assignment-relevant-pages" data-adaptive-overflow>
+    <div
+      class="assignment-relevant-pages-shelf"
+      data-adaptive-tier="0"
+      data-adaptive-collapse-at="4"
+      data-adaptive-count-selector=".assignment-relevant-pages-pills">
+      <span class="assignment-relevant-pages-label">Andre relevante sider</span>
+      <div class="assignment-relevant-pages-pills">
+        {% for text, url in links %}
+          <a class="assignment-relevant-page-pill" href="{{ url }}">
             {{ include_svg(svg='img/icons/arrow-icon.svg', class='assignment-relevant-page-icon') }}
-            <span>{{ custom_title or ns.meta.title or path }}</span>
+            <span>{{ text }}</span>
           </a>
-        {% endif %}
-      {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="assignment-relevant-pages-shelf" data-adaptive-tier="1">
+      <span class="assignment-relevant-pages-label">Andre relevante sider</span>
+      {% set trigger %}<span>Andre relevante sider</span>{% endset %}
+      {%
+        call dropdown(
+          trigger=trigger,
+          style='rounded',
+          columns=1,
+          aria_label='Andre relevante sider',
+          wrapper_class='assignment-relevant-pages-menu'
+        )
+      %}
+        {% for text, url in links %}
+          {{ dropdown_row(href=url, left_text=text, columns=1) }}
+        {% endfor %}
+      {% endcall %}
     </div>
   </div>
 {% endif %}

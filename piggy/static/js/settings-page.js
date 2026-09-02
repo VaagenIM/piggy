@@ -128,7 +128,7 @@
   function closeHeaderMenus() {
     document
       .querySelectorAll(
-        ".site-header .language-selector, .site-header .level-menu",
+        ".site-header .language-selector, .site-header .level-menu-dropdown",
       )
       .forEach((menu) => {
         menu.classList.remove("is-open");

@@ -1,0 +1,104 @@
+{% from 'macros/include.html' import include_svg %}
+
+{#
+  Usage:
+    {% set trigger %}
+      <span>{{ level_text }}</span>
+      <span>{{ level | int }}</span>
+    {% endset %}
+    {% call dropdown(id='level-menu', trigger=trigger, style='pill') %}
+      {{ dropdown_row(href=link, left_text='Level 1', right_text='Intro') }}
+    {% endcall %}
+#}
+{%
+  macro dropdown(
+    id='',
+    trigger='',
+    style='pill',
+    animation=true,
+    columns=2,
+    aria_label='',
+    trigger_class='',
+    panel_class='',
+    wrapper_class='',
+    show_chevron=true,
+    extra_attrs=''
+  )
+%}
+  {%
+    set wrapper_classes =
+    'piggy-dropdown piggy-dropdown--' ~ style ~
+    (' piggy-dropdown--no-animation' if not animation else '') ~
+    (' ' ~ wrapper_class if wrapper_class else '')
+  %}
+  {% set trigger_classes = 'piggy-dropdown-trigger' ~ (' ' ~ trigger_class if trigger_class else '') %}
+  {% set panel_classes = 'piggy-dropdown-panel piggy-dropdown-panel--cols-' ~ columns ~ (' ' ~ panel_class if panel_class else '') %}
+
+  <details
+    {% if id %}id="{{ id }}"{% endif %}
+    class="{{ wrapper_classes }}"
+    data-dropdown
+    {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+    {{ extra_attrs | safe }}>
+    <summary class="{{ trigger_classes }}" aria-haspopup="true" aria-expanded="false">
+      {{ trigger | safe }}
+      {% if show_chevron %}
+        {{ include_svg(svg='img/icons/arrow-icon.svg', class='piggy-dropdown-chevron') }}
+      {% endif %}
+    </summary>
+    <div
+      class="{{ panel_classes }}"
+      role="listbox"
+      {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}>
+      {{ caller() }}
+    </div>
+  </details>
+{% endmacro %}
+
+{%
+  macro dropdown_row(
+    href='',
+    left_text='',
+    right_text='',
+    icon_svg='',
+    icon_html='',
+    active=false,
+    columns=none,
+    row_class='',
+    extra_attrs=''
+  )
+%}
+  {% set resolved_columns = columns %}
+  {% if resolved_columns is none %}
+    {% set resolved_columns = 1 %}
+    {% if left_text and right_text %}{% set resolved_columns = 2 %}{% endif %}
+    {% if (icon_svg or icon_html) and left_text %}{% set resolved_columns = 3 %}{% endif %}
+  {% endif %}
+
+  {% set classes = 'piggy-dropdown-row piggy-dropdown-row--cols-' ~ resolved_columns ~ (' active' if active else '') ~ (' ' ~ row_class if row_class else '') %}
+  {% set element = 'a' if href else 'span' %}
+
+  <{{ element }}
+    class="{{ classes }}"
+    role="option"
+    {% if href %}href="{{ href }}"{% endif %}
+    aria-selected="{{ 'true' if active else 'false' }}"
+    {% if active %}aria-current="page"{% endif %}
+    {{ extra_attrs | safe }}>
+    {% if resolved_columns == 3 %}
+      <span class="piggy-dropdown-row-icon" aria-hidden="true">
+        {% if icon_svg %}
+          {{ include_svg(svg=icon_svg, class='piggy-dropdown-row-icon-svg') }}
+        {% else %}
+          {{ icon_html | safe }}
+        {% endif %}
+      </span>
+    {% endif %}
+    <span class="piggy-dropdown-row-text">
+      <span class="piggy-dropdown-row-left">{{ left_text }}</span>
+      {% if right_text %}
+        <span class="piggy-dropdown-row-right">{{ right_text }}</span>
+      {% endif %}
+    </span>
+  </{{ element }}>
+{% endmacro %}
