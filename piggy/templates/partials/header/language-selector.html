@@ -33,8 +33,10 @@
   )
 %}
   {% for lang, val in supported_languages.items() | sort_by_language_preference %}
-    {% set row_left %}<span class="language-flag">{{ val.flag }}</span>
-    <span class="language-name">{{ val.name }}</span>{% endset %}
+    {% set row_left %}
+      <span class="language-flag">{{ val.flag }}</span>
+      <span class="language-name">{{ val.name }}</span>
+    {% endset %}
     {%
       set extra_attrs =
       'data-lang="' ~ lang ~ '"' ~
