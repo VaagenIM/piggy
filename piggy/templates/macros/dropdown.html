@@ -22,6 +22,7 @@
     panel_class='',
     wrapper_class='',
     show_chevron=true,
+    full_width=false,
     extra_attrs=''
   )
 %}
@@ -29,6 +30,7 @@
     set wrapper_classes =
     'piggy-dropdown piggy-dropdown--' ~ style ~
     (' piggy-dropdown--no-animation' if not animation else '') ~
+    (' piggy-dropdown--full-width' if full_width else '') ~
     (' ' ~ wrapper_class if wrapper_class else '')
   %}
   {% set trigger_classes = 'piggy-dropdown-trigger' ~ (' ' ~ trigger_class if trigger_class else '') %}

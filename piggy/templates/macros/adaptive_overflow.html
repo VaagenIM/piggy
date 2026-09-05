@@ -1,0 +1,32 @@
+{% macro adaptive_tier_bootstrap() %}
+  <script>
+    (function () {
+      var container = document.currentScript.previousElementSibling;
+      if (!container || !container.hasAttribute('data-adaptive-overflow')) {
+        return;
+      }
+      var key = container.dataset.adaptiveKey;
+      if (!key) return;
+
+      var stored;
+      try {
+        stored = localStorage.getItem('piggy:adaptive-tier:' + key);
+      } catch (e) {
+        return;
+      }
+      if (stored === null) return;
+
+      var tiers = container.querySelectorAll(':scope > [data-adaptive-tier]');
+      var target = null;
+      tiers.forEach(function (tier) {
+        if (tier.dataset.adaptiveTier === stored) target = tier;
+      });
+      if (!target) return;
+
+      tiers.forEach(function (tier) {
+        tier.classList.toggle('is-active', tier === target);
+      });
+      container.dataset.activeTier = stored;
+    })();
+  </script>
+{% endmacro %}

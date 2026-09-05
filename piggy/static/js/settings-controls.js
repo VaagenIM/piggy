@@ -498,7 +498,7 @@
 
     const details = document.createElement("details");
     details.className =
-      "piggy-dropdown piggy-dropdown--rounded settings-font-select";
+      "piggy-dropdown piggy-dropdown--rounded piggy-dropdown--full-width settings-font-select";
     details.dataset.dropdown = "";
     details.dataset.fontSelect = id;
     details.setAttribute("aria-label", labelText);

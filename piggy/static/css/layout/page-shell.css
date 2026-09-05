@@ -12,9 +12,11 @@
 
 .background-overlay {
   position: fixed;
+  inset: 0;
   background: var(--piggy-main);
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   z-index: -1;
 }
 

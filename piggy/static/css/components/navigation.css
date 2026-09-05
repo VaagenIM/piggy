@@ -145,7 +145,7 @@
 }
 
 @media (max-width: 1150px) {
-  .site-navbar-controls {
+  .site-navbar-controls:has(.level-menu) {
     display: grid;
     grid-template-columns: minmax(0, 1fr) max-content;
     align-items: center;
@@ -166,8 +166,8 @@
     gap: 0.5rem;
   }
 
-  .site-navbar-main,
-  .site-navbar-controls {
+  .site-navbar:has(.level-menu) .site-navbar-main,
+  .site-navbar:has(.level-menu) .site-navbar-controls {
     flex: 1 1 100%;
   }
 
@@ -176,7 +176,7 @@
     min-width: 0;
   }
 
-  .site-navbar-controls {
+  .site-navbar-controls:has(.level-menu) {
     display: grid;
     grid-template-columns: minmax(0, 1fr) max-content;
     align-items: center;
@@ -187,7 +187,7 @@
     grid-column: 1;
   }
 
-  .site-navbar-actions {
+  .site-navbar:has(.level-menu) .site-navbar-actions {
     grid-column: 2;
     justify-self: end;
     min-width: max-content;
