@@ -692,6 +692,47 @@ body.settings-inline-active .settings-tab-panels {
   min-height: calc(0.34rem * var(--piggy-font-scale));
 }
 
+/***************************\
+|*    ACCENT COLOR PICK    *|
+\***************************/
+.settings-accent-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  padding: 0.4rem;
+}
+
+.accent-color-swatch {
+  appearance: none;
+  position: relative;
+  width: calc(2.3rem * var(--piggy-font-scale));
+  height: calc(2.3rem * var(--piggy-font-scale));
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--piggy-menu-text) 22%, transparent);
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.accent-color-swatch:hover {
+  transform: scale(1.08);
+}
+
+.accent-color-swatch:focus-visible {
+  outline: 2px solid var(--piggy-button-active);
+  outline-offset: 2px;
+}
+
+.accent-color-swatch[aria-pressed="true"] {
+  border-color: var(--piggy-menu-text);
+  box-shadow:
+    0 0 0 2px var(--piggy-menu),
+    0 0 0 4px var(--piggy-button-active);
+}
+
 .settings-control-stack {
   display: grid;
   gap: 0.8rem;

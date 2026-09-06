@@ -8,8 +8,8 @@ tags: default, bright
 preview.background: #f7f7f7
 preview.surface: #ffffff
 preview.text: #171717
-preview.accent: #78b3d9
-preview.border: #7faac6
+preview.accent: #2f7dd1
+preview.border: #86b4e4
 preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); color: rgb(23, 23, 23); text-shadow: none;
 */
 
@@ -52,15 +52,22 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
   --piggy-navbar-end: rgb(215, 215, 215);
   --piggy-text-navbar: #333333;
 
-  --piggy-button: #c6dfef;
-  --piggy-button-hover: #a9cce4;
-  --piggy-button-active: #78b3d9;
+  /*
+    buttons -- indirected through --piggy-accent-*-override so Settings >
+    Accent color can retint these (see preferences/accent-color.css); the
+    literal blue below is id "0", this theme's own default.
+  */
+  --piggy-button: var(--piggy-accent-button-override, #c5dbf2);
+  --piggy-button-hover: var(--piggy-accent-hover-override, #9bc1e9);
+  --piggy-button-active: var(--piggy-accent-override, #2f7dd1);
   --piggy-text-button: #172033;
-  --piggy-button-border: #7faac6;
+  --piggy-button-border: var(--piggy-accent-border-override, #86b4e4);
   --piggy-nav-button: #ffffff;
-  --piggy-nav-button-hover: #edf6fb;
+  --piggy-nav-button-hover: var(--piggy-accent-nav-hover-override, #e6eff9);
   --piggy-nav-button-text: #172033;
-  --piggy-nav-button-border: #9caeb8;
+  --piggy-nav-button-border: var(--piggy-accent-border-override, #86b4e4);
+  --piggy-level-menu-active: var(--piggy-accent-override, #2f7dd1);
+  --piggy-level-menu-active-text: var(--piggy-accent-text-override, #172033);
 
   --piggy-thumbnail-overlay: rgba(255, 255, 255, 0.7);
   --piggy-text-thumbnail: var(--piggy-dark);
@@ -77,8 +84,8 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
   --piggy-tooltip: var(--piggy-dark);
   --piggy-tooltip-text: var(--piggy-light);
 
-  --piggy-text-hyperlink: #236fa8;
-  --piggy-text-hyperlink-hover: #164c78;
+  --piggy-text-hyperlink: var(--piggy-accent-link-override, #2562a3);
+  --piggy-text-hyperlink-hover: var(--piggy-accent-link-hover-override, #1a4573);
 
   /* level container */
   --piggy-level-container-text: var(--piggy-dark);
