@@ -58,11 +58,7 @@ preview_style: background: linear-gradient(90deg, rgb(16, 19, 23), #000000); col
   --piggy-navbar-end: rgb(26, 30, 35);
   --piggy-text-navbar: var(--piggy-light);
 
-  /*
-    buttons -- indirected through --piggy-accent-*-override so Settings >
-    Accent color can retint these (see preferences/accent-color.css); the
-    literal blue below is id "0", this theme's own default.
-  */
+  /* buttons */
   --piggy-button: var(--piggy-accent-button-override, #1a4573);
   --piggy-button-hover: var(--piggy-accent-hover-override, #225a96);
   --piggy-button-active: var(--piggy-accent-override, #2f7dd1);
@@ -96,7 +92,10 @@ preview_style: background: linear-gradient(90deg, rgb(16, 19, 23), #000000); col
 
   /* links */
   --piggy-text-hyperlink: var(--piggy-accent-link-override, #7eaee2);
-  --piggy-text-hyperlink-hover: var(--piggy-accent-link-hover-override, #accbed);
+  --piggy-text-hyperlink-hover: var(
+    --piggy-accent-link-hover-override,
+    #accbed
+  );
 
   /* info boxes */
   --piggy-info-box-background: #00a3c255;
