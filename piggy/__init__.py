@@ -17,9 +17,9 @@ MEDIA_ROUTE = "img"
 IMG_FMT = "webp"
 
 # Site (UI chrome) languages, distinct from the per-assignment content languages in LANGUAGES
-SUPPORTED_UI_LOCALES = ["nb", "en"]
+SUPPORTED_UI_LOCALES = ["nb", "en", "uk"]
 DEFAULT_UI_LOCALE = "nb"
-UI_LOCALE_DISPLAY_KEY = {"nb": "nob", "en": "eng"}
+UI_LOCALE_DISPLAY_KEY = {"nb": "nob", "en": "eng", "uk": "ukr"}
 
 ASSIGNMENTS_TEMPLATE_FOLDER = "assignments"
 ASSIGNMENT_FILENAME_REGEX = re.compile(r"^.*Level[ _](\d+)[ _]-[ _](.+).md$")

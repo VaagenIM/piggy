@@ -1,7 +1,3 @@
-# English translations for Piggy.
-# Copyright (C) 2026 VaagenIM
-# This file is distributed under the same license as the Piggy project.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: Piggy 0.1.0\n"

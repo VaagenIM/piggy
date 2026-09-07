@@ -1,7 +1,3 @@
-# Norwegian Bokmål translations for Piggy.
-# Copyright (C) 2026 VaagenIM
-# This file is distributed under the same license as the Piggy project.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: Piggy 0.1.0\n"
@@ -19,15 +15,15 @@ msgstr ""
 
 #: piggy/app.py:211 piggy/caching.py:114 piggy/caching.py:201
 msgid "Assignment not found"
-msgstr "Assignment not found"
+msgstr "Oppgave ikke funnet"
 
 #: piggy/caching.py:122
 msgid "Error: Could not render assignment"
-msgstr "Error: Could not render assignment"
+msgstr "Feil: Kunne ikke vise oppgave"
 
 #: piggy/caching.py:187
 msgid "Page not found"
-msgstr "Page not found"
+msgstr "Fant ikke siden"
 
 #: piggy/js_i18n.py:15 piggy/js_i18n.py:33 piggy/js_i18n.py:38
 #: piggy/js_i18n.py:48 piggy/js_i18n.py:88 piggy/js_i18n.py:95
@@ -546,3 +542,8 @@ msgstr "Fokus switches"
 msgid "Lagrer skjermposisjonen for hver side på denne nettleseren. Dette gjør at Piggy vil returnere til der du var når du sluttet å lese."
 msgstr "Lagrer skjermposisjonen for hver side på denne nettleseren. Dette gjør at Piggy vil returnere til der du var når du sluttet å lese."
 
+  // Swap in server-rendered translations (window.PIGGY_I18N, injected in
+  // partials/head.html from piggy/js_i18n.py) for the current site language.  // Swap in server-rendered translations (window.PIGGY_I18N, injected in
+  // partials/head.html from piggy/js_i18n.py) for the current site language.  // Swap in server-rendered translations (window.PIGGY_I18N, injected in
+  // partials/head.html from piggy/js_i18n.py) for the current site language.  // Swap in server-rendered translations (window.PIGGY_I18N, injected in
+  // partials/head.html from piggy/js_i18n.py) for the current site language.
