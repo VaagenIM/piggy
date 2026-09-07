@@ -7,14 +7,14 @@
   data-settings-inline="{{ 'true' if settings_inline|default(false) else 'false' }}">
   <header class="settings-panel-header settings-page-header">
     <div class="settings-heading-group">
-      <h1 id="settings-title">Settings</h1>
+      <h1 id="settings-title">Innstillinger</h1>
     </div>
     <div class="settings-header-actions">
       <button
         id="settings-reset-button"
         class="piggy-button piggy-button--m settings-secondary-button"
         type="button">
-        Reset
+        Tilbakestill
       </button>
       <a
         id="settings-return-link"
@@ -30,7 +30,7 @@
           stroke-linejoin="round">
           <path d="m15 18-6-6 6-6" />
         </svg>
-        <span>Back to page</span>
+        <span>Tilbake til siden</span>
       </a>
     </div>
   </header>
@@ -40,31 +40,31 @@
       <section
         class="settings-preview"
         aria-labelledby="settings-preview-title">
-        <h2 id="settings-preview-title">Preview</h2>
+        <h2 id="settings-preview-title">Forhåndsvisning</h2>
         <div class="settings-preview-card">
           <div class="assignment-page-header settings-preview-header">
-            <p class="settings-preview-level">Assignment 5</p>
-            <h3 class="settings-preview-title">Loops and decisions</h3>
+            <p class="settings-preview-level">Oppgave 5</p>
+            <h3 class="settings-preview-title">Løkker og valg</h3>
           </div>
 
           <article
             class="settings-reader-preview md-content"
             aria-label="Settings preview">
-            <h2>Plan the program</h2>
+            <h2>Planlegg programmet</h2>
             <p>
-              A program is easier to read when each idea has enough room. First
-              describe the goal, then test one small part at a time.
+              Et program er lettere å lese når koden er forståelig. Det er også
+              viktig å teste små deler om gangen.
             </p>
             <p>
-              Use names that explain the value, such as
-              <code>total_score</code> or <code>current_level</code>.
+              Bruk navn for å forklare verdien, som
+              <code>total_score</code> eller <code>current_level</code>.
             </p>
 
-            <h3>Try the loop</h3>
+            <h3>Prøv løkken</h3>
             <ul>
-              <li>Start with a short list of values.</li>
-              <li>Print one result before adding more logic.</li>
-              <li>Check the output after every change.</li>
+              <li>Start med en kort liste med verdier.</li>
+              <li>Print ett resultat før du legger til mer logikk.</li>
+              <li>Sjekk det som skrives ut etter hver endring.</li>
             </ul>
 
             <div class="highlight">
@@ -80,28 +80,28 @@
             </div>
 
             <div class="admonition note">
-              <p class="admonition-title">Remember</p>
+              <p class="admonition-title">Husk!</p>
               <p>
-                Keep the loop small at first, then add one new rule when the
-                output looks correct.
+                La løkken være liten først, deretter, legg til mer logikk til
+                løkken ser perfekt ut.
               </p>
             </div>
 
             <table>
               <thead>
                 <tr>
-                  <th>Concept</th>
-                  <th>Example</th>
+                  <th>Konsept</th>
+                  <th>Eksempel</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Loop</td>
-                  <td>Repeats the same step</td>
+                  <td>Løkke</td>
+                  <td>Repeterer samme steg om igjen</td>
                 </tr>
                 <tr>
-                  <td>Condition</td>
-                  <td>Chooses one path</td>
+                  <td>Betingelse</td>
+                  <td>Velger en retning</td>
                 </tr>
               </tbody>
             </table>
@@ -124,7 +124,7 @@
             aria-selected="true"
             aria-controls="settings-panel-main"
             data-settings-tab="main">
-            Main
+            Hovedinnstillinger
           </button>
           <button
             id="settings-tab-text"
@@ -134,7 +134,7 @@
             aria-selected="false"
             aria-controls="settings-panel-text"
             data-settings-tab="text">
-            Text
+            Tekst
           </button>
           <button
             id="settings-tab-focus"
@@ -144,7 +144,7 @@
             aria-selected="false"
             aria-controls="settings-panel-focus"
             data-settings-tab="focus">
-            Focus
+            Fokus
           </button>
           <button
             id="settings-tab-support"
@@ -154,7 +154,7 @@
             aria-selected="false"
             aria-controls="settings-panel-support"
             data-settings-tab="support">
-            Support
+            Støtte
           </button>
         </div>
 
@@ -169,7 +169,7 @@
               <section
                 class="settings-subsection"
                 aria-labelledby="settings-presets-title">
-                <h3 id="settings-presets-title">Presets</h3>
+                <h3 id="settings-presets-title">Forhåndsinnstillinger</h3>
                 <div
                   class="settings-card-grid settings-card-grid--presets"
                   data-settings-render="presets"></div>
@@ -177,7 +177,7 @@
               <section
                 class="settings-subsection"
                 aria-labelledby="settings-theme-title">
-                <h3 id="settings-theme-title">Themes</h3>
+                <h3 id="settings-theme-title">Temaer</h3>
                 <div
                   class="settings-card-grid settings-card-grid--themes"
                   data-settings-render="themes"></div>
@@ -185,10 +185,7 @@
               <section
                 class="settings-subsection"
                 aria-labelledby="settings-accent-title">
-                <h3 id="settings-accent-title">Accent color</h3>
-                <p class="settings-support-copy">
-                  Applies to the Dark and Light themes.
-                </p>
+                <h3 id="settings-accent-title">Aksentfarge</h3>
                 <div
                   class="settings-accent-swatches"
                   data-settings-render="accentColor"></div>
@@ -215,7 +212,7 @@
             </div>
 
             <details class="settings-disclosure">
-              <summary>Advanced text layout</summary>
+              <summary>Avansert tekstoppsett</summary>
               <div class="settings-control-stack">
                 <div data-settings-render="readerLineHeight"></div>
                 <div data-settings-render="readerLetterSpacing"></div>
@@ -246,7 +243,7 @@
               <section
                 class="settings-subsection"
                 aria-labelledby="settings-focus-switches-title">
-                <h3 id="settings-focus-switches-title">Focus switches</h3>
+                <h3 id="settings-focus-switches-title">Fokus switches</h3>
                 <div class="settings-toggle-grid">
                   <div data-settings-render="focusMode"></div>
                   <div data-settings-render="readingRuler"></div>
@@ -265,8 +262,9 @@
             <div class="settings-control-stack">
               <div data-settings-render="rememberPosition"></div>
               <p class="settings-support-copy">
-                Stores your scroll position for each page on this browser, so
-                Piggy can return you close to where you stopped reading.
+                Lagrer skjermposisjonen for hver side på denne nettleseren.
+                Dette gjør at Piggy vil returnere til der du var når du sluttet
+                å lese.
               </p>
             </div>
           </section>

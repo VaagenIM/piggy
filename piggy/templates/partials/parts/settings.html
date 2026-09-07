@@ -5,10 +5,10 @@
   id="settings-button"
   class="piggy-button piggy-button--m site-nav-menu-button site-settings-button{% if is_settings_page %}site-settings-button--back{% endif %}"
   href="#settings"
-  data-settings-open-label="Settings"
-  data-settings-close-label="Back"
-  data-settings-open-title="Settings"
-  data-settings-close-title="Back to page"
+  data-settings-open-label="Innstillinger"
+  data-settings-close-label="Tilbake"
+  data-settings-open-title="Innstillinger"
+  data-settings-close-title="Tilbake til siden"
   title="{{ 'Back to page' if is_settings_page else 'Settings' }}"
   aria-label="{{ 'Back to page' if is_settings_page else 'Settings' }}">
   <svg
@@ -29,6 +29,6 @@
     </g>
   </svg>
   <span class="site-settings-button-label">
-    {{ "Back" if is_settings_page else "Settings" }}
+    {{ "Tilbake" if is_settings_page else "Innstillinger" }}
   </span>
 </a>
