@@ -1,0 +1,548 @@
+# English translations for Piggy.
+# Copyright (C) 2026 VaagenIM
+# This file is distributed under the same license as the Piggy project.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Piggy 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/VaagenIM/piggy/issues\n"
+"POT-Creation-Date: 2026-09-07 13:53+0200\n"
+"PO-Revision-Date: 2026-09-07 13:30+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: piggy/app.py:211 piggy/caching.py:114 piggy/caching.py:201
+msgid "Assignment not found"
+msgstr "Assignment not found"
+
+#: piggy/caching.py:122
+msgid "Error: Could not render assignment"
+msgstr "Error: Could not render assignment"
+
+#: piggy/caching.py:187
+msgid "Page not found"
+msgstr "Page not found"
+
+#: piggy/js_i18n.py:15 piggy/js_i18n.py:33 piggy/js_i18n.py:38
+#: piggy/js_i18n.py:48 piggy/js_i18n.py:88 piggy/js_i18n.py:95
+#: piggy/js_i18n.py:100 piggy/js_i18n.py:105 piggy/js_i18n.py:113
+msgid "Standard"
+msgstr "Standard"
+
+#: piggy/js_i18n.py:15
+msgid "Standard utseende på piggy"
+msgstr "Standard appearance for piggy"
+
+#: piggy/js_i18n.py:16
+msgid "Balansert"
+msgstr "Balanced"
+
+#: piggy/js_i18n.py:16
+msgid "Komfortabel med moderne tekst"
+msgstr "Comfortable with modern text"
+
+#: piggy/js_i18n.py:18 piggy/js_i18n.py:51 piggy/js_i18n.py:52
+msgid "Dysleksivennlig"
+msgstr "Dyslexia friendly"
+
+#: piggy/js_i18n.py:19
+msgid "Mer mellomrom og en vennligere form"
+msgstr "More spacing and a friendlier shape"
+
+#: piggy/js_i18n.py:21
+msgid "Nedsatt syn"
+msgstr "Low vision"
+
+#: piggy/js_i18n.py:21
+msgid "Stor tekst og sterke kontraster"
+msgstr "Large text and strong contrasts"
+
+#: piggy/js_i18n.py:23
+msgid "Prosjektor"
+msgstr "Projector"
+
+#: piggy/js_i18n.py:24
+msgid "For å vises på skjerm i klasserommet"
+msgstr "For display on a classroom screen"
+
+#: piggy/js_i18n.py:26
+msgid "Lav blending"
+msgstr "Low glare"
+
+#: piggy/js_i18n.py:26
+msgid "Dempede farger og mindre bevegelse"
+msgstr "Muted colors and less motion"
+
+#: piggy/js_i18n.py:27 piggy/templates/partials/parts/settings_content.html:150
+msgid "Fokus"
+msgstr "Focus"
+
+#: piggy/js_i18n.py:27
+msgid "Stille side med en smal leser"
+msgstr "A quiet page with a narrow reader"
+
+#: piggy/js_i18n.py:28 piggy/js_i18n.py:89 piggy/js_i18n.py:106
+msgid "Kompakt"
+msgstr "Compact"
+
+#: piggy/js_i18n.py:28
+msgid "Tett visning"
+msgstr "Dense layout"
+
+#: piggy/js_i18n.py:29
+msgid "Tilfeldig"
+msgstr "Randomized"
+
+#: piggy/js_i18n.py:29
+msgid "Gjør alt tilfeldig"
+msgstr "Randomizes everything"
+
+#: piggy/js_i18n.py:30
+msgid "Egendefinert"
+msgstr "Custom"
+
+#: piggy/js_i18n.py:30
+msgid "Dine nåværende innstillinger"
+msgstr "Your current settings"
+
+#: piggy/js_i18n.py:34
+msgid "Myk"
+msgstr "Soft"
+
+#: piggy/js_i18n.py:35
+msgid "Sterke"
+msgstr "Strong"
+
+#: piggy/js_i18n.py:39
+msgid "Rosé"
+msgstr "Rose"
+
+#: piggy/js_i18n.py:40
+msgid "Grønn"
+msgstr "Green"
+
+#: piggy/js_i18n.py:41
+msgid "Rav"
+msgstr "Amber"
+
+#: piggy/js_i18n.py:42
+msgid "Fiolett"
+msgstr "Violet"
+
+#: piggy/js_i18n.py:43
+msgid "Blågrønn"
+msgstr "Teal"
+
+#: piggy/js_i18n.py:44
+msgid "Crimson"
+msgstr "Crimson"
+
+#: piggy/js_i18n.py:45
+msgid "Lime"
+msgstr "Lime"
+
+#: piggy/js_i18n.py:49
+msgid "Lesbare bokstaver"
+msgstr "Readable letterforms"
+
+#: piggy/js_i18n.py:50
+msgid "Tekst med mye mellomrom"
+msgstr "Text with generous spacing"
+
+#: piggy/js_i18n.py:53
+msgid "Rund skrifttype"
+msgstr "Rounded typeface"
+
+#: piggy/js_i18n.py:54
+msgid "Humanist sans"
+msgstr "Humanist sans"
+
+#: piggy/js_i18n.py:55
+msgid "Myk og rund skrifttype"
+msgstr "Soft, rounded typeface"
+
+#: piggy/js_i18n.py:56 piggy/js_i18n.py:70 piggy/js_i18n.py:71
+#: piggy/js_i18n.py:118 piggy/js_i18n.py:165
+msgid "System"
+msgstr "System"
+
+#: piggy/js_i18n.py:57
+msgid "Bred skrift"
+msgstr "Wide typeface"
+
+#: piggy/js_i18n.py:58 piggy/js_i18n.py:59
+msgid "Serif skrift"
+msgstr "Serif typeface"
+
+#: piggy/js_i18n.py:62
+msgid "Default"
+msgstr "Default"
+
+#: piggy/js_i18n.py:63
+msgid "Lesbare symboler"
+msgstr "Readable symbols"
+
+#: piggy/js_i18n.py:64
+msgid "Ligaturer"
+msgstr "Ligatures"
+
+#: piggy/js_i18n.py:65
+msgid "Clean"
+msgstr "Clean"
+
+#: piggy/js_i18n.py:66
+msgid "Utvikler"
+msgstr "Developer"
+
+#: piggy/js_i18n.py:67
+msgid "Light"
+msgstr "Light"
+
+#: piggy/js_i18n.py:68
+msgid "Klassisk"
+msgstr "Classic"
+
+#: piggy/js_i18n.py:69
+msgid "Teknisk"
+msgstr "Technical"
+
+#: piggy/js_i18n.py:74
+msgid "Bitteliten"
+msgstr "Tiny"
+
+#: piggy/js_i18n.py:75
+msgid "Mindre"
+msgstr "Smaller"
+
+#: piggy/js_i18n.py:76
+msgid "Liten"
+msgstr "Small"
+
+#: piggy/js_i18n.py:77
+msgid "Vanlig"
+msgstr "Normal"
+
+#: piggy/js_i18n.py:78
+msgid "Stor"
+msgstr "Large"
+
+#: piggy/js_i18n.py:79
+msgid "Større"
+msgstr "Larger"
+
+#: piggy/js_i18n.py:80
+msgid "Massiv"
+msgstr "Huge"
+
+#: piggy/js_i18n.py:81
+msgid "Gigantisk"
+msgstr "Gigantic"
+
+#: piggy/js_i18n.py:84
+msgid "Bare innhold"
+msgstr "Content only"
+
+#: piggy/js_i18n.py:85
+msgid "Innhold og UI"
+msgstr "Content and UI"
+
+#: piggy/js_i18n.py:90 piggy/js_i18n.py:107
+msgid "Behagelig"
+msgstr "Comfortable"
+
+#: piggy/js_i18n.py:91 piggy/js_i18n.py:108
+msgid "Mye mellomrom"
+msgstr "Spacious"
+
+#: piggy/js_i18n.py:92 piggy/js_i18n.py:109
+msgid "Ekstra mellomrom"
+msgstr "Extra spacious"
+
+#: piggy/js_i18n.py:96 piggy/js_i18n.py:101 piggy/js_i18n.py:114
+msgid "Bred"
+msgstr "Wide"
+
+#: piggy/js_i18n.py:97 piggy/js_i18n.py:102
+msgid "Ekstra bred"
+msgstr "Extra wide"
+
+#: piggy/js_i18n.py:112
+msgid "Smal"
+msgstr "Narrow"
+
+#: piggy/js_i18n.py:115
+msgid "Full bredde"
+msgstr "Full width"
+
+#: piggy/js_i18n.py:119
+msgid "Lite"
+msgstr "Reduced"
+
+#: piggy/js_i18n.py:120
+msgid "Animert"
+msgstr "Animated"
+
+#: piggy/js_i18n.py:123 piggy/js_i18n.py:127 piggy/js_i18n.py:131
+msgid "Av"
+msgstr "Off"
+
+#: piggy/js_i18n.py:124 piggy/js_i18n.py:128 piggy/js_i18n.py:132
+msgid "På"
+msgstr "On"
+
+#: piggy/js_i18n.py:135
+msgid "Kontrast"
+msgstr "Contrast"
+
+#: piggy/js_i18n.py:136
+msgid "Skrifttype"
+msgstr "Font"
+
+#: piggy/js_i18n.py:137
+msgid "Skrifttype for kode"
+msgstr "Code font"
+
+#: piggy/js_i18n.py:138
+msgid "Tekststørrelse"
+msgstr "Text size"
+
+#: piggy/js_i18n.py:139
+msgid "Tekststørrelse omfang"
+msgstr "Text size scope"
+
+#: piggy/js_i18n.py:140
+msgid "Linjehøyde"
+msgstr "Line height"
+
+#: piggy/js_i18n.py:141
+msgid "Bokstavavstand"
+msgstr "Letter spacing"
+
+#: piggy/js_i18n.py:142
+msgid "Ordavstand"
+msgstr "Word spacing"
+
+#: piggy/js_i18n.py:143
+msgid "Paragrafavstand"
+msgstr "Paragraph spacing"
+
+#: piggy/js_i18n.py:144
+msgid "Innholdsbredde"
+msgstr "Content width"
+
+#: piggy/js_i18n.py:145
+msgid "Fokus modus"
+msgstr "Focus mode"
+
+#: piggy/js_i18n.py:146
+msgid "Linjal"
+msgstr "Ruler"
+
+#: piggy/js_i18n.py:147
+msgid "Bevegelse og effekter"
+msgstr "Motion and effects"
+
+#: piggy/js_i18n.py:148
+msgid "Husk posisjon"
+msgstr "Remember position"
+
+#: piggy/js_i18n.py:151
+msgid "Demp navigasjonsmenyen i fokus modus"
+msgstr "Dim the navigation menu in focus mode"
+
+#: piggy/js_i18n.py:152
+msgid "Bruk tekststørrelse på UI"
+msgstr "Apply text size to the UI"
+
+#: piggy/js_i18n.py:153
+msgid "Vis linjal"
+msgstr "Show ruler"
+
+#: piggy/js_i18n.py:154
+msgid "Husk hvor du stopte å lese"
+msgstr "Remember where you stopped reading"
+
+#: piggy/js_i18n.py:157
+msgid "Line one"
+msgstr "Line one"
+
+#: piggy/js_i18n.py:158
+msgid "Line two"
+msgstr "Line two"
+
+#: piggy/js_i18n.py:159
+msgid "Spacing"
+msgstr "Spacing"
+
+#: piggy/js_i18n.py:160
+msgid "Word spacing"
+msgstr "Word spacing"
+
+#: piggy/js_i18n.py:161
+msgid "First paragraph"
+msgstr "First paragraph"
+
+#: piggy/js_i18n.py:162
+msgid "Second paragraph"
+msgstr "Second paragraph"
+
+#: piggy/js_i18n.py:163
+msgid "Quiet"
+msgstr "Quiet"
+
+#: piggy/js_i18n.py:164
+msgid "Animated"
+msgstr "Animated"
+
+#: piggy/templates/error.html:7
+msgid "Error"
+msgstr "Error"
+
+#: piggy/templates/partials/parts/search_overlay.html:7
+msgid "Søk"
+msgstr "Search"
+
+#: piggy/templates/partials/parts/search_overlay.html:29
+msgid "Søk i oppgaver…"
+msgstr "Search assignments…"
+
+#: piggy/templates/partials/parts/search_overlay.html:32
+msgid "Søk i oppgaver"
+msgstr "Search assignments"
+
+#: piggy/templates/partials/parts/search_overlay.html:37
+msgid "Lukk søk"
+msgstr "Close search"
+
+#: piggy/templates/partials/parts/search_overlay.html:39
+msgid "Lukk"
+msgstr "Close"
+
+#: piggy/templates/partials/parts/search_overlay.html:46
+msgid "Søkeresultater"
+msgstr "Search results"
+
+#: piggy/templates/partials/parts/settings.html:8
+#: piggy/templates/partials/parts/settings.html:10
+#: piggy/templates/partials/parts/settings.html:12
+#: piggy/templates/partials/parts/settings.html:13
+#: piggy/templates/partials/parts/settings.html:32
+#: piggy/templates/partials/parts/settings_content.html:10
+msgid "Innstillinger"
+msgstr "Settings"
+
+#: piggy/templates/partials/parts/settings.html:9
+#: piggy/templates/partials/parts/settings.html:32
+msgid "Tilbake"
+msgstr "Back"
+
+#: piggy/templates/partials/parts/settings.html:11
+#: piggy/templates/partials/parts/settings.html:12
+#: piggy/templates/partials/parts/settings.html:13
+#: piggy/templates/partials/parts/settings_content.html:33
+msgid "Tilbake til siden"
+msgstr "Back to the page"
+
+#: piggy/templates/partials/parts/settings_content.html:17
+msgid "Tilbakestill"
+msgstr "Reset"
+
+#: piggy/templates/partials/parts/settings_content.html:43
+msgid "Forhåndsvisning"
+msgstr "Preview"
+
+#: piggy/templates/partials/parts/settings_content.html:46
+msgid "Oppgave 5"
+msgstr "Assignment 5"
+
+#: piggy/templates/partials/parts/settings_content.html:47
+msgid "Løkker og valg"
+msgstr "Loops and choices"
+
+#: piggy/templates/partials/parts/settings_content.html:52
+msgid "Settings preview"
+msgstr "Settings preview"
+
+#: piggy/templates/partials/parts/settings_content.html:53
+msgid "Planlegg programmet"
+msgstr "Plan the program"
+
+#: piggy/templates/partials/parts/settings_content.html:55
+msgid "Et program er lettere å lese når koden er forståelig. Det er også viktig å teste små deler om gangen."
+msgstr "A program is easier to read when the code is understandable. It's also important to test small parts at a time."
+
+#: piggy/templates/partials/parts/settings_content.html:58
+msgid "Bruk navn for å forklare verdien, som <code>total_score</code> eller <code>current_level</code>."
+msgstr "Use names to explain the value, such as <code>total_score</code> or <code>current_level</code>."
+
+#: piggy/templates/partials/parts/settings_content.html:64
+msgid "Prøv løkken"
+msgstr "Try the loop"
+
+#: piggy/templates/partials/parts/settings_content.html:66
+msgid "Start med en kort liste med verdier."
+msgstr "Start with a short list of values."
+
+#: piggy/templates/partials/parts/settings_content.html:68
+msgid "Print ett resultat før du legger til mer logikk."
+msgstr "Print one result before adding more logic."
+
+#: piggy/templates/partials/parts/settings_content.html:70
+msgid "Sjekk det som skrives ut etter hver endring."
+msgstr "Check the output after each change."
+
+#: piggy/templates/partials/parts/settings_content.html:121
+msgid "Settings categories"
+msgstr "Settings categories"
+
+#: piggy/templates/partials/parts/settings_content.html:130
+msgid "Hovedinnstillinger"
+msgstr "Main settings"
+
+#: piggy/templates/partials/parts/settings_content.html:140
+msgid "Tekst"
+msgstr "Text"
+
+#: piggy/templates/partials/parts/settings_content.html:160
+msgid "Støtte"
+msgstr "Support"
+
+#: piggy/templates/partials/parts/settings_content.html:176
+#: piggy/templates/partials/parts/settings_content.html:193
+msgid "Nettstedspråk"
+msgstr "Site language"
+
+#: piggy/templates/partials/parts/settings_content.html:225
+msgid "Forhåndsinnstillinger"
+msgstr "Presets"
+
+#: piggy/templates/partials/parts/settings_content.html:234
+msgid "Temaer"
+msgstr "Themes"
+
+#: piggy/templates/partials/parts/settings_content.html:242
+msgid "Aksentfarge"
+msgstr "Accent color"
+
+#: piggy/templates/partials/parts/settings_content.html:269
+msgid "Avansert tekstoppsett"
+msgstr "Advanced text layout"
+
+#: piggy/templates/partials/parts/settings_content.html:291
+msgid "Motion"
+msgstr "Motion"
+
+#: piggy/templates/partials/parts/settings_content.html:301
+msgid "Fokus switches"
+msgstr "Focus switches"
+
+#: piggy/templates/partials/parts/settings_content.html:321
+msgid "Lagrer skjermposisjonen for hver side på denne nettleseren. Dette gjør at Piggy vil returnere til der du var når du sluttet å lese."
+msgstr "Saves your scroll position for each page in this browser. This lets Piggy return you to where you left off reading."
+
