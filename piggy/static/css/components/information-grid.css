@@ -1,12 +1,6 @@
 /************************\
 |* INFORMATION CARD GRID *|
 \************************/
-.information-card-grid-wrapper {
-  grid-template-columns: 2fr;
-  max-width: 100%;
-  padding: 1rem;
-}
-
 .information-card-grid-container {
   display: grid;
   grid-template-columns: 1fr;

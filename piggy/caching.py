@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Callable, Optional
 
 from flask import Response, render_template
+from flask_babel import force_locale, gettext
 from frozendict import deepfreeze
 from turtleconverter import mdfile_to_sections, ConversionError
 
@@ -11,6 +12,7 @@ from piggy import (
     MEDIA_ROUTE,
     AssignmentTemplate,
     PIGGYBANK_FOLDER,
+    DEFAULT_UI_LOCALE,
 )
 from piggy.exceptions import PiggyHTTPException, PiggyErrorException
 from piggy.models import LANGUAGES
@@ -103,13 +105,13 @@ def _mdfile_to_sections_with_retry(path: Path, retries=0) -> dict:
 
 
 @lru_cache_wrapper
-def _render_assignment(p: Path, extra_metadata=None) -> Response:
+def _render_assignment(p: Path, extra_metadata=None, ui_locale: str = DEFAULT_UI_LOCALE) -> Response:
     """Render an assignment from a Path object."""
 
     extra_metadata = dict(extra_metadata or {})
 
     if not p.exists():
-        raise PiggyHTTPException("Assignment not found", status_code=404)
+        raise PiggyHTTPException(gettext("Assignment not found"), status_code=404)
 
     try:
         sections = _mdfile_to_sections_with_retry(p)
@@ -117,7 +119,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
         print("Rendering:", p)
 
     except ConversionError:
-        raise PiggyHTTPException("Error: Could not render assignment", status_code=500)
+        raise PiggyHTTPException(gettext("Error: Could not render assignment"), status_code=500)
 
     lang = ""
     assignment_path = p
@@ -150,22 +152,23 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
     if "title" in sections["meta"]:
         all_metadata["title"] = sections["meta"]["title"]
 
-    render = render_template(
-        AssignmentTemplate.ASSIGNMENT.template,
-        content=sections,
-        meta=all_metadata,
-        current_language=current_language,
-        supported_languages=get_supported_languages(assignment_path=assignment_path),
-        media_abspath=f"/{MEDIA_ROUTE}/{p.parent}",
-        abspath=f"/{ASSIGNMENT_ROUTE}/{p}",
-        **assignment_data,  # Unpack the remaining assignment data from piggymap
-    )
+    with force_locale(ui_locale):
+        render = render_template(
+            AssignmentTemplate.ASSIGNMENT.template,
+            content=sections,
+            meta=all_metadata,
+            current_language=current_language,
+            supported_languages=get_supported_languages(assignment_path=assignment_path),
+            media_abspath=f"/{MEDIA_ROUTE}/{p.parent}",
+            abspath=f"/{ASSIGNMENT_ROUTE}/{p}",
+            **assignment_data,  # Unpack the remaining assignment data from piggymap
+        )
 
     return Response(render, mimetype="text/html", status=200)
 
 
 @lru_cache_wrapper
-def _render_assignment_wildcard(path="", lang="") -> Response:
+def _render_assignment_wildcard(path="", lang="", ui_locale: str = DEFAULT_UI_LOCALE) -> Response:
     """
     Render the webpage for a given path.
 
@@ -181,7 +184,7 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
 
     # If a piggymap segment is not found, raise a 404
     if not segment:
-        raise PiggyHTTPException("Page not found", status_code=404)
+        raise PiggyHTTPException(gettext("Page not found"), status_code=404)
 
     metadata = {**metadata, **get_all_meta_from_path(path, PIGGYMAP)}
 
@@ -195,7 +198,7 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
 
         # If the assignment is not found, raise a 404
         if not path_from_segment:
-            raise PiggyHTTPException("Assignment not found", status_code=404)
+            raise PiggyHTTPException(gettext("Assignment not found"), status_code=404)
 
         path, assignment = str(path_from_segment).rsplit("/", 1)
 
@@ -208,17 +211,20 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
         return _render_assignment(
             Path(f"{path}/{assignment}"),
             extra_metadata=deepfreeze(metadata),
+            ui_locale=ui_locale,
         )
 
     # Render the appropriate template if it is not the final level
-    return Response(
-        render_template(
+    with force_locale(ui_locale):
+        rendered = render_template(
             template_type,
             meta=metadata,
             segment=segment,
             path=path,
             media_abspath=media_abspath,
             abspath=abspath,
-        ),
+        )
+    return Response(
+        rendered,
         200,
     )

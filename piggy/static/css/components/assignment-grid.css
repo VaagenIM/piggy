@@ -1,13 +1,6 @@
 /************************\
 |* ASSIGNMENT CARD GRID *|
 \************************/
-.assignment-card-grid-wrapper {
-  max-width: 100%;
-  padding: 1rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .assignment-card-grid-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -35,10 +28,17 @@
   }
 }
 
+/* medium-large screen (e.g. 1080p monitors) */
+@media (min-width: 1600px) {
+  .assignment-card-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* very large screen */
 @media (min-width: 2240px) {
   .assignment-card-grid-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 

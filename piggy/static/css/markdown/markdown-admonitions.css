@@ -6,33 +6,75 @@
   --piggy-admonition-icon: var(--piggy-text-main);
   --piggy-admonition-border: rgba(255, 255, 255, 0.18);
 
-  /* Note / Info / Tip */
-  --piggy-admonition-note-bg: rgba(0, 188, 212, 0.18);
-  --piggy-admonition-note-title-bg: rgba(0, 188, 212, 0.28);
+  /* Note */
+  --piggy-admonition-note-bg: rgba(68, 138, 255, 0.18);
+  --piggy-admonition-note-title-bg: rgba(68, 138, 255, 0.28);
   --piggy-admonition-note-text: var(--piggy-text-main);
-  --piggy-admonition-note-icon: #00bcd4;
-  --piggy-admonition-note-border: rgba(0, 188, 212, 0.45);
+  --piggy-admonition-note-icon: #448aff;
+  --piggy-admonition-note-border: rgba(68, 138, 255, 0.45);
 
-  /* Success / Question */
+  /* Abstract / Summary / Tldr */
+  --piggy-admonition-abstract-bg: rgba(0, 184, 212, 0.18);
+  --piggy-admonition-abstract-title-bg: rgba(0, 184, 212, 0.28);
+  --piggy-admonition-abstract-text: var(--piggy-text-main);
+  --piggy-admonition-abstract-icon: #00b8d4;
+  --piggy-admonition-abstract-border: rgba(0, 184, 212, 0.45);
+
+  /* Info / Todo */
+  --piggy-admonition-info-bg: rgba(0, 188, 212, 0.18);
+  --piggy-admonition-info-title-bg: rgba(0, 188, 212, 0.28);
+  --piggy-admonition-info-text: var(--piggy-text-main);
+  --piggy-admonition-info-icon: #00bcd4;
+  --piggy-admonition-info-border: rgba(0, 188, 212, 0.45);
+
+  /* Tip / Hint / Important */
+  --piggy-admonition-tip-bg: rgba(0, 191, 165, 0.18);
+  --piggy-admonition-tip-title-bg: rgba(0, 191, 165, 0.28);
+  --piggy-admonition-tip-text: var(--piggy-text-main);
+  --piggy-admonition-tip-icon: #00bfa5;
+  --piggy-admonition-tip-border: rgba(0, 191, 165, 0.45);
+
+  /* Success / Check / Done */
   --piggy-admonition-success-bg: rgba(126, 231, 135, 0.16);
   --piggy-admonition-success-title-bg: rgba(126, 231, 135, 0.26);
   --piggy-admonition-success-text: var(--piggy-text-main);
   --piggy-admonition-success-icon: #7ee787;
   --piggy-admonition-success-border: rgba(126, 231, 135, 0.45);
 
-  /* Warning / Attention */
+  /* Question / Help / FAQ */
+  --piggy-admonition-question-bg: rgba(156, 204, 101, 0.18);
+  --piggy-admonition-question-title-bg: rgba(156, 204, 101, 0.28);
+  --piggy-admonition-question-text: var(--piggy-text-main);
+  --piggy-admonition-question-icon: #9ccc65;
+  --piggy-admonition-question-border: rgba(156, 204, 101, 0.45);
+
+  /* Warning / Caution / Attention */
   --piggy-admonition-warning-bg: rgba(255, 203, 154, 0.18);
   --piggy-admonition-warning-title-bg: rgba(255, 203, 154, 0.3);
   --piggy-admonition-warning-text: var(--piggy-text-main);
   --piggy-admonition-warning-icon: #ffcb9a;
   --piggy-admonition-warning-border: rgba(255, 203, 154, 0.5);
 
-  /* Danger / Failure / Bug */
+  /* Failure / Fail / Missing */
+  --piggy-admonition-failure-bg: rgba(255, 138, 128, 0.18);
+  --piggy-admonition-failure-title-bg: rgba(255, 138, 128, 0.3);
+  --piggy-admonition-failure-text: var(--piggy-text-main);
+  --piggy-admonition-failure-icon: #ff8a80;
+  --piggy-admonition-failure-border: rgba(255, 138, 128, 0.5);
+
+  /* Danger / Error */
   --piggy-admonition-danger-bg: rgba(255, 123, 114, 0.18);
   --piggy-admonition-danger-title-bg: rgba(255, 123, 114, 0.3);
   --piggy-admonition-danger-text: var(--piggy-text-main);
   --piggy-admonition-danger-icon: #ff7b72;
   --piggy-admonition-danger-border: rgba(255, 123, 114, 0.5);
+
+  /* Bug */
+  --piggy-admonition-bug-bg: rgba(240, 98, 146, 0.18);
+  --piggy-admonition-bug-title-bg: rgba(240, 98, 146, 0.3);
+  --piggy-admonition-bug-text: var(--piggy-text-main);
+  --piggy-admonition-bug-icon: #f06292;
+  --piggy-admonition-bug-border: rgba(240, 98, 146, 0.5);
 
   /* Example */
   --piggy-admonition-example-bg: rgba(210, 168, 255, 0.18);
@@ -222,16 +264,8 @@
 |* ADMONITION TYPE MAPPING       *|
 \*********************************/
 
-/* NOTE / INFO / TIP */
-.md-content
-  :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
-  ) {
+/* NOTE */
+.md-content :is(.admonition.note, details.note) {
   --piggy-admonition-bg: var(--piggy-admonition-note-bg);
   --piggy-admonition-title-bg: var(--piggy-admonition-note-title-bg);
   --piggy-admonition-text: var(--piggy-admonition-note-text);
@@ -239,13 +273,59 @@
   --piggy-admonition-border: var(--piggy-admonition-note-border);
 }
 
-/* SUCCESS / QUESTION */
+/* ABSTRACT / SUMMARY / TLDR */
+.md-content
+  :is(
+    .admonition.abstract,
+    details.abstract,
+    .admonition.summary,
+    details.summary,
+    .admonition.tldr,
+    details.tldr
+  ) {
+  --piggy-admonition-bg: var(--piggy-admonition-abstract-bg);
+  --piggy-admonition-title-bg: var(--piggy-admonition-abstract-title-bg);
+  --piggy-admonition-text: var(--piggy-admonition-abstract-text);
+  --piggy-admonition-icon: var(--piggy-admonition-abstract-icon);
+  --piggy-admonition-border: var(--piggy-admonition-abstract-border);
+}
+
+/* INFO / TODO */
+.md-content
+  :is(.admonition.info, details.info, .admonition.todo, details.todo) {
+  --piggy-admonition-bg: var(--piggy-admonition-info-bg);
+  --piggy-admonition-title-bg: var(--piggy-admonition-info-title-bg);
+  --piggy-admonition-text: var(--piggy-admonition-info-text);
+  --piggy-admonition-icon: var(--piggy-admonition-info-icon);
+  --piggy-admonition-border: var(--piggy-admonition-info-border);
+}
+
+/* TIP / HINT / IMPORTANT */
+.md-content
+  :is(
+    .admonition.tip,
+    details.tip,
+    .admonition.hint,
+    details.hint,
+    .admonition.important,
+    details.important
+  ) {
+  --piggy-admonition-bg: var(--piggy-admonition-tip-bg);
+  --piggy-admonition-title-bg: var(--piggy-admonition-tip-title-bg);
+  --piggy-admonition-text: var(--piggy-admonition-tip-text);
+  --piggy-admonition-icon: var(--piggy-admonition-tip-icon);
+  --piggy-admonition-border: var(--piggy-admonition-tip-border);
+}
+
+/* SUCCESS / CHECK / DONE */
 .md-content
   :is(
     .admonition.success,
     details.success,
-    .admonition.question,
-    details.question
+    .admonition.check,
+    details.check,
+    .admonition.done,
+    details.done
   ) {
   --piggy-admonition-bg: var(--piggy-admonition-success-bg);
   --piggy-admonition-title-bg: var(--piggy-admonition-success-title-bg);
@@ -254,11 +334,30 @@
   --piggy-admonition-border: var(--piggy-admonition-success-border);
 }
 
-/* WARNING / ATTENTION */
+/* QUESTION / HELP / FAQ */
+.md-content
+  :is(
+    .admonition.question,
+    details.question,
+    .admonition.help,
+    details.help,
+    .admonition.faq,
+    details.faq
+  ) {
+  --piggy-admonition-bg: var(--piggy-admonition-question-bg);
+  --piggy-admonition-title-bg: var(--piggy-admonition-question-title-bg);
+  --piggy-admonition-text: var(--piggy-admonition-question-text);
+  --piggy-admonition-icon: var(--piggy-admonition-question-icon);
+  --piggy-admonition-border: var(--piggy-admonition-question-border);
+}
+
+/* WARNING / CAUTION / ATTENTION */
 .md-content
   :is(
     .admonition.warning,
     details.warning,
+    .admonition.caution,
+    details.caution,
     .admonition.attention,
     details.attention
   ) {
@@ -269,21 +368,40 @@
   --piggy-admonition-border: var(--piggy-admonition-warning-border);
 }
 
-/* DANGER / FAILURE / BUG */
+/* FAILURE / FAIL / MISSING */
 .md-content
   :is(
-    .admonition.danger,
-    details.danger,
     .admonition.failure,
     details.failure,
-    .admonition.bug,
-    details.bug
+    .admonition.fail,
+    details.fail,
+    .admonition.missing,
+    details.missing
   ) {
+  --piggy-admonition-bg: var(--piggy-admonition-failure-bg);
+  --piggy-admonition-title-bg: var(--piggy-admonition-failure-title-bg);
+  --piggy-admonition-text: var(--piggy-admonition-failure-text);
+  --piggy-admonition-icon: var(--piggy-admonition-failure-icon);
+  --piggy-admonition-border: var(--piggy-admonition-failure-border);
+}
+
+/* DANGER / ERROR */
+.md-content
+  :is(.admonition.danger, details.danger, .admonition.error, details.error) {
   --piggy-admonition-bg: var(--piggy-admonition-danger-bg);
   --piggy-admonition-title-bg: var(--piggy-admonition-danger-title-bg);
   --piggy-admonition-text: var(--piggy-admonition-danger-text);
   --piggy-admonition-icon: var(--piggy-admonition-danger-icon);
   --piggy-admonition-border: var(--piggy-admonition-danger-border);
+}
+
+/* BUG */
+.md-content :is(.admonition.bug, details.bug) {
+  --piggy-admonition-bg: var(--piggy-admonition-bug-bg);
+  --piggy-admonition-title-bg: var(--piggy-admonition-bug-title-bg);
+  --piggy-admonition-text: var(--piggy-admonition-bug-text);
+  --piggy-admonition-icon: var(--piggy-admonition-bug-icon);
+  --piggy-admonition-border: var(--piggy-admonition-bug-border);
 }
 
 /* EXAMPLE */
@@ -295,8 +413,9 @@
   --piggy-admonition-border: var(--piggy-admonition-example-border);
 }
 
-/* QUOTE */
-.md-content :is(.admonition.quote, details.quote) {
+/* QUOTE / CITE */
+.md-content
+  :is(.admonition.quote, details.quote, .admonition.cite, details.cite) {
   --piggy-admonition-bg: var(--piggy-admonition-quote-bg);
   --piggy-admonition-title-bg: var(--piggy-admonition-quote-title-bg);
   --piggy-admonition-text: var(--piggy-admonition-quote-text);

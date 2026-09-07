@@ -1,9 +1,10 @@
 /* METADATA
-id: 4
+id: 6
 name: High Contrast
 description: High contrast theme for maximum visibility.
 type: dark
 category: accessible
+group: regular
 tags: high contrast, visibility, accessible
 preview.background: #000000
 preview.surface: #000000
@@ -167,8 +168,26 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-admonition-note-bg: #000000;
   --piggy-admonition-note-title-bg: #000000;
   --piggy-admonition-note-text: #ffffff;
-  --piggy-admonition-note-icon: #00ffff;
-  --piggy-admonition-note-border: #00ffff;
+  --piggy-admonition-note-icon: #4d94ff;
+  --piggy-admonition-note-border: #4d94ff;
+
+  --piggy-admonition-abstract-bg: #000000;
+  --piggy-admonition-abstract-title-bg: #000000;
+  --piggy-admonition-abstract-text: #ffffff;
+  --piggy-admonition-abstract-icon: #00e6cc;
+  --piggy-admonition-abstract-border: #00e6cc;
+
+  --piggy-admonition-info-bg: #000000;
+  --piggy-admonition-info-title-bg: #000000;
+  --piggy-admonition-info-text: #ffffff;
+  --piggy-admonition-info-icon: #00bfff;
+  --piggy-admonition-info-border: #00bfff;
+
+  --piggy-admonition-tip-bg: #000000;
+  --piggy-admonition-tip-title-bg: #000000;
+  --piggy-admonition-tip-text: #ffffff;
+  --piggy-admonition-tip-icon: #00e676;
+  --piggy-admonition-tip-border: #00e676;
 
   --piggy-admonition-success-bg: #000000;
   --piggy-admonition-success-title-bg: #000000;
@@ -176,11 +195,23 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-admonition-success-icon: #00ff00;
   --piggy-admonition-success-border: #00ff00;
 
+  --piggy-admonition-question-bg: #000000;
+  --piggy-admonition-question-title-bg: #000000;
+  --piggy-admonition-question-text: #ffffff;
+  --piggy-admonition-question-icon: #ccff00;
+  --piggy-admonition-question-border: #ccff00;
+
   --piggy-admonition-warning-bg: #000000;
   --piggy-admonition-warning-title-bg: #000000;
   --piggy-admonition-warning-text: #ffffff;
   --piggy-admonition-warning-icon: #ffff00;
   --piggy-admonition-warning-border: #ffff00;
+
+  --piggy-admonition-failure-bg: #000000;
+  --piggy-admonition-failure-title-bg: #000000;
+  --piggy-admonition-failure-text: #ffffff;
+  --piggy-admonition-failure-icon: #ff8800;
+  --piggy-admonition-failure-border: #ff8800;
 
   --piggy-admonition-danger-bg: #000000;
   --piggy-admonition-danger-title-bg: #000000;
@@ -188,11 +219,17 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-admonition-danger-icon: #ff0000;
   --piggy-admonition-danger-border: #ff0000;
 
+  --piggy-admonition-bug-bg: #000000;
+  --piggy-admonition-bug-title-bg: #000000;
+  --piggy-admonition-bug-text: #ffffff;
+  --piggy-admonition-bug-icon: #ff2b7f;
+  --piggy-admonition-bug-border: #ff2b7f;
+
   --piggy-admonition-example-bg: #000000;
   --piggy-admonition-example-title-bg: #000000;
   --piggy-admonition-example-text: #ffffff;
-  --piggy-admonition-example-icon: #ff00ff;
-  --piggy-admonition-example-border: #ff00ff;
+  --piggy-admonition-example-icon: #bb44ff;
+  --piggy-admonition-example-border: #bb44ff;
 
   --piggy-admonition-quote-bg: #000000;
   --piggy-admonition-quote-title-bg: #000000;
@@ -483,67 +520,125 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-table-code-text: #ffffff;
 }
 
-/* NOTE / INFO / TIP */
+/* NOTE */
+[data-theme="high-contrast"] .md-content :is(.admonition.note, details.note) {
+  --piggy-table-admonition-accent: #4d94ff;
+}
+
+/* ABSTRACT / SUMMARY / TLDR */
 [data-theme="high-contrast"]
   .md-content
   :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
+    .admonition.abstract,
+    details.abstract,
+    .admonition.summary,
+    details.summary,
+    .admonition.tldr,
+    details.tldr
   ) {
-  --piggy-table-admonition-accent: #00ffff;
+  --piggy-table-admonition-accent: #00e6cc;
 }
 
-/* SUCCESS / QUESTION */
+/* INFO / TODO */
+[data-theme="high-contrast"]
+  .md-content
+  :is(.admonition.info, details.info, .admonition.todo, details.todo) {
+  --piggy-table-admonition-accent: #00bfff;
+}
+
+/* TIP / HINT / IMPORTANT */
+[data-theme="high-contrast"]
+  .md-content
+  :is(
+    .admonition.tip,
+    details.tip,
+    .admonition.hint,
+    details.hint,
+    .admonition.important,
+    details.important
+  ) {
+  --piggy-table-admonition-accent: #00e676;
+}
+
+/* SUCCESS / CHECK / DONE */
 [data-theme="high-contrast"]
   .md-content
   :is(
     .admonition.success,
     details.success,
-    .admonition.question,
-    details.question
+    .admonition.check,
+    details.check,
+    .admonition.done,
+    details.done
   ) {
   --piggy-table-admonition-accent: #00ff00;
 }
 
-/* WARNING / ATTENTION */
+/* QUESTION / HELP / FAQ */
+[data-theme="high-contrast"]
+  .md-content
+  :is(
+    .admonition.question,
+    details.question,
+    .admonition.help,
+    details.help,
+    .admonition.faq,
+    details.faq
+  ) {
+  --piggy-table-admonition-accent: #ccff00;
+}
+
+/* WARNING / CAUTION / ATTENTION */
 [data-theme="high-contrast"]
   .md-content
   :is(
     .admonition.warning,
     details.warning,
+    .admonition.caution,
+    details.caution,
     .admonition.attention,
     details.attention
   ) {
   --piggy-table-admonition-accent: #ffff00;
 }
 
-/* DANGER / FAILURE / BUG */
+/* FAILURE / FAIL / MISSING */
 [data-theme="high-contrast"]
   .md-content
   :is(
-    .admonition.danger,
-    details.danger,
     .admonition.failure,
     details.failure,
-    .admonition.bug,
-    details.bug
+    .admonition.fail,
+    details.fail,
+    .admonition.missing,
+    details.missing
   ) {
+  --piggy-table-admonition-accent: #ff8800;
+}
+
+/* DANGER / ERROR */
+[data-theme="high-contrast"]
+  .md-content
+  :is(.admonition.danger, details.danger, .admonition.error, details.error) {
   --piggy-table-admonition-accent: #ff0000;
+}
+
+/* BUG */
+[data-theme="high-contrast"] .md-content :is(.admonition.bug, details.bug) {
+  --piggy-table-admonition-accent: #ff2b7f;
 }
 
 /* EXAMPLE */
 [data-theme="high-contrast"]
   .md-content
   :is(.admonition.example, details.example) {
-  --piggy-table-admonition-accent: #ff00ff;
+  --piggy-table-admonition-accent: #bb44ff;
 }
 
-/* QUOTE */
-[data-theme="high-contrast"] .md-content :is(.admonition.quote, details.quote) {
+/* QUOTE / CITE */
+[data-theme="high-contrast"]
+  .md-content
+  :is(.admonition.quote, details.quote, .admonition.cite, details.cite) {
   --piggy-table-admonition-accent: #ffffff;
 }
 

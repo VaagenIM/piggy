@@ -3,13 +3,13 @@
 {{
   card(
     abspath = abspath,
-    item = item,
+    item = item if data.data|length > 1 else item ~ "/" ~ (data.data.keys()|list)[0],
     title = data.meta.name,
     level_count = data.data|length,
     description = data.meta.description,
     thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." ~ img_fmt ~ "?title=" ~ data.meta.name,
     thumbnail_alt = "Header image for " ~ data.meta.name,
-    extra_classes = 'card-assignment card-align-assignment',
+    extra_classes = 'card-assignment',
     difficulty = data.meta.difficulty,
     tags = data.meta.tags,
     card_type = 'assignment',

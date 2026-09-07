@@ -1,6 +1,31 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ ui_locale }}">
   <head>
+    <!-- prettier-ignore-start -->
+    <script>
+      (function () {
+        try {
+          var STORAGE_KEY = 'piggy.siteLanguage';
+          var GUARD_KEY = 'piggy.siteLanguageSyncAttempted';
+          var supported = {{ supported_ui_locales | tojson }};
+          var serverLocale = {{ ui_locale | tojson }};
+          var stored = window.localStorage.getItem(STORAGE_KEY);
+
+          if (stored && supported.indexOf(stored) !== -1 && stored !== serverLocale) {
+            if (!window.sessionStorage.getItem(GUARD_KEY)) {
+              window.sessionStorage.setItem(GUARD_KEY, '1');
+              document.cookie = 'ui_locale=' + stored + '; path=/; max-age=31536000; samesite=lax';
+              window.location.reload();
+            }
+          } else {
+            window.sessionStorage.removeItem(GUARD_KEY);
+          }
+        } catch (e) {
+          // localStorage/sessionStorage/cookies unavailable - fall back to the server-selected locale.
+        }
+      })();
+    </script>
+    <!-- prettier-ignore-end -->
     {% block head %}
       {% include "partials/head.html" | safe %}
     {% endblock %}

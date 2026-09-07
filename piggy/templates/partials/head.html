@@ -8,6 +8,7 @@
 <!-- prettier-ignore-start -->
 <script>
   window.PIGGY_THEMES = {{ themes | tojson }};
+  window.PIGGY_I18N = {{ js_i18n | tojson }};
 </script>
 <!-- prettier-ignore-end -->
 
@@ -41,6 +42,9 @@
   defer></script>
 <script
   src="{{ url_for('static', filename='js/settings-page.js') }}"
+  defer></script>
+<script
+  src="{{ url_for('static', filename='js/site-language.js') }}"
   defer></script>
 <script
   src="{{ url_for('static', filename='js/reader-runtime.js') }}"

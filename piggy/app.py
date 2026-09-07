@@ -4,15 +4,28 @@ from pathlib import Path
 from urllib.parse import quote, urlsplit
 
 from flask import Flask, send_file, request, Blueprint, render_template, redirect
+from flask_babel import Babel, force_locale, get_locale, gettext
 from flask_squeeze import Squeeze
 from jinja2 import ChoiceLoader, FileSystemLoader
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from piggy import ASSIGNMENT_ROUTE, MEDIA_ROUTE, AssignmentTemplate, STATIC_FONTS_PATHS, IMG_FMT, PIGGYBANK_FOLDER
+from piggy import (
+    ASSIGNMENT_ROUTE,
+    MEDIA_ROUTE,
+    AssignmentTemplate,
+    STATIC_FONTS_PATHS,
+    IMG_FMT,
+    PIGGYBANK_FOLDER,
+    SUPPORTED_UI_LOCALES,
+    DEFAULT_UI_LOCALE,
+    UI_LOCALE_DISPLAY_KEY,
+)
 from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
+from piggy.js_i18n import build_js_i18n
+from piggy.models import LANGUAGES
 from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
 from piggy.utils import (
     normalize_path_to_str,
@@ -21,6 +34,7 @@ from piggy.utils import (
     startup_tasks,
     resolve_image_filename,
     get_mimetype,
+    get_ui_locale,
 )
 
 # Ensure the working directory is the root of the project
@@ -33,12 +47,16 @@ os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
 def create_app(debug: bool = False) -> Flask:
     app = Flask(__name__, static_folder="static")
 
+    app.jinja_options["autoescape"] = False
+
+    Babel(app, default_locale=DEFAULT_UI_LOCALE, locale_selector=get_ui_locale)
+    app.jinja_env.policies["ext.i18n.trimmed"] = True
+
     Squeeze().init_app(app)
 
     # TODO: add cache time to env (we use nginx caching for prod)
     default_cache_ttl = 86400 * 30 if debug else None  # 30 days
     app.config["SEND_FILE_MAX_AGE_DEFAULT"] = default_cache_ttl
-    app.jinja_options["autoescape"] = False
 
     app.debug = debug
 
@@ -70,6 +88,12 @@ def create_app(debug: bool = False) -> Flask:
             "themes": get_themes(),
             "debug": app.debug,
             "static_fonts_paths": STATIC_FONTS_PATHS,
+            "ui_locale": str(get_locale()),
+            "supported_ui_locales": SUPPORTED_UI_LOCALES,
+            "ui_locale_display": {
+                code: LANGUAGES.get(content_code, {}) for code, content_code in UI_LOCALE_DISPLAY_KEY.items()
+            },
+            "js_i18n": build_js_i18n(),
         }
 
     @app.template_filter("sort_by_level")
@@ -125,10 +149,14 @@ def create_app(debug: bool = False) -> Flask:
         # Used to get the name of the template from the index via a path (breadcrumbs)
         return AssignmentTemplate.get_template_name_from_index(i - 1)
 
-    @app.route("/")
     @lru_cache_wrapper
+    def _cached_index(ui_locale: str):
+        with force_locale(ui_locale):
+            return render_template("index.html")
+
+    @app.route("/")
     def index():
-        return render_template("index.html")
+        return _cached_index(get_ui_locale())
 
     def sanitize_internal_return_path(value):
         if not value or not value.startswith("/") or value.startswith("//"):
@@ -160,24 +188,25 @@ def create_app(debug: bool = False) -> Flask:
 
     @assignment_routes.route("/<path:path>")
     @assignment_routes.route("/")
-    @lru_cache_wrapper
     def get_assignment_wildcard(path="", lang=""):
         path = path.strip("/")
         path = normalize_path_to_str(path, replace_spaces=True)
 
         # If we are over the final level (assignment), raise a 404
         if len(path.split("/")) > AssignmentTemplate.ASSIGNMENT.index:
-            raise PiggyHTTPException("Assignment not found", status_code=404)
+            raise PiggyHTTPException(gettext("Assignment not found"), status_code=404)
 
         # If we are at the final level (assignment), get lang from the cookies (valid requests only)
         if len(path.split("/")) == AssignmentTemplate.ASSIGNMENT.index and request and not lang:
             lang = request.cookies.get("lang", "")  # "" = default language (Norwegian
 
+        ui_locale = get_ui_locale()
+
         # Render the appropriate template for the current level
         try:
-            return _render_assignment_wildcard(path, lang=lang)
+            return _render_assignment_wildcard(path, lang=lang, ui_locale=ui_locale)
         except PiggyHTTPException:
-            return _render_assignment_wildcard(path, lang="")
+            return _render_assignment_wildcard(path, lang="", ui_locale=ui_locale)
 
     @assignment_routes.route("/<path:path>/lang/<lang>")
     @assignment_routes.route("/<path:path>/lang/")
@@ -198,8 +227,6 @@ def create_app(debug: bool = False) -> Flask:
         #       (This fn cannot be cached as it handles files)
 
         if ["lang", "attachments"] == request.path.split("/")[-3:-1]:
-            # If a language is specified, remove it from the wildcard (+ the assignment name)
-            # This only happens when the language is specified in the URL and not via cookies
             wildcard = wildcard.rsplit("/", 2)[0]
         system_path = get_piggymap_segment_from_path(wildcard, PIGGYMAP)[0].get("system_path", Path())
         if request.path.split("/")[1] == MEDIA_ROUTE:

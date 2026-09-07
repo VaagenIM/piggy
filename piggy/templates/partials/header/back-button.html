@@ -13,7 +13,7 @@
     {% endif %}
     {% set is_final_content_page = path_segments|length == AssignmentTemplate.ASSIGNMENT.index + 1 %}
     {% if levels_data and is_final_content_page %}
-      {% if levels_data.meta.type != "assignment" %}
+      {% if levels_data.meta.type != "assignment" or levels_data.data|length == 1 %}
         {% set back_steps = 2 %}
       {% endif %}
     {% endif %}

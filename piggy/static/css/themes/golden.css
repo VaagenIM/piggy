@@ -4,6 +4,7 @@ name: Golden
 description: A gold-on-onyx theme. (Gonna be, gonna be golden!)
 type: dark
 category: animated
+group: animated
 tags: animated, dark, gold
 preview.background: #0b0b0e
 preview.surface: #16161c
@@ -179,11 +180,29 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-code-token-error: #ff6b6b;
 
   /* admonitions */
-  --piggy-admonition-note-bg: #10272a;
-  --piggy-admonition-note-title-bg: #17383c;
+  --piggy-admonition-note-bg: #101f30;
+  --piggy-admonition-note-title-bg: #17304a;
   --piggy-admonition-note-text: #f7e9c5;
-  --piggy-admonition-note-icon: #00bcd4;
-  --piggy-admonition-note-border: #00bcd4;
+  --piggy-admonition-note-icon: #6ea8ff;
+  --piggy-admonition-note-border: #3d6fb0;
+
+  --piggy-admonition-abstract-bg: #10272a;
+  --piggy-admonition-abstract-title-bg: #17383c;
+  --piggy-admonition-abstract-text: #f7e9c5;
+  --piggy-admonition-abstract-icon: #00bcd4;
+  --piggy-admonition-abstract-border: #0e9aab;
+
+  --piggy-admonition-info-bg: #0e2436;
+  --piggy-admonition-info-title-bg: #163a52;
+  --piggy-admonition-info-text: #f7e9c5;
+  --piggy-admonition-info-icon: #4fc3f7;
+  --piggy-admonition-info-border: #2f8fc2;
+
+  --piggy-admonition-tip-bg: #0f2e28;
+  --piggy-admonition-tip-title-bg: #17423a;
+  --piggy-admonition-tip-text: #f7e9c5;
+  --piggy-admonition-tip-icon: #5eead4;
+  --piggy-admonition-tip-border: #2f9e82;
 
   --piggy-admonition-success-bg: #172516;
   --piggy-admonition-success-title-bg: #223720;
@@ -191,17 +210,35 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-admonition-success-icon: #7ee787;
   --piggy-admonition-success-border: #5fae68;
 
+  --piggy-admonition-question-bg: #242a12;
+  --piggy-admonition-question-title-bg: #363d1b;
+  --piggy-admonition-question-text: #f7e9c5;
+  --piggy-admonition-question-icon: #c9e26b;
+  --piggy-admonition-question-border: #92a83f;
+
   --piggy-admonition-warning-bg: #2a2312;
   --piggy-admonition-warning-title-bg: #3e3416;
   --piggy-admonition-warning-text: #ffe7a0;
   --piggy-admonition-warning-icon: #ffd86b;
   --piggy-admonition-warning-border: #d6a149;
 
+  --piggy-admonition-failure-bg: #301c14;
+  --piggy-admonition-failure-title-bg: #472a1d;
+  --piggy-admonition-failure-text: #ffe0d0;
+  --piggy-admonition-failure-icon: #ff9a7a;
+  --piggy-admonition-failure-border: #c96f4a;
+
   --piggy-admonition-danger-bg: #2c1715;
   --piggy-admonition-danger-title-bg: #421f1c;
   --piggy-admonition-danger-text: #ffe0d8;
   --piggy-admonition-danger-icon: #ff6b6b;
   --piggy-admonition-danger-border: #d95a4f;
+
+  --piggy-admonition-bug-bg: #301827;
+  --piggy-admonition-bug-title-bg: #45213a;
+  --piggy-admonition-bug-text: #ffe3ef;
+  --piggy-admonition-bug-icon: #ff8fc4;
+  --piggy-admonition-bug-border: #c2568f;
 
   --piggy-admonition-example-bg: #251b32;
   --piggy-admonition-example-title-bg: #38264d;
@@ -315,16 +352,24 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-table-code-text: var(--piggy-admonition-text);
 }
 
-/* NOTE / INFO / TIP */
+/* NOTE */
+[data-theme="golden"] .md-content :is(.admonition.note, details.note) {
+  --piggy-table-admonition-accent: rgba(110, 168, 255, 0.21);
+  --piggy-table-header-start: rgba(110, 168, 255, 0.068);
+  --piggy-table-header-end: rgba(110, 168, 255, 0.068);
+  --piggy-table-row-hover: rgba(110, 168, 255, 0.082);
+}
+
+/* ABSTRACT / SUMMARY / TLDR */
 [data-theme="golden"]
   .md-content
   :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
+    .admonition.abstract,
+    details.abstract,
+    .admonition.summary,
+    details.summary,
+    .admonition.tldr,
+    details.tldr
   ) {
   --piggy-table-admonition-accent: rgba(0, 188, 212, 0.21);
   --piggy-table-header-start: rgba(0, 188, 212, 0.068);
@@ -332,14 +377,43 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-table-row-hover: rgba(0, 188, 212, 0.082);
 }
 
-/* SUCCESS / QUESTION */
+/* INFO / TODO */
+[data-theme="golden"]
+  .md-content
+  :is(.admonition.info, details.info, .admonition.todo, details.todo) {
+  --piggy-table-admonition-accent: rgba(79, 195, 247, 0.21);
+  --piggy-table-header-start: rgba(79, 195, 247, 0.068);
+  --piggy-table-header-end: rgba(79, 195, 247, 0.068);
+  --piggy-table-row-hover: rgba(79, 195, 247, 0.082);
+}
+
+/* TIP / HINT / IMPORTANT */
+[data-theme="golden"]
+  .md-content
+  :is(
+    .admonition.tip,
+    details.tip,
+    .admonition.hint,
+    details.hint,
+    .admonition.important,
+    details.important
+  ) {
+  --piggy-table-admonition-accent: rgba(94, 234, 212, 0.21);
+  --piggy-table-header-start: rgba(94, 234, 212, 0.068);
+  --piggy-table-header-end: rgba(94, 234, 212, 0.068);
+  --piggy-table-row-hover: rgba(94, 234, 212, 0.082);
+}
+
+/* SUCCESS / CHECK / DONE */
 [data-theme="golden"]
   .md-content
   :is(
     .admonition.success,
     details.success,
-    .admonition.question,
-    details.question
+    .admonition.check,
+    details.check,
+    .admonition.done,
+    details.done
   ) {
   --piggy-table-admonition-accent: rgba(126, 231, 135, 0.19);
   --piggy-table-header-start: rgba(126, 231, 135, 0.062);
@@ -347,12 +421,31 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-table-row-hover: rgba(126, 231, 135, 0.078);
 }
 
-/* WARNING / ATTENTION */
+/* QUESTION / HELP / FAQ */
+[data-theme="golden"]
+  .md-content
+  :is(
+    .admonition.question,
+    details.question,
+    .admonition.help,
+    details.help,
+    .admonition.faq,
+    details.faq
+  ) {
+  --piggy-table-admonition-accent: rgba(201, 226, 107, 0.19);
+  --piggy-table-header-start: rgba(201, 226, 107, 0.062);
+  --piggy-table-header-end: rgba(201, 226, 107, 0.062);
+  --piggy-table-row-hover: rgba(201, 226, 107, 0.078);
+}
+
+/* WARNING / CAUTION / ATTENTION */
 [data-theme="golden"]
   .md-content
   :is(
     .admonition.warning,
     details.warning,
+    .admonition.caution,
+    details.caution,
     .admonition.attention,
     details.attention
   ) {
@@ -362,21 +455,39 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-table-row-hover: rgba(255, 216, 107, 0.09);
 }
 
-/* DANGER / FAILURE / BUG */
+/* FAILURE / FAIL / MISSING */
 [data-theme="golden"]
   .md-content
   :is(
-    .admonition.danger,
-    details.danger,
     .admonition.failure,
     details.failure,
-    .admonition.bug,
-    details.bug
+    .admonition.fail,
+    details.fail,
+    .admonition.missing,
+    details.missing
   ) {
+  --piggy-table-admonition-accent: rgba(255, 154, 122, 0.2);
+  --piggy-table-header-start: rgba(255, 154, 122, 0.065);
+  --piggy-table-header-end: rgba(255, 154, 122, 0.065);
+  --piggy-table-row-hover: rgba(255, 154, 122, 0.08);
+}
+
+/* DANGER / ERROR */
+[data-theme="golden"]
+  .md-content
+  :is(.admonition.danger, details.danger, .admonition.error, details.error) {
   --piggy-table-admonition-accent: rgba(255, 107, 107, 0.2);
   --piggy-table-header-start: rgba(255, 107, 107, 0.065);
   --piggy-table-header-end: rgba(255, 107, 107, 0.065);
   --piggy-table-row-hover: rgba(255, 107, 107, 0.08);
+}
+
+/* BUG */
+[data-theme="golden"] .md-content :is(.admonition.bug, details.bug) {
+  --piggy-table-admonition-accent: rgba(255, 143, 196, 0.2);
+  --piggy-table-header-start: rgba(255, 143, 196, 0.065);
+  --piggy-table-header-end: rgba(255, 143, 196, 0.065);
+  --piggy-table-row-hover: rgba(255, 143, 196, 0.08);
 }
 
 /* EXAMPLE */
@@ -387,8 +498,10 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-table-row-hover: rgba(216, 180, 255, 0.08);
 }
 
-/* QUOTE */
-[data-theme="golden"] .md-content :is(.admonition.quote, details.quote) {
+/* QUOTE / CITE */
+[data-theme="golden"]
+  .md-content
+  :is(.admonition.quote, details.quote, .admonition.cite, details.cite) {
   --piggy-table-admonition-accent: rgba(201, 183, 124, 0.18);
   --piggy-table-header-start: rgba(201, 183, 124, 0.055);
   --piggy-table-header-end: rgba(201, 183, 124, 0.055);

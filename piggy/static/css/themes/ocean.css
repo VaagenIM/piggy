@@ -4,6 +4,7 @@ name: Ocean
 description: A theme inspired by the serene blues and teals of the ocean.
 type: dark
 category: animated
+group: animated
 tags: animated, cool, calm
 preview.background: #002b36
 preview.surface: #002b36
@@ -190,11 +191,35 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-admonition-note-icon: #00e5ff;
   --piggy-admonition-note-border: #00bcd4;
 
+  --piggy-admonition-abstract-bg: #063744;
+  --piggy-admonition-abstract-title-bg: #0a4d5c;
+  --piggy-admonition-abstract-text: #e6fbff;
+  --piggy-admonition-abstract-icon: #29b8cf;
+  --piggy-admonition-abstract-border: #1f96a8;
+
+  --piggy-admonition-info-bg: #0a2f42;
+  --piggy-admonition-info-title-bg: #0e4560;
+  --piggy-admonition-info-text: #e6fbff;
+  --piggy-admonition-info-icon: #4dabff;
+  --piggy-admonition-info-border: #2f7dc2;
+
+  --piggy-admonition-tip-bg: #073f3a;
+  --piggy-admonition-tip-title-bg: #0b5850;
+  --piggy-admonition-tip-text: #e6fbff;
+  --piggy-admonition-tip-icon: #3de8c7;
+  --piggy-admonition-tip-border: #1fb39a;
+
   --piggy-admonition-success-bg: #063b34;
   --piggy-admonition-success-title-bg: #0a554b;
   --piggy-admonition-success-text: #e6fbff;
   --piggy-admonition-success-icon: #6fffe9;
   --piggy-admonition-success-border: #00ffaa;
+
+  --piggy-admonition-question-bg: #262b12;
+  --piggy-admonition-question-title-bg: #383f19;
+  --piggy-admonition-question-text: #f5fbd6;
+  --piggy-admonition-question-icon: #c4e86b;
+  --piggy-admonition-question-border: #93ab3a;
 
   --piggy-admonition-warning-bg: #3a2f12;
   --piggy-admonition-warning-title-bg: #554519;
@@ -202,11 +227,23 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-admonition-warning-icon: #ffd166;
   --piggy-admonition-warning-border: #e7b84a;
 
+  --piggy-admonition-failure-bg: #3a2015;
+  --piggy-admonition-failure-title-bg: #55301f;
+  --piggy-admonition-failure-text: #ffe6da;
+  --piggy-admonition-failure-icon: #ff8b70;
+  --piggy-admonition-failure-border: #d9714a;
+
   --piggy-admonition-danger-bg: #3a1720;
   --piggy-admonition-danger-title-bg: #55212e;
   --piggy-admonition-danger-text: #ffe5ea;
   --piggy-admonition-danger-icon: #ff6b6b;
   --piggy-admonition-danger-border: #ff4d6d;
+
+  --piggy-admonition-bug-bg: #3a1530;
+  --piggy-admonition-bug-title-bg: #552046;
+  --piggy-admonition-bug-text: #ffe0f5;
+  --piggy-admonition-bug-icon: #ff6bd6;
+  --piggy-admonition-bug-border: #c94dab;
 
   --piggy-admonition-example-bg: #241f46;
   --piggy-admonition-example-title-bg: #332b63;
@@ -306,31 +343,68 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-table-code-text: var(--piggy-admonition-text);
 }
 
-/* NOTE / INFO / TIP */
-[data-theme="ocean"]
-  .md-content
-  :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
-  ) {
+/* NOTE */
+[data-theme="ocean"] .md-content :is(.admonition.note, details.note) {
   --piggy-table-admonition-accent: rgba(0, 229, 255, 0.2);
   --piggy-table-header-start: rgba(0, 229, 255, 0.065);
   --piggy-table-header-end: rgba(0, 229, 255, 0.065);
   --piggy-table-row-hover: rgba(0, 229, 255, 0.08);
 }
 
-/* SUCCESS / QUESTION */
+/* ABSTRACT / SUMMARY / TLDR */
+[data-theme="ocean"]
+  .md-content
+  :is(
+    .admonition.abstract,
+    details.abstract,
+    .admonition.summary,
+    details.summary,
+    .admonition.tldr,
+    details.tldr
+  ) {
+  --piggy-table-admonition-accent: rgba(41, 184, 207, 0.2);
+  --piggy-table-header-start: rgba(41, 184, 207, 0.065);
+  --piggy-table-header-end: rgba(41, 184, 207, 0.065);
+  --piggy-table-row-hover: rgba(41, 184, 207, 0.08);
+}
+
+/* INFO / TODO */
+[data-theme="ocean"]
+  .md-content
+  :is(.admonition.info, details.info, .admonition.todo, details.todo) {
+  --piggy-table-admonition-accent: rgba(77, 171, 255, 0.2);
+  --piggy-table-header-start: rgba(77, 171, 255, 0.065);
+  --piggy-table-header-end: rgba(77, 171, 255, 0.065);
+  --piggy-table-row-hover: rgba(77, 171, 255, 0.08);
+}
+
+/* TIP / HINT / IMPORTANT */
+[data-theme="ocean"]
+  .md-content
+  :is(
+    .admonition.tip,
+    details.tip,
+    .admonition.hint,
+    details.hint,
+    .admonition.important,
+    details.important
+  ) {
+  --piggy-table-admonition-accent: rgba(61, 232, 199, 0.2);
+  --piggy-table-header-start: rgba(61, 232, 199, 0.065);
+  --piggy-table-header-end: rgba(61, 232, 199, 0.065);
+  --piggy-table-row-hover: rgba(61, 232, 199, 0.08);
+}
+
+/* SUCCESS / CHECK / DONE */
 [data-theme="ocean"]
   .md-content
   :is(
     .admonition.success,
     details.success,
-    .admonition.question,
-    details.question
+    .admonition.check,
+    details.check,
+    .admonition.done,
+    details.done
   ) {
   --piggy-table-admonition-accent: rgba(111, 255, 233, 0.19);
   --piggy-table-header-start: rgba(111, 255, 233, 0.062);
@@ -338,12 +412,31 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-table-row-hover: rgba(111, 255, 233, 0.078);
 }
 
-/* WARNING / ATTENTION */
+/* QUESTION / HELP / FAQ */
+[data-theme="ocean"]
+  .md-content
+  :is(
+    .admonition.question,
+    details.question,
+    .admonition.help,
+    details.help,
+    .admonition.faq,
+    details.faq
+  ) {
+  --piggy-table-admonition-accent: rgba(196, 232, 107, 0.19);
+  --piggy-table-header-start: rgba(196, 232, 107, 0.062);
+  --piggy-table-header-end: rgba(196, 232, 107, 0.062);
+  --piggy-table-row-hover: rgba(196, 232, 107, 0.078);
+}
+
+/* WARNING / CAUTION / ATTENTION */
 [data-theme="ocean"]
   .md-content
   :is(
     .admonition.warning,
     details.warning,
+    .admonition.caution,
+    details.caution,
     .admonition.attention,
     details.attention
   ) {
@@ -353,21 +446,39 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-table-row-hover: rgba(255, 209, 102, 0.078);
 }
 
-/* DANGER / FAILURE / BUG */
+/* FAILURE / FAIL / MISSING */
 [data-theme="ocean"]
   .md-content
   :is(
-    .admonition.danger,
-    details.danger,
     .admonition.failure,
     details.failure,
-    .admonition.bug,
-    details.bug
+    .admonition.fail,
+    details.fail,
+    .admonition.missing,
+    details.missing
   ) {
+  --piggy-table-admonition-accent: rgba(255, 139, 112, 0.2);
+  --piggy-table-header-start: rgba(255, 139, 112, 0.065);
+  --piggy-table-header-end: rgba(255, 139, 112, 0.065);
+  --piggy-table-row-hover: rgba(255, 139, 112, 0.08);
+}
+
+/* DANGER / ERROR */
+[data-theme="ocean"]
+  .md-content
+  :is(.admonition.danger, details.danger, .admonition.error, details.error) {
   --piggy-table-admonition-accent: rgba(255, 107, 107, 0.2);
   --piggy-table-header-start: rgba(255, 107, 107, 0.065);
   --piggy-table-header-end: rgba(255, 107, 107, 0.065);
   --piggy-table-row-hover: rgba(255, 107, 107, 0.08);
+}
+
+/* BUG */
+[data-theme="ocean"] .md-content :is(.admonition.bug, details.bug) {
+  --piggy-table-admonition-accent: rgba(255, 107, 214, 0.2);
+  --piggy-table-header-start: rgba(255, 107, 214, 0.065);
+  --piggy-table-header-end: rgba(255, 107, 214, 0.065);
+  --piggy-table-row-hover: rgba(255, 107, 214, 0.08);
 }
 
 /* EXAMPLE */
@@ -378,8 +489,10 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-table-row-hover: rgba(199, 146, 255, 0.08);
 }
 
-/* QUOTE */
-[data-theme="ocean"] .md-content :is(.admonition.quote, details.quote) {
+/* QUOTE / CITE */
+[data-theme="ocean"]
+  .md-content
+  :is(.admonition.quote, details.quote, .admonition.cite, details.cite) {
   --piggy-table-admonition-accent: rgba(136, 192, 208, 0.18);
   --piggy-table-header-start: rgba(136, 192, 208, 0.055);
   --piggy-table-header-end: rgba(136, 192, 208, 0.055);

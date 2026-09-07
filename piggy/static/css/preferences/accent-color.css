@@ -28,6 +28,29 @@
   --piggy-accent-override: #a3b52e;
 }
 
+/* Darker */
+[data-theme="darker"][data-accent-color="1"] {
+  --piggy-accent-override: #d6469e;
+}
+[data-theme="darker"][data-accent-color="2"] {
+  --piggy-accent-override: #2e9e5b;
+}
+[data-theme="darker"][data-accent-color="3"] {
+  --piggy-accent-override: #c98a2e;
+}
+[data-theme="darker"][data-accent-color="4"] {
+  --piggy-accent-override: #8a4fd1;
+}
+[data-theme="darker"][data-accent-color="5"] {
+  --piggy-accent-override: #1f9e9e;
+}
+[data-theme="darker"][data-accent-color="6"] {
+  --piggy-accent-override: #c9384f;
+}
+[data-theme="darker"][data-accent-color="7"] {
+  --piggy-accent-override: #a3b52e;
+}
+
 /* Light */
 [data-theme="light"][data-accent-color="1"] {
   --piggy-accent-override: #d6469e;
@@ -48,6 +71,29 @@
   --piggy-accent-override: #c9384f;
 }
 [data-theme="light"][data-accent-color="7"] {
+  --piggy-accent-override: #a3b52e;
+}
+
+/* Lighter */
+[data-theme="lighter"][data-accent-color="1"] {
+  --piggy-accent-override: #d6469e;
+}
+[data-theme="lighter"][data-accent-color="2"] {
+  --piggy-accent-override: #2e9e5b;
+}
+[data-theme="lighter"][data-accent-color="3"] {
+  --piggy-accent-override: #c98a2e;
+}
+[data-theme="lighter"][data-accent-color="4"] {
+  --piggy-accent-override: #8a4fd1;
+}
+[data-theme="lighter"][data-accent-color="5"] {
+  --piggy-accent-override: #1f9e9e;
+}
+[data-theme="lighter"][data-accent-color="6"] {
+  --piggy-accent-override: #c9384f;
+}
+[data-theme="lighter"][data-accent-color="7"] {
   --piggy-accent-override: #a3b52e;
 }
 
@@ -419,6 +465,44 @@
   );
 }
 
+[data-theme="darker"] {
+  --piggy-accent-button-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 38%,
+    #000000
+  );
+  --piggy-accent-hover-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 48%,
+    #0a0a0a
+  );
+  --piggy-accent-border-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 55%,
+    #141414
+  );
+  --piggy-accent-nav-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 22%,
+    #000000
+  );
+  --piggy-accent-nav-hover-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 34%,
+    #0a0a0a
+  );
+  --piggy-accent-link-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 62%,
+    white
+  );
+  --piggy-accent-link-hover-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 40%,
+    white
+  );
+}
+
 [data-theme="light"],
 [data-theme="desert"],
 [data-theme="sage"],
@@ -444,6 +528,39 @@
     in srgb,
     var(--piggy-accent-override) 18%,
     #f2f1f4
+  );
+  --piggy-accent-link-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 78%,
+    black
+  );
+  --piggy-accent-link-hover-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 55%,
+    black
+  );
+}
+
+[data-theme="lighter"] {
+  --piggy-accent-button-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 24%,
+    #ffffff
+  );
+  --piggy-accent-hover-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 40%,
+    #f7f7f9
+  );
+  --piggy-accent-border-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 50%,
+    #eceaef
+  );
+  --piggy-accent-nav-hover-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 14%,
+    #fafafc
   );
   --piggy-accent-link-override: color-mix(
     in srgb,

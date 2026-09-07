@@ -4,7 +4,7 @@
   class="search-overlay"
   role="dialog"
   aria-modal="true"
-  aria-label="Søk"
+  aria-label="{{ _('Søk') }}"
   aria-hidden="true"
   hidden>
   <div class="search-overlay-inner">
@@ -26,23 +26,23 @@
           id="search-overlay-input"
           class="search-overlay-input"
           type="search"
-          placeholder="Søk i oppgaver…"
+          placeholder="{{ _('Søk i oppgaver…') }}"
           autocomplete="off"
           spellcheck="false"
-          aria-label="Søk i oppgaver" />
+          aria-label="{{ _('Søk i oppgaver') }}" />
       </div>
       <button
         id="search-overlay-close"
         class="piggy-button piggy-button--m search-overlay-close"
-        aria-label="Lukk søk"
+        aria-label="{{ _('Lukk søk') }}"
         type="button">
-        Lukk
+        {{ _('Lukk') }}
       </button>
     </div>
     <ul
       id="search-results"
       class="search-results"
       role="listbox"
-      aria-label="Søkeresultater"></ul>
+      aria-label="{{ _('Søkeresultater') }}"></ul>
   </div>
 </div>
