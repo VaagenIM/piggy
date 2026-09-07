@@ -35,12 +35,21 @@
     rememberPosition: "Husk hvor du stopte å lese",
   };
 
+  const THEME_GROUP_ORDER = ["regular", "colored", "animated"];
+
+  const THEME_GROUP_LABELS = {
+    regular: "Vanlige",
+    colored: "Fargerike",
+    animated: "Animerte",
+  };
+
   const I18N =
     window.PIGGY_I18N && typeof window.PIGGY_I18N === "object"
       ? window.PIGGY_I18N
       : {};
   Object.assign(CONTROL_LABELS, I18N.controlLabels || {});
   Object.assign(TOGGLE_LABELS, I18N.toggleLabels || {});
+  Object.assign(THEME_GROUP_LABELS, I18N.themeGroups || {});
   const PREVIEW_LABELS = Object.assign(
     {
       lineOne: "Line one",
@@ -272,42 +281,79 @@
     });
   }
 
+  function createThemeCard(theme) {
+    const button = document.createElement("button");
+    button.className = "theme-card";
+    button.type = "button";
+    button.dataset.prefId = "theme";
+    button.dataset.prefValue = theme.path;
+    button.setAttribute("aria-pressed", "false");
+
+    const preview = document.createElement("span");
+    preview.className = "theme-card-preview";
+    preview.setAttribute("aria-hidden", "true");
+    preview.append(createThemePreview(theme));
+
+    const title = document.createElement("span");
+    title.className = "theme-card-title";
+    title.textContent = theme.name;
+
+    const titleRow = document.createElement("span");
+    titleRow.className = "theme-card-title-row";
+    titleRow.append(createSettingsIcon(getThemeIconName(theme)), title);
+
+    const body = document.createElement("span");
+    body.className = "theme-card-body";
+    body.append(titleRow);
+
+    button.title = theme.description
+      ? `${theme.name}: ${theme.description}`
+      : `${theme.name} (${getThemeMetaText(theme)})`;
+    button.setAttribute("aria-label", button.title);
+    button.append(preview, body);
+    return button;
+  }
+
+  function groupThemes(themes) {
+    const byGroup = new Map();
+
+    themes.forEach((theme) => {
+      const groupId = theme.group || "regular";
+      if (!byGroup.has(groupId)) byGroup.set(groupId, []);
+      byGroup.get(groupId).push(theme);
+    });
+
+    const orderedIds = [
+      ...THEME_GROUP_ORDER.filter((groupId) => byGroup.has(groupId)),
+      ...[...byGroup.keys()].filter((groupId) => !THEME_GROUP_ORDER.includes(groupId)),
+    ];
+
+    return orderedIds.map((groupId) => ({
+      id: groupId,
+      label: THEME_GROUP_LABELS[groupId] || groupId,
+      themes: byGroup.get(groupId),
+    }));
+  }
+
   function renderThemeCards(container) {
     if (!container) return;
 
     container.replaceChildren();
 
-    getThemes().forEach((theme) => {
-      const button = document.createElement("button");
-      button.className = "theme-card";
-      button.type = "button";
-      button.dataset.prefId = "theme";
-      button.dataset.prefValue = theme.path;
-      button.setAttribute("aria-pressed", "false");
+    groupThemes(getThemes()).forEach((group) => {
+      const section = document.createElement("div");
+      section.className = "theme-group";
 
-      const preview = document.createElement("span");
-      preview.className = "theme-card-preview";
-      preview.setAttribute("aria-hidden", "true");
-      preview.append(createThemePreview(theme));
+      const heading = document.createElement("h4");
+      heading.className = "theme-group-title settings-eyebrow";
+      heading.textContent = group.label;
 
-      const title = document.createElement("span");
-      title.className = "theme-card-title";
-      title.textContent = theme.name;
+      const grid = document.createElement("div");
+      grid.className = "settings-card-grid settings-card-grid--themes";
+      group.themes.forEach((theme) => grid.append(createThemeCard(theme)));
 
-      const titleRow = document.createElement("span");
-      titleRow.className = "theme-card-title-row";
-      titleRow.append(createSettingsIcon(getThemeIconName(theme)), title);
-
-      const body = document.createElement("span");
-      body.className = "theme-card-body";
-      body.append(titleRow);
-
-      button.title = theme.description
-        ? `${theme.name}: ${theme.description}`
-        : `${theme.name} (${getThemeMetaText(theme)})`;
-      button.setAttribute("aria-label", button.title);
-      button.append(preview, body);
-      container.append(button);
+      section.append(heading, grid);
+      container.append(section);
     });
   }
 

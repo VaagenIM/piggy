@@ -1,8 +1,9 @@
+
 msgid ""
 msgstr ""
 "Project-Id-Version: Piggy 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/VaagenIM/piggy/issues\n"
-"POT-Creation-Date: 2026-09-07 13:53+0200\n"
+"POT-Creation-Date: 2026-09-07 17:10+0200\n"
 "PO-Revision-Date: 2026-09-07 13:30+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -13,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: piggy/app.py:211 piggy/caching.py:114 piggy/caching.py:201
+#: piggy/app.py:197 piggy/caching.py:114 piggy/caching.py:201
 msgid "Assignment not found"
 msgstr "Assignment not found"
 
@@ -164,7 +165,7 @@ msgid "Myk og rund skrifttype"
 msgstr "Soft, rounded typeface"
 
 #: piggy/js_i18n.py:56 piggy/js_i18n.py:70 piggy/js_i18n.py:71
-#: piggy/js_i18n.py:118 piggy/js_i18n.py:165
+#: piggy/js_i18n.py:118 piggy/js_i18n.py:170
 msgid "System"
 msgstr "System"
 
@@ -293,106 +294,118 @@ msgid "På"
 msgstr "On"
 
 #: piggy/js_i18n.py:135
+msgid "Vanlige"
+msgstr "Regular"
+
+#: piggy/js_i18n.py:136
+msgid "Fargerike"
+msgstr "Colorful"
+
+#: piggy/js_i18n.py:137
+msgid "Animerte"
+msgstr "Animated"
+
+#: piggy/js_i18n.py:140
 msgid "Kontrast"
 msgstr "Contrast"
 
-#: piggy/js_i18n.py:136
+#: piggy/js_i18n.py:141
 msgid "Skrifttype"
 msgstr "Font"
 
-#: piggy/js_i18n.py:137
+#: piggy/js_i18n.py:142
 msgid "Skrifttype for kode"
 msgstr "Code font"
 
-#: piggy/js_i18n.py:138
+#: piggy/js_i18n.py:143
 msgid "Tekststørrelse"
 msgstr "Text size"
 
-#: piggy/js_i18n.py:139
+#: piggy/js_i18n.py:144
 msgid "Tekststørrelse omfang"
 msgstr "Text size scope"
 
-#: piggy/js_i18n.py:140
+#: piggy/js_i18n.py:145
 msgid "Linjehøyde"
 msgstr "Line height"
 
-#: piggy/js_i18n.py:141
+#: piggy/js_i18n.py:146
 msgid "Bokstavavstand"
 msgstr "Letter spacing"
 
-#: piggy/js_i18n.py:142
+#: piggy/js_i18n.py:147
 msgid "Ordavstand"
 msgstr "Word spacing"
 
-#: piggy/js_i18n.py:143
+#: piggy/js_i18n.py:148
 msgid "Paragrafavstand"
 msgstr "Paragraph spacing"
 
-#: piggy/js_i18n.py:144
+#: piggy/js_i18n.py:149
 msgid "Innholdsbredde"
 msgstr "Content width"
 
-#: piggy/js_i18n.py:145
+#: piggy/js_i18n.py:150
 msgid "Fokus modus"
 msgstr "Focus mode"
 
-#: piggy/js_i18n.py:146
+#: piggy/js_i18n.py:151
 msgid "Linjal"
 msgstr "Ruler"
 
-#: piggy/js_i18n.py:147
+#: piggy/js_i18n.py:152
 msgid "Bevegelse og effekter"
 msgstr "Motion and effects"
 
-#: piggy/js_i18n.py:148
+#: piggy/js_i18n.py:153
 msgid "Husk posisjon"
 msgstr "Remember position"
 
-#: piggy/js_i18n.py:151
+#: piggy/js_i18n.py:156
 msgid "Demp navigasjonsmenyen i fokus modus"
 msgstr "Dim the navigation menu in focus mode"
 
-#: piggy/js_i18n.py:152
+#: piggy/js_i18n.py:157
 msgid "Bruk tekststørrelse på UI"
 msgstr "Apply text size to the UI"
 
-#: piggy/js_i18n.py:153
+#: piggy/js_i18n.py:158
 msgid "Vis linjal"
 msgstr "Show ruler"
 
-#: piggy/js_i18n.py:154
+#: piggy/js_i18n.py:159
 msgid "Husk hvor du stopte å lese"
 msgstr "Remember where you stopped reading"
 
-#: piggy/js_i18n.py:157
+#: piggy/js_i18n.py:162
 msgid "Line one"
 msgstr "Line one"
 
-#: piggy/js_i18n.py:158
+#: piggy/js_i18n.py:163
 msgid "Line two"
 msgstr "Line two"
 
-#: piggy/js_i18n.py:159
+#: piggy/js_i18n.py:164
 msgid "Spacing"
 msgstr "Spacing"
 
-#: piggy/js_i18n.py:160
+#: piggy/js_i18n.py:165
 msgid "Word spacing"
 msgstr "Word spacing"
 
-#: piggy/js_i18n.py:161
+#: piggy/js_i18n.py:166
 msgid "First paragraph"
 msgstr "First paragraph"
 
-#: piggy/js_i18n.py:162
+#: piggy/js_i18n.py:167
 msgid "Second paragraph"
 msgstr "Second paragraph"
 
-#: piggy/js_i18n.py:163
+#: piggy/js_i18n.py:168
 msgid "Quiet"
 msgstr "Quiet"
 
-#: piggy/js_i18n.py:164
+#: piggy/js_i18n.py:169
 msgid "Animated"
 msgstr "Animated"
 
@@ -470,12 +483,20 @@ msgid "Planlegg programmet"
 msgstr "Plan the program"
 
 #: piggy/templates/partials/parts/settings_content.html:55
-msgid "Et program er lettere å lese når koden er forståelig. Det er også viktig å teste små deler om gangen."
-msgstr "A program is easier to read when the code is understandable. It's also important to test small parts at a time."
+msgid ""
+"Et program er lettere å lese når koden er forståelig. Det er også viktig "
+"å teste små deler om gangen."
+msgstr ""
+"A program is easier to read when the code is understandable. It's also "
+"important to test small parts at a time."
 
 #: piggy/templates/partials/parts/settings_content.html:58
-msgid "Bruk navn for å forklare verdien, som <code>total_score</code> eller <code>current_level</code>."
-msgstr "Use names to explain the value, such as <code>total_score</code> or <code>current_level</code>."
+msgid ""
+"Bruk navn for å forklare verdien, som <code>total_score</code> eller "
+"<code>current_level</code>."
+msgstr ""
+"Use names to explain the value, such as <code>total_score</code> or "
+"<code>current_level</code>."
 
 #: piggy/templates/partials/parts/settings_content.html:64
 msgid "Prøv løkken"
@@ -522,23 +543,27 @@ msgstr "Presets"
 msgid "Temaer"
 msgstr "Themes"
 
-#: piggy/templates/partials/parts/settings_content.html:242
+#: piggy/templates/partials/parts/settings_content.html:240
 msgid "Aksentfarge"
 msgstr "Accent color"
 
-#: piggy/templates/partials/parts/settings_content.html:269
+#: piggy/templates/partials/parts/settings_content.html:267
 msgid "Avansert tekstoppsett"
 msgstr "Advanced text layout"
 
-#: piggy/templates/partials/parts/settings_content.html:291
+#: piggy/templates/partials/parts/settings_content.html:289
 msgid "Motion"
 msgstr "Motion"
 
-#: piggy/templates/partials/parts/settings_content.html:301
+#: piggy/templates/partials/parts/settings_content.html:299
 msgid "Fokus switches"
 msgstr "Focus switches"
 
-#: piggy/templates/partials/parts/settings_content.html:321
-msgid "Lagrer skjermposisjonen for hver side på denne nettleseren. Dette gjør at Piggy vil returnere til der du var når du sluttet å lese."
-msgstr "Saves your scroll position for each page in this browser. This lets Piggy return you to where you left off reading."
+#: piggy/templates/partials/parts/settings_content.html:319
+msgid ""
+"Lagrer skjermposisjonen for hver side på denne nettleseren. Dette gjør at"
+" Piggy vil returnere til der du var når du sluttet å lese."
+msgstr ""
+"Saves your scroll position for each page in this browser. This lets Piggy"
+" return you to where you left off reading."
 

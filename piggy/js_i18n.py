@@ -131,6 +131,11 @@ def build_js_i18n() -> dict:
             "off": {"label": gettext("Av")},
             "on": {"label": gettext("På")},
         },
+        "themeGroups": {
+            "regular": gettext("Vanlige"),
+            "colored": gettext("Fargerike"),
+            "animated": gettext("Animerte"),
+        },
         "controlLabels": {
             "contrast": gettext("Kontrast"),
             "readerFont": gettext("Skrifttype"),
