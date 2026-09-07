@@ -178,11 +178,29 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
   --piggy-code-token-error: #b42335;
 
   /* Admonitions */
-  --piggy-admonition-note-bg: #dceff1;
-  --piggy-admonition-note-title-bg: #c5e3e6;
-  --piggy-admonition-note-text: #243b3f;
-  --piggy-admonition-note-icon: #2f7f86;
-  --piggy-admonition-note-border: #5ba3a8;
+  --piggy-admonition-note-bg: #dde9f3;
+  --piggy-admonition-note-title-bg: #c2d5e5;
+  --piggy-admonition-note-text: #222f3f;
+  --piggy-admonition-note-icon: #3a6e9c;
+  --piggy-admonition-note-border: #6f96b8;
+
+  --piggy-admonition-abstract-bg: #dceff1;
+  --piggy-admonition-abstract-title-bg: #c5e3e6;
+  --piggy-admonition-abstract-text: #243b3f;
+  --piggy-admonition-abstract-icon: #2f7f86;
+  --piggy-admonition-abstract-border: #5ba3a8;
+
+  --piggy-admonition-info-bg: #deeef2;
+  --piggy-admonition-info-title-bg: #c3dde4;
+  --piggy-admonition-info-text: #23383e;
+  --piggy-admonition-info-icon: #3a879c;
+  --piggy-admonition-info-border: #6ba3b3;
+
+  --piggy-admonition-tip-bg: #dff1eb;
+  --piggy-admonition-tip-title-bg: #c4e3d9;
+  --piggy-admonition-tip-text: #243d35;
+  --piggy-admonition-tip-icon: #388a6e;
+  --piggy-admonition-tip-border: #6db09a;
 
   --piggy-admonition-success-bg: #dff1e2;
   --piggy-admonition-success-title-bg: #c8e6cf;
@@ -190,17 +208,35 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
   --piggy-admonition-success-icon: #3f8a52;
   --piggy-admonition-success-border: #68a979;
 
+  --piggy-admonition-question-bg: #e7efdc;
+  --piggy-admonition-question-title-bg: #d4e1c1;
+  --piggy-admonition-question-text: #323c25;
+  --piggy-admonition-question-icon: #658439;
+  --piggy-admonition-question-border: #92af6a;
+
   --piggy-admonition-warning-bg: #f8ecd8;
   --piggy-admonition-warning-title-bg: #efd9b5;
   --piggy-admonition-warning-text: #4a321c;
   --piggy-admonition-warning-icon: #a96b22;
   --piggy-admonition-warning-border: #c48a43;
 
+  --piggy-admonition-failure-bg: #f6e1da;
+  --piggy-admonition-failure-title-bg: #ebc7bc;
+  --piggy-admonition-failure-text: #4c2d24;
+  --piggy-admonition-failure-icon: #c85d3c;
+  --piggy-admonition-failure-border: #c38674;
+
   --piggy-admonition-danger-bg: #f4dddd;
   --piggy-admonition-danger-title-bg: #eac6c6;
   --piggy-admonition-danger-text: #4a2424;
   --piggy-admonition-danger-icon: #a84242;
   --piggy-admonition-danger-border: #c76464;
+
+  --piggy-admonition-bug-bg: #f3dde9;
+  --piggy-admonition-bug-title-bg: #e5c2d5;
+  --piggy-admonition-bug-text: #482839;
+  --piggy-admonition-bug-icon: #bc4986;
+  --piggy-admonition-bug-border: #c181a3;
 
   --piggy-admonition-example-bg: #e8e0f1;
   --piggy-admonition-example-title-bg: #d9cbea;
@@ -300,16 +336,24 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
   --piggy-table-code-text: var(--piggy-admonition-text);
 }
 
-/* NOTE / INFO / TIP */
+/* NOTE */
+[data-theme="sage"] .md-content :is(.admonition.note, details.note) {
+  --piggy-table-admonition-accent: rgba(58, 110, 156, 0.25);
+  --piggy-table-header-start: rgba(58, 110, 156, 0.09);
+  --piggy-table-header-end: rgba(58, 110, 156, 0.09);
+  --piggy-table-row-hover: rgba(58, 110, 156, 0.1);
+}
+
+/* ABSTRACT / SUMMARY / TLDR */
 [data-theme="sage"]
   .md-content
   :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
+    .admonition.abstract,
+    details.abstract,
+    .admonition.summary,
+    details.summary,
+    .admonition.tldr,
+    details.tldr
   ) {
   --piggy-table-admonition-accent: rgba(47, 127, 134, 0.25);
   --piggy-table-header-start: rgba(47, 127, 134, 0.09);
@@ -317,14 +361,43 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
   --piggy-table-row-hover: rgba(47, 127, 134, 0.1);
 }
 
-/* SUCCESS / QUESTION */
+/* INFO / TODO */
+[data-theme="sage"]
+  .md-content
+  :is(.admonition.info, details.info, .admonition.todo, details.todo) {
+  --piggy-table-admonition-accent: rgba(58, 135, 156, 0.25);
+  --piggy-table-header-start: rgba(58, 135, 156, 0.09);
+  --piggy-table-header-end: rgba(58, 135, 156, 0.09);
+  --piggy-table-row-hover: rgba(58, 135, 156, 0.1);
+}
+
+/* TIP / HINT / IMPORTANT */
+[data-theme="sage"]
+  .md-content
+  :is(
+    .admonition.tip,
+    details.tip,
+    .admonition.hint,
+    details.hint,
+    .admonition.important,
+    details.important
+  ) {
+  --piggy-table-admonition-accent: rgba(56, 138, 110, 0.25);
+  --piggy-table-header-start: rgba(56, 138, 110, 0.09);
+  --piggy-table-header-end: rgba(56, 138, 110, 0.09);
+  --piggy-table-row-hover: rgba(56, 138, 110, 0.1);
+}
+
+/* SUCCESS / CHECK / DONE */
 [data-theme="sage"]
   .md-content
   :is(
     .admonition.success,
     details.success,
-    .admonition.question,
-    details.question
+    .admonition.check,
+    details.check,
+    .admonition.done,
+    details.done
   ) {
   --piggy-table-admonition-accent: rgba(63, 138, 82, 0.24);
   --piggy-table-header-start: rgba(63, 138, 82, 0.085);
@@ -332,12 +405,31 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
   --piggy-table-row-hover: rgba(63, 138, 82, 0.095);
 }
 
-/* WARNING / ATTENTION */
+/* QUESTION / HELP / FAQ */
+[data-theme="sage"]
+  .md-content
+  :is(
+    .admonition.question,
+    details.question,
+    .admonition.help,
+    details.help,
+    .admonition.faq,
+    details.faq
+  ) {
+  --piggy-table-admonition-accent: rgba(101, 132, 57, 0.24);
+  --piggy-table-header-start: rgba(101, 132, 57, 0.085);
+  --piggy-table-header-end: rgba(101, 132, 57, 0.085);
+  --piggy-table-row-hover: rgba(101, 132, 57, 0.095);
+}
+
+/* WARNING / CAUTION / ATTENTION */
 [data-theme="sage"]
   .md-content
   :is(
     .admonition.warning,
     details.warning,
+    .admonition.caution,
+    details.caution,
     .admonition.attention,
     details.attention
   ) {
@@ -347,21 +439,39 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
   --piggy-table-row-hover: rgba(169, 107, 34, 0.095);
 }
 
-/* DANGER / FAILURE / BUG */
+/* FAILURE / FAIL / MISSING */
 [data-theme="sage"]
   .md-content
   :is(
-    .admonition.danger,
-    details.danger,
     .admonition.failure,
     details.failure,
-    .admonition.bug,
-    details.bug
+    .admonition.fail,
+    details.fail,
+    .admonition.missing,
+    details.missing
   ) {
+  --piggy-table-admonition-accent: rgba(200, 93, 60, 0.25);
+  --piggy-table-header-start: rgba(200, 93, 60, 0.09);
+  --piggy-table-header-end: rgba(200, 93, 60, 0.09);
+  --piggy-table-row-hover: rgba(200, 93, 60, 0.1);
+}
+
+/* DANGER / ERROR */
+[data-theme="sage"]
+  .md-content
+  :is(.admonition.danger, details.danger, .admonition.error, details.error) {
   --piggy-table-admonition-accent: rgba(168, 66, 66, 0.25);
   --piggy-table-header-start: rgba(168, 66, 66, 0.09);
   --piggy-table-header-end: rgba(168, 66, 66, 0.09);
   --piggy-table-row-hover: rgba(168, 66, 66, 0.1);
+}
+
+/* BUG */
+[data-theme="sage"] .md-content :is(.admonition.bug, details.bug) {
+  --piggy-table-admonition-accent: rgba(188, 73, 134, 0.25);
+  --piggy-table-header-start: rgba(188, 73, 134, 0.09);
+  --piggy-table-header-end: rgba(188, 73, 134, 0.09);
+  --piggy-table-row-hover: rgba(188, 73, 134, 0.1);
 }
 
 /* EXAMPLE */
@@ -372,8 +482,10 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
   --piggy-table-row-hover: rgba(117, 98, 154, 0.1);
 }
 
-/* QUOTE */
-[data-theme="sage"] .md-content :is(.admonition.quote, details.quote) {
+/* QUOTE / CITE */
+[data-theme="sage"]
+  .md-content
+  :is(.admonition.quote, details.quote, .admonition.cite, details.cite) {
   --piggy-table-admonition-accent: rgba(95, 113, 100, 0.24);
   --piggy-table-header-start: rgba(95, 113, 100, 0.085);
   --piggy-table-header-end: rgba(95, 113, 100, 0.085);

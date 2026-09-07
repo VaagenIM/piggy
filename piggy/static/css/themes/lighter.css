@@ -181,11 +181,29 @@ preview_style: background: linear-gradient(90deg, #ffffff, #fbfbfb); color: rgb(
   --piggy-code-token-error: #cf222e;
 
   /* admonitions */
-  --piggy-admonition-note-bg: #eef9fc;
-  --piggy-admonition-note-title-bg: #ddf1f8;
-  --piggy-admonition-note-text: #17313a;
-  --piggy-admonition-note-icon: #087ea4;
-  --piggy-admonition-note-border: #27a3c7;
+  --piggy-admonition-note-bg: #eef4ff;
+  --piggy-admonition-note-title-bg: #dcebfe;
+  --piggy-admonition-note-text: #14304f;
+  --piggy-admonition-note-icon: #0969da;
+  --piggy-admonition-note-border: #4f8fe0;
+
+  --piggy-admonition-abstract-bg: #e7f7f6;
+  --piggy-admonition-abstract-title-bg: #d3efec;
+  --piggy-admonition-abstract-text: #123a37;
+  --piggy-admonition-abstract-icon: #0a8f8a;
+  --piggy-admonition-abstract-border: #48b3ac;
+
+  --piggy-admonition-info-bg: #eef9fc;
+  --piggy-admonition-info-title-bg: #ddf1f8;
+  --piggy-admonition-info-text: #17313a;
+  --piggy-admonition-info-icon: #087ea4;
+  --piggy-admonition-info-border: #27a3c7;
+
+  --piggy-admonition-tip-bg: #e9f9f1;
+  --piggy-admonition-tip-title-bg: #d5f1e2;
+  --piggy-admonition-tip-text: #163d2d;
+  --piggy-admonition-tip-icon: #1f9d72;
+  --piggy-admonition-tip-border: #4dbb92;
 
   --piggy-admonition-success-bg: #eefbf1;
   --piggy-admonition-success-title-bg: #def6e5;
@@ -193,17 +211,35 @@ preview_style: background: linear-gradient(90deg, #ffffff, #fbfbfb); color: rgb(
   --piggy-admonition-success-icon: #218a3d;
   --piggy-admonition-success-border: #39a858;
 
+  --piggy-admonition-question-bg: #f6f9e6;
+  --piggy-admonition-question-title-bg: #ebf0c8;
+  --piggy-admonition-question-text: #33350f;
+  --piggy-admonition-question-icon: #808f1e;
+  --piggy-admonition-question-border: #a3ac57;
+
   --piggy-admonition-warning-bg: #fff8ec;
   --piggy-admonition-warning-title-bg: #fff0d8;
   --piggy-admonition-warning-text: #4a2f0f;
   --piggy-admonition-warning-icon: #b66a00;
   --piggy-admonition-warning-border: #d98a22;
 
+  --piggy-admonition-failure-bg: #fff1ea;
+  --piggy-admonition-failure-title-bg: #ffdfce;
+  --piggy-admonition-failure-text: #4a2413;
+  --piggy-admonition-failure-icon: #c1552f;
+  --piggy-admonition-failure-border: #dd8259;
+
   --piggy-admonition-danger-bg: #fff2f0;
   --piggy-admonition-danger-title-bg: #ffe4e1;
   --piggy-admonition-danger-text: #4a1717;
   --piggy-admonition-danger-icon: #c3312b;
   --piggy-admonition-danger-border: #df514a;
+
+  --piggy-admonition-bug-bg: #fdeef5;
+  --piggy-admonition-bug-title-bg: #fbdcec;
+  --piggy-admonition-bug-text: #4a1530;
+  --piggy-admonition-bug-icon: #c22e78;
+  --piggy-admonition-bug-border: #dd6ba0;
 
   --piggy-admonition-example-bg: #f6f0ff;
   --piggy-admonition-example-title-bg: #ece0ff;
@@ -285,31 +321,68 @@ preview_style: background: linear-gradient(90deg, #ffffff, #fbfbfb); color: rgb(
   --piggy-table-code-text: var(--piggy-admonition-text);
 }
 
-/* NOTE / INFO / TIP */
+/* NOTE */
+[data-theme="lighter"] .md-content :is(.admonition.note, details.note) {
+  --piggy-table-admonition-accent: rgba(9, 105, 218, 0.18);
+  --piggy-table-header-start: rgba(9, 105, 218, 0.065);
+  --piggy-table-header-end: rgba(9, 105, 218, 0.065);
+  --piggy-table-row-hover: rgba(9, 105, 218, 0.075);
+}
+
+/* ABSTRACT / SUMMARY / TLDR */
 [data-theme="lighter"]
   .md-content
   :is(
-    .admonition.note,
-    details.note,
-    .admonition.info,
-    details.info,
-    .admonition.tip,
-    details.tip
+    .admonition.abstract,
+    details.abstract,
+    .admonition.summary,
+    details.summary,
+    .admonition.tldr,
+    details.tldr
   ) {
+  --piggy-table-admonition-accent: rgba(10, 143, 138, 0.18);
+  --piggy-table-header-start: rgba(10, 143, 138, 0.065);
+  --piggy-table-header-end: rgba(10, 143, 138, 0.065);
+  --piggy-table-row-hover: rgba(10, 143, 138, 0.075);
+}
+
+/* INFO / TODO */
+[data-theme="lighter"]
+  .md-content
+  :is(.admonition.info, details.info, .admonition.todo, details.todo) {
   --piggy-table-admonition-accent: rgba(8, 126, 164, 0.2);
   --piggy-table-header-start: rgba(8, 126, 164, 0.075);
   --piggy-table-header-end: rgba(8, 126, 164, 0.075);
   --piggy-table-row-hover: rgba(8, 126, 164, 0.085);
 }
 
-/* SUCCESS / QUESTION */
+/* TIP / HINT / IMPORTANT */
+[data-theme="lighter"]
+  .md-content
+  :is(
+    .admonition.tip,
+    details.tip,
+    .admonition.hint,
+    details.hint,
+    .admonition.important,
+    details.important
+  ) {
+  --piggy-table-admonition-accent: rgba(31, 157, 114, 0.18);
+  --piggy-table-header-start: rgba(31, 157, 114, 0.065);
+  --piggy-table-header-end: rgba(31, 157, 114, 0.065);
+  --piggy-table-row-hover: rgba(31, 157, 114, 0.075);
+}
+
+/* SUCCESS / CHECK / DONE */
 [data-theme="lighter"]
   .md-content
   :is(
     .admonition.success,
     details.success,
-    .admonition.question,
-    details.question
+    .admonition.check,
+    details.check,
+    .admonition.done,
+    details.done
   ) {
   --piggy-table-admonition-accent: rgba(33, 138, 61, 0.18);
   --piggy-table-header-start: rgba(33, 138, 61, 0.065);
@@ -317,12 +390,31 @@ preview_style: background: linear-gradient(90deg, #ffffff, #fbfbfb); color: rgb(
   --piggy-table-row-hover: rgba(33, 138, 61, 0.075);
 }
 
-/* WARNING / ATTENTION */
+/* QUESTION / HELP / FAQ */
+[data-theme="lighter"]
+  .md-content
+  :is(
+    .admonition.question,
+    details.question,
+    .admonition.help,
+    details.help,
+    .admonition.faq,
+    details.faq
+  ) {
+  --piggy-table-admonition-accent: rgba(128, 143, 30, 0.18);
+  --piggy-table-header-start: rgba(128, 143, 30, 0.065);
+  --piggy-table-header-end: rgba(128, 143, 30, 0.065);
+  --piggy-table-row-hover: rgba(128, 143, 30, 0.075);
+}
+
+/* WARNING / CAUTION / ATTENTION */
 [data-theme="lighter"]
   .md-content
   :is(
     .admonition.warning,
     details.warning,
+    .admonition.caution,
+    details.caution,
     .admonition.attention,
     details.attention
   ) {
@@ -332,21 +424,39 @@ preview_style: background: linear-gradient(90deg, #ffffff, #fbfbfb); color: rgb(
   --piggy-table-row-hover: rgba(182, 106, 0, 0.075);
 }
 
-/* DANGER / FAILURE / BUG */
+/* FAILURE / FAIL / MISSING */
 [data-theme="lighter"]
   .md-content
   :is(
-    .admonition.danger,
-    details.danger,
     .admonition.failure,
     details.failure,
-    .admonition.bug,
-    details.bug
+    .admonition.fail,
+    details.fail,
+    .admonition.missing,
+    details.missing
   ) {
+  --piggy-table-admonition-accent: rgba(193, 85, 47, 0.18);
+  --piggy-table-header-start: rgba(193, 85, 47, 0.06);
+  --piggy-table-header-end: rgba(193, 85, 47, 0.06);
+  --piggy-table-row-hover: rgba(193, 85, 47, 0.075);
+}
+
+/* DANGER / ERROR */
+[data-theme="lighter"]
+  .md-content
+  :is(.admonition.danger, details.danger, .admonition.error, details.error) {
   --piggy-table-admonition-accent: rgba(195, 49, 43, 0.18);
   --piggy-table-header-start: rgba(195, 49, 43, 0.06);
   --piggy-table-header-end: rgba(195, 49, 43, 0.06);
   --piggy-table-row-hover: rgba(195, 49, 43, 0.075);
+}
+
+/* BUG */
+[data-theme="lighter"] .md-content :is(.admonition.bug, details.bug) {
+  --piggy-table-admonition-accent: rgba(194, 46, 120, 0.18);
+  --piggy-table-header-start: rgba(194, 46, 120, 0.06);
+  --piggy-table-header-end: rgba(194, 46, 120, 0.06);
+  --piggy-table-row-hover: rgba(194, 46, 120, 0.075);
 }
 
 /* EXAMPLE */
@@ -357,8 +467,10 @@ preview_style: background: linear-gradient(90deg, #ffffff, #fbfbfb); color: rgb(
   --piggy-table-row-hover: rgba(123, 67, 184, 0.075);
 }
 
-/* QUOTE */
-[data-theme="lighter"] .md-content :is(.admonition.quote, details.quote) {
+/* QUOTE / CITE */
+[data-theme="lighter"]
+  .md-content
+  :is(.admonition.quote, details.quote, .admonition.cite, details.cite) {
   --piggy-table-admonition-accent: rgba(95, 107, 120, 0.16);
   --piggy-table-header-start: rgba(95, 107, 120, 0.055);
   --piggy-table-header-end: rgba(95, 107, 120, 0.055);
