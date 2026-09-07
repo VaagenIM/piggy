@@ -427,8 +427,8 @@
     if (label) {
       label.textContent =
         isInlineSettingsPage() || sourceContext.pageKey === getCurrentPageKey()
-          ? "Back"
-          : "Back to page";
+          ? "Tilbake"
+          : "Tilbake til siden";
     }
   }
 
@@ -444,11 +444,11 @@
       '[data-settings-icon="settings"]',
     );
     const text = showBack
-      ? settingsButton.dataset.settingsCloseLabel || "Back"
-      : settingsButton.dataset.settingsOpenLabel || "Settings";
+      ? settingsButton.dataset.settingsCloseLabel || "Tilbake"
+      : settingsButton.dataset.settingsOpenLabel || "Innstillinger";
     const title = showBack
-      ? settingsButton.dataset.settingsCloseTitle || "Back to page"
-      : settingsButton.dataset.settingsOpenTitle || "Settings";
+      ? settingsButton.dataset.settingsCloseTitle || "Tilbake til siden"
+      : settingsButton.dataset.settingsOpenTitle || "Innstillinger";
 
     if (label) label.textContent = text;
     if (backIcon) backIcon.hidden = !showBack;

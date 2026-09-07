@@ -1,19 +1,19 @@
 (function () {
   const CONTROL_LABELS = {
-    contrast: "Contrast",
-    readerFont: "Font",
-    codeFont: "Code font",
-    readerFontSize: "Text size",
-    fontSizeAffectsUi: "Text size scope",
-    readerLineHeight: "Line height",
-    readerLetterSpacing: "Letter spacing",
-    readerWordSpacing: "Word spacing",
-    readerParagraphSpacing: "Paragraph spacing",
-    readerWidth: "Content width",
-    focusMode: "Focus mode",
-    readingRuler: "Ruler",
-    reduceMotion: "Motion and effects",
-    rememberPosition: "Remember position",
+    contrast: "Kontrast",
+    readerFont: "Skrifttype",
+    codeFont: "Skrifttype for kode",
+    readerFontSize: "Tekststørrelse",
+    fontSizeAffectsUi: "Tekststørrelse omfang",
+    readerLineHeight: "Linjehøyde",
+    readerLetterSpacing: "Bokstavavstand",
+    readerWordSpacing: "Ordavstand",
+    readerParagraphSpacing: "Paragrafavstand",
+    readerWidth: "Innholdsbredde",
+    focusMode: "Fokus modus",
+    readingRuler: "Linjal",
+    reduceMotion: "Bevegelse og effekter",
+    rememberPosition: "Husk posisjon",
   };
 
   const THEME_ACCENT_LABELS = {
@@ -29,10 +29,10 @@
   };
 
   const TOGGLE_LABELS = {
-    focusMode: "Dim navigation while focusing",
-    fontSizeAffectsUi: "Apply text size to app UI",
-    readingRuler: "Show ruler",
-    rememberPosition: "Remember where you stopped reading",
+    focusMode: "Demp navigasjonsmenyen i fokus modus",
+    fontSizeAffectsUi: "Bruk tekststørrelse på UI",
+    readingRuler: "Vis linjal",
+    rememberPosition: "Husk hvor du stopte å lese",
   };
 
   const PRESET_ICONS = {
