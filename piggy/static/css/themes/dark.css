@@ -5,20 +5,20 @@ description: The default dark theme.
 type: dark
 category: standard
 tags: default, low light
-preview.background: #181d22
-preview.surface: #1c232a
+preview.background: #101317
+preview.surface: #12171b
 preview.text: #f4f6f8
-preview.accent: #24a1b8
-preview.border: #4f89ad
-preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); color: #ffffff; text-shadow: none;
+preview.accent: #2f7dd1
+preview.border: #20558e
+preview_style: background: linear-gradient(90deg, rgb(16, 19, 23), #000000); color: #ffffff; text-shadow: none;
 */
 
 [data-theme="dark"] {
   /* piggy colors (higher contrast) */
-  --piggy-main: rgb(24, 29, 34);
+  --piggy-main: rgb(16, 19, 23);
   --piggy-light: #ffffff;
   --piggy-neutral: #7a828a;
-  --piggy-dark: rgb(17, 21, 25);
+  --piggy-dark: rgb(11, 14, 17);
 
   --piggy-text-main: var(--piggy-light);
   --piggy-text-light: var(--piggy-light);
@@ -30,8 +30,8 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
   --piggy-shadow-glow: rgba(255, 255, 255, 0.35);
 
   /* piggy card colors */
-  --piggy-card-start: rgba(55, 78, 87, 0.658);
-  --piggy-card-end: rgba(14, 26, 34, 0.55);
+  --piggy-card-start: rgba(38, 54, 60, 0.658);
+  --piggy-card-end: rgba(9, 17, 22, 0.55);
   --piggy-card-border: rgba(83, 100, 110, 0.356);
   --piggy-text-card: var(--piggy-text-light);
 
@@ -54,22 +54,26 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
   --piggy-card-border-width: 1.5px;
 
   /* piggy elements */
-  --piggy-navbar-start: rgb(38, 44, 50);
-  --piggy-navbar-end: rgb(38, 44, 50);
+  --piggy-navbar-start: rgb(26, 30, 35);
+  --piggy-navbar-end: rgb(26, 30, 35);
   --piggy-text-navbar: var(--piggy-light);
 
-  /* buttons */
-  --piggy-button: #235174;
-  --piggy-button-hover: #326b94;
-  --piggy-button-active: #24a1b8;
+  /*
+    buttons -- indirected through --piggy-accent-*-override so Settings >
+    Accent color can retint these (see preferences/accent-color.css); the
+    literal blue below is id "0", this theme's own default.
+  */
+  --piggy-button: var(--piggy-accent-button-override, #1a4573);
+  --piggy-button-hover: var(--piggy-accent-hover-override, #225a96);
+  --piggy-button-active: var(--piggy-accent-override, #2f7dd1);
   --piggy-text-button: var(--piggy-light);
-  --piggy-level-menu-active: #176b80;
-  --piggy-level-menu-active-text: #ffffff;
-  --piggy-button-border: #4f89ad;
-  --piggy-nav-button: #263d4d;
-  --piggy-nav-button-hover: #315770;
+  --piggy-level-menu-active: var(--piggy-accent-override, #2f7dd1);
+  --piggy-level-menu-active-text: var(--piggy-accent-text-override, #ffffff);
+  --piggy-button-border: var(--piggy-accent-border-override, #20558e);
+  --piggy-nav-button: var(--piggy-accent-nav-override, #12304f);
+  --piggy-nav-button-hover: var(--piggy-accent-nav-hover-override, #18416d);
   --piggy-nav-button-text: var(--piggy-light);
-  --piggy-nav-button-border: #4a7792;
+  --piggy-nav-button-border: var(--piggy-accent-border-override, #20558e);
 
   /* thumbnails */
   --piggy-thumbnail-overlay: #000000aa;
@@ -83,7 +87,7 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
   --piggy-text-breadcrumb-hover: #85939e;
 
   /* menus */
-  --piggy-menu: #1c232a;
+  --piggy-menu: #12171b;
   --piggy-menu-text: var(--piggy-light);
 
   /* tooltips */
@@ -91,8 +95,8 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
   --piggy-tooltip-text: #ffffff;
 
   /* links */
-  --piggy-text-hyperlink: #6bb6ff;
-  --piggy-text-hyperlink-hover: #a8d7ff;
+  --piggy-text-hyperlink: var(--piggy-accent-link-override, #7eaee2);
+  --piggy-text-hyperlink-hover: var(--piggy-accent-link-hover-override, #accbed);
 
   /* info boxes */
   --piggy-info-box-background: #00a3c255;
@@ -148,7 +152,7 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
   --piggy-code-bg: #303946;
   --piggy-code-border: rgba(238, 207, 152, 0.18);
 
-  --piggy-code-block-bg: #11171d;
+  --piggy-code-block-bg: #0b0f13;
   --piggy-code-block-border: rgba(120, 145, 160, 0.35);
 
   /* code block extras */
@@ -157,7 +161,7 @@ preview_style: background: linear-gradient(90deg, rgb(24, 29, 34), #000000); col
   --piggy-code-inline-border: rgba(238, 207, 152, 0.22);
 
   --piggy-code-block-text: #dce7f0;
-  --piggy-code-block-background: #11171d;
+  --piggy-code-block-background: #0b0f13;
   --piggy-code-block-border-color: rgba(120, 145, 160, 0.35);
 
   --piggy-code-block-line-number: #7f8b96;

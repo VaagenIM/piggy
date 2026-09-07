@@ -146,6 +146,16 @@
       { value: "soft", label: "Soft" },
       { value: "strong", label: "Strong" },
     ],
+    accentColor: [
+      { value: "0", label: "Default", hex: "#2f7dd1" },
+      { value: "1", label: "Rose", hex: "#d6469e" },
+      { value: "2", label: "Green", hex: "#2e9e5b" },
+      { value: "3", label: "Amber", hex: "#c98a2e" },
+      { value: "4", label: "Violet", hex: "#8a4fd1" },
+      { value: "5", label: "Teal", hex: "#1f9e9e" },
+      { value: "6", label: "Crimson", hex: "#c9384f" },
+      { value: "7", label: "Lime", hex: "#a3b52e" },
+    ],
     readerFont: FONT_OPTIONS,
     codeFont: CODE_FONT_OPTIONS,
     readerFontSize: [
@@ -215,6 +225,19 @@
     ],
   };
 
+  function getReadableTextColor(hex) {
+    const match = /^#?([0-9a-f]{6})$/i.exec((hex || "").trim());
+    if (!match) return null;
+
+    const value = parseInt(match[1], 16);
+    const r = (value >> 16) & 255;
+    const g = (value >> 8) & 255;
+    const b = value & 255;
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+    return brightness > 140 ? "#000000" : "#ffffff";
+  }
+
   const SETTINGS = {
     readerPreset: {
       defaultValue: "default",
@@ -233,6 +256,35 @@
       },
       normalize(value) {
         return isKnownTheme(value) ? value : getSystemPreferredTheme();
+      },
+    },
+    accentColor: {
+      defaultValue: "0",
+      attribute: "data-accent-color",
+      options: VALUE_OPTIONS.accentColor,
+      afterApply(value) {
+        if (value === "0") {
+          document.documentElement.style.removeProperty(
+            "--piggy-accent-text-override",
+          );
+          return;
+        }
+
+        const resolved = getComputedStyle(document.documentElement)
+          .getPropertyValue("--piggy-accent-override")
+          .trim();
+        const textColor = getReadableTextColor(resolved);
+
+        if (textColor) {
+          document.documentElement.style.setProperty(
+            "--piggy-accent-text-override",
+            textColor,
+          );
+        } else {
+          document.documentElement.style.removeProperty(
+            "--piggy-accent-text-override",
+          );
+        }
       },
     },
     contrast: {

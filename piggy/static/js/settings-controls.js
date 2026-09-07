@@ -16,6 +16,18 @@
     rememberPosition: "Remember position",
   };
 
+  const THEME_ACCENT_LABELS = {
+    golden: {
+      1: "Rumi",
+      2: "Mira",
+      3: "Zoey",
+      4: "Jinu",
+      5: "Derpy",
+      6: "Honmoon",
+      7: "Gwi-Ma",
+    },
+  };
+
   const TOGGLE_LABELS = {
     focusMode: "Dim navigation while focusing",
     fontSizeAffectsUi: "Apply text size to app UI",
@@ -105,6 +117,7 @@
   let settingsRoot = null;
   let preferencesApi = null;
   let disclosureEventsBound = false;
+  let lastAccentSwatchTheme = null;
   const detailsCloseTimers = new WeakMap();
 
   function render(root, nextPreferencesApi) {
@@ -115,6 +128,7 @@
 
     renderPresetCards(getRenderTarget("presets"));
     renderThemeCards(getRenderTarget("themes"));
+    renderAccentColorControl(getRenderTarget("accentColor"));
     renderSegmentedControl("contrast", getRenderTarget("contrast"));
 
     renderSelectControl("readerFont", getRenderTarget("readerFont"));
@@ -196,6 +210,11 @@
       const id = element.dataset.prefDetail;
       element.textContent = getOptionDetail(id, preferences[id]);
     });
+
+    if (preferences.theme && preferences.theme !== lastAccentSwatchTheme) {
+      lastAccentSwatchTheme = preferences.theme;
+      updateAccentSwatchColors(settingsRoot, preferences.theme);
+    }
   }
 
   function getRenderTarget(name) {
@@ -268,6 +287,67 @@
       button.setAttribute("aria-label", button.title);
       button.append(preview, body);
       container.append(button);
+    });
+  }
+
+  function renderAccentColorControl(container) {
+    if (!container) return;
+
+    container.replaceChildren();
+
+    preferencesApi.getOptions("accentColor").forEach((option) => {
+      const button = document.createElement("button");
+      button.className = "accent-color-swatch";
+      button.type = "button";
+      button.dataset.prefId = "accentColor";
+      button.dataset.prefValue = option.value;
+      // Placeholder until update() repaints these for the active theme.
+      button.style.background = option.hex || "#888";
+      button.title = option.label;
+      button.setAttribute("aria-label", option.label);
+      button.setAttribute("aria-pressed", "false");
+      container.append(button);
+    });
+  }
+
+  function getAccentSwatchColors(themePath) {
+    const host = document.createElement("div");
+    host.setAttribute("data-theme", themePath);
+    host.style.cssText =
+      "position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;";
+
+    const swatch = document.createElement("span");
+    swatch.style.backgroundColor = "var(--piggy-button-active)";
+    host.append(swatch);
+    document.body.append(host);
+
+    const colors = {};
+    preferencesApi.getOptions("accentColor").forEach((option) => {
+      host.setAttribute("data-accent-color", option.value);
+      colors[option.value] = window.getComputedStyle(swatch).backgroundColor;
+    });
+
+    host.remove();
+    return colors;
+  }
+
+  function updateAccentSwatchColors(root, themePath) {
+    const swatches = root.querySelectorAll(
+      '.accent-color-swatch[data-pref-id="accentColor"]',
+    );
+    if (swatches.length === 0) return;
+
+    const colors = getAccentSwatchColors(themePath);
+    const labels = THEME_ACCENT_LABELS[themePath];
+    swatches.forEach((swatch) => {
+      const color = colors[swatch.dataset.prefValue];
+      if (color) swatch.style.background = color;
+
+      const label =
+        labels?.[swatch.dataset.prefValue] ||
+        getOptionLabel("accentColor", swatch.dataset.prefValue);
+      swatch.title = label;
+      swatch.setAttribute("aria-label", label);
     });
   }
 

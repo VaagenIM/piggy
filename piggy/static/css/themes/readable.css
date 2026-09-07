@@ -48,16 +48,16 @@ preview.border: #b59d6d
   --piggy-navbar-end: #d2bf8d;
   --piggy-text-navbar: #25251f;
 
-  --piggy-button: #c9b97f;
-  --piggy-button-hover: #b7a466;
-  --piggy-button-active: #7f6f3c;
+  --piggy-button: var(--piggy-accent-button-override, #c9b97f);
+  --piggy-button-hover: var(--piggy-accent-hover-override, #b7a466);
+  --piggy-button-active: var(--piggy-accent-override, #7f6f3c);
   --piggy-text-button: #25251f;
-  --piggy-level-menu-active-text: #fff9e8;
-  --piggy-button-border: #7f6f3c;
+  --piggy-level-menu-active-text: var(--piggy-accent-text-override, #fff9e8);
+  --piggy-button-border: var(--piggy-accent-border-override, #7f6f3c);
   --piggy-nav-button: #fff9e8;
-  --piggy-nav-button-hover: #f5eccf;
+  --piggy-nav-button-hover: var(--piggy-accent-nav-hover-override, #f5eccf);
   --piggy-nav-button-text: #25251f;
-  --piggy-nav-button-border: #a9945a;
+  --piggy-nav-button-border: var(--piggy-accent-border-override, #a9945a);
 
   --piggy-thumbnail-overlay: rgba(255, 249, 232, 0.76);
   --piggy-text-thumbnail: var(--piggy-dark);
@@ -75,8 +75,8 @@ preview.border: #b59d6d
   --piggy-tooltip: #25251f;
   --piggy-tooltip-text: #fff9e8;
 
-  --piggy-text-hyperlink: #2f6f73;
-  --piggy-text-hyperlink-hover: #214f52;
+  --piggy-text-hyperlink: var(--piggy-accent-link-override, #2f6f73);
+  --piggy-text-hyperlink-hover: var(--piggy-accent-link-hover-override, #214f52);
 
   --piggy-level-container-text: #25251f;
   --piggy-level-container: #dfd1a8;

@@ -53,17 +53,17 @@ preview_style: background: linear-gradient(90deg, #241313, #4a2020); color: #f6e
   --piggy-navbar-end: #331818;
   --piggy-text-navbar: #f6e8df;
 
-  --piggy-button: #84382f;
-  --piggy-button-hover: #a3473c;
-  --piggy-button-active: #d05d4e;
+  --piggy-button: var(--piggy-accent-button-override, #84382f);
+  --piggy-button-hover: var(--piggy-accent-hover-override, #a3473c);
+  --piggy-button-active: var(--piggy-accent-override, #d05d4e);
   --piggy-text-button: #ffffff;
-  --piggy-level-menu-active: #84382f;
-  --piggy-level-menu-active-text: #ffffff;
-  --piggy-button-border: #bd685e;
-  --piggy-nav-button: #51211f;
-  --piggy-nav-button-hover: #6b2b27;
+  --piggy-level-menu-active: var(--piggy-accent-override, #84382f);
+  --piggy-level-menu-active-text: var(--piggy-accent-text-override, #ffffff);
+  --piggy-button-border: var(--piggy-accent-border-override, #bd685e);
+  --piggy-nav-button: var(--piggy-accent-nav-override, #51211f);
+  --piggy-nav-button-hover: var(--piggy-accent-nav-hover-override, #6b2b27);
   --piggy-nav-button-text: #ffffff;
-  --piggy-nav-button-border: #985149;
+  --piggy-nav-button-border: var(--piggy-accent-border-override, #985149);
 
   --piggy-thumbnail-overlay: rgba(20, 7, 7, 0.58);
   --piggy-text-thumbnail: var(--piggy-dark);
@@ -80,8 +80,8 @@ preview_style: background: linear-gradient(90deg, #241313, #4a2020); color: #f6e
   --piggy-tooltip: #000000;
   --piggy-tooltip-text: #ffffff;
 
-  --piggy-text-hyperlink: #91caeb;
-  --piggy-text-hyperlink-hover: #bee4f7;
+  --piggy-text-hyperlink: var(--piggy-accent-link-override, #91caeb);
+  --piggy-text-hyperlink-hover: var(--piggy-accent-link-hover-override, #bee4f7);
 
   /* Level container */
   --piggy-level-container-text: #f6e8df;
