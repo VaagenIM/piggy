@@ -35,6 +35,27 @@
     rememberPosition: "Husk hvor du stopte å lese",
   };
 
+  const I18N =
+    window.PIGGY_I18N && typeof window.PIGGY_I18N === "object"
+      ? window.PIGGY_I18N
+      : {};
+  Object.assign(CONTROL_LABELS, I18N.controlLabels || {});
+  Object.assign(TOGGLE_LABELS, I18N.toggleLabels || {});
+  const PREVIEW_LABELS = Object.assign(
+    {
+      lineOne: "Line one",
+      lineTwo: "Line two",
+      spacing: "Spacing",
+      wordSpacing: "Word spacing",
+      firstParagraph: "First paragraph",
+      secondParagraph: "Second paragraph",
+      quiet: "Quiet",
+      animated: "Animated",
+      system: "System",
+    },
+    I18N.preview || {},
+  );
+
   const PRESET_ICONS = {
     default: "settings",
     balanced: "scale",
@@ -723,24 +744,24 @@
         preview.classList.add("settings-option-preview--lines");
         preview.style.lineHeight = getLineHeightPreview(value);
         preview.append(
-          createPreviewLine("Line one"),
-          createPreviewLine("Line two"),
+          createPreviewLine(PREVIEW_LABELS.lineOne),
+          createPreviewLine(PREVIEW_LABELS.lineTwo),
         );
         break;
       case "readerLetterSpacing":
-        preview.textContent = "Spacing";
+        preview.textContent = PREVIEW_LABELS.spacing;
         preview.style.letterSpacing = getLetterSpacingPreview(value);
         break;
       case "readerWordSpacing":
-        preview.textContent = "Word spacing";
+        preview.textContent = PREVIEW_LABELS.wordSpacing;
         preview.style.wordSpacing = getWordSpacingPreview(value);
         break;
       case "readerParagraphSpacing":
         preview.classList.add("settings-option-preview--paragraphs");
         preview.style.gap = getParagraphSpacingPreview(value);
         preview.append(
-          createPreviewLine("First paragraph"),
-          createPreviewLine("Second paragraph"),
+          createPreviewLine(PREVIEW_LABELS.firstParagraph),
+          createPreviewLine(PREVIEW_LABELS.secondParagraph),
         );
         break;
       case "readerWidth":
@@ -754,10 +775,10 @@
       case "reduceMotion":
         preview.textContent =
           value === "reduce"
-            ? "Quiet"
+            ? PREVIEW_LABELS.quiet
             : value === "allow"
-              ? "Animated"
-              : "System";
+              ? PREVIEW_LABELS.animated
+              : PREVIEW_LABELS.system;
         break;
       default:
         preview.textContent = getOptionLabel(id, value);

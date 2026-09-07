@@ -225,6 +225,25 @@
     ],
   };
 
+  (function applyI18n() {
+    const i18n =
+      window.PIGGY_I18N && typeof window.PIGGY_I18N === "object"
+        ? window.PIGGY_I18N
+        : {};
+
+    Object.keys(VALUE_OPTIONS).forEach((key) => {
+      const group = i18n[key];
+      if (!group) return;
+
+      VALUE_OPTIONS[key].forEach((option) => {
+        const translated = group[option.value];
+        if (!translated) return;
+        if (translated.label !== undefined) option.label = translated.label;
+        if (translated.detail !== undefined) option.detail = translated.detail;
+      });
+    });
+  })();
+
   function getReadableTextColor(hex) {
     const match = /^#?([0-9a-f]{6})$/i.exec((hex || "").trim());
     if (!match) return null;

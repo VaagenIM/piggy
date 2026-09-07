@@ -8,7 +8,14 @@ from typing import Optional
 from bs4 import BeautifulSoup as bs
 from flask import send_file, request
 
-from piggy import ALLOWED_URL_CHARS_REGEX, IMG_FMT, MEDIA_ROUTE, ASSIGNMENT_ROUTE
+from piggy import (
+    ALLOWED_URL_CHARS_REGEX,
+    IMG_FMT,
+    MEDIA_ROUTE,
+    ASSIGNMENT_ROUTE,
+    SUPPORTED_UI_LOCALES,
+    DEFAULT_UI_LOCALE,
+)
 from piggy.models import LANGUAGES
 from turtleconverter import generate_static_files
 
@@ -17,6 +24,18 @@ def lru_cache_wrapper(func):
     if os.environ.get("USE_CACHE", "1") == "1":
         return lru_cache()(func)
     return func
+
+
+def get_ui_locale() -> str:
+    """
+    Resolve the site UI locale for the current request: an explicit
+    `ui_locale` cookie takes priority, falling back to the browser's
+    Accept-Language header, then the default locale.
+    """
+    cookie_locale = request.cookies.get("ui_locale", "")
+    if cookie_locale in SUPPORTED_UI_LOCALES:
+        return cookie_locale
+    return request.accept_languages.best_match(SUPPORTED_UI_LOCALES, DEFAULT_UI_LOCALE)
 
 
 def serve_pil_image(pil_img):

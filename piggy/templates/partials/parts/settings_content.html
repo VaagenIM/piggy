@@ -7,14 +7,14 @@
   data-settings-inline="{{ 'true' if settings_inline|default(false) else 'false' }}">
   <header class="settings-panel-header settings-page-header">
     <div class="settings-heading-group">
-      <h1 id="settings-title">Innstillinger</h1>
+      <h1 id="settings-title">{{ _('Innstillinger') }}</h1>
     </div>
     <div class="settings-header-actions">
       <button
         id="settings-reset-button"
         class="piggy-button piggy-button--m settings-secondary-button"
         type="button">
-        Tilbakestill
+        {{ _('Tilbakestill') }}
       </button>
       <a
         id="settings-return-link"
@@ -30,7 +30,7 @@
           stroke-linejoin="round">
           <path d="m15 18-6-6 6-6" />
         </svg>
-        <span>Tilbake til siden</span>
+        <span>{{ _('Tilbake til siden') }}</span>
       </a>
     </div>
   </header>
@@ -40,31 +40,34 @@
       <section
         class="settings-preview"
         aria-labelledby="settings-preview-title">
-        <h2 id="settings-preview-title">Forhåndsvisning</h2>
+        <h2 id="settings-preview-title">{{ _('Forhåndsvisning') }}</h2>
         <div class="settings-preview-card">
           <div class="assignment-page-header settings-preview-header">
-            <p class="settings-preview-level">Oppgave 5</p>
-            <h3 class="settings-preview-title">Løkker og valg</h3>
+            <p class="settings-preview-level">{{ _('Oppgave 5') }}</p>
+            <h3 class="settings-preview-title">{{ _('Løkker og valg') }}</h3>
           </div>
 
           <article
             class="settings-reader-preview md-content"
-            aria-label="Settings preview">
-            <h2>Planlegg programmet</h2>
+            aria-label="{{ _('Settings preview') }}">
+            <h2>{{ _('Planlegg programmet') }}</h2>
             <p>
-              Et program er lettere å lese når koden er forståelig. Det er også
-              viktig å teste små deler om gangen.
+              {{ _('Et program er lettere å lese når koden er forståelig. Det er også viktig å teste små deler om gangen.') }}
             </p>
             <p>
-              Bruk navn for å forklare verdien, som
-              <code>total_score</code> eller <code>current_level</code>.
+              {% trans %}
+                Bruk navn for å forklare verdien, som
+                <code>total_score</code> eller <code>current_level</code>.
+              {% endtrans %}
             </p>
 
-            <h3>Prøv løkken</h3>
+            <h3>{{ _('Prøv løkken') }}</h3>
             <ul>
-              <li>Start med en kort liste med verdier.</li>
-              <li>Print ett resultat før du legger til mer logikk.</li>
-              <li>Sjekk det som skrives ut etter hver endring.</li>
+              <li>{{ _('Start med en kort liste med verdier.') }}</li>
+              <li>
+                {{ _('Print ett resultat før du legger til mer logikk.') }}
+              </li>
+              <li>{{ _('Sjekk det som skrives ut etter hver endring.') }}</li>
             </ul>
 
             <div class="highlight">
@@ -115,7 +118,7 @@
         <div
           class="settings-tab-list"
           role="tablist"
-          aria-label="Settings categories">
+          aria-label="{{ _('Settings categories') }}">
           <button
             id="settings-tab-main"
             class="settings-tab-button"
@@ -124,7 +127,7 @@
             aria-selected="true"
             aria-controls="settings-panel-main"
             data-settings-tab="main">
-            Hovedinnstillinger
+            {{ _('Hovedinnstillinger') }}
           </button>
           <button
             id="settings-tab-text"
@@ -134,7 +137,7 @@
             aria-selected="false"
             aria-controls="settings-panel-text"
             data-settings-tab="text">
-            Tekst
+            {{ _('Tekst') }}
           </button>
           <button
             id="settings-tab-focus"
@@ -144,7 +147,7 @@
             aria-selected="false"
             aria-controls="settings-panel-focus"
             data-settings-tab="focus">
-            Fokus
+            {{ _('Fokus') }}
           </button>
           <button
             id="settings-tab-support"
@@ -154,7 +157,7 @@
             aria-selected="false"
             aria-controls="settings-panel-support"
             data-settings-tab="support">
-            Støtte
+            {{ _('Støtte') }}
           </button>
         </div>
 
@@ -168,8 +171,59 @@
             <div class="settings-control-stack">
               <section
                 class="settings-subsection"
+                aria-labelledby="settings-site-language-title">
+                <h3 id="settings-site-language-title">
+                  {{ _('Nettstedspråk') }}
+                </h3>
+                {% from 'macros/dropdown.html' import dropdown, dropdown_row %}
+                {% set trigger %}
+                  <span class="language-flag"
+                    >{{ ui_locale_display.get(ui_locale, {}).get('flag', '') }}</span
+                  >
+                  <span class="language-current"
+                    >{{ ui_locale_display.get(ui_locale, {}).get('name', ui_locale) }}</span
+                  >
+                {% endset %}
+                {%
+                  call dropdown(
+                    id='site-language-container',
+                    trigger=trigger,
+                    style='pill',
+                    columns=1,
+                    aria_label=_('Nettstedspråk'),
+                    wrapper_class='language-selector',
+                    trigger_class='language-trigger site-language-trigger site-nav-menu-button',
+                    panel_class='language-dropdown'
+                  )
+                %}
+                  {% for code in supported_ui_locales %}
+                    {% set lang_meta = ui_locale_display.get(code, {}) %}
+                    {% set row_left %}
+                      <span class="language-flag"
+                        >{{ lang_meta.get('flag', '') }}</span
+                      >
+                      <span class="language-name"
+                        >{{ lang_meta.get('name', code) }}</span
+                      >
+                    {% endset %}
+                    {{
+                      dropdown_row(
+                        href='#',
+                        left_text=row_left,
+                        active=(code == ui_locale),
+                        columns=1,
+                        extra_attrs='data-ui-locale="' ~ code ~ '"'
+                      )
+                    }}
+                  {% endfor %}
+                {% endcall %}
+              </section>
+              <section
+                class="settings-subsection"
                 aria-labelledby="settings-presets-title">
-                <h3 id="settings-presets-title">Forhåndsinnstillinger</h3>
+                <h3 id="settings-presets-title">
+                  {{ _('Forhåndsinnstillinger') }}
+                </h3>
                 <div
                   class="settings-card-grid settings-card-grid--presets"
                   data-settings-render="presets"></div>
@@ -177,7 +231,7 @@
               <section
                 class="settings-subsection"
                 aria-labelledby="settings-theme-title">
-                <h3 id="settings-theme-title">Temaer</h3>
+                <h3 id="settings-theme-title">{{ _('Temaer') }}</h3>
                 <div
                   class="settings-card-grid settings-card-grid--themes"
                   data-settings-render="themes"></div>
@@ -185,7 +239,7 @@
               <section
                 class="settings-subsection"
                 aria-labelledby="settings-accent-title">
-                <h3 id="settings-accent-title">Aksentfarge</h3>
+                <h3 id="settings-accent-title">{{ _('Aksentfarge') }}</h3>
                 <div
                   class="settings-accent-swatches"
                   data-settings-render="accentColor"></div>
@@ -212,7 +266,7 @@
             </div>
 
             <details class="settings-disclosure">
-              <summary>Avansert tekstoppsett</summary>
+              <summary>{{ _('Avansert tekstoppsett') }}</summary>
               <div class="settings-control-stack">
                 <div data-settings-render="readerLineHeight"></div>
                 <div data-settings-render="readerLetterSpacing"></div>
@@ -234,7 +288,7 @@
               <section
                 class="settings-subsection"
                 aria-labelledby="settings-motion-title">
-                <h3 id="settings-motion-title">Motion</h3>
+                <h3 id="settings-motion-title">{{ _('Motion') }}</h3>
                 <div class="settings-control-stack">
                   <div data-settings-render="contrast"></div>
                   <div data-settings-render="reduceMotion"></div>
@@ -243,7 +297,9 @@
               <section
                 class="settings-subsection"
                 aria-labelledby="settings-focus-switches-title">
-                <h3 id="settings-focus-switches-title">Fokus switches</h3>
+                <h3 id="settings-focus-switches-title">
+                  {{ _('Fokus switches') }}
+                </h3>
                 <div class="settings-toggle-grid">
                   <div data-settings-render="focusMode"></div>
                   <div data-settings-render="readingRuler"></div>
@@ -262,9 +318,7 @@
             <div class="settings-control-stack">
               <div data-settings-render="rememberPosition"></div>
               <p class="settings-support-copy">
-                Lagrer skjermposisjonen for hver side på denne nettleseren.
-                Dette gjør at Piggy vil returnere til der du var når du sluttet
-                å lese.
+                {{ _('Lagrer skjermposisjonen for hver side på denne nettleseren. Dette gjør at Piggy vil returnere til der du var når du sluttet å lese.') }}
               </p>
             </div>
           </section>
