@@ -26,7 +26,7 @@ from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
 from piggy.js_i18n import build_js_i18n
 from piggy.models import LANGUAGES
-from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path, unfreeze
+from piggy.piggybank import PIGGYMAP, SHORTLINK_MAP, get_piggymap_segment_from_path, unfreeze
 from piggy.utils import (
     normalize_path_to_str,
     lru_cache_wrapper,
@@ -185,6 +185,14 @@ def create_app(debug: bool = False) -> Flask:
     def favicon():
         """Serve the favicon."""
         return redirect("/static/img/icons/piggy_icon-128.png", code=302)
+
+    @app.route("/s/<shortlink>")
+    def shortlink_redirect(shortlink):
+        """Return an immediate, static-friendly HTML redirect for an assignment shortlink."""
+        target = SHORTLINK_MAP.get(shortlink)
+        if not target:
+            raise PiggyHTTPException(gettext("Page not found"), status_code=404)
+        return render_template("shortlink.html", target=target), 200
 
     @assignment_routes.route("/<path:path>")
     @assignment_routes.route("/")
