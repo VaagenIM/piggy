@@ -13,7 +13,9 @@
 .assignment-page-header .assignment-heading {
   min-width: 0;
   margin: 0;
-  font-size: calc(2.5rem * var(--piggy-reader-font-scale));
+  font-size: calc(
+    clamp(1.6rem, 1rem + 3.5vw, 2.5rem) * var(--piggy-reader-font-scale)
+  );
   font-weight: 600;
   overflow-wrap: anywhere;
 }

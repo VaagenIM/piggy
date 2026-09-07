@@ -1,4 +1,5 @@
 {% from 'macros/dropdown.html' import dropdown, dropdown_row %}
+{% from 'macros/adaptive_overflow.html' import adaptive_tier_bootstrap %}
 
 {% set levels_data = none %}
 {% if meta is defined and meta %}
@@ -47,6 +48,7 @@
       {% set level_has_difficulty = level_difficulty|int > 0 and level_difficulty|int <= 5 %}
       {% set is_active = assignment.level|int == level|int %}
 
+
       {% set icon_html %}
         {% if level_has_difficulty %}
           <img
@@ -80,8 +82,14 @@
       {% endif %}
     {% endfor %}
 
-    <div class="level-menu" data-adaptive-overflow>
-      <nav class="level-tabs" data-adaptive-tier="0" aria-label="{{ level_text }}">
+    <div
+      class="level-menu"
+      data-adaptive-overflow
+      data-adaptive-key="level-menu">
+      <nav
+        class="level-tabs"
+        data-adaptive-tier="0"
+        aria-label="{{ level_text }}">
         {% for link, assignment in levels %}
           {% if current_language.key and current_language.key in assignment.translation_meta %}
             {% set level_meta = assignment.translation_meta[current_language.key] %}
@@ -99,23 +107,71 @@
           {% endif %}
           {% set level_title = level_meta.title or level_meta.name %}
           {% set is_active = assignment.level | int == level | int %}
-          {% set tab_element = 'span' if is_active else 'a' %}
-          <{{ tab_element }}
-            class="level-tab{{ ' active' if is_active else '' }}"
-            {% if not is_active %}href="{{ link }}"{% endif %}
-            {% if is_active %}aria-current="page"{% endif %}>
+          {% set tab_content %}
             <span class="piggy-dropdown-row-text">
-              <span class="piggy-dropdown-row-left">{{ level_text }} {{ assignment.level | int }}</span>
-              <span class="piggy-dropdown-row-right">{{ level_title | unescape }}</span>
+              <span class="piggy-dropdown-row-left"
+                >{{ level_text }} {{ assignment.level | int }}</span
+              >
+              <span class="piggy-dropdown-row-right"
+                >{{ level_title | unescape }}</span
+              >
             </span>
-          </{{ tab_element }}>
+          {% endset %}
+          {% if is_active %}
+            <span class="level-tab active" aria-current="page">
+              {{ tab_content | safe }}
+            </span>
+          {% else %}
+            <a class="level-tab" href="{{ link }}">
+              {{ tab_content | safe }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </nav>
+
+      <nav
+        class="level-tabs"
+        data-adaptive-tier="1"
+        aria-label="{{ level_text }}">
+        {% for link, assignment in levels %}
+          {% if current_language.key and current_language.key in assignment.translation_meta %}
+            {% if "/lang/" in request.path %}
+              {%
+                set link = request.path.split('/lang/')[0].split('/')[0:-1] | join('/') ~ "/" ~ link ~ "/lang/" ~
+                current_language.key
+              %}
+            {% endif %}
+          {% else %}
+            {% if "/lang/" in request.path %}
+              {% set link = request.path.split('/lang/')[0].split('/')[0:-1] | join('/') ~ "/" ~ link %}
+            {% endif %}
+          {% endif %}
+          {% set is_active = assignment.level | int == level | int %}
+          {% set short_tab_content %}
+            <span class="piggy-dropdown-row-text">
+              <span class="piggy-dropdown-row-left"
+                >{{ level_text }} {{ assignment.level | int }}</span
+              >
+            </span>
+          {% endset %}
+          {% if is_active %}
+            <span class="level-tab active" aria-current="page">
+              {{ short_tab_content | safe }}
+            </span>
+          {% else %}
+            <a class="level-tab" href="{{ link }}">
+              {{ short_tab_content | safe }}
+            </a>
+          {% endif %}
         {% endfor %}
       </nav>
 
       {% set trigger_wide %}
         <span class="piggy-dropdown-row--cols-2">
           <span class="piggy-dropdown-row-text">
-            <span class="piggy-dropdown-row-left">{{ level_text }} {{ level | int }}</span>
+            <span class="piggy-dropdown-row-left"
+              >{{ level_text }} {{ level | int }}</span
+            >
             <span class="piggy-dropdown-row-right">{{ ns.current_title }}</span>
           </span>
         </span>
@@ -129,13 +185,15 @@
           aria_label=level_text,
           wrapper_class='level-menu-dropdown',
           trigger_class='level-menu-trigger',
-          extra_attrs='data-adaptive-tier="1"'
+          full_width=true,
+          extra_attrs='data-adaptive-tier="2"'
         )
       %}
         {% for link, assignment in levels %}
           {{ level_dropdown_row(link, assignment) }}
         {% endfor %}
       {% endcall %}
+
 
       {% set trigger_compact %}
         <span>{{ level_text }} {{ level | int }}</span>
@@ -149,7 +207,8 @@
           aria_label=level_text,
           wrapper_class='level-menu-dropdown',
           trigger_class='level-menu-trigger',
-          extra_attrs='data-adaptive-tier="2"'
+          full_width=true,
+          extra_attrs='data-adaptive-tier="3"'
         )
       %}
         {% for link, assignment in levels %}
@@ -157,5 +216,6 @@
         {% endfor %}
       {% endcall %}
     </div>
+    {{ adaptive_tier_bootstrap() }}
   {% endif %}
 {% endif %}

@@ -5,6 +5,7 @@ A hacky script that scrapes a website and downloads all the pages and media file
 import multiprocessing
 import os
 import re
+import time
 import requests
 from pathlib import Path
 from shutil import copytree
@@ -53,10 +54,38 @@ def unquote_path(path):
     return new_path
 
 
+def get_with_retry(url_to_fetch, *, timeout=600, max_attempts=5):
+    """Retry HTML page fetches when the server temporarily responds with HTTP 500."""
+    last_response = None
+    for attempt in range(1, max_attempts + 1):
+        try:
+            response = requests.get(url_to_fetch, allow_redirects=True, timeout=timeout)
+        except requests.RequestException as exc:
+            if attempt == max_attempts:
+                raise
+            print(f"WARNING: Request failed for {url_to_fetch} (attempt {attempt}/{max_attempts}): {exc}. Retrying...")
+            time.sleep(attempt)
+            continue
+
+        last_response = response
+        if response.status_code != 500:
+            return response
+
+        if attempt == max_attempts:
+            print(f"WARNING: Could not fetch {url_to_fetch} after {max_attempts} attempts (status code: {response.status_code})")
+            return response
+
+        print(f"WARNING: Could not fetch {url_to_fetch} (status code: {response.status_code}). Retrying attempt {attempt + 1}/{max_attempts}...")
+        time.sleep(attempt)
+
+    return last_response
+
+
 def get_html(link) -> tuple[str, set[str], set[str]]:
     """Get the html from the given url, and append the new links to the links list."""
-    print(f"Visiting \33[34m{url}/{link.strip('/')}\33[0m")
-    r = requests.get(f"{url}/{link.strip('/')}", allow_redirects=True, timeout=600)
+    page_url = f"{url}/{link.strip('/')}"
+    print(f"Visiting \33[34m{page_url}\33[0m")
+    r = get_with_retry(page_url)
 
     visited.add(link)
 

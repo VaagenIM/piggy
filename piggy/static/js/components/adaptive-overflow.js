@@ -52,6 +52,19 @@ function initializeAdaptiveOverflow() {
       }
     }
 
+    const adaptiveKey = container.dataset.adaptiveKey;
+    if (adaptiveKey) {
+      try {
+        localStorage.setItem(
+          `piggy:adaptive-tier:${adaptiveKey}`,
+          String(tiers.indexOf(chosen)),
+        );
+      } catch (e) {
+        // localStorage may be unavailable (private mode, quota, etc.) --
+        // persistence is just an anti-flash nicety, safe to skip.
+      }
+    }
+
     const previousActive = tiers.find((tier) =>
       tier.classList.contains("is-active"),
     );

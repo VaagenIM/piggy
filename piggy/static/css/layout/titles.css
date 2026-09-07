@@ -3,31 +3,24 @@
 \************************/
 .page-title {
   margin-bottom: 0 !important;
-  font-size: calc(3rem * var(--piggy-font-scale));
+  font-size: calc(clamp(1.75rem, 1rem + 4vw, 3rem) * var(--piggy-font-scale));
   font-weight: 800;
   text-align: center;
   color: var(--piggy-content-h1) !important;
+  overflow-wrap: anywhere;
   word-wrap: break-word;
   max-width: 1006px;
   margin: 0 auto;
 }
 
-@media screen and (max-width: 800px) {
-  .page-title {
-    font-size: calc(2.5rem * var(--piggy-font-scale));
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .page-title {
-    font-size: calc(2.25rem * var(--piggy-font-scale));
-    word-wrap: break-word;
-  }
-}
-
 .assignment-title {
-  font-size: calc(2.5rem * var(--piggy-font-scale));
+  font-size: calc(
+    clamp(1.35rem, 0.7rem + 3.5vw, 2.5rem) * var(--piggy-font-scale)
+  );
   font-weight: 600;
   text-align: center;
   padding-bottom: 0.2rem;
+  overflow-wrap: anywhere;
+  word-wrap: break-word;
+  max-width: 100%;
 }

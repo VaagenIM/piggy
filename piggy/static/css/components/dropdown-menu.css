@@ -45,7 +45,8 @@
   top: calc(100% + 0.35rem);
   left: 0;
   box-sizing: border-box;
-  min-width: max-content;
+  width: max-content;
+  min-width: 100%;
   max-width: min(22rem, calc(100vw - 1rem));
   max-height: min(22rem, calc(100svh - 40svh));
   overflow-y: auto;
@@ -127,6 +128,10 @@
 
 .piggy-dropdown--rounded .piggy-dropdown-panel {
   border-radius: 8px;
+}
+
+.piggy-dropdown--full-width .piggy-dropdown-trigger {
+  width: 100%;
 }
 
 /* Rows: 1 = plain label, 2 = left | right, 3 = icon + (left | right) */

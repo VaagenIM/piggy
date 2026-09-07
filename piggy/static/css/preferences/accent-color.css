@@ -1,0 +1,490 @@
+/*********************************\
+|*   USER-CHOSEN ACCENT COLOR    *|
+\*********************************/
+:root[data-accent-color]:not([data-accent-color="0"]) {
+  --piggy-button-active-text: var(--piggy-accent-text-override);
+}
+
+/* ===== Preset base colors, one bespoke set per theme (ids 1-7) ===== */
+
+/* Dark -- blue is this theme's own default (see dark.css); 1-7 add variety
+   without a fixed hue family, since this is the generic/neutral theme. */
+[data-theme="dark"][data-accent-color="1"] {
+  --piggy-accent-override: #d6469e; /* Rose */
+}
+[data-theme="dark"][data-accent-color="2"] {
+  --piggy-accent-override: #2e9e5b; /* Green */
+}
+[data-theme="dark"][data-accent-color="3"] {
+  --piggy-accent-override: #c98a2e; /* Amber */
+}
+[data-theme="dark"][data-accent-color="4"] {
+  --piggy-accent-override: #8a4fd1; /* Violet */
+}
+[data-theme="dark"][data-accent-color="5"] {
+  --piggy-accent-override: #1f9e9e; /* Teal */
+}
+[data-theme="dark"][data-accent-color="6"] {
+  --piggy-accent-override: #c9384f; /* Crimson */
+}
+[data-theme="dark"][data-accent-color="7"] {
+  --piggy-accent-override: #a3b52e; /* Lime */
+}
+
+/* Light -- same idea as Dark. */
+[data-theme="light"][data-accent-color="1"] {
+  --piggy-accent-override: #d6469e; /* Rose */
+}
+[data-theme="light"][data-accent-color="2"] {
+  --piggy-accent-override: #2e9e5b; /* Green */
+}
+[data-theme="light"][data-accent-color="3"] {
+  --piggy-accent-override: #c98a2e; /* Amber */
+}
+[data-theme="light"][data-accent-color="4"] {
+  --piggy-accent-override: #8a4fd1; /* Violet */
+}
+[data-theme="light"][data-accent-color="5"] {
+  --piggy-accent-override: #1f9e9e; /* Teal */
+}
+[data-theme="light"][data-accent-color="6"] {
+  --piggy-accent-override: #c9384f; /* Crimson */
+}
+[data-theme="light"][data-accent-color="7"] {
+  --piggy-accent-override: #a3b52e; /* Lime */
+}
+
+/* Matrix -- native is neon terminal green; every id stays a shade of green. */
+[data-theme="matrix"][data-accent-color="1"] {
+  --piggy-accent-override: #00ff41; /* classic bright matrix green */
+}
+[data-theme="matrix"][data-accent-color="2"] {
+  --piggy-accent-override: #33cc33; /* medium green */
+}
+[data-theme="matrix"][data-accent-color="3"] {
+  --piggy-accent-override: #7fff00; /* chartreuse */
+}
+[data-theme="matrix"][data-accent-color="4"] {
+  --piggy-accent-override: #00b359; /* emerald */
+}
+[data-theme="matrix"][data-accent-color="5"] {
+  --piggy-accent-override: #66ffcc; /* mint / teal-green */
+}
+[data-theme="matrix"][data-accent-color="6"] {
+  --piggy-accent-override: #1a8033; /* deep forest green */
+}
+[data-theme="matrix"][data-accent-color="7"] {
+  --piggy-accent-override: #ccff33; /* yellow-green */
+}
+
+/* Ocean -- native is teal/cyan; every id stays in the blue-to-aqua family. */
+[data-theme="ocean"][data-accent-color="1"] {
+  --piggy-accent-override: #0099cc; /* ocean blue */
+}
+[data-theme="ocean"][data-accent-color="2"] {
+  --piggy-accent-override: #00e5cc; /* turquoise */
+}
+[data-theme="ocean"][data-accent-color="3"] {
+  --piggy-accent-override: #006699; /* deep sea blue */
+}
+[data-theme="ocean"][data-accent-color="4"] {
+  --piggy-accent-override: #33cccc; /* seafoam teal */
+}
+[data-theme="ocean"][data-accent-color="5"] {
+  --piggy-accent-override: #0077be; /* azure */
+}
+[data-theme="ocean"][data-accent-color="6"] {
+  --piggy-accent-override: #66d9e8; /* light aqua */
+}
+[data-theme="ocean"][data-accent-color="7"] {
+  --piggy-accent-override: #003d5c; /* navy depth */
+}
+
+/* Synthwave -- native is a multicolor retro-neon palette, so ids draw from
+   that whole spectrum rather than one hue. */
+[data-theme="synthwave"][data-accent-color="1"] {
+  --piggy-accent-override: #ff2079; /* hot pink */
+}
+[data-theme="synthwave"][data-accent-color="2"] {
+  --piggy-accent-override: #7b2ff7; /* electric purple */
+}
+[data-theme="synthwave"][data-accent-color="3"] {
+  --piggy-accent-override: #00e5ff; /* neon cyan */
+}
+[data-theme="synthwave"][data-accent-color="4"] {
+  --piggy-accent-override: #ff6f00; /* sunset orange */
+}
+[data-theme="synthwave"][data-accent-color="5"] {
+  --piggy-accent-override: #c724b1; /* deep magenta-purple */
+}
+[data-theme="synthwave"][data-accent-color="6"] {
+  --piggy-accent-override: #4d0f8a; /* deep indigo */
+}
+[data-theme="synthwave"][data-accent-color="7"] {
+  --piggy-accent-override: #ff99e6; /* pale neon pink */
+}
+
+/* Golden -- easter egg keyed to KPop Demon Hunters' cast instead of a plain
+   gold ramp; see THEME_ACCENT_LABELS.golden in settings-controls.js. */
+[data-theme="golden"][data-accent-color="1"] {
+  --piggy-accent-override: #ff4fa3; /* Rumi -- Huntrix lead, pink */
+}
+[data-theme="golden"][data-accent-color="2"] {
+  --piggy-accent-override: #3a6fe0; /* Mira -- Huntrix, cool blue */
+}
+[data-theme="golden"][data-accent-color="3"] {
+  --piggy-accent-override: #4fd67a; /* Zoey -- Huntrix, bright green */
+}
+[data-theme="golden"][data-accent-color="4"] {
+  --piggy-accent-override: #6b1a3d; /* Jinu -- Saja Boys, demon wine-purple */
+}
+[data-theme="golden"][data-accent-color="5"] {
+  --piggy-accent-override: #2f9e9e; /* Derpy -- the magpie-tiger, mystical teal */
+}
+[data-theme="golden"][data-accent-color="6"] {
+  --piggy-accent-override: #ffe066; /* Honmoon -- the golden soul-barrier */
+}
+[data-theme="golden"][data-accent-color="7"] {
+  --piggy-accent-override: #b8232f; /* Gwi-Ma -- the shadow demon, fire red */
+}
+
+/* Space -- native is cosmic cyan; ids draw from a starfield/nebula palette
+   of blues, cyans and purples. */
+[data-theme="space"][data-accent-color="1"] {
+  --piggy-accent-override: #45a1ff; /* star blue */
+}
+[data-theme="space"][data-accent-color="2"] {
+  --piggy-accent-override: #9d4edd; /* nebula purple */
+}
+[data-theme="space"][data-accent-color="3"] {
+  --piggy-accent-override: #00f5ff; /* electric cyan */
+}
+[data-theme="space"][data-accent-color="4"] {
+  --piggy-accent-override: #3a86ff; /* cosmic blue */
+}
+[data-theme="space"][data-accent-color="5"] {
+  --piggy-accent-override: #c77dff; /* lavender nebula */
+}
+[data-theme="space"][data-accent-color="6"] {
+  --piggy-accent-override: #0b3d91; /* deep space blue */
+}
+[data-theme="space"][data-accent-color="7"] {
+  --piggy-accent-override: #7fffd4; /* aquamarine */
+}
+
+/* Dusk -- native is twilight purple; ids stay in dusky purples/blues. */
+[data-theme="dusk"][data-accent-color="1"] {
+  --piggy-accent-override: #6c5ce7; /* twilight violet */
+}
+[data-theme="dusk"][data-accent-color="2"] {
+  --piggy-accent-override: #4834d4; /* deep indigo */
+}
+[data-theme="dusk"][data-accent-color="3"] {
+  --piggy-accent-override: #a29bfe; /* soft lavender */
+}
+[data-theme="dusk"][data-accent-color="4"] {
+  --piggy-accent-override: #2d3561; /* midnight blue */
+}
+[data-theme="dusk"][data-accent-color="5"] {
+  --piggy-accent-override: #b19cd9; /* light purple */
+}
+[data-theme="dusk"][data-accent-color="6"] {
+  --piggy-accent-override: #574b90; /* muted plum */
+}
+[data-theme="dusk"][data-accent-color="7"] {
+  --piggy-accent-override: #8878c3; /* dusky periwinkle */
+}
+
+/* Ember -- native is fire red-orange; ids stay in reds/oranges/embers. */
+[data-theme="ember"][data-accent-color="1"] {
+  --piggy-accent-override: #ff6b35; /* bright ember orange */
+}
+[data-theme="ember"][data-accent-color="2"] {
+  --piggy-accent-override: #c0392b; /* deep red */
+}
+[data-theme="ember"][data-accent-color="3"] {
+  --piggy-accent-override: #ff8c42; /* warm orange */
+}
+[data-theme="ember"][data-accent-color="4"] {
+  --piggy-accent-override: #8b2e1f; /* charred red-brown */
+}
+[data-theme="ember"][data-accent-color="5"] {
+  --piggy-accent-override: #e8734a; /* terracotta */
+}
+[data-theme="ember"][data-accent-color="6"] {
+  --piggy-accent-override: #ffab73; /* light amber-orange */
+}
+[data-theme="ember"][data-accent-color="7"] {
+  --piggy-accent-override: #a13d2d; /* rust */
+}
+
+/* Piggy (Dark) -- native is pink; ids stay in pinks/roses/magentas. */
+[data-theme="piggy-dark"][data-accent-color="1"] {
+  --piggy-accent-override: #ff6fa5; /* bright pink */
+}
+[data-theme="piggy-dark"][data-accent-color="2"] {
+  --piggy-accent-override: #d6336c; /* raspberry */
+}
+[data-theme="piggy-dark"][data-accent-color="3"] {
+  --piggy-accent-override: #ff9ec4; /* soft pink */
+}
+[data-theme="piggy-dark"][data-accent-color="4"] {
+  --piggy-accent-override: #b83280; /* deep magenta-pink */
+}
+[data-theme="piggy-dark"][data-accent-color="5"] {
+  --piggy-accent-override: #ffb3d1; /* pale pink */
+}
+[data-theme="piggy-dark"][data-accent-color="6"] {
+  --piggy-accent-override: #a3336b; /* muted mauve */
+}
+[data-theme="piggy-dark"][data-accent-color="7"] {
+  --piggy-accent-override: #ff4d94; /* hot pink */
+}
+
+/* Piggy -- native is pink (light); softer pinks/roses/berries. */
+[data-theme="piggy"][data-accent-color="1"] {
+  --piggy-accent-override: #e0779a; /* rose pink */
+}
+[data-theme="piggy"][data-accent-color="2"] {
+  --piggy-accent-override: #b83a5e; /* deep rose */
+}
+[data-theme="piggy"][data-accent-color="3"] {
+  --piggy-accent-override: #f2a6bd; /* soft blush */
+}
+[data-theme="piggy"][data-accent-color="4"] {
+  --piggy-accent-override: #a12f52; /* deep berry */
+}
+[data-theme="piggy"][data-accent-color="5"] {
+  --piggy-accent-override: #ffc2d4; /* pale pink */
+}
+[data-theme="piggy"][data-accent-color="6"] {
+  --piggy-accent-override: #d1547d; /* raspberry */
+}
+[data-theme="piggy"][data-accent-color="7"] {
+  --piggy-accent-override: #8f2745; /* dark maroon-pink */
+}
+
+/* Desert -- native is warm brown; ids stay in sand/tan/terracotta tones. */
+[data-theme="desert"][data-accent-color="1"] {
+  --piggy-accent-override: #b8763a; /* tan / caramel */
+}
+[data-theme="desert"][data-accent-color="2"] {
+  --piggy-accent-override: #8a5a2b; /* medium brown */
+}
+[data-theme="desert"][data-accent-color="3"] {
+  --piggy-accent-override: #d9a066; /* sandy tan */
+}
+[data-theme="desert"][data-accent-color="4"] {
+  --piggy-accent-override: #5c3a17; /* dark brown */
+}
+[data-theme="desert"][data-accent-color="5"] {
+  --piggy-accent-override: #c98a4a; /* terracotta-tan */
+}
+[data-theme="desert"][data-accent-color="6"] {
+  --piggy-accent-override: #e8c39e; /* pale sand */
+}
+[data-theme="desert"][data-accent-color="7"] {
+  --piggy-accent-override: #9c6b2f; /* bronze-brown */
+}
+
+/* Sage -- native is herb green; ids stay in sage/moss greens. */
+[data-theme="sage"][data-accent-color="1"] {
+  --piggy-accent-override: #7a9e6e; /* sage green */
+}
+[data-theme="sage"][data-accent-color="2"] {
+  --piggy-accent-override: #4a7a4f; /* forest sage */
+}
+[data-theme="sage"][data-accent-color="3"] {
+  --piggy-accent-override: #a3c299; /* light sage */
+}
+[data-theme="sage"][data-accent-color="4"] {
+  --piggy-accent-override: #3d5c3f; /* dark moss */
+}
+[data-theme="sage"][data-accent-color="5"] {
+  --piggy-accent-override: #8fae76; /* olive-sage */
+}
+[data-theme="sage"][data-accent-color="6"] {
+  --piggy-accent-override: #6b8e5a; /* herb green */
+}
+[data-theme="sage"][data-accent-color="7"] {
+  --piggy-accent-override: #b8cca8; /* pale sage */
+}
+
+/* Readable -- native is warm sepia/olive; ids stay in that parchment family. */
+[data-theme="readable"][data-accent-color="1"] {
+  --piggy-accent-override: #9c8a52; /* olive-tan */
+}
+[data-theme="readable"][data-accent-color="2"] {
+  --piggy-accent-override: #6b5d33; /* dark olive */
+}
+[data-theme="readable"][data-accent-color="3"] {
+  --piggy-accent-override: #bfae7a; /* light khaki */
+}
+[data-theme="readable"][data-accent-color="4"] {
+  --piggy-accent-override: #4f4526; /* deep sepia */
+}
+[data-theme="readable"][data-accent-color="5"] {
+  --piggy-accent-override: #a89660; /* warm tan */
+}
+[data-theme="readable"][data-accent-color="6"] {
+  --piggy-accent-override: #d4c496; /* pale parchment */
+}
+[data-theme="readable"][data-accent-color="7"] {
+  --piggy-accent-override: #7a6a3a; /* medium sepia */
+}
+
+/* Amethyst -- native is purple; ids stay in purples/lilacs/plums. */
+[data-theme="amethyst"][data-accent-color="1"] {
+  --piggy-accent-override: #9575d1; /* light amethyst */
+}
+[data-theme="amethyst"][data-accent-color="2"] {
+  --piggy-accent-override: #6a4ba0; /* deep purple */
+}
+[data-theme="amethyst"][data-accent-color="3"] {
+  --piggy-accent-override: #b39ddb; /* soft lavender */
+}
+[data-theme="amethyst"][data-accent-color="4"] {
+  --piggy-accent-override: #4a3578; /* dark violet */
+}
+[data-theme="amethyst"][data-accent-color="5"] {
+  --piggy-accent-override: #a687cc; /* medium purple */
+}
+[data-theme="amethyst"][data-accent-color="6"] {
+  --piggy-accent-override: #cdb8e8; /* pale lilac */
+}
+[data-theme="amethyst"][data-accent-color="7"] {
+  --piggy-accent-override: #5d4189; /* plum */
+}
+
+/* High-contrast: its own bold/pure set, kept maximally saturated for
+   guaranteed contrast against its pure-black background -- "fitting" here
+   means bold and unambiguous, not a narrow hue family. */
+[data-theme="high-contrast"][data-accent-color="1"] {
+  --piggy-accent-override: #ff66cc;
+}
+[data-theme="high-contrast"][data-accent-color="2"] {
+  --piggy-accent-override: #33ff88;
+}
+[data-theme="high-contrast"][data-accent-color="3"] {
+  --piggy-accent-override: #ffcc33;
+}
+[data-theme="high-contrast"][data-accent-color="4"] {
+  --piggy-accent-override: #bb66ff;
+}
+[data-theme="high-contrast"][data-accent-color="5"] {
+  --piggy-accent-override: #33e6e6;
+}
+[data-theme="high-contrast"][data-accent-color="6"] {
+  --piggy-accent-override: #ff5566;
+}
+[data-theme="high-contrast"][data-accent-color="7"] {
+  --piggy-accent-override: #ccff33;
+}
+
+/* ===== Derivation: compute dependent shades from --piggy-accent-override ===== */
+
+/*
+  Dark-type themes: chrome mixes toward a neutral dark-gray anchor, not pure
+  black -- mixing toward black scales a dark input toward zero too, which
+  made a dark accent choice (e.g. Golden's "Jinu") disappear into an
+  already-near-black page. Links still mix toward white; that direction was
+  never the problem.
+*/
+[data-theme="dark"],
+[data-theme="golden"],
+[data-theme="ocean"],
+[data-theme="matrix"],
+[data-theme="space"],
+[data-theme="synthwave"],
+[data-theme="dusk"],
+[data-theme="ember"],
+[data-theme="piggy-dark"] {
+  --piggy-accent-button-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 42%,
+    #322f36
+  );
+  --piggy-accent-hover-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 52%,
+    #423e46
+  );
+  --piggy-accent-border-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 58%,
+    #56515a
+  );
+  --piggy-accent-nav-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 25%,
+    #2c2932
+  );
+  --piggy-accent-nav-hover-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 38%,
+    #3a3540
+  );
+  --piggy-accent-link-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 62%,
+    white
+  );
+  --piggy-accent-link-hover-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 40%,
+    white
+  );
+}
+
+/* Light-type themes: mirror image, mixing toward a light-gray anchor
+   instead of pure white. */
+[data-theme="light"],
+[data-theme="desert"],
+[data-theme="sage"],
+[data-theme="readable"],
+[data-theme="amethyst"],
+[data-theme="piggy"] {
+  --piggy-accent-button-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 32%,
+    #ececef
+  );
+  --piggy-accent-hover-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 48%,
+    #dfdee3
+  );
+  --piggy-accent-border-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 58%,
+    #c9c7ce
+  );
+  --piggy-accent-nav-hover-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 18%,
+    #f2f1f4
+  );
+  --piggy-accent-link-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 78%,
+    black
+  );
+  --piggy-accent-link-hover-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 55%,
+    black
+  );
+}
+
+/* High-contrast: minimal derivation -- only the active/border/link accents
+   vary, kept as pure/undiluted as possible; the resting button/nav chrome
+   stays this theme's own literal black/white/gray on purpose. */
+[data-theme="high-contrast"] {
+  --piggy-accent-border-override: var(--piggy-accent-override);
+  --piggy-accent-link-override: var(--piggy-accent-override);
+  --piggy-accent-link-hover-override: color-mix(
+    in srgb,
+    var(--piggy-accent-override) 65%,
+    white
+  );
+}
