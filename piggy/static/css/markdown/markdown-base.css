@@ -280,6 +280,7 @@
   margin-bottom: calc(
     var(--piggy-reader-paragraph-gap) * var(--piggy-reader-space-scale)
   ) !important;
+  margin-left: calc(0.75rem * var(--piggy-reader-space-scale)) !important;
   padding-left: calc(1rem * var(--piggy-reader-space-scale)) !important;
 }
 
@@ -309,6 +310,7 @@
 .md-content li > ol {
   margin-top: calc(0.2rem * var(--piggy-reader-space-scale)) !important;
   margin-bottom: calc(0.2rem * var(--piggy-reader-space-scale)) !important;
+  margin-left: 0 !important;
 }
 
 /******************************\
@@ -398,6 +400,12 @@
 
 .md-content .task-list-item input[type="checkbox"] {
   margin-right: calc(0.4rem * var(--piggy-reader-space-scale)) !important;
+}
+
+.md-content .task-list-control {
+  margin-left: calc(
+    -1.6em + (0.75rem * var(--piggy-reader-space-scale))
+  ) !important;
 }
 
 /*********************\
