@@ -72,10 +72,14 @@ def get_with_retry(url_to_fetch, *, timeout=600, max_attempts=5):
             return response
 
         if attempt == max_attempts:
-            print(f"WARNING: Could not fetch {url_to_fetch} after {max_attempts} attempts (status code: {response.status_code})")
+            print(
+                f"WARNING: Could not fetch {url_to_fetch} after {max_attempts} attempts (status code: {response.status_code})"
+            )
             return response
 
-        print(f"WARNING: Could not fetch {url_to_fetch} (status code: {response.status_code}). Retrying attempt {attempt + 1}/{max_attempts}...")
+        print(
+            f"WARNING: Could not fetch {url_to_fetch} (status code: {response.status_code}). Retrying attempt {attempt + 1}/{max_attempts}..."
+        )
         time.sleep(attempt)
 
     return last_response
@@ -169,6 +173,10 @@ def get_links(html, path=""):
             continue
         link = clean_link(link, path)
         filtered_links.add(link)
+
+    shortlink_paths = re.compile(r'data-shortlink-url="https?://[^/"]+(/[^"]*)"').findall(html)
+    filtered_links.update(shortlink_paths)
+
     return filtered_links
 
 
