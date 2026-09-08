@@ -1,25 +1,26 @@
 {%
   macro card(
-      overlay_text,
-      difficulty,
-      tags,
-      level_count,
-      extra_classes='',
-      abspath='',
-      item='',
-      item_extended='',
-      title='title',
-      description='description',
-      thumbnail='',
-      thumbnail_alt='thumbnail alt',
-      card_type='',
-      show_title=true,
-      show_levels=true,
-      show_difficulty=true,
-      show_overlay=true,
-      show_tags=true,
-      show_description=true,
-      show_thumbnail=true
+    overlay_text,
+    difficulty,
+    tags,
+    level_count,
+    extra_classes='',
+    abspath='',
+    item='',
+    item_extended='',
+    title='title',
+    description='description',
+    thumbnail='',
+    thumbnail_alt='thumbnail alt',
+    card_type='',
+    show_title=true,
+    show_levels=true,
+    show_difficulty=true,
+    show_overlay=true,
+    show_tags=true,
+    show_description=true,
+    show_thumbnail=true,
+    center_description=true
   )
 %}
   {% if card_type == 'information' %}
@@ -87,7 +88,10 @@
     {% endif %}
 
     {% if show_description and description %}
-      <div class="description-container">{{ description }}</div>
+      <div
+        class="description-container {{ 'description-center' if center_description else '' }}">
+        {{ description }}
+      </div>
     {% endif %}
   </a>
 {% endmacro %}
