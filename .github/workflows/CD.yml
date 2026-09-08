@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - main
-      - develop
+      # - develop
 
 env:
   IMAGE_NAME: ghcr.io/vaagenim/piggy
