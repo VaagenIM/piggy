@@ -1,0 +1,84 @@
+{% if shortlink %}
+  {% set shortlink_url = url_for('shortlink_redirect', shortlink=shortlink, _external=True) %}
+  <span class="shortlink-copy" data-shortlink-copy>
+    <button
+      type="button"
+      class="shortlink-copy-button piggy-button piggy-button--m site-nav-menu-button"
+      data-shortlink-copy-button
+      data-shortlink-url="{{ shortlink_url }}"
+      data-copy-label="{{ _('Kopier lenke') }}"
+      data-copied-label="{{ _('Kopiert!') }}"
+      aria-label="{{ _('Kopier lenke til denne oppgaven') }}">
+      <svg
+        class="shortlink-copy-icon shortlink-copy-icon--link"
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M9 15a4.5 4.5 0 0 0 6.4.3l2.1-2.1a4.5 4.5 0 0 0-6.4-6.4L10 8" />
+        <path d="M15 9a4.5 4.5 0 0 0-6.4-.3l-2.1 2.1a4.5 4.5 0 0 0 6.4 6.4L14 16" />
+      </svg>
+      <svg
+        class="shortlink-copy-icon shortlink-copy-icon--check"
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+        <polyline points="5 13 10 18 19 7" />
+      </svg>
+    </button>
+    <span class="shortlink-copy-tooltip" data-shortlink-tooltip role="status" aria-live="polite">
+      {{ _('Kopier lenke') }}
+    </span>
+  </span>
+  <script>
+    (function () {
+      var root = document.currentScript.previousElementSibling;
+      var button = root.querySelector("[data-shortlink-copy-button]");
+      var tooltip = root.querySelector("[data-shortlink-tooltip]");
+      var resetTimer = null;
+
+      function showCopied() {
+        root.classList.add("is-copied");
+        tooltip.textContent = button.dataset.copiedLabel;
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(function () {
+          root.classList.remove("is-copied");
+          tooltip.textContent = button.dataset.copyLabel;
+        }, 1600);
+      }
+
+      function copyFallback(text) {
+        var textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand("copy");
+          showCopied();
+        } finally {
+          document.body.removeChild(textarea);
+        }
+      }
+
+      button.addEventListener("click", function () {
+        var url = button.dataset.shortlinkUrl;
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(url).then(showCopied, function () {
+            copyFallback(url);
+          });
+        } else {
+          copyFallback(url);
+        }
+      });
+    })();
+  </script>
+{% endif %}

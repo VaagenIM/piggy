@@ -114,6 +114,7 @@ def get_html(link) -> tuple[str, set[str], set[str]]:
 
     # Replace all content (og) links with the cname
     html = re.sub(rf"content=\"({url})([^\"/]*)", rf'content="{cname}\2', html)
+    html = html.replace(url, cname)
 
     # A hack to fix media links
     if "/lang/" in link:
@@ -255,7 +256,9 @@ def download_site():
                         path = "index.html"
                     else:
                         path = link.strip("/").split("#")[0]
-                        if "." not in path:
+                        if path.startswith("s/") and "." not in path:
+                            path += "/index.html"
+                        elif "." not in path:
                             path += ".html"
 
                     print(f"Writing \33[34m{link}\33[0m")

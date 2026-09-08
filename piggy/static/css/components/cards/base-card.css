@@ -50,3 +50,7 @@
   padding-top: 10px;
   font-weight: 600;
 }
+
+.description-container.description-center {
+  text-align: center;
+}

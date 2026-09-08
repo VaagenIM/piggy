@@ -29,6 +29,7 @@
 @import "./components/quick-access.css";
 @import "./components/assignment-meta.css";
 @import "./components/assignment-page.css";
+@import "./components/shortlink-copy.css";
 @import "./components/error-page.css";
 
 @import "./components/card-grid.css";
