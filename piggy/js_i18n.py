@@ -131,6 +131,10 @@ def build_js_i18n() -> dict:
             "off": {"label": gettext("Av")},
             "on": {"label": gettext("På")},
         },
+        "codeWrap": {
+            "off": {"label": gettext("Av")},
+            "on": {"label": gettext("På")},
+        },
         "themeGroups": {
             "regular": gettext("Vanlige"),
             "colored": gettext("Fargerike"),
@@ -151,12 +155,14 @@ def build_js_i18n() -> dict:
             "readingRuler": gettext("Linjal"),
             "reduceMotion": gettext("Bevegelse og effekter"),
             "rememberPosition": gettext("Husk posisjon"),
+            "codeWrap": gettext("Radbryting i kode"),
         },
         "toggleLabels": {
             "focusMode": gettext("Demp navigasjonsmenyen i fokus modus"),
             "fontSizeAffectsUi": gettext("Bruk tekststørrelse på UI"),
             "readingRuler": gettext("Vis linjal"),
             "rememberPosition": gettext("Husk hvor du stopte å lese"),
+            "codeWrap": gettext("Bryt lange kodelinjer"),
         },
         "preview": {
             "lineOne": gettext("Line one"),

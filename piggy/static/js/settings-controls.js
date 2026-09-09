@@ -14,6 +14,7 @@
     readingRuler: "Linjal",
     reduceMotion: "Bevegelse og effekter",
     rememberPosition: "Husk posisjon",
+    codeWrap: "Radbryting i kode",
   };
 
   const THEME_ACCENT_LABELS = {
@@ -33,6 +34,7 @@
     fontSizeAffectsUi: "Bruk tekststørrelse på UI",
     readingRuler: "Vis linjal",
     rememberPosition: "Husk hvor du stopte å lese",
+    codeWrap: "Bryt lange kodelinjer",
   };
 
   const THEME_GROUP_ORDER = ["regular", "colored", "animated"];
@@ -168,6 +170,7 @@
       "fontSizeAffectsUi",
       getRenderTarget("fontSizeAffectsUi"),
     );
+    renderToggleControl("codeWrap", getRenderTarget("codeWrap"));
 
     renderSegmentedControl(
       "readerLineHeight",

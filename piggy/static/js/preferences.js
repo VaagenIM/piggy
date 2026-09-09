@@ -223,6 +223,10 @@
       { value: "off", label: "Av" },
       { value: "on", label: "På" },
     ],
+    codeWrap: [
+      { value: "off", label: "Av" },
+      { value: "on", label: "På" },
+    ],
   };
 
   (function applyI18n() {
@@ -386,6 +390,11 @@
       defaultValue: "off",
       attribute: "data-reader-remember-position",
       options: VALUE_OPTIONS.rememberPosition,
+    },
+    codeWrap: {
+      defaultValue: "on",
+      attribute: "data-reader-code-wrap",
+      options: VALUE_OPTIONS.codeWrap,
     },
   };
 
