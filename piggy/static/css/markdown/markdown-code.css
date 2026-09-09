@@ -130,8 +130,9 @@
     var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
   border-radius: var(--piggy-code-block-radius) !important;
 
-  overflow: auto !important;
-  overscroll-behavior: contain !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  overscroll-behavior-x: contain !important;
   scrollbar-width: thin !important;
   scrollbar-color: var(--piggy-code-block-line-number)
     var(--piggy-code-block-background, var(--piggy-code-block-bg)) !important;
