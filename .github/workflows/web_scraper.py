@@ -54,7 +54,7 @@ def unquote_path(path):
     return new_path
 
 
-def get_with_retry(url_to_fetch, *, timeout=600, max_attempts=5):
+def get_with_retry(url_to_fetch, *, timeout=600, max_attempts=3):
     """Retry HTML page fetches when the server temporarily responds with HTTP 500."""
     last_response = None
     for attempt in range(1, max_attempts + 1):
