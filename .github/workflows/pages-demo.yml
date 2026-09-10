@@ -76,7 +76,9 @@ jobs:
 
       - name: Start Piggy server
         run: |
-          gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers 16 run:app &
+          workers=$(nproc --ignore=1)
+          workers=$((workers < 1 ? 1 : workers))
+          gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers "$workers" run:app &
 
       - name: Modify CNAME in web scraper
         run: sed -i 's/piggy.iktim.no/piglet.iktim.no/g' .github/workflows/web_scraper.py

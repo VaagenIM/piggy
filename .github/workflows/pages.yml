@@ -79,7 +79,9 @@ jobs:
 
       - name: Start Piggy server
         run: |
-          gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers 16 run:app &
+          workers=$(nproc --ignore=1)
+          workers=$((workers < 1 ? 1 : workers))
+          gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers "$workers" run:app &
 
       - name: Run web scraper to build static site
         env:
