@@ -268,10 +268,15 @@ def _build_shortlink_map(segment: dict) -> dict[str, dict]:
             meta = value.get("meta", {})
             title = value.get("heading", key.replace("_", " "))
             topic_path = target.removeprefix("/main/").rsplit("/", 1)[0]
+            description = (
+                meta.get("description")
+                or meta.get("oinkdata", {}).get("summary")
+                or meta.get("summary", "")
+            )
             shortlinks[value["shortlink"]] = {
                 "target": target,
                 "title": title,
-                "description": meta.get("description") or meta.get("summary", ""),
+                "description": description,
                 "image": f"/img/{topic_path}/{meta.get('thumbnail', 'media/header')}.{IMG_FMT}?title={title}",
             }
         for shortlink, target in _build_shortlink_map(value.get("data", {})).items():
