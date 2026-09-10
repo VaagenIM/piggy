@@ -6,6 +6,12 @@ on:
   repository_dispatch:
     types: [ fill_piggybank ]
   workflow_dispatch:
+    inputs:
+      full_rebuild:
+        description: "Invalidate the cached demo and rebuild every page"
+        required: false
+        default: false
+        type: boolean
   push:
     branches: [ main ]
 
@@ -54,6 +60,16 @@ jobs:
           path: piggybank
           fetch-depth: 0
 
+      - name: Restore demo cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .github/workflows/demo
+            .github/workflows/.demo-state.json
+          key: pages-demo-${{ github.workflow }}-${{ github.ref_name }}-${{ github.run_id }}
+          restore-keys: |
+            pages-demo-${{ github.workflow }}-${{ github.ref_name }}-
+
       - name: Install dependencies
         run: |
           uv pip install .
@@ -66,6 +82,8 @@ jobs:
           gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers 16 run:app &
 
       - name: Run web scraper to build static site
+        env:
+          FORCE_FULL_REBUILD: ${{ inputs.full_rebuild || 'false' }}
         run: python .github/workflows/web_scraper.py
 
       - name: Upload artifact

@@ -5,10 +5,13 @@ A hacky script that scrapes a website and downloads all the pages and media file
 import multiprocessing
 import os
 import re
+import subprocess
 import time
 import requests
+import json
+from hashlib import sha256
 from pathlib import Path
-from shutil import copytree
+from shutil import copytree, rmtree
 from urllib.parse import unquote
 from bs4 import BeautifulSoup as bs
 from turtleconverter import generate_static_files
@@ -21,6 +24,7 @@ links = {"/", "/404"}
 api_links = {"/api/search-data"}
 visited = set()
 media_links = set()
+incremental_mode = False
 url = "http://127.0.0.1:55555"  # The URL of the website we are scraping
 cname = "https://piggy.iktim.no"  # The CNAME of the website we will push the demo to
 
@@ -217,18 +221,24 @@ def _write_html(html, path):
 
 
 def _download_media(link):
+    request_path = link.strip("/").split("#")[0]
+    path = request_path
+    path = unquote_path(path)
+    # TODO: this is a hack. hopefully temporary.
+    if "/api/generate_thumbnail/" in link:
+        path = path.rsplit("?")[0] + ".webp"
+    path = path.rsplit("?")[0]
+    output_path = Path("demo") / path
+    if incremental_mode and output_path.exists():
+        return
+
     print(f"Downloading \33[34m{link}\33[0m")
-    path = link.strip("/").split("#")[0]
-    r = requests.get(f"{url}/{path}", allow_redirects=True)
+    r = requests.get(f"{url}/{request_path}", allow_redirects=True)
     try:
         os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
     except (NotADirectoryError, OSError):
         print(f"WARNING: Could not create directory for {path}. Skipping download.")
         return
-    path = unquote_path(path)
-    # TODO: this is a hack. hopefully temporary.
-    if "/api/generate_thumbnail/" in link:
-        path = path.rsplit("?")[0] + ".webp"
 
     if not path or not r.ok:
         print(f"WARNING: Could not download {link}")
@@ -237,8 +247,6 @@ def _download_media(link):
     if len(path.split("/")[-1]) > 255:
         print("WARNING: Cannot download file with name longer than 255 characters")
         return
-
-    path = path.rsplit("?")[0]
     try:
         os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
         with open(f"demo/{path}", "wb+") as f:
@@ -272,7 +280,8 @@ def download_site():
                     print(f"Writing \33[34m{link}\33[0m")
                     pool.apply_async(_write_html, args=(html, path))  # Run in parallel
 
-                    links.update(new_links)
+                    if not incremental_mode:
+                        links.update(new_links)
                     media_tasks.update(new_media_links)
     # A separate pool for media tasks, as we don't want to download multiple media files at once
     # (this appears to happen when we download the media files in parallel with the html files)
@@ -380,11 +389,209 @@ def minify_folder(folder):
                 _minify(p, suffix)
 
 
-if __name__ == "__main__":
-    generate_static_files(static_folder=Path("demo/static").absolute())
-    download_site()
-    download_api_views()
-    # Since we are in .github/workflows, we need to go up two directories to find the piggy folder
+def _git_revision(path: Path) -> str:
+    return subprocess.check_output(["git", "-C", str(path), "rev-parse", "HEAD"], text=True).strip()
+
+
+def _changed_piggybank_files(
+    piggybank_path: Path, previous_revision: str, current_revision: str
+) -> list[tuple[str, str]]:
+    outputs = [
+        subprocess.check_output(
+            [
+                "git",
+                "-c",
+                "core.quotePath=false",
+                "-C",
+                str(piggybank_path),
+                "diff",
+                "--name-status",
+                previous_revision,
+                current_revision,
+            ],
+            text=True,
+        ),
+        subprocess.check_output(
+            [
+                "git",
+                "-c",
+                "core.quotePath=false",
+                "-C",
+                str(piggybank_path),
+                "diff",
+                "--name-status",
+                current_revision,
+            ],
+            text=True,
+        ),
+    ]
+    changes = []
+    seen = set()
+    for output in outputs:
+        for line in output.splitlines():
+            status, path = line.split(maxsplit=1)
+            change = (status[0], path)
+            if change not in seen:
+                changes.append(change)
+                seen.add(change)
+    return changes
+
+
+def _piggybank_worktree_fingerprint(piggybank_path: Path) -> str:
+    diff = subprocess.check_output(
+        ["git", "-C", str(piggybank_path), "diff", "--binary", "HEAD"], stderr=subprocess.STDOUT
+    )
+    return sha256(diff).hexdigest()
+
+
+def _worktree_fingerprint(repository_path: Path) -> str:
+    diff = subprocess.check_output(
+        ["git", "-C", str(repository_path), "diff", "--binary", "HEAD"], stderr=subprocess.STDOUT
+    )
+    return sha256(diff).hexdigest()
+
+
+def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
+    """Return affected HTML routes, deleted output paths, and whether a full build is required."""
+    path = path.replace("\\", "/")
+    parts = path.split("/")
+    routes = {"/"}
+
+    if len(parts) < 2:
+        return routes, set(), True
+
+    translations_index = parts.index("translations") if "translations" in parts else -1
+    if translations_index >= 0:
+        language = parts[translations_index + 1] if len(parts) > translations_index + 1 else ""
+        content_parts = parts[:translations_index]
+        filename = parts[-1]
+        if not language or not filename:
+            return routes, set(), True
+        assignment = "/".join(content_parts + [Path(filename).stem])
+        routes.add(f"/main/{assignment}/lang/{language}")
+        routes.add(f"/main/{assignment}")
+        directory_parts = content_parts
+    elif path.endswith((".md", ".oink")):
+        directory_parts = parts[:-1]
+        assignment = "/".join(directory_parts + [Path(parts[-1]).stem])
+        routes.add(f"/main/{assignment}")
+    elif path.endswith("meta.json"):
+        directory_parts = parts[:-1]
+        if directory_parts:
+            routes.add(f"/main/{'/'.join(directory_parts)}")
+    else:
+        return routes, set(), True
+
+    for index in range(1, len(directory_parts) + 1):
+        routes.add(f"/main/{'/'.join(directory_parts[:index])}")
+
+    deleted = set()
+    return routes, deleted, False
+
+
+def _output_path_for_route(route: str) -> Path:
+    if route == "/":
+        return Path("demo/index.html")
+    path = route.strip("/").split("#", 1)[0]
+    if "." not in path.rsplit("/", 1)[-1]:
+        path += ".html"
+    return Path("demo") / path
+
+
+def configure_demo_build() -> tuple[str, str, bool]:
+    """Restore either a full or incremental build based on the cached demo state."""
+    global incremental_mode, links, api_links
+
     root_dir = Path(__file__).resolve().parents[2]
-    copytree(root_dir / "piggy" / "static", Path("demo/static").absolute(), dirs_exist_ok=True)
-    minify_folder(Path("demo/static").absolute())
+    piggybank_path = root_dir / "piggybank"
+    root_revision = _git_revision(root_dir)
+    root_worktree_fingerprint = _worktree_fingerprint(root_dir)
+    piggybank_revision = _git_revision(piggybank_path)
+    piggybank_worktree_fingerprint = _piggybank_worktree_fingerprint(piggybank_path)
+    state_path = Path(".demo-state.json")
+    previous_state = {}
+    if state_path.exists():
+        with state_path.open(encoding="utf-8") as file:
+            previous_state = json.load(file)
+
+    full_build = (
+        os.environ.get("FORCE_FULL_REBUILD", "").lower() == "true"
+        or
+        not previous_state
+        or previous_state.get("root_revision") != root_revision
+        or previous_state.get("root_worktree_fingerprint") != root_worktree_fingerprint
+        or not previous_state.get("piggybank_revision")
+    )
+    changes = []
+    if not full_build and (
+        previous_state["piggybank_revision"] != piggybank_revision
+        or previous_state.get("piggybank_worktree_fingerprint") != piggybank_worktree_fingerprint
+    ):
+        changes = _changed_piggybank_files(
+            piggybank_path, previous_state["piggybank_revision"], piggybank_revision
+        )
+
+    if full_build:
+        rmtree("demo", ignore_errors=True)
+        incremental_mode = False
+        links = {"/", "/404"}
+        api_links = {"/api/search-data"}
+    else:
+        incremental_mode = True
+        if not changes:
+            links = set()
+            api_links = set()
+            visited.clear()
+            media_links.clear()
+            return root_revision, piggybank_revision, False
+        affected_routes = {"/"}
+        deleted_outputs = set()
+        for status, path in changes:
+            routes, deleted, requires_full_build = _route_for_path(path)
+            if requires_full_build:
+                rmtree("demo", ignore_errors=True)
+                incremental_mode = False
+                links = {"/", "/404"}
+                api_links = {"/api/search-data"}
+                break
+            affected_routes.update(routes)
+            deleted_outputs.update(deleted)
+            if status == "D":
+                deleted_outputs.update(_output_path_for_route(route) for route in routes)
+        else:
+            links = affected_routes
+            api_links = {"/api/search-data"}
+            for route in affected_routes:
+                output_path = _output_path_for_route(route)
+                if output_path.exists():
+                    output_path.unlink()
+            for output_path in deleted_outputs:
+                output_path.unlink(missing_ok=True)
+
+    visited.clear()
+    media_links.clear()
+    return root_revision, piggybank_revision, True
+
+
+if __name__ == "__main__":
+    root_revision, piggybank_revision, build_required = configure_demo_build()
+    root_dir = Path(__file__).resolve().parents[2]
+    if build_required:
+        generate_static_files(static_folder=Path("demo/static").absolute())
+        download_site()
+        download_api_views()
+        # Since we are in .github/workflows, we need to go up two directories to find the piggy folder
+        copytree(root_dir / "piggy" / "static", Path("demo/static").absolute(), dirs_exist_ok=True)
+        minify_folder(Path("demo/static").absolute())
+    else:
+        print("No demo changes detected; using cached demo.")
+    with Path(".demo-state.json").open("w", encoding="utf-8") as file:
+        json.dump(
+            {
+                "root_revision": root_revision,
+                "root_worktree_fingerprint": _worktree_fingerprint(root_dir),
+                "piggybank_revision": piggybank_revision,
+                "piggybank_worktree_fingerprint": _piggybank_worktree_fingerprint(root_dir / "piggybank"),
+            },
+            file,
+        )
