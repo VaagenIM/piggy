@@ -89,7 +89,10 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
   --piggy-tooltip-text: #ffffff;
 
   --piggy-text-hyperlink: var(--piggy-accent-link-override, #4dabff);
-  --piggy-text-hyperlink-hover: var(--piggy-accent-link-hover-override, #9bdcff);
+  --piggy-text-hyperlink-hover: var(
+    --piggy-accent-link-hover-override,
+    #9bdcff
+  );
 
   --piggy-logo-gradient: linear-gradient(45deg, #e6fbff, #00d6f2, #336b87);
   --piggy-logo-border: rgba(0, 0, 0, 0.65);
