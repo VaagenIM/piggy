@@ -265,24 +265,28 @@ def download_site():
                 visited.add(link)  # Mark as visited BEFORE calling get_html()
 
             results = pool.map(get_html, tasks)
+            write_tasks = []
 
             for link, (html, new_links, new_media_links) in zip(tasks, results):
                 if html:
                     if link == "/":
                         path = "index.html"
                     else:
-                        path = link.strip("/").split("#")[0]
+                        path = link.split("#")[0].strip("/")
                         if path.startswith("s/") and "." not in path:
+                            path += "/index.html"
+                        elif link.endswith("/") and "." not in path:
                             path += "/index.html"
                         elif "." not in path:
                             path += ".html"
 
                     print(f"Writing \33[34m{link}\33[0m")
-                    pool.apply_async(_write_html, args=(html, path))  # Run in parallel
+                    write_tasks.append((html, path))
 
                     if not incremental_mode:
                         links.update(new_links)
                     media_tasks.update(new_media_links)
+            pool.starmap(_write_html, write_tasks)
     # A separate pool for media tasks, as we don't want to download multiple media files at once
     # (this appears to happen when we download the media files in parallel with the html files)
     with multiprocessing.Pool(processes=WORKERS) as pool:
@@ -483,7 +487,7 @@ def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
         return routes, set(), True
 
     for index in range(1, len(directory_parts) + 1):
-        routes.add(f"/main/{'/'.join(directory_parts[:index])}")
+        routes.add(f"/main/{'/'.join(directory_parts[:index])}/")
 
     deleted = set()
     return routes, deleted, False
@@ -492,8 +496,10 @@ def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
 def _output_path_for_route(route: str) -> Path:
     if route == "/":
         return Path("demo/index.html")
-    path = route.strip("/").split("#", 1)[0]
-    if "." not in path.rsplit("/", 1)[-1]:
+    path = route.split("#", 1)[0].strip("/")
+    if route.endswith("/") and "." not in path:
+        path += "/index.html"
+    elif "." not in path.rsplit("/", 1)[-1]:
         path += ".html"
     return Path("demo") / path
 
