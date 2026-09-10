@@ -250,7 +250,7 @@ PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
 print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")
 
 
-def _build_shortlink_map(segment: dict) -> dict[str, str]:
+def _build_shortlink_map(segment: dict) -> dict[str, dict]:
     shortlinks = {}
     for key, value in segment.items():
         if not isinstance(value, dict):
@@ -258,7 +258,14 @@ def _build_shortlink_map(segment: dict) -> dict[str, str]:
         if value.get("shortlink"):
             if value["shortlink"] in shortlinks:
                 raise ValueError(f"Duplicate assignment shortlink: {value['shortlink']}")
-            shortlinks[value["shortlink"]] = value["shortlink_target"]
+            target = value["shortlink_target"]
+            meta = value.get("meta", {})
+            shortlinks[value["shortlink"]] = {
+                "target": target,
+                "title": value.get("heading", key.replace("_", " ")),
+                "description": meta.get("description") or meta.get("summary", ""),
+                "image": f"/img/{target.removeprefix('/main/')}/media/header.webp",
+            }
         for shortlink, target in _build_shortlink_map(value.get("data", {})).items():
             if shortlink in shortlinks:
                 raise ValueError(f"Duplicate assignment shortlink: {shortlink}")

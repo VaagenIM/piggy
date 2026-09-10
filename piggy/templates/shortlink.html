@@ -1,14 +1,20 @@
 <!doctype html>
 <html lang="{{ ui_locale }}">
   <head>
-    <meta http-equiv="refresh" content="0;url={{ target }}" />
+    <meta http-equiv="refresh" content="0;url={{ shortlink.target }}" />
     <meta name="robots" content="noindex" />
-    <title>Sender deg videre</title>
+    {% set meta = {
+      "name": shortlink.title,
+      "description": shortlink.description,
+      "thumbnail": request.host_url.rstrip('/') ~ shortlink.image
+    } %}
+    {% include "partials/parts/og-tags.html" %}
+    <title>{{ shortlink.title }}</title>
     <script>
-      window.location.replace('{{ target }}');
+      window.location.replace({{ shortlink.target | tojson }});
     </script>
   </head>
   <body>
-    <a href="{{ target }}">Fortsett til oppgaven</a>
+    <a href="{{ shortlink.target }}">Fortsett til oppgaven</a>
   </body>
 </html>
