@@ -94,21 +94,18 @@ jobs:
 
       - name: Deploy to piggy-edge gh-pages
         run: |
-          rm -rf edge-deploy
-
-          git clone \
-            https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggy-edge.git \
-            edge-deploy
+          if [ -d edge-deploy/.git ]; then
+            git -C edge-deploy fetch --depth 1 origin gh-pages
+            git -C edge-deploy checkout -B gh-pages origin/gh-pages
+            git -C edge-deploy reset --hard origin/gh-pages
+            git -C edge-deploy clean -fdx
+          else
+            git clone --depth 1 --branch gh-pages \
+              https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggy-edge.git \
+              edge-deploy
+          fi
 
           cd edge-deploy
-
-          # Ensure gh-pages exists
-          if git ls-remote --exit-code --heads origin gh-pages; then
-            git checkout gh-pages
-            git pull origin gh-pages
-          else
-            git checkout --orphan gh-pages
-          fi
 
           # Remove old site contents except git metadata
           find . \
