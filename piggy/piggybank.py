@@ -7,7 +7,13 @@ import markupsafe
 import yaml
 from frozendict.cool import deepfreeze
 
-from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX, generate_shortlink
+from piggy import (
+    IMG_FMT,
+    ASSIGNMENT_FILENAME_REGEX,
+    AssignmentTemplate,
+    PIGGYBANK_FOLDER,
+    generate_shortlink,
+)
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper
 
 
@@ -260,11 +266,13 @@ def _build_shortlink_map(segment: dict) -> dict[str, dict]:
                 raise ValueError(f"Duplicate assignment shortlink: {value['shortlink']}")
             target = value["shortlink_target"]
             meta = value.get("meta", {})
+            title = value.get("heading", key.replace("_", " "))
+            topic_path = target.removeprefix("/main/").rsplit("/", 1)[0]
             shortlinks[value["shortlink"]] = {
                 "target": target,
-                "title": value.get("heading", key.replace("_", " ")),
+                "title": title,
                 "description": meta.get("description") or meta.get("summary", ""),
-                "image": f"/img/{target.removeprefix('/main/')}/media/header.webp",
+                "image": f"/img/{topic_path}/{meta.get('thumbnail', 'media/header')}.{IMG_FMT}?title={title}",
             }
         for shortlink, target in _build_shortlink_map(value.get("data", {})).items():
             if shortlink in shortlinks:
