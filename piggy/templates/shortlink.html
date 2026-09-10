@@ -3,15 +3,17 @@
   <head>
     <meta http-equiv="refresh" content="0;url={{ shortlink.target }}" />
     <meta name="robots" content="noindex" />
-    {% set meta = {
-      "name": shortlink.title,
-      "description": shortlink.description,
-      "thumbnail": request.host_url.rstrip('/') ~ shortlink.image
-    } %}
+    {%
+      set meta = {
+        "name": shortlink.title,
+        "description": shortlink.description,
+        "thumbnail": request.host_url.rstrip('/') ~ shortlink.image
+      }
+    %}
     {% include "partials/parts/og-tags.html" %}
     <title>{{ shortlink.title }}</title>
     <script>
-      window.location.replace({{ shortlink.target | tojson }});
+      window.location.replace('{{ shortlink.target }}');
     </script>
   </head>
   <body>
