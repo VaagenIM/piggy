@@ -10,6 +10,7 @@ import time
 import requests
 import json
 from hashlib import sha256
+from dataclasses import dataclass
 from pathlib import Path
 from shutil import copytree, rmtree
 from urllib.parse import unquote
@@ -22,11 +23,19 @@ WORKERS = max(1, multiprocessing.cpu_count() - 1)
 
 links = {"/", "/404"}
 api_links = {"/api/search-data"}
+api_view_links = set()
 visited = set()
 media_links = set()
 incremental_mode = False
 url = "http://127.0.0.1:55555"  # The URL of the website we are scraping
 cname = "https://piggy.iktim.no"  # The CNAME of the website we will push the demo to
+
+
+@dataclass
+class PageResult:
+    html: str
+    links: set[str]
+    media_links: set[str]
 
 # Media link are files that we want to download, but not parse as HTML (e.g. not write as UTF-8)
 # specifically fonts are causing issues.
@@ -89,7 +98,7 @@ def get_with_retry(url_to_fetch, *, timeout=600, max_attempts=3):
     return last_response
 
 
-def get_html(link) -> tuple[str, set[str], set[str]]:
+def get_html(link) -> PageResult | None:
     """Get the html from the given url, and append the new links to the links list."""
     page_url = f"{url}/{link.strip('/')}"
     print(f"Visiting \33[34m{page_url}\33[0m")
@@ -101,10 +110,11 @@ def get_html(link) -> tuple[str, set[str], set[str]]:
         if link == "/":
             raise Exception("Could not fetch the main page. Is the server running?")
         print(f"WARNING: Could not fetch {link} (status code: {r.status_code})")
-        return "", set(), set()
+        return None
 
     # Only prettify if mimetype is text/html
-    if "text/html" in r.headers.get("Content-Type"):
+    is_html = "text/html" in r.headers.get("Content-Type", "")
+    if is_html:
         html = str(bs(r.text, "html.parser"))
     else:
         html = r.text
@@ -150,7 +160,15 @@ def get_html(link) -> tuple[str, set[str], set[str]]:
 
     # Remove links that are media links
     new_links -= new_media_links
-    return html, new_links, new_media_links
+    return PageResult(html, new_links, new_media_links)
+
+
+def is_api_view_link(link: str) -> bool:
+    """Return whether a successfully fetched page should have a static API view."""
+    path = link.split("?", 1)[0].split("#", 1)[0].strip("/")
+    if not path.startswith("main/"):
+        return False
+    return not any(segment in path.split("/") for segment in ("lang", "attachments", "media"))
 
 
 def clean_link(link, path):
@@ -267,25 +285,29 @@ def download_site():
             results = pool.map(get_html, tasks)
             write_tasks = []
 
-            for link, (html, new_links, new_media_links) in zip(tasks, results):
-                if html:
-                    if link == "/":
-                        path = "index.html"
-                    else:
-                        path = link.split("#")[0].strip("/")
-                        if path.startswith("s/") and "." not in path:
-                            path += "/index.html"
-                        elif link.endswith("/") and "." not in path:
-                            path += "/index.html"
-                        elif "." not in path:
-                            path += ".html"
+            for link, result in zip(tasks, results):
+                if result is None:
+                    continue
 
-                    print(f"Writing \33[34m{link}\33[0m")
-                    write_tasks.append((html, path))
+                if link == "/":
+                    path = "index.html"
+                else:
+                    path = link.split("#")[0].strip("/")
+                    if path.startswith("s/") and "." not in path:
+                        path += "/index.html"
+                    elif link.endswith("/") and "." not in path:
+                        path += "/index.html"
+                    elif "." not in path:
+                        path += ".html"
 
-                    if not incremental_mode:
-                        links.update(new_links)
-                    media_tasks.update(new_media_links)
+                print(f"Writing \33[34m{link}\33[0m")
+                write_tasks.append((result.html, path))
+                if is_api_view_link(link):
+                    api_view_links.add(link)
+
+                if not incremental_mode:
+                    links.update(result.links)
+                media_tasks.update(result.media_links)
             pool.starmap(_write_html, write_tasks)
     # A separate pool for media tasks, as we don't want to download multiple media files at once
     # (this appears to happen when we download the media files in parallel with the html files)
@@ -360,7 +382,7 @@ def _download_direct_api(link):
 
 def download_api_views():
     with multiprocessing.Pool(processes=WORKERS) as pool:
-        pool.map(_download_api_view, visited)
+        pool.map(_download_api_view, api_view_links)
         pool.map(_download_direct_api, api_links)
 
 
@@ -434,6 +456,8 @@ def _changed_piggybank_files(
     for output in outputs:
         for line in output.splitlines():
             status, path = line.split(maxsplit=1)
+            if path.replace("\\", "/").startswith("preview/"):
+                continue
             change = (status[0], path)
             if change not in seen:
                 changes.append(change)
@@ -506,8 +530,9 @@ def _output_path_for_route(route: str) -> Path:
 
 def configure_demo_build() -> tuple[str, str, bool]:
     """Restore either a full or incremental build based on the cached demo state."""
-    global incremental_mode, links, api_links
+    global incremental_mode, links, api_links, api_view_links
 
+    api_view_links.clear()
     root_dir = Path(__file__).resolve().parents[2]
     piggybank_path = root_dir / "piggybank"
     root_revision = _git_revision(root_dir)
@@ -547,6 +572,7 @@ def configure_demo_build() -> tuple[str, str, bool]:
         if not changes:
             links = set()
             api_links = set()
+            api_view_links = set()
             visited.clear()
             media_links.clear()
             return root_revision, piggybank_revision, False
@@ -567,6 +593,7 @@ def configure_demo_build() -> tuple[str, str, bool]:
         else:
             links = affected_routes
             api_links = {"/api/search-data"}
+            api_view_links = set()
             for route in affected_routes:
                 output_path = _output_path_for_route(route)
                 if output_path.exists():
