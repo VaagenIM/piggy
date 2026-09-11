@@ -1,0 +1,318 @@
+/*********************************\
+|* MARKDOWN TABLE OF CONTENTS   *|
+\*********************************/
+/*
+ * Desktop breakpoint below is duplicated as DESKTOP_MEDIA_QUERY in
+ * js/components/markdown-toc.js - keep both in sync.
+ */
+
+:root {
+  --piggy-toc-width: calc(16.5rem * var(--piggy-reader-space-scale));
+  --piggy-toc-gap: calc(2.25rem * var(--piggy-reader-space-scale));
+  --piggy-toc-sticky-offset: calc(5rem * var(--piggy-reader-space-scale));
+  --piggy-toc-z: 400;
+}
+
+.toc-layout {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.toc-layout .md-content {
+  min-width: 0;
+}
+
+/* ------------------------------------------------------------- *
+ *  Sidebar shell
+ * ------------------------------------------------------------- */
+.toc-sidebar {
+  margin-bottom: calc(1.25rem * var(--piggy-reader-space-scale));
+}
+
+.toc-sidebar__toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: calc(0.55rem * var(--piggy-reader-space-scale))
+    calc(0.9rem * var(--piggy-reader-space-scale));
+  color: var(--piggy-text-button);
+  background: color-mix(in srgb, var(--piggy-button) 42%, transparent);
+  border: 1px solid
+    var(
+      --piggy-button-border,
+      color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+    );
+  border-radius: calc(0.9rem * var(--piggy-reader-space-scale));
+  box-shadow: 0 1px 2px var(--piggy-shadow-box);
+  font: inherit;
+  font-weight: 700;
+  font-size: calc(0.92rem * var(--piggy-reader-font-scale));
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  transition: background-color 0.18s ease;
+}
+
+.toc-sidebar__toggle:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--piggy-button-hover) 62%,
+    transparent
+  );
+}
+
+.toc-sidebar__toggle:focus-visible {
+  outline: 3px solid
+    var(
+      --piggy-button-focus,
+      color-mix(in srgb, var(--piggy-button-active) 58%, transparent)
+    );
+  outline-offset: 2px;
+}
+
+.toc-sidebar__toggle-icon {
+  flex: 0 0 auto;
+  width: calc(1.1rem * var(--piggy-reader-font-scale));
+  height: calc(1.1rem * var(--piggy-reader-font-scale));
+}
+
+.toc-sidebar__toggle-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.toc-sidebar__chevron {
+  flex: 0 0 auto;
+  width: calc(0.85rem * var(--piggy-reader-font-scale));
+  height: calc(0.85rem * var(--piggy-reader-font-scale));
+  transition: transform 0.18s ease;
+}
+
+.toc-sidebar__toggle[aria-expanded="true"] .toc-sidebar__chevron {
+  transform: rotate(180deg);
+}
+
+/* ------------------------------------------------------------- *
+ *  Mobile / collapsed panel (overlay)
+ * ------------------------------------------------------------- */
+.toc-sidebar__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--piggy-toc-z);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.toc-sidebar__backdrop[hidden] {
+  display: none;
+}
+
+.toc-sidebar__panel {
+  position: fixed;
+  z-index: calc(var(--piggy-toc-z) + 1);
+  top: 8vh;
+  left: 1rem;
+  right: 1rem;
+  margin-inline: auto;
+  width: auto;
+  max-width: 26rem;
+  max-height: 76vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  box-sizing: border-box;
+  padding: calc(0.9rem * var(--piggy-reader-space-scale));
+  background-color: var(--piggy-menu);
+  color: var(--piggy-menu-text);
+  border: 1px solid color-mix(in srgb, var(--piggy-neutral) 38%, transparent);
+  border-radius: calc(1rem * var(--piggy-reader-space-scale));
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.toc-sidebar__panel[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .toc-sidebar__backdrop:not([hidden]) {
+    animation: piggy-toc-fade-in 0.18s ease;
+  }
+
+  .toc-sidebar__panel:not([hidden]) {
+    animation: piggy-toc-panel-in 0.18s ease;
+  }
+}
+
+@keyframes piggy-toc-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes piggy-toc-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.toc-sidebar__heading {
+  display: none;
+  margin: 0 0 calc(0.6rem * var(--piggy-reader-space-scale));
+  font-size: calc(0.75rem * var(--piggy-reader-font-scale));
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--piggy-text-main);
+  opacity: 0.6;
+}
+
+.toc-sidebar__panel .toc-sidebar__heading {
+  display: block;
+}
+
+/* ------------------------------------------------------------- *
+ *  List / links (shared across breakpoints)
+ * ------------------------------------------------------------- */
+.toc-sidebar__list {
+  display: flex;
+  flex-direction: column;
+  gap: calc(0.15rem * var(--piggy-reader-space-scale));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.toc-sidebar__list--nested {
+  margin-top: calc(0.15rem * var(--piggy-reader-space-scale));
+  padding-left: calc(0.85rem * var(--piggy-reader-space-scale));
+  border-left: 1px solid
+    color-mix(in srgb, var(--piggy-neutral) 28%, transparent);
+}
+
+.toc-sidebar__item {
+  min-width: 0;
+}
+
+.toc-sidebar__link {
+  display: block;
+  padding: calc(0.32rem * var(--piggy-reader-space-scale))
+    calc(0.6rem * var(--piggy-reader-space-scale));
+  border-left: 2px solid transparent;
+  border-radius: 0 calc(0.55rem * var(--piggy-reader-space-scale))
+    calc(0.55rem * var(--piggy-reader-space-scale)) 0;
+  color: color-mix(in srgb, var(--piggy-text-main) 75%, transparent);
+  font-size: calc(0.88rem * var(--piggy-reader-font-scale));
+  line-height: 1.4;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.toc-sidebar__list--nested .toc-sidebar__link {
+  font-size: calc(0.82rem * var(--piggy-reader-font-scale));
+}
+
+.toc-sidebar__link:hover {
+  background-color: color-mix(in srgb, var(--piggy-button) 30%, transparent);
+  color: var(--piggy-text-main);
+}
+
+.toc-sidebar__link:focus-visible {
+  outline: 3px solid
+    var(
+      --piggy-button-focus,
+      color-mix(in srgb, var(--piggy-button-active) 58%, transparent)
+    );
+  outline-offset: -1px;
+}
+
+.toc-sidebar__link.is-active {
+  border-left-color: var(--piggy-button-active);
+  background-color: color-mix(
+    in srgb,
+    var(--piggy-button-active) 22%,
+    transparent
+  );
+  color: var(--piggy-text-main);
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------- *
+ *  Desktop: docked, sticky sidebar
+ * ------------------------------------------------------------- */
+@media (min-width: 1220px) {
+  .md-grid:has(.toc-sidebar) {
+    max-width: 78rem;
+  }
+
+  .toc-layout {
+    display: flex;
+    /* stretch (default) so .toc-sidebar is as tall as the article column -
+       the sticky panel needs that full height to travel/stick within. */
+    align-items: stretch;
+    gap: var(--piggy-toc-gap);
+  }
+
+  .toc-layout > .md-content {
+    flex: 1 1 auto;
+  }
+
+  .toc-sidebar {
+    flex: 0 0 var(--piggy-toc-width);
+    width: var(--piggy-toc-width);
+    margin-bottom: 0;
+  }
+
+  .toc-sidebar__toggle,
+  .toc-sidebar__backdrop {
+    display: none !important;
+  }
+
+  .toc-sidebar__panel {
+    display: block !important;
+    position: sticky;
+    top: var(--piggy-toc-sticky-offset);
+    left: auto;
+    right: auto;
+    margin-inline: 0;
+    width: 100%;
+    max-width: none;
+    max-height: calc(100vh - var(--piggy-toc-sticky-offset) - 2rem);
+    background-color: color-mix(in srgb, var(--piggy-light) 60%, transparent);
+    border: 1px solid color-mix(in srgb, var(--piggy-neutral) 28%, transparent);
+    box-shadow: none;
+    animation: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toc-sidebar__toggle-chevron,
+  .toc-sidebar__backdrop,
+  .toc-sidebar__panel,
+  .toc-sidebar__link {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Body scroll lock while the mobile panel is open */
+html.toc-scroll-lock {
+  overflow: hidden;
+}

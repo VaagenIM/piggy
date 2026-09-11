@@ -13,4 +13,8 @@
   </div>
 
   {{ content.body | safe }}
+
+  <script
+    src="{{ url_for('static', filename='js/components/markdown-toc.js') }}"
+    defer></script>
 {% endblock %}
