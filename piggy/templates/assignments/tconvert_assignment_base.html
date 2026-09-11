@@ -16,33 +16,91 @@
   {{ super() }}
 {% endblock %}
 
-{% block content %}
-  {# WIP: Commented out for now ~}
-  <!-- https://github.com/squidfunk/mkdocs-material/blob/master/material/templates/partials/toc.html -->
-  {% block toc %}
-    <nav class="md-nav md-nav--secondary" aria-label="{{ title | e }}">
+{% block container %}
+  <div class="toc-layout" data-md-component="header">
+    {% block toc %}
       {% set toc = page.toc %}
       {% set first = toc | first %}
       {% if first and first.level == 1 %}
         {% set toc = first.children %}
       {% endif %}
       {% if toc %}
-        <label class="md-nav__title" for="__toc">
-          <span class="md-nav__icon md-icon"></span>
-          Table of Contents
-        </label>
-        <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-          {% for toc_item in toc %}
-            <!-- https://github.com/squidfunk/mkdocs-material/blob/master/material/templates/partials/toc-item.html -->
-            {% include "partials/toc-item.html" %}
-          {% endfor %}
-        </ul>
+        <div class="toc-sidebar" data-toc-sidebar>
+          <button
+            type="button"
+            class="toc-sidebar__toggle"
+            data-toc-toggle
+            aria-expanded="false"
+            aria-controls="assignment-toc-panel">
+            <svg
+              class="toc-sidebar__toggle-icon"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <line x1="4" y1="7" x2="20" y2="7"></line>
+              <line x1="4" y1="12" x2="20" y2="12"></line>
+              <line x1="4" y1="17" x2="20" y2="17"></line>
+            </svg>
+            <span class="toc-sidebar__toggle-label">Table of Contents</span>
+            <svg
+              class="toc-sidebar__chevron"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="toc-sidebar__backdrop" data-toc-backdrop hidden></div>
+          <nav
+            class="toc-sidebar__panel"
+            id="assignment-toc-panel"
+            data-toc-panel
+            aria-label="Table of contents"
+            hidden>
+            <p class="toc-sidebar__heading">Table of Contents</p>
+            <ul class="toc-sidebar__list">
+              {% for toc_item in toc recursive %}
+                <li class="toc-sidebar__item">
+                  <a
+                    href="{{ toc_item.url }}"
+                    class="toc-sidebar__link"
+                    data-toc-link>
+                    <span class="toc-sidebar__link-text">
+                      {% if toc_item.typeset %}
+                        {{ toc_item.typeset.title }}
+                      {% else %}
+                        {{ toc_item.title }}
+                      {% endif %}
+                    </span>
+                  </a>
+                  {% if toc_item.children %}
+                    <ul class="toc-sidebar__list toc-sidebar__list--nested">
+                      {{ loop(toc_item.children) }}
+                    </ul>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </nav>
+        </div>
       {% endif %}
-    </nav>
-  {% endblock %}
-  {~ WIP: Commented out for now #}
-
-  {{ super() }}
+    {% endblock %}
+    <div class="md-content" data-md-component="content">
+      <article class="md-content__inner md-typeset">
+        {% block content %}
+          {{ super() }}
+        {% endblock %}
+      </article>
+    </div>
+  </div>
 {% endblock %}
 
 {% block footer %}
