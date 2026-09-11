@@ -1021,3 +1021,9 @@
 .md-content .md-annotation__list {
   margin-top: 0.75rem !important;
 }
+
+/* Don't remove, this fixes stuff such as != <= >= turning into a weird amalgamation characters */
+code,
+pre {
+  font-variant-ligatures: none;
+}
