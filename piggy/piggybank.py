@@ -7,7 +7,13 @@ import markupsafe
 import yaml
 from frozendict.cool import deepfreeze
 
-from piggy import AssignmentTemplate, PIGGYBANK_FOLDER, ASSIGNMENT_FILENAME_REGEX, generate_shortlink
+from piggy import (
+    IMG_FMT,
+    ASSIGNMENT_FILENAME_REGEX,
+    AssignmentTemplate,
+    PIGGYBANK_FOLDER,
+    generate_shortlink,
+)
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper
 
 
@@ -250,7 +256,7 @@ PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
 print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")
 
 
-def _build_shortlink_map(segment: dict) -> dict[str, str]:
+def _build_shortlink_map(segment: dict) -> dict[str, dict]:
     shortlinks = {}
     for key, value in segment.items():
         if not isinstance(value, dict):
@@ -258,7 +264,21 @@ def _build_shortlink_map(segment: dict) -> dict[str, str]:
         if value.get("shortlink"):
             if value["shortlink"] in shortlinks:
                 raise ValueError(f"Duplicate assignment shortlink: {value['shortlink']}")
-            shortlinks[value["shortlink"]] = value["shortlink_target"]
+            target = value["shortlink_target"]
+            meta = value.get("meta", {})
+            title = value.get("heading", key.replace("_", " "))
+            topic_path = target.removeprefix("/main/").rsplit("/", 1)[0]
+            description = (
+                meta.get("description")
+                or meta.get("oinkdata", {}).get("summary")
+                or meta.get("summary", "")
+            )
+            shortlinks[value["shortlink"]] = {
+                "target": target,
+                "title": title,
+                "description": description,
+                "image": f"/img/{topic_path}/{meta.get('thumbnail', 'media/header')}.{IMG_FMT}?title={title}",
+            }
         for shortlink, target in _build_shortlink_map(value.get("data", {})).items():
             if shortlink in shortlinks:
                 raise ValueError(f"Duplicate assignment shortlink: {shortlink}")

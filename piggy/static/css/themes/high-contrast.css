@@ -63,7 +63,10 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-text-breadcrumb-hover: #ffff00;
 
   --piggy-text-hyperlink: var(--piggy-accent-link-override, #00ffff);
-  --piggy-text-hyperlink-hover: var(--piggy-accent-link-hover-override, #99ffff);
+  --piggy-text-hyperlink-hover: var(
+    --piggy-accent-link-hover-override,
+    #99ffff
+  );
 
   --piggy-menu: #000000;
   --piggy-menu-text: #ffffff;

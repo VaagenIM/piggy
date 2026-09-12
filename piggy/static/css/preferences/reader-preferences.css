@@ -276,3 +276,32 @@
     transition-duration: 0.001ms !important;
   }
 }
+
+:root[data-reader-code-wrap="off"] .md-content .highlight code,
+:root[data-reader-code-wrap="off"] .md-content .highlight .md-code__content,
+:root[data-reader-code-wrap="off"] .md-content .md-code__content span,
+:root[data-reader-code-wrap="off"] .md-content .highlight .hll {
+  white-space: pre !important;
+}
+
+:root[data-reader-code-wrap="off"] .md-content .highlight code,
+:root[data-reader-code-wrap="off"] .md-content .highlight .md-code__content {
+  min-width: max-content !important;
+}
+
+:root[data-reader-code-wrap="off"]
+  .md-content
+  .highlight:not(.piggy-code-titlebar-ready)
+  pre:has(.md-code__nav) {
+  padding-right: calc(
+    var(--piggy-code-block-padding-x) + var(--piggy-code-copy-reserved-space)
+  ) !important;
+}
+
+:root[data-reader-code-wrap="off"]
+  .md-content
+  .highlight:not(.piggy-code-titlebar-ready)
+  pre:has(.md-code__nav)
+  .md-code__content::before {
+  content: none !important;
+}

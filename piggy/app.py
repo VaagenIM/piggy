@@ -192,7 +192,7 @@ def create_app(debug: bool = False) -> Flask:
         target = SHORTLINK_MAP.get(shortlink)
         if not target:
             raise PiggyHTTPException(gettext("Page not found"), status_code=404)
-        return render_template("shortlink.html", target=target), 200
+        return render_template("shortlink.html", shortlink=target), 200
 
     @assignment_routes.route("/<path:path>")
     @assignment_routes.route("/")

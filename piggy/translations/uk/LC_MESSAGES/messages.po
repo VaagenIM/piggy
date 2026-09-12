@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Piggy 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/VaagenIM/piggy/issues\n"
-"POT-Creation-Date: 2026-09-07 17:10+0200\n"
+"POT-Creation-Date: 2026-09-09 13:11+0200\n"
 "PO-Revision-Date: 2026-09-07 14:06+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uk\n"
@@ -15,17 +15,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: piggy/app.py:197 piggy/caching.py:114 piggy/caching.py:201
+#: piggy/app.py:194 piggy/caching.py:187
+msgid "Page not found"
+msgstr "Сторінку не знайдено"
+
+#: piggy/app.py:205 piggy/caching.py:114 piggy/caching.py:201
 msgid "Assignment not found"
 msgstr "Завдання не знайдено"
 
 #: piggy/caching.py:122
 msgid "Error: Could not render assignment"
 msgstr "Помилка: не вдалося відобразити завдання"
-
-#: piggy/caching.py:187
-msgid "Page not found"
-msgstr "Сторінку не знайдено"
 
 #: piggy/js_i18n.py:15 piggy/js_i18n.py:33 piggy/js_i18n.py:38
 #: piggy/js_i18n.py:48 piggy/js_i18n.py:88 piggy/js_i18n.py:95
@@ -166,7 +166,7 @@ msgid "Myk og rund skrifttype"
 msgstr "М'який і округлий шрифт"
 
 #: piggy/js_i18n.py:56 piggy/js_i18n.py:70 piggy/js_i18n.py:71
-#: piggy/js_i18n.py:118 piggy/js_i18n.py:170
+#: piggy/js_i18n.py:118 piggy/js_i18n.py:176
 msgid "System"
 msgstr "Системний"
 
@@ -287,126 +287,136 @@ msgid "Animert"
 msgstr "Анімований"
 
 #: piggy/js_i18n.py:123 piggy/js_i18n.py:127 piggy/js_i18n.py:131
+#: piggy/js_i18n.py:135
 msgid "Av"
 msgstr "Вимк."
 
 #: piggy/js_i18n.py:124 piggy/js_i18n.py:128 piggy/js_i18n.py:132
+#: piggy/js_i18n.py:136
 msgid "På"
 msgstr "Увімк."
 
-#: piggy/js_i18n.py:135
+#: piggy/js_i18n.py:139
 msgid "Vanlige"
 msgstr "Звичайні"
 
-#: piggy/js_i18n.py:136
+#: piggy/js_i18n.py:140
 msgid "Fargerike"
 msgstr "Кольорові"
 
-#: piggy/js_i18n.py:137
+#: piggy/js_i18n.py:141
 msgid "Animerte"
 msgstr "Анімовані"
 
-#: piggy/js_i18n.py:140
+#: piggy/js_i18n.py:144
 msgid "Kontrast"
 msgstr "Контраст"
 
-#: piggy/js_i18n.py:141
+#: piggy/js_i18n.py:145
 msgid "Skrifttype"
 msgstr "Шрифт"
 
-#: piggy/js_i18n.py:142
+#: piggy/js_i18n.py:146
 msgid "Skrifttype for kode"
 msgstr "Шрифт для коду"
 
-#: piggy/js_i18n.py:143
+#: piggy/js_i18n.py:147
 msgid "Tekststørrelse"
 msgstr "Розмір тексту"
 
-#: piggy/js_i18n.py:144
+#: piggy/js_i18n.py:148
 msgid "Tekststørrelse omfang"
 msgstr "Область застосування розміру тексту"
 
-#: piggy/js_i18n.py:145
+#: piggy/js_i18n.py:149
 msgid "Linjehøyde"
 msgstr "Висота рядка"
 
-#: piggy/js_i18n.py:146
+#: piggy/js_i18n.py:150
 msgid "Bokstavavstand"
 msgstr "Міжлітерний інтервал"
 
-#: piggy/js_i18n.py:147
+#: piggy/js_i18n.py:151
 msgid "Ordavstand"
 msgstr "Міжслівний інтервал"
 
-#: piggy/js_i18n.py:148
+#: piggy/js_i18n.py:152
 msgid "Paragrafavstand"
 msgstr "Інтервал між абзацами"
 
-#: piggy/js_i18n.py:149
+#: piggy/js_i18n.py:153
 msgid "Innholdsbredde"
 msgstr "Ширина вмісту"
 
-#: piggy/js_i18n.py:150
+#: piggy/js_i18n.py:154
 msgid "Fokus modus"
 msgstr "Режим фокусування"
 
-#: piggy/js_i18n.py:151
+#: piggy/js_i18n.py:155
 msgid "Linjal"
 msgstr "Лінійка"
 
-#: piggy/js_i18n.py:152
+#: piggy/js_i18n.py:156
 msgid "Bevegelse og effekter"
 msgstr "Рух та ефекти"
 
-#: piggy/js_i18n.py:153
+#: piggy/js_i18n.py:157
 msgid "Husk posisjon"
 msgstr "Запам'ятати позицію"
 
-#: piggy/js_i18n.py:156
+#: piggy/js_i18n.py:158
+msgid "Radbryting i kode"
+msgstr "Перенесення рядків коду"
+
+#: piggy/js_i18n.py:161
 msgid "Demp navigasjonsmenyen i fokus modus"
 msgstr "Приглушити меню навігації в режимі фокусування"
 
-#: piggy/js_i18n.py:157
+#: piggy/js_i18n.py:162
 msgid "Bruk tekststørrelse på UI"
 msgstr "Застосувати розмір тексту до інтерфейсу"
 
-#: piggy/js_i18n.py:158
+#: piggy/js_i18n.py:163
 msgid "Vis linjal"
 msgstr "Показати лінійку"
 
-#: piggy/js_i18n.py:159
+#: piggy/js_i18n.py:164
 msgid "Husk hvor du stopte å lese"
 msgstr "Запам'ятати, де ви зупинилися читати"
 
-#: piggy/js_i18n.py:162
+#: piggy/js_i18n.py:165
+msgid "Bryt lange kodelinjer"
+msgstr "Переносити довгі рядки коду"
+
+#: piggy/js_i18n.py:168
 msgid "Line one"
 msgstr "Перший рядок"
 
-#: piggy/js_i18n.py:163
+#: piggy/js_i18n.py:169
 msgid "Line two"
 msgstr "Другий рядок"
 
-#: piggy/js_i18n.py:164
+#: piggy/js_i18n.py:170
 msgid "Spacing"
 msgstr "Інтервал"
 
-#: piggy/js_i18n.py:165
+#: piggy/js_i18n.py:171
 msgid "Word spacing"
 msgstr "Міжслівний інтервал"
 
-#: piggy/js_i18n.py:166
+#: piggy/js_i18n.py:172
 msgid "First paragraph"
 msgstr "Перший абзац"
 
-#: piggy/js_i18n.py:167
+#: piggy/js_i18n.py:173
 msgid "Second paragraph"
 msgstr "Другий абзац"
 
-#: piggy/js_i18n.py:168
+#: piggy/js_i18n.py:174
 msgid "Quiet"
 msgstr "Спокійно"
 
-#: piggy/js_i18n.py:169
+#: piggy/js_i18n.py:175
 msgid "Animated"
 msgstr "Анімовано"
 
@@ -531,40 +541,51 @@ msgstr "Текст"
 msgid "Støtte"
 msgstr "Підтримка"
 
-#: piggy/templates/partials/parts/settings_content.html:176
-#: piggy/templates/partials/parts/settings_content.html:193
-msgid "Nettstedspråk"
-msgstr "Мова сайту"
-
-#: piggy/templates/partials/parts/settings_content.html:225
+#: piggy/templates/partials/parts/settings_content.html:227
 msgid "Forhåndsinnstillinger"
 msgstr "Готові налаштування"
 
-#: piggy/templates/partials/parts/settings_content.html:234
+#: piggy/templates/partials/parts/settings_content.html:236
 msgid "Temaer"
 msgstr "Теми"
 
-#: piggy/templates/partials/parts/settings_content.html:240
+#: piggy/templates/partials/parts/settings_content.html:242
 msgid "Aksentfarge"
 msgstr "Акцентний колір"
 
-#: piggy/templates/partials/parts/settings_content.html:267
+#: piggy/templates/partials/parts/settings_content.html:270
 msgid "Avansert tekstoppsett"
 msgstr "Розширене налаштування тексту"
 
-#: piggy/templates/partials/parts/settings_content.html:289
+#: piggy/templates/partials/parts/settings_content.html:292
 msgid "Motion"
 msgstr "Рух"
 
-#: piggy/templates/partials/parts/settings_content.html:299
+#: piggy/templates/partials/parts/settings_content.html:302
 msgid "Fokus switches"
 msgstr "Перемикачі фокусування"
 
-#: piggy/templates/partials/parts/settings_content.html:319
+#: piggy/templates/partials/parts/settings_content.html:322
 msgid ""
 "Lagrer skjermposisjonen for hver side på denne nettleseren. Dette gjør at"
 " Piggy vil returnere til der du var når du sluttet å lese."
 msgstr ""
 "Зберігає позицію прокрутки для кожної сторінки в цьому браузері. Це "
 "дозволяє Piggy повертати вас туди, де ви зупинилися читати."
+
+#: piggy/templates/partials/parts/shortlink_copy.html:9
+#: piggy/templates/partials/parts/shortlink_copy.html:37
+msgid "Kopier lenke"
+msgstr ""
+
+#: piggy/templates/partials/parts/shortlink_copy.html:10
+msgid "Kopiert!"
+msgstr ""
+
+#: piggy/templates/partials/parts/shortlink_copy.html:11
+msgid "Kopier lenke til denne oppgaven"
+msgstr ""
+
+#~ msgid "Nettstedspråk"
+#~ msgstr "Мова сайту"
 

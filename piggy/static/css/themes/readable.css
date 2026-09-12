@@ -77,7 +77,10 @@ preview.border: #b59d6d
   --piggy-tooltip-text: #fff9e8;
 
   --piggy-text-hyperlink: var(--piggy-accent-link-override, #2f6f73);
-  --piggy-text-hyperlink-hover: var(--piggy-accent-link-hover-override, #214f52);
+  --piggy-text-hyperlink-hover: var(
+    --piggy-accent-link-hover-override,
+    #214f52
+  );
 
   --piggy-level-container-text: #25251f;
   --piggy-level-container: #dfd1a8;

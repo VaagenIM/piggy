@@ -86,7 +86,10 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
   --piggy-tooltip-text: #ffffff;
 
   --piggy-text-hyperlink: var(--piggy-accent-link-override, #00d9ff);
-  --piggy-text-hyperlink-hover: var(--piggy-accent-link-hover-override, #8ff3ff);
+  --piggy-text-hyperlink-hover: var(
+    --piggy-accent-link-hover-override,
+    #8ff3ff
+  );
 
   --grid-line-color: rgba(204, 0, 255, 0.52);
   --grid-background-color: #241032;
