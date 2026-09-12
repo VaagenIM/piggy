@@ -26,6 +26,7 @@ api_links = {"/api/search-data"}
 api_view_links = set()
 visited = set()
 media_links = set()
+changed_media_links = set()
 incremental_mode = False
 url = "http://127.0.0.1:55555"  # The URL of the website we are scraping
 cname = "https://piggy.iktim.no"  # The CNAME of the website we will push the demo to
@@ -274,7 +275,7 @@ def _download_media(link):
 
 
 def download_site():
-    media_tasks = set()
+    media_tasks = set(changed_media_links)
     with multiprocessing.Pool(processes=WORKERS) as pool:
         while visited != links:
             tasks = set(link for link in links if link not in visited)
@@ -486,7 +487,12 @@ def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
     routes = {"/"}
 
     if len(parts) < 2:
-        return routes, set(), True
+        return routes, set(), False
+
+    if parts[-2] in {"attachments", "media"}:
+        source_path = Path(*parts)
+        output_prefix = "main" if parts[-2] == "attachments" else "img"
+        return routes, {Path("demo") / output_prefix / source_path}, False
 
     translations_index = parts.index("translations") if "translations" in parts else -1
     if translations_index >= 0:
@@ -494,7 +500,7 @@ def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
         content_parts = parts[:translations_index]
         filename = parts[-1]
         if not language or not filename:
-            return routes, set(), True
+            return routes, set(), False
         assignment = "/".join(content_parts + [Path(filename).stem])
         routes.add(f"/main/{assignment}/lang/{language}")
         routes.add(f"/main/{assignment}")
@@ -508,13 +514,20 @@ def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
         if directory_parts:
             routes.add(f"/main/{'/'.join(directory_parts)}")
     else:
-        return routes, set(), True
+        return routes, set(), False
 
     for index in range(1, len(directory_parts) + 1):
         routes.add(f"/main/{'/'.join(directory_parts[:index])}/")
 
-    deleted = set()
-    return routes, deleted, False
+    return routes, set(), False
+
+
+def _media_link_for_path(path: str) -> str | None:
+    parts = path.replace("\\", "/").split("/")
+    if len(parts) < 2 or parts[-2] not in {"attachments", "media"}:
+        return None
+    prefix = "main" if parts[-2] == "attachments" else "img"
+    return f"/{prefix}/{'/'.join(parts)}"
 
 
 def _output_path_for_route(route: str) -> Path:
@@ -530,9 +543,10 @@ def _output_path_for_route(route: str) -> Path:
 
 def configure_demo_build() -> tuple[str, str, bool]:
     """Restore either a full or incremental build based on the cached demo state."""
-    global incremental_mode, links, api_links, api_view_links
+    global incremental_mode, links, api_links, api_view_links, changed_media_links
 
     api_view_links.clear()
+    changed_media_links.clear()
     root_dir = Path(__file__).resolve().parents[2]
     piggybank_path = root_dir / "piggybank"
     root_revision = _git_revision(root_dir)
@@ -588,6 +602,8 @@ def configure_demo_build() -> tuple[str, str, bool]:
                 break
             affected_routes.update(routes)
             deleted_outputs.update(deleted)
+            if status != "D" and (media_link := _media_link_for_path(path)):
+                changed_media_links.add(media_link)
             if status == "D":
                 deleted_outputs.update(_output_path_for_route(route) for route in routes)
         else:
