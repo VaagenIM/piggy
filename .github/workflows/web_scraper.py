@@ -482,7 +482,7 @@ def _worktree_fingerprint(repository_path: Path) -> str:
 
 def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
     """Return affected HTML routes, deleted output paths, and whether a full build is required."""
-    path = path.replace("\\", "/")
+    path = path.replace("\\", "/").replace(" ", "_")
     parts = path.split("/")
     routes = {"/"}
 
@@ -523,7 +523,7 @@ def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
 
 
 def _media_link_for_path(path: str) -> str | None:
-    parts = path.replace("\\", "/").split("/")
+    parts = path.replace("\\", "/").replace(" ", "_").split("/")
     if len(parts) < 2 or parts[-2] not in {"attachments", "media"}:
         return None
     prefix = "main" if parts[-2] == "attachments" else "img"
