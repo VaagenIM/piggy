@@ -2,6 +2,9 @@
 !piggy/
 !piggy/**
 
+*.min.js
+*.min.css
+
 **/devtools/*.html
 **/js/modules/**/*.js
 **/css/vendor/**/*.css
