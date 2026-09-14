@@ -6,3 +6,65 @@
   width: calc(2rem * var(--piggy-font-scale));
   height: auto;
 }
+
+/* Small difficulty badge shown inline in the full-width level tabs */
+.level-tab-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.35rem;
+}
+
+.level-tab-icon .level-menu-difficulty-image {
+  width: calc(1.3rem * var(--piggy-font-scale));
+}
+
+/* Tooltip shown on hover/focus of the compact "Level N" tabs */
+.level-tab {
+  position: relative;
+}
+
+.level-tab-tooltip {
+  position: absolute;
+  top: calc(100% + 0.4rem * var(--piggy-font-scale));
+  left: 50%;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: max-content;
+  max-width: min(320px, calc(100vw - 16px));
+  padding: calc(0.3rem * var(--piggy-font-scale))
+    calc(0.55rem * var(--piggy-font-scale));
+  border-radius: calc(0.35rem * var(--piggy-font-scale));
+  background: var(--piggy-tooltip, #000000);
+  color: var(--piggy-tooltip-text, #ffffff);
+  border: 1px solid
+    var(
+      --piggy-menu-border,
+      color-mix(in srgb, var(--piggy-neutral) 35%, transparent)
+    );
+  box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.28);
+  font-size: calc(0.78rem * var(--piggy-font-scale));
+  font-weight: 650;
+  line-height: 1.2;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-4px);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+.level-tab-tooltip-difficulty-image {
+  display: block;
+  flex: 0 0 auto;
+  width: calc(2rem * var(--piggy-font-scale));
+  height: auto;
+}
+
+.level-tab:hover .level-tab-tooltip,
+.level-tab:focus-visible .level-tab-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
