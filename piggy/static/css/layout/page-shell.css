@@ -7,7 +7,6 @@
   color: var(--piggy-text-main);
   text-shadow: var(--piggy-shadow-text) 3px 3px 5px;
   font-size: calc(1rem * var(--piggy-font-scale));
-  padding-bottom: 5rem;
 }
 
 .background-overlay {
@@ -23,4 +22,11 @@
 .content-wrapper {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-wrapper > main {
+  flex: 1 0 auto;
 }

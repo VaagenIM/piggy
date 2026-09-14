@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Piggy 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/VaagenIM/piggy/issues\n"
-"POT-Creation-Date: 2026-09-07 17:10+0200\n"
+"POT-Creation-Date: 2026-09-09 13:11+0200\n"
 "PO-Revision-Date: 2026-09-07 13:30+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: nb\n"
@@ -14,17 +14,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: piggy/app.py:197 piggy/caching.py:114 piggy/caching.py:201
+#: piggy/app.py:194 piggy/caching.py:187
+msgid "Page not found"
+msgstr "Fant ikke siden"
+
+#: piggy/app.py:205 piggy/caching.py:114 piggy/caching.py:201
 msgid "Assignment not found"
 msgstr "Oppgave ikke funnet"
 
 #: piggy/caching.py:122
 msgid "Error: Could not render assignment"
 msgstr "Feil: Kunne ikke vise oppgave"
-
-#: piggy/caching.py:187
-msgid "Page not found"
-msgstr "Fant ikke siden"
 
 #: piggy/js_i18n.py:15 piggy/js_i18n.py:33 piggy/js_i18n.py:38
 #: piggy/js_i18n.py:48 piggy/js_i18n.py:88 piggy/js_i18n.py:95
@@ -165,7 +165,7 @@ msgid "Myk og rund skrifttype"
 msgstr "Myk og rund skrifttype"
 
 #: piggy/js_i18n.py:56 piggy/js_i18n.py:70 piggy/js_i18n.py:71
-#: piggy/js_i18n.py:118 piggy/js_i18n.py:170
+#: piggy/js_i18n.py:118 piggy/js_i18n.py:176
 msgid "System"
 msgstr "System"
 
@@ -286,126 +286,136 @@ msgid "Animert"
 msgstr "Animert"
 
 #: piggy/js_i18n.py:123 piggy/js_i18n.py:127 piggy/js_i18n.py:131
+#: piggy/js_i18n.py:135
 msgid "Av"
 msgstr "Av"
 
 #: piggy/js_i18n.py:124 piggy/js_i18n.py:128 piggy/js_i18n.py:132
+#: piggy/js_i18n.py:136
 msgid "På"
 msgstr "På"
 
-#: piggy/js_i18n.py:135
+#: piggy/js_i18n.py:139
 msgid "Vanlige"
 msgstr "Vanlige"
 
-#: piggy/js_i18n.py:136
+#: piggy/js_i18n.py:140
 msgid "Fargerike"
 msgstr "Fargerike"
 
-#: piggy/js_i18n.py:137
+#: piggy/js_i18n.py:141
 msgid "Animerte"
 msgstr "Animerte"
 
-#: piggy/js_i18n.py:140
+#: piggy/js_i18n.py:144
 msgid "Kontrast"
 msgstr "Kontrast"
 
-#: piggy/js_i18n.py:141
+#: piggy/js_i18n.py:145
 msgid "Skrifttype"
 msgstr "Skrifttype"
 
-#: piggy/js_i18n.py:142
+#: piggy/js_i18n.py:146
 msgid "Skrifttype for kode"
 msgstr "Skrifttype for kode"
 
-#: piggy/js_i18n.py:143
+#: piggy/js_i18n.py:147
 msgid "Tekststørrelse"
 msgstr "Tekststørrelse"
 
-#: piggy/js_i18n.py:144
+#: piggy/js_i18n.py:148
 msgid "Tekststørrelse omfang"
 msgstr "Tekststørrelse omfang"
 
-#: piggy/js_i18n.py:145
+#: piggy/js_i18n.py:149
 msgid "Linjehøyde"
 msgstr "Linjehøyde"
 
-#: piggy/js_i18n.py:146
+#: piggy/js_i18n.py:150
 msgid "Bokstavavstand"
 msgstr "Bokstavavstand"
 
-#: piggy/js_i18n.py:147
+#: piggy/js_i18n.py:151
 msgid "Ordavstand"
 msgstr "Ordavstand"
 
-#: piggy/js_i18n.py:148
+#: piggy/js_i18n.py:152
 msgid "Paragrafavstand"
 msgstr "Paragrafavstand"
 
-#: piggy/js_i18n.py:149
+#: piggy/js_i18n.py:153
 msgid "Innholdsbredde"
 msgstr "Innholdsbredde"
 
-#: piggy/js_i18n.py:150
+#: piggy/js_i18n.py:154
 msgid "Fokus modus"
 msgstr "Fokus modus"
 
-#: piggy/js_i18n.py:151
+#: piggy/js_i18n.py:155
 msgid "Linjal"
 msgstr "Linjal"
 
-#: piggy/js_i18n.py:152
+#: piggy/js_i18n.py:156
 msgid "Bevegelse og effekter"
 msgstr "Bevegelse og effekter"
 
-#: piggy/js_i18n.py:153
+#: piggy/js_i18n.py:157
 msgid "Husk posisjon"
 msgstr "Husk posisjon"
 
-#: piggy/js_i18n.py:156
+#: piggy/js_i18n.py:158
+msgid "Radbryting i kode"
+msgstr "Radbryting i kode"
+
+#: piggy/js_i18n.py:161
 msgid "Demp navigasjonsmenyen i fokus modus"
 msgstr "Demp navigasjonsmenyen i fokus modus"
 
-#: piggy/js_i18n.py:157
+#: piggy/js_i18n.py:162
 msgid "Bruk tekststørrelse på UI"
 msgstr "Bruk tekststørrelse på UI"
 
-#: piggy/js_i18n.py:158
+#: piggy/js_i18n.py:163
 msgid "Vis linjal"
 msgstr "Vis linjal"
 
-#: piggy/js_i18n.py:159
+#: piggy/js_i18n.py:164
 msgid "Husk hvor du stopte å lese"
 msgstr "Husk hvor du stopte å lese"
 
-#: piggy/js_i18n.py:162
+#: piggy/js_i18n.py:165
+msgid "Bryt lange kodelinjer"
+msgstr "Bryt lange kodelinjer"
+
+#: piggy/js_i18n.py:168
 msgid "Line one"
 msgstr "Line one"
 
-#: piggy/js_i18n.py:163
+#: piggy/js_i18n.py:169
 msgid "Line two"
 msgstr "Line two"
 
-#: piggy/js_i18n.py:164
+#: piggy/js_i18n.py:170
 msgid "Spacing"
 msgstr "Spacing"
 
-#: piggy/js_i18n.py:165
+#: piggy/js_i18n.py:171
 msgid "Word spacing"
 msgstr "Word spacing"
 
-#: piggy/js_i18n.py:166
+#: piggy/js_i18n.py:172
 msgid "First paragraph"
 msgstr "First paragraph"
 
-#: piggy/js_i18n.py:167
+#: piggy/js_i18n.py:173
 msgid "Second paragraph"
 msgstr "Second paragraph"
 
-#: piggy/js_i18n.py:168
+#: piggy/js_i18n.py:174
 msgid "Quiet"
 msgstr "Quiet"
 
-#: piggy/js_i18n.py:169
+#: piggy/js_i18n.py:175
 msgid "Animated"
 msgstr "Animated"
 
@@ -530,40 +540,51 @@ msgstr "Tekst"
 msgid "Støtte"
 msgstr "Støtte"
 
-#: piggy/templates/partials/parts/settings_content.html:176
-#: piggy/templates/partials/parts/settings_content.html:193
-msgid "Nettstedspråk"
-msgstr "Nettstedspråk"
-
-#: piggy/templates/partials/parts/settings_content.html:225
+#: piggy/templates/partials/parts/settings_content.html:227
 msgid "Forhåndsinnstillinger"
 msgstr "Forhåndsinnstillinger"
 
-#: piggy/templates/partials/parts/settings_content.html:234
+#: piggy/templates/partials/parts/settings_content.html:236
 msgid "Temaer"
 msgstr "Temaer"
 
-#: piggy/templates/partials/parts/settings_content.html:240
+#: piggy/templates/partials/parts/settings_content.html:242
 msgid "Aksentfarge"
 msgstr "Aksentfarge"
 
-#: piggy/templates/partials/parts/settings_content.html:267
+#: piggy/templates/partials/parts/settings_content.html:270
 msgid "Avansert tekstoppsett"
 msgstr "Avansert tekstoppsett"
 
-#: piggy/templates/partials/parts/settings_content.html:289
+#: piggy/templates/partials/parts/settings_content.html:292
 msgid "Motion"
 msgstr "Motion"
 
-#: piggy/templates/partials/parts/settings_content.html:299
+#: piggy/templates/partials/parts/settings_content.html:302
 msgid "Fokus switches"
 msgstr "Fokus switches"
 
-#: piggy/templates/partials/parts/settings_content.html:319
+#: piggy/templates/partials/parts/settings_content.html:322
 msgid ""
 "Lagrer skjermposisjonen for hver side på denne nettleseren. Dette gjør at"
 " Piggy vil returnere til der du var når du sluttet å lese."
 msgstr ""
 "Lagrer skjermposisjonen for hver side på denne nettleseren. Dette gjør at"
 " Piggy vil returnere til der du var når du sluttet å lese."
+
+#: piggy/templates/partials/parts/shortlink_copy.html:9
+#: piggy/templates/partials/parts/shortlink_copy.html:37
+msgid "Kopier lenke"
+msgstr ""
+
+#: piggy/templates/partials/parts/shortlink_copy.html:10
+msgid "Kopiert!"
+msgstr ""
+
+#: piggy/templates/partials/parts/shortlink_copy.html:11
+msgid "Kopier lenke til denne oppgaven"
+msgstr ""
+
+#~ msgid "Nettstedspråk"
+#~ msgstr "Nettstedspråk"
 

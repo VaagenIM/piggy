@@ -82,7 +82,10 @@ preview_style: background: linear-gradient(90deg, #201d2f, #34304a); color: #ede
   --piggy-tooltip-text: #ffffff;
 
   --piggy-text-hyperlink: var(--piggy-accent-link-override, #8cc8ff);
-  --piggy-text-hyperlink-hover: var(--piggy-accent-link-hover-override, #b8dcff);
+  --piggy-text-hyperlink-hover: var(
+    --piggy-accent-link-hover-override,
+    #b8dcff
+  );
 
   /* Level container */
   --piggy-level-container-text: #edeaf7;

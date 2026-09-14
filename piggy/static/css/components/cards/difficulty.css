@@ -27,6 +27,7 @@
   top: -0.35rem;
   left: 0.35rem;
   width: 4rem;
+  z-index: 3;
 
   /* may be used sometime */
   --difficulty-1-color: #00a000;

@@ -14,6 +14,7 @@
     readingRuler: "Linjal",
     reduceMotion: "Bevegelse og effekter",
     rememberPosition: "Husk posisjon",
+    codeWrap: "Radbryting i kode",
   };
 
   const THEME_ACCENT_LABELS = {
@@ -33,6 +34,7 @@
     fontSizeAffectsUi: "Bruk tekststørrelse på UI",
     readingRuler: "Vis linjal",
     rememberPosition: "Husk hvor du stopte å lese",
+    codeWrap: "Bryt lange kodelinjer",
   };
 
   const THEME_GROUP_ORDER = ["regular", "colored", "animated"];
@@ -168,6 +170,7 @@
       "fontSizeAffectsUi",
       getRenderTarget("fontSizeAffectsUi"),
     );
+    renderToggleControl("codeWrap", getRenderTarget("codeWrap"));
 
     renderSegmentedControl(
       "readerLineHeight",
@@ -325,7 +328,9 @@
 
     const orderedIds = [
       ...THEME_GROUP_ORDER.filter((groupId) => byGroup.has(groupId)),
-      ...[...byGroup.keys()].filter((groupId) => !THEME_GROUP_ORDER.includes(groupId)),
+      ...[...byGroup.keys()].filter(
+        (groupId) => !THEME_GROUP_ORDER.includes(groupId),
+      ),
     ];
 
     return orderedIds.map((groupId) => ({
@@ -388,9 +393,16 @@
     host.append(swatch);
     document.body.append(host);
 
+    const defaultValue = preferencesApi.getSetting("accentColor")?.defaultValue;
     const colors = {};
     preferencesApi.getOptions("accentColor").forEach((option) => {
       host.setAttribute("data-accent-color", option.value);
+
+      if (option.value === defaultValue) {
+        host.style.setProperty("--piggy-accent-override", "initial");
+      } else {
+        host.style.removeProperty("--piggy-accent-override");
+      }
       colors[option.value] = window.getComputedStyle(swatch).backgroundColor;
     });
 
