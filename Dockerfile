@@ -23,6 +23,9 @@ ENV AUTO_UPDATE="True"
 ENV FLASK_DEBUG="0"
 ENV USE_CACHE="1"
 
+ARG PIGGY_VERSION=dev
+ENV PIGGY_VERSION=${PIGGY_VERSION}
+
 WORKDIR /app
 
 COPY --from=builder /app/venv /app/venv

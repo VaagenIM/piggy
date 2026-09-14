@@ -26,6 +26,11 @@ def lru_cache_wrapper(func):
     return func
 
 
+def get_version() -> str:
+    """Resolve the running app's version, stamped in by CI as PIGGY_VERSION (e.g. "26.9.36")."""
+    return os.environ.get("PIGGY_VERSION", "dev")
+
+
 def get_ui_locale() -> str:
     """
     Resolve the site UI locale for the current request: an explicit

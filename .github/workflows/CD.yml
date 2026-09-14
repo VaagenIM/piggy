@@ -25,6 +25,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Compute version
+        id: version
+        run: echo "value=$(.github/workflows/scripts/compute-version.sh)" >> "$GITHUB_OUTPUT"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
@@ -50,5 +56,7 @@ jobs:
           platforms: ${{ env.PLATFORMS }}
           push: true
           tags: ghcr.io/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          build-args: |
+            PIGGY_VERSION=${{ steps.version.outputs.value }}
           cache-from: type=gha
           cache-to: type=gha
