@@ -183,7 +183,9 @@
                   src="{{ url_for('static', filename='img/difficulties/' + level_difficulty + '.png') }}"
                   alt="" />
               {% endif %}
-              <span class="level-tab-tooltip-title">{{ level_title | unescape }}</span>
+              <span class="level-tab-tooltip-title"
+                >{{ level_title | unescape }}</span
+              >
             </span>
           {% endset %}
           {% if is_active %}
