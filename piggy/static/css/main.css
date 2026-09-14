@@ -46,6 +46,7 @@
 
 @import "./markdown/markdown-material-compat.css";
 @import "./markdown/markdown-base.css";
+@import "./markdown/markdown-mermaid.css";
 @import "./markdown/markdown-code.css";
 @import "./markdown/markdown-code-palettes.css";
 @import "./markdown/markdown-code-tokens.css";
