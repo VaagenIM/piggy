@@ -138,6 +138,7 @@
 
 :root[data-reader-contrast="soft"] .md-content .piggy-code-titlebar,
 :root[data-reader-contrast="soft"] .md-content .highlighttable th.filename,
+:root[data-reader-contrast="soft"] .md-content .highlight > span.filename,
 :root[data-reader-contrast="soft"] .md-content .highlighttable td.linenos {
   border-color: color-mix(
     in srgb,
@@ -182,6 +183,7 @@
 
 :root[data-reader-contrast="strong"] .md-content .piggy-code-titlebar,
 :root[data-reader-contrast="strong"] .md-content .highlighttable th.filename,
+:root[data-reader-contrast="strong"] .md-content .highlight > span.filename,
 :root[data-reader-contrast="strong"] .md-content .highlighttable td.linenos {
   border-color: color-mix(
     in srgb,
