@@ -12,6 +12,11 @@
   {{ super() }}
 {% endblock %}
 
+{% block scripts %}
+  <script src="/static/js/vendor/mermaid-11.17.2.min.js"></script>
+  {{ super() }}
+{% endblock %}
+
 {% block header %}
   {{ super() }}
 {% endblock %}
