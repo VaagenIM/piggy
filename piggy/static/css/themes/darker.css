@@ -302,9 +302,6 @@ preview_style: background: linear-gradient(90deg, #000000, #000000); color: #fff
 }
 
 [data-theme="darker"] .md-content {
-  --piggy-code-block-highlight-bg: rgba(56, 139, 253, 0.14);
-  --piggy-code-block-highlight-border: rgba(56, 139, 253, 0.3);
-
   border-radius: 0.5rem;
 }
 

@@ -295,9 +295,6 @@ preview_style: background: linear-gradient(90deg, #002b36, #336b87); color: #a7d
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="ocean"] .md-content {
-  --piggy-code-block-highlight-bg: rgba(0, 192, 220, 0.18);
-  --piggy-code-block-highlight-border: rgba(0, 192, 220, 0.42);
-
   border: 1px solid rgba(136, 192, 208, 0.42);
   border-radius: 0.5rem;
   background: rgba(0, 25, 35, 0.78);

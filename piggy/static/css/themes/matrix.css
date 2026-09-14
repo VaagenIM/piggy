@@ -404,9 +404,6 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
 }
 
 [data-theme="matrix"] .md-content {
-  --piggy-code-block-highlight-bg: rgba(0, 255, 102, 0.18);
-  --piggy-code-block-highlight-border: rgba(0, 255, 102, 0.42);
-
   border: 1px solid #00ff00;
   border-radius: 0.5rem !important;
   background-color: #000000ee;

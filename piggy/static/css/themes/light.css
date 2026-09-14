@@ -288,9 +288,6 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="light"] .md-content {
-  --piggy-code-block-highlight-bg: rgba(9, 105, 218, 0.1);
-  --piggy-code-block-highlight-border: rgba(9, 105, 218, 0.26);
-
   border-radius: 0.5rem;
 }
 

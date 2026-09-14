@@ -301,9 +301,6 @@ preview_style: background-color: #0b0c10; color: #66fcf1; text-shadow: none;
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="space"] .md-content {
-  --piggy-code-block-highlight-bg: rgba(102, 252, 241, 0.16);
-  --piggy-code-block-highlight-border: rgba(102, 252, 241, 0.38);
-
   border: 1px solid rgba(102, 252, 241, 0.42);
   border-radius: 0.5rem;
   background: rgba(5, 8, 18, 0.84);
