@@ -30,7 +30,7 @@ jobs:
 
       - name: Compute version
         id: version
-        run: echo "value=$(.github/workflows/scripts/compute-version.sh)" >> "$GITHUB_OUTPUT"
+        run: echo "value=$(bash .github/workflows/scripts/compute-version.sh)" >> "$GITHUB_OUTPUT"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4

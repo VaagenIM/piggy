@@ -7,7 +7,6 @@
   color: var(--piggy-text-main);
   text-shadow: var(--piggy-shadow-text) 3px 3px 5px;
   font-size: calc(1rem * var(--piggy-font-scale));
-  padding-bottom: 5rem;
 }
 
 .background-overlay {
@@ -23,11 +22,4 @@
 .content-wrapper {
   position: relative;
   z-index: 1;
-}
-
-.site-version {
-  text-align: center;
-  padding: 1rem 0;
-  font-size: 0.75em;
-  opacity: 0.6;
 }

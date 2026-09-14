@@ -59,10 +59,13 @@
           </div>
         {% endif %}
       </main>
-      <footer>
-        {% block footer %}
-          <p class="site-version">v{{ version }}</p>
-        {% endblock %}
+      <footer class="site-footer">
+        <div class="footer-content">
+          {% include "partials/footer/build_info.html" %}
+          {% include "partials/footer/links.html" %}
+          {% block footer %}
+          {% endblock %}
+        </div>
       </footer>
     </div>
     <div id="reader-ruler" class="reader-ruler" aria-hidden="true"></div>
