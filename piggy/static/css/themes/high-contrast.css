@@ -14,6 +14,7 @@ preview.border: #ffffff
 preview_style: background-color: #000000; color: #ffffff; border: 1px solid #ffffff;
 */
 [data-theme="high-contrast"] {
+  --md-mermaid-stroke-width: 3px;
   --piggy-main: #000000;
   --piggy-light: #ffffff;
   --piggy-neutral: #7f7f7f;

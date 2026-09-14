@@ -1,6 +1,7 @@
 :root {
   --md-mermaid-font-family:
     var(--piggy-site-font-family, "Noto Sans"), sans-serif;
+  --md-mermaid-stroke-width: 2px;
 
   /* General colors */
   --md-mermaid-edge-color: var(--piggy-code);
