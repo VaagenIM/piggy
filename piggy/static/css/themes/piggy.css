@@ -291,9 +291,6 @@ preview_style: background: linear-gradient(90deg, #ffe6e9, #ff99cc); color: rgb(
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="piggy"] .md-content {
-  --piggy-code-block-highlight-bg: rgba(201, 92, 125, 0.13);
-  --piggy-code-block-highlight-border: rgba(201, 92, 125, 0.3);
-
   border-radius: 0.5rem;
 }
 

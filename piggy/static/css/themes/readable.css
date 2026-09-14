@@ -247,9 +247,6 @@ preview.border: #b59d6d
 }
 
 [data-theme="readable"] .md-content {
-  --piggy-code-block-highlight-bg: rgba(127, 111, 60, 0.15);
-  --piggy-code-block-highlight-border: rgba(127, 111, 60, 0.34);
-
   border-radius: 0.5rem;
   background: rgba(255, 249, 232, 0.42);
 }

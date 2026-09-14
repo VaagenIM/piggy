@@ -162,6 +162,7 @@ const PIGGY_SVG_NAMESPACE = "http://www.w3.org/2000/svg";
 document.addEventListener("DOMContentLoaded", () => {
   piggyInitializeCodeTitlebars();
   piggyObserveCodeTitlebars();
+  piggyScheduleLineNumberSync();
 });
 
 function piggyInitializeCodeTitlebars(root = document) {
@@ -183,16 +184,136 @@ function piggyObserveCodeTitlebars() {
   if (!markdownContent) return;
 
   const observer = new MutationObserver((mutations) => {
+    let sawAddedNodes = false;
+
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
         piggyInitializeCodeTitlebars(node);
+        sawAddedNodes = true;
       }
     }
+
+    if (sawAddedNodes) piggyScheduleLineNumberSync();
   });
 
   observer.observe(markdownContent, {
     childList: true,
     subtree: true,
+  });
+}
+
+/****************************************\
+|* LINE NUMBER / WRAPPED-LINE SYNCING   *|
+\****************************************/
+let piggyLineNumberSyncScheduled = false;
+
+function piggyScheduleLineNumberSync() {
+  if (piggyLineNumberSyncScheduled) return;
+  piggyLineNumberSyncScheduled = true;
+
+  requestAnimationFrame(() => {
+    piggyLineNumberSyncScheduled = false;
+    piggySyncAllLineNumberWrapping();
+  });
+}
+
+window.addEventListener("resize", piggyScheduleLineNumberSync, {
+  passive: true,
+});
+window.addEventListener("orientationchange", piggyScheduleLineNumberSync, {
+  passive: true,
+});
+
+if (window.visualViewport) {
+  window.visualViewport.addEventListener(
+    "resize",
+    piggyScheduleLineNumberSync,
+    {
+      passive: true,
+    },
+  );
+}
+
+if (document.fonts) {
+  document.fonts.ready.then(piggyScheduleLineNumberSync);
+}
+
+document.addEventListener(
+  "piggy:preferenceschange",
+  piggyScheduleLineNumberSync,
+);
+
+function piggyObserveMarkdownContentResize() {
+  const markdownContent = document.querySelector(".md-content");
+  if (!markdownContent || typeof ResizeObserver === "undefined") return;
+
+  const observer = new ResizeObserver(() => {
+    piggyScheduleLineNumberSync();
+  });
+  observer.observe(markdownContent);
+}
+
+document.addEventListener(
+  "DOMContentLoaded",
+  piggyObserveMarkdownContentResize,
+);
+
+function piggyIsCodeWrapEnabled() {
+  return (
+    document.documentElement.getAttribute("data-reader-code-wrap") !== "off"
+  );
+}
+
+function piggySyncAllLineNumberWrapping(root = document) {
+  const tables = [];
+
+  if (root instanceof Element && root.matches(".md-content .highlighttable")) {
+    tables.push(root);
+  }
+
+  if (typeof root.querySelectorAll === "function") {
+    tables.push(...root.querySelectorAll(".md-content .highlighttable"));
+  }
+
+  tables.forEach(piggySyncLineNumberWrapping);
+}
+
+function piggySyncLineNumberWrapping(highlighttable) {
+  const normals = [
+    ...highlighttable.querySelectorAll(".linenodiv pre .normal"),
+  ];
+  if (!normals.length) return;
+
+  if (!piggyIsCodeWrapEnabled()) {
+    normals.forEach((normal) => {
+      normal.style.marginBottom = "";
+    });
+    return;
+  }
+
+  const codeElement = highlighttable.querySelector("td.code pre > code");
+  if (!codeElement) return;
+
+  const codeRect = codeElement.getBoundingClientRect();
+  if (codeRect.width === 0 && codeRect.height === 0) return;
+
+  const lineSpans = [...codeElement.querySelectorAll(":scope > span[id]")];
+  if (lineSpans.length !== normals.length) return;
+
+  const lineHeight = parseFloat(getComputedStyle(codeElement).lineHeight);
+  if (!lineHeight) return;
+
+  lineSpans.forEach((lineSpan, index) => {
+    const normal = normals[index];
+    if (!normal) return;
+
+    const wrappedRows = Math.max(
+      1,
+      Math.round(lineSpan.getBoundingClientRect().height / lineHeight),
+    );
+    const extraHeight = (wrappedRows - 1) * lineHeight;
+
+    normal.style.marginBottom = extraHeight > 0.5 ? `${extraHeight}px` : "";
   });
 }
 
