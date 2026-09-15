@@ -215,6 +215,10 @@
       { value: "off", label: "Av" },
       { value: "on", label: "På" },
     ],
+    iconClarity: [
+      { value: "off", label: "Av" },
+      { value: "on", label: "På" },
+    ],
     hideDecorations: [
       { value: "off", label: "Av" },
       { value: "on", label: "På" },
@@ -228,25 +232,6 @@
       { value: "on", label: "På" },
     ],
   };
-
-  (function applyI18n() {
-    const i18n =
-      window.PIGGY_I18N && typeof window.PIGGY_I18N === "object"
-        ? window.PIGGY_I18N
-        : {};
-
-    Object.keys(VALUE_OPTIONS).forEach((key) => {
-      const group = i18n[key];
-      if (!group) return;
-
-      VALUE_OPTIONS[key].forEach((option) => {
-        const translated = group[option.value];
-        if (!translated) return;
-        if (translated.label !== undefined) option.label = translated.label;
-        if (translated.detail !== undefined) option.detail = translated.detail;
-      });
-    });
-  })();
 
   function getReadableTextColor(hex) {
     const match = /^#?([0-9a-f]{6})$/i.exec((hex || "").trim());
@@ -381,6 +366,11 @@
       attribute: "data-reader-ruler",
       options: VALUE_OPTIONS.readingRuler,
     },
+    iconClarity: {
+      defaultValue: "off",
+      attribute: "data-reader-icon-clarity",
+      options: VALUE_OPTIONS.iconClarity,
+    },
     hideDecorations: {
       defaultValue: "off",
       attribute: "data-reader-hide-decorations",
@@ -416,6 +406,7 @@
         reduceMotion: "system",
         focusMode: "off",
         readingRuler: "off",
+        iconClarity: "off",
         hideDecorations: "off",
       },
     },
@@ -436,6 +427,7 @@
         reduceMotion: "system",
         focusMode: "off",
         readingRuler: "off",
+        iconClarity: "off",
         hideDecorations: "off",
       },
     },
@@ -456,6 +448,7 @@
         reduceMotion: "reduce",
         focusMode: "off",
         readingRuler: "on",
+        iconClarity: "off",
         hideDecorations: "on",
       },
     },
@@ -476,6 +469,7 @@
         reduceMotion: "reduce",
         focusMode: "off",
         readingRuler: "off",
+        iconClarity: "on",
         hideDecorations: "on",
       },
     },
@@ -496,6 +490,7 @@
         reduceMotion: "reduce",
         focusMode: "off",
         readingRuler: "off",
+        iconClarity: "off",
         hideDecorations: "on",
       },
     },
@@ -516,6 +511,7 @@
         reduceMotion: "reduce",
         focusMode: "off",
         readingRuler: "off",
+        iconClarity: "off",
         hideDecorations: "on",
       },
     },
@@ -536,6 +532,7 @@
         reduceMotion: "reduce",
         focusMode: "on",
         readingRuler: "off",
+        iconClarity: "off",
         hideDecorations: "on",
       },
     },
@@ -556,6 +553,7 @@
         reduceMotion: "system",
         focusMode: "off",
         readingRuler: "off",
+        iconClarity: "off",
         hideDecorations: "off",
       },
     },

@@ -12,6 +12,7 @@
     readerWidth: "Innholdsbredde",
     focusMode: "Fokus modus",
     readingRuler: "Linjal",
+    iconClarity: "Ikonsynlighet",
     reduceMotion: "Bevegelse og effekter",
     rememberPosition: "Husk posisjon",
     codeWrap: "Radbryting i kode",
@@ -33,6 +34,7 @@
     focusMode: "Demp navigasjonsmenyen i fokus modus",
     fontSizeAffectsUi: "Bruk tekststørrelse på UI",
     readingRuler: "Vis linjal",
+    iconClarity: "Tydeligere ikoner og farger",
     rememberPosition: "Husk hvor du stopte å lese",
     codeWrap: "Bryt lange kodelinjer",
   };
@@ -45,27 +47,17 @@
     animated: "Animerte",
   };
 
-  const I18N =
-    window.PIGGY_I18N && typeof window.PIGGY_I18N === "object"
-      ? window.PIGGY_I18N
-      : {};
-  Object.assign(CONTROL_LABELS, I18N.controlLabels || {});
-  Object.assign(TOGGLE_LABELS, I18N.toggleLabels || {});
-  Object.assign(THEME_GROUP_LABELS, I18N.themeGroups || {});
-  const PREVIEW_LABELS = Object.assign(
-    {
-      lineOne: "Line one",
-      lineTwo: "Line two",
-      spacing: "Spacing",
-      wordSpacing: "Word spacing",
-      firstParagraph: "First paragraph",
-      secondParagraph: "Second paragraph",
-      quiet: "Quiet",
-      animated: "Animated",
-      system: "System",
-    },
-    I18N.preview || {},
-  );
+  const PREVIEW_LABELS = {
+    lineOne: "Line one",
+    lineTwo: "Line two",
+    spacing: "Spacing",
+    wordSpacing: "Word spacing",
+    firstParagraph: "First paragraph",
+    secondParagraph: "Second paragraph",
+    quiet: "Quiet",
+    animated: "Animated",
+    system: "System",
+  };
 
   const PRESET_ICONS = {
     default: "settings",
@@ -192,6 +184,7 @@
 
     renderToggleControl("focusMode", getRenderTarget("focusMode"));
     renderToggleControl("readingRuler", getRenderTarget("readingRuler"));
+    renderToggleControl("iconClarity", getRenderTarget("iconClarity"));
     renderSegmentedControl("reduceMotion", getRenderTarget("reduceMotion"));
     renderToggleControl(
       "rememberPosition",

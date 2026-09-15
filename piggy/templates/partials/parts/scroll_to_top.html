@@ -14,6 +14,22 @@
 
 <script>
   const scrollToTopBtn = document.getElementById('scroll-to-top-btn');
+  const siteFooter = document.querySelector('.site-footer');
+
+  function updateScrollToTopOffset() {
+    if (!siteFooter) return;
+
+    const gap = parseFloat(getComputedStyle(scrollToTopBtn).bottom) || 0;
+    const footerClearance = gap / 2;
+    const buttonBottomEdge = window.innerHeight - gap;
+    const footerTop = siteFooter.getBoundingClientRect().top;
+    const overlap = buttonBottomEdge - footerTop + footerClearance;
+
+    scrollToTopBtn.style.setProperty(
+      '--scroll-to-top-offset',
+      overlap > 0 ? `-${overlap}px` : '0px'
+    );
+  }
 
   function piggyShouldReduceScrollMotion() {
     const preference = document.documentElement.getAttribute(
@@ -34,7 +50,11 @@
     } else {
       scrollToTopBtn.classList.remove('is-visible');
     }
+
+    updateScrollToTopOffset();
   });
+
+  window.addEventListener('resize', updateScrollToTopOffset);
 
   scrollToTopBtn.addEventListener('click', () => {
     window.scrollTo({
@@ -42,4 +62,6 @@
       behavior: piggyShouldReduceScrollMotion() ? 'auto' : 'smooth',
     });
   });
+
+  updateScrollToTopOffset();
 </script>

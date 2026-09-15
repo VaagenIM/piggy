@@ -2,6 +2,7 @@
 |* SCROLL TO TOP BUTTON *|
 \************************/
 #scroll-to-top-btn {
+  --scroll-to-top-offset: 0px;
   transition: all 0.3s ease;
   color: var(--piggy-text-main);
   position: fixed;
@@ -20,6 +21,7 @@
   height: calc(3rem * var(--piggy-font-scale));
   opacity: 0;
   pointer-events: none;
+  transform: translateY(var(--scroll-to-top-offset));
 }
 
 #scroll-to-top-btn.is-visible {
@@ -28,7 +30,7 @@
 }
 
 #scroll-to-top-btn:hover {
-  transform: scale(1.1);
+  transform: translateY(var(--scroll-to-top-offset)) scale(1.1);
   background-color: var(--piggy-button-hover);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
