@@ -6,7 +6,7 @@
     --piggy-footer-border,
     var(--piggy-button-border, var(--piggy-button-active))
   );
-  margin-top: 3rem;
+  margin-top: 4rem;
   border-top: 1px solid
     color-mix(in srgb, var(--site-footer-border) 55%, transparent);
   background: color-mix(in srgb, var(--site-footer-border) 6%, transparent);
