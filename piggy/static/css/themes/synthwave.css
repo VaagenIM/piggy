@@ -485,9 +485,6 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="synthwave"] .md-content {
-  --piggy-code-block-highlight-bg: rgba(240, 79, 255, 0.18);
-  --piggy-code-block-highlight-border: rgba(240, 79, 255, 0.42);
-
   border: 1px solid #cc00ffaa;
   border-radius: 0.5rem;
   background-color: #000000cc;

@@ -49,12 +49,7 @@
   );
   --piggy-code-block-highlight-bg: color-mix(
     in srgb,
-    var(--piggy-button-active) 18%,
-    transparent
-  );
-  --piggy-code-block-highlight-border: color-mix(
-    in srgb,
-    var(--piggy-button-active) 68%,
+    var(--piggy-button-active) 20%,
     transparent
   );
   --piggy-code-annotation-bg: var(
@@ -522,6 +517,68 @@
   display: none !important;
 }
 
+/**************************\
+|* FILENAME (NO LINENUMS) *|
+\**************************/
+.md-content .highlight > span.filename {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  min-height: calc(2.2rem * var(--piggy-font-scale)) !important;
+  margin: 0 !important;
+  padding: 0 var(--piggy-code-block-padding-x) !important;
+  padding-right: calc(
+    var(--piggy-code-block-padding-x) + var(--piggy-code-titlebar-control-space)
+  ) !important;
+
+  color: var(--piggy-code-block-text, var(--piggy-code)) !important;
+  background: var(--piggy-code-block-filename-bg) !important;
+  background-color: var(--piggy-code-block-filename-bg) !important;
+
+  border-bottom: 1px solid
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
+  border-radius: calc(var(--piggy-code-block-radius) - 1px)
+    calc(var(--piggy-code-block-radius) - 1px) 0 0 !important;
+  box-shadow: none !important;
+
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
+  font-size: calc(
+    0.76rem * var(--piggy-reader-component-font-scale)
+  ) !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.25 !important;
+  text-align: left !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  position: relative !important;
+}
+
+.md-content .highlight > span.filename::before {
+  content: "" !important;
+  flex: 0 0 auto !important;
+  width: calc(0.72rem * var(--piggy-font-scale)) !important;
+  height: calc(0.72rem * var(--piggy-font-scale)) !important;
+  margin-right: calc(0.38rem * var(--piggy-font-scale)) !important;
+
+  background: var(--piggy-code-clipboard, currentColor) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/%3E%3Cpath d='M14 2v6h6'/%3E%3Cpath d='m10 13-2 2 2 2'/%3E%3Cpath d='m14 17 2-2-2-2'/%3E%3C/svg%3E")
+    center / contain no-repeat !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/%3E%3Cpath d='M14 2v6h6'/%3E%3Cpath d='m10 13-2 2 2 2'/%3E%3Cpath d='m14 17 2-2-2-2'/%3E%3C/svg%3E")
+    center / contain no-repeat !important;
+  opacity: 0.78 !important;
+}
+
+.md-content .highlight > span.filename + pre {
+  margin-top: 0 !important;
+}
+
 .md-content .highlighttable td.linenos {
   grid-column: 1 !important;
   width: auto !important;
@@ -610,12 +667,8 @@
 
   background: var(--piggy-code-block-highlight-bg) !important;
   border-radius: calc(0.24rem * var(--piggy-font-scale)) !important;
-  box-shadow: inset 0 0 0 1px
-    color-mix(
-      in srgb,
-      var(--piggy-code-block-highlight-border) 24%,
-      transparent
-    ) !important;
+  box-shadow: inset 0 0 0 1.5px
+    color-mix(in srgb, var(--piggy-button-active) 50%, transparent) !important;
   box-decoration-break: clone !important;
   -webkit-box-decoration-break: clone !important;
   line-height: inherit !important;

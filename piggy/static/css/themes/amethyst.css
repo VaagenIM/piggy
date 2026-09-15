@@ -293,9 +293,6 @@ preview_style: background: linear-gradient(90deg, #e0d2f3, #bba7df); color: #2d2
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
 [data-theme="amethyst"] .md-content {
-  --piggy-code-block-highlight-bg: rgba(129, 100, 186, 0.14);
-  --piggy-code-block-highlight-border: rgba(129, 100, 186, 0.34);
-
   border-radius: 0.5rem;
 }
 

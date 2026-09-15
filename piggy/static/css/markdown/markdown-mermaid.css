@@ -1,0 +1,49 @@
+:root {
+  --md-mermaid-font-family:
+    var(--piggy-site-font-family, "Noto Sans"), sans-serif;
+  --md-mermaid-stroke-width: 2px;
+
+  /* General colors */
+  --md-mermaid-edge-color: var(--piggy-code);
+  --md-mermaid-node-bg-color: color-mix(
+    in srgb,
+    var(--piggy-text-hyperlink) 18%,
+    transparent
+  );
+  --md-mermaid-node-fg-color: var(--piggy-text-hyperlink);
+  --md-mermaid-label-bg-color: var(--piggy-main);
+  --md-mermaid-label-fg-color: var(--piggy-code);
+
+  /* Sequence diagram colors */
+  --md-mermaid-sequence-actor-bg-color: var(--piggy-main);
+  --md-mermaid-sequence-actor-fg-color: var(--piggy-code);
+  --md-mermaid-sequence-actor-border-color: var(--piggy-text-hyperlink);
+  --md-mermaid-sequence-actor-line-color: var(--piggy-neutral);
+  --md-mermaid-sequence-actorman-bg-color: var(--piggy-main);
+  --md-mermaid-sequence-actorman-line-color: var(--piggy-text-hyperlink);
+  --md-mermaid-sequence-box-bg-color: color-mix(
+    in srgb,
+    var(--piggy-text-hyperlink) 18%,
+    transparent
+  );
+  --md-mermaid-sequence-box-fg-color: var(--piggy-code);
+  --md-mermaid-sequence-label-bg-color: color-mix(
+    in srgb,
+    var(--piggy-text-hyperlink) 18%,
+    transparent
+  );
+  --md-mermaid-sequence-label-fg-color: var(--piggy-text-hyperlink);
+  --md-mermaid-sequence-loop-bg-color: color-mix(
+    in srgb,
+    var(--piggy-text-hyperlink) 18%,
+    transparent
+  );
+  --md-mermaid-sequence-loop-fg-color: var(--piggy-code);
+  --md-mermaid-sequence-loop-border-color: var(--piggy-text-hyperlink);
+  --md-mermaid-sequence-message-fg-color: var(--piggy-code);
+  --md-mermaid-sequence-message-line-color: var(--piggy-code);
+  --md-mermaid-sequence-note-bg-color: var(--piggy-main);
+  --md-mermaid-sequence-note-fg-color: var(--piggy-code);
+  --md-mermaid-sequence-note-border-color: var(--piggy-code);
+  --md-mermaid-sequence-number-fg-color: var(--piggy-main);
+}

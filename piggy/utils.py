@@ -1,5 +1,6 @@
 import os
 import re
+import subprocess
 from functools import lru_cache
 from io import BytesIO
 from pathlib import Path
@@ -15,6 +16,7 @@ from piggy import (
     ASSIGNMENT_ROUTE,
     SUPPORTED_UI_LOCALES,
     DEFAULT_UI_LOCALE,
+    PIGGYBANK_FOLDER,
 )
 from piggy.models import LANGUAGES
 from turtleconverter import generate_static_files
@@ -24,6 +26,30 @@ def lru_cache_wrapper(func):
     if os.environ.get("USE_CACHE", "1") == "1":
         return lru_cache()(func)
     return func
+
+
+def get_version() -> str:
+    """Resolve the running app's version, stamped in by CI as PIGGY_VERSION (e.g. "26.9.36")."""
+    return os.environ.get("PIGGY_VERSION", "dev")
+
+
+def get_piggybank_version() -> str:
+    """Resolve the checked-out piggybank content's short commit hash, if available.
+
+    piggybank content can be updated independently of the app (a mounted volume in
+    production, a submodule elsewhere), so this is read fresh rather than cached.
+    """
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(PIGGYBANK_FOLDER), "rev-parse", "--short", "HEAD"],
+            capture_output=True,
+            text=True,
+            timeout=5,
+            check=True,
+        )
+        return result.stdout.strip()
+    except (subprocess.SubprocessError, OSError):
+        return "unknown"
 
 
 def get_ui_locale() -> str:

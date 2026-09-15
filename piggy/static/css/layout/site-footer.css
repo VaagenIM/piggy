@@ -1,0 +1,59 @@
+/************************\
+|*      SITE FOOTER     *|
+\************************/
+.site-footer {
+  --site-footer-border: var(
+    --piggy-footer-border,
+    var(--piggy-button-border, var(--piggy-button-active))
+  );
+  margin-top: 3rem;
+  border-top: 1px solid
+    color-mix(in srgb, var(--site-footer-border) 55%, transparent);
+  background: color-mix(in srgb, var(--site-footer-border) 6%, transparent);
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem 0.85rem;
+  max-width: 60rem;
+  margin-inline: auto;
+  padding: 1.1rem 1rem;
+  font-size: calc(0.8rem * var(--piggy-font-scale));
+  opacity: 0.7;
+}
+
+.footer-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.footer-separator {
+  opacity: 0.6;
+}
+
+.footer-link {
+  color: var(--piggy-text-breadcrumb, var(--piggy-text-main));
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  color: var(--piggy-text-breadcrumb-hover, var(--piggy-text-main));
+  text-decoration: underline;
+}
+
+.footer-link--icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.footer-link-icon {
+  flex: 0 0 auto;
+  width: calc(0.85rem * var(--piggy-font-scale));
+  height: calc(0.85rem * var(--piggy-font-scale));
+  fill: currentColor;
+}

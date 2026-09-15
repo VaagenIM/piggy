@@ -106,8 +106,22 @@
             {% endif %}
           {% endif %}
           {% set level_title = level_meta.title or level_meta.name %}
+          {% if assignment.meta.difficulty %}
+            {% set level_difficulty = assignment.meta.difficulty %}
+          {% else %}
+            {% set level_difficulty = "-1" %}
+          {% endif %}
+          {% set level_has_difficulty = level_difficulty|int > 0 and level_difficulty|int <= 5 %}
           {% set is_active = assignment.level | int == level | int %}
           {% set tab_content %}
+            {% if level_has_difficulty %}
+              <span class="level-tab-icon" aria-hidden="true">
+                <img
+                  class="level-menu-difficulty-image"
+                  src="{{ url_for('static', filename='img/difficulties/' + level_difficulty + '.png') }}"
+                  alt="" />
+              </span>
+            {% endif %}
             <span class="piggy-dropdown-row-text">
               <span class="piggy-dropdown-row-left"
                 >{{ level_text }} {{ assignment.level | int }}</span
@@ -135,6 +149,7 @@
         aria-label="{{ level_text }}">
         {% for link, assignment in levels %}
           {% if current_language.key and current_language.key in assignment.translation_meta %}
+            {% set level_meta = assignment.translation_meta[current_language.key] %}
             {% if "/lang/" in request.path %}
               {%
                 set link = request.path.split('/lang/')[0].split('/')[0:-1] | join('/') ~ "/" ~ link ~ "/lang/" ~
@@ -142,15 +157,34 @@
               %}
             {% endif %}
           {% else %}
+            {% set level_meta = assignment.meta %}
             {% if "/lang/" in request.path %}
               {% set link = request.path.split('/lang/')[0].split('/')[0:-1] | join('/') ~ "/" ~ link %}
             {% endif %}
           {% endif %}
+          {% set level_title = level_meta.title or level_meta.name %}
+          {% if assignment.meta.difficulty %}
+            {% set level_difficulty = assignment.meta.difficulty %}
+          {% else %}
+            {% set level_difficulty = "-1" %}
+          {% endif %}
+          {% set level_has_difficulty = level_difficulty|int > 0 and level_difficulty|int <= 5 %}
           {% set is_active = assignment.level | int == level | int %}
           {% set short_tab_content %}
             <span class="piggy-dropdown-row-text">
               <span class="piggy-dropdown-row-left"
                 >{{ level_text }} {{ assignment.level | int }}</span
+              >
+            </span>
+            <span class="level-tab-tooltip" role="tooltip">
+              {% if level_has_difficulty %}
+                <img
+                  class="level-tab-tooltip-difficulty-image"
+                  src="{{ url_for('static', filename='img/difficulties/' + level_difficulty + '.png') }}"
+                  alt="" />
+              {% endif %}
+              <span class="level-tab-tooltip-title"
+                >{{ level_title | unescape }}</span
               >
             </span>
           {% endset %}
@@ -185,8 +219,7 @@
           aria_label=level_text,
           wrapper_class='level-menu-dropdown',
           trigger_class='level-menu-trigger',
-          full_width=true,
-          extra_attrs='data-adaptive-tier="2"'
+          extra_attrs='data-adaptive-tier="2" data-match-panel-width'
         )
       %}
         {% for link, assignment in levels %}
@@ -207,7 +240,6 @@
           aria_label=level_text,
           wrapper_class='level-menu-dropdown',
           trigger_class='level-menu-trigger',
-          full_width=true,
           extra_attrs='data-adaptive-tier="3"'
         )
       %}

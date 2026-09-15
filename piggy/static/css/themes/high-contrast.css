@@ -14,6 +14,7 @@ preview.border: #ffffff
 preview_style: background-color: #000000; color: #ffffff; border: 1px solid #ffffff;
 */
 [data-theme="high-contrast"] {
+  --md-mermaid-stroke-width: 3px;
   --piggy-main: #000000;
   --piggy-light: #ffffff;
   --piggy-neutral: #7f7f7f;
@@ -401,11 +402,6 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/
-[data-theme="high-contrast"] .md-content {
-  --piggy-code-block-highlight-bg: rgba(255, 255, 0, 0.24);
-  --piggy-code-block-highlight-border: #ffff00;
-}
-
 [data-theme="high-contrast"] .md-content .highlighttable,
 [data-theme="high-contrast"] .md-content .md-code__content {
   border-radius: 5px !important;

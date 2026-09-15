@@ -35,6 +35,8 @@ from piggy.utils import (
     resolve_image_filename,
     get_mimetype,
     get_ui_locale,
+    get_version,
+    get_piggybank_version,
 )
 
 # Ensure the working directory is the root of the project
@@ -84,6 +86,8 @@ def create_app(debug: bool = False) -> Flask:
             "piggymap": PIGGYMAP,
             "img_fmt": IMG_FMT,
             "github_pages": use_github_pages,  # Used to determine if we should use lang in URL
+            "version": get_version(),
+            "piggybank_version": get_piggybank_version(),
             "AssignmentTemplate": AssignmentTemplate,
             "themes": get_themes(),
             "debug": app.debug,

@@ -271,7 +271,7 @@
 
 [data-adaptive-overflow]:not([data-active-tier]) > [data-adaptive-tier="0"] {
   position: static;
-  width: auto;
+  width: max-content;
   max-width: 100%;
   visibility: visible;
   pointer-events: auto;
@@ -279,7 +279,7 @@
 
 [data-adaptive-tier].is-active {
   position: static;
-  width: auto;
+  width: max-content;
   max-width: 100%;
   visibility: visible;
   pointer-events: auto;
@@ -313,35 +313,22 @@
   padding-bottom: calc(0.25rem * var(--piggy-font-scale) + 3px);
   padding-left: calc(0.75rem * var(--piggy-font-scale));
   line-height: 1.2;
-  background: color-mix(
-    in srgb,
-    var(--piggy-nav-button, var(--piggy-button)) 55%,
-    var(--piggy-navbar-start)
-  );
+  background: var(--piggy-nav-button, var(--piggy-button));
   color: var(--piggy-nav-button-text, var(--piggy-text-button));
   border: 1px solid
-    color-mix(
-      in srgb,
+    var(
+      --piggy-nav-button-border,
       var(
-          --piggy-nav-button-border,
-          var(
-            --piggy-button-border,
-            color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
-          )
-        )
-        65%,
-      var(--piggy-navbar-start)
+        --piggy-button-border,
+        color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+      )
     );
   border-radius: 999px;
   text-decoration: none;
 }
 
 .level-tab:hover {
-  background: color-mix(
-    in srgb,
-    var(--piggy-nav-button-hover, var(--piggy-button-hover)) 70%,
-    var(--piggy-navbar-start)
-  );
+  background: var(--piggy-nav-button-hover, var(--piggy-button-hover));
 }
 
 .level-tab.active {
