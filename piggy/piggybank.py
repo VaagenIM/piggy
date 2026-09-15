@@ -208,12 +208,17 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0, 
 
         assignment_key = normalize_path_to_str(i, replace_spaces=True, normalize_url=True, remove_ext=True)
         assignment_url = f"{_url_path}/{assignment_key}".strip("/")
+        shortlink_identity = (
+            f"{match.group(1).strip()}{frontmatter['title']}"
+            if frontmatter.get("title")
+            else assignment_key
+        )
         piggymap[assignment_key] = {
             "path": assignment_path,
             "level": match.group(1).strip(),
             "level_name": frontmatter["title"],
             "heading": frontmatter["title"],
-            "shortlink": generate_shortlink(assignment_url),
+            "shortlink": generate_shortlink(shortlink_identity),
             "shortlink_target": f"/main/{assignment_url}",
             "meta": frontmatter,
             "translation_meta": translation_meta,
