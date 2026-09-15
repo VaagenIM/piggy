@@ -127,6 +127,10 @@ def build_js_i18n() -> dict:
             "off": {"label": gettext("Av")},
             "on": {"label": gettext("På")},
         },
+        "iconClarity": {
+            "off": {"label": gettext("Av")},
+            "on": {"label": gettext("På")},
+        },
         "rememberPosition": {
             "off": {"label": gettext("Av")},
             "on": {"label": gettext("På")},
@@ -153,6 +157,7 @@ def build_js_i18n() -> dict:
             "readerWidth": gettext("Innholdsbredde"),
             "focusMode": gettext("Fokus modus"),
             "readingRuler": gettext("Linjal"),
+            "iconClarity": gettext("Ikonsynlighet"),
             "reduceMotion": gettext("Bevegelse og effekter"),
             "rememberPosition": gettext("Husk posisjon"),
             "codeWrap": gettext("Radbryting i kode"),
@@ -161,6 +166,7 @@ def build_js_i18n() -> dict:
             "focusMode": gettext("Demp navigasjonsmenyen i fokus modus"),
             "fontSizeAffectsUi": gettext("Bruk tekststørrelse på UI"),
             "readingRuler": gettext("Vis linjal"),
+            "iconClarity": gettext("Tydeligere ikoner og farger"),
             "rememberPosition": gettext("Husk hvor du stopte å lese"),
             "codeWrap": gettext("Bryt lange kodelinjer"),
         },

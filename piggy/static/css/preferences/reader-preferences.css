@@ -204,6 +204,107 @@
   border-bottom: 1px solid var(--piggy-admonition-border) !important;
 }
 
+/********************************\
+|*   ICON CLARITY (VISIBILITY)  *|
+\********************************/
+:root[data-reader-icon-clarity="on"] .md-content :is(.admonition, details) {
+  --piggy-admonition-title-icon-size: calc(
+    1.4rem * var(--piggy-reader-component-font-scale)
+  );
+}
+
+:root[data-reader-icon-clarity="on"][data-theme-type="light"]:not(
+    [data-theme="high-contrast"]
+  ) {
+  --piggy-icon-clarity-note: #1d63b0;
+  --piggy-icon-clarity-abstract: #0e7fa0;
+  --piggy-icon-clarity-info: #0b87a6;
+  --piggy-icon-clarity-tip: #0c96a0;
+  --piggy-icon-clarity-success: #0b7285;
+  --piggy-icon-clarity-question: #8a7a00;
+  --piggy-icon-clarity-warning: #b54700;
+  --piggy-icon-clarity-failure: #9c3d1e;
+  --piggy-icon-clarity-danger: #a82a3e;
+  --piggy-icon-clarity-bug: #a83e78;
+  --piggy-icon-clarity-example: #6b3fa0;
+  --piggy-icon-clarity-quote: #5f6b78;
+
+  --piggy-admonition-note-icon: var(--piggy-icon-clarity-note);
+  --piggy-admonition-abstract-icon: var(--piggy-icon-clarity-abstract);
+  --piggy-admonition-info-icon: var(--piggy-icon-clarity-info);
+  --piggy-admonition-tip-icon: var(--piggy-icon-clarity-tip);
+  --piggy-admonition-success-icon: var(--piggy-icon-clarity-success);
+  --piggy-admonition-question-icon: var(--piggy-icon-clarity-question);
+  --piggy-admonition-warning-icon: var(--piggy-icon-clarity-warning);
+  --piggy-admonition-failure-icon: var(--piggy-icon-clarity-failure);
+  --piggy-admonition-danger-icon: var(--piggy-icon-clarity-danger);
+  --piggy-admonition-bug-icon: var(--piggy-icon-clarity-bug);
+  --piggy-admonition-example-icon: var(--piggy-icon-clarity-example);
+  --piggy-admonition-quote-icon: var(--piggy-icon-clarity-quote);
+}
+
+:root[data-reader-icon-clarity="on"][data-theme-type="dark"]:not(
+    [data-theme="high-contrast"]
+  ) {
+  --piggy-icon-clarity-note: #6fa8e0;
+  --piggy-icon-clarity-abstract: #4fc4db;
+  --piggy-icon-clarity-info: #4fc0e0;
+  --piggy-icon-clarity-tip: #7fe0e8;
+  --piggy-icon-clarity-success: #2fb4d9;
+  --piggy-icon-clarity-question: #d9c24a;
+  --piggy-icon-clarity-warning: #ff9640;
+  --piggy-icon-clarity-failure: #e06a45;
+  --piggy-icon-clarity-danger: #ff5c7a;
+  --piggy-icon-clarity-bug: #e07ab0;
+  --piggy-icon-clarity-example: #a97fde;
+  --piggy-icon-clarity-quote: #aeb8c4;
+
+  --piggy-admonition-note-icon: var(--piggy-icon-clarity-note);
+  --piggy-admonition-abstract-icon: var(--piggy-icon-clarity-abstract);
+  --piggy-admonition-info-icon: var(--piggy-icon-clarity-info);
+  --piggy-admonition-tip-icon: var(--piggy-icon-clarity-tip);
+  --piggy-admonition-success-icon: var(--piggy-icon-clarity-success);
+  --piggy-admonition-question-icon: var(--piggy-icon-clarity-question);
+  --piggy-admonition-warning-icon: var(--piggy-icon-clarity-warning);
+  --piggy-admonition-failure-icon: var(--piggy-icon-clarity-failure);
+  --piggy-admonition-danger-icon: var(--piggy-icon-clarity-danger);
+  --piggy-admonition-bug-icon: var(--piggy-icon-clarity-bug);
+  --piggy-admonition-example-icon: var(--piggy-icon-clarity-example);
+  --piggy-admonition-quote-icon: var(--piggy-icon-clarity-quote);
+}
+
+:root[data-reader-icon-clarity="on"]:not([data-theme="high-contrast"])
+  .md-content
+  :is(.admonition, details) {
+  --piggy-admonition-bg: color-mix(
+    in srgb,
+    var(--piggy-admonition-icon) 12%,
+    var(--piggy-main)
+  ) !important;
+  --piggy-admonition-title-bg: color-mix(
+    in srgb,
+    var(--piggy-admonition-icon) 22%,
+    var(--piggy-main)
+  ) !important;
+  --piggy-admonition-border: color-mix(
+    in srgb,
+    var(--piggy-admonition-icon) 70%,
+    var(--piggy-main)
+  ) !important;
+}
+
+:root[data-reader-icon-clarity="on"]:not([data-reader-contrast="strong"])
+  .md-content
+  :is(.admonition, details) {
+  border: 1px solid
+    color-mix(in srgb, var(--piggy-admonition-border) 55%, transparent) !important;
+  border-left-width: calc(0.35rem * var(--piggy-reader-space-scale)) !important;
+}
+
+:root[data-reader-icon-clarity="on"] svg[stroke]:not(.md-content *) {
+  stroke-width: 2.75;
+}
+
 :root[data-reader-hide-decorations="on"] .background-overlay canvas,
 :root[data-reader-reduce-motion="reduce"] .background-overlay canvas {
   display: none !important;

@@ -12,6 +12,7 @@
     readerWidth: "Innholdsbredde",
     focusMode: "Fokus modus",
     readingRuler: "Linjal",
+    iconClarity: "Ikonsynlighet",
     reduceMotion: "Bevegelse og effekter",
     rememberPosition: "Husk posisjon",
     codeWrap: "Radbryting i kode",
@@ -33,6 +34,7 @@
     focusMode: "Demp navigasjonsmenyen i fokus modus",
     fontSizeAffectsUi: "Bruk tekststørrelse på UI",
     readingRuler: "Vis linjal",
+    iconClarity: "Tydeligere ikoner og farger",
     rememberPosition: "Husk hvor du stopte å lese",
     codeWrap: "Bryt lange kodelinjer",
   };
@@ -192,6 +194,7 @@
 
     renderToggleControl("focusMode", getRenderTarget("focusMode"));
     renderToggleControl("readingRuler", getRenderTarget("readingRuler"));
+    renderToggleControl("iconClarity", getRenderTarget("iconClarity"));
     renderSegmentedControl("reduceMotion", getRenderTarget("reduceMotion"));
     renderToggleControl(
       "rememberPosition",
