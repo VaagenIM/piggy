@@ -1,15 +1,14 @@
 from flask import abort
-from flask_babel import lazy_gettext as _l
 from werkzeug.exceptions import HTTPException
 
 # For consistency between HTTPException and PiggyHTTPException
 DEFAULT_ERROR_MESSAGE_NAMES = {
-    "404": _l("Page not found"),  # vs just "Not Found"
+    "404": "Fant ikke siden",  # vs just "Not Found"
 }
 
 ERROR_MESSAGE_DESCRIPTIONS = {
-    "default": _l("Something went wrong, please try again later."),
-    "404": _l("Your <strike>queen</strike> gilt is in another castle..."),
+    "default": "Something went wrong, please try again later.",
+    "404": "Your <strike>queen</strike> gilt is in another castle...",
 }
 
 
@@ -17,7 +16,7 @@ def normalize_http_exception(e):
     """Convert any (HTTPException) exception to a usable PiggyHTTPException."""
     if not any(isinstance(e, exc) for exc in (HTTPException, PiggyHTTPException)):
         # TODO: We shouldn't get here, but if we do, log the error
-        return PiggyHTTPException(_l("An unexpected error occurred"), status_code=500)
+        return PiggyHTTPException("An unexpected error occurred", status_code=500)
 
     if isinstance(e, HTTPException):
         name = DEFAULT_ERROR_MESSAGE_NAMES.get(str(e.code), e.name)

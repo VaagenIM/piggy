@@ -14,8 +14,6 @@ from piggy import (
     IMG_FMT,
     MEDIA_ROUTE,
     ASSIGNMENT_ROUTE,
-    SUPPORTED_UI_LOCALES,
-    DEFAULT_UI_LOCALE,
     PIGGYBANK_FOLDER,
 )
 from piggy.models import LANGUAGES
@@ -50,18 +48,6 @@ def get_piggybank_version() -> str:
         return result.stdout.strip()
     except (subprocess.SubprocessError, OSError):
         return "unknown"
-
-
-def get_ui_locale() -> str:
-    """
-    Resolve the site UI locale for the current request: an explicit
-    `ui_locale` cookie takes priority, falling back to the browser's
-    Accept-Language header, then the default locale.
-    """
-    cookie_locale = request.cookies.get("ui_locale", "")
-    if cookie_locale in SUPPORTED_UI_LOCALES:
-        return cookie_locale
-    return request.accept_languages.best_match(SUPPORTED_UI_LOCALES, DEFAULT_UI_LOCALE)
 
 
 def serve_pil_image(pil_img):

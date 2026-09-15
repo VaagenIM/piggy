@@ -4,7 +4,6 @@ from pathlib import Path
 from urllib.parse import quote, urlsplit
 
 from flask import Flask, send_file, request, Blueprint, render_template, redirect
-from flask_babel import Babel, force_locale, get_locale, gettext
 from flask_squeeze import Squeeze
 from jinja2 import ChoiceLoader, FileSystemLoader
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -16,16 +15,11 @@ from piggy import (
     STATIC_FONTS_PATHS,
     IMG_FMT,
     PIGGYBANK_FOLDER,
-    SUPPORTED_UI_LOCALES,
-    DEFAULT_UI_LOCALE,
-    UI_LOCALE_DISPLAY_KEY,
 )
 from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
-from piggy.js_i18n import build_js_i18n
-from piggy.models import LANGUAGES
 from piggy.piggybank import PIGGYMAP, SHORTLINK_MAP, get_piggymap_segment_from_path, unfreeze
 from piggy.utils import (
     normalize_path_to_str,
@@ -34,7 +28,6 @@ from piggy.utils import (
     startup_tasks,
     resolve_image_filename,
     get_mimetype,
-    get_ui_locale,
     get_version,
     get_piggybank_version,
 )
@@ -50,9 +43,6 @@ def create_app(debug: bool = False) -> Flask:
     app = Flask(__name__, static_folder="static")
 
     app.jinja_options["autoescape"] = False
-
-    Babel(app, default_locale=DEFAULT_UI_LOCALE, locale_selector=get_ui_locale)
-    app.jinja_env.policies["ext.i18n.trimmed"] = True
 
     Squeeze().init_app(app)
 
@@ -92,12 +82,6 @@ def create_app(debug: bool = False) -> Flask:
             "themes": get_themes(),
             "debug": app.debug,
             "static_fonts_paths": STATIC_FONTS_PATHS,
-            "ui_locale": str(get_locale()),
-            "supported_ui_locales": SUPPORTED_UI_LOCALES,
-            "ui_locale_display": {
-                code: LANGUAGES.get(content_code, {}) for code, content_code in UI_LOCALE_DISPLAY_KEY.items()
-            },
-            "js_i18n": build_js_i18n(),
         }
 
     @app.template_filter("sort_by_level")
@@ -154,13 +138,12 @@ def create_app(debug: bool = False) -> Flask:
         return AssignmentTemplate.get_template_name_from_index(i - 1)
 
     @lru_cache_wrapper
-    def _cached_index(ui_locale: str):
-        with force_locale(ui_locale):
-            return render_template("index.html")
+    def _cached_index():
+        return render_template("index.html")
 
     @app.route("/")
     def index():
-        return _cached_index(get_ui_locale())
+        return _cached_index()
 
     def sanitize_internal_return_path(value):
         if not value or not value.startswith("/") or value.startswith("//"):
@@ -195,7 +178,7 @@ def create_app(debug: bool = False) -> Flask:
         """Return an immediate, static-friendly HTML redirect for an assignment shortlink."""
         target = SHORTLINK_MAP.get(shortlink)
         if not target:
-            raise PiggyHTTPException(gettext("Page not found"), status_code=404)
+            raise PiggyHTTPException("Fant ikke siden", status_code=404)
         return render_template("shortlink.html", shortlink=target), 200
 
     @assignment_routes.route("/<path:path>")
@@ -206,19 +189,17 @@ def create_app(debug: bool = False) -> Flask:
 
         # If we are over the final level (assignment), raise a 404
         if len(path.split("/")) > AssignmentTemplate.ASSIGNMENT.index:
-            raise PiggyHTTPException(gettext("Assignment not found"), status_code=404)
+            raise PiggyHTTPException("Oppgave ikke funnet", status_code=404)
 
         # If we are at the final level (assignment), get lang from the cookies (valid requests only)
         if len(path.split("/")) == AssignmentTemplate.ASSIGNMENT.index and request and not lang:
             lang = request.cookies.get("lang", "")  # "" = default language (Norwegian
 
-        ui_locale = get_ui_locale()
-
         # Render the appropriate template for the current level
         try:
-            return _render_assignment_wildcard(path, lang=lang, ui_locale=ui_locale)
+            return _render_assignment_wildcard(path, lang=lang)
         except PiggyHTTPException:
-            return _render_assignment_wildcard(path, lang="", ui_locale=ui_locale)
+            return _render_assignment_wildcard(path, lang="")
 
     @assignment_routes.route("/<path:path>/lang/<lang>")
     @assignment_routes.route("/<path:path>/lang/")
