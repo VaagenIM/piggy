@@ -52,6 +52,9 @@ format) is loaded and merged **over** the markdown frontmatter. Any key it
 sets overrides the same key from the frontmatter block. It's intended for
 metadata that shouldn't live inside the markdown file itself.
 
+The `uuid` key is used as the assignment's shortlink identity. If it is
+missing, the normalized markdown filename is used as a fallback.
+
 ## Translations
 
 A translated version of an assignment can be placed at

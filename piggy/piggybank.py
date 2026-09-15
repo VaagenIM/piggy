@@ -152,6 +152,7 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0, 
     :param path: The path to the directory to generate the piggymap for
     :param max_levels: The max number of levels to search
     :param _current_level: The current level of recursion (used internally)
+    :param _url_path: The url path of the piggymap folder
     :return: A dictionary representing the directory structure of the piggymap folder and the assignment files within
     """
     piggymap = dict()
@@ -208,12 +209,13 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0, 
 
         assignment_key = normalize_path_to_str(i, replace_spaces=True, normalize_url=True, remove_ext=True)
         assignment_url = f"{_url_path}/{assignment_key}".strip("/")
+        shortlink_identity = assignment_oink.get("uuid") or assignment_key
         piggymap[assignment_key] = {
             "path": assignment_path,
             "level": match.group(1).strip(),
             "level_name": frontmatter["title"],
             "heading": frontmatter["title"],
-            "shortlink": generate_shortlink(assignment_url),
+            "shortlink": generate_shortlink(shortlink_identity),
             "shortlink_target": f"/main/{assignment_url}",
             "meta": frontmatter,
             "translation_meta": translation_meta,
@@ -268,11 +270,7 @@ def _build_shortlink_map(segment: dict) -> dict[str, dict]:
             meta = value.get("meta", {})
             title = value.get("heading", key.replace("_", " "))
             topic_path = target.removeprefix("/main/").rsplit("/", 1)[0]
-            description = (
-                meta.get("description")
-                or meta.get("oinkdata", {}).get("summary")
-                or meta.get("summary", "")
-            )
+            description = meta.get("description") or meta.get("oinkdata", {}).get("summary") or meta.get("summary", "")
             shortlinks[value["shortlink"]] = {
                 "target": target,
                 "title": title,

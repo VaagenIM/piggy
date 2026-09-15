@@ -8,7 +8,7 @@ DEFAULT_ERROR_MESSAGE_NAMES = {
 
 ERROR_MESSAGE_DESCRIPTIONS = {
     "default": "Something went wrong, please try again later.",
-    "404": "Your <strike>queen</strike> gilt is in another castle...",
+    "404": "Your <strike>princess</strike> gilt is in another castle...",
 }
 
 
