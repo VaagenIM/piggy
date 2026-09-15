@@ -13,11 +13,13 @@
           <div class="quick-access-column">
             <h3 class="quick-access-year-heading">{{ year.meta.name }}</h3>
             {% for sd_key, sd in year.data.items() %}
+              <!--
               <div class="quick-access-card-header">
                 <div class="quick-access-study-direction">
                   {{ sd.meta.name }}:
                 </div>
               </div>
+              -->
               <div class="quick-access-card">
                 {% if sd.data is defined %}
                   <div class="quick-access-subjects">
