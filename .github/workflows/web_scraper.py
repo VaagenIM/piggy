@@ -508,20 +508,20 @@ def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
     translations_index = parts.index("translations") if "translations" in parts else -1
     if translations_index >= 0:
         language = parts[translations_index + 1] if len(parts) > translations_index + 1 else ""
-        content_parts = parts[:translations_index]
+        content_parts = [part.replace(".", "") for part in parts[:translations_index]]
         filename = parts[-1]
         if not language or not filename:
             return routes, set(), False
-        assignment = "/".join(content_parts + [Path(filename).stem])
+        assignment = "/".join(content_parts + [Path(filename).stem.replace(".", "")])
         routes.add(f"/main/{assignment}/lang/{language}")
         routes.add(f"/main/{assignment}")
         directory_parts = content_parts
     elif path.endswith((".md", ".oink")):
-        directory_parts = parts[:-1]
-        assignment = "/".join(directory_parts + [Path(parts[-1]).stem])
+        directory_parts = [part.replace(".", "") for part in parts[:-1]]
+        assignment = "/".join(directory_parts + [Path(parts[-1]).stem.replace(".", "")])
         routes.add(f"/main/{assignment}")
     elif path.endswith("meta.json"):
-        directory_parts = parts[:-1]
+        directory_parts = [part.replace(".", "") for part in parts[:-1]]
         if directory_parts:
             routes.add(f"/main/{'/'.join(directory_parts)}")
     else:
