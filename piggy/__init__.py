@@ -18,7 +18,7 @@ MEDIA_ROUTE = "img"
 IMG_FMT = "webp"
 
 ASSIGNMENTS_TEMPLATE_FOLDER = "assignments"
-ASSIGNMENT_FILENAME_REGEX = re.compile(r"^.*Level[ _](\d+)[ _]-[ _](.+).md$")
+ASSIGNMENT_FILENAME_REGEX = re.compile(r"^.*Level[ _](\d+)[ _]-[ _](.+)\.md$")
 ALLOWED_URL_CHARS_REGEX = re.compile(r"[a-zA-Z0-9\.\-\_\/æøåÆØÅ]")
 SHORTLINK_LENGTH = 6
 SHORTLINK_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"

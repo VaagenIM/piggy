@@ -547,6 +547,13 @@ def _output_path_for_route(route: str) -> Path:
     return Path("demo") / path
 
 
+def _remove_output_path(output_path: Path):
+    if output_path.is_dir():
+        rmtree(output_path)
+    else:
+        output_path.unlink(missing_ok=True)
+
+
 def configure_demo_build() -> tuple[str, str, bool]:
     """Restore either a full or incremental build based on the cached demo state."""
     global incremental_mode, links, api_links, api_view_links, changed_media_links
@@ -619,9 +626,9 @@ def configure_demo_build() -> tuple[str, str, bool]:
             for route in affected_routes:
                 output_path = _output_path_for_route(route)
                 if output_path.exists():
-                    output_path.unlink()
+                    _remove_output_path(output_path)
             for output_path in deleted_outputs:
-                output_path.unlink(missing_ok=True)
+                _remove_output_path(output_path)
 
     visited.clear()
     media_links.clear()
