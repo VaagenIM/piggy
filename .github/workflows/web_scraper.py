@@ -234,9 +234,17 @@ def get_media_links(html, path=""):
 
 
 def _write_html(html, path):
-    os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
-    with open(f"demo/{path}", "wb+") as f:
+    output_path = Path("demo") / path
+    if output_path.is_dir():
+        output_path /= "index.html"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("wb+") as f:
         f.write(html.encode())
+
+
+def _has_child_route(link):
+    route = link.rstrip("/")
+    return any(candidate.startswith(f"{route}/") for candidate in links)
 
 
 def _download_media(link):
@@ -294,9 +302,7 @@ def download_site():
                     path = "index.html"
                 else:
                     path = link.split("#")[0].strip("/")
-                    if path.startswith("s/") and "." not in path:
-                        path += "/index.html"
-                    elif link.endswith("/") and "." not in path:
+                    if path.startswith("s/") or link.endswith("/") or _has_child_route(link):
                         path += "/index.html"
                     elif "." not in path:
                         path += ".html"
