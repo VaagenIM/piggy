@@ -242,11 +242,6 @@ def _write_html(html, path):
         f.write(html.encode())
 
 
-def _has_child_route(link):
-    route = link.rstrip("/")
-    return any(candidate.startswith(f"{route}/") for candidate in links)
-
-
 def _download_media(link):
     request_path = link.strip("/").split("#")[0]
     path = request_path
@@ -302,7 +297,9 @@ def download_site():
                     path = "index.html"
                 else:
                     path = link.split("#")[0].strip("/")
-                    if path.startswith("s/") or link.endswith("/") or _has_child_route(link):
+                    if path.startswith("s/") and "." not in path:
+                        path += "/index.html"
+                    elif link.endswith("/") and "." not in path:
                         path += "/index.html"
                     elif "." not in path:
                         path += ".html"
