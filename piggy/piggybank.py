@@ -9,6 +9,8 @@ from frozendict.cool import deepfreeze
 
 from piggy import (
     IMG_FMT,
+    MEDIA_ROUTE,
+    ASSIGNMENT_ROUTE,
     ASSIGNMENT_FILENAME_REGEX,
     AssignmentTemplate,
     PIGGYBANK_FOLDER,
@@ -160,13 +162,18 @@ def _register_shortlink(shortlink_map: dict, meta: dict, fallback_identity: str,
     if shortlink in shortlink_map:
         raise ValueError(f"Duplicate page shortlink: {shortlink}")
 
-    topic_path = target.removeprefix("/main/").rsplit("/", 1)[0]
+    target_path = target.removeprefix(f"/{ASSIGNMENT_ROUTE}/")
+    media_path = (
+        target_path.rsplit("/", 1)[0]
+        if len(target_path.split("/")) == AssignmentTemplate.ASSIGNMENT.index
+        else target_path
+    )
     description = meta.get("description") or meta.get("oinkdata", {}).get("summary") or meta.get("summary", "")
     shortlink_map[shortlink] = {
         "target": target,
         "title": title,
         "description": description,
-        "image": f"/img/{topic_path}/{meta.get('thumbnail', 'media/header')}.{IMG_FMT}?title={title}",
+        "image": f"/{MEDIA_ROUTE}/{media_path}/{meta.get('thumbnail', 'media/header')}.{IMG_FMT}?title={title}",
     }
     return shortlink
 
