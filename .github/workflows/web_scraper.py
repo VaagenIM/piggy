@@ -187,6 +187,15 @@ def clean_link(link, path):
     return link
 
 
+def _normalize_page_link(link):
+    if not link.startswith("/main/"):
+        return link
+    parts = link.split("/")
+    if "attachments" in parts or "media" in parts:
+        return link
+    return "/".join(part.replace(".", "") for part in parts)
+
+
 def get_links(html, path=""):
     links = re.compile(r'href="((?!#|https?://)[^"]*)"').findall(html)
     filtered_links = set()
@@ -195,11 +204,11 @@ def get_links(html, path=""):
             continue
         if link.startswith("/static/"):
             continue
-        link = clean_link(link, path)
+        link = _normalize_page_link(clean_link(link, path))
         filtered_links.add(link)
 
     shortlink_paths = re.compile(r'data-shortlink-url="https?://[^/"]+(/[^"]*)"').findall(html)
-    filtered_links.update(shortlink_paths)
+    filtered_links.update(_normalize_page_link(link) for link in shortlink_paths)
 
     return filtered_links
 
