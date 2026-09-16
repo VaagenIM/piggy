@@ -185,7 +185,7 @@ def create_app(debug: bool = False) -> Flask:
     @assignment_routes.route("/")
     def get_assignment_wildcard(path="", lang=""):
         path = path.strip("/")
-        path = normalize_path_to_str(path, replace_spaces=True)
+        path = normalize_path_to_str(path, normalize_page_path=True)
 
         # If we are over the final level (assignment), raise a 404
         if len(path.split("/")) > AssignmentTemplate.ASSIGNMENT.index:

@@ -68,15 +68,15 @@ def get_supported_languages(assignment_path: Path):
 
 
 @lru_cache_wrapper
-def normalize_path_to_str(path: Path or str, replace_spaces=False, normalize_url=False, remove_ext=False) -> str:
-    """Normalize a path to use forward slashes and replace spaces with underscores."""
+def normalize_path_to_str(path: Path or str, normalize_page_path=False, normalize_url=False, remove_ext=False) -> str:
+    """Normalize a page path to use forward slashes, underscores, and no dots."""
     path = str(path).replace("\\", "/")
-    if replace_spaces:
-        path = path.replace(" ", "_")
-    if normalize_url:
-        path = normalize_url_str(path)
     if remove_ext:
         path = re.sub(r"\.\w+$", "", path)
+    if normalize_page_path:
+        path = path.replace(" ", "_").replace(".", "")
+    if normalize_url:
+        path = normalize_url_str(path)
     return path
 
 
@@ -264,7 +264,7 @@ def process_json_for_api(obj, exclude_keys=None):
         if current_path:
             folder = Path(current_path).parent.as_posix()
             folder = re.sub(r"^[^/]+/", "", folder)
-            folder = normalize_path_to_str(folder, replace_spaces=True, normalize_url=True)
+            folder = normalize_path_to_str(folder, normalize_page_path=True, normalize_url=True)
             return f"/{MEDIA_ROUTE}/{folder}/{thumb}.{IMG_FMT}"
 
         return f"/{MEDIA_ROUTE}/{thumb}.{IMG_FMT}"
@@ -286,7 +286,7 @@ def process_json_for_api(obj, exclude_keys=None):
                     # Remove the first folder and the extension from the path
                     file_path = v.as_posix()
                     p = re.sub(r"^[^/]+/|(\.\w+)$", "", file_path)
-                    p = normalize_path_to_str(p, replace_spaces=True, normalize_url=True)
+                    p = normalize_path_to_str(p, normalize_page_path=True, normalize_url=True)
 
                     url = f"/{ASSIGNMENT_ROUTE}/{p}"
 
