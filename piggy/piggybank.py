@@ -23,6 +23,7 @@ def load_meta_json(path: Path):
             data = json.load(f)
     except FileNotFoundError:
         data = {}
+    data["oinkdata"] = load_oink_file(path)
     if "name" not in data:
         data["name"] = path.parent.name.replace("_", " ")
     return data
@@ -45,6 +46,19 @@ def get_piggymap_segment_from_path(path: str or Path, piggymap: dict) -> tuple[d
         # Get the data if it exists, if not get segment minus the meta
         segment = segment.get("data", {k: v for k, v in segment.items() if k != "meta"})
     return meta, segment
+
+
+def get_piggymap_page_from_path(path: str or Path, piggymap: dict) -> dict:
+    """Get the page data stored at a path."""
+    path = normalize_path_to_str(path, replace_spaces=True)
+    segment = piggymap
+    parts = [part for part in path.split("/") if part]
+    for index, part in enumerate(parts):
+        page = segment.get(part, {})
+        if index == len(parts) - 1:
+            return page
+        segment = page.get("data", {})
+    return {}
 
 
 # TODO: these could probably be combined into one function
@@ -99,16 +113,16 @@ def get_template_from_path(path: str) -> str:
 
 
 def load_oink_file(path: Path) -> dict:
-    """Load an .oink file (YAML) adjacent to a .md file, if it exists. Returns an empty dict if not found."""
+    """Load a JSON .oink file adjacent to a metadata or markdown file, if it exists."""
     oink_path = path.with_suffix(".oink")
     if not oink_path.exists():
         return {}
     try:
         with open(oink_path, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
+            data = json.load(f)
         if isinstance(data, dict):
             return data
-    except yaml.YAMLError:
+    except json.JSONDecodeError:
         print(f"Error parsing oink file {oink_path}")
     return {}
 
@@ -140,7 +154,30 @@ def get_frontmatter_from_file(path: Path) -> dict:
     return {k: str(markupsafe.escape(v)) for k, v in frontmatter.items()}
 
 
-def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0, _url_path: str = ""):
+def _register_shortlink(shortlink_map: dict, meta: dict, fallback_identity: str, target: str, title: str):
+    identity = meta.get("uuid") or meta.get("oinkdata", {}).get("uuid") or fallback_identity
+    shortlink = generate_shortlink(identity)
+    if shortlink in shortlink_map:
+        raise ValueError(f"Duplicate page shortlink: {shortlink}")
+
+    topic_path = target.removeprefix("/main/").rsplit("/", 1)[0]
+    description = meta.get("description") or meta.get("oinkdata", {}).get("summary") or meta.get("summary", "")
+    shortlink_map[shortlink] = {
+        "target": target,
+        "title": title,
+        "description": description,
+        "image": f"/img/{topic_path}/{meta.get('thumbnail', 'media/header')}.{IMG_FMT}?title={title}",
+    }
+    return shortlink
+
+
+def generate_piggymap(
+    path: Path,
+    max_levels: int = 5,
+    _current_level: int = 0,
+    _url_path: str = "",
+    _shortlink_map: dict | None = None,
+):
     """
     Generate a dictionary of the directory structure of the given path
 
@@ -156,6 +193,7 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0, 
     :return: A dictionary representing the directory structure of the piggymap folder and the assignment files within
     """
     piggymap = dict()
+    shortlink_map = _shortlink_map if _shortlink_map is not None else {}
 
     # We only want to go 5 levels deep, and we only want to include directories (or the assignment files)
     if not os.path.isdir(path) or _current_level == max_levels:
@@ -169,12 +207,21 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0, 
                 Path(f"{path}/{item}"),
                 _current_level=_current_level + 1,
                 _url_path=f"{_url_path}/{i}",
+                _shortlink_map=shortlink_map,
             )
             if new_item:
                 piggymap[i] = {"data": new_item}
                 # If the folder contains a 'meta.json' file, we should add that as metadata to the folder
                 piggymap[i]["meta"] = load_meta_json(Path(f"{path}/{item}/meta.json"))
                 piggymap[i]["meta"]["system_path"] = Path(f"{path}/{item}")
+                page_url = f"{_url_path}/{i}".strip("/")
+                piggymap[i]["shortlink"] = _register_shortlink(
+                    shortlink_map,
+                    piggymap[i]["meta"],
+                    page_url,
+                    f"/main/{page_url}",
+                    piggymap[i]["meta"]["name"],
+                )
             # Subjects should have their type set to exercise by default
             if _current_level == AssignmentTemplate.TOPIC.index - 1 and i in piggymap:
                 piggymap[i]["meta"]["type"] = piggymap[i]["meta"].get("type", "exercise")
@@ -209,14 +256,20 @@ def generate_piggymap(path: Path, max_levels: int = 5, _current_level: int = 0, 
 
         assignment_key = normalize_path_to_str(i, replace_spaces=True, normalize_url=True, remove_ext=True)
         assignment_url = f"{_url_path}/{assignment_key}".strip("/")
-        shortlink_identity = assignment_oink.get("uuid") or assignment_key
+        shortlink_target = f"/main/{assignment_url}"
         piggymap[assignment_key] = {
             "path": assignment_path,
             "level": match.group(1).strip(),
             "level_name": frontmatter["title"],
             "heading": frontmatter["title"],
-            "shortlink": generate_shortlink(shortlink_identity),
-            "shortlink_target": f"/main/{assignment_url}",
+            "shortlink": _register_shortlink(
+                shortlink_map,
+                frontmatter,
+                assignment_key,
+                shortlink_target,
+                frontmatter["title"],
+            ),
+            "shortlink_target": shortlink_target,
             "meta": frontmatter,
             "translation_meta": translation_meta,
         }
@@ -254,34 +307,7 @@ def unfreeze(d):
 
 start_time = timeit.default_timer()
 print("Building piggymap")
-PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
+SHORTLINK_MAP = {}
+PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER, _shortlink_map=SHORTLINK_MAP))
+SHORTLINK_MAP = deepfreeze(SHORTLINK_MAP)
 print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")
-
-
-def _build_shortlink_map(segment: dict) -> dict[str, dict]:
-    shortlinks = {}
-    for key, value in segment.items():
-        if not isinstance(value, dict):
-            continue
-        if value.get("shortlink"):
-            if value["shortlink"] in shortlinks:
-                raise ValueError(f"Duplicate assignment shortlink: {value['shortlink']}")
-            target = value["shortlink_target"]
-            meta = value.get("meta", {})
-            title = value.get("heading", key.replace("_", " "))
-            topic_path = target.removeprefix("/main/").rsplit("/", 1)[0]
-            description = meta.get("description") or meta.get("oinkdata", {}).get("summary") or meta.get("summary", "")
-            shortlinks[value["shortlink"]] = {
-                "target": target,
-                "title": title,
-                "description": description,
-                "image": f"/img/{topic_path}/{meta.get('thumbnail', 'media/header')}.{IMG_FMT}?title={title}",
-            }
-        for shortlink, target in _build_shortlink_map(value.get("data", {})).items():
-            if shortlink in shortlinks:
-                raise ValueError(f"Duplicate assignment shortlink: {shortlink}")
-            shortlinks[shortlink] = target
-    return shortlinks
-
-
-SHORTLINK_MAP = deepfreeze(_build_shortlink_map(PIGGYMAP))
