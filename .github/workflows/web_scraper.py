@@ -173,6 +173,7 @@ def is_api_view_link(link: str) -> bool:
 
 
 def clean_link(link, path):
+    link = unquote(link).replace(" ", "_")
     if re.match(r"\.?.+[#:].*", link.split("/")[-1]) and path:
         # Reconstruct without #.* or :.*
         stem = link.split("/")[-1].split("#")[0].split(":")[0]
@@ -242,6 +243,11 @@ def _write_html(html, path):
         f.write(html.encode())
 
 
+def _has_translation_route(link):
+    route = link.rstrip("/")
+    return any(candidate.startswith(f"{route}/lang/") for candidate in links)
+
+
 def _download_media(link):
     request_path = link.strip("/").split("#")[0]
     path = request_path
@@ -300,6 +306,8 @@ def download_site():
                     if path.startswith("s/") and "." not in path:
                         path += "/index.html"
                     elif link.endswith("/") and "." not in path:
+                        path += "/index.html"
+                    elif "." in path and _has_translation_route(link):
                         path += "/index.html"
                     elif "." not in path:
                         path += ".html"
