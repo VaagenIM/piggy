@@ -149,6 +149,7 @@ def create_app(debug: bool = False) -> Flask:
         return _cached_index()
 
     @app.route("/sitemap")
+    @app.route("/sitemap.xml")
     def sitemap():
         """Return the public XML sitemap."""
         paths = get_cached_sitemap_paths(PIGGYMAP)
