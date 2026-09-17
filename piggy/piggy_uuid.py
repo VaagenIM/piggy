@@ -62,6 +62,12 @@ def generate_uuid(
     if UUID_RETRY_LIMIT < 1:
         raise ValueError("UUID_RETRY_LIMIT must be positive")
     path = Path(path)
+    oink_path = path.with_suffix(".oink")
+    if oink_path.is_file():
+        with oink_path.open("r", encoding="utf-8") as handle:
+            existing_uuid = json.load(handle).get("uuid")
+        if existing_uuid:
+            return existing_uuid
     identity = _identity_from_path(path)
     base_identity = identity
     folder = Path(piggybank_folder).resolve()
