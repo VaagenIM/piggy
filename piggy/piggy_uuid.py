@@ -7,7 +7,7 @@ from typing import Dict
 
 
 SHORTLINK_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-SHORTLINK_SIZE = 6
+SHORTLINK_SIZE = 8
 UUID_NAMESPACE = uuid.UUID("8f6f6f6d-6f6f-4f6f-8f6f-6f6f6f6f6f6f")
 UUID_RETRY_LIMIT = 10000
 _SHORTLINKS_BY_CONFIG: Dict[tuple, Dict[str, str]] = {}
