@@ -230,6 +230,9 @@ def create_app(debug: bool = False) -> Flask:
         try:
             if filename.endswith(".auto"):
                 filename = resolve_image_filename(system_path / folder / filename)
+            # If it doesn't end with auto, but we are on debug mode, we should resolve as well
+            elif debug and filename.endswith(f".{IMG_FMT}"):
+                filename = resolve_image_filename(system_path / folder / filename)
             return send_file(Path(system_path / folder / filename).absolute(), mimetype=get_mimetype(filename))
         except FileNotFoundError:
             if folder == "media":
