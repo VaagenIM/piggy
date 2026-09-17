@@ -3,13 +3,6 @@ import re
 from enum import Enum
 from pathlib import Path
 
-from .piggy_uuid import SHORTLINK_ALPHABET, SHORTLINK_SIZE, _generate_shortlink, generate_uuid
-
-
-def generate_shortlink(identity: str, length: int = SHORTLINK_SIZE) -> str:
-    return _generate_shortlink(identity, SHORTLINK_ALPHABET, length)
-
-
 PIGGYBANK_FOLDER = Path("piggybank")
 STATIC_FONTS_PATHS = [
     str(Path(os.path.join(dp, f)).as_posix()).split("/static/fonts/")[-1]
@@ -26,7 +19,6 @@ IMG_FMT = "webp"
 ASSIGNMENTS_TEMPLATE_FOLDER = "assignments"
 ASSIGNMENT_FILENAME_REGEX = re.compile(r"^.*Level[ _](\d+)[ _]-[ _](.+)\.md$")
 ALLOWED_URL_CHARS_REGEX = re.compile(r"[a-zA-Z0-9\.\-\_\/æøåÆØÅ]")
-SHORTLINK_LENGTH = SHORTLINK_SIZE
 # TESTING ONLY - piggybank branch is used for testing, needs a different approach than prod
 if "piggybank" in os.environ.get("PIGGYBANK_BRANCH", "test-output"):
     PIGGYBANK_FOLDER = Path("piggybank") / "piggybank"

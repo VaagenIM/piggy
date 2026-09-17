@@ -7,6 +7,7 @@ import markupsafe
 import yaml
 from frozendict.cool import deepfreeze
 
+from piggy.piggy_uuid import SHORTLINK_ALPHABET, SHORTLINK_SIZE, _generate_shortlink, generate_uuid
 from piggy import (
     IMG_FMT,
     MEDIA_ROUTE,
@@ -14,9 +15,7 @@ from piggy import (
     ASSIGNMENT_FILENAME_REGEX,
     AssignmentTemplate,
     PIGGYBANK_FOLDER,
-    generate_uuid,
 )
-from piggy import generate_shortlink
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper
 
 
@@ -161,7 +160,7 @@ def _register_shortlink(shortlink_map: dict, meta: dict, fallback_path: Path, ta
     identity = meta.get("uuid") or meta.get("oinkdata", {}).get("uuid")
     if not identity:
         identity = generate_uuid(fallback_path, piggybank_folder=PIGGYBANK_FOLDER)
-    shortlink = generate_shortlink(identity)
+    shortlink = _generate_shortlink(identity, SHORTLINK_ALPHABET, SHORTLINK_SIZE)
 
     target_path = target.removeprefix(f"/{ASSIGNMENT_ROUTE}/")
     media_path = (
