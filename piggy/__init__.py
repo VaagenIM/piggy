@@ -3,11 +3,12 @@ import re
 from enum import Enum
 from pathlib import Path
 
-from piggy.piggy_uuid import SHORTLINK_ALPHABET, SHORTLINK_SIZE, _generate_shortlink, generate_uuid
+from .piggy_uuid import SHORTLINK_ALPHABET, SHORTLINK_SIZE, _generate_shortlink, generate_uuid
 
 
 def generate_shortlink(identity: str, length: int = SHORTLINK_SIZE) -> str:
     return _generate_shortlink(identity, SHORTLINK_ALPHABET, length)
+
 
 PIGGYBANK_FOLDER = Path("piggybank")
 STATIC_FONTS_PATHS = [
