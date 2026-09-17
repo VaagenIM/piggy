@@ -3,14 +3,16 @@ import os
 from pathlib import Path
 from urllib.parse import quote, urlsplit
 
-from flask import Flask, send_file, request, Blueprint, render_template, redirect
+from flask import Flask, send_file, send_from_directory, request, Blueprint, render_template, redirect
 from flask_squeeze import Squeeze
 from jinja2 import ChoiceLoader, FileSystemLoader
+from werkzeug.exceptions import NotFound
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from piggy import (
     ASSIGNMENT_ROUTE,
     MEDIA_ROUTE,
+    EMOTE_ROUTE,
     AssignmentTemplate,
     STATIC_FONTS_PATHS,
     IMG_FMT,
@@ -239,6 +241,14 @@ def create_app(debug: bool = False) -> Flask:
                 query_params = {"c": name, "width": 1024, "height": 512}
                 name = name.replace("_", " ")
                 return generate_thumbnail(name, request=request.from_values(query_string=query_params))
+            return send_file("static/img/placeholders/100x100.png")
+
+    @app.route(f"/{EMOTE_ROUTE}/<path:filename>")
+    def get_emote(filename):
+        """Serve an emote image (used by :name: shortcodes in assignment markdown)."""
+        try:
+            return send_from_directory((PIGGYBANK_FOLDER / "emotes").absolute(), filename)
+        except NotFound:
             return send_file("static/img/placeholders/100x100.png")
 
     @app.errorhandler(Exception)

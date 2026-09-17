@@ -15,6 +15,8 @@ STATIC_FONTS_PATHS = [
 ASSIGNMENT_ROUTE = "main"
 # Media is on a different prefix to not compete with the assignment routes
 MEDIA_ROUTE = "img"
+# Shared images referenced from markdown via :name: shortcodes
+EMOTE_ROUTE = "emotes"
 IMG_FMT = "webp"
 
 ASSIGNMENTS_TEMPLATE_FOLDER = "assignments"

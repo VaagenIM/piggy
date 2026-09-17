@@ -1,0 +1,10 @@
+/***************************\
+|*    EMOTE OVERRIDES      *|
+\***************************/
+.md-content .emote {
+  display: inline-block;
+  height: calc(2rem * var(--piggy-font-scale));
+  width: auto;
+  vertical-align: middle;
+  margin: 0 0.15em;
+}

@@ -9,6 +9,7 @@ from turtleconverter import mdfile_to_sections, ConversionError
 from piggy import (
     ASSIGNMENT_ROUTE,
     MEDIA_ROUTE,
+    EMOTE_ROUTE,
     AssignmentTemplate,
     PIGGYBANK_FOLDER,
 )
@@ -17,6 +18,7 @@ from piggy.models import LANGUAGES
 from piggy.piggybank import (
     get_all_meta_from_path,
     PIGGYMAP,
+    EMOTES,
     get_template_from_path,
     get_piggymap_segment_from_path,
     get_assignment_data_from_path,
@@ -43,6 +45,36 @@ TURTLECONVERTER_STYLESHEET_RE = re.compile(
 def remove_turtleconverter_stylesheets(head: str) -> str:
     """Drop generated turtleconverter CSS links from converted assignment heads."""
     return TURTLECONVERTER_STYLESHEET_RE.sub("", head)
+
+
+EMOTE_TOKEN_RE = re.compile(r":([a-zA-Z0-9_-]+):")
+# Matches from an opening <pre>/<code> tag to the nearest closing one, so :name: tokens
+# inside code samples are left alone. mkdocs always nests <pre><code>...</code></pre>, so
+# stopping at the first closing tag (rather than requiring a matching one) still protects
+# the entire code region.
+CODE_BLOCK_RE = re.compile(r"(?is)<(?:pre|code)\b.*?</(?:pre|code)>")
+
+
+def replace_emotes(html: str) -> str:
+    """Replace known :name: shortcodes with their emote <img>, skipping <pre>/<code> regions."""
+    if not EMOTES:
+        return html
+
+    def emote_sub(match: re.Match) -> str:
+        emote = EMOTES.get(match.group(1))
+        if not emote:
+            return match.group(0)
+        alt = emote["alt"]
+        return f'<img class="emote" src="/{EMOTE_ROUTE}/{emote["filename"]}" alt="{alt}" title="{alt}" loading="lazy">'
+
+    chunks = []
+    pos = 0
+    for block in CODE_BLOCK_RE.finditer(html):
+        chunks.append(EMOTE_TOKEN_RE.sub(emote_sub, html[pos : block.start()]))
+        chunks.append(block.group(0))
+        pos = block.end()
+    chunks.append(EMOTE_TOKEN_RE.sub(emote_sub, html[pos:]))
+    return "".join(chunks)
 
 
 def cache_directory(
@@ -116,6 +148,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
     try:
         sections = _mdfile_to_sections_with_retry(p)
         sections["head"] = remove_turtleconverter_stylesheets(sections["head"])
+        sections["body"] = replace_emotes(sections["body"])
         print("Rendering:", p)
 
     except ConversionError:

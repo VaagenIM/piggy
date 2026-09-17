@@ -14,7 +14,7 @@ from piggy import (
     PIGGYBANK_FOLDER,
     generate_shortlink,
 )
-from piggy.utils import normalize_path_to_str, lru_cache_wrapper
+from piggy.utils import normalize_path_to_str, lru_cache_wrapper, get_mimetype
 
 
 def load_meta_json(path: Path):
@@ -26,6 +26,28 @@ def load_meta_json(path: Path):
     if "name" not in data:
         data["name"] = path.parent.name.replace("_", " ")
     return data
+
+
+def load_emotes_json(path: Path) -> dict:
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+
+def discover_emotes(folder: Path, metadata_path: Path) -> dict:
+    """Build the ``:name:`` -> {filename, alt} map from an emotes folder and its sibling emotes.json."""
+    if not folder.is_dir():
+        return {}
+    metadata = load_emotes_json(metadata_path)
+    emotes = {}
+    for file in sorted(folder.iterdir()):
+        if not file.is_file() or get_mimetype(file.name) is None:
+            continue
+        alt = metadata.get(file.stem, {}).get("alt") or file.stem.replace("_", " ").title()
+        emotes[file.stem] = {"filename": file.name, "alt": alt}
+    return emotes
 
 
 # TODO: these could probably be combined into one function
@@ -256,6 +278,8 @@ start_time = timeit.default_timer()
 print("Building piggymap")
 PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER))
 print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")
+
+EMOTES = deepfreeze(discover_emotes(PIGGYBANK_FOLDER / "emotes", PIGGYBANK_FOLDER / "emotes.json"))
 
 
 def _build_shortlink_map(segment: dict) -> dict[str, dict]:

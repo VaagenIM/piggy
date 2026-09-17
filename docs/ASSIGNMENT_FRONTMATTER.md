@@ -4,7 +4,8 @@ Individual assignment files (`Level N - Title.md`, matched by
 `ASSIGNMENT_FILENAME_REGEX` in `piggy/__init__.py`) carry their own metadata
 as a YAML frontmatter block at the top of the file, optionally extended by a
 sibling `.oink` file. This is a separate mechanism from folder-level
-`meta.json` — see [METADATA.md](METADATA.md) for that.
+`meta.json` — see [METADATA.md](METADATA.md) for that — and from the
+`:name:` shared-image shortcode mechanism, see [EMOTES.md](EMOTES.md).
 
 ```markdown
 ---
