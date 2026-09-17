@@ -7,6 +7,7 @@ import markupsafe
 import yaml
 from frozendict.cool import deepfreeze
 
+from piggy.piggy_uuid import SHORTLINK_ALPHABET, SHORTLINK_SIZE, _generate_shortlink, generate_uuid
 from piggy import (
     IMG_FMT,
     MEDIA_ROUTE,
@@ -14,7 +15,6 @@ from piggy import (
     ASSIGNMENT_FILENAME_REGEX,
     AssignmentTemplate,
     PIGGYBANK_FOLDER,
-    generate_shortlink,
 )
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper
 
@@ -156,11 +156,11 @@ def get_frontmatter_from_file(path: Path) -> dict:
     return {k: str(markupsafe.escape(v)) for k, v in frontmatter.items()}
 
 
-def _register_shortlink(shortlink_map: dict, meta: dict, fallback_identity: str, target: str, title: str):
-    identity = meta.get("uuid") or meta.get("oinkdata", {}).get("uuid") or fallback_identity
-    shortlink = generate_shortlink(identity)
-    if shortlink in shortlink_map:
-        raise ValueError(f"Duplicate page shortlink: {shortlink}")
+def _register_shortlink(shortlink_map: dict, meta: dict, fallback_path: Path, target: str, title: str):
+    identity = meta.get("uuid") or meta.get("oinkdata", {}).get("uuid")
+    if not identity:
+        identity = generate_uuid(fallback_path, piggybank_folder=PIGGYBANK_FOLDER)
+    shortlink = _generate_shortlink(identity, SHORTLINK_ALPHABET, SHORTLINK_SIZE)
 
     target_path = target.removeprefix(f"/{ASSIGNMENT_ROUTE}/")
     media_path = (
@@ -225,7 +225,7 @@ def generate_piggymap(
                 piggymap[i]["shortlink"] = _register_shortlink(
                     shortlink_map,
                     piggymap[i]["meta"],
-                    page_url,
+                    Path(path) / item / "meta.json",
                     f"/main/{page_url}",
                     piggymap[i]["meta"]["name"],
                 )
@@ -272,7 +272,7 @@ def generate_piggymap(
             "shortlink": _register_shortlink(
                 shortlink_map,
                 frontmatter,
-                assignment_key,
+                assignment_path,
                 shortlink_target,
                 frontmatter["title"],
             ),

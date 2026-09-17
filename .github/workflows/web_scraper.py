@@ -4,6 +4,7 @@ A hacky script that scrapes a website and downloads all the pages and media file
 
 import multiprocessing
 import os
+import posixpath
 import re
 import subprocess
 import time
@@ -184,6 +185,14 @@ def clean_link(link, path):
         link = f"/{path.rsplit('/', 1)[0]}/{link}"
     # Replace \\ with /
     link = link.replace("\\", "/")
+    # Resolve relative path segments so page and media link collectors use the
+    # same canonical URL and cannot mistake media for an assignment.
+    if link:
+        suffix_index = min(
+            (index for index in (link.find("?"), link.find("#")) if index >= 0),
+            default=len(link),
+        )
+        link = posixpath.normpath(link[:suffix_index]) + link[suffix_index:]
     return link
 
 
