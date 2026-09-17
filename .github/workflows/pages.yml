@@ -72,6 +72,8 @@ jobs:
             pages-demo-${{ github.workflow }}-${{ github.ref_name }}-
 
       - name: Install dependencies
+        env:
+          UV_LINK_MODE: copy
         run: |
           uv pip install .
           echo "GITHUB_PAGES=1" >> $GITHUB_ENV
