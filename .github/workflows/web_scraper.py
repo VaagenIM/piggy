@@ -266,6 +266,12 @@ def _write_html(html, path):
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("wb+") as f:
         f.write(html.encode())
+    if path == "sitemap.xml":
+        (Path("demo") / "sitemap").write_text(
+            '<!doctype html><meta http-equiv="refresh" content="0; url=sitemap.xml">'
+            '<a href="sitemap.xml">View sitemap.xml</a>',
+            encoding="utf-8",
+        )
 
 
 def _has_translation_route(link):
@@ -327,7 +333,7 @@ def download_site():
                 if link == "/":
                     path = "index.html"
                 elif link == "/sitemap":
-                    path = "sitemap"
+                    path = "sitemap.xml"
                 else:
                     path = link.split("#")[0].strip("/")
                     if path.startswith("s/") and "." not in path:
@@ -571,6 +577,8 @@ def _media_link_for_path(path: str) -> str | None:
 def _output_path_for_route(route: str) -> Path:
     if route == "/":
         return Path("demo/index.html")
+    if route == "/sitemap":
+        return Path("demo/sitemap.xml")
     path = route.split("#", 1)[0].strip("/")
     if route.endswith("/") and "." not in path:
         path += "/index.html"
