@@ -15,6 +15,7 @@ from piggy import (
     ASSIGNMENT_FILENAME_REGEX,
     AssignmentTemplate,
     PIGGYBANK_FOLDER,
+    Visibility,
 )
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper
 
@@ -29,6 +30,17 @@ def load_meta_json(path: Path):
     if "name" not in data:
         data["name"] = path.parent.name.replace("_", " ")
     return data
+
+
+def _get_effective_visibility(value: str | None, inherited_visibility: Visibility) -> Visibility:
+    """Resolve visibility while propagating the most restrictive parent status."""
+    visibility = Visibility.from_value(value)
+    order = {
+        Visibility.PUBLIC: 0,
+        Visibility.UNLISTED: 1,
+        Visibility.PRIVATE: 2,
+    }
+    return max((visibility, inherited_visibility), key=order.__getitem__)
 
 
 # TODO: these could probably be combined into one function
@@ -184,6 +196,7 @@ def generate_piggymap(
     _current_level: int = 0,
     _url_path: str = "",
     _shortlink_map: dict | None = None,
+    _inherited_visibility: Visibility = Visibility.PUBLIC,
 ):
     """
     Generate a dictionary of the directory structure of the given path
@@ -210,16 +223,20 @@ def generate_piggymap(
         i = normalize_path_to_str(item, normalize_page_path=True)
         # If the item is a directory, we want to go deeper
         if os.path.isdir(f"{path}/{item}"):
+            directory_meta = load_meta_json(Path(f"{path}/{item}/meta.json"))
+            effective_visibility = _get_effective_visibility(directory_meta.get("visibility"), _inherited_visibility)
+            directory_meta["visibility"] = effective_visibility.value
             new_item = generate_piggymap(
                 Path(f"{path}/{item}"),
                 _current_level=_current_level + 1,
                 _url_path=f"{_url_path}/{i}",
                 _shortlink_map=shortlink_map,
+                _inherited_visibility=effective_visibility,
             )
             if new_item:
                 piggymap[i] = {"data": new_item}
                 # If the folder contains a 'meta.json' file, we should add that as metadata to the folder
-                piggymap[i]["meta"] = load_meta_json(Path(f"{path}/{item}/meta.json"))
+                piggymap[i]["meta"] = directory_meta
                 piggymap[i]["meta"]["system_path"] = Path(f"{path}/{item}")
                 page_url = f"{_url_path}/{i}".strip("/")
                 piggymap[i]["shortlink"] = _register_shortlink(
@@ -243,6 +260,8 @@ def generate_piggymap(
         frontmatter = get_frontmatter_from_file(assignment_path)
         assignment_oink = load_oink_file(assignment_path)
         frontmatter.update(assignment_oink)
+        assignment_visibility = _get_effective_visibility(frontmatter.get("visibility"), _inherited_visibility)
+        frontmatter["visibility"] = assignment_visibility.value
 
         # Default thumbnail to the assignment group's header image if not specified
         if "thumbnail" not in frontmatter:
@@ -259,6 +278,10 @@ def generate_piggymap(
             if not trans_oink and assignment_oink:
                 trans_oink = {**assignment_oink, "oinkdata": {}}
             trans_frontmatter.update(trans_oink)
+            translation_visibility = _get_effective_visibility(
+                trans_frontmatter.get("visibility"), assignment_visibility
+            )
+            trans_frontmatter["visibility"] = translation_visibility.value
             translation_meta[lang] = trans_frontmatter
 
         assignment_key = normalize_path_to_str(item, normalize_page_path=True, normalize_url=True, remove_ext=True)

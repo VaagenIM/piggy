@@ -11,6 +11,7 @@ from piggy import (
     MEDIA_ROUTE,
     AssignmentTemplate,
     PIGGYBANK_FOLDER,
+    Visibility,
 )
 from piggy.exceptions import PiggyHTTPException, PiggyErrorException
 from piggy.models import LANGUAGES
@@ -168,7 +169,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
 
 
 @lru_cache_wrapper
-def _render_assignment_wildcard(path="", lang="") -> Response:
+def _render_assignment_wildcard(path="", lang="", allow_private=False) -> Response:
     """
     Render the webpage for a given path.
 
@@ -194,6 +195,10 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
 
     # If we are at the final level assignment, render the assignment
     if len(path.split("/")) == AssignmentTemplate.ASSIGNMENT.index:
+        assignment_visibility = Visibility.from_value(metadata.get("visibility"))
+        if not allow_private and assignment_visibility is Visibility.PRIVATE:
+            raise PiggyHTTPException("Fant ikke siden", status_code=404)
+
         # Get the path name with forward slashes
         path_from_segment = normalize_path_to_str(segment.get("path", ""))
 

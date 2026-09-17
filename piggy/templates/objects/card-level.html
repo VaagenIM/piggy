@@ -1,4 +1,4 @@
-{% from 'objects/card.html' import card %}
+{% from 'objects/card.html' import card with context %}
 
 {{
   card(
@@ -8,6 +8,7 @@
     description = data.meta.description,
     thumbnail = media_abspath + "/" + data.meta.thumbnail + "." + img_fmt + "?title=" + data.meta.title if data.meta.thumbnail else url_for('api.generate_thumbnail', text = data.level_name) ~ '?c=' ~ meta.name,
     thumbnail_alt = 'Header image for ' ~ data.meta.title,
+    visibility = data.meta.visibility,
     difficulty = data.meta.difficulty,
     extra_classes = 'card-special-condition' if 'special_condition' in data else '',
     overlay_text = 'Level ' ~ data.level ~ ' - ' ~ data.level_name if data.level else '',

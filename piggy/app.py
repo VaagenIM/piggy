@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 from urllib.parse import quote, urlsplit
 
-from flask import Flask, send_file, request, Blueprint, render_template, redirect
+from flask import Flask, send_file, request, Blueprint, render_template, redirect, Response, abort
 from flask_squeeze import Squeeze
 from jinja2 import ChoiceLoader, FileSystemLoader
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -12,6 +12,7 @@ from piggy import (
     ASSIGNMENT_ROUTE,
     MEDIA_ROUTE,
     AssignmentTemplate,
+    Visibility,
     STATIC_FONTS_PATHS,
     IMG_FMT,
     PIGGYBANK_FOLDER,
@@ -31,6 +32,7 @@ from piggy.utils import (
     get_version,
     get_piggybank_version,
 )
+from piggy.sitemap import get_cached_sitemap_paths, render_internal_sitemap, render_sitemap_xml
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
@@ -79,6 +81,7 @@ def create_app(debug: bool = False) -> Flask:
             "version": get_version(),
             "piggybank_version": get_piggybank_version(),
             "AssignmentTemplate": AssignmentTemplate,
+            "Visibility": Visibility,
             "themes": get_themes(),
             "debug": app.debug,
             "static_fonts_paths": STATIC_FONTS_PATHS,
@@ -145,6 +148,22 @@ def create_app(debug: bool = False) -> Flask:
     def index():
         return _cached_index()
 
+    @app.route("/sitemap")
+    def sitemap():
+        """Return the public XML sitemap."""
+        paths = get_cached_sitemap_paths(PIGGYMAP)
+        return Response(render_sitemap_xml(paths, request.url_root), mimetype="application/xml")
+
+    @app.route("/sitemap-internal")
+    def sitemap_internal():
+        """Return all page paths for the GitHub Pages scraper."""
+        if not use_github_pages:
+            abort(404)
+        return Response(
+            render_internal_sitemap(get_cached_sitemap_paths(PIGGYMAP, include_unlisted=True)),
+            mimetype="text/plain",
+        )
+
     def sanitize_internal_return_path(value):
         if not value or not value.startswith("/") or value.startswith("//"):
             return "/"
@@ -197,9 +216,9 @@ def create_app(debug: bool = False) -> Flask:
 
         # Render the appropriate template for the current level
         try:
-            return _render_assignment_wildcard(path, lang=lang)
+            return _render_assignment_wildcard(path, lang=lang, allow_private=debug)
         except PiggyHTTPException:
-            return _render_assignment_wildcard(path, lang="")
+            return _render_assignment_wildcard(path, lang="", allow_private=debug)
 
     @assignment_routes.route("/<path:path>/lang/<lang>")
     @assignment_routes.route("/<path:path>/lang/")

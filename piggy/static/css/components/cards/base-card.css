@@ -22,6 +22,57 @@
   text-decoration: none;
 }
 
+.visibility-unlisted::before,
+.visibility-private::before {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1;
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.25rem;
+  color: var(--piggy-text-card);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+
+.visibility-unlisted,
+.visibility-private {
+  opacity: 0.8;
+  filter: grayscale(20%);
+}
+
+.visibility-unlisted::before {
+  content: "UNLISTED";
+  border: 6px solid var(--piggy-admonition-warning-border);
+  background: var(--piggy-card-end);
+}
+
+.visibility-unlisted::after {
+  content: "";
+  position: absolute;
+  inset: 0.35rem;
+  border: 6px solid var(--piggy-admonition-warning-border);
+  border-radius: 0.75rem;
+  pointer-events: none;
+}
+
+.visibility-private::before {
+  content: "PRIVATE";
+  border: 6px solid var(--piggy-admonition-danger-border);
+  background: var(--piggy-card-end);
+}
+
+.visibility-private::after {
+  content: "";
+  position: absolute;
+  inset: 0.35rem;
+  border: 6px solid var(--piggy-admonition-danger-border);
+  border-radius: 0.75rem;
+  pointer-events: none;
+}
+
 .card-container:hover {
   transform: translateY(-3px) rotate(0.5deg) scale(98%);
   animation-timing-function: ease;

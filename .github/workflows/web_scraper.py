@@ -100,6 +100,13 @@ def get_with_retry(url_to_fetch, *, timeout=600, max_attempts=3):
     return last_response
 
 
+def get_internal_sitemap():
+    """Return all page paths, including pages not linked from public navigation."""
+    response = get_with_retry(f"{url}/sitemap-internal")
+    response.raise_for_status()
+    return {line.strip() for line in response.text.splitlines() if line.strip()}
+
+
 def get_html(link) -> PageResult | None:
     """Get the html from the given url, and append the new links to the links list."""
     page_url = f"{url}/{link.strip('/')}"
@@ -319,6 +326,8 @@ def download_site():
 
                 if link == "/":
                     path = "index.html"
+                elif link == "/sitemap":
+                    path = "sitemap"
                 else:
                     path = link.split("#")[0].strip("/")
                     if path.startswith("s/") and "." not in path:
@@ -663,6 +672,9 @@ if __name__ == "__main__":
     root_dir = Path(__file__).resolve().parents[2]
     if build_required:
         generate_static_files(static_folder=Path("demo/static").absolute())
+        links.add("/sitemap")
+        if not incremental_mode:
+            links.update(get_internal_sitemap())
         download_site()
         download_api_views()
         # Since we are in .github/workflows, we need to go up two directories to find the piggy folder
