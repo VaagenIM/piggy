@@ -17,6 +17,7 @@ from piggy.models import LANGUAGES
 from piggy.piggybank import (
     get_all_meta_from_path,
     PIGGYMAP,
+    get_piggymap_page_from_path,
     get_template_from_path,
     get_piggymap_segment_from_path,
     get_assignment_data_from_path,
@@ -186,6 +187,7 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
         raise PiggyHTTPException("Fant ikke siden", status_code=404)
 
     metadata = {**metadata, **get_all_meta_from_path(path, PIGGYMAP)}
+    page = get_piggymap_page_from_path(path, PIGGYMAP)
 
     media_abspath = f"/{MEDIA_ROUTE}/{path}" if path else f"/{MEDIA_ROUTE}"
     abspath = f"/{ASSIGNMENT_ROUTE}/{path}" if path else f"/{ASSIGNMENT_ROUTE}"
@@ -217,6 +219,7 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
         template_type,
         meta=metadata,
         segment=segment,
+        shortlink=page.get("shortlink"),
         path=path,
         media_abspath=media_abspath,
         abspath=abspath,

@@ -2,7 +2,9 @@
 
 Every folder in the `piggybank/` content tree can contain a `meta.json` file
 describing that folder - its display name, a description, tags, and a few
-other display hints. This document lists every property `meta.json` supports.
+other display hints. A sibling `meta.oink` JSON file can provide additional
+metadata under `oinkdata`, including the folder UUID used for shortlinks.
+This document lists every property `meta.json` supports.
 
 For metadata on individual assignment files (`Level N - Title.md`), see
 [ASSIGNMENT_FRONTMATTER.md](ASSIGNMENT_FRONTMATTER.md) instead - that's a

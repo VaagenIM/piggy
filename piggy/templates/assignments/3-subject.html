@@ -25,7 +25,9 @@
       <div
         class="card-grid-container card-type-information information-card-grid-container">
         {% for item, data in informations %}
-          {% include 'objects/card-information.html' %}
+          {% if data.meta.visibility != "unlisted" %}
+            {% include 'objects/card-information.html' %}
+          {% endif %}
         {% endfor %}
       </div>
     </div>
@@ -38,7 +40,9 @@
       <div
         class="card-grid-container card-type-assignment assignment-card-grid-container">
         {% for item, data in assignments %}
-          {% include 'objects/card-assignment.html' %}
+          {% if data.meta.visibility != "unlisted" %}
+            {% include 'objects/card-assignment.html' %}
+          {% endif %}
         {% endfor %}
       </div>
     </div>
@@ -50,7 +54,9 @@
       <h2 class="assignment-title">Øvingsoppgaver:</h2>
       <div class="card-grid-container card-type-exercise">
         {% for item, data in exercises %}
-          {% include 'objects/card-exercise.html' %}
+          {% if data.meta.visibility != "unlisted" %}
+            {% include 'objects/card-exercise.html' %}
+          {% endif %}
         {% endfor %}
       </div>
     </div>

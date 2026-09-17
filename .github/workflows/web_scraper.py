@@ -173,6 +173,7 @@ def is_api_view_link(link: str) -> bool:
 
 
 def clean_link(link, path):
+    link = unquote(link).replace(" ", "_")
     if re.match(r"\.?.+[#:].*", link.split("/")[-1]) and path:
         # Reconstruct without #.* or :.*
         stem = link.split("/")[-1].split("#")[0].split(":")[0]
@@ -186,6 +187,15 @@ def clean_link(link, path):
     return link
 
 
+def _normalize_page_link(link):
+    if not link.startswith("/main/"):
+        return link
+    parts = link.split("/")
+    if "attachments" in parts or "media" in parts:
+        return link
+    return "/".join(part.replace(".", "") for part in parts)
+
+
 def get_links(html, path=""):
     links = re.compile(r'href="((?!#|https?://)[^"]*)"').findall(html)
     filtered_links = set()
@@ -194,11 +204,11 @@ def get_links(html, path=""):
             continue
         if link.startswith("/static/"):
             continue
-        link = clean_link(link, path)
+        link = _normalize_page_link(clean_link(link, path))
         filtered_links.add(link)
 
     shortlink_paths = re.compile(r'data-shortlink-url="https?://[^/"]+(/[^"]*)"').findall(html)
-    filtered_links.update(shortlink_paths)
+    filtered_links.update(_normalize_page_link(link) for link in shortlink_paths)
 
     return filtered_links
 
@@ -234,9 +244,17 @@ def get_media_links(html, path=""):
 
 
 def _write_html(html, path):
-    os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
-    with open(f"demo/{path}", "wb+") as f:
+    output_path = Path("demo") / path
+    if output_path.is_dir():
+        output_path /= "index.html"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("wb+") as f:
         f.write(html.encode())
+
+
+def _has_translation_route(link):
+    route = link.rstrip("/")
+    return any(candidate.startswith(f"{route}/lang/") for candidate in links)
 
 
 def _download_media(link):
@@ -297,6 +315,8 @@ def download_site():
                     if path.startswith("s/") and "." not in path:
                         path += "/index.html"
                     elif link.endswith("/") and "." not in path:
+                        path += "/index.html"
+                    elif "." in path and _has_translation_route(link):
                         path += "/index.html"
                     elif "." not in path:
                         path += ".html"
@@ -497,20 +517,20 @@ def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
     translations_index = parts.index("translations") if "translations" in parts else -1
     if translations_index >= 0:
         language = parts[translations_index + 1] if len(parts) > translations_index + 1 else ""
-        content_parts = parts[:translations_index]
+        content_parts = [part.replace(".", "") for part in parts[:translations_index]]
         filename = parts[-1]
         if not language or not filename:
             return routes, set(), False
-        assignment = "/".join(content_parts + [Path(filename).stem])
+        assignment = "/".join(content_parts + [Path(filename).stem.replace(".", "")])
         routes.add(f"/main/{assignment}/lang/{language}")
         routes.add(f"/main/{assignment}")
         directory_parts = content_parts
     elif path.endswith((".md", ".oink")):
-        directory_parts = parts[:-1]
-        assignment = "/".join(directory_parts + [Path(parts[-1]).stem])
+        directory_parts = [part.replace(".", "") for part in parts[:-1]]
+        assignment = "/".join(directory_parts + [Path(parts[-1]).stem.replace(".", "")])
         routes.add(f"/main/{assignment}")
     elif path.endswith("meta.json"):
-        directory_parts = parts[:-1]
+        directory_parts = [part.replace(".", "") for part in parts[:-1]]
         if directory_parts:
             routes.add(f"/main/{'/'.join(directory_parts)}")
     else:
@@ -539,6 +559,13 @@ def _output_path_for_route(route: str) -> Path:
     elif "." not in path.rsplit("/", 1)[-1]:
         path += ".html"
     return Path("demo") / path
+
+
+def _remove_output_path(output_path: Path):
+    if output_path.is_dir():
+        rmtree(output_path)
+    else:
+        output_path.unlink(missing_ok=True)
 
 
 def configure_demo_build() -> tuple[str, str, bool]:
@@ -613,9 +640,9 @@ def configure_demo_build() -> tuple[str, str, bool]:
             for route in affected_routes:
                 output_path = _output_path_for_route(route)
                 if output_path.exists():
-                    output_path.unlink()
+                    _remove_output_path(output_path)
             for output_path in deleted_outputs:
-                output_path.unlink(missing_ok=True)
+                _remove_output_path(output_path)
 
     visited.clear()
     media_links.clear()
