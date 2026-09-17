@@ -53,7 +53,7 @@ sets overrides the same key from the frontmatter block. It's intended for
 metadata that shouldn't live inside the markdown file itself.
 
 The `uuid` key is used as the assignment's shortlink identity. If it is
-missing, the normalized markdown filename is used as a fallback.
+missing, a deterministic UUID is generated from the normalized path.
 
 ## Translations
 

@@ -1,8 +1,13 @@
-import hashlib
 import os
 import re
 from enum import Enum
 from pathlib import Path
+
+from piggy.piggy_uuid import SHORTLINK_ALPHABET, SHORTLINK_SIZE, _generate_shortlink, generate_uuid
+
+
+def generate_shortlink(identity: str, length: int = SHORTLINK_SIZE) -> str:
+    return _generate_shortlink(identity, SHORTLINK_ALPHABET, length)
 
 PIGGYBANK_FOLDER = Path("piggybank")
 STATIC_FONTS_PATHS = [
@@ -20,21 +25,7 @@ IMG_FMT = "webp"
 ASSIGNMENTS_TEMPLATE_FOLDER = "assignments"
 ASSIGNMENT_FILENAME_REGEX = re.compile(r"^.*Level[ _](\d+)[ _]-[ _](.+)\.md$")
 ALLOWED_URL_CHARS_REGEX = re.compile(r"[a-zA-Z0-9\.\-\_\/æøåÆØÅ]")
-SHORTLINK_LENGTH = 6
-SHORTLINK_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-
-
-def generate_shortlink(path: str, length: int = SHORTLINK_LENGTH) -> str:
-    """Generate a stable, URL-safe shortlink token for an assignment path."""
-    digest = hashlib.sha256(f"piggy-shortlink-v1:{path}".encode("utf-8")).digest()
-    value = int.from_bytes(digest, "big")
-    token = []
-    for _ in range(length):
-        value, remainder = divmod(value, len(SHORTLINK_ALPHABET))
-        token.append(SHORTLINK_ALPHABET[remainder])
-    return "".join(token)
-
-
+SHORTLINK_LENGTH = SHORTLINK_SIZE
 # TESTING ONLY - piggybank branch is used for testing, needs a different approach than prod
 if "piggybank" in os.environ.get("PIGGYBANK_BRANCH", "test-output"):
     PIGGYBANK_FOLDER = Path("piggybank") / "piggybank"
