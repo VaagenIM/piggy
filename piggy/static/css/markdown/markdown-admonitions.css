@@ -140,6 +140,10 @@
   overflow: hidden !important;
 }
 
+.md-content :is(.admonition, details):not(:has(> :nth-child(2))) {
+  overflow: clip !important;
+}
+
 .md-content :is(.admonition, details) :is(.admonition, details) {
   border: 1px solid
     color-mix(in srgb, var(--piggy-admonition-border) 50%, transparent) !important;
