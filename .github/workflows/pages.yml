@@ -6,6 +6,12 @@ on:
   repository_dispatch:
     types: [ fill_piggybank ]
   workflow_dispatch:
+    inputs:
+      full_rebuild:
+        description: "Invalidate the cached demo and rebuild every page"
+        required: false
+        default: false
+        type: boolean
   push:
     branches: [ main ]
 
@@ -25,9 +31,10 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
+          fetch-depth: 0
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
@@ -39,11 +46,6 @@ jobs:
       - name: Set up Python
         run: uv python install
 
-      - name: Set up npm
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-
       - name: Cleanup earlier runs
         run: |
           rm -rf piggybank
@@ -51,7 +53,7 @@ jobs:
           pkill -f python || true
 
       - name: Checkout piggybank
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: VaagenIM/piggybank
           ref: output
@@ -59,19 +61,35 @@ jobs:
           path: piggybank
           fetch-depth: 0
 
+      - name: Restore demo cache
+        uses: actions/cache@v6
+        with:
+          path: |
+            .github/workflows/demo
+            .github/workflows/.demo-state.json
+          key: pages-demo-${{ github.workflow }}-${{ github.ref_name }}-${{ github.run_id }}
+          restore-keys: |
+            pages-demo-${{ github.workflow }}-${{ github.ref_name }}-
+
       - name: Install dependencies
+        env:
+          UV_LINK_MODE: copy
         run: |
           uv pip install .
-          npm install --omit=dev
           echo "GITHUB_PAGES=1" >> $GITHUB_ENV
           echo "USE_CACHE=0" >> $GITHUB_ENV
+          echo "PIGGY_VERSION=$(bash .github/workflows/scripts/compute-version.sh)" >> $GITHUB_ENV
           uv pip install -r .github/workflows/requirements-pages.txt
 
       - name: Start Piggy server
         run: |
-          gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers 16 run:app &
+          workers=$(nproc --ignore=1)
+          workers=$((workers < 1 ? 1 : workers))
+          gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers "$workers" run:app &
 
       - name: Run web scraper to build static site
+        env:
+          FORCE_FULL_REBUILD: ${{ inputs.full_rebuild || 'false' }}
         run: python .github/workflows/web_scraper.py
 
       - name: Upload artifact

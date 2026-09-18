@@ -19,6 +19,7 @@
   height: max-content;
   white-space: nowrap;
   font-size: calc(0.85rem * var(--piggy-font-scale));
+  line-height: calc(1.25 / 0.875);
 }
 
 .difficulty-icon {
@@ -26,6 +27,7 @@
   top: -0.35rem;
   left: 0.35rem;
   width: 4rem;
+  z-index: 3;
 
   /* may be used sometime */
   --difficulty-1-color: #00a000;

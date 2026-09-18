@@ -1,28 +1,64 @@
 (function () {
   const CONTROL_LABELS = {
-    contrast: "Contrast",
-    readerFont: "Font",
-    codeFont: "Code font",
-    readerFontSize: "Text size",
-    fontSizeAffectsUi: "Text size scope",
-    readerLineHeight: "Line height",
-    readerLetterSpacing: "Letter spacing",
-    readerWordSpacing: "Word spacing",
-    readerParagraphSpacing: "Paragraph spacing",
-    readerWidth: "Content width",
-    focusMode: "Focus mode",
-    readingRuler: "Ruler",
-    reduceMotion: "Motion and effects",
-    rememberPosition: "Remember position",
-    audioReader: "Audio reader",
+    contrast: "Kontrast",
+    readerFont: "Skrifttype",
+    codeFont: "Skrifttype for kode",
+    readerFontSize: "Tekststørrelse",
+    fontSizeAffectsUi: "Tekststørrelse omfang",
+    readerLineHeight: "Linjehøyde",
+    readerLetterSpacing: "Bokstavavstand",
+    readerWordSpacing: "Ordavstand",
+    readerParagraphSpacing: "Paragrafavstand",
+    readerWidth: "Innholdsbredde",
+    focusMode: "Fokus modus",
+    readingRuler: "Linjal",
+    iconClarity: "Ikonsynlighet",
+    reduceMotion: "Bevegelse og effekter",
+    rememberPosition: "Husk posisjon",
+    audioReader: "Opplesing",
+    codeWrap: "Radbryting i kode",
+  };
+
+  const THEME_ACCENT_LABELS = {
+    golden: {
+      1: "Rumi",
+      2: "Mira",
+      3: "Zoey",
+      4: "Jinu",
+      5: "Derpy",
+      6: "Honmoon",
+      7: "Gwi-Ma",
+    },
   };
 
   const TOGGLE_LABELS = {
-    focusMode: "Dim navigation while focusing",
-    fontSizeAffectsUi: "Apply text size to app UI",
-    readingRuler: "Show ruler",
-    rememberPosition: "Remember where you stopped reading",
-    audioReader: "Click text to play recorded audio",
+    focusMode: "Demp navigasjonsmenyen i fokus modus",
+    fontSizeAffectsUi: "Bruk tekststørrelse på UI",
+    readingRuler: "Vis linjal",
+    iconClarity: "Tydeligere ikoner og farger",
+    rememberPosition: "Husk hvor du stopte å lese",
+    audioReader: "Klikk på tekst for å spille av innlest lyd",
+    codeWrap: "Bryt lange kodelinjer",
+  };
+
+  const THEME_GROUP_ORDER = ["regular", "colored", "animated"];
+
+  const THEME_GROUP_LABELS = {
+    regular: "Vanlige",
+    colored: "Fargerike",
+    animated: "Animerte",
+  };
+
+  const PREVIEW_LABELS = {
+    lineOne: "Line one",
+    lineTwo: "Line two",
+    spacing: "Spacing",
+    wordSpacing: "Word spacing",
+    firstParagraph: "First paragraph",
+    secondParagraph: "Second paragraph",
+    quiet: "Quiet",
+    animated: "Animated",
+    system: "System",
   };
 
   const PRESET_ICONS = {
@@ -106,17 +142,19 @@
 
   let settingsRoot = null;
   let preferencesApi = null;
-  let fontSelectEventsBound = false;
+  let disclosureEventsBound = false;
+  let lastAccentSwatchTheme = null;
   const detailsCloseTimers = new WeakMap();
 
   function render(root, nextPreferencesApi) {
     settingsRoot = root;
     preferencesApi = nextPreferencesApi;
     if (!settingsRoot || !preferencesApi) return;
-    bindFontSelectEvents();
+    bindDisclosureEvents();
 
     renderPresetCards(getRenderTarget("presets"));
     renderThemeCards(getRenderTarget("themes"));
+    renderAccentColorControl(getRenderTarget("accentColor"));
     renderSegmentedControl("contrast", getRenderTarget("contrast"));
 
     renderSelectControl("readerFont", getRenderTarget("readerFont"));
@@ -126,6 +164,7 @@
       "fontSizeAffectsUi",
       getRenderTarget("fontSizeAffectsUi"),
     );
+    renderToggleControl("codeWrap", getRenderTarget("codeWrap"));
 
     renderSegmentedControl(
       "readerLineHeight",
@@ -147,6 +186,7 @@
 
     renderToggleControl("focusMode", getRenderTarget("focusMode"));
     renderToggleControl("readingRuler", getRenderTarget("readingRuler"));
+    renderToggleControl("iconClarity", getRenderTarget("iconClarity"));
     renderSegmentedControl("reduceMotion", getRenderTarget("reduceMotion"));
     renderToggleControl(
       "rememberPosition",
@@ -199,6 +239,11 @@
       const id = element.dataset.prefDetail;
       element.textContent = getOptionDetail(id, preferences[id]);
     });
+
+    if (preferences.theme && preferences.theme !== lastAccentSwatchTheme) {
+      lastAccentSwatchTheme = preferences.theme;
+      updateAccentSwatchColors(settingsRoot, preferences.theme);
+    }
   }
 
   function getRenderTarget(name) {
@@ -235,42 +280,149 @@
     });
   }
 
+  function createThemeCard(theme) {
+    const button = document.createElement("button");
+    button.className = "theme-card";
+    button.type = "button";
+    button.dataset.prefId = "theme";
+    button.dataset.prefValue = theme.path;
+    button.setAttribute("aria-pressed", "false");
+
+    const preview = document.createElement("span");
+    preview.className = "theme-card-preview";
+    preview.setAttribute("aria-hidden", "true");
+    preview.append(createThemePreview(theme));
+
+    const title = document.createElement("span");
+    title.className = "theme-card-title";
+    title.textContent = theme.name;
+
+    const titleRow = document.createElement("span");
+    titleRow.className = "theme-card-title-row";
+    titleRow.append(createSettingsIcon(getThemeIconName(theme)), title);
+
+    const body = document.createElement("span");
+    body.className = "theme-card-body";
+    body.append(titleRow);
+
+    button.title = theme.description
+      ? `${theme.name}: ${theme.description}`
+      : `${theme.name} (${getThemeMetaText(theme)})`;
+    button.setAttribute("aria-label", button.title);
+    button.append(preview, body);
+    return button;
+  }
+
+  function groupThemes(themes) {
+    const byGroup = new Map();
+
+    themes.forEach((theme) => {
+      const groupId = theme.group || "regular";
+      if (!byGroup.has(groupId)) byGroup.set(groupId, []);
+      byGroup.get(groupId).push(theme);
+    });
+
+    const orderedIds = [
+      ...THEME_GROUP_ORDER.filter((groupId) => byGroup.has(groupId)),
+      ...[...byGroup.keys()].filter(
+        (groupId) => !THEME_GROUP_ORDER.includes(groupId),
+      ),
+    ];
+
+    return orderedIds.map((groupId) => ({
+      id: groupId,
+      label: THEME_GROUP_LABELS[groupId] || groupId,
+      themes: byGroup.get(groupId),
+    }));
+  }
+
   function renderThemeCards(container) {
     if (!container) return;
 
     container.replaceChildren();
 
-    getThemes().forEach((theme) => {
+    groupThemes(getThemes()).forEach((group) => {
+      const section = document.createElement("div");
+      section.className = "theme-group";
+
+      const heading = document.createElement("h4");
+      heading.className = "theme-group-title settings-eyebrow";
+      heading.textContent = group.label;
+
+      const grid = document.createElement("div");
+      grid.className = "settings-card-grid settings-card-grid--themes";
+      group.themes.forEach((theme) => grid.append(createThemeCard(theme)));
+
+      section.append(heading, grid);
+      container.append(section);
+    });
+  }
+
+  function renderAccentColorControl(container) {
+    if (!container) return;
+
+    container.replaceChildren();
+
+    preferencesApi.getOptions("accentColor").forEach((option) => {
       const button = document.createElement("button");
-      button.className = "theme-card";
+      button.className = "accent-color-swatch";
       button.type = "button";
-      button.dataset.prefId = "theme";
-      button.dataset.prefValue = theme.path;
+      button.dataset.prefId = "accentColor";
+      button.dataset.prefValue = option.value;
+      // Placeholder until update() repaints these for the active theme.
+      button.style.background = option.hex || "#888";
+      button.title = option.label;
+      button.setAttribute("aria-label", option.label);
       button.setAttribute("aria-pressed", "false");
-
-      const preview = document.createElement("span");
-      preview.className = "theme-card-preview";
-      preview.setAttribute("aria-hidden", "true");
-      preview.append(createThemePreview(theme));
-
-      const title = document.createElement("span");
-      title.className = "theme-card-title";
-      title.textContent = theme.name;
-
-      const titleRow = document.createElement("span");
-      titleRow.className = "theme-card-title-row";
-      titleRow.append(createSettingsIcon(getThemeIconName(theme)), title);
-
-      const body = document.createElement("span");
-      body.className = "theme-card-body";
-      body.append(titleRow);
-
-      button.title = theme.description
-        ? `${theme.name}: ${theme.description}`
-        : `${theme.name} (${getThemeMetaText(theme)})`;
-      button.setAttribute("aria-label", button.title);
-      button.append(preview, body);
       container.append(button);
+    });
+  }
+
+  function getAccentSwatchColors(themePath) {
+    const host = document.createElement("div");
+    host.setAttribute("data-theme", themePath);
+    host.style.cssText =
+      "position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;";
+
+    const swatch = document.createElement("span");
+    swatch.style.backgroundColor = "var(--piggy-button-active)";
+    host.append(swatch);
+    document.body.append(host);
+
+    const defaultValue = preferencesApi.getSetting("accentColor")?.defaultValue;
+    const colors = {};
+    preferencesApi.getOptions("accentColor").forEach((option) => {
+      host.setAttribute("data-accent-color", option.value);
+
+      if (option.value === defaultValue) {
+        host.style.setProperty("--piggy-accent-override", "initial");
+      } else {
+        host.style.removeProperty("--piggy-accent-override");
+      }
+      colors[option.value] = window.getComputedStyle(swatch).backgroundColor;
+    });
+
+    host.remove();
+    return colors;
+  }
+
+  function updateAccentSwatchColors(root, themePath) {
+    const swatches = root.querySelectorAll(
+      '.accent-color-swatch[data-pref-id="accentColor"]',
+    );
+    if (swatches.length === 0) return;
+
+    const colors = getAccentSwatchColors(themePath);
+    const labels = THEME_ACCENT_LABELS[themePath];
+    swatches.forEach((swatch) => {
+      const color = colors[swatch.dataset.prefValue];
+      if (color) swatch.style.background = color;
+
+      const label =
+        labels?.[swatch.dataset.prefValue] ||
+        getOptionLabel("accentColor", swatch.dataset.prefValue);
+      swatch.title = label;
+      swatch.setAttribute("aria-label", label);
     });
   }
 
@@ -500,11 +652,16 @@
     label.textContent = labelText;
 
     const details = document.createElement("details");
-    details.className = "settings-font-select";
+    details.className =
+      "piggy-dropdown piggy-dropdown--rounded piggy-dropdown--full-width settings-font-select";
+    details.dataset.dropdown = "";
     details.dataset.fontSelect = id;
+    details.setAttribute("aria-label", labelText);
 
     const summary = document.createElement("summary");
-    summary.className = "settings-font-select-summary";
+    summary.className = "piggy-dropdown-trigger settings-font-select-summary";
+    summary.setAttribute("aria-haspopup", "true");
+    summary.setAttribute("aria-expanded", "false");
     summary.setAttribute("aria-labelledby", labelId);
 
     const currentRow = document.createElement("span");
@@ -520,13 +677,15 @@
     summary.append(currentRow, chevron);
 
     const menu = document.createElement("div");
-    menu.className = "settings-font-select-menu";
+    menu.className =
+      "piggy-dropdown-panel piggy-dropdown-panel--cols-2 settings-font-select-menu";
     menu.setAttribute("role", "listbox");
     menu.setAttribute("aria-labelledby", labelId);
 
     options.forEach((option) => {
       const button = document.createElement("button");
-      button.className = "settings-font-option";
+      button.className =
+        "piggy-dropdown-row piggy-dropdown-row--cols-2 settings-font-option";
       button.type = "button";
       button.dataset.prefId = id;
       button.dataset.prefValue = option.value;
@@ -539,6 +698,8 @@
     details.append(summary, menu);
     field.append(label, details);
     container.replaceChildren(field);
+
+    window.PiggyDropdown?.register(details);
   }
 
   function renderSegmentedControl(id, container) {
@@ -637,24 +798,24 @@
         preview.classList.add("settings-option-preview--lines");
         preview.style.lineHeight = getLineHeightPreview(value);
         preview.append(
-          createPreviewLine("Line one"),
-          createPreviewLine("Line two"),
+          createPreviewLine(PREVIEW_LABELS.lineOne),
+          createPreviewLine(PREVIEW_LABELS.lineTwo),
         );
         break;
       case "readerLetterSpacing":
-        preview.textContent = "Spacing";
+        preview.textContent = PREVIEW_LABELS.spacing;
         preview.style.letterSpacing = getLetterSpacingPreview(value);
         break;
       case "readerWordSpacing":
-        preview.textContent = "Word spacing";
+        preview.textContent = PREVIEW_LABELS.wordSpacing;
         preview.style.wordSpacing = getWordSpacingPreview(value);
         break;
       case "readerParagraphSpacing":
         preview.classList.add("settings-option-preview--paragraphs");
         preview.style.gap = getParagraphSpacingPreview(value);
         preview.append(
-          createPreviewLine("First paragraph"),
-          createPreviewLine("Second paragraph"),
+          createPreviewLine(PREVIEW_LABELS.firstParagraph),
+          createPreviewLine(PREVIEW_LABELS.secondParagraph),
         );
         break;
       case "readerWidth":
@@ -668,10 +829,10 @@
       case "reduceMotion":
         preview.textContent =
           value === "reduce"
-            ? "Quiet"
+            ? PREVIEW_LABELS.quiet
             : value === "allow"
-              ? "Animated"
-              : "System";
+              ? PREVIEW_LABELS.animated
+              : PREVIEW_LABELS.system;
         break;
       default:
         preview.textContent = getOptionLabel(id, value);
@@ -729,25 +890,16 @@
     );
   }
 
-  function bindFontSelectEvents() {
-    if (fontSelectEventsBound) return;
+  function bindDisclosureEvents() {
+    if (disclosureEventsBound) return;
 
-    document.addEventListener("click", handleFontSelectDocumentClick);
-    document.addEventListener("keydown", handleFontSelectDocumentKeydown);
-    fontSelectEventsBound = true;
+    document.addEventListener("click", handleDisclosureDocumentClick);
+    document.addEventListener("keydown", handleDisclosureDocumentKeydown);
+    disclosureEventsBound = true;
   }
 
-  function handleFontSelectDocumentClick(event) {
+  function handleDisclosureDocumentClick(event) {
     if (!settingsRoot) return;
-
-    const fontSummary = event.target.closest(".settings-font-select-summary");
-    if (fontSummary && settingsRoot.contains(fontSummary)) {
-      event.preventDefault();
-      const select = fontSummary.closest("[data-font-select]");
-      closeSiblingFontSelects(select);
-      toggleAnimatedDetails(select);
-      return;
-    }
 
     const disclosureSummary = event.target.closest(
       ".settings-disclosure > summary",
@@ -755,29 +907,13 @@
     if (disclosureSummary && settingsRoot.contains(disclosureSummary)) {
       event.preventDefault();
       toggleAnimatedDetails(disclosureSummary.closest(".settings-disclosure"));
-      return;
     }
-
-    const clickedSelect = event.target.closest("[data-font-select]");
-    const clickedOption = event.target.closest(".settings-font-option");
-
-    settingsRoot
-      .querySelectorAll("[data-font-select][open]")
-      .forEach((select) => {
-        if (!clickedSelect || select !== clickedSelect || clickedOption) {
-          closeAnimatedDetails(select);
-        }
-      });
   }
 
-  function handleFontSelectDocumentKeydown(event) {
+  function handleDisclosureDocumentKeydown(event) {
     if (!settingsRoot) return;
 
-    const activeSelect = event.target.closest("[data-font-select]");
-
-    const summary = event.target.closest(
-      ".settings-font-select-summary, .settings-disclosure > summary",
-    );
+    const summary = event.target.closest(".settings-disclosure > summary");
 
     if (
       summary &&
@@ -785,83 +921,8 @@
       (event.key === "Enter" || event.key === " ")
     ) {
       event.preventDefault();
-      const details = summary.closest("details");
-      if (details?.matches("[data-font-select]")) {
-        closeSiblingFontSelects(details);
-      }
-      toggleAnimatedDetails(details);
-      return;
+      toggleAnimatedDetails(summary.closest(".settings-disclosure"));
     }
-
-    if (event.key === "Escape") {
-      const openSelects = settingsRoot.querySelectorAll(
-        "[data-font-select][open]",
-      );
-      if (!openSelects.length) return;
-
-      event.preventDefault();
-      openSelects.forEach((select) => {
-        closeAnimatedDetails(select, { focusSummary: select === activeSelect });
-      });
-      return;
-    }
-
-    if (!activeSelect) return;
-
-    const options = [...activeSelect.querySelectorAll(".settings-font-option")];
-    if (!options.length) return;
-
-    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-      event.preventDefault();
-      closeSiblingFontSelects(activeSelect);
-      openAnimatedDetails(activeSelect);
-
-      const currentIndex = options.indexOf(document.activeElement);
-      const selectedIndex = getSelectedFontOptionIndex(options);
-      let nextIndex = currentIndex === -1 ? selectedIndex : currentIndex;
-
-      if (event.key === "ArrowDown") {
-        nextIndex = currentIndex === -1 ? nextIndex : nextIndex + 1;
-      } else {
-        nextIndex = currentIndex === -1 ? nextIndex : nextIndex - 1;
-      }
-
-      options[wrapIndex(nextIndex, options.length)]?.focus();
-      return;
-    }
-
-    if (event.key === "Home" || event.key === "End") {
-      if (
-        !activeSelect.open ||
-        !event.target.closest(".settings-font-option")
-      ) {
-        return;
-      }
-
-      event.preventDefault();
-      options[event.key === "Home" ? 0 : options.length - 1]?.focus();
-    }
-  }
-
-  function getSelectedFontOptionIndex(options) {
-    const selectedIndex = options.findIndex(
-      (option) => option.getAttribute("aria-selected") === "true",
-    );
-    return selectedIndex === -1 ? 0 : selectedIndex;
-  }
-
-  function wrapIndex(index, length) {
-    return ((index % length) + length) % length;
-  }
-
-  function closeSiblingFontSelects(currentSelect) {
-    settingsRoot
-      ?.querySelectorAll("[data-font-select][open]")
-      .forEach((select) => {
-        if (select !== currentSelect) {
-          closeAnimatedDetails(select);
-        }
-      });
   }
 
   function toggleAnimatedDetails(details) {
@@ -938,10 +999,6 @@
   }
 
   function getAnimatedDetailsElement(details) {
-    if (details.matches("[data-font-select]")) {
-      return details.querySelector(".settings-font-select-menu");
-    }
-
     return details.querySelector(":scope > .settings-control-stack");
   }
 

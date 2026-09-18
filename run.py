@@ -1,8 +1,18 @@
 import atexit
 import os
 import subprocess
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 subprocesses = []
+
+PORT = os.environ.get("PIGGY_PORT", 5001)
+PIGGYBANK_DATA_URL = "https://github.com/VaagenIM/piggybank.git"
+PIGGYBANK_DATA_FOLDER = Path("piggybank-data")
 
 
 @atexit.register
@@ -13,13 +23,30 @@ def cleanup():
         p.wait()
 
 
-def run_tailwind(reload=False):
-    cmd = f"cd piggy && npx tailwindcss -c tailwind.config.js -o static/css/tailwind.css {'--watch' if reload else ''} "
-    subprocesses.append(subprocess.Popen(cmd, shell=True))
+def checkout_branch():
+    branch = os.environ.get("PIGGYBANK_BRANCH", "test-output")
+    print("Checking out branch: " + branch)
+    if "piggybank" in branch:
+        cmd = f"cd piggybank && git fetch && git checkout {branch} --"
+    else:
+        cmd = f"cd piggybank && git stash && git fetch && git checkout {branch} && git pull"
+    subprocess.run(cmd, shell=True, check=True)
 
 
-def checkout_branch(branch):
-    os.system(f"cd piggybank && git stash && git fetch && git checkout {branch} && git pull && cd ..")
+def sync_piggybank_data():
+    """Clone or update the latest UUID map from the piggybank data branch."""
+    if not (PIGGYBANK_DATA_FOLDER / ".git").exists():
+        if PIGGYBANK_DATA_FOLDER.exists():
+            raise RuntimeError(f"{PIGGYBANK_DATA_FOLDER} exists but is not a git checkout")
+        subprocess.run(
+            ["git", "clone", "--branch", "data", "--single-branch", PIGGYBANK_DATA_URL, str(PIGGYBANK_DATA_FOLDER)],
+            check=True,
+        )
+        return
+
+    git = ["git", "-C", str(PIGGYBANK_DATA_FOLDER)]
+    subprocess.run([*git, "fetch", "origin", "data"], check=True)
+    subprocess.run([*git, "reset", "--hard", "origin/data"], check=True)
 
 
 if __name__ == "__main__":
@@ -37,10 +64,10 @@ if __name__ == "__main__":
     # Run these once on the first run
     if os.environ.get("WERKZEUG_RUN_MAIN") != "true":
         # This code will run only once, not in the reloaded processes
-        checkout_branch("output")
+        checkout_branch()
+        sync_piggybank_data()
         subprocesses.append(subprocess.Popen("npx livereload piggy,piggybank -e html,css,js,md", shell=True))
-        print("Houston, we have lift-off! (http://localhost:5001)")
-    run_tailwind(reload=False)
+        print(f"Houston, we have lift-off! (http://localhost:{PORT})")
     # Import after setting the environment variables for testing
     from piggy.app import create_app
     from piggy.devtools import inject_devtools
@@ -48,12 +75,10 @@ if __name__ == "__main__":
     app = create_app(debug=os.environ.get("FLASK_DEBUG", False) == "1")
     inject_devtools(app)
 
-    app.run(port=5001)
+    app.run(port=PORT)
 else:
     # Production
     from piggy.app import create_app
-
-    run_tailwind(reload=False)
 
     # TODO: Re-enable (requires branch to be published) (or a env to pass the branch with a PAT)
     # checkout_branch("output")

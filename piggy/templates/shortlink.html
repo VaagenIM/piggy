@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta http-equiv="refresh" content="0;url={{ shortlink.target }}" />
+    <meta name="robots" content="noindex" />
+    {%
+      set meta = {
+        "name": shortlink.title,
+        "description": shortlink.description,
+        "thumbnail": request.host_url.rstrip('/') ~ shortlink.image
+      }
+    %}
+    {% include "partials/parts/og-tags.html" %}
+    <title>{{ shortlink.title }}</title>
+    <script>
+      window.location.replace('{{ shortlink.target }}');
+    </script>
+  </head>
+  <body>
+    <a href="{{ shortlink.target }}">Fortsett til siden</a>
+  </body>
+</html>

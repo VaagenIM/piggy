@@ -1,6 +1,14 @@
 /*****************************\
 |*     ELEMENT OVERRIDES     *|
 \*****************************/
+html,
+body {
+  /* `clip` (not `hidden`) so this doesn't force overflow-y to compute as
+     `auto`, which would turn body into a scroll container and break
+     `position: sticky` on .site-header. */
+  overflow-x: clip;
+}
+
 h1,
 h2,
 h3,

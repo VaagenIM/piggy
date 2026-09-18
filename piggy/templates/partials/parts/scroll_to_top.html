@@ -1,7 +1,6 @@
-<button id="scroll-to-top-btn" class="opacity-0 pointer-events-none">
+<button id="scroll-to-top-btn">
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    class="h-6 w-6"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor">
@@ -15,6 +14,22 @@
 
 <script>
   const scrollToTopBtn = document.getElementById('scroll-to-top-btn');
+  const siteFooter = document.querySelector('.site-footer');
+
+  function updateScrollToTopOffset() {
+    if (!siteFooter) return;
+
+    const gap = parseFloat(getComputedStyle(scrollToTopBtn).bottom) || 0;
+    const footerClearance = gap / 2;
+    const buttonBottomEdge = window.innerHeight - gap;
+    const footerTop = siteFooter.getBoundingClientRect().top;
+    const overlap = buttonBottomEdge - footerTop + footerClearance;
+
+    scrollToTopBtn.style.setProperty(
+      '--scroll-to-top-offset',
+      overlap > 0 ? `-${overlap}px` : '0px'
+    );
+  }
 
   function piggyShouldReduceScrollMotion() {
     const preference = document.documentElement.getAttribute(
@@ -31,13 +46,15 @@
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 150) {
-      scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
-      scrollToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+      scrollToTopBtn.classList.add('is-visible');
     } else {
-      scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none');
-      scrollToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+      scrollToTopBtn.classList.remove('is-visible');
     }
+
+    updateScrollToTopOffset();
   });
+
+  window.addEventListener('resize', updateScrollToTopOffset);
 
   scrollToTopBtn.addEventListener('click', () => {
     window.scrollTo({
@@ -45,4 +62,6 @@
       behavior: piggyShouldReduceScrollMotion() ? 'auto' : 'smooth',
     });
   });
+
+  updateScrollToTopOffset();
 </script>

@@ -1,0 +1,73 @@
+/****************************\
+|*   SHORTLINK COPY BUTTON  *|
+\****************************/
+.shortlink-copy {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.shortlink-copy-button {
+  position: relative;
+  width: calc(2.05rem * var(--piggy-font-scale));
+  padding-inline: 0;
+}
+
+.shortlink-copy-icon {
+  position: absolute;
+  width: calc(1.1rem * var(--piggy-font-scale));
+  height: calc(1.1rem * var(--piggy-font-scale));
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease;
+}
+
+.shortlink-copy-icon--link {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.shortlink-copy-icon--check {
+  opacity: 0;
+  transform: scale(0.5);
+  color: #3fa76b;
+}
+
+.shortlink-copy.is-copied .shortlink-copy-icon--link {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.shortlink-copy.is-copied .shortlink-copy-icon--check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.shortlink-copy-tooltip {
+  position: absolute;
+  top: calc(100% + 0.4rem * var(--piggy-font-scale));
+  left: 50%;
+  z-index: 5;
+  padding: calc(0.3rem * var(--piggy-font-scale))
+    calc(0.55rem * var(--piggy-font-scale));
+  border-radius: calc(0.35rem * var(--piggy-font-scale));
+  background: var(--piggy-tooltip, #000000);
+  color: var(--piggy-tooltip-text, #ffffff);
+  font-size: calc(0.72rem * var(--piggy-font-scale));
+  font-weight: 650;
+  line-height: 1.2;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-4px);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+.shortlink-copy-button:hover + .shortlink-copy-tooltip,
+.shortlink-copy-button:focus-visible + .shortlink-copy-tooltip,
+.shortlink-copy.is-copied .shortlink-copy-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

@@ -1,0 +1,41 @@
+{% from 'macros/include.html' import include_svg %}
+{% from 'macros/dropdown.html' import dropdown, dropdown_row %}
+
+{% if content.meta.relevant_pages %}
+  {% set links = split_md_links(content.meta.relevant_pages) %}
+  <div class="assignment-relevant-pages" data-adaptive-overflow>
+    <div
+      class="assignment-relevant-pages-shelf"
+      data-adaptive-tier="0"
+      data-adaptive-collapse-at="4"
+      data-adaptive-count-selector=".assignment-relevant-pages-pills">
+      <span class="assignment-relevant-pages-label">Relevante sider</span>
+      <div class="assignment-relevant-pages-pills">
+        {% for text, url in links %}
+          <a class="assignment-relevant-page-pill" href="{{ url }}">
+            {{ include_svg(svg='img/icons/arrow-icon.svg', class='assignment-relevant-page-icon') }}
+            <span>{{ text }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="assignment-relevant-pages-shelf" data-adaptive-tier="1">
+      <span class="assignment-relevant-pages-label">Andre relevante sider</span>
+      {% set trigger %}<span>Andre relevante sider</span>{% endset %}
+      {%
+        call dropdown(
+          trigger=trigger,
+          style='rounded',
+          columns=1,
+          aria_label='Andre relevante sider',
+          wrapper_class='assignment-relevant-pages-menu'
+        )
+      %}
+        {% for text, url in links %}
+          {{ dropdown_row(href=url, left_text=text, columns=1) }}
+        {% endfor %}
+      {% endcall %}
+    </div>
+  </div>
+{% endif %}

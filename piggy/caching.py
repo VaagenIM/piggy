@@ -12,12 +12,14 @@ from piggy import (
     MEDIA_ROUTE,
     AssignmentTemplate,
     PIGGYBANK_FOLDER,
+    Visibility,
 )
 from piggy.exceptions import PiggyHTTPException, PiggyErrorException
 from piggy.models import LANGUAGES
 from piggy.piggybank import (
     get_all_meta_from_path,
     PIGGYMAP,
+    get_piggymap_page_from_path,
     get_template_from_path,
     get_piggymap_segment_from_path,
     get_assignment_data_from_path,
@@ -62,13 +64,7 @@ def cache_directory(
         if len(_path.split("/")) == AssignmentTemplate.ASSIGNMENT.index - 1:
             for assignment, assignment_data in value.get("data", {}).items():
                 # Get the path of the assignment Path object
-                assignment_path_obj = (
-                    segment
-                    .get(key, {})
-                    .get("data", {})
-                    .get(assignment, {})
-                    .get("path", Path(""))
-                )
+                assignment_path_obj = segment.get(key, {}).get("data", {}).get(assignment, {}).get("path", Path(""))
 
                 # Set the assignment path to a string with the right url format
                 assignment_path = str(f"{_path}/{key}/{assignment}")
@@ -81,9 +77,7 @@ def cache_directory(
                 [
                     fn(f"{assignment_path}", lang)
                     for lang in LANGUAGES.keys()
-                    if Path(
-                        f"{assignment_path_obj.parent}/translations/{lang}/{assignment}.md"
-                    ).exists()
+                    if Path(f"{assignment_path_obj.parent}/translations/{lang}/{assignment}.md").exists()
                 ]
 
         # If we are at the assignment level, we are done
@@ -96,9 +90,7 @@ def cache_directory(
 
 def _mdfile_to_sections_with_retry(path: Path, retries=0) -> dict:
     if retries > 1:
-        raise PiggyErrorException(
-            f"Could not render assignment after {retries} retries: {path}"
-        )
+        raise PiggyErrorException(f"Could not render assignment after {retries} retries: {path}")
 
     try:
         if "docs_folder" in MDFILE_TO_SECTIONS_PARAMS:
@@ -113,6 +105,8 @@ def _mdfile_to_sections_with_retry(path: Path, retries=0) -> dict:
                     / "assignments"
                     / "tconvert_assignment_base.html"
                 ),
+                remove_heading=False,
+                remove_heading_if_title_matches=True,
             )
 
         return mdfile_to_sections(
@@ -134,7 +128,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
     extra_metadata = dict(extra_metadata or {})
 
     if not p.exists():
-        raise PiggyHTTPException("Assignment not found", status_code=404)
+        raise PiggyHTTPException("Oppgave ikke funnet", status_code=404)
 
     try:
         sections = _mdfile_to_sections_with_retry(p)
@@ -142,7 +136,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
         print("Rendering:", p)
 
     except ConversionError:
-        raise PiggyHTTPException("Error: Could not render assignment", status_code=500)
+        raise PiggyHTTPException("Feil: Kunne ikke vise oppgave", status_code=500)
 
     lang = ""
     assignment_path = p
@@ -191,7 +185,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
 
 
 @lru_cache_wrapper
-def _render_assignment_wildcard(path="", lang="") -> Response:
+def _render_assignment_wildcard(path="", lang="", allow_private=False) -> Response:
     """
     Render the webpage for a given path.
 
@@ -207,21 +201,26 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
 
     # If a piggymap segment is not found, raise a 404
     if not segment:
-        raise PiggyHTTPException("Page not found", status_code=404)
+        raise PiggyHTTPException("Fant ikke siden", status_code=404)
 
     metadata = {**metadata, **get_all_meta_from_path(path, PIGGYMAP)}
+    page = get_piggymap_page_from_path(path, PIGGYMAP)
 
     media_abspath = f"/{MEDIA_ROUTE}/{path}" if path else f"/{MEDIA_ROUTE}"
     abspath = f"/{ASSIGNMENT_ROUTE}/{path}" if path else f"/{ASSIGNMENT_ROUTE}"
 
     # If we are at the final level assignment, render the assignment
     if len(path.split("/")) == AssignmentTemplate.ASSIGNMENT.index:
+        assignment_visibility = Visibility.from_value(metadata.get("visibility"))
+        if not allow_private and assignment_visibility is Visibility.PRIVATE:
+            raise PiggyHTTPException("Fant ikke siden", status_code=404)
+
         # Get the path name with forward slashes
         path_from_segment = normalize_path_to_str(segment.get("path", ""))
 
         # If the assignment is not found, raise a 404
         if not path_from_segment:
-            raise PiggyHTTPException("Assignment not found", status_code=404)
+            raise PiggyHTTPException("Oppgave ikke funnet", status_code=404)
 
         path, assignment = str(path_from_segment).rsplit("/", 1)
 
@@ -237,14 +236,16 @@ def _render_assignment_wildcard(path="", lang="") -> Response:
         )
 
     # Render the appropriate template if it is not the final level
+    rendered = render_template(
+        template_type,
+        meta=metadata,
+        segment=segment,
+        shortlink=page.get("shortlink"),
+        path=path,
+        media_abspath=media_abspath,
+        abspath=abspath,
+    )
     return Response(
-        render_template(
-            template_type,
-            meta=metadata,
-            segment=segment,
-            path=path,
-            media_abspath=media_abspath,
-            abspath=abspath,
-        ),
+        rendered,
         200,
     )

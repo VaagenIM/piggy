@@ -8,6 +8,7 @@
 .thumbnail-image {
   aspect-ratio: 16 / 5;
   width: 100%;
+  object-fit: cover;
   border-radius: 0.65rem;
   box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
   position: relative;

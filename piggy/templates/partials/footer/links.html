@@ -1,0 +1,20 @@
+{% from 'macros/include.html' import include_svg %}
+
+<div class="footer-item footer-links">
+  <a
+    class="footer-link footer-link--icon"
+    href="https://github.com/VaagenIM/piggy"
+    target="_blank"
+    rel="noopener">
+    {{ include_svg(svg='img/icons/github.svg', class='footer-link-icon') }}
+    GitHub
+  </a>
+  <span class="footer-separator" aria-hidden="true">&middot;</span>
+  <a
+    class="footer-link"
+    href="https://github.com/VaagenIM/piggy/issues/new"
+    target="_blank"
+    rel="noopener"
+    >Meld en feil</a
+  >
+</div>

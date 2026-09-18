@@ -1,38 +1,14 @@
 /**************************\
 |*   LANGUAGE SELECTION   *|
 \**************************/
-.language-selector {
-  position: relative;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-}
-
-.language-trigger {
-  list-style: none;
-}
-
-.language-trigger::-webkit-details-marker {
-  display: none;
-}
-
-.language-trigger.piggy-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding-block: 0;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.language-trigger .language-flag {
+.language-selector .language-flag {
   display: inline-flex;
   align-items: center;
   font-size: calc(1rem * var(--piggy-font-scale));
   line-height: 1;
 }
 
-.language-trigger > svg:not(.language-chevron) {
+.language-trigger > svg {
   width: calc(1.05rem * var(--piggy-font-scale));
   height: calc(1.05rem * var(--piggy-font-scale));
   flex: 0 0 auto;
@@ -49,78 +25,17 @@
   line-height: 1;
 }
 
-.language-chevron {
-  width: calc(0.9rem * var(--piggy-font-scale));
-  height: calc(0.9rem * var(--piggy-font-scale));
-  flex: 0 0 auto;
-  transition: transform 0.18s ease;
-}
-
-.language-selector[open] .language-chevron,
-.language-selector.is-open .language-chevron {
-  transform: rotate(180deg);
-}
-
-.language-selector .language-name {
+.language-dropdown .language-name {
   overflow-wrap: anywhere;
 }
 
-.language-selector .language-dropdown {
-  min-width: 100%;
-  width: max-content;
-  max-width: min(22rem, calc(100vw - 1rem));
-  display: none;
-  position: absolute;
-  background-color: var(--piggy-menu);
-  white-space: normal;
-  box-shadow: 0 0.75rem 1.75rem rgba(0, 0, 0, 0.18);
-  border: 1px solid
-    var(
-      --piggy-menu-border,
-      color-mix(in srgb, var(--piggy-neutral) 35%, transparent)
-    );
-  border-radius: 1rem;
-  top: calc(100% + 0.25rem);
+.piggy-dropdown.language-selector .piggy-dropdown-panel {
   right: 0;
   left: auto;
-  z-index: 1000;
-
-  max-height: calc(100svh - 40svh);
-  overflow-y: auto;
-  padding: 0.35rem;
-}
-
-.language-selector .language-dropdown a {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--piggy-menu-text);
-  padding: 0.55rem 0.75rem;
-  text-decoration: none;
-  border-radius: 999px;
-  border-bottom: 0;
-  cursor: pointer;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-  font-weight: 600;
-}
-
-.language-selector .language-dropdown a:last-child {
-  border-bottom: none;
-}
-
-.language-selector .language-dropdown a:hover {
-  background-color: var(--piggy-button-hover);
-  color: var(--piggy-text-button);
-}
-
-.language-selector[open] .language-dropdown,
-.language-selector.is-open .language-dropdown {
-  display: block;
 }
 
 @media (max-width: 860px) {
-  .language-selector .piggy-button {
+  .language-selector .piggy-dropdown-trigger {
     gap: 0.3rem;
     padding-inline: 0.6rem;
   }

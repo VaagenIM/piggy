@@ -1,4 +1,4 @@
-{% from 'objects/card.html' import card %}
+{% from 'objects/card.html' import card with context %}
 
 {{
   card(
@@ -7,6 +7,7 @@
     title = data.meta.name,
     thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." ~ img_fmt ~ "?title=" ~ data.meta.name,
     thumbnail_alt = "Header image for " + data.meta.name,
-    description = data.meta.description
+    description = data.meta.description,
+    visibility = data.meta.visibility
   )
 }}

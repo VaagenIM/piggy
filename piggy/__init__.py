@@ -1,9 +1,10 @@
-import re
 import os
+import re
 from enum import Enum
 from pathlib import Path
 
 PIGGYBANK_FOLDER = Path("piggybank")
+PIGGYBANK_UUID_MAP_PATH = Path("piggybank-data") / "uuid_map.json"
 STATIC_FONTS_PATHS = [
     str(Path(os.path.join(dp, f)).as_posix()).split("/static/fonts/")[-1]
     for dp, dn, filenames in os.walk(Path(__file__).parent / "static" / "fonts")
@@ -17,8 +18,12 @@ MEDIA_ROUTE = "img"
 IMG_FMT = "webp"
 
 ASSIGNMENTS_TEMPLATE_FOLDER = "assignments"
-ASSIGNMENT_FILENAME_REGEX = re.compile(r"^.*Level[ _](\d+)[ _]-[ _](.+).md$")
+ASSIGNMENT_FILENAME_REGEX = re.compile(r"^.*Level[ _](\d+)[ _]-[ _](.+)\.md$")
 ALLOWED_URL_CHARS_REGEX = re.compile(r"[a-zA-Z0-9\.\-\_\/æøåÆØÅ]")
+# TESTING ONLY - piggybank branch is used for testing, needs a different approach than prod
+if "piggybank" in os.environ.get("PIGGYBANK_BRANCH", "test-output"):
+    PIGGYBANK_FOLDER = Path("piggybank") / "piggybank"
+    IMG_FMT = "auto"
 
 
 class AssignmentTemplate(Enum):
@@ -60,3 +65,19 @@ class AssignmentTemplate(Enum):
     def get_dictmap():
         """Return a dictionary mapping the name to the index of the enum."""
         return {v.value["name"]: v.value["index"] for v in AssignmentTemplate}
+
+
+class Visibility(str, Enum):
+    """Supported page visibility values."""
+
+    PUBLIC = "public"
+    UNLISTED = "unlisted"
+    PRIVATE = "private"
+
+    @classmethod
+    def from_value(cls, value: str | None) -> "Visibility":
+        """Normalize missing or unknown metadata to public visibility."""
+        try:
+            return cls(value or cls.PUBLIC.value)
+        except ValueError:
+            return cls.PUBLIC

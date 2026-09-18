@@ -12,10 +12,24 @@
     0.875rem * var(--piggy-reader-component-font-scale)
   );
   --piggy-code-titlebar-control-space: calc(2.6rem * var(--piggy-font-scale));
-  --piggy-code-copy-reserved-space: calc(3rem * var(--piggy-font-scale));
   --piggy-code-copy-button-size: calc(2rem * var(--piggy-font-scale));
   --piggy-code-copy-icon-size: calc(1rem * var(--piggy-font-scale));
   --piggy-code-copy-button-margin: calc(0.1rem * var(--piggy-font-scale));
+  --piggy-code-copy-reserved-space: max(
+    0px,
+    calc(
+      var(--piggy-code-copy-button-margin) +
+        var(--piggy-code-copy-button-size) - var(--piggy-code-block-padding-x) +
+        calc(0.35rem * var(--piggy-font-scale))
+    )
+  );
+  --piggy-code-copy-reserved-height: max(
+    0px,
+    calc(
+      var(--piggy-code-copy-button-margin) +
+        var(--piggy-code-copy-button-size) - var(--piggy-code-block-padding-y)
+    )
+  );
   --piggy-code-tooltip-viewport-padding: calc(2rem * var(--piggy-font-scale));
   --piggy-code-tooltip-max-width: min(
     calc(20rem * var(--piggy-font-scale)),
@@ -35,12 +49,7 @@
   );
   --piggy-code-block-highlight-bg: color-mix(
     in srgb,
-    var(--piggy-button-active) 18%,
-    transparent
-  );
-  --piggy-code-block-highlight-border: color-mix(
-    in srgb,
-    var(--piggy-button-active) 68%,
+    var(--piggy-button-active) 20%,
     transparent
   );
   --piggy-code-annotation-bg: var(
@@ -102,6 +111,7 @@
   font-size: 0.875em !important;
   line-height: 1.35 !important;
   white-space: normal !important;
+  overflow-wrap: anywhere !important;
 }
 
 /************************\
@@ -130,27 +140,7 @@
     var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
   border-radius: var(--piggy-code-block-radius) !important;
 
-  overflow: auto !important;
-  overscroll-behavior: contain !important;
-  scrollbar-width: thin !important;
-  scrollbar-color: var(--piggy-code-block-line-number)
-    var(--piggy-code-block-background, var(--piggy-code-block-bg)) !important;
-}
-
-.md-content .highlight::-webkit-scrollbar {
-  width: 0.75rem;
-  height: 0.75rem;
-}
-
-.md-content .highlight::-webkit-scrollbar-track {
-  background: var(--piggy-code-block-background, var(--piggy-code-block-bg));
-}
-
-.md-content .highlight::-webkit-scrollbar-thumb {
-  background: var(--piggy-code-block-line-number);
-  border: 0.2rem solid
-    var(--piggy-code-block-background, var(--piggy-code-block-bg));
-  border-radius: 999px;
+  overflow: hidden !important;
 }
 
 .md-content .highlight:has(.md-tooltip--active) {
@@ -186,7 +176,7 @@
 .md-content .highlight pre {
   position: static !important;
   box-sizing: border-box !important;
-  min-width: max-content !important;
+  min-width: 0 !important;
   width: 100% !important;
   margin: 0 !important;
   padding: var(--piggy-code-block-padding-y) var(--piggy-code-block-padding-x) !important;
@@ -199,23 +189,54 @@
   font-size: var(--piggy-code-block-font-size) !important;
   line-height: var(--piggy-code-block-line-height) !important;
   tab-size: 2 !important;
+
+  border-radius: calc(var(--piggy-code-block-radius) - 1px) !important;
+
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  overscroll-behavior-x: contain !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--piggy-code-block-line-number)
+    var(--piggy-code-block-background, var(--piggy-code-block-bg)) !important;
 }
 
-.md-content .highlight:not(.piggy-code-titlebar-ready) pre:has(.md-code__nav) {
-  padding-right: calc(
-    var(--piggy-code-block-padding-x) + var(--piggy-code-copy-reserved-space)
-  ) !important;
+.md-content .highlight pre::-webkit-scrollbar {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.md-content .highlight pre::-webkit-scrollbar-track {
+  background: var(--piggy-code-block-background, var(--piggy-code-block-bg));
+}
+
+.md-content .highlight pre::-webkit-scrollbar-thumb {
+  background: var(--piggy-code-block-line-number);
+  border: 0.2rem solid
+    var(--piggy-code-block-background, var(--piggy-code-block-bg));
+  border-radius: 999px;
+}
+
+.md-content
+  .highlight:not(.piggy-code-titlebar-ready)
+  pre:has(.md-code__nav)
+  .md-code__content::before {
+  content: "" !important;
+  display: block !important;
+  float: right !important;
+  width: var(--piggy-code-copy-reserved-space) !important;
+  height: var(--piggy-code-copy-reserved-height) !important;
 }
 
 .md-content .highlight code,
 .md-content .highlight .md-code__content {
   display: block !important;
-  min-width: max-content !important;
+  min-width: 0 !important;
   padding: 0 !important;
 
   font-size: inherit !important;
   line-height: inherit !important;
-  white-space: pre !important;
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
 }
 
 .md-content .md-code__content span {
@@ -223,7 +244,8 @@
   overflow: visible !important;
   padding: 0 !important;
   line-height: inherit !important;
-  white-space: pre !important;
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
 }
 
 .md-content .highlight ::selection {
@@ -495,6 +517,68 @@
   display: none !important;
 }
 
+/**************************\
+|* FILENAME (NO LINENUMS) *|
+\**************************/
+.md-content .highlight > span.filename {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  min-height: calc(2.2rem * var(--piggy-font-scale)) !important;
+  margin: 0 !important;
+  padding: 0 var(--piggy-code-block-padding-x) !important;
+  padding-right: calc(
+    var(--piggy-code-block-padding-x) + var(--piggy-code-titlebar-control-space)
+  ) !important;
+
+  color: var(--piggy-code-block-text, var(--piggy-code)) !important;
+  background: var(--piggy-code-block-filename-bg) !important;
+  background-color: var(--piggy-code-block-filename-bg) !important;
+
+  border-bottom: 1px solid
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
+  border-radius: calc(var(--piggy-code-block-radius) - 1px)
+    calc(var(--piggy-code-block-radius) - 1px) 0 0 !important;
+  box-shadow: none !important;
+
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
+  font-size: calc(
+    0.76rem * var(--piggy-reader-component-font-scale)
+  ) !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.25 !important;
+  text-align: left !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  position: relative !important;
+}
+
+.md-content .highlight > span.filename::before {
+  content: "" !important;
+  flex: 0 0 auto !important;
+  width: calc(0.72rem * var(--piggy-font-scale)) !important;
+  height: calc(0.72rem * var(--piggy-font-scale)) !important;
+  margin-right: calc(0.38rem * var(--piggy-font-scale)) !important;
+
+  background: var(--piggy-code-clipboard, currentColor) !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/%3E%3Cpath d='M14 2v6h6'/%3E%3Cpath d='m10 13-2 2 2 2'/%3E%3Cpath d='m14 17 2-2-2-2'/%3E%3C/svg%3E")
+    center / contain no-repeat !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/%3E%3Cpath d='M14 2v6h6'/%3E%3Cpath d='m10 13-2 2 2 2'/%3E%3Cpath d='m14 17 2-2-2-2'/%3E%3C/svg%3E")
+    center / contain no-repeat !important;
+  opacity: 0.78 !important;
+}
+
+.md-content .highlight > span.filename + pre {
+  margin-top: 0 !important;
+}
+
 .md-content .highlighttable td.linenos {
   grid-column: 1 !important;
   width: auto !important;
@@ -583,16 +667,13 @@
 
   background: var(--piggy-code-block-highlight-bg) !important;
   border-radius: calc(0.24rem * var(--piggy-font-scale)) !important;
-  box-shadow: inset 0 0 0 1px
-    color-mix(
-      in srgb,
-      var(--piggy-code-block-highlight-border) 24%,
-      transparent
-    ) !important;
+  box-shadow: inset 0 0 0 1.5px
+    color-mix(in srgb, var(--piggy-button-active) 50%, transparent) !important;
   box-decoration-break: clone !important;
   -webkit-box-decoration-break: clone !important;
   line-height: inherit !important;
-  white-space: pre !important;
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
 }
 
 .md-content .highlight .hll:not(:has(*)) {
@@ -992,4 +1073,10 @@
 
 .md-content .md-annotation__list {
   margin-top: 0.75rem !important;
+}
+
+/* Don't remove, this fixes stuff such as != <= >= turning into a weird amalgamation characters */
+code,
+pre {
+  font-variant-ligatures: none;
 }

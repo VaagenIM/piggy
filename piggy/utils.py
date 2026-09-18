@@ -1,13 +1,21 @@
 import os
 import re
+import subprocess
 from functools import lru_cache
 from io import BytesIO
 from pathlib import Path
+from typing import Optional
 
 from bs4 import BeautifulSoup as bs
 from flask import send_file, request
 
-from piggy import ALLOWED_URL_CHARS_REGEX, IMG_FMT, MEDIA_ROUTE, ASSIGNMENT_ROUTE
+from piggy import (
+    ALLOWED_URL_CHARS_REGEX,
+    IMG_FMT,
+    MEDIA_ROUTE,
+    ASSIGNMENT_ROUTE,
+    PIGGYBANK_FOLDER,
+)
 from piggy.models import LANGUAGES
 from turtleconverter import generate_static_files
 
@@ -16,6 +24,30 @@ def lru_cache_wrapper(func):
     if os.environ.get("USE_CACHE", "1") == "1":
         return lru_cache()(func)
     return func
+
+
+def get_version() -> str:
+    """Resolve the running app's version, stamped in by CI as PIGGY_VERSION (e.g. "26.9.36")."""
+    return os.environ.get("PIGGY_VERSION", "dev")
+
+
+def get_piggybank_version() -> str:
+    """Resolve the checked-out piggybank content's short commit hash, if available.
+
+    piggybank content can be updated independently of the app (a mounted volume in
+    production, a submodule elsewhere), so this is read fresh rather than cached.
+    """
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(PIGGYBANK_FOLDER), "rev-parse", "--short", "HEAD"],
+            capture_output=True,
+            text=True,
+            timeout=5,
+            check=True,
+        )
+        return result.stdout.strip()
+    except (subprocess.SubprocessError, OSError):
+        return "unknown"
 
 
 def serve_pil_image(pil_img):
@@ -36,15 +68,15 @@ def get_supported_languages(assignment_path: Path):
 
 
 @lru_cache_wrapper
-def normalize_path_to_str(path: Path or str, replace_spaces=False, normalize_url=False, remove_ext=False) -> str:
-    """Normalize a path to use forward slashes and replace spaces with underscores."""
+def normalize_path_to_str(path: Path or str, normalize_page_path=False, normalize_url=False, remove_ext=False) -> str:
+    """Normalize a page path to use forward slashes, underscores, and no dots."""
     path = str(path).replace("\\", "/")
-    if replace_spaces:
-        path = path.replace(" ", "_")
-    if normalize_url:
-        path = normalize_url_str(path)
     if remove_ext:
         path = re.sub(r"\.\w+$", "", path)
+    if normalize_page_path:
+        path = path.replace(" ", "_").replace(".", "")
+    if normalize_url:
+        path = normalize_url_str(path)
     return path
 
 
@@ -109,6 +141,30 @@ class ParserState:
 
 CSS_META_IDENTIFIER = "/* METADATA"
 CSS_META_LIST_KEYS = {"tags", "recommended_for", "features"}
+
+
+# Note: only used when IMG_FMT is set to "auto", which is not the case for production.
+@lru_cache_wrapper
+def resolve_image_filename(fp: Path) -> str:
+    """Find the image format of a file in a given path."""
+    for ext in ["jpg", "png", "webp", "jpeg"]:
+        if fp.with_suffix(f".{ext}").exists():
+            return f"{fp.stem}.{ext}"
+    return fp.name
+
+
+@lru_cache_wrapper
+def get_mimetype(filename: str) -> Optional[str]:
+    """Guess the mimetype of a file based on its extension."""
+    MIME_TYPES = {
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".png": "image/png",
+        ".webp": "image/webp",
+        ".gif": "image/gif",
+        ".svg": "image/svg+xml",
+    }
+    return MIME_TYPES.get(Path(filename).suffix.lower(), None)
 
 
 @lru_cache_wrapper
@@ -208,7 +264,7 @@ def process_json_for_api(obj, exclude_keys=None):
         if current_path:
             folder = Path(current_path).parent.as_posix()
             folder = re.sub(r"^[^/]+/", "", folder)
-            folder = normalize_path_to_str(folder, replace_spaces=True, normalize_url=True)
+            folder = normalize_path_to_str(folder, normalize_page_path=True, normalize_url=True)
             return f"/{MEDIA_ROUTE}/{folder}/{thumb}.{IMG_FMT}"
 
         return f"/{MEDIA_ROUTE}/{thumb}.{IMG_FMT}"
@@ -230,7 +286,7 @@ def process_json_for_api(obj, exclude_keys=None):
                     # Remove the first folder and the extension from the path
                     file_path = v.as_posix()
                     p = re.sub(r"^[^/]+/|(\.\w+)$", "", file_path)
-                    p = normalize_path_to_str(p, replace_spaces=True, normalize_url=True)
+                    p = normalize_path_to_str(p, normalize_page_path=True, normalize_url=True)
 
                     url = f"/{ASSIGNMENT_ROUTE}/{p}"
 

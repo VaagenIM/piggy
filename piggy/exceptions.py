@@ -3,12 +3,12 @@ from werkzeug.exceptions import HTTPException
 
 # For consistency between HTTPException and PiggyHTTPException
 DEFAULT_ERROR_MESSAGE_NAMES = {
-    "404": "Page not found",  # vs just "Not Found"
+    "404": "Fant ikke siden",  # vs just "Not Found"
 }
 
 ERROR_MESSAGE_DESCRIPTIONS = {
     "default": "Something went wrong, please try again later.",
-    "404": "Your <strike>queen</strike> gilt is in another castle...",
+    "404": "Your <strike>princess</strike> gilt is in another castle...",
 }
 
 
