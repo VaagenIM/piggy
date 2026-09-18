@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import hashlib
 import json
+import subprocess
 import uuid
 from pathlib import Path
 from typing import Dict
@@ -12,7 +13,7 @@ UUID_NAMESPACE = uuid.UUID("8f6f6f6d-6f6f-4f6f-8f6f-6f6f6f6f6f6f")
 UUID_RETRY_LIMIT = 10000
 _SHORTLINKS_BY_CONFIG: Dict[tuple, Dict[str, str]] = {}
 _UUIDS_BY_CONFIG: Dict[tuple, Dict[str, str]] = {}
-_UUID_MAPS_BY_PATH: Dict[Path, Dict[str, str]] = {}
+_UUID_MAPS_BY_PATH: Dict[tuple[Path, Path], Dict[str, str]] = {}
 
 
 def _generate_shortlink(identity: str, shortlink_alphabet: str, shortlink_size: int) -> str:
@@ -56,7 +57,7 @@ def _uuid_map_key(path: Path, piggybank_folder: Path) -> str:
     return relative
 
 
-def _read_uuid_map(uuid_map_path: Path) -> Dict[str, str]:
+def _read_uuid_map(uuid_map_path: Path, piggybank_folder: Path) -> Dict[str, str]:
     if not uuid_map_path.is_file():
         return {}
     with uuid_map_path.open("r", encoding="utf-8") as handle:
@@ -68,6 +69,28 @@ def _read_uuid_map(uuid_map_path: Path) -> Dict[str, str]:
         if not isinstance(identity, str) or not isinstance(path, str):
             raise ValueError(f"UUID map entries must be strings: {uuid_map_path}")
         inverted[path.replace("\\", "/")] = identity
+    rename_output = subprocess.run(
+        [
+            "git",
+            "-C",
+            str(piggybank_folder),
+            "diff",
+            "--relative",
+            "--find-renames",
+            "--name-status",
+            "HEAD",
+            "--",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+    for line in rename_output.splitlines():
+        status, *paths = line.split("\t")
+        if status.startswith("R") and len(paths) == 2:
+            old_path, new_path = (path.replace("\\", "/") for path in paths)
+            if old_path in inverted:
+                inverted[new_path] = inverted[old_path]
     return inverted
 
 
@@ -99,10 +122,11 @@ def generate_uuid(
         if existing_uuid:
             return existing_uuid
     uuid_map_path = (Path(uuid_map_path) if uuid_map_path is not None else piggybank_folder / "uuid_map.json").resolve()
-    uuid_map = _UUID_MAPS_BY_PATH.setdefault(
-        uuid_map_path,
-        _read_uuid_map(uuid_map_path),
-    )
+    uuid_map_key = (uuid_map_path, piggybank_folder)
+    uuid_map = _UUID_MAPS_BY_PATH.get(uuid_map_key)
+    if uuid_map is None:
+        uuid_map = _read_uuid_map(uuid_map_path, piggybank_folder)
+        _UUID_MAPS_BY_PATH[uuid_map_key] = uuid_map
     mapped_uuid = uuid_map.get(_uuid_map_key(path, piggybank_folder))
     if mapped_uuid:
         return mapped_uuid
