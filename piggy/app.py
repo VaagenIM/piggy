@@ -202,7 +202,7 @@ def create_app(debug: bool = False) -> Flask:
         The reader exposes deterministic IDs in the rendered page. This route only accepts
         those safe IDs and resolves files inside the current assignment's audio directory.
         """
-        wildcard = normalize_path_to_str(wildcard.strip("/"), replace_spaces=True)
+        wildcard = normalize_path_to_str(wildcard.strip("/"), normalize_page_path=True)
         lang = request.args.get("lang", "").strip()
         audio_root = get_reader_audio_root(wildcard, lang)
 

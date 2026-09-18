@@ -84,6 +84,13 @@ The endpoint also accepts paths that include `/main/` at the front, and paths
 that end with `/lang/<language>`. If both a path language and `?lang=` are
 provided, the query parameter is used.
 
+A shortlink code (the same code used in `/s/<shortlink>`) can be used in place
+of the full path:
+
+```text
+/api/get-audio-map/AbCd1234/
+```
+
 Response shape:
 
 ```json

@@ -8,7 +8,7 @@ from piggy import ASSIGNMENT_ROUTE, AssignmentTemplate
 from piggy.caching import _mdfile_to_sections_with_retry
 from piggy.exceptions import PiggyHTTPException
 from piggy.models import LANGUAGES
-from piggy.piggybank import PIGGYMAP, get_piggymap_segment_from_path
+from piggy.piggybank import PIGGYMAP, SHORTLINK_MAP, get_piggymap_segment_from_path
 from piggy.reader_audio import build_reader_audio_map
 from piggy.search import build_search_index
 from piggy.thumbnails import create_thumbnail
@@ -97,7 +97,7 @@ def api_reader_audio_map(route):
 
 
 def normalize_audio_map_route(route: str, lang: str = "") -> tuple[str, str]:
-    route = normalize_path_to_str(route.strip("/"), replace_spaces=True)
+    route = normalize_path_to_str(route.strip("/"), normalize_page_path=True)
 
     if route.startswith(f"{ASSIGNMENT_ROUTE}/"):
         route = route.removeprefix(f"{ASSIGNMENT_ROUTE}/")
@@ -107,6 +107,10 @@ def normalize_audio_map_route(route: str, lang: str = "") -> tuple[str, str]:
         lang = lang or parts[-1]
         parts = parts[:-2]
 
+    if len(parts) == 1 and parts[0] in SHORTLINK_MAP:
+        target = SHORTLINK_MAP[parts[0]]["target"].removeprefix(f"/{ASSIGNMENT_ROUTE}/")
+        parts = [part for part in target.split("/") if part]
+
     return "/".join(parts), lang
 
 
@@ -115,7 +119,7 @@ def get_reader_audio_map_from_route(route: str, lang: str = ""):
     if lang and lang not in LANGUAGES:
         raise PiggyHTTPException("Audio map not found", status_code=404)
 
-    route = normalize_path_to_str(route, replace_spaces=True)
+    route = normalize_path_to_str(route, normalize_page_path=True)
     if len([part for part in route.split("/") if part]) != AssignmentTemplate.ASSIGNMENT.index:
         raise PiggyHTTPException("Audio map not found", status_code=404)
 
