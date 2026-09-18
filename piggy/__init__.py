@@ -64,3 +64,19 @@ class AssignmentTemplate(Enum):
     def get_dictmap():
         """Return a dictionary mapping the name to the index of the enum."""
         return {v.value["name"]: v.value["index"] for v in AssignmentTemplate}
+
+
+class Visibility(str, Enum):
+    """Supported page visibility values."""
+
+    PUBLIC = "public"
+    UNLISTED = "unlisted"
+    PRIVATE = "private"
+
+    @classmethod
+    def from_value(cls, value: str | None) -> "Visibility":
+        """Normalize missing or unknown metadata to public visibility."""
+        try:
+            return cls(value or cls.PUBLIC.value)
+        except ValueError:
+            return cls.PUBLIC

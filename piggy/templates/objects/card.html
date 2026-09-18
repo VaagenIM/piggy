@@ -13,6 +13,7 @@
     thumbnail='',
     thumbnail_alt='thumbnail alt',
     card_type='',
+    visibility=Visibility.PUBLIC.value,
     show_title=true,
     show_levels=true,
     show_difficulty=true,
@@ -29,69 +30,74 @@
     {% set badge = '' %}
   {% endif %}
 
-  <a
-    href="{{ abspath }}/{{ item }}"
-    class="card card-container {{ extra_classes }} {{ wrapper_classes }}"
-    data-title="{{ title|lower }}"
-    data-description="{{ description|lower }}"
-    data-tags="{{ tags|join(' ')|lower }}"
-    data-overlay-text="{{ overlay_text|lower }}">
-    {% if badge %}
-      {{ badge }}
-    {% endif %}
+  {% set is_hidden = visibility in [Visibility.UNLISTED.value, Visibility.PRIVATE.value] %}
+  {% set visibility_class = ' visibility-private' if debug and visibility == Visibility.PRIVATE.value else (' visibility-unlisted' if debug and visibility == Visibility.UNLISTED.value else '') %}
+  {% set card_classes = ['card', 'card-container', extra_classes|trim, visibility_class|trim, wrapper_classes|trim] | reject('equalto', '') | join(' ') %}
+  {% if not is_hidden or debug %}
+    <a
+      href="{{ abspath }}/{{ item }}"
+      class="{{ card_classes }}"
+      data-title="{{ title|lower }}"
+      data-description="{{ description|lower }}"
+      data-tags="{{ tags|join(' ')|lower }}"
+      data-overlay-text="{{ overlay_text|lower }}">
+      {% if badge %}
+        {{ badge }}
+      {% endif %}
 
-    {% if show_title and title %}
-      <div class="card-header">
-        <div class="card-title">{{ title }}</div>
-      </div>
-    {% endif %}
-
-    {% if show_thumbnail %}
-      <div class="thumbnail-container">
-        <div class="thumbnail-loader" aria-hidden="true">
-          <div class="loader"></div>
+      {% if show_title and title %}
+        <div class="card-header">
+          <div class="card-title">{{ title }}</div>
         </div>
-        <img
-          class="thumbnail-image"
-          src="{{ thumbnail }}"
-          alt="{{ thumbnail_alt }}"
-          loading="lazy" />
+      {% endif %}
 
-        {% if show_levels and level_count and level_count > 1 %}
-          <div class="level-count-container">
-            {{ level_count }} Level{{ 's' if level_count != 1 }}
+      {% if show_thumbnail %}
+        <div class="thumbnail-container">
+          <div class="thumbnail-loader" aria-hidden="true">
+            <div class="loader"></div>
           </div>
-        {% endif %}
-
-        {% if show_difficulty and difficulty and difficulty|int > 0 %}
-          {% if difficulty|int > 5 %}
-            {% set difficulty = "5" %}
-          {% endif %}
           <img
-            class="difficulty-icon difficulty-{{ difficulty|string }}"
-            src="{{ url_for('static', filename='img/difficulties/' + difficulty|string + '.png') }}" />
-        {% endif %}
+            class="thumbnail-image"
+            src="{{ thumbnail }}"
+            alt="{{ thumbnail_alt }}"
+            loading="lazy" />
 
-        {% if show_overlay and overlay_text %}
-          <div class="thumbnail-text-overlay">{{ overlay_text }}</div>
-        {% endif %}
-      </div>
-    {% endif %}
+          {% if show_levels and level_count and level_count > 1 %}
+            <div class="level-count-container">
+              {{ level_count }} Level{{ 's' if level_count != 1 }}
+            </div>
+          {% endif %}
 
-    {# Card Tags #}
-    {% if show_tags and tags %}
-      <div class="tags-container">
-        {% for tag in tags %}
-          <span class="tag-box" data-tag="{{ tag }}"> {{ tag }} </span>
-        {% endfor %}
-      </div>
-    {% endif %}
+          {% if show_difficulty and difficulty and difficulty|int > 0 %}
+            {% if difficulty|int > 5 %}
+              {% set difficulty = "5" %}
+            {% endif %}
+            <img
+              class="difficulty-icon difficulty-{{ difficulty|string }}"
+              src="{{ url_for('static', filename='img/difficulties/' + difficulty|string + '.png') }}" />
+          {% endif %}
 
-    {% if show_description and description %}
-      <div
-        class="description-container {{ 'description-center' if center_description else '' }}">
-        {{ description }}
-      </div>
-    {% endif %}
-  </a>
+          {% if show_overlay and overlay_text %}
+            <div class="thumbnail-text-overlay">{{ overlay_text }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {# Card Tags #}
+      {% if show_tags and tags %}
+        <div class="tags-container">
+          {% for tag in tags %}
+            <span class="tag-box" data-tag="{{ tag }}"> {{ tag }} </span>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if show_description and description %}
+        <div
+          class="description-container {{ 'description-center' if center_description else '' }}">
+          {{ description }}
+        </div>
+      {% endif %}
+    </a>
+  {% endif %}
 {% endmacro %}
