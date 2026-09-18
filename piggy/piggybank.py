@@ -15,6 +15,7 @@ from piggy import (
     ASSIGNMENT_FILENAME_REGEX,
     AssignmentTemplate,
     PIGGYBANK_FOLDER,
+    PIGGYBANK_UUID_MAP_PATH,
     Visibility,
 )
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper
@@ -171,7 +172,11 @@ def get_frontmatter_from_file(path: Path) -> dict:
 def _register_shortlink(shortlink_map: dict, meta: dict, fallback_path: Path, target: str, title: str):
     identity = meta.get("uuid") or meta.get("oinkdata", {}).get("uuid")
     if not identity:
-        identity = generate_uuid(fallback_path, piggybank_folder=PIGGYBANK_FOLDER)
+        identity = generate_uuid(
+            fallback_path,
+            piggybank_folder=PIGGYBANK_FOLDER,
+            uuid_map_path=PIGGYBANK_UUID_MAP_PATH,
+        )
     shortlink = _generate_shortlink(identity, SHORTLINK_ALPHABET, SHORTLINK_SIZE)
 
     target_path = target.removeprefix(f"/{ASSIGNMENT_ROUTE}/")
