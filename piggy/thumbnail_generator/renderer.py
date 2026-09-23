@@ -73,6 +73,7 @@ def create_thumbnail(
     w, h = size
 
     title = " ".join(title.split()).strip() or "Untitled"
+    title = title.replace("_", " ")
 
     style_seed = _seed_from_text(
         title,
