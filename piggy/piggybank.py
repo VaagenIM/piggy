@@ -186,15 +186,11 @@ def _register_shortlink(shortlink_map: dict, meta: dict, fallback_path: Path, ta
         else target_path
     )
     description = meta.get("description") or meta.get("oinkdata", {}).get("summary") or meta.get("summary", "")
-    if meta.get("thumbnail", "media/header") == "media/header":
-        thumbnail = f"/api/generate_thumbnail/{title.replace(" ", "_")}"
-    else:
-        thumbnail = f"/{MEDIA_ROUTE}/{media_path}/{meta.get('thumbnail', 'media/header')}.{IMG_FMT}?title={title}"
     shortlink_map[shortlink] = {
         "target": target,
         "title": title,
         "description": description,
-        "image": thumbnail,
+        "image": f"/{MEDIA_ROUTE}/{media_path}/{meta.get('thumbnail', 'media/header')}.{IMG_FMT}?title={title}",
     }
     return shortlink
 
@@ -265,6 +261,7 @@ def generate_piggymap(
         if not match:
             continue
         assignment_path = Path(f"{path}/{item}")
+        assignment_key = normalize_path_to_str(item, normalize_page_path=True, normalize_url=True, remove_ext=True)
 
         frontmatter = get_frontmatter_from_file(assignment_path)
         assignment_oink = load_oink_file(assignment_path)
@@ -274,7 +271,7 @@ def generate_piggymap(
 
         # Default thumbnail to the assignment group's header image if not specified
         if "thumbnail" not in frontmatter:
-            frontmatter["thumbnail"] = "media/header"
+            frontmatter["thumbnail"] = f"{assignment_key}/media/header"
 
         # Get translations metadata
         translation_meta = dict()
@@ -293,7 +290,6 @@ def generate_piggymap(
             trans_frontmatter["visibility"] = translation_visibility.value
             translation_meta[lang] = trans_frontmatter
 
-        assignment_key = normalize_path_to_str(item, normalize_page_path=True, normalize_url=True, remove_ext=True)
         assignment_url = f"{_url_path}/{assignment_key}".strip("/")
         shortlink_target = f"/main/{assignment_url}"
         piggymap[assignment_key] = {
