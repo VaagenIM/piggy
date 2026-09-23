@@ -1,15 +1,14 @@
 """Node Graph structural decal."""
 
-import math
 import random
 
 import PIL.Image
 import PIL.ImageDraw
 
-from ..backgrounds import _CORNER_ZONES, _radial_color_layer
+from ..backgrounds import _radial_color_layer
 from ..common import _mix_rgb
 from .base import Decal, DecalContext, DecalRenderContext, DecalResult
-from .helpers import _boxes_intersect, _clear_side_zone, _decal_side, _point_in_box
+from .helpers import _clear_side_zone, _decal_side, _point_in_box
 
 
 class NodeGraphDecal(Decal):

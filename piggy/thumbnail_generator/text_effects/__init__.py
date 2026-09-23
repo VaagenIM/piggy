@@ -86,6 +86,7 @@ __all__ = [
     "IsolationTreatment",
     "TextEffectContext",
     "TextRenderContext",
+    "TextRenderState",
     "TextStyle",
     "TitleLayout",
     "ISOLATION_TREATMENTS",
