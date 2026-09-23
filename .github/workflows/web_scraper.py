@@ -138,7 +138,7 @@ def get_html(link) -> PageResult | None:
     # TODO: this is a hack. hopefully temporary.
     html = re.sub(
         r"""/api/generate_thumbnail/([^?]*)(\?[^"]*)""",
-        lambda m: f"/api/generate_thumbnail/{clean_link(m.group(1), link.strip('/')).lstrip('/')}.webp",
+        lambda m: f"/api/generate_thumbnail/{m.group(1).replace(' ', '_').replace('.', '')}.webp",
         html,
     )
     html = re.sub(r"/media/header\..+\?title=[^\"]*", r"/media/header.webp", html)
