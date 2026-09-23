@@ -14,7 +14,7 @@ from hashlib import sha256
 from dataclasses import dataclass
 from pathlib import Path
 from shutil import copytree, rmtree
-from urllib.parse import unquote
+from urllib.parse import unquote, urlunsplit, urlsplit
 from bs4 import BeautifulSoup as bs
 from turtleconverter import generate_static_files
 from rjsmin import jsmin
@@ -186,26 +186,30 @@ def is_api_view_link(link: str) -> bool:
 
 
 def clean_link(link, path):
-    link = unquote(link).replace(" ", "_")
-    if re.match(r"\.?.+[#:].*", link.split("/")[-1]) and path:
-        # Reconstruct without #.* or :.*
-        stem = link.split("/")[-1].split("#")[0].split(":")[0]
-        directories = link.split("/")[:-1]
-        link = "/".join(directories + [stem])
+    link = link.replace("&amp;", "&").replace(" ", "_")
+
+    # Separate path/query/fragment so query parameters are preserved
+    parsed = urlsplit(link)
+    link_path = unquote(parsed.path)
+
+    if re.match(r"\.?.+[#:].*", link_path.split("/")[-1]) and path:
+        # Reconstruct without #.* or :.* in the filename.
+        stem = link_path.split("/")[-1].split("#")[0].split(":")[0]
+        directories = link_path.split("/")[:-1]
+        link_path = "/".join(directories + [stem])
+
     # Add path to relative links
-    if not link.startswith("/") and path:
-        link = f"/{path.rsplit('/', 1)[0]}/{link}"
+    if not link_path.startswith("/") and path:
+        link_path = f"/{path.rsplit('/', 1)[0]}/{link_path}"
+
     # Replace \\ with /
-    link = link.replace("\\", "/")
-    # Resolve relative path segments so page and media link collectors use the
-    # same canonical URL and cannot mistake media for an assignment.
-    if link:
-        suffix_index = min(
-            (index for index in (link.find("?"), link.find("#")) if index >= 0),
-            default=len(link),
-        )
-        link = posixpath.normpath(link[:suffix_index]) + link[suffix_index:]
-    return link
+    link_path = link_path.replace("\\", "/")
+
+    # Resolve relative path segments while preserving query + fragment.
+    if link_path:
+        link_path = posixpath.normpath(link_path)
+
+    return urlunsplit(("", "", link_path, parsed.query, parsed.fragment))
 
 
 def _normalize_page_link(link):
@@ -249,16 +253,6 @@ def get_media_links(html, path=""):
         if not link.startswith("/") and path:
             filtered_links.add(f"{path.rsplit('/', 1)[0]}/{link}")
             continue
-        if "?" in link and any(
-            (
-                link.split("?")[0] in [l.split("?")[0] for l in media_links],
-                link.split("?")[0] in [l.split("?")[0] for l in filtered_links],
-            )
-        ):
-            print(
-                f"Skipping {link} because it has a query string and the base link is already in media_links or filtered_links"
-            )
-            continue
         filtered_links.add(link)
 
     return filtered_links
@@ -279,35 +273,43 @@ def _has_translation_route(link):
 
 
 def _download_media(link):
-    request_path = link.strip("/").split("#")[0]
-    path = request_path
-    path = unquote_path(path)
+    # The URL used for downloading keeps the query string.
+    request_path = link.strip("/").split("#", 1)[0]
+
+    # The filesystem path never contains query parameters or fragments.
+    path = unquote_path(request_path.split("?", 1)[0])
+
     # TODO: this is a hack. hopefully temporary.
-    if "/api/generate_thumbnail/" in link:
-        path = path.rsplit("?")[0] + ".webp"
-    path = path.rsplit("?")[0]
+    if "/api/generate_thumbnail/" in request_path:
+        path = path + ".webp"
     output_path = Path("demo") / path
     if incremental_mode and output_path.exists():
         return
 
-    print(f"Downloading \33[34m{link}\33[0m")
-    r = requests.get(f"{url}/{request_path}", allow_redirects=True)
+    request_url = f"{url}/{request_path}"
+    print(f"Downloading \33[34m{request_url}\33[0m")
+
     try:
-        os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
-    except (NotADirectoryError, OSError):
-        print(f"WARNING: Could not create directory for {path}. Skipping download.")
+        r = requests.get(request_url, allow_redirects=True, timeout=600)
+    except requests.RequestException as e:
+        print(f"WARNING: Could not download {link}: {e}")
         return
 
-    if not path or not r.ok:
-        print(f"WARNING: Could not download {link}")
+    if not r.ok:
+        print(f"WARNING: Could not download {link} " f"(status code: {r.status_code})")
+        return
+
+    if not path:
+        print(f"WARNING: Could not download {link}: empty output path")
         return
 
     if len(path.split("/")[-1]) > 255:
         print("WARNING: Cannot download file with name longer than 255 characters")
         return
     try:
-        os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
-        with open(f"demo/{path}", "wb+") as f:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+
+        with output_path.open("wb") as f:
             f.write(r.content)
     except Exception as e:
         print(f"WARNING: Could not write file {path}: {e}")
