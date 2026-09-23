@@ -39,6 +39,7 @@ class PageResult:
     links: set[str]
     media_links: set[str]
 
+
 # Media link are files that we want to download, but not parse as HTML (e.g. not write as UTF-8)
 # specifically fonts are causing issues.
 media_link_filetypes = [
@@ -137,8 +138,8 @@ def get_html(link) -> PageResult | None:
 
     # TODO: this is a hack. hopefully temporary.
     html = re.sub(
-        r"""/api/generate_thumbnail/([^?]*)(\?[^"]*)""",
-        lambda m: f"/api/generate_thumbnail/{m.group(1).replace(' ', '_').replace('.', '')}.webp",
+        r"""/api/generate_thumbnail/([^?"]*)""",
+        lambda m: f"/api/generate_thumbnail/{clean_link(m.group(1), path='').lstrip('/')}.webp",
         html,
     )
     html = re.sub(r"/media/header\..+\?title=[^\"]*", r"/media/header.webp", html)
@@ -612,8 +613,7 @@ def configure_demo_build() -> tuple[str, str, bool]:
 
     full_build = (
         os.environ.get("FORCE_FULL_REBUILD", "").lower() == "true"
-        or
-        not previous_state
+        or not previous_state
         or previous_state.get("root_revision") != root_revision
         or previous_state.get("root_worktree_fingerprint") != root_worktree_fingerprint
         or not previous_state.get("piggybank_revision")
@@ -623,9 +623,7 @@ def configure_demo_build() -> tuple[str, str, bool]:
         previous_state["piggybank_revision"] != piggybank_revision
         or previous_state.get("piggybank_worktree_fingerprint") != piggybank_worktree_fingerprint
     ):
-        changes = _changed_piggybank_files(
-            piggybank_path, previous_state["piggybank_revision"], piggybank_revision
-        )
+        changes = _changed_piggybank_files(piggybank_path, previous_state["piggybank_revision"], piggybank_revision)
 
     if full_build:
         rmtree("demo", ignore_errors=True)
