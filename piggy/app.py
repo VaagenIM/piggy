@@ -131,7 +131,6 @@ def create_app(debug: bool = False) -> Flask:
         return {
             "unfreeze": unfreeze,
             "split_md_links": split_md_links,
-            "normalize_path_to_str": normalize_path_to_str,
         }
 
     @app.template_global()

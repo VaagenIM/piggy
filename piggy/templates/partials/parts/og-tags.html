@@ -45,11 +45,9 @@
   {% endif %}
 {% endif %}
 
-{% set thumbnail_slug = normalize_path_to_str(level_name, normalize_page_path=True, normalize_url=True) if level_name else level_name %}
-
 {% if meta.thumbnail == 'media/header' or (not media_abspath and meta.thumbnail) %}
   {% if meta.thumbnail == 'media/header' %}
-    {% set ns.image = url_for('api.generate_thumbnail', text=thumbnail_slug, title=level_name, _external=True) %}
+    {% set ns.image = url_for('api.generate_thumbnail', text=level_name, _external=True) %}
   {% else %}
     {% set ns.image = meta.thumbnail %}
   {% endif %}
@@ -58,7 +56,7 @@
   {% set image_path = media_path.replace(' ', '_') + '/' + meta.thumbnail + '.' + img_fmt %}
   {% set ns.image = request.host_url.rstrip('/') + image_path + '?title=' + ns.og_name %}
 {% elif level_name %}
-  {% set ns.image = url_for('api.generate_thumbnail', text=thumbnail_slug, title=level_name, c=meta.topic.name, _external=True) %}
+  {% set ns.image = url_for('api.generate_thumbnail', text=level_name, _external=True) + '?c=' + meta.topic.name %}
 {% elif ns.meta_exists %}
   {% set ns.image = request.host_url.rstrip('/') + media_abspath + '/media/header.' + img_fmt + '?title=' + ns.og_name %}
 {% else %}

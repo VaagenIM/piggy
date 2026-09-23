@@ -13,7 +13,7 @@ api_routes = Blueprint("api", __name__, url_prefix="/api")
 @api_routes.route("/generate_thumbnail/<string:text>")
 def generate_thumbnail(text: str, request=request):
     """Generate a deterministic, readable fallback thumbnail."""
-    text = unescape(request.args.get("title", text)).strip()
+    text = unescape(text).strip()
 
     raw_bg_color = request.args.get(
         "bg_color",

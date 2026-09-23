@@ -2,7 +2,6 @@ import json
 import os
 import timeit
 from pathlib import Path
-from urllib.parse import quote
 
 import markupsafe
 import yaml
@@ -188,8 +187,7 @@ def _register_shortlink(shortlink_map: dict, meta: dict, fallback_path: Path, ta
     )
     description = meta.get("description") or meta.get("oinkdata", {}).get("summary") or meta.get("summary", "")
     if meta.get("thumbnail", "media/header") == "media/header":
-        thumbnail_slug = normalize_path_to_str(title, normalize_page_path=True, normalize_url=True)
-        thumbnail = f"/api/generate_thumbnail/{thumbnail_slug}?title={quote(title)}"
+        thumbnail = f"/api/generate_thumbnail/{title.replace(" ", "_")}"
     else:
         thumbnail = f"/{MEDIA_ROUTE}/{media_path}/{meta.get('thumbnail', 'media/header')}.{IMG_FMT}?title={title}"
     shortlink_map[shortlink] = {
