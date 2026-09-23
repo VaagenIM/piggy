@@ -77,6 +77,7 @@ def get_with_retry(url_to_fetch, *, timeout=600, max_attempts=3):
         try:
             response = requests.get(url_to_fetch, allow_redirects=True, timeout=timeout)
         except requests.RequestException as exc:
+            # if we are trying to visit "404", we don't want to retry, as it will always fail
             if attempt == max_attempts:
                 raise
             print(f"WARNING: Request failed for {url_to_fetch} (attempt {attempt}/{max_attempts}): {exc}. Retrying...")
@@ -90,6 +91,12 @@ def get_with_retry(url_to_fetch, *, timeout=600, max_attempts=3):
         if attempt == max_attempts:
             print(
                 f"WARNING: Could not fetch {url_to_fetch} after {max_attempts} attempts (status code: {response.status_code})"
+            )
+            return response
+
+        if url_to_fetch.endswith("/404"):
+            print(
+                f"WARNING: Could not fetch {url_to_fetch} (status code: {response.status_code}). Not retrying, as this is the 404 page."
             )
             return response
 
@@ -110,6 +117,13 @@ def get_internal_sitemap():
 
 def get_html(link) -> PageResult | None:
     """Get the html from the given url, and append the new links to the links list."""
+
+    path = link.split("?", 1)[0].split("#", 1)[0].rstrip("/")
+
+    if path == "/s" or path.endswith("/attachments") or path.endswith("/lang"):
+        visited.add(link)
+        return None
+
     page_url = f"{url}/{link.strip('/')}"
     print(f"Visiting \33[34m{page_url}\33[0m")
     r = get_with_retry(page_url)
