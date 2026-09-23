@@ -3,7 +3,8 @@
 {% if data.meta.thumbnail != "media/header" %}
   {% set thumbnail_url = media_abspath + "/" + data.meta.thumbnail + "." + img_fmt + "?title=" + data.meta.title %}
 {% else %}
-  {% set thumbnail_url = url_for('api.generate_thumbnail', text = data.level_name) %}
+  {% set thumbnail_slug = normalize_path_to_str(data.level_name, normalize_page_path=True, normalize_url=True) %}
+  {% set thumbnail_url = url_for('api.generate_thumbnail', text = thumbnail_slug, title = data.level_name) %}
 {% endif %}
 
 {{

@@ -187,7 +187,7 @@ def is_api_view_link(link: str) -> bool:
 
 def clean_link(link, path):
     link = unquote(link).replace(" ", "_")
-    if re.match(r"\.?.+[#:].*", link.split("/")[-1]) and path:
+    if re.match(r"\.?.+[#:].*", link.split("/")[-1]):
         # Reconstruct without #.* or :.*
         stem = link.split("/")[-1].split("#")[0].split(":")[0]
         directories = link.split("/")[:-1]
@@ -284,7 +284,9 @@ def _download_media(link):
     path = unquote_path(path)
     # TODO: this is a hack. hopefully temporary.
     if "/api/generate_thumbnail/" in link:
-        path = path.rsplit("?")[0] + ".webp"
+        prefix, _, rest = path.partition("api/generate_thumbnail/")
+        text_part = rest.split("?", 1)[0]
+        path = f"{prefix}api/generate_thumbnail/{clean_link(text_part, path='').lstrip('/')}.webp"
     path = path.rsplit("?")[0]
     output_path = Path("demo") / path
     if incremental_mode and output_path.exists():
