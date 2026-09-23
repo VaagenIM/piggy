@@ -76,6 +76,7 @@
   .replace('http:/', 'http://')
   .replace('https:/', 'https://')
   .replace('\\', '/')
+  .replace(" ", "_")
 %}
 
 <meta property="og:title" content="{{ ns.og_name }}" />
