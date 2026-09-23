@@ -2,7 +2,27 @@
 
 import colorsys
 import random
+import re
 from hashlib import md5
+
+
+emoji_pattern = re.compile(
+    "["
+    "\U0001f300-\U0001f5ff"  # symbols & pictographs
+    "\U0001f600-\U0001f64f"  # emoticons
+    "\U0001f680-\U0001f6ff"  # transport & map
+    "\U0001f700-\U0001f77f"  # alchemical symbols
+    "\U0001f780-\U0001f7ff"  # geometric shapes extended
+    "\U0001f800-\U0001f8ff"  # supplemental arrows
+    "\U0001f900-\U0001f9ff"  # supplemental symbols & pictographs
+    "\U0001fa00-\U0001faff"  # symbols & pictographs extended
+    "\u2600-\u26ff"  # miscellaneous symbols
+    "\u2700-\u27bf"  # dingbats
+    "\ufe0f"  # variation selector
+    "\u200d"  # zero-width joiner
+    "]+",
+    re.UNICODE,
+)
 
 
 def _seed_from_text(title: str, seed: str = "") -> int:

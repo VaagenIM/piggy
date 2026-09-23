@@ -15,7 +15,7 @@ from .backgrounds import (
     scale_layer_alpha,
     synthetic_palette_from_background,
 )
-from .common import _ensure_text_contrast, _hex_to_rgb, _seed_from_text
+from .common import _ensure_text_contrast, _hex_to_rgb, _seed_from_text, emoji_pattern
 from .decals import (
     _DecalContext,
     _choose_primary_decal,
@@ -74,6 +74,7 @@ def create_thumbnail(
 
     title = " ".join(title.split()).strip() or "Untitled"
     title = title.replace("_", " ")
+    title = emoji_pattern.sub("", title).strip()
 
     style_seed = _seed_from_text(
         title,
