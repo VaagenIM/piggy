@@ -136,7 +136,11 @@ def get_html(link) -> PageResult | None:
         new_media_links = get_media_links(html, path=link.strip("/"))
 
     # TODO: this is a hack. hopefully temporary.
-    html = re.sub(r"""/api/generate_thumbnail/([^?]*)(\?[^"]*)""", r"/api/generate_thumbnail/\1.webp", html)
+    html = re.sub(
+        r"""/api/generate_thumbnail/([^?]*)(\?[^"]*)""",
+        lambda m: f"/api/generate_thumbnail/{clean_link(m.group(1), link.strip('/')).lstrip('/')}.webp",
+        html,
+    )
     html = re.sub(r"/media/header\..+\?title=[^\"]*", r"/media/header.webp", html)
 
     # Replace all content (og) links with the cname
