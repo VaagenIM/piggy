@@ -45,16 +45,26 @@
   {% endif %}
 {% endif %}
 
-{% set media_path = media_abspath.replace('\\', '/').replace(PIGGYBANK_FOLDER, '') %}
 {% set base_url = request.host_url.rstrip('/') %}
+{% set media_path = media_abspath.replace('\\', '/').replace(PIGGYBANK_FOLDER, '') if media_abspath else '' %}
 
+{# Fallback thumbnails #}
 {% if meta.thumbnail and meta.thumbnail.endswith('media/header') %}
-  {% set ns.image = base_url + media_abspath + meta.thumbnail + '.' + img_fmt + '?title=' + ns.og_name %}
+  {% set image_base = media_abspath.replace('\\', '/').rsplit('/translations/', 1)[0] if media_abspath else media_path %}
+  {% set ns.image = base_url + image_base + '/' + meta.thumbnail + '.' + img_fmt + '?title=' + ns.og_name %}
+
+  {# If thumbnail exists and is absolute url (shortlinks) #}
+{% elif meta.thumbnail and meta.thumbnail.startswith('http') %}
+  {% set ns.image = meta.thumbnail %}
+
+  {# If thumbnail exists and is a relative path #}
 {% elif media_abspath and meta.thumbnail %}
   {% set ns.image = base_url + media_path.replace(' ', '_') + '/' + meta.thumbnail + '.' + img_fmt + '?title=' + ns.og_name %}
+
+  {# If no thumbnail is available, use a default image #}
 {% elif level_name %}
   {% set ns.image = url_for('api.generate_thumbnail', text=level_name, _external=True) + '?c=' + meta.topic.name %}
-{% elif ns.meta_exists %}
+{% elif ns.meta_exists and media_abspath %}
   {% set ns.image = base_url + media_abspath + '/media/header.' + img_fmt + '?title=' + ns.og_name %}
 {% else %}
   {% set ns.image = url_for('static', filename='img/icons/piggy_icon.png', _external=True) %}
