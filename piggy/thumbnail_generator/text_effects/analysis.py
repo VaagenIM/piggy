@@ -11,10 +11,43 @@ from .base import TextEffectContext
 
 
 SHORT_STOPWORDS = {
-    "og", "i", "på", "av", "en", "et", "er", "til", "for", "med",
-    "som", "de", "det", "den", "du", "vi", "å", "om", "ikke", "har",
-    "a", "an", "the", "of", "to", "in", "on", "at", "is", "it",
-    "and", "or", "as", "by", "be", "are", "was",
+    "og",
+    "i",
+    "på",
+    "av",
+    "en",
+    "et",
+    "er",
+    "til",
+    "for",
+    "med",
+    "som",
+    "de",
+    "det",
+    "den",
+    "du",
+    "vi",
+    "å",
+    "om",
+    "ikke",
+    "har",
+    "a",
+    "an",
+    "the",
+    "of",
+    "to",
+    "in",
+    "on",
+    "at",
+    "is",
+    "it",
+    "and",
+    "or",
+    "as",
+    "by",
+    "be",
+    "are",
+    "was",
 }
 
 
@@ -27,8 +60,7 @@ def select_accent_word_index(words: list[str], effect_rng: random.Random) -> int
         return [
             i
             for i, word in enumerate(words)
-            if len(clean_word(word)) >= min_length
-            and clean_word(word) not in SHORT_STOPWORDS
+            if len(clean_word(word)) >= min_length and clean_word(word) not in SHORT_STOPWORDS
         ]
 
     picks = candidates(4) or candidates(3)

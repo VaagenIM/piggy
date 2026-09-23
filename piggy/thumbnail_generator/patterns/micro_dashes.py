@@ -29,24 +29,16 @@ class MicroDashesPattern(Pattern):
             )
         )
 
-        angle_rad = math.radians(
-            angle
-        )
+        angle_rad = math.radians(angle)
 
         length = ctx.rng.uniform(
             max(5, ctx.h * 0.018),
             max(9, ctx.h * 0.032),
         )
 
-        dx = (
-            math.cos(angle_rad)
-            * length
-        )
+        dx = math.cos(angle_rad) * length
 
-        dy = (
-            math.sin(angle_rad)
-            * length
-        )
+        dy = math.sin(angle_rad) * length
 
         offset_x = ctx.rng.randint(
             0,
@@ -65,11 +57,7 @@ class MicroDashesPattern(Pattern):
                 spacing_y,
             )
         ):
-            row_offset = (
-                spacing_x // 2
-                if row % 2
-                else 0
-            )
+            row_offset = spacing_x // 2 if row % 2 else 0
 
             for x in range(
                 offset_x - row_offset,

@@ -12,9 +12,8 @@ from .base import Decal, DecalContext, DecalRenderContext, DecalResult
 from .helpers import _boxes_intersect, _clear_side_zone, _decal_side, _point_in_box
 
 
-
 class IsometricCubesDecal(Decal):
-    name = 'isometric_cubes'
+    name = "isometric_cubes"
     pattern_conflicts = {}
     support_enabled = True
 
@@ -34,8 +33,15 @@ class IsometricCubesDecal(Decal):
 
     def draw(self, ctx: DecalRenderContext) -> DecalResult:
         layer, region = _draw_decal_isometric_cubes(
-            ctx.layer, ctx.w, ctx.h, ctx.accent, ctx.secondary, ctx.safe_bbox,
-            ctx.layout, ctx.complexity, ctx.rng,
+            ctx.layer,
+            ctx.w,
+            ctx.h,
+            ctx.accent,
+            ctx.secondary,
+            ctx.safe_bbox,
+            ctx.layout,
+            ctx.complexity,
+            ctx.rng,
         )
         return DecalResult(layer, region)
 
@@ -103,10 +109,7 @@ def _draw_decal_isometric_cubes(
             (cx - dx, cy),
         ]
 
-        bottom = [
-            (x, y + height)
-            for x, y in top
-        ]
+        bottom = [(x, y + height) for x, y in top]
 
         box = (
             cx - dx,

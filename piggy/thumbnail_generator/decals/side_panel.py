@@ -12,9 +12,8 @@ from .base import Decal, DecalContext, DecalRenderContext, DecalResult
 from .helpers import _boxes_intersect, _clear_side_zone, _decal_side, _point_in_box
 
 
-
 class SidePanelDecal(Decal):
-    name = 'side_panel'
+    name = "side_panel"
     pattern_conflicts = {}
     support_enabled = True
 
@@ -32,8 +31,15 @@ class SidePanelDecal(Decal):
 
     def draw(self, ctx: DecalRenderContext) -> DecalResult:
         layer, region = _draw_decal_side_panel(
-            ctx.layer, ctx.w, ctx.h, ctx.accent, ctx.secondary, ctx.safe_bbox,
-            ctx.layout, ctx.complexity, ctx.rng,
+            ctx.layer,
+            ctx.w,
+            ctx.h,
+            ctx.accent,
+            ctx.secondary,
+            ctx.safe_bbox,
+            ctx.layout,
+            ctx.complexity,
+            ctx.rng,
         )
         return DecalResult(layer, region)
 

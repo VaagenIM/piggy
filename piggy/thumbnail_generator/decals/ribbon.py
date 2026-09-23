@@ -12,10 +12,9 @@ from .base import Decal, DecalContext, DecalRenderContext, DecalResult
 from .helpers import _boxes_intersect, _clear_side_zone, _decal_side, _point_in_box
 
 
-
 class RibbonDecal(Decal):
-    name = 'ribbon'
-    pattern_conflicts = {'diagonal_blocks': 0.3}
+    name = "ribbon"
+    pattern_conflicts = {"diagonal_blocks": 0.3}
     support_enabled = True
 
     def score(self, ctx: DecalContext) -> float:
@@ -32,8 +31,15 @@ class RibbonDecal(Decal):
 
     def draw(self, ctx: DecalRenderContext) -> DecalResult:
         layer, region = _draw_decal_ribbon(
-            ctx.layer, ctx.w, ctx.h, ctx.accent, ctx.secondary, ctx.safe_bbox,
-            ctx.layout, ctx.complexity, ctx.rng,
+            ctx.layer,
+            ctx.w,
+            ctx.h,
+            ctx.accent,
+            ctx.secondary,
+            ctx.safe_bbox,
+            ctx.layout,
+            ctx.complexity,
+            ctx.rng,
         )
         return DecalResult(layer, region)
 

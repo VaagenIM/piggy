@@ -2,6 +2,7 @@
 
 import random
 
+
 def _expand_bbox(
     bbox: tuple[int, int, int, int],
     padding_x: int,
@@ -91,5 +92,3 @@ def _clear_side_zone(
         return None
 
     return (0, 0, right, h)
-
-

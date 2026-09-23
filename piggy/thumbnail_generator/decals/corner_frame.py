@@ -12,10 +12,9 @@ from .base import Decal, DecalContext, DecalRenderContext, DecalResult
 from .helpers import _boxes_intersect, _clear_side_zone, _decal_side, _point_in_box
 
 
-
 class CornerFrameDecal(Decal):
-    name = 'corner_frame'
-    pattern_conflicts = {'corner_geometry': 0.4}
+    name = "corner_frame"
+    pattern_conflicts = {"corner_geometry": 0.4}
     support_enabled = False
 
     def score(self, ctx: DecalContext) -> float:
@@ -28,8 +27,14 @@ class CornerFrameDecal(Decal):
 
     def draw(self, ctx: DecalRenderContext) -> DecalResult:
         layer, region = _draw_decal_corner_frame(
-            ctx.layer, ctx.w, ctx.h, ctx.accent, ctx.safe_bbox,
-            ctx.layout, ctx.complexity, ctx.rng,
+            ctx.layer,
+            ctx.w,
+            ctx.h,
+            ctx.accent,
+            ctx.safe_bbox,
+            ctx.layout,
+            ctx.complexity,
+            ctx.rng,
         )
         return DecalResult(layer, region)
 
@@ -45,9 +50,16 @@ def _draw_decal_corner_frame(
     decal_rng: random.Random,
 ) -> tuple[PIL.Image.Image, tuple[int, int, int, int] | None]:
     """Restrained corner brackets -- the safest, most minimal decal; works well over an already-busy background."""
-    candidates = ["top_right", "bottom_right"] if layout == "left" else [
-        "top_left", "top_right", "bottom_left", "bottom_right",
-    ]
+    candidates = (
+        ["top_right", "bottom_right"]
+        if layout == "left"
+        else [
+            "top_left",
+            "top_right",
+            "bottom_left",
+            "bottom_right",
+        ]
+    )
 
     corner_count = 1 if decal_rng.random() < 0.55 else 2
     corners = decal_rng.sample(candidates, k=min(corner_count, len(candidates)))
@@ -68,8 +80,10 @@ def _draw_decal_corner_frame(
             x, y, sx, sy = w - margin, h - margin, -1, -1
 
         box = (
-            min(x, x + sx * arm), min(y, y + sy * arm),
-            max(x, x + sx * arm), max(y, y + sy * arm),
+            min(x, x + sx * arm),
+            min(y, y + sy * arm),
+            max(x, x + sx * arm),
+            max(y, y + sy * arm),
         )
 
         if _boxes_intersect(box, safe_bbox):
@@ -93,9 +107,15 @@ def _draw_decal_corner_frame(
                 width=1,
             )
 
-        region = box if region is None else (
-            min(region[0], box[0]), min(region[1], box[1]),
-            max(region[2], box[2]), max(region[3], box[3]),
+        region = (
+            box
+            if region is None
+            else (
+                min(region[0], box[0]),
+                min(region[1], box[1]),
+                max(region[2], box[2]),
+                max(region[3], box[3]),
+            )
         )
 
     return decal_layer, region

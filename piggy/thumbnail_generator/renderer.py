@@ -72,25 +72,16 @@ def create_thumbnail(
     """
     w, h = size
 
-    title = (
-        " ".join(
-            title.split()
-        ).strip()
-        or "Untitled"
-    )
+    title = " ".join(title.split()).strip() or "Untitled"
 
     style_seed = _seed_from_text(
         title,
         seed or title,
     )
 
-    background_rng = random.Random(
-        style_seed ^ 0xB4C6C0DE
-    )
+    background_rng = random.Random(style_seed ^ 0xB4C6C0DE)
 
-    pattern_rng = random.Random(
-        style_seed ^ 0x9A11E4D9
-    )
+    pattern_rng = random.Random(style_seed ^ 0x9A11E4D9)
 
     if bg_color is not None:
         palette = synthetic_palette_from_background(
@@ -98,19 +89,11 @@ def create_thumbnail(
             style_seed,
         )
     else:
-        palette = choose_palette(
-            style_seed
-        )
+        palette = choose_palette(style_seed)
 
-    background = _hex_to_rgb(
-        palette.backgrounds[0]
-    )
+    background = _hex_to_rgb(palette.backgrounds[0])
 
-    requested_text = _hex_to_rgb(
-        text_color
-        if text_color is not None
-        else palette.text
-    )
+    requested_text = _hex_to_rgb(text_color if text_color is not None else palette.text)
 
     # Guarantee readable typography.
     text = _ensure_text_contrast(
@@ -118,19 +101,11 @@ def create_thumbnail(
         background,
     )
 
-    accent = _hex_to_rgb(
-        palette.accent
-    )
+    accent = _hex_to_rgb(palette.accent)
 
-    layout = (
-        "center"
-        if style_seed % 3
-        else "left"
-    )
+    layout = "center" if style_seed % 3 else "left"
 
-    background_style = choose_background_style(
-        background_rng
-    )
+    background_style = choose_background_style(background_rng)
 
     image = background_style.draw(
         BackgroundContext(
@@ -151,16 +126,9 @@ def create_thumbnail(
         (0, 0, 0, 0),
     )
 
-    decoration_draw = (
-        PIL.ImageDraw.Draw(
-            decoration
-        )
-    )
+    decoration_draw = PIL.ImageDraw.Draw(decoration)
 
-    pattern = PATTERNS[
-        (style_seed // 7)
-        % len(PATTERNS)
-    ]
+    pattern = PATTERNS[(style_seed // 7) % len(PATTERNS)]
 
     pattern.draw(
         PatternContext(
@@ -182,56 +150,33 @@ def create_thumbnail(
         decoration,
     )
 
-    measure_draw = PIL.ImageDraw.Draw(
-        image
-    )
+    measure_draw = PIL.ImageDraw.Draw(image)
 
     fonts = _existing_fonts()
 
-    font_path = fonts[
-        style_seed
-        % len(fonts)
-    ]
+    font_path = fonts[style_seed % len(fonts)]
 
     if layout == "left":
-        text_area_left = int(
-            w * 0.10
-        )
+        text_area_left = int(w * 0.10)
 
-        text_area_right = int(
-            w * 0.72
-        )
+        text_area_right = int(w * 0.72)
 
         align = "left"
 
     else:
-        text_area_left = int(
-            w * 0.10
-        )
+        text_area_left = int(w * 0.10)
 
-        text_area_right = int(
-            w * 0.90
-        )
+        text_area_right = int(w * 0.90)
 
         align = "center"
 
-    text_area_top = int(
-        h * 0.12
-    )
+    text_area_top = int(h * 0.12)
 
-    text_area_bottom = int(
-        h * 0.88
-    )
+    text_area_bottom = int(h * 0.88)
 
-    max_text_w = (
-        text_area_right
-        - text_area_left
-    )
+    max_text_w = text_area_right - text_area_left
 
-    max_text_h = (
-        text_area_bottom
-        - text_area_top
-    )
+    max_text_h = text_area_bottom - text_area_top
 
     font, rendered_text, spacing = _fit_title(
         measure_draw,
@@ -243,51 +188,32 @@ def create_thumbnail(
         align,
     )
 
-    local_bbox = (
-        measure_draw.multiline_textbbox(
-            (0, 0),
-            rendered_text,
-            font=font,
-            spacing=spacing,
-            align=align,
-        )
+    local_bbox = measure_draw.multiline_textbbox(
+        (0, 0),
+        rendered_text,
+        font=font,
+        spacing=spacing,
+        align=align,
     )
 
-    text_w = (
-        local_bbox[2]
-        - local_bbox[0]
-    )
+    text_w = local_bbox[2] - local_bbox[0]
 
-    text_h = (
-        local_bbox[3]
-        - local_bbox[1]
-    )
+    text_h = local_bbox[3] - local_bbox[1]
 
     if layout == "left":
-        text_x = (
-            text_area_left
-            - local_bbox[0]
-        )
+        text_x = text_area_left - local_bbox[0]
 
     else:
-        text_x = (
-            (w - text_w) // 2
-            - local_bbox[0]
-        )
+        text_x = (w - text_w) // 2 - local_bbox[0]
 
-    text_y = (
-        (h - text_h) // 2
-        - local_bbox[1]
-    )
+    text_y = (h - text_h) // 2 - local_bbox[1]
 
-    text_bbox = (
-        measure_draw.multiline_textbbox(
-            (text_x, text_y),
-            rendered_text,
-            font=font,
-            spacing=spacing,
-            align=align,
-        )
+    text_bbox = measure_draw.multiline_textbbox(
+        (text_x, text_y),
+        rendered_text,
+        font=font,
+        spacing=spacing,
+        align=align,
     )
 
     # ------------------------------------------------------------
@@ -302,9 +228,7 @@ def create_thumbnail(
         h,
     )
 
-    decal_rng = random.Random(
-        style_seed ^ 0x6C0DEBA5
-    )
+    decal_rng = random.Random(style_seed ^ 0x6C0DEBA5)
 
     background_complexity = background_style.complexity
 
@@ -326,11 +250,7 @@ def create_thumbnail(
         decal_rng,
     )
 
-    secondary = _hex_to_rgb(
-        palette.backgrounds[1]
-        if len(palette.backgrounds) > 1
-        else palette.backgrounds[0]
-    )
+    secondary = _hex_to_rgb(palette.backgrounds[1] if len(palette.backgrounds) > 1 else palette.backgrounds[0])
 
     decal_layer = PIL.Image.new(
         "RGBA",
@@ -381,15 +301,13 @@ def create_thumbnail(
 
     words = title.split() or [title]
 
-    local_luminance, local_variance, local_min_contrast, pattern_density = (
-        analyze_text_background(
-            image,
-            decoration,
-            text_bbox,
-            text,
-            w,
-            h,
-        )
+    local_luminance, local_variance, local_min_contrast, pattern_density = analyze_text_background(
+        image,
+        decoration,
+        text_bbox,
+        text,
+        w,
+        h,
     )
 
     ctx = build_text_effect_context(
@@ -411,9 +329,7 @@ def create_thumbnail(
         pattern_density=pattern_density,
     )
 
-    effect_rng = random.Random(
-        style_seed ^ 0x5A17C0DE
-    )
+    effect_rng = random.Random(style_seed ^ 0x5A17C0DE)
 
     accent_word_index = select_accent_word_index(
         words,
@@ -450,9 +366,7 @@ def create_thumbnail(
                 (0, 0, 0, 0),
             )
 
-            quiet_draw = PIL.ImageDraw.Draw(
-                quiet
-            )
+            quiet_draw = PIL.ImageDraw.Draw(quiet)
 
             panel_pad_x = max(
                 18,
@@ -500,9 +414,7 @@ def create_thumbnail(
                 quiet,
             )
 
-    draw = PIL.ImageDraw.Draw(
-        image
-    )
+    draw = PIL.ImageDraw.Draw(image)
 
     # ------------------------------------------------------------
     # Accent near title
@@ -522,15 +434,9 @@ def create_thumbnail(
 
             draw.rounded_rectangle(
                 (
-                    text_bbox[0]
-                    - gap
-                    - bar_w,
-
+                    text_bbox[0] - gap - bar_w,
                     text_bbox[1],
-
-                    text_bbox[0]
-                    - gap,
-
+                    text_bbox[0] - gap,
                     text_bbox[3],
                 ),
                 radius=bar_w,
@@ -552,10 +458,7 @@ def create_thumbnail(
             )
 
             underline_y = min(
-                h
-                - underline_h
-                - 12,
-
+                h - underline_h - 12,
                 text_bbox[3]
                 + max(
                     14,
@@ -565,16 +468,10 @@ def create_thumbnail(
 
             draw.rounded_rectangle(
                 (
-                    w // 2
-                    - underline_w // 2,
-
+                    w // 2 - underline_w // 2,
                     underline_y,
-
-                    w // 2
-                    + underline_w // 2,
-
-                    underline_y
-                    + underline_h,
+                    w // 2 + underline_w // 2,
+                    underline_y + underline_h,
                 ),
                 radius=underline_h,
                 fill=(

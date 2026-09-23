@@ -18,10 +18,7 @@ class RadialBackground(BackgroundStyle):
         center_y = ctx.rng.uniform(0.10, 0.90) * h
 
         corners = ((0, 0), (w, 0), (0, h), (w, h))
-        max_dist = max(
-            ((center_x - x) ** 2 + (center_y - y) ** 2) ** 0.5
-            for x, y in corners
-        )
+        max_dist = max(((center_x - x) ** 2 + (center_y - y) ** 2) ** 0.5 for x, y in corners)
 
         diameter = max(2, round(max_dist * 1.5))
         grad = PIL.Image.radial_gradient("L").resize((diameter, diameter))

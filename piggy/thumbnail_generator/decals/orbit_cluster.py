@@ -12,10 +12,9 @@ from .base import Decal, DecalContext, DecalRenderContext, DecalResult
 from .helpers import _boxes_intersect, _clear_side_zone, _decal_side, _point_in_box
 
 
-
 class OrbitClusterDecal(Decal):
-    name = 'orbit_cluster'
-    pattern_conflicts = {'rings': 0.35}
+    name = "orbit_cluster"
+    pattern_conflicts = {"rings": 0.35}
     support_enabled = True
 
     def score(self, ctx: DecalContext) -> float:
@@ -30,8 +29,15 @@ class OrbitClusterDecal(Decal):
 
     def draw(self, ctx: DecalRenderContext) -> DecalResult:
         layer, region = _draw_decal_orbit_cluster(
-            ctx.layer, ctx.w, ctx.h, ctx.accent, ctx.secondary, ctx.safe_bbox,
-            ctx.layout, ctx.complexity, ctx.rng,
+            ctx.layer,
+            ctx.w,
+            ctx.h,
+            ctx.accent,
+            ctx.secondary,
+            ctx.safe_bbox,
+            ctx.layout,
+            ctx.complexity,
+            ctx.rng,
         )
         return DecalResult(layer, region)
 
@@ -59,10 +65,7 @@ def _draw_decal_orbit_cluster(
     extending past the canvas edge rather than centred and self-
     contained.
     """
-    candidates = [
-        zone for zone in _CORNER_ZONES
-        if not (layout == "left" and zone in ("top_left", "bottom_left"))
-    ]
+    candidates = [zone for zone in _CORNER_ZONES if not (layout == "left" and zone in ("top_left", "bottom_left"))]
     zone_name = decal_rng.choice(candidates)
     (x_lo, x_hi), (y_lo, y_hi) = _CORNER_ZONES[zone_name]
 
@@ -112,8 +115,10 @@ def _draw_decal_orbit_cluster(
         decal_layer = PIL.Image.alpha_composite(decal_layer, glow)
 
     region = (
-        round(cx - base_radius), round(cy - base_radius),
-        round(cx + base_radius), round(cy + base_radius),
+        round(cx - base_radius),
+        round(cy - base_radius),
+        round(cx + base_radius),
+        round(cy + base_radius),
     )
 
     return decal_layer, region

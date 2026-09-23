@@ -4,6 +4,7 @@ import colorsys
 import random
 from hashlib import md5
 
+
 def _seed_from_text(title: str, seed: str = "") -> int:
     """Return a stable seed for a title/style combination."""
     return int(
@@ -14,10 +15,7 @@ def _seed_from_text(title: str, seed: str = "") -> int:
 
 def _hex_to_rgb(value: str) -> tuple[int, int, int]:
     value = value.lstrip("#")
-    return tuple(
-        int(value[i:i + 2], 16)
-        for i in (0, 2, 4)
-    )
+    return tuple(int(value[i : i + 2], 16) for i in (0, 2, 4))
 
 
 def _rgb_to_hex(value: tuple[int, int, int]) -> str:
@@ -62,10 +60,7 @@ def _mix_rgb(
 ) -> tuple[int, int, int]:
     amount = max(0.0, min(1.0, amount))
 
-    return tuple(
-        round(x + (y - x) * amount)
-        for x, y in zip(a, b)
-    )
+    return tuple(round(x + (y - x) * amount) for x, y in zip(a, b))
 
 
 def _relative_luminance(
@@ -85,11 +80,7 @@ def _relative_luminance(
 
     r, g, b = channels
 
-    return (
-        0.2126 * r
-        + 0.7152 * g
-        + 0.0722 * b
-    )
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
 
 
 def _contrast_ratio(
@@ -121,10 +112,7 @@ def _ensure_text_contrast(
     light = (248, 250, 252)
     dark = (17, 24, 39)
 
-    if (
-        _contrast_ratio(light, background)
-        >= _contrast_ratio(dark, background)
-    ):
+    if _contrast_ratio(light, background) >= _contrast_ratio(dark, background):
         return light
 
     return dark
@@ -138,10 +126,7 @@ def _accent_from_background(
     Generate an accent colour related to, but distinct from,
     the background colour.
     """
-    r, g, b = (
-        channel / 255
-        for channel in background
-    )
+    r, g, b = (channel / 255 for channel in background)
 
     hue, lightness, saturation = colorsys.rgb_to_hls(
         r,

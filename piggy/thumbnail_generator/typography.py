@@ -20,7 +20,6 @@ _FONT_PATHS = [
     _FONTS_DIR / "PlusJakartaSans-ExtraBold.ttf",
     _FONTS_DIR / "Outfit-ExtraBold.ttf",
     _FONTS_DIR / "Inter-Black.ttf",
-
     # Condensed / long-title friendly
     _FONTS_DIR / "BarlowCondensed-SemiBold.ttf",
     _FONTS_DIR / "Oswald-Bold.ttf",
@@ -29,7 +28,6 @@ _FONT_PATHS = [
     _FONTS_DIR / "IBMPlexSansCondensed-Bold.ttf",
     _FONTS_DIR / "ArchivoNarrow-Bold.ttf",
     _FONTS_DIR / "BebasNeue-Regular.ttf",
-
     # Technical / geometric
     _FONTS_DIR / "Rajdhani-Bold.ttf",
     _FONTS_DIR / "Oxanium-Bold.ttf",
@@ -37,7 +35,6 @@ _FONT_PATHS = [
     _FONTS_DIR / "Exo2-Bold.ttf",
     _FONTS_DIR / "TitilliumWeb-Bold.ttf",
     _FONTS_DIR / "RussoOne-Regular.ttf",
-
     # More character / occasional
     _FONTS_DIR / "Anton-Regular.ttf",
     _FONTS_DIR / "Teko-SemiBold.ttf",
@@ -45,18 +42,12 @@ _FONT_PATHS = [
     _FONTS_DIR / "ConcertOne-Regular.ttfe",
 ]
 
+
 def _existing_fonts() -> list[Path]:
-    fonts = [
-        path
-        for path in _FONT_PATHS
-        if path.exists()
-    ]
+    fonts = [path for path in _FONT_PATHS if path.exists()]
 
     if not fonts:
-        raise FileNotFoundError(
-            f"No thumbnail fonts found in {_FONTS_DIR}. "
-            "Expected at least one TTF font."
-        )
+        raise FileNotFoundError(f"No thumbnail fonts found in {_FONTS_DIR}. " "Expected at least one TTF font.")
 
     return fonts
 
@@ -182,28 +173,15 @@ def _fit_title(
                 for line in lines
             ]
 
-            mean_width = (
-                sum(line_widths)
-                / len(line_widths)
-            )
+            mean_width = sum(line_widths) / len(line_widths)
 
-            raggedness = sum(
-                abs(width - mean_width)
-                for width in line_widths
-            )
+            raggedness = sum(abs(width - mean_width) for width in line_widths)
 
             # Balanced wrapping matters, but prefer fewer lines
             # slightly when two choices look similarly good.
-            score = (
-                raggedness
-                + (len(lines) - 1)
-                * max_width
-                * 0.08
-            )
+            score = raggedness + (len(lines) - 1) * max_width * 0.08
 
-            fitting.append(
-                (score, rendered)
-            )
+            fitting.append((score, rendered))
 
         if fitting:
             _, rendered = min(
@@ -232,10 +210,7 @@ def _fit_title(
     rendered = title
 
     while rendered:
-        candidate = (
-            rendered.rstrip()
-            + ("..." if rendered != title else "")
-        )
+        candidate = rendered.rstrip() + ("..." if rendered != title else "")
 
         bbox = draw.textbbox(
             (0, 0),

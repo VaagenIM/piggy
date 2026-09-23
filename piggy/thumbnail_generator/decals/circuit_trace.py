@@ -12,10 +12,9 @@ from .base import Decal, DecalContext, DecalRenderContext, DecalResult
 from .helpers import _boxes_intersect, _clear_side_zone, _decal_side, _point_in_box
 
 
-
 class CircuitTraceDecal(Decal):
-    name = 'circuit_trace'
-    pattern_conflicts = {'grid': 0.7}
+    name = "circuit_trace"
+    pattern_conflicts = {"grid": 0.7}
     support_enabled = True
 
     def score(self, ctx: DecalContext) -> float:
@@ -34,8 +33,15 @@ class CircuitTraceDecal(Decal):
 
     def draw(self, ctx: DecalRenderContext) -> DecalResult:
         layer, region = _draw_decal_circuit_trace(
-            ctx.layer, ctx.w, ctx.h, ctx.accent, ctx.secondary, ctx.safe_bbox,
-            ctx.layout, ctx.complexity, ctx.rng,
+            ctx.layer,
+            ctx.w,
+            ctx.h,
+            ctx.accent,
+            ctx.secondary,
+            ctx.safe_bbox,
+            ctx.layout,
+            ctx.complexity,
+            ctx.rng,
         )
         return DecalResult(layer, region)
 
@@ -98,10 +104,7 @@ def _draw_decal_circuit_trace(
             ),
         ]
 
-        if any(
-            _point_in_box(px, py, safe_bbox)
-            for px, py in points
-        ):
+        if any(_point_in_box(px, py, safe_bbox) for px, py in points):
             continue
 
         line_color = _mix_rgb(accent, secondary, 0.25)

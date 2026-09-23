@@ -10,15 +10,9 @@ class TopographicContoursPattern(Pattern):
         self,
         ctx: PatternContext,
     ) -> None:
-        side = ctx.rng.choice(
-            ("left", "right")
-        )
+        side = ctx.rng.choice(("left", "right"))
 
-        center_x = (
-            ctx.w * -0.04
-            if side == "left"
-            else ctx.w * 1.04
-        )
+        center_x = ctx.w * -0.04 if side == "left" else ctx.w * 1.04
 
         center_y = ctx.rng.uniform(
             ctx.h * 0.25,
@@ -52,59 +46,26 @@ class TopographicContoursPattern(Pattern):
 
         point_count = 90
 
-        for contour in range(
-            contour_count
-        ):
-            radius = (
-                base_radius
-                + contour * gap
-            )
+        for contour in range(contour_count):
+            radius = base_radius + contour * gap
 
             points = []
 
-            for i in range(
-                point_count + 1
-            ):
-                angle = (
-                    math.tau
-                    * i
-                    / point_count
-                )
+            for i in range(point_count + 1):
+                angle = math.tau * i / point_count
 
                 wobble = (
-                    math.sin(
-                        angle * 3
-                        + phase_a
-                        + contour * 0.18
-                    )
-                    * radius
-                    * 0.055
-                    +
-                    math.sin(
-                        angle * 5
-                        + phase_b
-                        - contour * 0.12
-                    )
-                    * radius
-                    * 0.025
+                    math.sin(angle * 3 + phase_a + contour * 0.18) * radius * 0.055
+                    + math.sin(angle * 5 + phase_b - contour * 0.12) * radius * 0.025
                 )
 
                 r = radius + wobble
 
-                x = (
-                    center_x
-                    + math.cos(angle) * r
-                )
+                x = center_x + math.cos(angle) * r
 
-                y = (
-                    center_y
-                    + math.sin(angle) * r
-                    * 0.70
-                )
+                y = center_y + math.sin(angle) * r * 0.70
 
-                points.append(
-                    (x, y)
-                )
+                points.append((x, y))
 
             alpha = max(
                 18,

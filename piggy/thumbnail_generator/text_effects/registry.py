@@ -42,10 +42,7 @@ def choose_text_style(
     rng: random.Random,
     has_accent_word: bool,
 ) -> TextStyle:
-    scores = {
-        effect.name: effect.score(ctx, has_accent_word)
-        for effect in TEXT_STYLES
-    }
+    scores = {effect.name: effect.score(ctx, has_accent_word) for effect in TEXT_STYLES}
     return TEXT_STYLES_BY_NAME[_weighted_choice(scores, rng)]
 
 

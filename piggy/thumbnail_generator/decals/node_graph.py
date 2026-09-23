@@ -12,10 +12,9 @@ from .base import Decal, DecalContext, DecalRenderContext, DecalResult
 from .helpers import _boxes_intersect, _clear_side_zone, _decal_side, _point_in_box
 
 
-
 class NodeGraphDecal(Decal):
-    name = 'node_graph'
-    pattern_conflicts = {'dot_cluster': 0.55}
+    name = "node_graph"
+    pattern_conflicts = {"dot_cluster": 0.55}
     support_enabled = True
 
     def score(self, ctx: DecalContext) -> float:
@@ -34,8 +33,15 @@ class NodeGraphDecal(Decal):
 
     def draw(self, ctx: DecalRenderContext) -> DecalResult:
         layer, region = _draw_decal_node_graph(
-            ctx.layer, ctx.w, ctx.h, ctx.accent, ctx.secondary, ctx.safe_bbox,
-            ctx.layout, ctx.complexity, ctx.rng,
+            ctx.layer,
+            ctx.w,
+            ctx.h,
+            ctx.accent,
+            ctx.secondary,
+            ctx.safe_bbox,
+            ctx.layout,
+            ctx.complexity,
+            ctx.rng,
         )
         return DecalResult(layer, region)
 
@@ -134,8 +140,10 @@ def _draw_decal_node_graph(
     xs = [x for x, _ in nodes]
     ys = [y for _, y in nodes]
     region = (
-        round(min(xs) - 10), round(min(ys) - 10),
-        round(max(xs) + 10), round(max(ys) + 10),
+        round(min(xs) - 10),
+        round(min(ys) - 10),
+        round(max(xs) + 10),
+        round(max(ys) + 10),
     )
 
     return decal_layer, region

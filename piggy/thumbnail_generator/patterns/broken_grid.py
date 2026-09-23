@@ -109,9 +109,7 @@ class BrokenGridPattern(Pattern):
                 )
 
         # Rare brighter junctions.
-        for _ in range(
-            ctx.rng.randint(2, 6)
-        ):
+        for _ in range(ctx.rng.randint(2, 6)):
             x = ctx.rng.randrange(
                 offset_x,
                 max(

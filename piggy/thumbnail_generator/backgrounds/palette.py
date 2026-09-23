@@ -40,11 +40,7 @@ def synthetic_palette_from_background(
     secondary_hue = (hue + hue_shift) % 1.0
 
     is_dark = lightness < 0.5
-    secondary_lightness = (
-        min(0.85, lightness + 0.16)
-        if is_dark
-        else max(0.15, lightness - 0.16)
-    )
+    secondary_lightness = min(0.85, lightness + 0.16) if is_dark else max(0.15, lightness - 0.16)
     secondary_saturation = max(0.45, min(0.85, saturation + 0.10))
 
     sr, sg, sb = colorsys.hls_to_rgb(

@@ -12,10 +12,9 @@ from .base import Decal, DecalContext, DecalRenderContext, DecalResult
 from .helpers import _boxes_intersect, _clear_side_zone, _decal_side, _point_in_box
 
 
-
 class SignalWaveDecal(Decal):
-    name = 'signal_wave'
-    pattern_conflicts = {'waves': 0.25}
+    name = "signal_wave"
+    pattern_conflicts = {"waves": 0.25}
     support_enabled = True
 
     def score(self, ctx: DecalContext) -> float:
@@ -32,8 +31,15 @@ class SignalWaveDecal(Decal):
 
     def draw(self, ctx: DecalRenderContext) -> DecalResult:
         layer, region = _draw_decal_signal_wave(
-            ctx.layer, ctx.w, ctx.h, ctx.accent, ctx.secondary, ctx.safe_bbox,
-            ctx.layout, ctx.complexity, ctx.rng,
+            ctx.layer,
+            ctx.w,
+            ctx.h,
+            ctx.accent,
+            ctx.secondary,
+            ctx.safe_bbox,
+            ctx.layout,
+            ctx.complexity,
+            ctx.rng,
         )
         return DecalResult(layer, region)
 
@@ -105,11 +111,8 @@ def _draw_decal_signal_wave(
         # Combining two waves makes it look less like a textbook sine wave.
         y = (
             cy
-            + math.sin(t * math.tau * frequency + phase)
-            * amplitude
-            + math.sin(t * math.tau * frequency * 2.7 + phase)
-            * amplitude
-            * 0.22
+            + math.sin(t * math.tau * frequency + phase) * amplitude
+            + math.sin(t * math.tau * frequency * 2.7 + phase) * amplitude * 0.22
         )
 
         points.append((x, y))

@@ -34,9 +34,5 @@ def choose_background_style(rng: random.Random) -> BackgroundStyle:
 
 
 def pattern_strength(style: str | BackgroundStyle) -> float:
-    complexity = (
-        style.complexity
-        if isinstance(style, BackgroundStyle)
-        else BACKGROUND_COMPLEXITY.get(style, 0)
-    )
+    complexity = style.complexity if isinstance(style, BackgroundStyle) else BACKGROUND_COMPLEXITY.get(style, 0)
     return PATTERN_STRENGTH_BY_COMPLEXITY.get(complexity, 1.0)

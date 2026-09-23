@@ -12,9 +12,8 @@ from .base import Decal, DecalContext, DecalRenderContext, DecalResult
 from .helpers import _boxes_intersect, _clear_side_zone, _decal_side, _point_in_box
 
 
-
 class HexClusterDecal(Decal):
-    name = 'hex_cluster'
+    name = "hex_cluster"
     pattern_conflicts = {}
     support_enabled = True
 
@@ -34,8 +33,15 @@ class HexClusterDecal(Decal):
 
     def draw(self, ctx: DecalRenderContext) -> DecalResult:
         layer, region = _draw_decal_hex_cluster(
-            ctx.layer, ctx.w, ctx.h, ctx.accent, ctx.secondary, ctx.safe_bbox,
-            ctx.layout, ctx.complexity, ctx.rng,
+            ctx.layer,
+            ctx.w,
+            ctx.h,
+            ctx.accent,
+            ctx.secondary,
+            ctx.safe_bbox,
+            ctx.layout,
+            ctx.complexity,
+            ctx.rng,
         )
         return DecalResult(layer, region)
 
@@ -136,11 +142,7 @@ def _draw_decal_hex_cluster(
     draw = PIL.ImageDraw.Draw(decal_layer)
 
     for index, (x, y, box) in enumerate(boxes):
-        color = (
-            accent
-            if index == 0
-            else _mix_rgb(accent, secondary, 0.35)
-        )
+        color = accent if index == 0 else _mix_rgb(accent, secondary, 0.35)
 
         alpha = 175 if index == 0 else 105
 

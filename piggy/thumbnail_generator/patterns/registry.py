@@ -28,7 +28,4 @@ PATTERNS = (
     HalftoneFadePattern(),
 )
 
-PATTERNS_BY_NAME: dict[str, Pattern] = {
-    pattern.name: pattern
-    for pattern in PATTERNS
-}
+PATTERNS_BY_NAME: dict[str, Pattern] = {pattern.name: pattern for pattern in PATTERNS}

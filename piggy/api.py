@@ -36,10 +36,7 @@ def generate_thumbnail(text: str, request=request):
     )
 
     # `c` is simply a stable visual seed.
-    style_seed = (
-        request.args.get("c", "")
-        or text
-    )
+    style_seed = request.args.get("c", "") or text
 
     def sanitize_hex(
         value: str,
@@ -50,19 +47,11 @@ def generate_thumbnail(text: str, request=request):
         "no override, choose a curated palette", so this must never
         invent a fallback colour of its own.
         """
-        value = (
-            (value or "")
-            .strip()
-            .lstrip("#")
-            .lower()
-        )
+        value = (value or "").strip().lstrip("#").lower()
 
         # Allow shorthand such as #fff.
         if len(value) == 3:
-            value = "".join(
-                char * 2
-                for char in value
-            )
+            value = "".join(char * 2 for char in value)
 
         if len(value) != 6:
             return None
@@ -121,10 +110,7 @@ def generate_thumbnail(text: str, request=request):
     thumbnail_text = text[:50]
 
     if len(thumbnail_text) < len(text):
-        thumbnail_text = (
-            thumbnail_text.rstrip()
-            + "..."
-        )
+        thumbnail_text = thumbnail_text.rstrip() + "..."
 
     img = create_thumbnail(
         thumbnail_text,

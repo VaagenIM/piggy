@@ -8,24 +8,16 @@ class HalftoneFadePattern(Pattern):
         self,
         ctx: PatternContext,
     ) -> None:
-        side = ctx.rng.choice(
-            ("left", "right")
-        )
+        side = ctx.rng.choice(("left", "right"))
 
         spacing = ctx.rng.randint(
             max(18, ctx.w // 55),
             max(28, ctx.w // 40),
         )
 
-        rows = (
-            ctx.h // spacing
-            + 2
-        )
+        rows = ctx.h // spacing + 2
 
-        cols = (
-            ctx.w // spacing
-            + 2
-        )
+        cols = ctx.w // spacing + 2
 
         max_radius = ctx.rng.uniform(
             2.5,
@@ -43,23 +35,13 @@ class HalftoneFadePattern(Pattern):
         )
 
         for row in range(rows):
-            y = (
-                row * spacing
-                + spacing / 2
-            )
+            y = row * spacing + spacing / 2
 
             # Stagger alternate rows.
-            row_shift = (
-                spacing / 2
-                if row % 2
-                else 0
-            )
+            row_shift = spacing / 2 if row % 2 else 0
 
             for col in range(cols):
-                x = (
-                    col * spacing
-                    + row_shift
-                )
+                x = col * spacing + row_shift
 
                 position = x / max(
                     1,
@@ -67,15 +49,9 @@ class HalftoneFadePattern(Pattern):
                 )
 
                 if side == "right":
-                    position = (
-                        1.0 - position
-                    )
+                    position = 1.0 - position
 
-                strength = (
-                    start_strength
-                    - position
-                    / fade_width
-                )
+                strength = start_strength - position / fade_width
 
                 strength = max(
                     0.0,
@@ -90,23 +66,15 @@ class HalftoneFadePattern(Pattern):
 
                 # Slight random thinning keeps the edge
                 # from looking mathematically clipped.
-                if (
-                    ctx.rng.random()
-                    > 0.55
-                    + strength * 0.40
-                ):
+                if ctx.rng.random() > 0.55 + strength * 0.40:
                     continue
 
                 radius = max(
                     1.0,
-                    max_radius
-                    * strength,
+                    max_radius * strength,
                 )
 
-                alpha = round(
-                    22
-                    + strength * 48
-                )
+                alpha = round(22 + strength * 48)
 
                 ctx.draw.ellipse(
                     (
