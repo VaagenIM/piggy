@@ -1,12 +1,18 @@
 {% from 'objects/card.html' import card with context %}
 
+{% if data.meta.thumbnail != "media/header" %}
+  {% set thumbnail_url = media_abspath + "/" + data.meta.thumbnail + "." + img_fmt + "?title=" + data.meta.title %}
+{% else %}
+  {% set thumbnail_url = url_for('api.generate_thumbnail', text = data.level_name) %}
+{% endif %}
+
 {{
   card(
     abspath = abspath,
     item = item,
     title = data.meta.title,
     description = data.meta.description,
-    thumbnail = media_abspath + "/" + data.meta.thumbnail + "." + img_fmt + "?title=" + data.meta.title if data.meta.thumbnail else url_for('api.generate_thumbnail', text = data.level_name) ~ '?c=' ~ meta.name,
+    thumbnail = thumbnail_url,
     thumbnail_alt = 'Header image for ' ~ data.meta.title,
     visibility = data.meta.visibility,
     difficulty = data.meta.difficulty,

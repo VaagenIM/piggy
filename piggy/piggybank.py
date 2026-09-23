@@ -186,11 +186,15 @@ def _register_shortlink(shortlink_map: dict, meta: dict, fallback_path: Path, ta
         else target_path
     )
     description = meta.get("description") or meta.get("oinkdata", {}).get("summary") or meta.get("summary", "")
+    if not meta.get("thumbnail"):
+        thumbnail = f"/api/generate-thumbnail?text={title}"
+    else:
+        thumbnail = f"/{MEDIA_ROUTE}/{media_path}/{meta.get('thumbnail', 'media/header')}.{IMG_FMT}?title={title}"
     shortlink_map[shortlink] = {
         "target": target,
         "title": title,
         "description": description,
-        "image": f"/{MEDIA_ROUTE}/{media_path}/{meta.get('thumbnail', 'media/header')}.{IMG_FMT}?title={title}",
+        "image": thumbnail,
     }
     return shortlink
 
