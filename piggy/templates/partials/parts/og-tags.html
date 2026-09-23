@@ -50,7 +50,7 @@
 
 {# Fallback thumbnails #}
 {% if meta.thumbnail and meta.thumbnail.endswith('media/header') %}
-  {% set image_base = media_abspath.replace('\\', '/').rsplit('/translations/', 1)[0] if media_abspath else media_path %}
+  {% set image_base = media_path.rsplit('/translations/', 1)[0] %}
   {% set ns.image = base_url + image_base + '/' + meta.thumbnail + '.' + img_fmt + '?title=' + ns.og_name %}
 
   {# If thumbnail exists and is absolute url (shortlinks) #}
