@@ -2,11 +2,13 @@
 
 {% if not meta %}
   {# Standard og-meta #}
-  {% set meta = {
+  {%
+    set meta = {
         "name": "Piggy",
         "description": "Piggy er en åpen oppgavebank for Vågen VGS laget av IT-lærerne.",
         "thumbnail": url_for('static', filename='img/icons/piggy_icon.png', _external=True)
-    } %}
+    }
+  %}
   {% set ns.meta_exists = False %}
 {% endif %}
 
@@ -74,12 +76,14 @@
   {% set ns.image = url_for('static', filename='img/icons/piggy_icon.png', _external=True) %}
 {% endif %}
 
-{% set ns.image = ns.image
+{%
+  set ns.image = ns.image
   .replace('//', '/')
   .replace('http:/', 'http://')
   .replace('https:/', 'https://')
   .replace('\\', '/')
-  .replace(" ", "_") %}
+  .replace(" ", "_")
+%}
 
 <meta property="og:title" content="{{ ns.og_name }}" />
 <meta property="og:type" content="website" />
