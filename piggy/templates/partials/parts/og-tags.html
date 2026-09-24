@@ -48,9 +48,8 @@
 {% set base_url = request.host_url.rstrip('/') %}
 {% set media_path = media_abspath.replace('\\', '/').replace(PIGGYBANK_FOLDER, '') if media_abspath else '' %}
 
-{% if meta._has_thumbnail %}
-  {% set _tn_path = meta.thumbnail %}
-{% else %}
+{% set _tn_path = meta.thumbnail %}
+{% if not meta._has_thumbnail and meta._use_fallback %}
   {% set _tn_path = "media/header" %}
 {% endif %}
 

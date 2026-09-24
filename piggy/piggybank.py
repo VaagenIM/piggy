@@ -18,7 +18,7 @@ from piggy import (
     PIGGYBANK_UUID_MAP_PATH,
     Visibility,
 )
-from piggy.utils import normalize_path_to_str, lru_cache_wrapper
+from piggy.utils import normalize_path_to_str, lru_cache_wrapper, resolve_image_filename
 
 
 def load_meta_json(path: Path):
@@ -186,7 +186,7 @@ def _register_shortlink(shortlink_map: dict, meta: dict, fallback_path: Path, ta
         else target_path
     )
     description = meta.get("description") or meta.get("oinkdata", {}).get("summary") or meta.get("summary", "")
-    thumb_path = meta.get("thumbnail") if meta.get("_has_thumbnail") else "media/header"
+    thumb_path = meta.get("thumbnail", "media/header") if not meta.get("_use_fallback") else "media/header"
     shortlink_map[shortlink] = {
         "target": target,
         "title": title,
@@ -272,9 +272,13 @@ def generate_piggymap(
 
         # Default thumbnail to the assignment group's header image if not specified
         frontmatter["_has_thumbnail"] = True
+        frontmatter["_use_fallback"] = False
         if "thumbnail" not in frontmatter:
             frontmatter["thumbnail"] = f"{assignment_key}/media/header"
             frontmatter["_has_thumbnail"] = False
+            _p = Path(assignment_path.parent / "media" / "header")
+            if resolve_image_filename(_p) != _p.name:
+                frontmatter["_use_fallback"] = True
 
         # Get translations metadata
         translation_meta = dict()
