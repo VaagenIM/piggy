@@ -2,13 +2,11 @@
 
 {% if not meta %}
   {# Standard og-meta #}
-  {%
-    set meta = {
+  {% set meta = {
         "name": "Piggy",
         "description": "Piggy er en åpen oppgavebank for Vågen VGS laget av IT-lærerne.",
         "thumbnail": url_for('static', filename='img/icons/piggy_icon.png', _external=True)
-    }
-  %}
+    } %}
   {% set ns.meta_exists = False %}
 {% endif %}
 
@@ -48,10 +46,16 @@
 {% set base_url = request.host_url.rstrip('/') %}
 {% set media_path = media_abspath.replace('\\', '/').replace(PIGGYBANK_FOLDER, '') if media_abspath else '' %}
 
+{% if meta._has_thumbnail %}
+  {% set _tn_path = meta.thumbnail %}
+{% else %}
+  {% set _tn_path = "media/header" %}
+{% endif %}
+
 {# Fallback thumbnails #}
 {% if meta.thumbnail and meta.thumbnail.endswith('media/header') %}
   {% set image_base = media_path.rsplit('/translations/', 1)[0] %}
-  {% set ns.image = base_url + image_base + '/' + meta.thumbnail + '.' + img_fmt + '?title=' + ns.og_name %}
+  {% set ns.image = base_url + image_base + '/' + _tn_path + '.' + img_fmt + '?title=' + ns.og_name %}
 
   {# If thumbnail exists and is absolute url (shortlinks) #}
 {% elif meta.thumbnail and meta.thumbnail.startswith('http') %}
@@ -59,7 +63,7 @@
 
   {# If thumbnail exists and is a relative path #}
 {% elif media_abspath and meta.thumbnail %}
-  {% set ns.image = base_url + media_path.replace(' ', '_') + '/' + meta.thumbnail + '.' + img_fmt + '?title=' + ns.og_name %}
+  {% set ns.image = base_url + media_path.replace(' ', '_') + '/' + _tn_path + '.' + img_fmt + '?title=' + ns.og_name %}
 
   {# If no thumbnail is available, use a default image #}
 {% elif level_name %}
@@ -70,14 +74,12 @@
   {% set ns.image = url_for('static', filename='img/icons/piggy_icon.png', _external=True) %}
 {% endif %}
 
-{%
-  set ns.image = ns.image
+{% set ns.image = ns.image
   .replace('//', '/')
   .replace('http:/', 'http://')
   .replace('https:/', 'https://')
   .replace('\\', '/')
-  .replace(" ", "_")
-%}
+  .replace(" ", "_") %}
 
 <meta property="og:title" content="{{ ns.og_name }}" />
 <meta property="og:type" content="website" />
