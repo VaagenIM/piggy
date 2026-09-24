@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import hashlib
 import json
+import subprocess
 import uuid
 from pathlib import Path
 from typing import Dict
@@ -12,6 +13,7 @@ UUID_NAMESPACE = uuid.UUID("8f6f6f6d-6f6f-4f6f-8f6f-6f6f6f6f6f6f")
 UUID_RETRY_LIMIT = 10000
 _SHORTLINKS_BY_CONFIG: Dict[tuple, Dict[str, str]] = {}
 _UUIDS_BY_CONFIG: Dict[tuple, Dict[str, str]] = {}
+_UUID_MAPS_BY_PATH: Dict[tuple[Path, Path], Dict[str, str]] = {}
 
 
 def _generate_shortlink(identity: str, shortlink_alphabet: str, shortlink_size: int) -> str:
@@ -39,16 +41,63 @@ def _read_shortlinks(folder: Path, shortlink_alphabet: str, shortlink_size: int)
 
 def _identity_from_path(path: Path) -> str:
     filename = path.name
-    if filename != "meta.json":
+    if filename != "meta.json" or not path.is_file():
+        if filename == "meta.json":
+            return path.parent.name
         return filename
     with path.open("r", encoding="utf-8") as handle:
         data = json.load(handle)
     return data.get("name") or path.parent.name
 
 
+def _uuid_map_key(path: Path, piggybank_folder: Path) -> str:
+    relative = path.relative_to(piggybank_folder).as_posix()
+    if path.name == "meta.json":
+        return path.parent.relative_to(piggybank_folder).as_posix()
+    return relative
+
+
+def _read_uuid_map(uuid_map_path: Path, piggybank_folder: Path) -> Dict[str, str]:
+    if not uuid_map_path.is_file():
+        return {}
+    with uuid_map_path.open("r", encoding="utf-8") as handle:
+        uuid_map = json.load(handle)
+    if not isinstance(uuid_map, dict):
+        raise ValueError(f"UUID map must contain a JSON object: {uuid_map_path}")
+    inverted: Dict[str, str] = {}
+    for identity, path in uuid_map.items():
+        if not isinstance(identity, str) or not isinstance(path, str):
+            raise ValueError(f"UUID map entries must be strings: {uuid_map_path}")
+        inverted[path.replace("\\", "/")] = identity
+    rename_output = subprocess.run(
+        [
+            "git",
+            "-C",
+            str(piggybank_folder),
+            "diff",
+            "--relative",
+            "--find-renames",
+            "--name-status",
+            "HEAD",
+            "--",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+    for line in rename_output.splitlines():
+        status, *paths = line.split("\t")
+        if status.startswith("R") and len(paths) == 2:
+            old_path, new_path = (path.replace("\\", "/") for path in paths)
+            if old_path in inverted:
+                inverted[new_path] = inverted[old_path]
+    return inverted
+
+
 def generate_uuid(
     path: str | Path,
-    piggybank_folder: str = "piggybank",
+    piggybank_folder: str | Path,
+    uuid_map_path: str | Path | None = None,
     shortlink_alphabet: str = SHORTLINK_ALPHABET,
     shortlink_size: int = SHORTLINK_SIZE,
     uuid_namespace: uuid.UUID = UUID_NAMESPACE,
@@ -62,15 +111,28 @@ def generate_uuid(
     if UUID_RETRY_LIMIT < 1:
         raise ValueError("UUID_RETRY_LIMIT must be positive")
     path = Path(path)
+    piggybank_folder = Path(piggybank_folder).resolve()
+    path = path.resolve()
+    if not path.is_relative_to(piggybank_folder):
+        raise ValueError(f"{path} is outside piggybank folder {piggybank_folder}")
     oink_path = path.with_suffix(".oink")
     if oink_path.is_file():
         with oink_path.open("r", encoding="utf-8") as handle:
             existing_uuid = json.load(handle).get("uuid")
         if existing_uuid:
             return existing_uuid
+    uuid_map_path = (Path(uuid_map_path) if uuid_map_path is not None else piggybank_folder / "uuid_map.json").resolve()
+    uuid_map_key = (uuid_map_path, piggybank_folder)
+    uuid_map = _UUID_MAPS_BY_PATH.get(uuid_map_key)
+    if uuid_map is None:
+        uuid_map = _read_uuid_map(uuid_map_path, piggybank_folder)
+        _UUID_MAPS_BY_PATH[uuid_map_key] = uuid_map
+    mapped_uuid = uuid_map.get(_uuid_map_key(path, piggybank_folder))
+    if mapped_uuid:
+        return mapped_uuid
     identity = _identity_from_path(path)
     base_identity = identity
-    folder = Path(piggybank_folder).resolve()
+    folder = piggybank_folder
     config = (folder, shortlink_alphabet, shortlink_size, uuid_namespace)
     shortlinks = _SHORTLINKS_BY_CONFIG.setdefault(config, _read_shortlinks(folder, shortlink_alphabet, shortlink_size))
     generated = _UUIDS_BY_CONFIG.setdefault(config, {})
@@ -86,5 +148,5 @@ def generate_uuid(
             return candidate
     conflict = shortlinks.get(shortlink, "unknown page")
     raise RuntimeError(
-        f"Unable to generate a unique UUID for {path}; " f"shortlink {shortlink} is already used by {conflict}"
+        f"Unable to generate a unique UUID for {path}; shortlink {shortlink} is already used by {conflict}"
     )

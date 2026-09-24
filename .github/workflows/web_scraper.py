@@ -14,7 +14,7 @@ from hashlib import sha256
 from dataclasses import dataclass
 from pathlib import Path
 from shutil import copytree, rmtree
-from urllib.parse import unquote
+from urllib.parse import unquote, urlunsplit, urlsplit
 from bs4 import BeautifulSoup as bs
 from turtleconverter import generate_static_files
 from rjsmin import jsmin
@@ -38,6 +38,7 @@ class PageResult:
     html: str
     links: set[str]
     media_links: set[str]
+
 
 # Media link are files that we want to download, but not parse as HTML (e.g. not write as UTF-8)
 # specifically fonts are causing issues.
@@ -76,6 +77,7 @@ def get_with_retry(url_to_fetch, *, timeout=600, max_attempts=3):
         try:
             response = requests.get(url_to_fetch, allow_redirects=True, timeout=timeout)
         except requests.RequestException as exc:
+            # if we are trying to visit "404", we don't want to retry, as it will always fail
             if attempt == max_attempts:
                 raise
             print(f"WARNING: Request failed for {url_to_fetch} (attempt {attempt}/{max_attempts}): {exc}. Retrying...")
@@ -89,6 +91,12 @@ def get_with_retry(url_to_fetch, *, timeout=600, max_attempts=3):
         if attempt == max_attempts:
             print(
                 f"WARNING: Could not fetch {url_to_fetch} after {max_attempts} attempts (status code: {response.status_code})"
+            )
+            return response
+
+        if url_to_fetch.endswith("/404"):
+            print(
+                f"WARNING: Could not fetch {url_to_fetch} (status code: {response.status_code}). Not retrying, as this is the 404 page."
             )
             return response
 
@@ -109,6 +117,13 @@ def get_internal_sitemap():
 
 def get_html(link) -> PageResult | None:
     """Get the html from the given url, and append the new links to the links list."""
+
+    path = link.split("?", 1)[0].split("#", 1)[0].rstrip("/")
+
+    if path == "/s" or path.endswith("/attachments") or path.endswith("/lang"):
+        visited.add(link)
+        return None
+
     page_url = f"{url}/{link.strip('/')}"
     print(f"Visiting \33[34m{page_url}\33[0m")
     r = get_with_retry(page_url)
@@ -136,7 +151,11 @@ def get_html(link) -> PageResult | None:
         new_media_links = get_media_links(html, path=link.strip("/"))
 
     # TODO: this is a hack. hopefully temporary.
-    html = re.sub(r"""/api/generate_thumbnail/([^?]*)(\?[^"]*)""", r"/api/generate_thumbnail/\1.webp", html)
+    html = re.sub(
+        r"""/api/generate_thumbnail/([^?"]*)(\?[^"]*)?""",
+        lambda m: f"/api/generate_thumbnail/{re.sub(r'[^A-Za-z0-9_]', '', clean_link(m.group(1), path=''))}.webp{m.group(2) or ''}",
+        html,
+    )
     html = re.sub(r"/media/header\..+\?title=[^\"]*", r"/media/header.webp", html)
 
     # Replace all content (og) links with the cname
@@ -181,26 +200,30 @@ def is_api_view_link(link: str) -> bool:
 
 
 def clean_link(link, path):
-    link = unquote(link).replace(" ", "_")
-    if re.match(r"\.?.+[#:].*", link.split("/")[-1]) and path:
-        # Reconstruct without #.* or :.*
-        stem = link.split("/")[-1].split("#")[0].split(":")[0]
-        directories = link.split("/")[:-1]
-        link = "/".join(directories + [stem])
+    link = link.replace("&amp;", "&").replace(" ", "_")
+
+    # Separate path/query/fragment so query parameters are preserved
+    parsed = urlsplit(link)
+    link_path = unquote(parsed.path)
+
+    if re.match(r"\.?.+[#:].*", link_path.split("/")[-1]) and path:
+        # Reconstruct without #.* or :.* in the filename.
+        stem = link_path.split("/")[-1].split("#")[0].split(":")[0]
+        directories = link_path.split("/")[:-1]
+        link_path = "/".join(directories + [stem])
+
     # Add path to relative links
-    if not link.startswith("/") and path:
-        link = f"/{path.rsplit('/', 1)[0]}/{link}"
+    if not link_path.startswith("/") and path:
+        link_path = f"/{path.rsplit('/', 1)[0]}/{link_path}"
+
     # Replace \\ with /
-    link = link.replace("\\", "/")
-    # Resolve relative path segments so page and media link collectors use the
-    # same canonical URL and cannot mistake media for an assignment.
-    if link:
-        suffix_index = min(
-            (index for index in (link.find("?"), link.find("#")) if index >= 0),
-            default=len(link),
-        )
-        link = posixpath.normpath(link[:suffix_index]) + link[suffix_index:]
-    return link
+    link_path = link_path.replace("\\", "/")
+
+    # Resolve relative path segments while preserving query + fragment.
+    if link_path:
+        link_path = posixpath.normpath(link_path)
+
+    return urlunsplit(("", "", link_path, parsed.query, parsed.fragment))
 
 
 def _normalize_page_link(link):
@@ -244,16 +267,6 @@ def get_media_links(html, path=""):
         if not link.startswith("/") and path:
             filtered_links.add(f"{path.rsplit('/', 1)[0]}/{link}")
             continue
-        if "?" in link and any(
-            (
-                link.split("?")[0] in [l.split("?")[0] for l in media_links],
-                link.split("?")[0] in [l.split("?")[0] for l in filtered_links],
-            )
-        ):
-            print(
-                f"Skipping {link} because it has a query string and the base link is already in media_links or filtered_links"
-            )
-            continue
         filtered_links.add(link)
 
     return filtered_links
@@ -274,35 +287,43 @@ def _has_translation_route(link):
 
 
 def _download_media(link):
-    request_path = link.strip("/").split("#")[0]
-    path = request_path
-    path = unquote_path(path)
+    # The URL used for downloading keeps the query string.
+    request_path = link.strip("/").split("#", 1)[0]
+
+    # The filesystem path never contains query parameters or fragments.
+    path = unquote_path(request_path.split("?", 1)[0])
+
     # TODO: this is a hack. hopefully temporary.
-    if "/api/generate_thumbnail/" in link:
-        path = path.rsplit("?")[0] + ".webp"
-    path = path.rsplit("?")[0]
+    if "/api/generate_thumbnail/" in request_path:
+        path = path + ".webp"
     output_path = Path("demo") / path
     if incremental_mode and output_path.exists():
         return
 
-    print(f"Downloading \33[34m{link}\33[0m")
-    r = requests.get(f"{url}/{request_path}", allow_redirects=True)
+    request_url = f"{url}/{request_path}"
+    print(f"Downloading \33[34m{request_url}\33[0m")
+
     try:
-        os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
-    except (NotADirectoryError, OSError):
-        print(f"WARNING: Could not create directory for {path}. Skipping download.")
+        r = requests.get(request_url, allow_redirects=True, timeout=600)
+    except requests.RequestException as e:
+        print(f"WARNING: Could not download {link}: {e}")
         return
 
-    if not path or not r.ok:
-        print(f"WARNING: Could not download {link}")
+    if not r.ok:
+        print(f"WARNING: Could not download {link} " f"(status code: {r.status_code})")
+        return
+
+    if not path:
+        print(f"WARNING: Could not download {link}: empty output path")
         return
 
     if len(path.split("/")[-1]) > 255:
         print("WARNING: Cannot download file with name longer than 255 characters")
         return
     try:
-        os.makedirs(os.path.dirname(f"demo/{path}"), exist_ok=True)
-        with open(f"demo/{path}", "wb+") as f:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+
+        with output_path.open("wb") as f:
             f.write(r.content)
     except Exception as e:
         print(f"WARNING: Could not write file {path}: {e}")
@@ -608,8 +629,7 @@ def configure_demo_build() -> tuple[str, str, bool]:
 
     full_build = (
         os.environ.get("FORCE_FULL_REBUILD", "").lower() == "true"
-        or
-        not previous_state
+        or not previous_state
         or previous_state.get("root_revision") != root_revision
         or previous_state.get("root_worktree_fingerprint") != root_worktree_fingerprint
         or not previous_state.get("piggybank_revision")
@@ -619,9 +639,7 @@ def configure_demo_build() -> tuple[str, str, bool]:
         previous_state["piggybank_revision"] != piggybank_revision
         or previous_state.get("piggybank_worktree_fingerprint") != piggybank_worktree_fingerprint
     ):
-        changes = _changed_piggybank_files(
-            piggybank_path, previous_state["piggybank_revision"], piggybank_revision
-        )
+        changes = _changed_piggybank_files(piggybank_path, previous_state["piggybank_revision"], piggybank_revision)
 
     if full_build:
         rmtree("demo", ignore_errors=True)

@@ -1,4 +1,3 @@
-from hashlib import md5
 from html import unescape
 
 from flask import Blueprint, request, jsonify
@@ -13,72 +12,117 @@ api_routes = Blueprint("api", __name__, url_prefix="/api")
 
 @api_routes.route("/generate_thumbnail/<string:text>")
 def generate_thumbnail(text: str, request=request):
-    """Generate a thumbnail image with the given text and query parameters."""
-    text = unescape(text)
-    bg_color = request.args.get("bg_color", "")
-    text_color = request.args.get("text_color", "")
-    width = request.args.get("width", 500)
-    height = request.args.get("height", 200)
+    """Generate a deterministic, readable fallback thumbnail."""
+    text = unescape(text).strip()
 
-    # c is a hash of the text to get a color combination
-    gibberish = request.args.get("c", "")
+    raw_bg_color = request.args.get(
+        "bg_color",
+        "",
+    )
 
-    # Text, Background combinations  (text_color, bg_color)
-    color_palettes = [
-        ("ffffff", "85144b"),
-        ("001f3f", "39cccc"),
-        ("ff851b", "001f3f"),
-        ("2ecc40", "001f3f"),
-        ("39cccc", "001f3f"),
-        ("7fdbff", "85144b"),
-        ("f012be", "111111"),
-        ("ffdc00", "111111"),
-        ("001f3f", "ff4136"),
-        ("ffffff", "111111"),
-        ("111111", "ffffff"),
-        ("ff4136", "111111"),
-        ("2ecc40", "111111"),
-        ("ff4136", "85144b"),
-        # Earthy / warm
-        ("fefae0", "3a5a40"),
-        ("f4f1de", "e07a5f"),
-        ("264653", "e9c46a"),
-        ("f2e9e4", "6b4226"),
-        # Cool / modern
-        ("caf0f8", "023e8a"),
-        ("e0fbfc", "293241"),
-        ("f8f9fa", "495057"),
-        ("ffffff", "6c63ff"),
-        # Vivid / bold
-        ("1a1a2e", "e94560"),
-        ("fca311", "14213d"),
-        ("edf2f4", "d90429"),
-        ("f72585", "3a0ca3"),
-        ("4cc9f0", "560bad"),
-        ("80ffdb", "2b2d42"),
-    ]
+    raw_text_color = request.args.get(
+        "text_color",
+        "",
+    )
 
-    if gibberish and not bg_color and not text_color:
-        # Hash both gibberish and the text so each title gets a unique palette
-        seed = int(md5((gibberish + text).encode()).hexdigest(), 16)
-        text_color, bg_color = color_palettes[seed % len(color_palettes)]
+    width = request.args.get(
+        "width",
+        640,
+    )
 
-    if not bg_color:
-        bg_color = "111111"
-    if not text_color:
-        text_color = "fefefe"
+    height = request.args.get(
+        "height",
+        200,
+    )
 
-    # sanitize the query parameters, text is max 50ch
-    _text = text[:50]
-    if len(_text) < len(text):
-        _text += "..."
-    bg_color = bg_color.lstrip("#")
-    text_color = text_color.lstrip("#")
-    width = min(int(width), 1000)
-    height = min(int(height), 1000)
+    # `c` is simply a stable visual seed.
+    style_seed = request.args.get("c", "") or text
 
-    # create the thumbnail
-    img = create_thumbnail(_text, bg_color, text_color, (width, height)).convert("RGB")
+    def sanitize_hex(
+        value: str,
+    ) -> str | None:
+        """
+        Return a clean `rrggbb` hex string, or `None` when nothing
+        usable was supplied -- `create_thumbnail` treats `None` as
+        "no override, choose a curated palette", so this must never
+        invent a fallback colour of its own.
+        """
+        value = (value or "").strip().lstrip("#").lower()
+
+        # Allow shorthand such as #fff.
+        if len(value) == 3:
+            value = "".join(char * 2 for char in value)
+
+        if len(value) != 6:
+            return None
+
+        try:
+            int(value, 16)
+
+        except ValueError:
+            return None
+
+        return value
+
+    def sanitize_dimension(
+        value,
+        default: int,
+        minimum: int,
+        maximum: int,
+    ) -> int:
+        try:
+            value = int(value)
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+            value = default
+
+        return max(
+            minimum,
+            min(
+                value,
+                maximum,
+            ),
+        )
+
+    bg_color = sanitize_hex(raw_bg_color)
+    text_color = sanitize_hex(raw_text_color)
+
+    # Your automatic media route explicitly asks for 1024x512.
+    # The old max of 1000 silently reduced that to 1000x512.
+    width = sanitize_dimension(
+        width,
+        default=500,
+        minimum=128,
+        maximum=2048,
+    )
+
+    height = sanitize_dimension(
+        height,
+        default=200,
+        minimum=64,
+        maximum=2048,
+    )
+
+    # Prevent absurd fallback URLs from becoming giant title blocks.
+    thumbnail_text = text[:50]
+
+    if len(thumbnail_text) < len(text):
+        thumbnail_text = thumbnail_text.rstrip() + "..."
+
+    img = create_thumbnail(
+        thumbnail_text,
+        bg_color=bg_color,
+        text_color=text_color,
+        size=(
+            width,
+            height,
+        ),
+        seed=style_seed,
+    )
+
     return serve_pil_image(img)
 
 

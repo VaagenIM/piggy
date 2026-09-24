@@ -259,7 +259,7 @@ def create_app(debug: bool = False) -> Flask:
                 # if there is no /, we are at the root folder and should repeat the name
                 _, name = wildcard.rsplit("/", 1) if "/" in wildcard else (wildcard, wildcard)
                 name = request.args.get("title", name)
-                query_params = {"c": name, "width": 1024, "height": 512}
+                query_params = {"c": name, "width": 1024, "height": 320}
                 name = name.replace("_", " ")
                 return generate_thumbnail(name, request=request.from_values(query_string=query_params))
             return send_file("static/img/placeholders/100x100.png")

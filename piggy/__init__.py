@@ -4,6 +4,7 @@ from enum import Enum
 from pathlib import Path
 
 PIGGYBANK_FOLDER = Path("piggybank")
+PIGGYBANK_UUID_MAP_PATH = Path("piggybank-data") / "uuid_map.json"
 STATIC_FONTS_PATHS = [
     str(Path(os.path.join(dp, f)).as_posix()).split("/static/fonts/")[-1]
     for dp, dn, filenames in os.walk(Path(__file__).parent / "static" / "fonts")

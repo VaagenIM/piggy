@@ -45,21 +45,44 @@
   {% endif %}
 {% endif %}
 
-{% if not media_abspath and meta.thumbnail %}
+{% set base_url = request.host_url.rstrip('/') %}
+{% set media_path = media_abspath.replace('\\', '/').replace(PIGGYBANK_FOLDER, '') if media_abspath else '' %}
+
+{% set _tn_path = meta.thumbnail %}
+{% if not meta._has_thumbnail and meta._use_fallback %}
+  {% set _tn_path = "media/header" %}
+{% endif %}
+
+{# Fallback thumbnails #}
+{% if meta.thumbnail and meta.thumbnail.endswith('media/header') %}
+  {% set image_base = media_path.rsplit('/translations/', 1)[0] %}
+  {% set ns.image = base_url + image_base + '/' + _tn_path + '.' + img_fmt + '?title=' + ns.og_name %}
+
+  {# If thumbnail exists and is absolute url (shortlinks) #}
+{% elif meta.thumbnail and meta.thumbnail.startswith('http') %}
   {% set ns.image = meta.thumbnail %}
+
+  {# If thumbnail exists and is a relative path #}
 {% elif media_abspath and meta.thumbnail %}
-  {# TODO: This is a bit of a hack and probably unintended... Not sure why "piggybank" is here... #}
-  {% set media_path = media_abspath.replace('\\', '/').replace(PIGGYBANK_FOLDER, '') %}
-  {% set image_path = media_path.replace(' ', '_') + '/' + meta.thumbnail + '.' + img_fmt %}
-  {% set ns.image = request.host_url.rstrip('/') + image_path + '?title=' + ns.og_name %}
+  {% set ns.image = base_url + media_path.replace(' ', '_') + '/' + _tn_path + '.' + img_fmt + '?title=' + ns.og_name %}
+
+  {# If no thumbnail is available, use a default image #}
 {% elif level_name %}
-  {% set ns.image = url_for('api.generate_thumbnail', text=level_name, _external=True)+'?c=' + meta.topic.name %}
-{% elif ns.meta_exists %}
-  {% set ns.image = request.host_url.rstrip('/') + media_abspath + '/media/header.' + img_fmt + '?title=' + ns.og_name %}
+  {% set ns.image = url_for('api.generate_thumbnail', text=level_name, _external=True) + '?c=' + meta.topic.name %}
+{% elif ns.meta_exists and media_abspath %}
+  {% set ns.image = base_url + media_abspath + '/media/header.' + img_fmt + '?title=' + ns.og_name %}
 {% else %}
   {% set ns.image = url_for('static', filename='img/icons/piggy_icon.png', _external=True) %}
 {% endif %}
-{% set ns.image = ns.image.replace('//', '/').replace('http:/', 'http://').replace('https:/', 'https://') %}
+
+{%
+  set ns.image = ns.image
+  .replace('//', '/')
+  .replace('http:/', 'http://')
+  .replace('https:/', 'https://')
+  .replace('\\', '/')
+  .replace(" ", "_")
+%}
 
 <meta property="og:title" content="{{ ns.og_name }}" />
 <meta property="og:type" content="website" />

@@ -1,6 +1,7 @@
 import atexit
 import os
 import subprocess
+from pathlib import Path
 
 from dotenv import load_dotenv
 
@@ -10,6 +11,8 @@ load_dotenv()
 subprocesses = []
 
 PORT = os.environ.get("PIGGY_PORT", 5001)
+PIGGYBANK_DATA_URL = "https://github.com/VaagenIM/piggybank.git"
+PIGGYBANK_DATA_FOLDER = Path("piggybank-data")
 
 
 @atexit.register
@@ -30,6 +33,22 @@ def checkout_branch():
     subprocess.run(cmd, shell=True, check=True)
 
 
+def sync_piggybank_data():
+    """Clone or update the latest UUID map from the piggybank data branch."""
+    if not (PIGGYBANK_DATA_FOLDER / ".git").exists():
+        if PIGGYBANK_DATA_FOLDER.exists():
+            raise RuntimeError(f"{PIGGYBANK_DATA_FOLDER} exists but is not a git checkout")
+        subprocess.run(
+            ["git", "clone", "--branch", "data", "--single-branch", PIGGYBANK_DATA_URL, str(PIGGYBANK_DATA_FOLDER)],
+            check=True,
+        )
+        return
+
+    git = ["git", "-C", str(PIGGYBANK_DATA_FOLDER)]
+    subprocess.run([*git, "fetch", "origin", "data"], check=True)
+    subprocess.run([*git, "reset", "--hard", "origin/data"], check=True)
+
+
 if __name__ == "__main__":
     # Debug
     import logging
@@ -46,6 +65,7 @@ if __name__ == "__main__":
     if os.environ.get("WERKZEUG_RUN_MAIN") != "true":
         # This code will run only once, not in the reloaded processes
         checkout_branch()
+        sync_piggybank_data()
         subprocesses.append(subprocess.Popen("npx livereload piggy,piggybank -e html,css,js,md", shell=True))
         print(f"Houston, we have lift-off! (http://localhost:{PORT})")
     # Import after setting the environment variables for testing
