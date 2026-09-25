@@ -539,6 +539,16 @@ def _worktree_fingerprint(repository_path: Path) -> str:
     return sha256(diff).hexdigest()
 
 
+# Mirrors piggy.ALLOWED_URL_CHARS_REGEX. The app strips all other characters from the
+# assignment URL segment (e.g. the commas in "Rock, Paper, Scissors"), so routes must match.
+_DISALLOWED_ASSIGNMENT_CHARS = re.compile(r"[^a-zA-Z0-9\-_æøåÆØÅ]")
+
+
+def _assignment_segment(filename: str) -> str:
+    """Return the URL segment the app uses for an assignment file name."""
+    return _DISALLOWED_ASSIGNMENT_CHARS.sub("", Path(filename).stem.replace(".", ""))
+
+
 def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
     """Return affected HTML routes, deleted output paths, and whether a full build is required."""
     path = path.replace("\\", "/").replace(" ", "_")
@@ -560,13 +570,13 @@ def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
         filename = parts[-1]
         if not language or not filename:
             return routes, set(), False
-        assignment = "/".join(content_parts + [Path(filename).stem.replace(".", "")])
+        assignment = "/".join(content_parts + [_assignment_segment(filename)])
         routes.add(f"/main/{assignment}/lang/{language}")
         routes.add(f"/main/{assignment}")
         directory_parts = content_parts
     elif path.endswith((".md", ".oink")):
         directory_parts = [part.replace(".", "") for part in parts[:-1]]
-        assignment = "/".join(directory_parts + [Path(parts[-1]).stem.replace(".", "")])
+        assignment = "/".join(directory_parts + [_assignment_segment(parts[-1])])
         routes.add(f"/main/{assignment}")
     elif path.endswith("meta.json"):
         directory_parts = [part.replace(".", "") for part in parts[:-1]]
