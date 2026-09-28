@@ -28,15 +28,34 @@ from piggy.utils import (
     generate_summary_from_mkdocs_html,
     normalize_path_to_str,
     lru_cache_wrapper,
+    disable_server_side_markdown_exec,
 )
+
+# Before any page is rendered: markdown content must never run code on the server
+disable_server_side_markdown_exec()
 
 
 TURTLECONVERTER_STYLESHEET_RE = re.compile(
     r"""
     <link\b
     (?=[^>]*\brel=(?:"stylesheet"|'stylesheet'|stylesheet))
-    (?=[^>]*\bhref=(?:"[^"]*/static/turtleconvert/stylesheets/[^"]*"|'[^']*/static/turtleconvert/stylesheets/[^']*'|[^\s>]*static/turtleconvert/stylesheets/[^\s>]*))
+    (?=[^>]*\bhref=(?:"[^"]*/static/turtleconvert/(?:stylesheets/|_markdown_exec_pyodide\.css)[^"]*"|'[^']*/static/turtleconvert/(?:stylesheets/|_markdown_exec_pyodide\.css)[^']*'|[^\s>]*static/turtleconvert/(?:stylesheets/|_markdown_exec_pyodide\.css)[^\s>]*))
     [^>]*>
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+
+
+PYODIDE_EDITOR_LABEL_RE = re.compile(
+    r"""(<span\ class=["']?pyodide-bar-item["']?>)Editor(?:\ \(session:\ ([^)<]*)\))?(?=</span>)""",
+    re.VERBOSE,
+)
+
+# markdown-exec's highlight.js script and themes, unused by piggy's editor script
+PYODIDE_UNUSED_ASSETS_RE = re.compile(
+    r"""
+    <script\b[^>]*\bsrc=["']?[^"'\s>]*/highlight\.js/[^>]*>\s*</script>
+    | <link\b[^>]*\bhref=["']?[^"'\s>]*/highlightjs-themes@[^>]*>
     """,
     re.IGNORECASE | re.VERBOSE,
 )
@@ -45,6 +64,22 @@ TURTLECONVERTER_STYLESHEET_RE = re.compile(
 def remove_turtleconverter_stylesheets(head: str) -> str:
     """Drop generated turtleconverter CSS links from converted assignment heads."""
     return TURTLECONVERTER_STYLESHEET_RE.sub("", head)
+
+
+def relabel_pyodide_editors(body: str) -> str:
+    """Label pyodide editors "Rediger", only naming the session when a block opts into a shared one."""
+
+    def label(match: re.Match) -> str:
+        session = match.group(2)
+        suffix = f" (økt: {session})" if session and session != "default" else ""
+        return f"{match.group(1)}Rediger{suffix}"
+
+    return PYODIDE_EDITOR_LABEL_RE.sub(label, body)
+
+
+def remove_unused_pyodide_assets(body: str) -> str:
+    """Drop markdown-exec's highlight.js script and theme links."""
+    return PYODIDE_UNUSED_ASSETS_RE.sub("", body)
 
 
 def cache_directory(
@@ -118,6 +153,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
     try:
         sections = _mdfile_to_sections_with_retry(p)
         sections["head"] = remove_turtleconverter_stylesheets(sections["head"])
+        sections["body"] = remove_unused_pyodide_assets(relabel_pyodide_editors(sections["body"]))
         print("Rendering:", p)
 
     except ConversionError:

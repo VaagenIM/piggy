@@ -445,3 +445,24 @@ function piggyCreateCodeLanguageIcon() {
 
   return icon;
 }
+
+/****************************************\
+|* CODE COPY FEEDBACK                   *|
+\****************************************/
+const piggyCopiedTimeouts = new WeakMap();
+
+document.addEventListener("click", (event) => {
+  const button = event.target.closest?.(
+    '.md-content .md-code__button[data-md-type="copy"]',
+  );
+  // Only when Material will copy something (an empty editor gives nothing)
+  if (!button?.matches("[data-clipboard-text], [data-clipboard-target]"))
+    return;
+
+  button.dataset.copied = "";
+  clearTimeout(piggyCopiedTimeouts.get(button));
+  piggyCopiedTimeouts.set(
+    button,
+    setTimeout(() => delete button.dataset.copied, 1500),
+  );
+});

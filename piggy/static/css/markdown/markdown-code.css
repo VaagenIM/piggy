@@ -200,16 +200,19 @@
     var(--piggy-code-block-background, var(--piggy-code-block-bg)) !important;
 }
 
-.md-content .highlight pre::-webkit-scrollbar {
+.md-content .highlight pre::-webkit-scrollbar,
+.md-content .pyodide .pyodide-output::-webkit-scrollbar {
   width: 0.75rem;
   height: 0.75rem;
 }
 
-.md-content .highlight pre::-webkit-scrollbar-track {
+.md-content .highlight pre::-webkit-scrollbar-track,
+.md-content .pyodide .pyodide-output::-webkit-scrollbar-track {
   background: var(--piggy-code-block-background, var(--piggy-code-block-bg));
 }
 
-.md-content .highlight pre::-webkit-scrollbar-thumb {
+.md-content .highlight pre::-webkit-scrollbar-thumb,
+.md-content .pyodide .pyodide-output::-webkit-scrollbar-thumb {
   background: var(--piggy-code-block-line-number);
   border: 0.2rem solid
     var(--piggy-code-block-background, var(--piggy-code-block-bg));
@@ -248,9 +251,15 @@
   overflow-wrap: anywhere !important;
 }
 
-.md-content .highlight ::selection {
+.md-content .highlight ::selection,
+.md-content .pyodide ::selection {
   color: var(--piggy-code-selection-text) !important;
   background: var(--piggy-code-selection-bg) !important;
+}
+
+.md-content .pyodide ::highlight(piggy-code-selection) {
+  color: var(--piggy-code-selection-text);
+  background-color: var(--piggy-code-selection-bg);
 }
 
 /************************\
@@ -807,6 +816,25 @@
   transform: translateY(-50%) translateX(0) !important;
 }
 
+/* Brief feedback after copying (markdown-overrides.js sets data-copied) */
+.md-content .md-code__button[data-md-type="copy"][data-copied] {
+  color: var(
+    --piggy-admonition-success-icon,
+    var(--piggy-code-clipboard-hover)
+  ) !important;
+}
+
+.md-content .md-code__button[data-md-type="copy"][data-copied]::after {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") !important;
+}
+
+.md-content .md-code__button[data-md-type="copy"][data-copied]::before {
+  content: "Copied!" !important;
+  opacity: 1 !important;
+  transform: translateY(-50%) translateX(0) !important;
+}
+
 /************************\
 |* CODE ANNOTATIONS     *|
 \************************/
@@ -1073,6 +1101,829 @@
 
 .md-content .md-annotation__list {
   margin-top: 0.75rem !important;
+}
+
+/************************\
+|* PYODIDE CODE BLOCKS  *|
+\************************/
+/* Script: piggy/overrides/_markdown_exec_pyodide.js */
+.md-content .pyodide {
+  --piggy-pyodide-edit-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z'/%3E%3Cpath d='m15 5 4 4'/%3E%3C/svg%3E");
+  --piggy-pyodide-run-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5.14v14l11-7-11-7Z'/%3E%3C/svg%3E");
+  --piggy-pyodide-info-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 16v-4'/%3E%3Cpath d='M12 8h.01'/%3E%3C/svg%3E");
+  --piggy-pyodide-close-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6 6 18'/%3E%3Cpath d='m6 6 12 12'/%3E%3C/svg%3E");
+  --piggy-pyodide-reset-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8'/%3E%3Cpath d='M3 3v5h5'/%3E%3C/svg%3E");
+  --piggy-pyodide-output-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 17 6-6-6-6'/%3E%3Cpath d='M12 19h8'/%3E%3C/svg%3E");
+
+  display: block !important;
+  position: relative !important;
+  isolation: isolate !important;
+  box-sizing: border-box !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  margin: calc(1rem * var(--piggy-font-scale)) 0 !important;
+
+  color: var(--piggy-code-block-text, var(--piggy-code)) !important;
+  background: var(
+    --piggy-code-block-background,
+    var(--piggy-code-block-bg)
+  ) !important;
+  background-color: var(
+    --piggy-code-block-background,
+    var(--piggy-code-block-bg)
+  ) !important;
+
+  border: 1px solid
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
+  border-radius: var(--piggy-code-block-radius) !important;
+
+  overflow: hidden !important;
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease !important;
+}
+
+.md-content .pyodide:has(> :where(div:not(.pyodide-editor-bar)):hover) {
+  border-color: color-mix(
+    in srgb,
+    var(--piggy-button-active) 35%,
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border))
+  ) !important;
+}
+
+.md-content .pyodide:has(.ace_focus) {
+  border-color: color-mix(
+    in srgb,
+    var(--piggy-button-active) 60%,
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border))
+  ) !important;
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--piggy-button-active) 22%, transparent) !important;
+}
+
+.md-content .pyodide-editor-bar {
+  --piggy-pyodide-bar-icon: var(--piggy-pyodide-edit-icon);
+  --piggy-pyodide-bar-icon-color: var(--piggy-button-active);
+  --piggy-pyodide-bar-icon-opacity: 1;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: calc(0.45rem * var(--piggy-font-scale)) !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-height: calc(2.2rem * var(--piggy-font-scale)) !important;
+  margin: 0 !important;
+  padding: 0 var(--piggy-code-copy-button-margin) 0
+    var(--piggy-code-block-padding-x) !important;
+
+  color: var(--piggy-code-block-text, var(--piggy-code)) !important;
+  background: var(--piggy-code-block-filename-bg) !important;
+  background-color: var(--piggy-code-block-filename-bg) !important;
+
+  border: 0 !important;
+  border-bottom: 1px solid
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
+
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
+  font-size: calc(
+    0.76rem * var(--piggy-reader-component-font-scale)
+  ) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.25 !important;
+  white-space: nowrap !important;
+}
+
+.md-content .pyodide > .pyodide-editor-bar ~ .pyodide-editor-bar {
+  --piggy-pyodide-bar-icon: var(--piggy-pyodide-output-icon);
+  --piggy-pyodide-bar-icon-color: var(--piggy-code-clipboard, currentColor);
+  --piggy-pyodide-bar-icon-opacity: 0.78;
+
+  border-top: 1px solid
+    var(--piggy-code-block-border-color, var(--piggy-code-block-border)) !important;
+}
+
+.md-content .pyodide-bar-item {
+  box-sizing: border-box !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.md-content .pyodide-bar-item:not(.pyodide-clickable) {
+  display: block !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.md-content .pyodide-bar-item:not(.pyodide-clickable)::before {
+  content: "" !important;
+  display: inline-block !important;
+  width: calc(0.95rem * var(--piggy-font-scale)) !important;
+  height: calc(0.95rem * var(--piggy-font-scale)) !important;
+  margin-right: calc(0.38rem * var(--piggy-font-scale)) !important;
+
+  background: var(--piggy-pyodide-bar-icon-color) !important;
+  -webkit-mask: var(--piggy-pyodide-bar-icon) center / contain no-repeat !important;
+  mask: var(--piggy-pyodide-bar-icon) center / contain no-repeat !important;
+  opacity: var(--piggy-pyodide-bar-icon-opacity) !important;
+  vertical-align: middle !important;
+}
+
+/* Run / Clear buttons */
+.md-content .pyodide-clickable {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  align-items: center !important;
+  gap: calc(0.3rem * var(--piggy-font-scale)) !important;
+  padding: calc(0.28rem * var(--piggy-font-scale))
+    calc(0.65rem * var(--piggy-font-scale)) !important;
+
+  color: var(--piggy-code-clipboard) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+
+  border: 1px solid transparent !important;
+  border-radius: 999px !important;
+
+  cursor: pointer !important;
+  text-align: center !important;
+  user-select: none !important;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease !important;
+}
+
+.md-content .pyodide-clickable:hover {
+  color: var(--piggy-code-clipboard-hover) !important;
+  background: color-mix(
+    in srgb,
+    var(--piggy-code-clipboard-hover) 12%,
+    transparent
+  ) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--piggy-code-clipboard-hover) 12%,
+    transparent
+  ) !important;
+  border-color: color-mix(
+    in srgb,
+    var(--piggy-code-clipboard-hover) 26%,
+    transparent
+  ) !important;
+}
+
+.md-content .pyodide-clickable[id$="--run"] {
+  color: var(--piggy-text-button) !important;
+  background: var(--piggy-button) !important;
+  background-color: var(--piggy-button) !important;
+  border-color: var(
+    --piggy-button-border,
+    color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+  ) !important;
+}
+
+.md-content .pyodide-clickable[id$="--run"]:hover {
+  color: var(--piggy-text-button) !important;
+  background: var(--piggy-button-hover) !important;
+  background-color: var(--piggy-button-hover) !important;
+}
+
+/* While the code runs, Run is ignored */
+.md-content .pyodide[data-running] .pyodide-clickable[id$="--run"] {
+  cursor: progress !important;
+  opacity: 0.6 !important;
+}
+
+/* ...until it has run a while: then it is the Stop button */
+.md-content .pyodide[data-running] .pyodide-clickable[id$="--run"][data-stop] {
+  cursor: pointer !important;
+  opacity: 1 !important;
+}
+
+/* Only one editor runs at a time on the page */
+:root[data-pyodide-running]
+  .md-content
+  .pyodide:not([data-running])
+  .pyodide-clickable[id$="--run"] {
+  cursor: not-allowed !important;
+  opacity: 0.6 !important;
+}
+
+.md-content .pyodide-clickable .twemoji {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  width: calc(0.85rem * var(--piggy-font-scale)) !important;
+  height: calc(0.85rem * var(--piggy-font-scale)) !important;
+  vertical-align: middle !important;
+}
+
+.md-content .pyodide-clickable .twemoji svg {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  fill: currentColor !important;
+}
+
+/* Copy buttons */
+.md-content .pyodide-editor-bar .md-code__button[data-md-type="copy"] {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+}
+
+.md-content
+  .pyodide-editor-bar
+  .md-code__button.pyodide-copy-output:not([data-copied])::before {
+  content: "Copy output" !important;
+}
+
+/* Help button */
+.md-content
+  .pyodide-editor-bar:has(> .pyodide-help-button)
+  .pyodide-bar-item:not(.pyodide-clickable) {
+  flex: 0 1 auto !important;
+}
+
+.md-content .pyodide-help-button,
+.md-content .pyodide-help__close,
+.md-content .pyodide-reset-button {
+  display: inline-grid !important;
+  flex: 0 0 auto !important;
+  place-items: center !important;
+  box-sizing: border-box !important;
+  width: calc(1.6rem * var(--piggy-font-scale)) !important;
+  height: calc(1.6rem * var(--piggy-font-scale)) !important;
+  padding: 0 !important;
+
+  color: var(--piggy-code-clipboard) !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 999px !important;
+
+  cursor: pointer !important;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease !important;
+}
+
+.md-content .pyodide-help-button {
+  margin: 0 auto 0 calc(-0.2rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content .pyodide-help-button::after,
+.md-content .pyodide-help__close::after,
+.md-content .pyodide-reset-button::after {
+  content: "" !important;
+  width: calc(0.95rem * var(--piggy-font-scale)) !important;
+  height: calc(0.95rem * var(--piggy-font-scale)) !important;
+
+  background: currentColor !important;
+  -webkit-mask: var(--piggy-pyodide-info-icon) center / contain no-repeat !important;
+  mask: var(--piggy-pyodide-info-icon) center / contain no-repeat !important;
+}
+
+.md-content .pyodide-help__close::after {
+  -webkit-mask-image: var(--piggy-pyodide-close-icon) !important;
+  mask-image: var(--piggy-pyodide-close-icon) !important;
+}
+
+.md-content .pyodide-reset-button::after {
+  -webkit-mask-image: var(--piggy-pyodide-reset-icon) !important;
+  mask-image: var(--piggy-pyodide-reset-icon) !important;
+}
+
+/* Reset is only usable once the code has changed */
+.md-content .pyodide-reset-button:disabled {
+  cursor: default !important;
+  opacity: 0.35 !important;
+}
+
+.md-content .pyodide-help-button:hover,
+.md-content .pyodide-help-button:focus-visible,
+.md-content .pyodide:has(> .pyodide-help:popover-open) .pyodide-help-button,
+.md-content .pyodide-help__close:hover,
+.md-content .pyodide-help__close:focus-visible,
+.md-content .pyodide-reset-button:not(:disabled):hover,
+.md-content .pyodide-reset-button:focus-visible {
+  color: var(--piggy-code-clipboard-hover) !important;
+  background: color-mix(
+    in srgb,
+    var(--piggy-code-clipboard-hover) 12%,
+    transparent
+  ) !important;
+  border-color: color-mix(
+    in srgb,
+    var(--piggy-code-clipboard-hover) 26%,
+    transparent
+  ) !important;
+}
+
+.md-content .pyodide-help-button:focus-visible,
+.md-content .pyodide-help__close:focus-visible,
+.md-content .pyodide-reset-button:focus-visible {
+  outline: 2px solid var(--piggy-button-focus, var(--piggy-button-active)) !important;
+  outline-offset: 2px !important;
+}
+
+.md-content .pyodide-help {
+  position: fixed !important;
+  inset: auto;
+  box-sizing: border-box !important;
+  width: min(
+    calc(28rem * var(--piggy-font-scale)),
+    calc(100vw - 16px)
+  ) !important;
+  max-height: calc(100vh - 16px) !important;
+  margin: 0 !important;
+  padding: calc(0.75rem * var(--piggy-font-scale))
+    calc(0.95rem * var(--piggy-font-scale))
+    calc(0.95rem * var(--piggy-font-scale)) !important;
+  overflow: auto !important;
+
+  color: var(--piggy-code-tooltip-text) !important;
+  background: var(--piggy-code-tooltip-bg) !important;
+  border: 1px solid var(--piggy-code-tooltip-border) !important;
+  border-radius: calc(0.5rem * var(--piggy-font-scale)) !important;
+  box-shadow:
+    0 0.8rem 2rem rgba(0, 0, 0, 0.24),
+    0 0 0 1px
+      color-mix(in srgb, var(--piggy-code-annotation-ring) 20%, transparent) !important;
+
+  font-size: calc(
+    0.85rem * var(--piggy-reader-component-font-scale)
+  ) !important;
+  line-height: 1.45 !important;
+  text-align: left !important;
+  flex-direction: column !important;
+  gap: calc(0.55rem * var(--piggy-font-scale)) !important;
+
+  /* Slides in from the button's side (data-shown and data-side set by the script) */
+  opacity: 0;
+  transform: translateY(var(--piggy-pyodide-help-slide, -0.5rem)) scaleY(0.98);
+  transform-origin: top;
+  pointer-events: none;
+  /* Closing: slide first, fade at the end, so the slide stays visible */
+  transition:
+    opacity 0.18s ease-in,
+    transform 0.18s ease-out,
+    display 0.18s allow-discrete,
+    overlay 0.18s allow-discrete;
+}
+
+.md-content .pyodide-help[data-side="above"] {
+  --piggy-pyodide-help-slide: 0.5rem;
+  transform-origin: bottom;
+}
+
+.md-content .pyodide-help:popover-open {
+  display: flex !important;
+}
+
+.md-content .pyodide-help:popover-open[data-shown] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition-duration: 0.16s;
+  transition-timing-function: ease-out;
+}
+
+.md-content .pyodide-help__header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: calc(0.5rem * var(--piggy-font-scale)) !important;
+  margin: 0 calc(-0.4rem * var(--piggy-font-scale)) 0 0 !important;
+}
+
+.md-content .pyodide-help__title {
+  font-size: calc(
+    0.95rem * var(--piggy-reader-component-font-scale)
+  ) !important;
+}
+
+.md-content .pyodide-help__item {
+  display: grid !important;
+  grid-template-columns: auto minmax(0, 1fr) !important;
+  gap: calc(0.55rem * var(--piggy-font-scale)) !important;
+  align-items: start !important;
+  text-wrap: pretty !important;
+}
+
+.md-content .pyodide-help__item::before {
+  content: "" !important;
+  width: calc(0.95rem * var(--piggy-font-scale)) !important;
+  height: calc(0.95rem * var(--piggy-font-scale)) !important;
+  margin-top: calc(0.15rem * var(--piggy-font-scale)) !important;
+
+  background: var(--piggy-button-active) !important;
+  -webkit-mask: var(--piggy-pyodide-help-icon) center / contain no-repeat !important;
+  mask: var(--piggy-pyodide-help-icon) center / contain no-repeat !important;
+}
+
+.md-content .pyodide-help__item--edit {
+  --piggy-pyodide-help-icon: var(--piggy-pyodide-edit-icon);
+}
+
+.md-content .pyodide-help__item--reset {
+  --piggy-pyodide-help-icon: var(--piggy-pyodide-reset-icon);
+}
+
+.md-content .pyodide-help__item--run {
+  --piggy-pyodide-help-icon: var(--piggy-pyodide-run-icon);
+}
+
+.md-content .pyodide-help__item--copy {
+  --piggy-pyodide-help-icon: var(--md-code-copy-icon);
+}
+
+.md-content .pyodide-help__subtitle {
+  margin-top: calc(0.2rem * var(--piggy-font-scale)) !important;
+  padding-top: calc(0.6rem * var(--piggy-font-scale)) !important;
+  border-top: 1px solid var(--piggy-code-tooltip-border) !important;
+}
+
+.md-content .pyodide-help__shortcuts {
+  display: grid !important;
+  grid-template-columns: max-content minmax(0, 1fr) !important;
+  gap: calc(0.45rem * var(--piggy-font-scale))
+    calc(0.75rem * var(--piggy-font-scale)) !important;
+  align-items: center !important;
+}
+
+.md-content .pyodide-help__keys {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: calc(0.25rem * var(--piggy-font-scale)) !important;
+  color: var(--piggy-key-separator) !important;
+  white-space: nowrap !important;
+}
+
+.md-content .pyodide-help kbd {
+  min-width: calc(1.4rem * var(--piggy-font-scale)) !important;
+  min-height: calc(1.35rem * var(--piggy-font-scale)) !important;
+  padding: calc(0.06rem * var(--piggy-font-scale))
+    calc(0.32rem * var(--piggy-font-scale)) !important;
+  font-size: calc(
+    0.74rem * var(--piggy-reader-component-font-scale)
+  ) !important;
+}
+
+/* Ace editor */
+.md-content .pyodide > div:has(> .pyodide-editor) {
+  margin: 0 !important;
+  padding: var(--piggy-code-block-padding-y) 0 !important;
+  cursor: text !important;
+  transition: background-color 140ms ease !important;
+}
+
+.md-content .pyodide > div:has(> .pyodide-editor):hover,
+.md-content .pyodide > div:has(> .pyodide-editor):focus-within {
+  background-color: color-mix(
+    in srgb,
+    var(--piggy-code-block-text, var(--piggy-code)) 4%,
+    transparent
+  ) !important;
+}
+
+.md-content .pyodide .pyodide-editor {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  color: var(--piggy-code-syntax-text) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
+  font-size: var(--piggy-code-block-font-size) !important;
+  line-height: var(--piggy-code-block-line-height) !important;
+}
+
+.md-content .pyodide .ace_gutter {
+  color: var(--piggy-code-block-line-number) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.md-content .pyodide .ace_gutter-cell {
+  padding-left: calc(0.75rem * var(--piggy-font-scale) + 2ch) !important;
+  padding-right: calc(1.65rem * var(--piggy-font-scale) - 4px) !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+.md-content .pyodide .ace_marker-layer .ace_active-line,
+.md-content .pyodide .ace_gutter-active-line {
+  background: color-mix(
+    in srgb,
+    var(--piggy-code-block-text, var(--piggy-code)) 6%,
+    transparent
+  ) !important;
+}
+
+.md-content .pyodide .ace_focus .ace_gutter-active-line {
+  color: var(--piggy-code-block-text, var(--piggy-code)) !important;
+}
+
+.md-content .pyodide .ace_editor:not(.ace_focus) .ace_active-line,
+.md-content .pyodide .ace_editor:not(.ace_focus) .ace_gutter-active-line {
+  background: transparent !important;
+}
+
+.md-content .pyodide .ace_editor:not(.ace_focus) .ace_bracket {
+  display: none !important;
+}
+
+.md-content .pyodide .ace_marker-layer .ace_selection {
+  background: var(--piggy-code-selection-bg) !important;
+}
+
+/* The selected text is highlighted instead (see ::highlight above) */
+.md-content
+  .pyodide
+  .piggy-code-selection-highlight
+  .ace_marker-layer
+  .ace_selection {
+  background: transparent !important;
+}
+
+.md-content .pyodide .ace_marker-layer .ace_bracket,
+.md-content .pyodide .ace_marker-layer .ace_selected-word {
+  background: transparent !important;
+  border-color: color-mix(
+    in srgb,
+    var(--piggy-code-block-line-number) 40%,
+    transparent
+  ) !important;
+}
+
+/* No glow from Ace's default theme around multi-cursor selections */
+.md-content .pyodide .ace_marker-layer .ace_selection.ace_start {
+  box-shadow: none !important;
+}
+
+.md-content .pyodide .ace_cursor {
+  color: var(--piggy-code-block-text, var(--piggy-code)) !important;
+}
+
+.md-content .pyodide .ace_hidden-cursors .ace_cursor {
+  opacity: 0 !important;
+}
+
+.md-content .pyodide .ace_indent-guide {
+  background: none !important;
+  box-shadow: inset -1px 0 0
+    color-mix(in srgb, var(--piggy-code-block-line-number) 25%, transparent) !important;
+}
+
+.md-content .pyodide .ace_print-margin,
+.md-content .pyodide .ace_fold-widget {
+  display: none !important;
+}
+
+.md-content .pyodide .ace_scrollbar {
+  scrollbar-color: var(--piggy-code-block-line-number)
+    var(--piggy-code-block-background, var(--piggy-code-block-bg)) !important;
+}
+
+/* Ace token colors (see markdown-code-tokens.css) */
+.md-content .pyodide .ace_comment {
+  color: var(--piggy-code-syntax-comment) !important;
+  font-style: italic !important;
+}
+
+.md-content .pyodide .ace_keyword,
+.md-content .pyodide .ace_storage {
+  color: var(--piggy-code-syntax-keyword) !important;
+  font-weight: 600 !important;
+}
+
+.md-content .pyodide .ace_constant.ace_language {
+  color: var(--piggy-code-syntax-keyword-constant) !important;
+  font-weight: 600 !important;
+}
+
+.md-content .pyodide .ace_keyword.ace_operator {
+  color: var(--piggy-code-syntax-operator) !important;
+  font-weight: inherit !important;
+}
+
+.md-content .pyodide .ace_string {
+  color: var(--piggy-code-syntax-string) !important;
+}
+
+.md-content .pyodide .ace_string.ace_regexp {
+  color: var(--piggy-code-syntax-string-regex) !important;
+}
+
+.md-content .pyodide .ace_constant.ace_language.ace_escape,
+.md-content .pyodide .ace_constant.ace_character.ace_escape {
+  color: var(--piggy-code-syntax-string-escape) !important;
+  font-weight: inherit !important;
+}
+
+.md-content .pyodide .ace_constant.ace_numeric {
+  color: var(--piggy-code-syntax-number) !important;
+}
+
+.md-content .pyodide .ace_constant.ace_other {
+  color: var(--piggy-code-syntax-name-constant) !important;
+}
+
+.md-content .pyodide .ace_support.ace_function {
+  color: var(--piggy-code-syntax-name-builtin) !important;
+}
+
+.md-content .pyodide .ace_entity.ace_name.ace_function {
+  color: var(--piggy-code-syntax-name-function) !important;
+}
+
+.md-content .pyodide .ace_support.ace_class,
+.md-content .pyodide .ace_support.ace_type,
+.md-content .pyodide .ace_storage.ace_type {
+  color: var(--piggy-code-syntax-name-class) !important;
+  font-weight: 600 !important;
+}
+
+.md-content .pyodide .ace_variable.ace_language {
+  color: var(--piggy-code-syntax-name-builtin-pseudo) !important;
+}
+
+.md-content .pyodide .ace_identifier,
+.md-content .pyodide .ace_variable,
+.md-content .pyodide .ace_variable.ace_parameter {
+  color: var(--piggy-code-syntax-name-variable) !important;
+}
+
+.md-content .pyodide .ace_paren,
+.md-content .pyodide .ace_punctuation {
+  color: var(--piggy-code-syntax-punctuation) !important;
+}
+
+.md-content .pyodide .ace_invalid {
+  color: var(--piggy-code-syntax-error) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Output */
+.md-content .pyodide > pre {
+  margin: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Replaced by the copy button in the output bar */
+.md-content .pyodide > pre > .md-code__nav {
+  display: none !important;
+}
+
+.md-content .pyodide .pyodide-output {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-height: calc(
+    var(--piggy-code-block-line-height) + 2 * var(--piggy-code-block-padding-y)
+  ) !important;
+  max-height: calc(25rem * var(--piggy-font-scale)) !important;
+  margin: 0 !important;
+  padding: var(--piggy-code-block-padding-y) var(--piggy-code-block-padding-x) !important;
+
+  color: var(--piggy-code-syntax-text) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  font-family: var(
+    --piggy-monospace-font-family,
+    "Cascadia Code PL",
+    monospace
+  ) !important;
+  font-size: var(--piggy-code-block-font-size) !important;
+  line-height: var(--piggy-code-block-line-height) !important;
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
+
+  overflow: auto !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--piggy-code-block-line-number)
+    var(--piggy-code-block-background, var(--piggy-code-block-bg)) !important;
+}
+
+:root[data-reader-code-wrap="off"] .md-content .pyodide .pyodide-output {
+  white-space: pre !important;
+  overflow-wrap: normal !important;
+}
+
+/* "Kjører koden …" / "Laster inn Python …" while waiting */
+.md-content .pyodide .pyodide-output .pyodide-output__status {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.6em !important;
+  color: var(--piggy-code-syntax-comment) !important;
+  font-style: italic !important;
+  /* Fades in after a moment, so quick runs don't flash it */
+  animation: piggy-pyodide-status-in 150ms ease-out 120ms both;
+}
+
+/* Hidden while input() waits for the student */
+.md-content .pyodide .pyodide-output .pyodide-output__status[hidden] {
+  display: none !important;
+}
+
+.md-content .pyodide .pyodide-output .pyodide-output__status::before {
+  content: "";
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 1em;
+  height: 1em;
+
+  border: 2px solid
+    color-mix(in srgb, var(--piggy-button-active) 25%, transparent);
+  border-top-color: var(--piggy-button-active);
+  border-radius: 50%;
+
+  /* Transform-only, so it keeps spinning while Python blocks the page */
+  animation: piggy-pyodide-spin 0.8s linear infinite;
+  will-change: transform;
+}
+
+@keyframes piggy-pyodide-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes piggy-pyodide-status-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Hint while there is no output */
+.md-content .pyodide .pyodide-output:empty::before {
+  content: attr(data-hint);
+  color: var(--piggy-code-syntax-comment);
+  font-style: italic;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* "Koden ble stoppet." after Stop or the time limit */
+.md-content .pyodide .pyodide-output .pyodide-output__note {
+  color: var(--piggy-code-syntax-comment) !important;
+  font-style: italic !important;
+}
+
+/* input(): the answer, typed right after the prompt (width set by the script) */
+.md-content .pyodide .pyodide-output .pyodide-output__input {
+  display: inline-block !important;
+  box-sizing: content-box !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  color: inherit !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--piggy-button-active) !important;
+  border-radius: 0 !important;
+  caret-color: var(--piggy-button-active) !important;
+
+  font: inherit !important;
+  line-height: inherit !important;
+  vertical-align: baseline !important;
+  outline: none !important;
+}
+
+/* Tracebacks and other stderr output */
+.md-content .pyodide .pyodide-output .pyodide-output__error {
+  color: var(--piggy-code-syntax-error) !important;
 }
 
 /* Don't remove, this fixes stuff such as != <= >= turning into a weird amalgamation characters */

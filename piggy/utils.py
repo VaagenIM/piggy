@@ -1,11 +1,13 @@
 import os
 import re
+import shutil
 import subprocess
 from functools import lru_cache
 from io import BytesIO
 from pathlib import Path
 from typing import Optional
 
+import markdown_exec
 from bs4 import BeautifulSoup as bs
 from flask import send_file, request
 
@@ -132,8 +134,7 @@ def generate_print_css():
         f.write(css)
 
 
-# Lightweight state machine to read CSS metadata blocks. Theme CSS stays the
-# source of truth for colors, while metadata gives the settings UI richer cards.
+# Lightweight state machine to read CSS metadata blocks
 class ParserState:
     INIT = 1
     READ = 2
@@ -321,17 +322,57 @@ def process_json_for_api(obj, exclude_keys=None):
     return transform(obj)
 
 
+MARKDOWN_EXEC_ALLOWED_LANGUAGES = frozenset({"pyodide", "tree"})
+
+
+def _show_code_instead_of_executing(language: str):
+    def show_code(code: str, md, **_options) -> str:
+        # The same highlighting superfences gives any other fenced code block
+        return md.preprocessors["fenced_code_block"].highlight(
+            src=code, language=language, options={}, md=md, classes=[], id_value="", attrs={}
+        )
+
+    return show_code
+
+
+def disable_server_side_markdown_exec():
+    # Only works while markdown-exec dispatches through this dict, so refuse to start otherwise
+    if markdown_exec.formatter.__globals__.get("formatters") is not markdown_exec.formatters:
+        raise RuntimeError(
+            "markdown-exec no longer dispatches through markdown_exec.formatters; "
+            "update disable_server_side_markdown_exec() before running this version"
+        )
+
+    markdown_exec.MARKDOWN_EXEC_AUTO.clear()
+    for language in list(markdown_exec.formatters):
+        if language not in MARKDOWN_EXEC_ALLOWED_LANGUAGES:
+            markdown_exec.formatters[language] = _show_code_instead_of_executing(language)
+
+
 def delete_turtleconverter_stylesheets():
     """No longer used, might as well save a couple bytes."""
-    stylesheets_path = Path(__file__).parent / "static" / "turtleconvert" / "stylesheets"
+    turtleconvert_path = Path(__file__).parent / "static" / "turtleconvert"
+    stylesheets_path = turtleconvert_path / "stylesheets"
     if stylesheets_path.exists() and stylesheets_path.is_dir():
         for file in stylesheets_path.iterdir():
             if file.is_file():
                 file.unlink()
         stylesheets_path.rmdir()
 
+    # Pyodide code blocks are styled by markdown/markdown-code.css instead
+    (turtleconvert_path / "_markdown_exec_pyodide.css").unlink(missing_ok=True)
+
+
+def override_pyodide_js():
+    """Replace markdown-exec's pyodide editor script with piggy's (edits need a restart)."""
+    source = Path(__file__).parent / "overrides" / "_markdown_exec_pyodide.js"
+    destination = Path(__file__).parent / "static" / "turtleconvert" / "_markdown_exec_pyodide.js"
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(source, destination)
+
 
 def startup_tasks():
     generate_static_files(static_folder=Path(os.path.dirname(Path(__file__).absolute())) / "static")
-    # delete_turtleconverter_stylesheets()
+    delete_turtleconverter_stylesheets()
+    override_pyodide_js()  # after turtleconverter has written its own version
     generate_print_css()
