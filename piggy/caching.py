@@ -28,7 +28,11 @@ from piggy.utils import (
     generate_summary_from_mkdocs_html,
     normalize_path_to_str,
     lru_cache_wrapper,
+    disable_server_side_markdown_exec,
 )
+
+# Before any page is rendered: markdown content must never run code on the server
+disable_server_side_markdown_exec()
 
 
 TURTLECONVERTER_STYLESHEET_RE = re.compile(

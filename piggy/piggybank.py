@@ -158,7 +158,7 @@ def get_frontmatter_from_file(path: Path) -> dict:
                 fallback_title = line.lstrip("#").strip()
                 break
     try:
-        frontmatter = yaml.unsafe_load(data)
+        frontmatter = yaml.safe_load(data)
     except yaml.YAMLError:
         print(f"Error parsing frontmatter in {path}")
 

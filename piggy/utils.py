@@ -6,6 +6,7 @@ from io import BytesIO
 from pathlib import Path
 from typing import Optional
 
+import markdown_exec
 from bs4 import BeautifulSoup as bs
 from flask import send_file, request
 
@@ -318,6 +319,32 @@ def process_json_for_api(obj, exclude_keys=None):
         return obj
 
     return transform(obj)
+
+MARKDOWN_EXEC_ALLOWED_LANGUAGES = frozenset({"pyodide", "tree"})
+
+
+def _show_code_instead_of_executing(language: str):
+    def show_code(code: str, md, **_options) -> str:
+        # The same highlighting superfences gives any other fenced code block
+        return md.preprocessors["fenced_code_block"].highlight(
+            src=code, language=language, options={}, md=md, classes=[], id_value="", attrs={}
+        )
+
+    return show_code
+
+
+def disable_server_side_markdown_exec():
+    # Only works while markdown-exec dispatches through this dict, so refuse to start otherwise
+    if markdown_exec.formatter.__globals__.get("formatters") is not markdown_exec.formatters:
+        raise RuntimeError(
+            "markdown-exec no longer dispatches through markdown_exec.formatters; "
+            "update disable_server_side_markdown_exec() before running this version"
+        )
+
+    markdown_exec.MARKDOWN_EXEC_AUTO.clear()
+    for language in list(markdown_exec.formatters):
+        if language not in MARKDOWN_EXEC_ALLOWED_LANGUAGES:
+            markdown_exec.formatters[language] = _show_code_instead_of_executing(language)
 
 
 def delete_turtleconverter_stylesheets():
