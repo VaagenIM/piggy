@@ -35,16 +35,33 @@ TURTLECONVERTER_STYLESHEET_RE = re.compile(
     r"""
     <link\b
     (?=[^>]*\brel=(?:"stylesheet"|'stylesheet'|stylesheet))
-    (?=[^>]*\bhref=(?:"[^"]*/static/turtleconvert/stylesheets/[^"]*"|'[^']*/static/turtleconvert/stylesheets/[^']*'|[^\s>]*static/turtleconvert/stylesheets/[^\s>]*))
+    (?=[^>]*\bhref=(?:"[^"]*/static/turtleconvert/(?:stylesheets/|_markdown_exec_pyodide\.css)[^"]*"|'[^']*/static/turtleconvert/(?:stylesheets/|_markdown_exec_pyodide\.css)[^']*'|[^\s>]*static/turtleconvert/(?:stylesheets/|_markdown_exec_pyodide\.css)[^\s>]*))
     [^>]*>
     """,
     re.IGNORECASE | re.VERBOSE,
 )
 
 
+PYODIDE_EDITOR_LABEL_RE = re.compile(
+    r"""(<span\ class=["']?pyodide-bar-item["']?>)Editor(?:\ \(session:\ ([^)<]*)\))?(?=</span>)""",
+    re.VERBOSE,
+)
+
+
 def remove_turtleconverter_stylesheets(head: str) -> str:
     """Drop generated turtleconverter CSS links from converted assignment heads."""
     return TURTLECONVERTER_STYLESHEET_RE.sub("", head)
+
+
+def relabel_pyodide_editors(body: str) -> str:
+    """Label pyodide editors "Rediger", only naming the session when a block opts into a shared one."""
+
+    def label(match: re.Match) -> str:
+        session = match.group(2)
+        suffix = f" (økt: {session})" if session and session != "default" else ""
+        return f"{match.group(1)}Rediger{suffix}"
+
+    return PYODIDE_EDITOR_LABEL_RE.sub(label, body)
 
 
 def cache_directory(
@@ -118,6 +135,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
     try:
         sections = _mdfile_to_sections_with_retry(p)
         sections["head"] = remove_turtleconverter_stylesheets(sections["head"])
+        sections["body"] = relabel_pyodide_editors(sections["body"])
         print("Rendering:", p)
 
     except ConversionError:

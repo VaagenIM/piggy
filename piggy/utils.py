@@ -132,8 +132,7 @@ def generate_print_css():
         f.write(css)
 
 
-# Lightweight state machine to read CSS metadata blocks. Theme CSS stays the
-# source of truth for colors, while metadata gives the settings UI richer cards.
+# Lightweight state machine to read CSS metadata blocks
 class ParserState:
     INIT = 1
     READ = 2
@@ -323,15 +322,19 @@ def process_json_for_api(obj, exclude_keys=None):
 
 def delete_turtleconverter_stylesheets():
     """No longer used, might as well save a couple bytes."""
-    stylesheets_path = Path(__file__).parent / "static" / "turtleconvert" / "stylesheets"
+    turtleconvert_path = Path(__file__).parent / "static" / "turtleconvert"
+    stylesheets_path = turtleconvert_path / "stylesheets"
     if stylesheets_path.exists() and stylesheets_path.is_dir():
         for file in stylesheets_path.iterdir():
             if file.is_file():
                 file.unlink()
         stylesheets_path.rmdir()
 
+    # Pyodide code blocks are styled by markdown/markdown-code.css instead
+    (turtleconvert_path / "_markdown_exec_pyodide.css").unlink(missing_ok=True)
+
 
 def startup_tasks():
     generate_static_files(static_folder=Path(os.path.dirname(Path(__file__).absolute())) / "static")
-    # delete_turtleconverter_stylesheets()
+    delete_turtleconverter_stylesheets()
     generate_print_css()
