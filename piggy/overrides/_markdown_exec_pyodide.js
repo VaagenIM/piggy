@@ -125,7 +125,8 @@ const PIGGY_PYODIDE_OUTPUT_HINTS = {
 const PIGGY_PYODIDE_STATUS = {
   loading: "Laster inn Python …",
   running: "Kjører koden …",
-  failed: "Kunne ikke laste inn Python. Sjekk nettet og last inn siden på nytt.",
+  failed:
+    "Kunne ikke laste inn Python. Sjekk nettet og last inn siden på nytt.",
 };
 
 function piggyClearPyodideOutput(output) {
