@@ -471,9 +471,27 @@ function piggyInitializePyodideEditors() {
   piggySyncPyodideEditorWrapping();
   document.querySelectorAll(".md-content .pyodide").forEach((pyodide) => {
     piggyAddPyodideCopyButtons(pyodide);
+    piggyAddPyodideResetButton(pyodide);
     piggyAddPyodideHelp(pyodide);
+    piggyAddPyodideOutputHint(pyodide);
   });
   piggyUsePyodideRunner();
+}
+
+// Shown by CSS while the output is empty (.pyodide-output:empty::before)
+const PIGGY_PYODIDE_OUTPUT_HINTS = {
+  idle: 'Trykk "Run" for å kjøre koden - resultatet skrives ut her.',
+  noOutput: "Koden kjørte, men skrev ikke ut noe.",
+};
+
+function piggyAddPyodideOutputHint(pyodide) {
+  const output = pyodide.querySelector(".pyodide-output");
+  if (!output) return;
+
+  output.dataset.hint = PIGGY_PYODIDE_OUTPUT_HINTS.idle;
+  pyodide.querySelector('[id$="--clear"]')?.addEventListener("click", () => {
+    output.dataset.hint = PIGGY_PYODIDE_OUTPUT_HINTS.idle;
+  });
 }
 
 // markdown-exec prints Pyodide's whole PythonError, trim it
@@ -493,7 +511,12 @@ async def run(code, namespace):
         tb = exc.__traceback__
         while tb and tb.tb_frame.f_code.co_filename != "main.py":
             tb = tb.tb_next
-        print("".join(traceback.format_exception(type(exc), exc, tb)), end="", file=sys.stderr)
+        text = "".join(traceback.format_exception(type(exc), exc, tb))
+        if tb is None:
+            # No frames (e.g. SyntaxError): Python still indents it as if under a
+            # "Traceback" header, so drop that shared indent (keeps the ^ aligned)
+            text = "".join(line.removeprefix("  ") for line in text.splitlines(keepends=True))
+        print(text, end="", file=sys.stderr)
 
 run
 `;
@@ -511,6 +534,7 @@ function piggyUsePyodideRunner() {
       batched: (text) => piggyWritePyodideOutput(output, text, true),
     });
     output.replaceChildren();
+    output.dataset.hint = ""; // no hint while running
 
     try {
       piggyPyodideRunner ??= pyodide.runPython(PIGGY_PYODIDE_RUNNER, {
@@ -527,6 +551,9 @@ function piggyUsePyodideRunner() {
     } catch (error) {
       piggyWritePyodideOutput(output, String(error), true);
     }
+
+    // Only visible if the run left the output empty
+    output.dataset.hint = PIGGY_PYODIDE_OUTPUT_HINTS.noOutput;
   };
 }
 
@@ -587,6 +614,31 @@ function piggyAddPyodideCopyButtons(pyodide) {
   outputBar.append(copyOutput);
 }
 
+function piggyAddPyodideResetButton(pyodide) {
+  const editor = pyodide.querySelector(".pyodide-editor")?.env?.editor;
+  const run = pyodide.querySelector('[id$="--run"]');
+  if (!editor || !run) return;
+
+  const originalCode = editor.getValue();
+  const reset = document.createElement("button");
+  reset.type = "button";
+  reset.className = "pyodide-reset-button";
+  reset.title = "Tilbakestill koden";
+  reset.setAttribute("aria-label", "Tilbakestill koden");
+  reset.disabled = true;
+
+  reset.addEventListener("click", () => {
+    editor.setValue(originalCode, -1);
+    editor.focus();
+  });
+  // Always shown (so Run never moves), but only usable once the code changed
+  editor.session.on("change", () => {
+    reset.disabled = editor.getValue() === originalCode;
+  });
+
+  run.before(reset);
+}
+
 function piggyCreatePyodideCopyButton() {
   const button = document.createElement("button");
   button.type = "button";
@@ -611,6 +663,11 @@ const PIGGY_PYODIDE_HELP = {
       "edit",
       "Rediger",
       "Klikk i koden og endre den som du vil. Endringene lagres ikke hvis du laster inn siden på nytt.",
+    ],
+    [
+      "reset",
+      "Tilbakestill",
+      `Setter tilbake den opprinnelige koden. Du kan angre med ${PIGGY_MOD_KEY}+Z.`,
     ],
     [
       "run",
