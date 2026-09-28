@@ -665,7 +665,17 @@ function piggyAddPyodideHelp(block) {
     const open = event.newState === "open";
     const method = open ? "addEventListener" : "removeEventListener";
 
-    if (open) position();
+    if (open) {
+      const side = help.dataset.side;
+      position();
+      if (help.dataset.side !== side) {
+        // Switch sides without animating, so it slides in from the new side
+        help.style.transition = "none";
+        help.getBoundingClientRect();
+        help.style.removeProperty("transition");
+      }
+    }
+    help.toggleAttribute("data-shown", open);
     window[method]("scroll", position, { capture: true, passive: true });
     window[method]("resize", position, { passive: true });
   });
@@ -766,10 +776,10 @@ function piggyPositionPyodideHelp(help, button) {
   const fitsBelow =
     anchor.bottom + gap + help.offsetHeight <= window.innerHeight - margin;
   const fitsAbove = anchor.top - gap - help.offsetHeight >= margin;
-  const preferredTop =
-    fitsBelow || !fitsAbove
-      ? anchor.bottom + gap
-      : anchor.top - gap - help.offsetHeight;
+  const below = fitsBelow || !fitsAbove;
+  const preferredTop = below
+    ? anchor.bottom + gap
+    : anchor.top - gap - help.offsetHeight;
   // If it fits neither below nor above, keep it on screen anyway
   const top = Math.max(
     margin,
@@ -778,6 +788,7 @@ function piggyPositionPyodideHelp(help, button) {
 
   help.style.left = `${left}px`;
   help.style.top = `${top}px`;
+  help.dataset.side = below ? "below" : "above";
 }
 
 /* Selected text in the theme's selection colours, like ::selection elsewhere */

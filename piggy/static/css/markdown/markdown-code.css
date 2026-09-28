@@ -1464,12 +1464,37 @@
   ) !important;
   line-height: 1.45 !important;
   text-align: left !important;
+  flex-direction: column !important;
+  gap: calc(0.55rem * var(--piggy-font-scale)) !important;
+
+  /* Slides in from the button's side (data-shown and data-side set by the script) */
+  opacity: 0;
+  transform: translateY(var(--piggy-pyodide-help-slide, -0.5rem)) scaleY(0.98);
+  transform-origin: top;
+  pointer-events: none;
+  /* Closing: slide first, fade at the end, so the slide stays visible */
+  transition:
+    opacity 0.18s ease-in,
+    transform 0.18s ease-out,
+    display 0.18s allow-discrete,
+    overlay 0.18s allow-discrete;
+}
+
+.md-content .pyodide-help[data-side="above"] {
+  --piggy-pyodide-help-slide: 0.5rem;
+  transform-origin: bottom;
 }
 
 .md-content .pyodide-help:popover-open {
   display: flex !important;
-  flex-direction: column !important;
-  gap: calc(0.55rem * var(--piggy-font-scale)) !important;
+}
+
+.md-content .pyodide-help:popover-open[data-shown] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition-duration: 0.16s;
+  transition-timing-function: ease-out;
 }
 
 .md-content .pyodide-help__header {
