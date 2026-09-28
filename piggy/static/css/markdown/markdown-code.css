@@ -816,6 +816,25 @@
   transform: translateY(-50%) translateX(0) !important;
 }
 
+/* Brief feedback after copying (markdown-overrides.js sets data-copied) */
+.md-content .md-code__button[data-md-type="copy"][data-copied] {
+  color: var(
+    --piggy-admonition-success-icon,
+    var(--piggy-code-clipboard-hover)
+  ) !important;
+}
+
+.md-content .md-code__button[data-md-type="copy"][data-copied]::after {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") !important;
+}
+
+.md-content .md-code__button[data-md-type="copy"][data-copied]::before {
+  content: "Copied!" !important;
+  opacity: 1 !important;
+  transform: translateY(-50%) translateX(0) !important;
+}
+
 /************************\
 |* CODE ANNOTATIONS     *|
 \************************/
@@ -1087,12 +1106,14 @@
 /************************\
 |* PYODIDE CODE BLOCKS  *|
 \************************/
+/* Script: piggy/overrides/_markdown_exec_pyodide.js */
 .md-content .pyodide {
   --piggy-pyodide-edit-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z'/%3E%3Cpath d='m15 5 4 4'/%3E%3C/svg%3E");
   --piggy-pyodide-run-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5.14v14l11-7-11-7Z'/%3E%3C/svg%3E");
   --piggy-pyodide-info-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 16v-4'/%3E%3Cpath d='M12 8h.01'/%3E%3C/svg%3E");
   --piggy-pyodide-close-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6 6 18'/%3E%3Cpath d='m6 6 12 12'/%3E%3C/svg%3E");
   --piggy-pyodide-reset-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8'/%3E%3Cpath d='M3 3v5h5'/%3E%3C/svg%3E");
+  --piggy-pyodide-output-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 17 6-6-6-6'/%3E%3Cpath d='M12 19h8'/%3E%3C/svg%3E");
 
   display: block !important;
   position: relative !important;
@@ -1180,7 +1201,7 @@
 }
 
 .md-content .pyodide > .pyodide-editor-bar ~ .pyodide-editor-bar {
-  --piggy-pyodide-bar-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 17 6-6-6-6'/%3E%3Cpath d='M12 19h8'/%3E%3C/svg%3E");
+  --piggy-pyodide-bar-icon: var(--piggy-pyodide-output-icon);
   --piggy-pyodide-bar-icon-color: var(--piggy-code-clipboard, currentColor);
   --piggy-pyodide-bar-icon-opacity: 0.78;
 
@@ -1277,6 +1298,27 @@
   background-color: var(--piggy-button-hover) !important;
 }
 
+/* While the code runs, Run is ignored */
+.md-content .pyodide[data-running] .pyodide-clickable[id$="--run"] {
+  cursor: progress !important;
+  opacity: 0.6 !important;
+}
+
+/* ...until it has run a while: then it is the Stop button */
+.md-content .pyodide[data-running] .pyodide-clickable[id$="--run"][data-stop] {
+  cursor: pointer !important;
+  opacity: 1 !important;
+}
+
+/* Only one editor runs at a time on the page */
+:root[data-pyodide-running]
+  .md-content
+  .pyodide:not([data-running])
+  .pyodide-clickable[id$="--run"] {
+  cursor: not-allowed !important;
+  opacity: 0.6 !important;
+}
+
 .md-content .pyodide-clickable .twemoji {
   display: inline-flex !important;
   flex: 0 0 auto !important;
@@ -1298,7 +1340,9 @@
   margin: 0 !important;
 }
 
-.md-content .pyodide-editor-bar .md-code__button.pyodide-copy-output::before {
+.md-content
+  .pyodide-editor-bar
+  .md-code__button.pyodide-copy-output:not([data-copied])::before {
   content: "Copy output" !important;
 }
 
@@ -1396,7 +1440,7 @@
   inset: auto;
   box-sizing: border-box !important;
   width: min(
-    calc(21rem * var(--piggy-font-scale)),
+    calc(28rem * var(--piggy-font-scale)),
     calc(100vw - 16px)
   ) !important;
   max-height: calc(100vh - 16px) !important;
@@ -1447,6 +1491,7 @@
   grid-template-columns: auto minmax(0, 1fr) !important;
   gap: calc(0.55rem * var(--piggy-font-scale)) !important;
   align-items: start !important;
+  text-wrap: pretty !important;
 }
 
 .md-content .pyodide-help__item::before {
@@ -1597,11 +1642,17 @@
 
 .md-content .pyodide .ace_marker-layer .ace_bracket,
 .md-content .pyodide .ace_marker-layer .ace_selected-word {
+  background: transparent !important;
   border-color: color-mix(
     in srgb,
     var(--piggy-code-block-line-number) 40%,
     transparent
   ) !important;
+}
+
+/* No glow from Ace's default theme around multi-cursor selections */
+.md-content .pyodide .ace_marker-layer .ace_selection.ace_start {
+  box-shadow: none !important;
 }
 
 .md-content .pyodide .ace_cursor {
@@ -1764,7 +1815,52 @@
   overflow-wrap: normal !important;
 }
 
-/* Hint while there is no output (text set by markdown-overrides.js) */
+/* "Kjører koden …" / "Laster inn Python …" while waiting */
+.md-content .pyodide .pyodide-output .pyodide-output__status {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.6em !important;
+  color: var(--piggy-code-syntax-comment) !important;
+  font-style: italic !important;
+  /* Fades in after a moment, so quick runs don't flash it */
+  animation: piggy-pyodide-status-in 150ms ease-out 120ms both;
+}
+
+/* Hidden while input() waits for the student */
+.md-content .pyodide .pyodide-output .pyodide-output__status[hidden] {
+  display: none !important;
+}
+
+.md-content .pyodide .pyodide-output .pyodide-output__status::before {
+  content: "";
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 1em;
+  height: 1em;
+
+  border: 2px solid
+    color-mix(in srgb, var(--piggy-button-active) 25%, transparent);
+  border-top-color: var(--piggy-button-active);
+  border-radius: 50%;
+
+  /* Transform-only, so it keeps spinning while Python blocks the page */
+  animation: piggy-pyodide-spin 0.8s linear infinite;
+  will-change: transform;
+}
+
+@keyframes piggy-pyodide-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes piggy-pyodide-status-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Hint while there is no output */
 .md-content .pyodide .pyodide-output:empty::before {
   content: attr(data-hint);
   color: var(--piggy-code-syntax-comment);
@@ -1773,15 +1869,34 @@
   user-select: none;
 }
 
-/* Program output is plain text, so drop highlight.js' guessed token colors */
-.md-content .pyodide .pyodide-output * {
-  color: inherit !important;
-  background: transparent !important;
-  font-style: inherit !important;
-  font-weight: inherit !important;
+/* "Koden ble stoppet." after Stop or the time limit */
+.md-content .pyodide .pyodide-output .pyodide-output__note {
+  color: var(--piggy-code-syntax-comment) !important;
+  font-style: italic !important;
 }
 
-/* Tracebacks and other stderr output (markdown-overrides.js) */
+/* input(): the answer, typed right after the prompt (width set by the script) */
+.md-content .pyodide .pyodide-output .pyodide-output__input {
+  display: inline-block !important;
+  box-sizing: content-box !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  color: inherit !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--piggy-button-active) !important;
+  border-radius: 0 !important;
+  caret-color: var(--piggy-button-active) !important;
+
+  font: inherit !important;
+  line-height: inherit !important;
+  vertical-align: baseline !important;
+  outline: none !important;
+}
+
+/* Tracebacks and other stderr output */
 .md-content .pyodide .pyodide-output .pyodide-output__error {
   color: var(--piggy-code-syntax-error) !important;
 }

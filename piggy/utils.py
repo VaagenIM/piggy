@@ -1,5 +1,6 @@
 import os
 import re
+import shutil
 import subprocess
 from functools import lru_cache
 from io import BytesIO
@@ -320,6 +321,7 @@ def process_json_for_api(obj, exclude_keys=None):
 
     return transform(obj)
 
+
 MARKDOWN_EXEC_ALLOWED_LANGUAGES = frozenset({"pyodide", "tree"})
 
 
@@ -361,7 +363,16 @@ def delete_turtleconverter_stylesheets():
     (turtleconvert_path / "_markdown_exec_pyodide.css").unlink(missing_ok=True)
 
 
+def override_pyodide_js():
+    """Replace markdown-exec's pyodide editor script with piggy's (edits need a restart)."""
+    source = Path(__file__).parent / "overrides" / "_markdown_exec_pyodide.js"
+    destination = Path(__file__).parent / "static" / "turtleconvert" / "_markdown_exec_pyodide.js"
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(source, destination)
+
+
 def startup_tasks():
     generate_static_files(static_folder=Path(os.path.dirname(Path(__file__).absolute())) / "static")
     delete_turtleconverter_stylesheets()
+    override_pyodide_js()  # after turtleconverter has written its own version
     generate_print_css()

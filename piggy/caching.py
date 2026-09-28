@@ -51,6 +51,15 @@ PYODIDE_EDITOR_LABEL_RE = re.compile(
     re.VERBOSE,
 )
 
+# markdown-exec's highlight.js script and themes, unused by piggy's editor script
+PYODIDE_UNUSED_ASSETS_RE = re.compile(
+    r"""
+    <script\b[^>]*\bsrc=["']?[^"'\s>]*/highlight\.js/[^>]*>\s*</script>
+    | <link\b[^>]*\bhref=["']?[^"'\s>]*/highlightjs-themes@[^>]*>
+    """,
+    re.IGNORECASE | re.VERBOSE,
+)
+
 
 def remove_turtleconverter_stylesheets(head: str) -> str:
     """Drop generated turtleconverter CSS links from converted assignment heads."""
@@ -66,6 +75,11 @@ def relabel_pyodide_editors(body: str) -> str:
         return f"{match.group(1)}Rediger{suffix}"
 
     return PYODIDE_EDITOR_LABEL_RE.sub(label, body)
+
+
+def remove_unused_pyodide_assets(body: str) -> str:
+    """Drop markdown-exec's highlight.js script and theme links."""
+    return PYODIDE_UNUSED_ASSETS_RE.sub("", body)
 
 
 def cache_directory(
@@ -139,7 +153,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
     try:
         sections = _mdfile_to_sections_with_retry(p)
         sections["head"] = remove_turtleconverter_stylesheets(sections["head"])
-        sections["body"] = relabel_pyodide_editors(sections["body"])
+        sections["body"] = remove_unused_pyodide_assets(relabel_pyodide_editors(sections["body"]))
         print("Rendering:", p)
 
     except ConversionError:
