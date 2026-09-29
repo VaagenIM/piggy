@@ -10,7 +10,7 @@
     title = data.meta.name,
     description = data.meta.description,
     thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." ~ img_fmt ~ "?title=" ~ data.meta.name,
-    meta = (subchapter_count ~ (' underkapittel' if subchapter_count == 1 else ' underkapitler')) if subchapter_count > 1 else '',
+    meta = (subchapter_count ~ (' del' if subchapter_count == 1 else ' deler')) if subchapter_count > 1 else '',
     tags = data.meta.tags,
     visibility = data.meta.visibility,
     title_tag = 'h3',
