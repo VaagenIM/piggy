@@ -1,0 +1,66 @@
+{#
+  Landing-page subject directory, generated from the content tree:
+  year -> study direction -> subject.
+#}
+{% from 'objects/card.html' import card with context %}
+
+{% macro subject_tile(subj, title_tag) %}
+  {% set hidden = [Visibility.UNLISTED.value, Visibility.PRIVATE.value] %}
+  {% set items = subj.data.values() | list if subj.data is defined else [] %}
+  {% set items = items if debug else items | rejectattr('meta.visibility', 'in', hidden) | list %}
+  {% set module_count = items | rejectattr('meta.type', 'in', ['assignment', 'information']) | list | length %}
+  {% set assignment_count = items | selectattr('meta.type', 'equalto', 'assignment') | list | length %}
+  {% set counts = [] %}
+  {% if module_count %}
+    {% set counts = counts + [module_count ~ (' modul' if module_count == 1 else ' moduler')] %}
+  {% endif %}
+  {% if assignment_count %}
+    {% set counts = counts + [assignment_count ~ (' oppgave' if assignment_count == 1 else ' oppgaver')] %}
+  {% endif %}
+  {% set path = subj.meta.system_path | string | replace('\\', '/') | replace(' ', '_') %}
+  {{
+    card(
+      variant = 'subject',
+      href = '/' ~ path | replace(PIGGYBANK_FOLDER, ASSIGNMENT_URL_PREFIX),
+      title = subj.meta.name,
+      thumbnail = '/' ~ path | replace(PIGGYBANK_FOLDER, MEDIA_URL_PREFIX) ~ '/media/header.' ~ img_fmt,
+      meta = counts | join(' · '),
+      visibility = subj.meta.visibility,
+      title_tag = title_tag,
+    )
+  }}
+{% endmacro %}
+
+{% macro subject_directory(tree) %}
+  {% for year_key, year in tree.items() if year.data is defined and year.data %}
+    {% set directions = year.data.items() | list %}
+    {% set single = directions | length == 1 %}
+    <section class="home-year" aria-labelledby="home-year-{{ year_key }}">
+      <div class="home-year-label">
+        <h2 class="home-year-title" id="home-year-{{ year_key }}">
+          {{ year.meta.name }}
+        </h2>
+        {% if single %}
+          <p class="home-year-direction">{{ directions[0][1].meta.name }}</p>
+        {% endif %}
+      </div>
+
+      <div class="home-year-content">
+        {% for sd_key, sd in directions %}
+          <div class="home-direction">
+            {% if not single %}
+              <h3 class="home-direction-title">{{ sd.meta.name }}</h3>
+            {% endif %}
+            {% if sd.data is defined and sd.data %}
+              <div class="home-subject-grid">
+                {% for subj_key, subj in sd.data.items() %}
+                  {{ subject_tile(subj, 'h3' if single else 'h4') }}
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+{% endmacro %}

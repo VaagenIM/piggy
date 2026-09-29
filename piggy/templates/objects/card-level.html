@@ -1,18 +1,20 @@
+{#
+  Level / task card
+#}
 {% from 'objects/card.html' import card with context %}
-
+{% set level_number = data.level|int(-1) %}
 {{
   card(
-    abspath = abspath,
-    item = item,
+    variant = 'level',
+    href = abspath ~ "/" ~ item,
     title = data.meta.title,
     description = data.meta.description,
-    thumbnail = media_abspath + "/" + data.meta.thumbnail + "." + img_fmt + "?title=" + data.meta.title,
-    thumbnail_alt = 'Header image for ' ~ data.meta.title,
-    visibility = data.meta.visibility,
+    thumbnail = media_abspath ~ "/" ~ data.meta.thumbnail ~ "." ~ img_fmt ~ "?title=" ~ data.meta.title,
+    eyebrow = ('Level ' ~ (level_number if level_number >= 0 else data.level)) if data.level else '',
+    action = 'Åpne',
     difficulty = data.meta.difficulty,
+    visibility = data.meta.visibility,
     extra_classes = 'card-special-condition' if 'special_condition' in data else '',
-    overlay_text = 'Level ' ~ data.level ~ ' - ' ~ data.level_name if data.level else '',
-    show_overlay=false,
-    show_difficulty=true
+    search_text = 'Level ' ~ data.level ~ ' - ' ~ data.level_name if data.level else '',
   )
 }}

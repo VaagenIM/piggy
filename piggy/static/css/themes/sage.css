@@ -284,11 +284,6 @@ preview_style: background: linear-gradient(90deg, #d8e8c8, #a9cfa3); color: #1f3
   --piggy-key-admonition-shadow-hover: rgba(32, 64, 38, 0.12);
 }
 
-[data-theme="sage"] .level-count-container {
-  color: var(--piggy-dark);
-  background-color: var(--piggy-main);
-}
-
 /******************************\
 |*     MARKDOWN OVERRIDES     *|
 \******************************/

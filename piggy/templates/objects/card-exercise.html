@@ -1,18 +1,18 @@
+{#
+  Module / chapter card
+#}
 {% from 'objects/card.html' import card with context %}
+{% set subchapter_count = data.data|length %}
 {{
   card(
-    abspath = abspath,
-    item = item ~ "/" ~ (data.data.keys()|list)[0],
+    variant = 'module',
+    href = abspath ~ "/" ~ item ~ "/" ~ (data.data.keys()|list)[0],
     title = data.meta.name,
-    level_count = data.data|length,
     description = data.meta.description,
     thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." ~ img_fmt ~ "?title=" ~ data.meta.name,
-    thumbnail_alt = "Header image for " ~ data.meta.name,
-    extra_classes = 'card-exercise',
-    visibility = data.meta.visibility,
-    difficulty = data.meta.difficulty,
+    meta = (subchapter_count ~ (' underkapittel' if subchapter_count == 1 else ' underkapitler')) if subchapter_count > 1 else '',
     tags = data.meta.tags,
-    card_type = 'exercise',
-    show_tags = false
+    visibility = data.meta.visibility,
+    title_tag = 'h3',
   )
 }}
