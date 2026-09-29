@@ -286,12 +286,6 @@ preview_style: background: linear-gradient(90deg, #0b0b0e, #6d5520); color: #ffd
   --piggy-key-admonition-shadow-hover: rgba(255, 216, 107, 0.2);
 }
 
-[data-theme="golden"] .level-count-container {
-  color: #0b0b0e;
-  background-color: #ffd86b;
-  box-shadow: 0 0 0.5rem var(--piggy-shadow-glow);
-}
-
 [data-theme="golden"] .level-tab.active {
   background: #000000;
   border-bottom-color: #000000;

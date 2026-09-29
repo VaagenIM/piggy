@@ -1,0 +1,104 @@
+/*********************\
+|*   LANDING PAGE    *|
+\*********************/
+/* Builds on layout/overview.css; subject tiles are .piggy-card--subject. */
+.home {
+  --overview-section-gap: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+  --home-tile-min: calc(18rem * var(--piggy-font-scale));
+  --home-tile-gap: clamp(0.75rem, 0.5rem + 0.6vw, 1.25rem);
+}
+
+/* A handful of subjects per year: keep the composed width on ultrawide too. */
+@media (min-width: 2240px) {
+  .home {
+    --overview-max: 1400px;
+  }
+}
+
+.home-header {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+}
+
+.home-header-icon {
+  flex: none;
+  width: calc(3.75rem * var(--piggy-font-scale));
+  height: auto;
+}
+
+.home-header-text {
+  flex: 1 1 calc(14rem * var(--piggy-font-scale));
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+/***** YEAR SECTIONS *****/
+.home-year {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+}
+
+.home-year + .home-year {
+  margin-top: var(--overview-section-gap);
+  padding-top: var(--overview-section-gap);
+  border-top: 1px solid var(--overview-rule);
+}
+
+.home-year-label {
+  flex: 1 1 calc(12.5rem * var(--piggy-font-scale));
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.home-year-content {
+  flex: 999 1 0;
+  min-width: min(100%, 2 * var(--home-tile-min) + var(--home-tile-gap));
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.home-year-title {
+  margin: 0;
+  font-size: calc(2rem * var(--piggy-font-scale));
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.home-year-direction {
+  margin: 0;
+  color: var(--overview-muted);
+  font-size: calc(1rem * var(--piggy-font-scale));
+  font-weight: 600;
+  line-height: 1.35;
+  overflow-wrap: break-word;
+}
+
+.home-direction {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.home-direction-title {
+  margin: 0;
+  font-size: calc(1.2rem * var(--piggy-font-scale));
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.home-subject-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(100%, var(--home-tile-min)), 1fr)
+  );
+  gap: var(--home-tile-gap);
+}

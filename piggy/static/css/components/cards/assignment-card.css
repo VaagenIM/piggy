@@ -1,22 +1,27 @@
 /****************************\
 |*     ASSIGNMENT CARDS     *|
 \****************************/
-
-.card-assignment {
-  background: linear-gradient(
-    135deg,
-    var(--piggy-assignment-card-start) 0%,
-    var(--piggy-assignment-card-end) 100%
+.piggy-card--assignment {
+  --card-accent: var(--piggy-assignment-accent);
+  --card-border: var(--piggy-assignment-card-border);
+  --card-tint: color-mix(
+    in srgb,
+    var(--piggy-assignment-accent) 7%,
+    transparent
   );
-  border: var(--piggy-card-border-width) solid
-    var(--piggy-assignment-card-border);
-  padding: 0.75rem;
 }
 
-.card-assignment:hover {
-  box-shadow: inset 0 0 20px var(--piggy-assignment-shadow-glow);
+.piggy-card--assignment .piggy-card-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  color: var(--card-accent-text);
 }
 
-.card-assignment .thumbnail-image {
-  aspect-ratio: 4 / 1;
+.piggy-card--assignment .piggy-card-eyebrow::before {
+  content: "";
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 2px;
+  background: var(--card-accent);
 }

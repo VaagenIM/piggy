@@ -1,0 +1,19 @@
+/*************************\
+|*     SUBJECT CARDS     *|
+\*************************/
+.piggy-card--subject .piggy-card-body {
+  padding-top: 0.8rem;
+}
+
+.piggy-card--subject .piggy-card-title {
+  font-size: calc(
+    clamp(1.05rem, 0.95rem + 0.3vw, 1.15rem) * var(--piggy-font-scale)
+  );
+  line-height: 1.25;
+  /* Wrap at spaces only; overflow-wrap still rescues very long words. */
+  hyphens: manual;
+}
+
+.piggy-card--subject .piggy-card-footer {
+  padding-top: 0.3rem;
+}

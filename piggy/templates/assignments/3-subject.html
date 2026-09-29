@@ -1,64 +1,91 @@
 {% extends "assignments/_assignments_base.html" %}
 {% block assignment_title %}{{ meta.name }}{% endblock %}
 
+{#
+  Subject overview landing page
+#}
+{% block assignment_header %}
+{% endblock %}
+
 {% block assignment_base %}
+  {% set hidden = [Visibility.UNLISTED.value, Visibility.PRIVATE.value] %}
+  {% set shown = segment.items() | list if debug else segment.items() | rejectattr('1.meta.visibility', 'in', hidden) | list %}
 
-  {# filter out information #}
-  {%
-    set informations = segment.items() | selectattr('1.meta.type', 'equalto',
-    'information') | list
-  %}
+  {% set informations = shown | selectattr('1.meta.type', 'equalto', 'information') | list %}
+  {% set assignments = shown | selectattr('1.meta.type', 'equalto', 'assignment') | list %}
+  {# everything without a type is a module (legacy default type `exercise`) #}
+  {% set modules = shown | list_difference([assignments] + [informations]) %}
 
-  {# filter out assignments #}
-  {%
-    set assignments = segment.items() | selectattr('1.meta.type', 'equalto',
-    'assignment') | list
-  %}
+  {% set direction = meta.class_name.name if meta.class_name is defined else '' %}
+  {% set year = meta.year_level.name if meta.year_level is defined else '' %}
 
-  {# everything that doesn't have a type should be treated as an exercise (default type) #}
-  {% set exercises = segment.items() | list_difference([assignments] + [informations]) %}
+  <div class="overview subject-overview">
+    <header class="overview-header">
+      {% if year or direction %}
+        <p class="overview-eyebrow">
+          {{ [year, direction] | reject('equalto', '') | join(' · ') }}
+        </p>
+      {% endif %}
+      <h1 class="overview-title">{{ meta.name }}</h1>
+      {% if meta.description %}
+        <p class="overview-lead">{{ meta.description }}</p>
+      {% endif %}
+    </header>
 
-  {# INFORMATION #}
-  {% if informations %}
-    <div class="card-grid-wrapper information-card-grid-wrapper">
-      <h2 class="assignment-title">Informasjon:</h2>
-      <div
-        class="card-grid-container card-type-information information-card-grid-container">
-        {% for item, data in informations %}
-          {% include 'objects/card-information.html' %}
-        {% endfor %}
-      </div>
-    </div>
-  {% endif %}
+    {% if informations %}
+      <section
+        class="overview-section overview-section--compact"
+        aria-labelledby="section-information">
+        <div class="overview-section-header">
+          <h2 class="overview-section-title" id="section-information">
+            Informasjon og ressurser
+          </h2>
+        </div>
+        <div
+          class="card-grid-container card-type-information information-card-grid-container">
+          {% for item, data in informations %}
+            {% include 'objects/card-information.html' %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
 
-  {# ASSIGNMENTS #}
-  {% if assignments %}
-    <div class="card-grid-wrapper assignment-card-grid-wrapper">
-      <h2 class="assignment-title">Innleveringsoppaver:</h2>
-      <div
-        class="card-grid-container card-type-assignment assignment-card-grid-container">
-        {% for item, data in assignments %}
-          {% include 'objects/card-assignment.html' %}
-        {% endfor %}
-      </div>
-    </div>
-  {% endif %}
+    {% if modules %}
+      <section class="overview-section" aria-labelledby="section-modules">
+        <div class="overview-section-header">
+          <h2 class="overview-section-title" id="section-modules">Moduler</h2>
+          <span class="overview-section-count">{{ modules | length }}</span>
+          <p class="overview-section-lead">Lærestoff og kapitler i faget.</p>
+        </div>
+        <div class="card-grid-container card-type-exercise">
+          {% for item, data in modules %}
+            {% include 'objects/card-exercise.html' %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
 
-  {# EXERCISES #}
-  {% if exercises %}
-    <div class="card-grid-wrapper">
-      <h2 class="assignment-title">Øvingsoppgaver:</h2>
-      <div class="card-grid-container card-type-exercise">
-        {% for item, data in exercises %}
-          {% include 'objects/card-exercise.html' %}
-        {% endfor %}
-      </div>
-    </div>
-  {% endif %}
+    {% if assignments %}
+      <section class="overview-section" aria-labelledby="section-assignments">
+        <div class="overview-section-header">
+          <h2 class="overview-section-title" id="section-assignments">
+            Innleveringsoppgaver
+          </h2>
+          <span class="overview-section-count">{{ assignments | length }}</span>
+          <p class="overview-section-lead">
+            Større oppgaver og arbeid som skal leveres.
+          </p>
+        </div>
+        <div class="card-grid-container card-type-assignment">
+          {% for item, data in assignments %}
+            {% include 'objects/card-assignment.html' %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
 
-  {% if not segment.items() %}
-    <div class="card-grid-container">
-      Hmm... There doesn't seem to be anything here!
-    </div>
-  {% endif %}
+    {% if not shown %}
+      <p class="overview-empty">Det er ikke noe innhold her ennå.</p>
+    {% endif %}
+  </div>
 {% endblock %}
