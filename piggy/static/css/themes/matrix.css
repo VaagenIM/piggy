@@ -363,22 +363,17 @@ preview_style: background: linear-gradient(90deg, #000000, #004400); color: #00f
   background: var(--piggy-header-bg-h6);
 }
 
-[data-theme="matrix"] .card-container {
-  border-radius: 0.25rem;
+[data-theme="matrix"] .piggy-card {
+  --card-radius: 0.25rem;
 }
 
-[data-theme="matrix"] .thumbnail-image {
-  border-radius: 0.25rem !important;
-  box-shadow: var(--piggy-assignment-shadow-glow) !important;
-}
-
-[data-theme="matrix"] .card-assignment .description-container,
-[data-theme="matrix"] .card-assignment .card-title {
-  color: var(--piggy-assignment-text) !important;
-}
-
-[data-theme="matrix"] .card-assignment .description-container {
-  border-color: var(--piggy-assignment-text) !important;
+[data-theme="matrix"] .piggy-card--assignment {
+  --card-title: var(--piggy-assignment-text);
+  --card-muted: color-mix(
+    in srgb,
+    var(--piggy-assignment-text) 85%,
+    transparent
+  );
 }
 
 /*****************************\

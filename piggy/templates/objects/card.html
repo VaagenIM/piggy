@@ -1,103 +1,97 @@
+{% from 'macros/include.html' import include_svg %}
+
+{#
+  Shared card component. The whole card is one <a>.
+#}
 {%
   macro card(
-    overlay_text,
-    difficulty,
-    tags,
-    level_count,
-    extra_classes='',
-    abspath='',
-    item='',
-    item_extended='',
-    title='title',
-    description='description',
+    variant,
+    href,
+    title,
+    description='',
     thumbnail='',
-    thumbnail_alt='thumbnail alt',
-    card_type='',
+    thumbnail_alt='',
+    eyebrow='',
+    meta='',
+    action='',
+    difficulty=0,
+    tags=[],
     visibility=Visibility.PUBLIC.value,
-    show_title=true,
-    show_levels=true,
-    show_difficulty=true,
-    show_overlay=true,
-    show_tags=true,
-    show_description=true,
-    show_thumbnail=true,
-    center_description=true
+    title_tag='h2',
+    extra_classes='',
+    search_text=''
   )
 %}
-  {% if card_type == 'information' %}
-    {% set badge = '' %}
-  {% else %}
-    {% set badge = '' %}
-  {% endif %}
-
   {% set is_hidden = visibility in [Visibility.UNLISTED.value, Visibility.PRIVATE.value] %}
-  {% set visibility_class = ' visibility-private' if debug and visibility == Visibility.PRIVATE.value else (' visibility-unlisted' if debug and visibility == Visibility.UNLISTED.value else '') %}
-  {% set card_classes = ['card', 'card-container', extra_classes|trim, visibility_class|trim, wrapper_classes|trim] | reject('equalto', '') | join(' ') %}
   {% if not is_hidden or debug %}
+    {% set visibility_class = 'visibility-private' if debug and visibility == Visibility.PRIVATE.value else ('visibility-unlisted' if debug and visibility == Visibility.UNLISTED.value else '') %}
+    {% set card_classes = ['piggy-card', 'piggy-card--' ~ variant, extra_classes|trim, visibility_class] | reject('equalto', '') | join(' ') %}
+    {% set difficulty = [(difficulty or 0)|int(0), 5] | min %}
     <a
-      href="{{ abspath }}/{{ item }}"
+      href="{{ href }}"
       class="{{ card_classes }}"
+      data-card-type="{{ variant }}"
       data-title="{{ title|lower }}"
       data-description="{{ description|lower }}"
-      data-tags="{{ tags|join(' ')|lower }}"
-      data-overlay-text="{{ overlay_text|lower }}">
-      {% if badge %}
-        {{ badge }}
-      {% endif %}
-
-      {% if show_title and title %}
-        <div class="card-header">
-          <div class="card-title">{{ title }}</div>
-        </div>
-      {% endif %}
-
-      {% if show_thumbnail %}
-        <div class="thumbnail-container">
+      data-tags="{{ (tags or [])|join(' ')|lower }}"
+      data-overlay-text="{{ search_text|lower }}">
+      {% if variant == 'information' %}
+        <span class="piggy-card-icon" aria-hidden="true">
+          {{ include_svg(svg='img/icons/info.svg')|replace(' id="Capa_1"', '') }}
+        </span>
+      {% elif thumbnail %}
+        <div class="piggy-card-media">
           <div class="thumbnail-loader" aria-hidden="true">
             <div class="loader"></div>
           </div>
           <img
-            class="thumbnail-image"
+            class="piggy-card-image"
             src="{{ thumbnail }}"
             alt="{{ thumbnail_alt }}"
             loading="lazy" />
+        </div>
+      {% endif %}
 
-          {% if show_levels and level_count and level_count > 1 %}
-            <div class="level-count-container">
-              {{ level_count }} Level{{ 's' if level_count != 1 }}
-            </div>
-          {% endif %}
-
-          {% if show_difficulty and difficulty and difficulty|int > 0 %}
-            {% if difficulty|int > 5 %}
-              {% set difficulty = "5" %}
+      <div class="piggy-card-body">
+        {% if eyebrow or difficulty > 0 %}
+          <div class="piggy-card-head">
+            {% if eyebrow %}
+              <span class="piggy-card-eyebrow">{{ eyebrow }}</span>
             {% endif %}
-            <img
-              class="difficulty-icon difficulty-{{ difficulty|string }}"
-              src="{{ url_for('static', filename='img/difficulties/' + difficulty|string + '.png') }}" />
+            {% if difficulty > 0 %}
+              <img
+                class="piggy-card-difficulty difficulty-{{ difficulty }}"
+                src="{{ url_for('static', filename='img/difficulties/' ~ difficulty ~ '.png') }}"
+                alt="Vanskelighetsgrad {{ difficulty }} av 5"
+                title="Vanskelighetsgrad {{ difficulty }} av 5" />
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if title_tag == 'h3' %}
+          <h3 class="piggy-card-title">{{ title }}</h3>
+        {% elif title_tag == 'h4' %}
+          <h4 class="piggy-card-title">{{ title }}</h4>
+        {% else %}
+          <h2 class="piggy-card-title">{{ title }}</h2>
+        {% endif %}
+
+        {% if description %}
+          <p class="piggy-card-description">{{ description }}</p>
+        {% endif %}
+      </div>
+
+      <div class="piggy-card-footer">
+        {% if meta %}
+          <span class="piggy-card-meta">{{ meta }}</span>
+        {% endif %}
+        <span class="piggy-card-action">
+          {% if action %}
+            <span class="piggy-card-action-label">{{ action }}</span>
           {% endif %}
-
-          {% if show_overlay and overlay_text %}
-            <div class="thumbnail-text-overlay">{{ overlay_text }}</div>
-          {% endif %}
-        </div>
-      {% endif %}
-
-      {# Card Tags #}
-      {% if show_tags and tags %}
-        <div class="tags-container">
-          {% for tag in tags %}
-            <span class="tag-box" data-tag="{{ tag }}"> {{ tag }} </span>
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      {% if show_description and description %}
-        <div
-          class="description-container {{ 'description-center' if center_description else '' }}">
-          {{ description }}
-        </div>
-      {% endif %}
+          <span class="piggy-card-arrow" aria-hidden="true">→</span>
+        </span>
+      </div>
     </a>
   {% endif %}
 {% endmacro %}

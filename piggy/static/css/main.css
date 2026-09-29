@@ -16,6 +16,7 @@
 @import "./layout/site-header.css";
 @import "./layout/site-footer.css";
 @import "./layout/titles.css";
+@import "./layout/overview.css";
 
 @import "./components/navigation.css";
 @import "./components/breadcrumbs.css";
@@ -27,22 +28,20 @@
 @import "./components/level-select.css";
 @import "./components/language-selector.css";
 @import "./components/scroll-to-top.css";
-@import "./components/quick-access.css";
+@import "./components/home.css";
 @import "./components/assignment-meta.css";
 @import "./components/assignment-page.css";
 @import "./components/shortlink-copy.css";
 @import "./components/error-page.css";
 
 @import "./components/card-grid.css";
-@import "./components/assignment-grid.css";
 @import "./components/information-grid.css";
 
 @import "./components/cards/base-card.css";
-@import "./components/cards/thumbnails.css";
-@import "./components/cards/tags.css";
 @import "./components/cards/difficulty.css";
 @import "./components/cards/assignment-card.css";
 @import "./components/cards/information-card.css";
+@import "./components/cards/subject-card.css";
 
 @import "./markdown/markdown-material-compat.css";
 @import "./markdown/markdown-base.css";

@@ -1,0 +1,117 @@
+/****************************\
+|*     OVERVIEW PAGES       *|
+\****************************/
+.overview {
+  --overview-max: 1400px;
+  --overview-gutter: clamp(1rem, 0.5rem + 2vw, 2rem);
+  --overview-section-gap: clamp(2.25rem, 1.5rem + 2.5vw, 3.5rem);
+  --overview-muted: color-mix(in srgb, var(--piggy-text-main) 72%, transparent);
+  --overview-rule: color-mix(in srgb, var(--piggy-text-main) 16%, transparent);
+
+  width: min(100% - 2 * var(--overview-gutter), var(--overview-max));
+  margin-inline: auto;
+  overflow-wrap: break-word;
+  padding-block: clamp(1.25rem, 0.75rem + 2vw, 2.5rem) 3rem;
+  text-align: left;
+}
+
+/* Wider canvas where the card grid intentionally allows 4-5 columns. */
+@media (min-width: 2240px) {
+  .overview {
+    --overview-max: 1840px;
+  }
+}
+
+@media (min-width: 3200px) {
+  .overview {
+    --overview-max: 2300px;
+  }
+}
+
+/***** PAGE HEADER *****/
+.overview-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 60rem;
+  margin-bottom: var(--overview-section-gap);
+}
+
+.overview-eyebrow {
+  margin: 0;
+  color: var(--overview-muted);
+  font-size: calc(0.9rem * var(--piggy-font-scale));
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.overview-title {
+  margin: 0;
+  font-size: calc(
+    clamp(1.75rem, 1.2rem + 2.4vw, 3rem) * var(--piggy-font-scale)
+  );
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.overview-lead {
+  max-width: 65ch;
+  margin: 0;
+  color: var(--overview-muted);
+  font-size: calc(1.1rem * var(--piggy-font-scale));
+  line-height: 1.55;
+}
+
+/***** SECTIONS *****/
+.overview-section + .overview-section {
+  margin-top: var(--overview-section-gap);
+  padding-top: var(--overview-section-gap);
+  border-top: 1px solid var(--overview-rule);
+}
+
+.overview-section--compact + .overview-section {
+  margin-top: calc(var(--overview-section-gap) * 0.6);
+  padding-top: calc(var(--overview-section-gap) * 0.6);
+}
+
+.overview-section-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.overview-section-title {
+  min-width: 0;
+  margin: 0;
+  font-size: calc(1.6rem * var(--piggy-font-scale));
+  font-weight: 750;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.overview-section-count {
+  color: var(--overview-muted);
+  font-size: calc(1rem * var(--piggy-font-scale));
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.overview-section-lead {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--overview-muted);
+  font-size: calc(0.95rem * var(--piggy-font-scale));
+  line-height: 1.5;
+}
+
+.overview-empty {
+  margin: 0;
+  color: var(--overview-muted);
+  font-size: calc(1.05rem * var(--piggy-font-scale));
+}

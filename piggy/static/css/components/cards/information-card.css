@@ -1,50 +1,58 @@
 /***************************\
 |*    INFORMATION CARDS    *|
 \***************************/
-.card-information {
-  background: linear-gradient(
-    135deg,
-    var(--piggy-information-card-start) 0%,
-    var(--piggy-information-card-end) 100%
+/*
+ * Compact, text-first reference entries: icon | title + description | action.
+ */
+.piggy-card--information {
+  --card-accent: var(--piggy-information-accent);
+  --card-border: var(--piggy-information-card-border);
+  --card-tint: color-mix(
+    in srgb,
+    var(--piggy-information-accent) 6%,
+    transparent
   );
-  border: var(--piggy-card-border-width) solid
-    var(--piggy-information-card-border);
-  padding: 0.75rem;
+
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  padding: 0.9rem var(--card-pad-x);
 }
 
-.card-information:hover {
-  box-shadow: inset 0 0 20px var(--piggy-information-shadow-glow);
-  transform: rotate(0.4deg) scale(99%);
-  animation-timing-function: ease;
-  cursor: pointer;
+.piggy-card--information .piggy-card-body {
+  flex: 1 1 calc(15rem * var(--piggy-font-scale));
+  min-width: 0;
+  gap: 0.2rem;
+  padding: 0;
 }
 
-.card-information .card-title {
-  text-align: left !important;
+.piggy-card--information .piggy-card-title {
+  font-size: calc(1.05rem * var(--piggy-font-scale));
 }
 
-/* Special information card alignment trickery */
-.card-align-information {
-  display: grid !important;
-  grid-template-columns: 0fr 4fr 3fr;
-  grid-template-areas:
-    "badge header tags"
-    "badge description description";
-  gap: 0.5rem;
+.piggy-card--information .piggy-card-description {
+  font-size: calc(0.88rem * var(--piggy-font-scale));
 }
 
-.card-align-information .card-header {
-  grid-area: header;
+.piggy-card--information .piggy-card-footer {
+  margin: 0 0 0 auto;
+  padding: 0;
 }
 
-.card-align-information .thumbnail-container {
-  grid-area: thumbnail;
+.piggy-card-icon {
+  flex: none;
+  align-self: flex-start;
+  display: grid;
+  place-items: center;
+  width: calc(2.25rem * var(--piggy-font-scale));
+  height: calc(2.25rem * var(--piggy-font-scale));
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--card-accent) 16%, transparent);
 }
 
-.card-align-information .description-container {
-  grid-area: description;
-}
-
-.card-align-information .tags-container {
-  grid-area: tags;
+.piggy-card-icon svg {
+  width: 50%;
+  height: 50%;
+  fill: var(--card-accent-text);
 }

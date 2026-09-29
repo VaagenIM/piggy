@@ -1,25 +1,217 @@
 /*****************\
 |*     CARDS     *|
 \*****************/
-.card-container {
-  position: relative;
-  display: block;
-  background: linear-gradient(
-    45deg,
-    var(--piggy-card-start) 0%,
-    var(--piggy-card-end) 100%
+.piggy-card {
+  --card-accent: var(--piggy-button-active);
+  --card-border: var(--piggy-card-border);
+  --card-tint: transparent;
+  --card-radius: 0.9rem;
+  --card-pad-x: 1.1rem;
+  --card-pad-y: 1rem;
+
+  --card-text: var(--piggy-text-card);
+  --card-title: var(--piggy-text-title);
+  --card-muted: color-mix(
+    in srgb,
+    var(--piggy-text-description) 80%,
+    transparent
   );
-  color: var(--piggy-text-card);
-  transition:
-    transform 0.1s ease,
-    box-shadow 0.1s ease;
-  box-shadow: 5px 5px 5px 0 var(--piggy-shadow-box);
-  border-color: var(--piggy-card-border);
-  border-style: solid;
-  border-width: var(--piggy-card-border-width);
-  border-radius: 1rem;
-  padding: 0.75rem;
+  --card-accent-text: color-mix(
+    in srgb,
+    var(--card-accent) 50%,
+    var(--card-text)
+  );
+  --card-border-hover: color-mix(
+    in srgb,
+    var(--card-accent) 60%,
+    var(--card-border)
+  );
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+
+  color: var(--card-text);
+  background:
+    linear-gradient(var(--card-tint), var(--card-tint)),
+    linear-gradient(180deg, var(--piggy-card-start), var(--piggy-card-end));
+  border: var(--piggy-card-border-width) solid var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: 0 1px 2px var(--piggy-shadow-box);
   text-decoration: none;
+
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+/* Hover is reinforcement only: the footer action is always visible. */
+@media (hover: hover) {
+  .piggy-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--card-border-hover);
+    box-shadow: 0 10px 24px -10px var(--piggy-shadow-box);
+  }
+
+  .piggy-card:hover .piggy-card-image {
+    transform: scale(1.015);
+  }
+
+  .piggy-card:hover .piggy-card-arrow {
+    transform: translateX(3px);
+  }
+}
+
+.piggy-card:focus-visible {
+  outline: 3px solid
+    var(
+      --piggy-button-focus,
+      color-mix(in srgb, var(--piggy-button-active) 70%, var(--card-text))
+    );
+  outline-offset: 3px;
+  border-color: var(--card-border-hover);
+}
+
+.piggy-card:focus-visible .piggy-card-arrow {
+  transform: translateX(3px);
+}
+
+/***** MEDIA *****/
+.piggy-card-media {
+  position: relative;
+  aspect-ratio: 16 / 5;
+  overflow: hidden;
+  background: var(--piggy-code-bg);
+}
+
+.piggy-card-media .thumbnail-loader {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.piggy-card-image {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.25s ease;
+}
+
+/***** BODY *****/
+.piggy-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: var(--card-pad-y) var(--card-pad-x) 0;
+  text-align: left;
+}
+
+.piggy-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem 0.75rem;
+  min-height: calc(1.5rem * var(--piggy-font-scale));
+}
+
+.piggy-card-eyebrow {
+  color: var(--card-muted);
+  font-size: calc(0.72rem * var(--piggy-font-scale));
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.piggy-card-title {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  /* !important: base/elements.css forces every heading to --piggy-text-main */
+  color: var(--card-title) !important;
+  font-size: calc(1.15rem * var(--piggy-font-scale));
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  text-align: left;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.piggy-card-description {
+  margin: 0;
+  color: var(--card-muted);
+  font-size: calc(0.92rem * var(--piggy-font-scale));
+  font-weight: 500;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+/***** FOOTER *****/
+.piggy-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin-top: auto;
+  padding: calc(var(--card-pad-y) * 0.85) var(--card-pad-x) var(--card-pad-y);
+  font-size: calc(0.85rem * var(--piggy-font-scale));
+  line-height: 1.4;
+}
+
+.piggy-card-meta {
+  color: var(--card-muted);
+  font-weight: 600;
+}
+
+.piggy-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  margin-left: auto;
+  color: var(--card-accent-text);
+  font-weight: 700;
+}
+
+.piggy-card-arrow {
+  display: inline-block;
+  position: relative;
+  top: -0.06em;
+  font-size: 1.4em;
+  font-weight: 600;
+  line-height: 1;
+  transition: transform 0.18s ease;
+}
+
+/***** REDUCED MOTION *****/
+/* Transitions are already neutralised globally; also drop the movement itself. */
+:root[data-reader-reduce-motion="reduce"]
+  :is(.piggy-card, .piggy-card-image, .piggy-card-arrow) {
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-reader-reduce-motion="allow"]):not(
+      [data-reader-reduce-motion="reduce"]
+    )
+    :is(.piggy-card, .piggy-card-image, .piggy-card-arrow) {
+    transform: none !important;
+  }
+}
+
+/***** DEBUG VISIBILITY INDICATORS *****/
+.visibility-unlisted,
+.visibility-private {
+  opacity: 0.8;
+  filter: grayscale(20%);
 }
 
 .visibility-unlisted::before,
@@ -27,81 +219,42 @@
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  z-index: 1;
+  z-index: 3;
   padding: 0.2rem 0.45rem;
   border-radius: 0.25rem;
   color: var(--piggy-text-card);
+  background: var(--piggy-card-end);
   font-size: 0.65rem;
   font-weight: 800;
   letter-spacing: 0.05em;
   pointer-events: none;
 }
 
-.visibility-unlisted,
-.visibility-private {
-  opacity: 0.8;
-  filter: grayscale(20%);
+.visibility-unlisted::after,
+.visibility-private::after {
+  content: "";
+  position: absolute;
+  inset: 0.35rem;
+  z-index: 3;
+  border: 6px solid;
+  border-radius: calc(var(--card-radius, 0.9rem) - 0.35rem);
+  pointer-events: none;
 }
 
 .visibility-unlisted::before {
   content: "UNLISTED";
   border: 6px solid var(--piggy-admonition-warning-border);
-  background: var(--piggy-card-end);
 }
 
 .visibility-unlisted::after {
-  content: "";
-  position: absolute;
-  inset: 0.35rem;
-  border: 6px solid var(--piggy-admonition-warning-border);
-  border-radius: 0.75rem;
-  pointer-events: none;
+  border-color: var(--piggy-admonition-warning-border);
 }
 
 .visibility-private::before {
   content: "PRIVATE";
   border: 6px solid var(--piggy-admonition-danger-border);
-  background: var(--piggy-card-end);
 }
 
 .visibility-private::after {
-  content: "";
-  position: absolute;
-  inset: 0.35rem;
-  border: 6px solid var(--piggy-admonition-danger-border);
-  border-radius: 0.75rem;
-  pointer-events: none;
-}
-
-.card-container:hover {
-  transform: translateY(-3px) rotate(0.5deg) scale(98%);
-  animation-timing-function: ease;
-  box-shadow: inset 0px 0px 25px 0 var(--piggy-shadow-glow);
-  cursor: pointer;
-}
-
-.card-title {
-  color: var(--piggy-text-title);
-  font-size: calc(1.25rem * var(--piggy-font-scale));
-  font-weight: 800;
-  line-height: calc(2 / 1.5);
-  width: 100%;
-  text-align: center;
-  padding-bottom: 0.25rem;
-}
-
-.card-header {
-  display: flex;
-}
-
-.description-container {
-  color: var(--piggy-text-description);
-  border-top: 1px solid var(--piggy-text-description);
-  margin-top: 0.5rem;
-  padding-top: 10px;
-  font-weight: 600;
-}
-
-.description-container.description-center {
-  text-align: center;
+  border-color: var(--piggy-admonition-danger-border);
 }

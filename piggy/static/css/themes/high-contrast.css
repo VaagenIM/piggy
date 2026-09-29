@@ -292,34 +292,19 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   --piggy-key-admonition-shadow-hover: transparent;
 }
 
-[data-theme="high-contrast"] .card-container {
-  border-radius: 5px;
-  margin: 5px;
+[data-theme="high-contrast"] .piggy-card {
+  --card-radius: 5px;
+  --card-tint: transparent;
+  --card-muted: var(--piggy-text-description);
 }
 
-[data-theme="high-contrast"] .thumbnail-image {
-  border-radius: 5px;
-  border-width: var(--piggy-card-border-width);
-  border-color: #ff0000;
-  background-color: #000;
-  padding: 5px;
+[data-theme="high-contrast"] .overview {
+  --overview-muted: var(--piggy-text-main);
+  --overview-rule: var(--piggy-text-main);
 }
 
-[data-theme="high-contrast"] .thumbnail-text-overlay {
-  border-radius: 0px;
-  border-width: var(--piggy-card-border-width);
-  border-color: #00ff00;
-  position: relative;
-  margin-top: 5px;
-}
-
-[data-theme="high-contrast"] .tag-box {
-  border-radius: 5px;
-  background-color: #000000 !important;
-  border: 1px solid #ffffff;
-  color: #ffffff !important;
-  margin-top: 5px;
-  filter: none;
+[data-theme="high-contrast"] .piggy-card-media {
+  border-bottom: var(--piggy-card-border-width) solid var(--card-border);
 }
 
 [data-theme="high-contrast"] .piggy-navbar {
@@ -345,15 +330,6 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
 [data-theme="high-contrast"] .level-button {
   border-radius: 5px !important;
   border-width: 0px;
-}
-
-[data-theme="high-contrast"] .level-count-container {
-  border-radius: 5px;
-  border-width: var(--piggy-card-border-width);
-  border-color: #ffff00;
-  margin-bottom: 5px;
-  color: #fff;
-  background-color: #000;
 }
 
 [data-theme="high-contrast"] .settings-page {

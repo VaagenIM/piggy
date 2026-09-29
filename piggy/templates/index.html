@@ -1,12 +1,30 @@
 {% extends 'layout.html' %}
-{% from "partials/parts/quick_access.html" import quick_access with context %}
+{% from "partials/parts/subject_directory.html" import subject_directory with context %}
 
 {% block base %}
-  <section class="home-quick-access">
-    {% if piggymap|length > 0 %}
-      <div id="quick-access">{{ quick_access(piggymap) }}</div>
+  <div class="overview home">
+    <header class="overview-header home-header">
+      <img
+        class="home-header-icon"
+        src="{{ url_for('static', filename='img/icons/piggy_icon-128.png') }}"
+        alt=""
+        width="128"
+        height="128" />
+      <div class="home-header-text">
+        <h1 class="overview-title">Velkommen til Piggy</h1>
+        <p class="overview-lead">
+          Informasjonsbanken til IM-Linjen på Vågen VGS
+        </p>
+      </div>
+    </header>
+
+    {% if piggymap | length > 0 %}
+      {{ subject_directory(piggymap) }}
     {% else %}
-      Hmm, there seems to be NO content here, please add some to continue! 🐷
+      <p class="overview-empty">
+        Det er ikke noe innhold her ennå. Legg til innhold for å komme i gang!
+        🐷
+      </p>
     {% endif %}
-  </section>
+  </div>
 {% endblock %}

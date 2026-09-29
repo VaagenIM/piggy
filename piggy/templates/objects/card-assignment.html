@@ -1,22 +1,17 @@
 {% from 'objects/card.html' import card with context %}
+{% set task_count = data.data|length %}
 {{
   card(
-    abspath = abspath,
-    item = item if data.data|length > 1 else item ~ "/" ~ (data.data.keys()|list)[0],
+    variant = 'assignment',
+    href = abspath ~ "/" ~ (item if task_count > 1 else item ~ "/" ~ (data.data.keys()|list)[0]),
     title = data.meta.name,
-    level_count = data.data|length,
     description = data.meta.description,
     thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." ~ img_fmt ~ "?title=" ~ data.meta.name,
-    thumbnail_alt = "Header image for " ~ data.meta.name,
-    extra_classes = 'card-assignment',
-    visibility = data.meta.visibility,
-    difficulty = data.meta.difficulty,
+    eyebrow = 'Oppgave',
+    meta = (task_count ~ ' oppgaver') if task_count > 1 else '',
+    action = 'Se oppgavene' if task_count > 1 else 'Se oppgaven',
     tags = data.meta.tags,
-    card_type = 'assignment',
-    show_levels=false,
-    show_difficulty=false,
-    show_overlay=false,
-    show_tags=false,
-    show_description=true
+    visibility = data.meta.visibility,
+    title_tag = 'h3',
   )
 }}

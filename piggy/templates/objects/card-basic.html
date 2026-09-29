@@ -1,13 +1,12 @@
+{# Plain navigation card for year levels, classes and subjects. #}
 {% from 'objects/card.html' import card with context %}
-
 {{
   card(
-    abspath = abspath,
-    item = item,
+    variant = 'navigation',
+    href = abspath ~ "/" ~ item,
     title = data.meta.name,
-    thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." ~ img_fmt ~ "?title=" ~ data.meta.name,
-    thumbnail_alt = "Header image for " + data.meta.name,
     description = data.meta.description,
-    visibility = data.meta.visibility
+    thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." ~ img_fmt ~ "?title=" ~ data.meta.name,
+    visibility = data.meta.visibility,
   )
 }}

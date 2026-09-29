@@ -408,50 +408,24 @@ preview_style: background: linear-gradient(90deg, rgba(120, 0, 180, 1.0), #FF572
 
 @media (prefers-reduced-motion: reduce) {
   [data-theme="synthwave"] .background-overlay,
-  [data-theme="synthwave"] .card-container:hover {
+  [data-theme="synthwave"] .piggy-card:hover {
     animation: none !important;
   }
 }
 
-[data-theme="synthwave"] .card-container {
-  position: relative;
-  z-index: 0;
-
+[data-theme="synthwave"] .piggy-card {
   box-shadow: 2px 2px 15px 0 var(--piggy-shadow-box);
-
-  transition:
-    transform 0.2s ease,
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
 }
 
-[data-theme="synthwave"] .card-container::after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  z-index: -1;
+/* Neon border cycle on hover/focus, animated on the card itself. */
+@media (hover: hover) {
+  [data-theme="synthwave"] .piggy-card:hover {
+    animation: synthwaveCardGlow 2s linear infinite;
+  }
+}
 
-  border-radius: inherit;
-  pointer-events: none;
-
-  opacity: 0;
-
-  box-shadow: 0 0 15px 0 #ff00ff;
-  border: 1px solid #ff00ff;
-
+[data-theme="synthwave"] .piggy-card:focus-visible {
   animation: synthwaveCardGlow 2s linear infinite;
-  transition: opacity 0.25s ease;
-}
-
-[data-theme="synthwave"] .card-container:hover {
-  transform: perspective(1000px) rotateX(-1deg) rotateY(3deg) rotateZ(1deg)
-    scale(0.98);
-
-  border-color: transparent;
-}
-
-[data-theme="synthwave"] .card-container:hover::after {
-  opacity: 1;
 }
 
 @keyframes synthwaveCardGlow {
