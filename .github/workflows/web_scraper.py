@@ -485,6 +485,15 @@ def _git_revision(path: Path) -> str:
 def _changed_piggybank_files(
     piggybank_path: Path, previous_revision: str, current_revision: str
 ) -> list[tuple[str, str]]:
+    """Return changed files as (status, path) pairs.
+
+    Git reports renames as:
+        R100    old/path    new/path
+
+    Treat a rename as a deletion of the old path plus an addition of the new
+    path. This lets the incremental build remove the old generated output and
+    rebuild the new output independently.
+    """
     outputs = [
         subprocess.check_output(
             [
@@ -518,10 +527,40 @@ def _changed_piggybank_files(
     seen = set()
     for output in outputs:
         for line in output.splitlines():
-            status, path = line.split(maxsplit=1)
-            if path.replace("\\", "/").startswith("preview/"):
+            if not line:
                 continue
-            change = (status[0], path)
+            # --name-status uses tabs between the status and paths.
+            fields = line.split("\t")
+            status = fields[0]
+            status_code = status[0]
+            if status_code in {"R", "C"}:
+                # Rename/copy:
+                #   R100    old/path    new/path
+                if len(fields) < 3:
+                    continue
+
+                old_path = fields[1]
+                new_path = fields[2]
+                old_path = old_path.replace("\\", "/")
+                new_path = new_path.replace("\\", "/")
+
+                if not old_path.startswith("preview/"):
+                    change = ("D", old_path)
+                    if change not in seen:
+                        changes.append(change)
+                        seen.add(change)
+                if not new_path.startswith("preview/"):
+                    change = ("A", new_path)
+                    if change not in seen:
+                        changes.append(change)
+                        seen.add(change)
+                continue
+            if len(fields) < 2:
+                continue
+            path = fields[1].replace("\\", "/")
+            if path.startswith("preview/"):
+                continue
+            change = (status_code, path)
             if change not in seen:
                 changes.append(change)
                 seen.add(change)
