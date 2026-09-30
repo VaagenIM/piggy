@@ -241,7 +241,9 @@ def _normalize_page_link(link):
     parts = link.split("/")
     if "attachments" in parts or "media" in parts:
         return link
-    return "/".join(part.replace(".", "") for part in parts)
+    link = "/".join(part.replace(".", "") for part in parts)
+    # Page routes are canonicalized without a trailing slash.
+    return link.rstrip("/")
 
 
 def get_links(html, path=""):
