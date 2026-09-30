@@ -346,7 +346,7 @@ def download_site():
             tasks = set(link for link in links if link not in visited)
 
             for link in tasks:
-                visited.add(link)  # Mark as visited BEFORE calling get_html()
+                visited.add(link)
 
             results = pool.map(get_html, tasks)
             write_tasks = []
@@ -355,24 +355,13 @@ def download_site():
                 if result is None:
                     continue
 
-                if link == "/":
-                    path = "index.html"
-                elif link == "/sitemap.xml":
-                    path = "sitemap.xml"
-                else:
-                    path = link.split("#")[0].strip("/")
-                    if path.startswith("s/") and "." not in path:
-                        path += "/index.html"
-                    elif link.endswith("/") and "." not in path:
-                        path += "/index.html"
-                    elif "." in path and _has_translation_route(link):
-                        path += "/index.html"
-                    elif "." not in path:
-                        path += ".html"
+                output_path = _output_path_for_route(link)
+                path = output_path.relative_to("demo")
 
-                print(f"Writing \33[34m{link} -> {Path('demo') / path}\33[0m")
+                print(f"Writing \33[34m{link}\33[0m -> demo/{path}")
 
-                write_tasks.append((result.html, path))
+                write_tasks.append((result.html, str(path)))
+
                 if is_api_view_link(link):
                     api_view_links.add(link)
 
@@ -380,8 +369,9 @@ def download_site():
                     links.update(result.links)
                 media_tasks.update(result.media_links)
             pool.starmap(_write_html, write_tasks)
-    # A separate pool for media tasks, as we don't want to download multiple media files at once
-    # (this appears to happen when we download the media files in parallel with the HTML files)
+
+    # A separate pool for media tasks, as we don't want to download
+    # multiple media files at once.
     with multiprocessing.Pool(processes=WORKERS) as pool:
         pool.map(_download_media, media_tasks)
 
@@ -601,15 +591,19 @@ def _media_link_for_path(path: str) -> str | None:
 
 
 def _output_path_for_route(route: str) -> Path:
+    """Return the canonical filesystem path for an HTML route."""
     if route == "/":
         return Path("demo/index.html")
     if route == "/sitemap.xml":
         return Path("demo/sitemap.xml")
-    path = route.split("#", 1)[0].split("?", 1)[0].strip("/")
-    # Directory routes are represented by index.html.
+    # Remove query strings and fragments before mapping to the filesystem.
+    path = route.split("?", 1)[0].split("#", 1)[0].strip("/")
+    if not path:
+        return Path("demo/index.html")
+    # Routes ending in "/" represent directory/index.html pages.
     if route.endswith("/") and "." not in path:
         path += "/index.html"
-    # Routes without an extension are normal HTML pages.
+    # Everything else without a file extension is a normal .html page.
     elif "." not in path.rsplit("/", 1)[-1]:
         path += ".html"
     return Path("demo") / path
