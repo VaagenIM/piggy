@@ -33,6 +33,7 @@
 @import "./components/assignment-page.css";
 @import "./components/shortlink-copy.css";
 @import "./components/error-page.css";
+@import "./components/embeds.css";
 
 @import "./components/card-grid.css";
 @import "./components/information-grid.css";
