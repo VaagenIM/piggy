@@ -80,7 +80,9 @@ def get_with_retry(url_to_fetch, *, timeout=600, max_attempts=3):
             # if we are trying to visit "404", we don't want to retry, as it will always fail
             if attempt == max_attempts:
                 raise
-            print(f"WARNING: Request failed for {url_to_fetch} (attempt {attempt}/{max_attempts}): {exc}. Retrying...")
+            print(
+                f"WARNING: Request failed for {url_to_fetch} " f"(attempt {attempt}/{max_attempts}): {exc}. Retrying..."
+            )
             time.sleep(attempt)
             continue
 
@@ -90,18 +92,23 @@ def get_with_retry(url_to_fetch, *, timeout=600, max_attempts=3):
 
         if attempt == max_attempts:
             print(
-                f"WARNING: Could not fetch {url_to_fetch} after {max_attempts} attempts (status code: {response.status_code})"
+                f"WARNING: Could not fetch {url_to_fetch} after "
+                f"{max_attempts} attempts (status code: {response.status_code})"
             )
             return response
 
         if url_to_fetch.endswith("/404"):
             print(
-                f"WARNING: Could not fetch {url_to_fetch} (status code: {response.status_code}). Not retrying, as this is the 404 page."
+                f"WARNING: Could not fetch {url_to_fetch} "
+                f"(status code: {response.status_code}). "
+                "Not retrying, as this is the 404 page."
             )
             return response
 
         print(
-            f"WARNING: Could not fetch {url_to_fetch} (status code: {response.status_code}). Retrying attempt {attempt + 1}/{max_attempts}..."
+            f"WARNING: Could not fetch {url_to_fetch} "
+            f"(status code: {response.status_code}). "
+            f"Retrying attempt {attempt + 1}/{max_attempts}..."
         )
         time.sleep(attempt)
 
@@ -173,7 +180,9 @@ def get_html(link) -> PageResult | None:
             html,
         )
         html = re.sub(
-            rf"""href=\"({link.split("Level")[0].split("/")[-1]}[^/]+)\"""", rf'href="../../\1/lang/{lang}"', html
+            rf"""href=\"({link.split("Level")[0].split("/")[-1]}[^/]+)\"""",
+            rf'href="../../\1/lang/{lang}"',
+            html,
         )
 
     # Ensure parent directories of every discovered link are also visited.
@@ -277,8 +286,9 @@ def _write_html(html, path):
     if output_path.is_dir():
         output_path /= "index.html"
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    with output_path.open("wb+") as f:
+    with output_path.open("wb") as f:
         f.write(html.encode())
+    print(f"Wrote {output_path} ({output_path.stat().st_size} bytes)")
 
 
 def _has_translation_route(link):
@@ -310,7 +320,7 @@ def _download_media(link):
         return
 
     if not r.ok:
-        print(f"WARNING: Could not download {link} " f"(status code: {r.status_code})")
+        print(f"WARNING: Could not download {link} (status code: {r.status_code})")
         return
 
     if not path:
@@ -360,7 +370,8 @@ def download_site():
                     elif "." not in path:
                         path += ".html"
 
-                print(f"Writing \33[34m{link}\33[0m")
+                print(f"Writing \33[34m{link} -> {Path('demo') / path}\33[0m")
+
                 write_tasks.append((result.html, path))
                 if is_api_view_link(link):
                     api_view_links.add(link)
@@ -370,9 +381,9 @@ def download_site():
                 media_tasks.update(result.media_links)
             pool.starmap(_write_html, write_tasks)
     # A separate pool for media tasks, as we don't want to download multiple media files at once
-    # (this appears to happen when we download the media files in parallel with the html files)
+    # (this appears to happen when we download the media files in parallel with the HTML files)
     with multiprocessing.Pool(processes=WORKERS) as pool:
-        pool.map(_download_media, media_tasks)  # Download media in parallel
+        pool.map(_download_media, media_tasks)
 
 
 def api_transform(link: str) -> str | None:
@@ -539,16 +550,6 @@ def _worktree_fingerprint(repository_path: Path) -> str:
     return sha256(diff).hexdigest()
 
 
-# Mirrors piggy.ALLOWED_URL_CHARS_REGEX. The app strips all other characters from the
-# assignment URL segment (e.g. the commas in "Rock, Paper, Scissors"), so routes must match.
-_DISALLOWED_ASSIGNMENT_CHARS = re.compile(r"[^a-zA-Z0-9\-_æøåÆØÅ]")
-
-
-def _assignment_segment(filename: str) -> str:
-    """Return the URL segment the app uses for an assignment file name."""
-    return _DISALLOWED_ASSIGNMENT_CHARS.sub("", Path(filename).stem.replace(".", ""))
-
-
 def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
     """Return affected HTML routes, deleted output paths, and whether a full build is required."""
     path = path.replace("\\", "/").replace(" ", "_")
@@ -570,13 +571,13 @@ def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
         filename = parts[-1]
         if not language or not filename:
             return routes, set(), False
-        assignment = "/".join(content_parts + [_assignment_segment(filename)])
+        assignment = "/".join(content_parts + [Path(filename).stem.replace(".", "")])
         routes.add(f"/main/{assignment}/lang/{language}")
         routes.add(f"/main/{assignment}")
         directory_parts = content_parts
     elif path.endswith((".md", ".oink")):
         directory_parts = [part.replace(".", "") for part in parts[:-1]]
-        assignment = "/".join(directory_parts + [_assignment_segment(parts[-1])])
+        assignment = "/".join(directory_parts + [Path(parts[-1]).stem.replace(".", "")])
         routes.add(f"/main/{assignment}")
     elif path.endswith("meta.json"):
         directory_parts = [part.replace(".", "") for part in parts[:-1]]
@@ -604,9 +605,11 @@ def _output_path_for_route(route: str) -> Path:
         return Path("demo/index.html")
     if route == "/sitemap.xml":
         return Path("demo/sitemap.xml")
-    path = route.split("#", 1)[0].strip("/")
+    path = route.split("#", 1)[0].split("?", 1)[0].strip("/")
+    # Directory routes are represented by index.html.
     if route.endswith("/") and "." not in path:
         path += "/index.html"
+    # Routes without an extension are normal HTML pages.
     elif "." not in path.rsplit("/", 1)[-1]:
         path += ".html"
     return Path("demo") / path
@@ -685,9 +688,10 @@ def configure_demo_build() -> tuple[str, str, bool]:
             links = affected_routes
             api_links = {"/api/search-data"}
             api_view_links = set()
-            for route in affected_routes:
+            for route in sorted(affected_routes):
                 output_path = _output_path_for_route(route)
                 if output_path.exists():
+                    print(f"Removing cached page: {output_path}")
                     _remove_output_path(output_path)
             for output_path in deleted_outputs:
                 _remove_output_path(output_path)
