@@ -593,7 +593,11 @@ def _media_link_for_path(path: str) -> str | None:
 
 
 def _output_path_for_route(route: str) -> Path:
-    """Return the canonical filesystem path for an HTML route."""
+    """Return the canonical filesystem path for an HTML route.
+
+    For directory-style routes, prefer an existing <path>.html file over
+    <path>/index.html so incremental builds update the existing file.
+    """
     if route == "/":
         return Path("demo/index.html")
     if route == "/sitemap.xml":
@@ -603,10 +607,14 @@ def _output_path_for_route(route: str) -> Path:
     if not path:
         return Path("demo/index.html")
     # Routes ending in "/" represent directory/index.html pages.
+    # However, if <path>.html already exists, update that instead.
     if route.endswith("/") and "." not in path:
-        path += "/index.html"
+        html_path = Path("demo") / f"{path}.html"
+        if html_path.exists():
+            return html_path
+        return Path("demo") / path / "index.html"
     # Everything else without a file extension is a normal .html page.
-    elif "." not in path.rsplit("/", 1)[-1]:
+    if "." not in path.rsplit("/", 1)[-1]:
         path += ".html"
     return Path("demo") / path
 
@@ -648,8 +656,11 @@ def configure_demo_build() -> tuple[str, str, bool]:
         previous_state["piggybank_revision"] != piggybank_revision
         or previous_state.get("piggybank_worktree_fingerprint") != piggybank_worktree_fingerprint
     ):
-        changes = _changed_piggybank_files(piggybank_path, previous_state["piggybank_revision"], piggybank_revision)
-
+        changes = _changed_piggybank_files(
+            piggybank_path,
+            previous_state["piggybank_revision"],
+            piggybank_revision,
+        )
     if full_build:
         rmtree("demo", ignore_errors=True)
         incremental_mode = False
@@ -684,11 +695,6 @@ def configure_demo_build() -> tuple[str, str, bool]:
             links = affected_routes
             api_links = {"/api/search-data"}
             api_view_links = set()
-            for route in sorted(affected_routes):
-                output_path = _output_path_for_route(route)
-                if output_path.exists():
-                    print(f"Removing cached page: {output_path}")
-                    _remove_output_path(output_path)
             for output_path in deleted_outputs:
                 _remove_output_path(output_path)
 
