@@ -241,7 +241,9 @@ def _normalize_page_link(link):
     parts = link.split("/")
     if "attachments" in parts or "media" in parts:
         return link
-    return "/".join(part.replace(".", "") for part in parts)
+    link = "/".join(part.replace(".", "") for part in parts)
+    # Page routes are canonicalized without a trailing slash.
+    return link.rstrip("/")
 
 
 def get_links(html, path=""):
@@ -483,6 +485,15 @@ def _git_revision(path: Path) -> str:
 def _changed_piggybank_files(
     piggybank_path: Path, previous_revision: str, current_revision: str
 ) -> list[tuple[str, str]]:
+    """Return changed files as (status, path) pairs.
+
+    Git reports renames as:
+        R100    old/path    new/path
+
+    Treat a rename as a deletion of the old path plus an addition of the new
+    path. This lets the incremental build remove the old generated output and
+    rebuild the new output independently.
+    """
     outputs = [
         subprocess.check_output(
             [
@@ -516,10 +527,40 @@ def _changed_piggybank_files(
     seen = set()
     for output in outputs:
         for line in output.splitlines():
-            status, path = line.split(maxsplit=1)
-            if path.replace("\\", "/").startswith("preview/"):
+            if not line:
                 continue
-            change = (status[0], path)
+            # --name-status uses tabs between the status and paths.
+            fields = line.split("\t")
+            status = fields[0]
+            status_code = status[0]
+            if status_code in {"R", "C"}:
+                # Rename/copy:
+                #   R100    old/path    new/path
+                if len(fields) < 3:
+                    continue
+
+                old_path = fields[1]
+                new_path = fields[2]
+                old_path = old_path.replace("\\", "/")
+                new_path = new_path.replace("\\", "/")
+
+                if not old_path.startswith("preview/"):
+                    change = ("D", old_path)
+                    if change not in seen:
+                        changes.append(change)
+                        seen.add(change)
+                if not new_path.startswith("preview/"):
+                    change = ("A", new_path)
+                    if change not in seen:
+                        changes.append(change)
+                        seen.add(change)
+                continue
+            if len(fields) < 2:
+                continue
+            path = fields[1].replace("\\", "/")
+            if path.startswith("preview/"):
+                continue
+            change = (status_code, path)
             if change not in seen:
                 changes.append(change)
                 seen.add(change)
@@ -582,6 +623,45 @@ def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
     return routes, set(), False
 
 
+def _level_neighbour_routes(piggybank_path: Path, path: str) -> set[str]:
+    """Return routes for all Level assignments next to a changed assignment."""
+    normalized_path = path.replace("\\", "/")
+    path_parts = normalized_path.split("/")
+    if "translations" in path_parts:
+        assignment_index = path_parts.index("translations")
+        neighbour_directory = Path(*path_parts[:assignment_index])
+    else:
+        changed_file = Path(normalized_path)
+        neighbour_directory = changed_file.parent
+
+    changed_file = Path(normalized_path)
+    if "Level" not in changed_file.name:
+        return set()
+
+    directory = piggybank_path / neighbour_directory
+    if not directory.is_dir():
+        return set()
+
+    routes = set()
+    for neighbour in directory.glob("*Level*"):
+        if neighbour.suffix not in {".md", ".oink"}:
+            continue
+
+        neighbour_path = (neighbour_directory / neighbour.name).as_posix()
+        neighbour_routes, _, _ = _route_for_path(neighbour_path)
+        routes.update(neighbour_routes)
+
+        translations_directory = neighbour.parent / "translations"
+        if not translations_directory.is_dir():
+            continue
+        for translation in translations_directory.glob(f"*/{neighbour.name}"):
+            translation_path = translation.relative_to(piggybank_path).as_posix()
+            translation_routes, _, _ = _route_for_path(translation_path)
+            routes.update(translation_routes)
+
+    return routes
+
+
 def _media_link_for_path(path: str) -> str | None:
     parts = path.replace("\\", "/").replace(" ", "_").split("/")
     if len(parts) < 2 or parts[-2] not in {"attachments", "media"}:
@@ -591,7 +671,11 @@ def _media_link_for_path(path: str) -> str | None:
 
 
 def _output_path_for_route(route: str) -> Path:
-    """Return the canonical filesystem path for an HTML route."""
+    """Return the canonical filesystem path for an HTML route.
+
+    For directory-style routes, prefer an existing <path>.html file over
+    <path>/index.html so incremental builds update the existing file.
+    """
     if route == "/":
         return Path("demo/index.html")
     if route == "/sitemap.xml":
@@ -601,10 +685,14 @@ def _output_path_for_route(route: str) -> Path:
     if not path:
         return Path("demo/index.html")
     # Routes ending in "/" represent directory/index.html pages.
+    # However, if <path>.html already exists, update that instead.
     if route.endswith("/") and "." not in path:
-        path += "/index.html"
+        html_path = Path("demo") / f"{path}.html"
+        if html_path.exists():
+            return html_path
+        return Path("demo") / path / "index.html"
     # Everything else without a file extension is a normal .html page.
-    elif "." not in path.rsplit("/", 1)[-1]:
+    if "." not in path.rsplit("/", 1)[-1]:
         path += ".html"
     return Path("demo") / path
 
@@ -646,8 +734,11 @@ def configure_demo_build() -> tuple[str, str, bool]:
         previous_state["piggybank_revision"] != piggybank_revision
         or previous_state.get("piggybank_worktree_fingerprint") != piggybank_worktree_fingerprint
     ):
-        changes = _changed_piggybank_files(piggybank_path, previous_state["piggybank_revision"], piggybank_revision)
-
+        changes = _changed_piggybank_files(
+            piggybank_path,
+            previous_state["piggybank_revision"],
+            piggybank_revision,
+        )
     if full_build:
         rmtree("demo", ignore_errors=True)
         incremental_mode = False
@@ -666,6 +757,7 @@ def configure_demo_build() -> tuple[str, str, bool]:
         deleted_outputs = set()
         for status, path in changes:
             routes, deleted, requires_full_build = _route_for_path(path)
+            routes.update(_level_neighbour_routes(piggybank_path, path))
             if requires_full_build:
                 rmtree("demo", ignore_errors=True)
                 incremental_mode = False
@@ -682,11 +774,6 @@ def configure_demo_build() -> tuple[str, str, bool]:
             links = affected_routes
             api_links = {"/api/search-data"}
             api_view_links = set()
-            for route in sorted(affected_routes):
-                output_path = _output_path_for_route(route)
-                if output_path.exists():
-                    print(f"Removing cached page: {output_path}")
-                    _remove_output_path(output_path)
             for output_path in deleted_outputs:
                 _remove_output_path(output_path)
 
