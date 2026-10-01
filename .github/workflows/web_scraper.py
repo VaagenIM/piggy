@@ -623,6 +623,45 @@ def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
     return routes, set(), False
 
 
+def _level_neighbour_routes(piggybank_path: Path, path: str) -> set[str]:
+    """Return routes for all Level assignments next to a changed assignment."""
+    normalized_path = path.replace("\\", "/")
+    path_parts = normalized_path.split("/")
+    if "translations" in path_parts:
+        assignment_index = path_parts.index("translations")
+        neighbour_directory = Path(*path_parts[:assignment_index])
+    else:
+        changed_file = Path(normalized_path)
+        neighbour_directory = changed_file.parent
+
+    changed_file = Path(normalized_path)
+    if "Level" not in changed_file.name:
+        return set()
+
+    directory = piggybank_path / neighbour_directory
+    if not directory.is_dir():
+        return set()
+
+    routes = set()
+    for neighbour in directory.glob("*Level*"):
+        if neighbour.suffix not in {".md", ".oink"}:
+            continue
+
+        neighbour_path = (neighbour_directory / neighbour.name).as_posix()
+        neighbour_routes, _, _ = _route_for_path(neighbour_path)
+        routes.update(neighbour_routes)
+
+        translations_directory = neighbour.parent / "translations"
+        if not translations_directory.is_dir():
+            continue
+        for translation in translations_directory.glob(f"*/{neighbour.name}"):
+            translation_path = translation.relative_to(piggybank_path).as_posix()
+            translation_routes, _, _ = _route_for_path(translation_path)
+            routes.update(translation_routes)
+
+    return routes
+
+
 def _media_link_for_path(path: str) -> str | None:
     parts = path.replace("\\", "/").replace(" ", "_").split("/")
     if len(parts) < 2 or parts[-2] not in {"attachments", "media"}:
@@ -718,6 +757,7 @@ def configure_demo_build() -> tuple[str, str, bool]:
         deleted_outputs = set()
         for status, path in changes:
             routes, deleted, requires_full_build = _route_for_path(path)
+            routes.update(_level_neighbour_routes(piggybank_path, path))
             if requires_full_build:
                 rmtree("demo", ignore_errors=True)
                 incremental_mode = False
