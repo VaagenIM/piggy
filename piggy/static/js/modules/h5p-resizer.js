@@ -93,10 +93,6 @@
           'data-piggy-theme',
           document.documentElement.getAttribute('data-theme') || ''
         );
-        var stylesheet = document.querySelector('link[href$="/css/main.css"]');
-        var cssUrl = stylesheet
-          ? new URL('./components/h5p.css', stylesheet.href).href
-          : new URL('/static/css/components/h5p.css', document.baseURI).href;
         var link = documentRoot.getElementById('piggy-h5p-theme');
         if (!link) {
           link = documentRoot.createElement('link');
@@ -104,7 +100,7 @@
           link.rel = 'stylesheet';
           documentRoot.head.appendChild(link);
         }
-        link.href = cssUrl;
+        link.href = '/static/css/components/h5p.css';
       }
     }
     catch (error) {
