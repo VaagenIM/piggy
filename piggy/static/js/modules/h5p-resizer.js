@@ -42,6 +42,25 @@
     return variables;
   };
 
+  var copyFontStylesheets = function (documentRoot) {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      var href = links[i].href;
+      if (href.indexOf('fonts.googleapis.com') === -1 && href.indexOf('/css/fonts/') === -1) {
+        continue;
+      }
+      if (documentRoot.querySelector('link[data-piggy-font][href="' + href + '"]')) {
+        continue;
+      }
+      var link = documentRoot.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      link.setAttribute('data-piggy-font', '');
+      documentRoot.head.appendChild(link);
+    }
+  };
+
   var isH5PIframe = function (iframe) {
     if (iframe.src.indexOf('h5p') !== -1) {
       return true;
@@ -52,6 +71,44 @@
     }
     catch (error) {
       return false;
+    }
+  };
+
+  var fitIframeToContent = function (iframe) {
+    try {
+      var documentRoot = iframe.contentDocument;
+      var content = documentRoot && documentRoot.querySelector('.h5p-content');
+      if (!content) {
+        return;
+      }
+      var scroller = documentRoot.scrollingElement || documentRoot.documentElement;
+      var height = Math.ceil(content.getBoundingClientRect().bottom + scroller.scrollTop);
+      if (height > 0) {
+        iframe.style.height = height + 'px';
+        scroller.scrollTop = 0;
+      }
+    }
+    catch (error) {
+      // Cross-origin frames keep the height H5P asked for.
+    }
+  };
+
+  var observeContentSize = function (iframe) {
+    if (iframe.piggyContentObserver) {
+      return;
+    }
+    try {
+      var content = iframe.contentDocument.querySelector('.h5p-content');
+      if (!content || !iframe.contentWindow.ResizeObserver) {
+        return;
+      }
+      iframe.piggyContentObserver = new iframe.contentWindow.ResizeObserver(function () {
+        fitIframeToContent(iframe);
+      });
+      iframe.piggyContentObserver.observe(content);
+    }
+    catch (error) {
+      // Cross-origin frames are resized by H5P's messages only.
     }
   };
 
@@ -71,11 +128,22 @@
       variables: variables
     };
 
+    // Lets the page give the quiz frame spacing (see h5p.css).
+    iframe.classList.add('piggy-h5p-frame');
+    observeContentSize(iframe);
+
     // Same-origin H5P files can be themed immediately, without waiting for
     // the embedded document to implement a message handler.
     try {
       var root = iframe.contentDocument?.documentElement;
       if (root) {
+        // Drop variables the new theme doesn't define
+        for (var i = root.style.length - 1; i >= 0; i--) {
+          var property = root.style[i];
+          if (property.indexOf('--piggy-') === 0 && !(property in variables)) {
+            root.style.removeProperty(property);
+          }
+        }
         Object.keys(variables).forEach(function (name) {
           root.style.setProperty(name, variables[name]);
         });
@@ -89,10 +157,18 @@
       }
       var documentRoot = iframe.contentDocument;
       if (documentRoot) {
+        var pageRoot = document.documentElement;
+        var pageStyle = getComputedStyle(pageRoot);
+
         documentRoot.documentElement.setAttribute(
           'data-piggy-theme',
-          document.documentElement.getAttribute('data-theme') || ''
+          pageRoot.getAttribute('data-theme') || ''
         );
+
+        documentRoot.documentElement.style.fontSize = pageStyle.fontSize;
+        documentRoot.documentElement.style.colorScheme = pageStyle.colorScheme;
+        copyFontStylesheets(documentRoot);
+
         var link = documentRoot.getElementById('piggy-h5p-theme');
         if (!link) {
           link = documentRoot.createElement('link');
@@ -189,6 +265,7 @@
   actionHandlers.resize = function (iframe, data) {
     // Resize iframe so all content is visible. Use scrollHeight to make sure we get everything
     iframe.style.height = data.scrollHeight + 'px';
+    fitIframeToContent(iframe);
   };
 
   /**
@@ -250,9 +327,18 @@
   }
 
   applyThemeToH5PIframes();
-  new MutationObserver(applyThemeToH5PIframes).observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['class', 'style', 'data-theme', 'data-theme-type']
+  var themeUpdateQueued = false;
+  new MutationObserver(function () {
+    if (themeUpdateQueued) {
+      return;
+    }
+    themeUpdateQueued = true;
+    requestAnimationFrame(function () {
+      themeUpdateQueued = false;
+      applyThemeToH5PIframes();
+    });
+  }).observe(document.documentElement, {
+    attributes: true
   });
 
 })();

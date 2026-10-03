@@ -239,6 +239,12 @@ preview.border: #b59d6d
   --piggy-key-admonition-inner-border-hover: rgba(255, 255, 255, 0.88);
   --piggy-key-admonition-shadow: rgba(70, 58, 32, 0.06);
   --piggy-key-admonition-shadow-hover: rgba(70, 58, 32, 0.11);
+
+  /* h5p quizzes */
+  --piggy-h5p-raised: rgba(255, 255, 255, 0.55);
+  --piggy-h5p-success: var(--piggy-admonition-success-icon);
+  --piggy-h5p-danger: var(--piggy-admonition-danger-icon);
+  --piggy-h5p-on-state: #ffffff;
 }
 
 [data-theme="readable"] .md-content {

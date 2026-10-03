@@ -295,6 +295,9 @@ preview_style: background: linear-gradient(90deg, #000000, #000000); color: #fff
 
   --piggy-key-admonition-shadow: rgba(0, 0, 0, 0.24);
   --piggy-key-admonition-shadow-hover: rgba(0, 0, 0, 0.32);
+
+  /* h5p quizzes */
+  --piggy-h5p-on-state: #ffffff;
 }
 
 [data-theme="darker"] .site-navbar {

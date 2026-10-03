@@ -282,6 +282,12 @@ preview_style: background: linear-gradient(90deg, #ffffff, rgb(240, 240, 240)); 
 
   --piggy-key-admonition-shadow: rgba(23, 32, 51, 0.08);
   --piggy-key-admonition-shadow-hover: rgba(23, 32, 51, 0.12);
+
+  /* h5p quizzes */
+  --piggy-h5p-raised: rgba(255, 255, 255, 0.55);
+  --piggy-h5p-success: var(--piggy-admonition-success-icon);
+  --piggy-h5p-danger: var(--piggy-admonition-danger-icon);
+  --piggy-h5p-on-state: #ffffff;
 }
 
 /******************************\
