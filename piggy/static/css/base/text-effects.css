@@ -1,87 +1,84 @@
-/******************\
-|*   TEXT EFFECTS  *|
-\******************/
+/* SNOUT TEXT EFFECTS */
+
+/* Original colour mappings preserved. These are literal colours, not theme-aware. */
 .snout-hl-0 {
-  color: rgb(0, 0, 0);
+  color: #000;
 }
-
 .snout-hl-1 {
-  color: rgb(255, 0, 0);
+  color: #f00;
 }
-
 .snout-hl-2 {
-  color: rgb(0, 255, 0);
+  color: #0f0;
 }
-
 .snout-hl-3 {
-  color: rgb(0, 0, 255);
+  color: #00f;
 }
-
 .snout-hl-4 {
-  color: rgb(255, 255, 0);
+  color: #ff0;
 }
-
 .snout-hl-5 {
-  color: rgb(255, 0, 255);
+  color: #f0f;
 }
-
 .snout-hl-6 {
-  color: rgb(0, 255, 255);
+  color: #0ff;
 }
-
 .snout-hl-7 {
-  color: rgb(255, 255, 255);
-}
-
-.snout-rainbow {
-  position: relative;
   color: #fff;
-  background: linear-gradient(
+}
+
+/* Coexisting compatibility stuff */
+:is(
+  .snout-rainbow,
+  .snout-warning,
+  .snout-fun,
+  .snout-shimmer,
+  .snout-wave,
+  .snout-zoom,
+  .snout-shake,
+  .snout-bounce,
+  .snout-wobble,
+  .snout-float,
+  .snout-swing
+) {
+  animation:
+    var(--snout-paint-animation, none), var(--snout-motion-animation, none);
+}
+
+/* Gradient surfaces retain a solid colour if text clipping is unavailable. */
+:is(
+  .snout-rainbow,
+  .snout-warning,
+  .snout-fun,
+  .snout-gold,
+  .snout-ice,
+  .snout-fire,
+  .snout-shimmer
+) {
+  font-weight: 800;
+  background-repeat: repeat-x;
+}
+.snout-rainbow {
+  color: #a855f7;
+  --snout-gradient: linear-gradient(
     90deg,
-    #f00,
-    #f60,
-    #ff0,
-    #0f0,
-    #0ff,
-    #00f,
-    #f0f,
-    #f00
+    #ff577f,
+    #ffb454,
+    #ffe66d,
+    #67e8a5,
+    #67d9ff,
+    #a78bfa,
+    #ff577f
   );
-  -webkit-background-clip: text;
-  color: transparent;
   background-size: 200% 100%;
-  animation: rainbow 3s linear infinite !important;
-  filter: drop-shadow(1px 1px 0 #00000088) drop-shadow(-1px 1px 0 #00000088)
-    drop-shadow(-1px -1px 0 #00000088) drop-shadow(1px -1px 0 #00000088)
-    saturate(1.5) brightness(1);
-  font-weight: bold;
+  --snout-paint-animation: snout-colour-scroll var(--snout-paint-speed, 6s)
+    linear infinite;
 }
-
-.snout-wave {
-  display: inline-block;
-  position: relative;
-  animation: wave 0.75s linear infinite !important;
-}
-
-.snout-zoom {
-  display: inline-block;
-  position: relative;
-  animation: zoom 1.5s ease-in-out infinite !important;
-}
-
-.snout-shake {
-  display: inline-block;
-  position: relative;
-  animation: shake 0.15s linear infinite !important;
-}
-
 .snout-warning {
-  display: inline-block;
-  position: relative;
+  color: #ff2200;
   font-weight: 900;
   letter-spacing: 0.05em;
 
-  background: repeating-linear-gradient(
+  --snout-gradient: repeating-linear-gradient(
     35deg,
     #ff2200 0%,
     #ff2200 15%,
@@ -89,40 +86,381 @@
     #ff2200 35%,
     #ff2200 100%
   );
+
   background-size: 200% 100%;
-  -webkit-background-clip: text;
-  color: transparent;
 
-  animation: background-scroll 1.2s linear infinite;
-  filter: drop-shadow(0 0 10px #ff220066) brightness(1.2) saturate(1.6)
-    saturate(1.5) brightness(1);
+  --snout-paint-animation: snout-warning-scroll var(--snout-paint-speed, 1.2s)
+    linear infinite;
 }
 
-.snout-glow {
-  display: inline-block;
-  position: relative;
-  filter: drop-shadow(0 0 5px #ffffffff) brightness(1.2) saturate(1.6)
-    saturate(1.5) brightness(1);
+/* Higher specificity preserves the warning glow over the shared filter. */
+.snout-warning.snout-warning {
+  filter: drop-shadow(0 0 10px #ff220066) brightness(1.2) saturate(1.6);
 }
 
+@keyframes snout-warning-scroll {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 200% 50%;
+  }
+}
 .snout-fun {
-  display: inline-block;
-  position: relative;
-  font-weight: 900;
-  letter-spacing: 0.05em;
-
-  background: repeating-linear-gradient(
-    35deg,
-    #00a2ff 0%,
-    #ff00dd 25%,
-    #ff5e00 50%,
-    #ff00dd 75%,
-    #00a2ff 100%
+  color: #dd56ee;
+  --snout-gradient: linear-gradient(
+    90deg,
+    #38bdf8,
+    #c084fc,
+    #f472b6,
+    #fb923c,
+    #38bdf8
   );
   background-size: 200% 100%;
-  -webkit-background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 0 3px #00000066);
+  --snout-paint-animation: snout-colour-scroll var(--snout-paint-speed, 5s)
+    linear infinite;
+}
+.snout-gold {
+  color: #b98220;
+  --snout-gradient: linear-gradient(
+    180deg,
+    #fff2bc 0%,
+    #e8b849 35%,
+    #946014 49%,
+    #ffe9a0 53%,
+    #bd862b 100%
+  );
+}
+.snout-ice {
+  color: #38a5c4;
+  --snout-gradient: linear-gradient(
+    180deg,
+    #efffff 0%,
+    #a5f3fc 40%,
+    #269bc0 48%,
+    #cffafe 54%,
+    #4893d7 100%
+  );
+}
+.snout-fire {
+  color: #ef6330;
+  --snout-gradient: linear-gradient(0deg, #d62d35, #f97316 45%, #ffe48a);
+}
+.snout-shimmer {
+  color: #8b8de0;
+  --snout-gradient: linear-gradient(
+    110deg,
+    #818cf8 0%,
+    #818cf8 40%,
+    #f5f3ff 50%,
+    #818cf8 60%,
+    #818cf8 100%
+  );
+  background-size: 250% 100%;
+  --snout-paint-animation: snout-shimmer-pass var(--snout-paint-speed, 4s)
+    ease-in-out infinite;
+}
+@supports ((background-clip: text) or (-webkit-background-clip: text)) {
+  :is(
+    .snout-rainbow,
+    .snout-warning,
+    .snout-fun,
+    .snout-gold,
+    .snout-ice,
+    .snout-fire,
+    .snout-shimmer
+  ) {
+    background-image: var(--snout-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Use a shadow of the rendered glyphs, not text-shadow behind transparent text. */
+    filter: drop-shadow(0 1px 1px rgb(0 0 0 / 35%));
+  }
+}
 
-  animation: background-scroll 3.6s linear infinite;
+/* Light and dimensional effects. */
+.snout-glow {
+  /* Inherits text colour; optionally set --snout-glow-color. */
+  text-shadow:
+    0 0 0.16em var(--snout-glow-color, currentColor),
+    0 0 0.45em var(--snout-glow-color, currentColor);
+}
+.snout-neon {
+  color: #fff0fc;
+  font-weight: 800;
+  text-shadow:
+    0 0 0.06em #fff,
+    0 0 0.2em var(--snout-glow-color, #e843d5),
+    0 0 0.5em var(--snout-glow-color, #e843d5),
+    0 0 0.9em var(--snout-glow-color, #e843d5);
+}
+.snout-outline {
+  color: var(--snout-fill, #fff);
+  font-weight: 900;
+  text-shadow:
+    -1px -1px 0 var(--snout-outline-color, #232433),
+    1px -1px 0 var(--snout-outline-color, #232433),
+    -1px 1px 0 var(--snout-outline-color, #232433),
+    1px 1px 0 var(--snout-outline-color, #232433);
+}
+.snout-extrude {
+  color: var(--snout-fill, #ffc874);
+  font-weight: 900;
+  text-shadow:
+    0.025em 0.025em 0 var(--snout-depth-color, #8d4a33),
+    0.05em 0.05em 0 var(--snout-depth-color, #8d4a33),
+    0.075em 0.075em 0 var(--snout-depth-color, #8d4a33),
+    0.1em 0.1em 0 var(--snout-depth-color, #8d4a33),
+    0.13em 0.15em 0.08em rgb(0 0 0 / 25%);
+}
+.snout-retro {
+  color: #ffe5af;
+  font-weight: 900;
+  text-shadow:
+    0.045em 0.045em 0 #e76865,
+    0.09em 0.09em 0 #7a4b9d,
+    0.135em 0.135em 0 #253454;
+}
+.snout-chromatic {
+  /* Static RGB split; no flashing or duplicate text attributes required. */
+  font-weight: 800;
+  text-shadow:
+    -0.045em 0 0 #f43f78,
+    0.045em 0 0 #22d3ee;
+}
+
+/* Highlight surfaces; can wrap across lines. */
+.snout-marker {
+  color: var(--snout-marker-ink, #292314);
+  background: linear-gradient(
+    transparent 18%,
+    var(--snout-marker-color, #fde68a) 18%,
+    var(--snout-marker-color, #fde68a) 92%,
+    transparent 92%
+  );
+  padding-inline: 0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.snout-underline {
+  text-decoration-line: underline;
+  text-decoration-color: var(--snout-line-color, #a78bfa);
+  text-decoration-thickness: 0.14em;
+  text-underline-offset: 0.16em;
+  text-decoration-skip-ink: none;
+}
+
+/* Motion effects: inline-block makes the entire phrase one animated unit.
+   Keep these spans short; they do not wrap like ordinary inline text. */
+:is(
+  .snout-wave,
+  .snout-zoom,
+  .snout-shake,
+  .snout-bounce,
+  .snout-wobble,
+  .snout-float,
+  .snout-swing
+) {
+  display: inline-block;
+  transform-origin: center;
+}
+.snout-wave {
+  --snout-motion-animation: snout-wave-motion var(--snout-speed, 1.8s)
+    ease-in-out infinite;
+}
+.snout-zoom {
+  --snout-motion-animation: snout-zoom-motion var(--snout-speed, 2.4s)
+    ease-in-out infinite;
+}
+.snout-shake {
+  /* A short shake followed by a rest, rather than continuous rapid movement. */
+  --snout-motion-animation: snout-shake-motion var(--snout-speed, 3s) linear
+    infinite;
+}
+.snout-bounce {
+  --snout-motion-animation: snout-bounce-motion var(--snout-speed, 2s)
+    ease-in-out infinite;
+}
+.snout-wobble {
+  --snout-motion-animation: snout-wobble-motion var(--snout-speed, 2.8s)
+    ease-in-out infinite;
+}
+.snout-float {
+  --snout-motion-animation: snout-float-motion var(--snout-speed, 3.6s)
+    ease-in-out infinite;
+}
+.snout-swing {
+  transform-origin: top center;
+  --snout-motion-animation: snout-swing-motion var(--snout-speed, 2.4s)
+    ease-in-out infinite;
+}
+
+@keyframes snout-colour-scroll {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 200% 50%;
+  }
+}
+@keyframes snout-colour-sweep {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+@keyframes snout-shimmer-pass {
+  0%,
+  15% {
+    background-position: 100% 50%;
+  }
+  65%,
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes snout-wave-motion {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-0.1em) rotate(2deg);
+  }
+}
+@keyframes snout-zoom-motion {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+@keyframes snout-shake-motion {
+  0%,
+  16%,
+  100% {
+    transform: translateX(0);
+  }
+  2%,
+  6%,
+  10%,
+  14% {
+    transform: translateX(-0.045em);
+  }
+  4%,
+  8%,
+  12% {
+    transform: translateX(0.045em);
+  }
+}
+@keyframes snout-bounce-motion {
+  0%,
+  40%,
+  100% {
+    transform: translateY(0);
+  }
+  16% {
+    transform: translateY(-0.22em);
+  }
+  28% {
+    transform: translateY(-0.07em);
+  }
+}
+@keyframes snout-wobble-motion {
+  0%,
+  40%,
+  100% {
+    transform: rotate(0);
+  }
+  10% {
+    transform: rotate(-5deg);
+  }
+  20% {
+    transform: rotate(4deg);
+  }
+  30% {
+    transform: rotate(-2deg);
+  }
+}
+@keyframes snout-float-motion {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.16em);
+  }
+}
+@keyframes snout-swing-motion {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+/* Pause these effects within any container carrying this attribute. */
+[data-snout-motion="off"]
+  :is(
+    .snout-rainbow,
+    .snout-warning,
+    .snout-fun,
+    .snout-shimmer,
+    .snout-wave,
+    .snout-zoom,
+    .snout-shake,
+    .snout-bounce,
+    .snout-wobble,
+    .snout-float,
+    .snout-swing
+  ) {
+  animation: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    .snout-rainbow,
+    .snout-warning,
+    .snout-fun,
+    .snout-shimmer,
+    .snout-wave,
+    .snout-zoom,
+    .snout-shake,
+    .snout-bounce,
+    .snout-wobble,
+    .snout-float,
+    .snout-swing
+  ) {
+    animation: none !important;
+  }
+}
+@media (forced-colors: active) {
+  :is(
+    .snout-rainbow,
+    .snout-warning,
+    .snout-fun,
+    .snout-gold,
+    .snout-ice,
+    .snout-fire,
+    .snout-shimmer,
+    .snout-glow,
+    .snout-neon,
+    .snout-outline,
+    .snout-extrude,
+    .snout-retro,
+    .snout-chromatic,
+    .snout-marker
+  ) {
+    color: CanvasText;
+    background: none;
+    filter: none;
+    text-shadow: none;
+  }
 }

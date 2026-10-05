@@ -290,6 +290,21 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
 
   --piggy-key-admonition-shadow: transparent;
   --piggy-key-admonition-shadow-hover: transparent;
+
+  /* h5p quizzes */
+  --piggy-h5p-line: 2px;
+  --piggy-h5p-accent: var(--piggy-information-accent);
+  --piggy-h5p-muted: var(--piggy-text-main);
+  --piggy-h5p-surface: transparent;
+  --piggy-h5p-raised: transparent;
+  --piggy-h5p-bar: transparent;
+  --piggy-h5p-border: rgba(255, 255, 255, 0.7);
+  --piggy-h5p-border-strong: var(--piggy-text-main);
+  --piggy-h5p-card-border: var(--piggy-text-main);
+  --piggy-h5p-selected-bg: rgba(0, 255, 255, 0.22);
+  --piggy-h5p-success-bg: rgba(0, 255, 0, 0.22);
+  --piggy-h5p-danger-bg: rgba(255, 0, 0, 0.22);
+  --piggy-h5p-on-state: #000000;
 }
 
 [data-theme="high-contrast"] .piggy-card {

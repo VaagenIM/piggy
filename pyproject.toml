@@ -11,7 +11,7 @@ dependencies = [
     "pillow~=12.3.0",
     "beautifulsoup4~=4.15.0",
     "frozendict==2.4.7",
-    "flask-squeeze==3.5.0",
+    "flask-squeeze~=3.5.0",
     "MarkupSafe==3.0.3",
     "python-dotenv>=1.2.3",
 ]
@@ -24,7 +24,7 @@ py-modules = []
 
 [project.optional-dependencies]
 dev = [
-    "ruff~=0.16.5",
+    "ruff~=0.16.9",
 ]
 
 [tool.ruff]

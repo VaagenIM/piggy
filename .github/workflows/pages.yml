@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           ref: main
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
@@ -43,15 +43,6 @@ jobs:
           enable-cache: true
           activate-environment: true
 
-      - name: Set up Python
-        run: uv python install
-
-      - name: Cleanup earlier runs
-        run: |
-          rm -rf piggybank
-          pkill -f gunicorn || true
-          pkill -f python || true
-
       - name: Checkout piggybank
         uses: actions/checkout@v7
         with:
@@ -59,7 +50,7 @@ jobs:
           ref: output
           token: ${{ secrets.PIGGYPAT }}
           path: piggybank
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Restore demo cache
         uses: actions/cache@v6
@@ -75,11 +66,10 @@ jobs:
         env:
           UV_LINK_MODE: copy
         run: |
-          uv pip install .
+          uv pip install . -r .github/workflows/requirements-pages.txt
           echo "GITHUB_PAGES=1" >> $GITHUB_ENV
           echo "USE_CACHE=0" >> $GITHUB_ENV
           echo "PIGGY_VERSION=$(bash .github/workflows/scripts/compute-version.sh)" >> $GITHUB_ENV
-          uv pip install -r .github/workflows/requirements-pages.txt
 
       - name: Start Piggy server
         run: |

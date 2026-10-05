@@ -1,0 +1,63 @@
+.pptx-embed {
+  display: block;
+  width: 100%;
+  margin: 1.5rem 0;
+  border: var(--piggy-card-border-width) solid var(--piggy-card-border);
+  border-radius: 0.5rem;
+  background: var(--piggy-main);
+  box-shadow: 0 6px 20px var(--piggy-shadow-box);
+  overflow: hidden;
+}
+
+:root {
+  --pptx-primary: var(--piggy-button-active);
+  --pptx-primary-strong: var(--piggy-button-hover);
+  --pptx-primary-ink: var(--piggy-text-button);
+  --pptx-primary-wash: var(--piggy-header-bg-h2);
+  --pptx-text-color: var(--piggy-text-main);
+  --pptx-text-soft: var(--piggy-text-card);
+  --pptx-text-muted: color-mix(
+    in srgb,
+    var(--piggy-text-description) 72%,
+    transparent
+  );
+  --pptx-logo-color: var(--piggy-logo);
+  --pptx-font-family: var(--piggy-ui-font-family);
+  --pptx-mono-font-family: var(--piggy-monospace-font-family);
+  --pptx-font-size-body: calc(1rem * var(--piggy-font-scale));
+  --pptx-font-size-meta: calc(0.78rem * var(--piggy-font-scale));
+  --pptx-font-size-control: calc(0.68rem * var(--piggy-font-scale));
+  --pptx-font-size-heading: calc(1.35rem * var(--piggy-font-scale));
+  --pptx-font-size-brand: calc(0.9rem * var(--piggy-font-scale));
+  --pptx-surface-deep: var(--piggy-card-end);
+  --ink-950: var(--pptx-surface-deep);
+  --text: var(--pptx-text-color);
+  --line-soft: var(--pptx-border-soft);
+  --pptx-background: var(--piggy-main);
+  --pptx-surface: var(--piggy-card-end);
+  --pptx-surface-raised: var(--piggy-card-start);
+  --pptx-surface-hover: var(--piggy-button-hover);
+  --pptx-border: var(--piggy-card-border);
+  --pptx-border-soft: color-mix(
+    in srgb,
+    var(--piggy-card-border) 65%,
+    transparent
+  );
+  --pptx-topbar-background: color-mix(
+    in srgb,
+    var(--piggy-navbar-end) 94%,
+    transparent
+  );
+  --pptx-stage-background: var(--piggy-main);
+  --pptx-sidebar-background: var(--piggy-card-end);
+  --pptx-dialog-background: var(--piggy-card-end);
+  --pptx-dialog-shadow: 0 24px 70px var(--piggy-shadow-box);
+  --pptx-shadow: 0 24px 70px var(--piggy-shadow-box);
+  --pptx-danger: var(--piggy-admonition-danger-border);
+  --pptx-fullscreen-background: var(--piggy-dark);
+  --pptx-slide-background: var(--piggy-dark);
+}
+
+:root[data-theme="high-contrast"] {
+  --pptx-border-soft: var(--piggy-card-border);
+}
