@@ -55,10 +55,7 @@ html.h5p-iframe {
   );
   --q-on-state: var(--piggy-h5p-on-state, var(--piggy-main));
 
-  --q-success: var(
-    --piggy-h5p-success,
-    var(--piggy-admonition-success-border)
-  );
+  --q-success: var(--piggy-h5p-success, var(--piggy-admonition-success-border));
   --q-success-text: var(--piggy-admonition-success-icon);
   --q-success-bg: var(
     --piggy-h5p-success-bg,
