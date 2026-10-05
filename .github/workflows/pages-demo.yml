@@ -74,47 +74,33 @@ jobs:
           workers=$((workers < 1 ? 1 : workers))
           gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers "$workers" run:app &
 
-      - name: Modify CNAME in web scraper
-        run: sed -i 's/piggy.iktim.no/piglet.iktim.no/g' .github/workflows/web_scraper.py
-
       - name: Run web scraper
         env:
           FORCE_FULL_REBUILD: ${{ inputs.full_rebuild || 'false' }}
-        run: python .github/workflows/web_scraper.py
-
-      - name: Add custom domain
         run: |
+          sed -i 's/piggy.iktim.no/piglet.iktim.no/g' .github/workflows/web_scraper.py
+          python .github/workflows/web_scraper.py
           echo "piglet.iktim.no" > .github/workflows/demo/CNAME
-
+          
       - name: Deploy to piggy-edge gh-pages
         run: |
-          if [ -d edge-deploy/.git ]; then
-            git -C edge-deploy fetch --depth 1 origin gh-pages
-            git -C edge-deploy checkout -B gh-pages origin/gh-pages
-            git -C edge-deploy reset --hard origin/gh-pages
-            git -C edge-deploy clean -fdx
-          else
-            git clone --depth 1 --branch gh-pages \
-              https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggy-edge.git \
-              edge-deploy
-          fi
-
+          rm -rf edge-deploy
+          mkdir edge-deploy
           cd edge-deploy
 
-          # Remove old site contents except git metadata
-          find . \
-            -mindepth 1 \
-            -not -path "./.git*" \
-            -delete
+          git init
+          git checkout -b gh-pages
 
-          cp -R ../.github/workflows/demo/* .
-
+          cp -a ../.github/workflows/demo/. .
           touch .nojekyll
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add .
-          git commit -m "Deploy develop preview ${GITHUB_SHA}" || echo "No changes"
+          git add -A
+          git commit -m "Deploy develop preview ${GITHUB_SHA}"
 
-          git push origin gh-pages --force
+          git remote add origin \
+            https://${{ secrets.PIGGYPAT }}@github.com/VaagenIM/piggy-edge.git
+
+          git push --force origin gh-pages
