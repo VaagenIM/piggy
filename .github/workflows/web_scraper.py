@@ -8,6 +8,8 @@ import posixpath
 import re
 import subprocess
 import time
+
+import htmlmin
 import requests
 import json
 from hashlib import sha256
@@ -284,6 +286,13 @@ def get_media_links(html, path=""):
 
 
 def _write_html(html, path):
+    html = htmlmin.minify(
+        html,
+        remove_comments=True,
+        remove_empty_space=True,
+        reduce_boolean_attributes=True,
+    )
+
     output_path = Path("demo") / path
     if output_path.is_dir():
         output_path /= "index.html"
