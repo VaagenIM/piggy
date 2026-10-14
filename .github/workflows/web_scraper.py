@@ -752,7 +752,7 @@ def configure_demo_build() -> tuple[str, str, bool]:
         rmtree("demo", ignore_errors=True)
         incremental_mode = False
         links = {"/", "/404"}
-        api_links = {"/api/search-data"}
+        api_links = {"/api/search-data", "/api"}
     else:
         incremental_mode = True
         if not changes:
@@ -781,7 +781,7 @@ def configure_demo_build() -> tuple[str, str, bool]:
                 deleted_outputs.update(_output_path_for_route(route) for route in routes)
         else:
             links = affected_routes
-            api_links = {"/api/search-data"}
+            api_links = {"/api/search-data", "/api"}
             api_view_links = set()
             for output_path in deleted_outputs:
                 _remove_output_path(output_path)
