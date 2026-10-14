@@ -23,13 +23,23 @@ class ConverterContractTests(unittest.TestCase):
     def test_title_and_native_skip_target_survive_conversion(self):
         with tempfile.TemporaryDirectory() as tmp:
             body = self.render(
-                Path(tmp), "Test Level 1 - Start.md", "---\ntitle: Start\n---\n# Start\n\n## Øving\n\nFagtekst.\n"
+                Path(tmp), "Test Level 1 - Start.md", "---\ntitle: Start\n---\n# Start!\n\n## Øving\n\nFagtekst.\n"
             )
         soup = BeautifulSoup(body, "html.parser")
         self.assertEqual(len(soup.find_all("h1")), 1)
         skip = soup.select_one("a.md-skip")
         self.assertIsNotNone(skip)
         self.assertIsNotNone(soup.find(id=skip["href"].removeprefix("#")))
+        self.assertIn("Fagtekst.", soup.get_text())
+
+    def test_title_removed_if_matching_frontmatter(self):
+        # Since the title is the same as the first heading, it should be removed from the body (the template will render it in a separate <h1>).
+        with tempfile.TemporaryDirectory() as tmp:
+            body = self.render(
+                Path(tmp), "Test Level 1 - Start.md", "---\ntitle: Start\n---\n# Start\n\n## Øving\n\nFagtekst.\n"
+            )
+        soup = BeautifulSoup(body, "html.parser")
+        self.assertEqual(len(soup.find_all("h1")), 0)
         self.assertIn("Fagtekst.", soup.get_text())
 
     def test_canonical_section_link_reaches_native_heading(self):
