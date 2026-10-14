@@ -6,6 +6,7 @@ import unittest
 from unittest.mock import patch
 
 from bs4 import BeautifulSoup
+from flask import render_template
 
 from piggy import caching
 from piggy.utils import disable_server_side_markdown_exec, normalize_path_to_str
@@ -41,6 +42,51 @@ class ConverterContractTests(unittest.TestCase):
         soup = BeautifulSoup(body, "html.parser")
         self.assertEqual(len(soup.find_all("h1")), 0)
         self.assertIn("Fagtekst.", soup.get_text())
+
+    def test_application_skip_target_survives_title_replacement(self):
+        from piggy.app import create_app
+
+        with patch("piggy.app.startup_tasks"):
+            app = create_app()
+        for heading in ("# Start", "# En annen tittel", ""):
+            with self.subTest(heading=heading), tempfile.TemporaryDirectory() as tmp:
+                body = self.render(
+                    Path(tmp),
+                    "Test Level 1 - Start.md",
+                    f"---\ntitle: Start\n---\n{heading}\n\n## Øving\n\nFagtekst.\n",
+                )
+                with app.test_request_context("/main/Test"):
+                    html = render_template(
+                        "assignments/5-assignment.html",
+                        content={"heading": "Start", "head": "", "body": body, "meta": {"title": "Start"}},
+                        meta={"title": "Start"},
+                        current_language="",
+                        supported_languages={},
+                    )
+                soup = BeautifulSoup(html, "html.parser")
+                links = soup.select("a.piggy-skip-link")
+                self.assertEqual(len(links), 1)
+                targets = soup.find_all(id=links[0]["href"].removeprefix("#"))
+                self.assertEqual(len(targets), 1)
+                self.assertEqual(targets[0].name, "main")
+                self.assertEqual(targets[0]["tabindex"], "-1")
+                self.assertIn("Fagtekst.", targets[0].get_text())
+
+    def test_application_skip_target_exists_on_front_page(self):
+        from piggy.app import create_app
+
+        with patch("piggy.app.startup_tasks"):
+            app = create_app()
+        response = app.test_client().get("/")
+        self.assertEqual(response.status_code, 200)
+        html = response.get_data(as_text=True)
+        soup = BeautifulSoup(html, "html.parser")
+        link = soup.select_one("a.piggy-skip-link")
+        self.assertIsNotNone(link)
+        targets = soup.find_all(id=link["href"].removeprefix("#"))
+        self.assertEqual(len(targets), 1)
+        self.assertEqual(targets[0].name, "main")
+        self.assertEqual(targets[0]["tabindex"], "-1")
 
     def test_canonical_section_link_reaches_native_heading(self):
         with tempfile.TemporaryDirectory() as tmp:
