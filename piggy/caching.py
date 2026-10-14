@@ -15,6 +15,7 @@ from piggy import (
 )
 from piggy.exceptions import PiggyHTTPException, PiggyErrorException
 from piggy.models import LANGUAGES
+from piggy.rendered_navigation import repair_rendered_navigation
 from piggy.piggybank import (
     get_all_meta_from_path,
     PIGGYMAP,
@@ -154,6 +155,11 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
         sections = _mdfile_to_sections_with_retry(p)
         sections["head"] = remove_turtleconverter_stylesheets(sections["head"])
         sections["body"] = remove_unused_pyodide_assets(relabel_pyodide_editors(sections["body"]))
+        sections["body"] = repair_rendered_navigation(
+            sections["body"],
+            route=ASSIGNMENT_ROUTE,
+            normalize_page_path=lambda path: normalize_path_to_str(path, normalize_page_path=True, normalize_url=True),
+        )
         print("Rendering:", p)
 
     except ConversionError:
