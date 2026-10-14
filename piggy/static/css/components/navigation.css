@@ -1,6 +1,52 @@
 /***************************\
 |*     NAVIGATION MENU     *|
 \***************************/
+.piggy-skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.piggy-skip-link:focus {
+  position: fixed;
+  z-index: 99999;
+  top: 1rem;
+  left: 1rem;
+
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  height: auto;
+  margin: 0;
+  padding: 14px 24px;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
+
+  color: var(--piggy-text-button);
+  background: var(--piggy-button);
+  border: 1px solid var(--piggy-button-border);
+  border-radius: 14px;
+
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+
+  outline: 2px solid var(--piggy-button-active);
+  outline-offset: 4px;
+
+  box-shadow:
+    0 8px 28px var(--piggy-shadow-box),
+    0 0 20px var(--piggy-shadow-glow);
+}
+
 .piggy-navbar {
   background: linear-gradient(
     90deg,

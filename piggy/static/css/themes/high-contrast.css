@@ -322,6 +322,13 @@ preview_style: background-color: #000000; color: #ffffff; border: 1px solid #fff
   border-bottom: var(--piggy-card-border-width) solid var(--card-border);
 }
 
+[data-theme="high-contrast"] .piggy-skip-link:focus {
+  border-width: 2px;
+  border-radius: 0;
+
+  outline: 3px solid var(--piggy-button-focus);
+}
+
 [data-theme="high-contrast"] .piggy-navbar {
   border-bottom: var(--piggy-card-border-width) solid white;
 }
