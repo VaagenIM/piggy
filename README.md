@@ -15,7 +15,7 @@ Or just run the `install.sh` script
 
 ## Documentation
 
-Navigation regression tests (after installing dependencies):
+Converter regression tests (after installing dependencies):
 
 ```bash
 uv run python -m unittest discover -s tests -v

@@ -8,7 +8,6 @@
     {% endblock %}
   </head>
   <body class="main-container">
-    <a class="skip-link" href="#piggy-main-content">Hopp til innhold</a>
     <div class="background-overlay"></div>
     <div class="content-wrapper">
       <header class="site-header">
@@ -17,8 +16,6 @@
         {% endblock %}
       </header>
       <main
-        id="piggy-main-content"
-        tabindex="-1"
         dir="{% if current_language %}{{ current_language.direction }}{% endif %}">
         <div data-reader-page-content>
           {% block base %}
