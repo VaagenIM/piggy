@@ -1,4 +1,4 @@
-name: Navigation tests
+name: Converter tests
 
 on:
   push:
@@ -6,19 +6,19 @@ on:
       - "piggy/**"
       - "tests/**"
       - "pyproject.toml"
-      - ".github/workflows/test-navigation.yml"
+      - ".github/workflows/test-converter.yml"
   pull_request:
     paths:
       - "piggy/**"
       - "tests/**"
       - "pyproject.toml"
-      - ".github/workflows/test-navigation.yml"
+      - ".github/workflows/test-converter.yml"
 
 permissions:
   contents: read
 
 jobs:
-  navigation:
+  converter:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
