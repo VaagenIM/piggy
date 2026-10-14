@@ -1,0 +1,30 @@
+name: Navigation tests
+
+on:
+  push:
+    paths:
+      - "piggy/**"
+      - "tests/**"
+      - "pyproject.toml"
+      - ".github/workflows/test-navigation.yml"
+  pull_request:
+    paths:
+      - "piggy/**"
+      - "tests/**"
+      - "pyproject.toml"
+      - ".github/workflows/test-navigation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  navigation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v7
+        with:
+          python-version: "3.12"
+          activate-environment: true
+      - run: uv pip install .
+      - run: python -m unittest discover -s tests -v
