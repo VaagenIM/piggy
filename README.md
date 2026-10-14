@@ -3,9 +3,15 @@
 [![GitHub Pages](https://badgen.net/badge/visit/github%20pages/?icon=chrome)](https://piggy.iktim.no)
 [![GitHub Pages Edge](https://badgen.net/badge/visit/demo%20pages/?icon=chrome)](https://piglet.iktim.no)
 
-Install `pip install .`
+Install dev:
 
-Install dev `pip install .[dev]` + `npm install`
+```bash
+uv sync --all-extras --upgrade
+uv run pre-commit install
+npm i
+```
+
+Or just run the `install.sh` script
 
 ## Documentation
 

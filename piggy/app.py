@@ -46,8 +46,6 @@ def create_app(debug: bool = False) -> Flask:
 
     app.jinja_options["autoescape"] = False
 
-    Squeeze().init_app(app)
-
     # TODO: add cache time to env (we use nginx caching for prod)
     default_cache_ttl = 86400 * 30 if debug else None  # 30 days
     app.config["SEND_FILE_MAX_AGE_DEFAULT"] = default_cache_ttl
@@ -67,6 +65,11 @@ def create_app(debug: bool = False) -> Flask:
     startup_tasks()
 
     use_github_pages = os.environ.get("GITHUB_PAGES", False)
+
+    if use_github_pages:
+        app.config["SQUEEZE_COMPRESS"] = False
+        app.config["SQUEEZE_MINIFY_HTML"] = False
+    Squeeze().init_app(app)
 
     @app.context_processor
     def context_processor():

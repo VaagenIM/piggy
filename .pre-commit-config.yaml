@@ -1,0 +1,17 @@
+repos:
+  - repo: local
+    hooks:
+      - id: prettier
+        name: Prettier
+        entry: npx prettier --write
+        language: system
+        files: ^piggy/.*\.(html|css|js)$
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.9
+    hooks:
+      - id: ruff-check
+        args: [ --fix ]
+        files: ^piggy/.*\.py$
+      - id: ruff-format
+        files: ^piggy/.*\.py$

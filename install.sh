@@ -11,6 +11,9 @@ fi
 echo "Installing Python dependencies with uv..."
 uv sync --all-extras --upgrade
 
+echo "Installing pre-commit hooks..."
+uv run pre-commit install
+
 echo "Fetching piggybank submodule..."
 git submodule update --init --recursive
 
