@@ -132,7 +132,7 @@ def _mdfile_to_sections_with_retry(path: Path, retries=0) -> dict:
             normalize_urls=True,
             template=(Path(__file__).parent / "templates" / "assignments" / "tconvert_assignment_base.html"),
             remove_heading=False,
-            remove_heading_if_title_matches=False,
+            remove_heading_if_title_matches=True,
         )
 
     except FileNotFoundError:
