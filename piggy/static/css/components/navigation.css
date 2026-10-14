@@ -1,27 +1,6 @@
 /***************************\
 |*     NAVIGATION MENU     *|
 \***************************/
-.skip-link {
-  position: fixed;
-  top: 0.5rem;
-  left: 0.5rem;
-  z-index: 10000;
-  max-width: calc(100vw - 1rem);
-  padding: 0.75rem 1rem;
-  border: 2px solid #111;
-  border-radius: 0.25rem;
-  background: #fff;
-  color: #111;
-  text-shadow: none;
-  transform: translateY(calc(-100% - 1rem));
-}
-
-.skip-link:focus {
-  transform: none;
-  outline: 3px solid #111;
-  outline-offset: 2px;
-}
-
 .piggy-navbar {
   background: linear-gradient(
     90deg,

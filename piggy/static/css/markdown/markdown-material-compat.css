@@ -137,9 +137,28 @@
 }
 
 .md-overlay,
-.md-skip,
 .md-dialog {
   display: none !important;
+}
+
+/* Keep the converter's native skip link available to keyboard users. */
+.md-skip {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.md-skip:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  clip-path: none;
+  white-space: normal;
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 .md-container,
