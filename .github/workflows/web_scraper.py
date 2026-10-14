@@ -25,7 +25,7 @@ from rcssmin import cssmin
 WORKERS = max(1, multiprocessing.cpu_count() - 1)
 
 links = {"/", "/404"}
-api_links = {"/api/search-data"}
+api_links = {"/api/search-data", "/api"}
 api_view_links = set()
 visited = set()
 media_links = set()
