@@ -148,7 +148,7 @@ CSS_META_LIST_KEYS = {"tags", "recommended_for", "features"}
 @lru_cache_wrapper
 def resolve_image_filename(fp: Path) -> str:
     """Find the image format of a file in a given path."""
-    for ext in ["jpg", "png", "webp", "jpeg"]:
+    for ext in ["jpg", "png", "webp", "jpeg", "jxl"]:
         if fp.with_suffix(f".{ext}").exists():
             return f"{fp.stem}.{ext}"
     return fp.name
@@ -164,6 +164,7 @@ def get_mimetype(filename: str) -> Optional[str]:
         ".webp": "image/webp",
         ".gif": "image/gif",
         ".svg": "image/svg+xml",
+        ".jxl": "image/jxl",
     }
     return MIME_TYPES.get(Path(filename).suffix.lower(), None)
 
