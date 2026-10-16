@@ -41,6 +41,27 @@
   padding: initial;
 }
 
+/**************************\
+|* glightbox + excalidraw *|
+\**************************/
+
+.gscrollbar-fixer {
+  padding-right: initial !important;
+  margin-right: initial !important;
+}
+
+.glightbox-open {
+  overflow: initial !important;
+}
+
+.gslide-media.gslide-image {
+  background: var(--piggy-main);
+}
+
+.gslide-media.gslide-image img {
+  background: transparent;
+}
+
 /**********************\
 |*   LINK OVERRIDES   *|
 \**********************/
