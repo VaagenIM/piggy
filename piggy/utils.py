@@ -362,16 +362,59 @@ def delete_turtleconverter_stylesheets():
     (turtleconvert_path / "_markdown_exec_pyodide.css").unlink(missing_ok=True)
 
 
-def override_pyodide_js():
-    """Replace markdown-exec's pyodide editor script with piggy's (edits need a restart)."""
-    source = Path(__file__).parent / "overrides" / "_markdown_exec_pyodide.js"
-    destination = Path(__file__).parent / "static" / "turtleconvert" / "_markdown_exec_pyodide.js"
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(source, destination)
+def patch_excalidraw_bundle(bundle_path: Path):
+    """Patch Excalidraw theme handling (background color)."""
+    source = bundle_path.read_text(encoding="utf-8")
+
+    replacements = (
+        (
+            'applyTheme(e){return e.appState.exportWithDarkMode=this.mode=="dark",e.exportPadding=20,e.appState.exportEmbedScene=!0,e}',
+            'applyTheme(e){const background = getComputedStyle(document.querySelector(".md-content")).backgroundColor;e.appState.viewBackgroundColor=background;e.appState.exportBackground=true;e.appState.exportWithDarkMode=false;e.exportPadding=20;e.appState.exportEmbedScene=true;return e}',
+            "applyTheme",
+        ),
+        (
+            'constructor(){super(),this.theme=new ctt,this.addEventListener("click",this.onclick),this.theme.handler.onModeChange(e=>this.connectedCallback())}',
+            'constructor(){super(),this.theme=new ctt,this.addEventListener("click",this.onclick),this.theme.handler.onModeChange(e=>this.connectedCallback()),this.customThemeObserver=new MutationObserver(()=>this.connectedCallback()),this.customThemeObserver.observe(document.documentElement,{attributes:!0,attributeFilter:["data-theme","data-theme-type"]})}',
+            "renderer constructor",
+        ),
+    )
+
+    for old, new, name in replacements:
+        count = source.count(old)
+        if count != 1:
+            raise RuntimeError(
+                f"Could not patch {name}: expected exactly one match, found {count}. Bundle left unchanged."
+            )
+        source = source.replace(old, new, 1)
+
+    bundle_path.write_text(source, encoding="utf-8")
+
+
+def override_turtleconvert_files():
+    """Replace turtleconvert files with Piggy's overrides (edits need a restart)."""
+    base_path = Path(__file__).parent
+    overrides_path = base_path / "overrides"
+    destination_path = base_path / "static" / "turtleconvert"
+
+    files = (
+        ("_markdown_exec_pyodide.js", "_markdown_exec_pyodide.js"),
+        ("excalidraw-renderer.bundle.js", "excalidraw-renderer.bundle.js"),
+    )
+
+    destination_path.mkdir(parents=True, exist_ok=True)
+
+    for source_name, destination_name in files:
+        shutil.copyfile(
+            overrides_path / source_name,
+            destination_path / destination_name,
+        )
+
+    # Patch the copied bundle
+    patch_excalidraw_bundle(destination_path / "excalidraw-renderer.bundle.js")
 
 
 def startup_tasks():
-    generate_static_files(static_folder=Path(os.path.dirname(Path(__file__).absolute())) / "static")
+    generate_static_files(static_folder=Path(__file__).parent / "static")
     delete_turtleconverter_stylesheets()
-    override_pyodide_js()  # after turtleconverter has written its own version
+    override_turtleconvert_files()
     generate_print_css()

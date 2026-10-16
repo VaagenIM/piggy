@@ -4,6 +4,7 @@
 
 *.min.js
 *.min.css
+*.bundle.js
 
 **/devtools/*.html
 **/js/modules/**/*.js
