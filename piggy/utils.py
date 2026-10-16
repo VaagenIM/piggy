@@ -396,10 +396,7 @@ def override_turtleconvert_files():
     overrides_path = base_path / "overrides"
     destination_path = base_path / "static" / "turtleconvert"
 
-    files = (
-        ("_markdown_exec_pyodide.js", "_markdown_exec_pyodide.js"),
-        ("excalidraw-renderer.bundle.js", "excalidraw-renderer.bundle.js"),
-    )
+    files = (("_markdown_exec_pyodide.js", "_markdown_exec_pyodide.js"),)
 
     destination_path.mkdir(parents=True, exist_ok=True)
 
@@ -409,7 +406,7 @@ def override_turtleconvert_files():
             destination_path / destination_name,
         )
 
-    # Patch the copied bundle
+    # Patch the Excalidraw bundle to fix theme handling
     patch_excalidraw_bundle(destination_path / "excalidraw-renderer.bundle.js")
 
 
