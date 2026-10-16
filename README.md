@@ -15,12 +15,6 @@ Or just run the `install.sh` script
 
 ## Documentation
 
-Converter regression tests (after installing dependencies):
-
-```bash
-uv run python -m unittest discover -s tests -v
-```
-
 - [Folder `meta.json` reference](docs/METADATA.md)
 - [Assignment frontmatter reference](docs/ASSIGNMENT_FRONTMATTER.md)
 

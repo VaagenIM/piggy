@@ -4,6 +4,7 @@ import shutil
 import subprocess
 from functools import lru_cache
 from io import BytesIO
+from mimetypes import guess_type
 from pathlib import Path
 from typing import Optional
 
@@ -148,7 +149,7 @@ CSS_META_LIST_KEYS = {"tags", "recommended_for", "features"}
 @lru_cache_wrapper
 def resolve_image_filename(fp: Path) -> str:
     """Find the image format of a file in a given path."""
-    for ext in ["jpg", "png", "webp", "jpeg"]:
+    for ext in ["jpg", "png", "webp", "jpeg", "jxl"]:
         if fp.with_suffix(f".{ext}").exists():
             return f"{fp.stem}.{ext}"
     return fp.name
@@ -156,16 +157,14 @@ def resolve_image_filename(fp: Path) -> str:
 
 @lru_cache_wrapper
 def get_mimetype(filename: str) -> Optional[str]:
-    """Guess the mimetype of a file based on its extension."""
-    MIME_TYPES = {
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".png": "image/png",
-        ".webp": "image/webp",
-        ".gif": "image/gif",
-        ".svg": "image/svg+xml",
+    """Guess the MIME-type of a file based on its extension."""
+    custom_types = {
+        ".excalidraw": "application/vnd.excalidraw+json",
+        ".jxl": "image/jxl",
     }
-    return MIME_TYPES.get(Path(filename).suffix.lower(), None)
+
+    suffix = Path(filename).suffix.lower()
+    return custom_types.get(suffix) or guess_type(filename)[0]
 
 
 @lru_cache_wrapper
