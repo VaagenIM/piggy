@@ -54,12 +54,12 @@
   overflow: initial !important;
 }
 
-.gslide-media.gslide-image {
-  background: var(--piggy-main);
+:root {
+  --excalidraw-background: #f8fafc;
 }
 
-.gslide-media.gslide-image img {
-  background: transparent;
+excalidraw-renderer img {
+  border-radius: 20px;
 }
 
 /**********************\

@@ -369,13 +369,8 @@ def patch_excalidraw_bundle(bundle_path: Path):
     replacements = (
         (
             'applyTheme(e){return e.appState.exportWithDarkMode=this.mode=="dark",e.exportPadding=20,e.appState.exportEmbedScene=!0,e}',
-            'applyTheme(e){const styles=getComputedStyle(document.documentElement);const css=(name,fallback)=>styles.getPropertyValue(name).trim()||fallback;const textColor=css("--piggy-text-main",css("--piggy-text-light","#fff2dc"));e.appState.viewBackgroundColor="transparent";e.appState.exportBackground=false;e.appState.exportWithDarkMode=false;e.exportPadding=20;e.appState.exportEmbedScene=true;if(Array.isArray(e.elements)){e.elements=e.elements.map(t=>t.strokeColor&&t.strokeColor.toLowerCase()==="#1e1e1e"?{...t,strokeColor:textColor}:t)}return e}',
+            'applyTheme(e){e.appState.viewBackgroundColor=getComputedStyle(document.documentElement).getPropertyValue("--excalidraw-background").trim()||"#ffffff";e.appState.exportBackground=true;e.appState.exportWithDarkMode=false;e.exportPadding=20;e.appState.exportEmbedScene=true;return e}',
             "applyTheme",
-        ),
-        (
-            'constructor(){super(),this.theme=new ctt,this.addEventListener("click",this.onclick),this.theme.handler.onModeChange(e=>this.connectedCallback())}',
-            'constructor(){super(),this.theme=new ctt,this.addEventListener("click",this.onclick),this.theme.handler.onModeChange(e=>this.connectedCallback()),this.customThemeObserver=new MutationObserver(()=>this.connectedCallback()),this.customThemeObserver.observe(document.documentElement,{attributes:!0,attributeFilter:["data-theme","data-theme-type"]})}',
-            "renderer constructor",
         ),
     )
 
