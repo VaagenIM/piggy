@@ -369,7 +369,7 @@ def patch_excalidraw_bundle(bundle_path: Path):
     replacements = (
         (
             'applyTheme(e){return e.appState.exportWithDarkMode=this.mode=="dark",e.exportPadding=20,e.appState.exportEmbedScene=!0,e}',
-            'applyTheme(e){e.appState.viewBackgroundColor=getComputedStyle(document.documentElement).getPropertyValue("--excalidraw-background").trim()||"#ffffff";e.appState.exportBackground=true;e.appState.exportWithDarkMode=false;e.exportPadding=20;e.appState.exportEmbedScene=true;return e}',
+            'applyTheme(e){const current=e.appState.viewBackgroundColor;const fallback=getComputedStyle(document.documentElement).getPropertyValue("--excalidraw-background").trim()||"#ffffff";if(!current){e.appState.viewBackgroundColor=fallback}e.appState.exportBackground=true;e.appState.exportWithDarkMode=false;e.exportPadding=20;e.appState.exportEmbedScene=true;return e}',
             "applyTheme",
         ),
     )
