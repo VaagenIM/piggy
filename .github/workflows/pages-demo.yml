@@ -76,7 +76,7 @@ jobs:
 
       - name: Run web scraper
         env:
-          FORCE_FULL_REBUILD: ${{ inputs.full_rebuild || 'false' }}
+          FORCE_FULL_REBUILD: ${{ inputs.full_rebuild || 'true' }}
         run: |
           sed -i 's/piggy.iktim.no/piglet.iktim.no/g' .github/workflows/web_scraper.py
           python .github/workflows/web_scraper.py

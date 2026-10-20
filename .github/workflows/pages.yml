@@ -79,7 +79,7 @@ jobs:
 
       - name: Run web scraper to build static site
         env:
-          FORCE_FULL_REBUILD: ${{ inputs.full_rebuild || 'false' }}
+          FORCE_FULL_REBUILD: ${{ inputs.full_rebuild || 'true' }}
         run: python .github/workflows/web_scraper.py
 
       - name: Upload artifact
