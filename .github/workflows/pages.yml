@@ -43,6 +43,12 @@ jobs:
           enable-cache: true
           activate-environment: true
 
+      - name: Delete old piggybank if it exists
+        run: |
+          if [ -d piggybank ]; then
+            rm -rf piggybank
+          fi
+
       - name: Checkout piggybank
         uses: actions/checkout@v7
         with:
@@ -79,7 +85,7 @@ jobs:
 
       - name: Run web scraper to build static site
         env:
-          FORCE_FULL_REBUILD: ${{ inputs.full_rebuild || 'true' }}
+          FORCE_FULL_REBUILD: true
         run: python .github/workflows/web_scraper.py
 
       - name: Upload artifact
