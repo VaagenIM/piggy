@@ -286,12 +286,13 @@ def get_media_links(html, path=""):
 
 
 def _write_html(html, path):
-    html = htmlmin.minify(
-        html,
-        remove_comments=True,
-        remove_empty_space=True,
-        reduce_boolean_attributes=True,
-    )
+    if Path(path) != Path("sitemap.xml"):
+        html = htmlmin.minify(
+            html,
+            remove_comments=True,
+            remove_empty_space=True,
+            reduce_boolean_attributes=True,
+        )
 
     output_path = Path("demo") / path
     if output_path.is_dir():
