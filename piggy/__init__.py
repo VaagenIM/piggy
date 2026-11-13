@@ -20,6 +20,8 @@ IMG_FMT = "webp"
 ASSIGNMENTS_TEMPLATE_FOLDER = "assignments"
 ASSIGNMENT_FILENAME_REGEX = re.compile(r"^.*Level[ _](\d+)[ _]-[ _](.+)\.md$")
 ALLOWED_URL_CHARS_REGEX = re.compile(r"[a-zA-Z0-9\.\-\_\/æøåÆØÅ]")
+# Cards with one of these tags (in any case) stay hidden until the tag is picked in the page's filters
+HIDDEN_TAGS = frozenset({"ekstra", "skjult", "extra", "hidden"})
 # TESTING ONLY - piggybank branch is used for testing, needs a different approach than prod
 if "piggybank" in os.environ.get("PIGGYBANK_BRANCH", "test-output"):
     PIGGYBANK_FOLDER = Path("piggybank") / "piggybank"
