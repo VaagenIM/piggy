@@ -31,6 +31,7 @@ derived title.
 | `title` | string | Effectively required | Display title. If omitted, falls back to the first `# heading` in the file, then to the filename. |
 | `difficulty` | integer (1–5 in practice) | Optional | Drives the difficulty icon (`static/img/difficulties/1.png`…`5.png`); values `>5` are clamped to 5, values `<=0` hide the icon. |
 | `thumbnail` | string (relative path, no extension) | Optional | Defaults to `media/header` if omitted. Resolved to a full image URL at render time. |
+| `thumbnail_title` | string | Optional | Text drawn on the generated fallback thumbnail (used when no thumbnail image exists). Defaults to `title`, so set this to keep the page title and the thumbnail text separate. |
 | `description` | string | Optional | Used for card descriptions and as an `og:description`/`twitter:description` fallback. |
 | `summary` | string | Optional | If omitted, auto-generated from the first ~200 characters of the rendered HTML body (`piggy/caching.py`, `generate_summary_from_mkdocs_html`). Used as a lower-priority `og:description` fallback than `description`. |
 | `oinkdata` | object | Optional, via `.oink` only | Not settable from frontmatter itself — only comes from a sibling `.oink` JSON file (see below). Only `oinkdata.summary` is currently read anywhere, as an `og:description` fallback between `description` and `summary`. |

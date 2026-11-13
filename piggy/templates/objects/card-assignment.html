@@ -6,7 +6,7 @@
     href = abspath ~ "/" ~ (item if task_count > 1 else item ~ "/" ~ (data.data.keys()|list)[0]),
     title = data.meta.name,
     description = data.meta.description,
-    thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." ~ img_fmt ~ "?title=" ~ data.meta.name,
+    thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." ~ img_fmt ~ "?title=" ~ (data.meta.thumbnail_title or data.meta.name),
     eyebrow = 'Oppgave',
     meta = (task_count ~ ' oppgaver') if task_count > 1 else '',
     action = 'Se oppgavene' if task_count > 1 else 'Se oppgaven',

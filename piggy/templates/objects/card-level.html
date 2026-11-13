@@ -9,7 +9,7 @@
     href = abspath ~ "/" ~ item,
     title = data.meta.title,
     description = data.meta.description,
-    thumbnail = media_abspath ~ "/" ~ data.meta.thumbnail ~ "." ~ img_fmt ~ "?title=" ~ data.meta.title,
+    thumbnail = media_abspath ~ "/" ~ data.meta.thumbnail ~ "." ~ img_fmt ~ "?title=" ~ (data.meta.thumbnail_title or data.meta.title),
     eyebrow = ('Level ' ~ (level_number if level_number >= 0 else data.level)) if data.level else '',
     action = 'Åpne',
     difficulty = data.meta.difficulty,
