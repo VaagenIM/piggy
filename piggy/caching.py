@@ -22,6 +22,7 @@ from piggy.piggybank import (
     get_template_from_path,
     get_piggymap_segment_from_path,
     get_assignment_data_from_path,
+    get_referenced_by,
 )
 from piggy.utils import (
     get_supported_languages,
@@ -196,6 +197,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
         meta=all_metadata,
         current_language=current_language,
         supported_languages=get_supported_languages(assignment_path=assignment_path),
+        referenced_by=get_referenced_by(meta, assignment_path, PIGGYMAP),
         media_abspath=f"/{MEDIA_ROUTE}/{p.parent}",
         abspath=f"/{ASSIGNMENT_ROUTE}/{p}",
         **assignment_data,  # Unpack the remaining assignment data from piggymap

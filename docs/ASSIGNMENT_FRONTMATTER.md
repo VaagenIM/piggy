@@ -55,6 +55,13 @@ metadata that shouldn't live inside the markdown file itself.
 The `uuid` key is used as the assignment's shortlink identity. If it is
 missing, a deterministic UUID is generated from the normalized path.
 
+The `referenced_by` key is written by the piggybank pipeline and lists the
+pages whose `relevant_pages` link to this page, grouped by their folder. It
+is shown as a "Brukt i" row under the page title: one button per other
+folder, linking to that folder's first public referencing page
+(`piggy/piggybank.py`, `get_referenced_by`). Translations show the row of
+their original document.
+
 ## Translations
 
 A translated version of an assignment can be placed at
