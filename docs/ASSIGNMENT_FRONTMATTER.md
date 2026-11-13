@@ -45,6 +45,21 @@ relevant_pages:
     title: uv (pakkehåndterer)
 ```
 
+### Shortlinks in `relevant_pages`
+
+A shortlink copied with the "Kopier lenke" button can be pasted as an entry
+on its own, and the button is titled after the page it points to. As a
+markdown link it keeps its own label. Either way the button links straight to
+the page instead of going through the `/s/` redirect (`piggy/shortlinks.py`).
+The `https://piggy.iktim.no/s/<code>`, `/s/<code>` and `s/<code>` forms all work;
+an unknown code on its own is skipped.
+
+```yaml
+relevant_pages:
+  - https://piggy.iktim.no/s/KDFJtPht
+  - "[YFF-prosjektene](s/KDFJtPht)"
+```
+
 ## `.oink` sidecar files
 
 A file named `Level N - Title.oink` next to `Level N - Title.md` (JSON
