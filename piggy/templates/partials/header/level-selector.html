@@ -6,7 +6,8 @@
   {% set levels_data = meta.get(AssignmentTemplate.LEVELS_DATA.name) %}
 {% endif %}
 
-{% if levels_data %}
+{# Topics with "sibling_links": false are standalone pages without links to the other levels #}
+{% if levels_data and levels_data.meta.sibling_links is not false %}
   {% if levels_data.meta.level_name %}
     {% set level_text = levels_data.meta.level_name %}
   {% else %}

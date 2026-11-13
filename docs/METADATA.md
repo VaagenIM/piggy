@@ -51,6 +51,7 @@ piggybank/piggybank/
 | `type` | string (enum) | Optional | One of `"assignment"`, `"exercise"` (default), `"information"`, `"extra"`. On a **topic** folder, buckets its children into "Informasjon" / "Innleveringsoppgaver" / "Øvingsoppgaver" sections (`piggy/templates/assignments/3-subject.html:6-19`) and sets the level-selector label ("Tema"/"Oppgave"/"Level" - `piggy/templates/partials/header/level-selector.html:10-16`). On a **subject** folder, if left unset it is auto-defaulted to `"exercise"` at build time (`piggy/piggybank.py:167-169`). |
 | `note` | string | Optional, topic-level only | Freeform note rendered as an info callout at the top of the topic page (`piggy/templates/assignments/4-topic.html:9-13`). |
 | `level_name` | string | Optional, topic-level only | Overrides the default type-based label used in the level selector (e.g. `"Del"` instead of "Level" - `piggy/templates/partials/header/level-selector.html:7-8`). |
+| `sibling_links` | boolean | Optional, topic-level only | Set to `false` to make every level a standalone page: the level selector (links to the other levels) is hidden, and the topic page becomes the way to reach the levels - the subject card opens the topic page and the back button returns to it, for every topic `type`. Defaults to `true`. |
 
 > **Do not author `system_path` manually.** It's injected into the in-memory
 > metadata at build time (`piggy/piggybank.py:166`) to point at the folder's
@@ -107,6 +108,16 @@ on the subject page.
   "tags": ["HTML", "CSS", "Web"],
   "difficulty": -1,
   "level_name": "Del"
+}
+```
+
+A topic whose levels are standalone pages (no links between the levels):
+
+```json
+{
+  "name": "YFF prosjekter",
+  "type": "assignment",
+  "sibling_links": false
 }
 ```
 
