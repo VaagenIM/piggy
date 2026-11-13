@@ -45,6 +45,7 @@ piggybank/piggybank/
 | Property | Type | Required | Meaning |
 |---|---|---|---|
 | `name` | string | Optional | Display name for the folder. If omitted, falls back to the folder name with underscores replaced by spaces (`piggy/piggybank.py:20-21`). |
+| `thumbnail_title` | string | Optional | Text drawn on the generated fallback thumbnail (used when the folder has no `media/header` image). Defaults to `name`, so set this to keep the card/page title and the thumbnail text separate. |
 | `description` | string | Optional | Free-text description. Used as card description text and as the `og:description`/`twitter:description` fallback (`piggy/templates/partials/parts/og-tags.html:39`). |
 | `tags` | array of strings | Optional, topic-level | Keyword list rendered as pill badges on cards (`piggy/templates/objects/card.html:81-87`) and used for client-side search filtering. Only meaningful on topic folders in practice. |
 | `difficulty` | integer | Optional | Only actually rendered (as a 1–5 icon, clamped at 5) for assignment *levels* under a topic - see `piggy/templates/objects/card.html:65-72`. When set directly on a folder's own `meta.json` it is **not rendered anywhere** (see [Known quirks](#known-quirks--unused-fields)). `-1` is used throughout existing content as an "unset" placeholder. |

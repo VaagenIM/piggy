@@ -6,7 +6,7 @@
     href = abspath ~ "/" ~ item,
     title = data.meta.name,
     description = data.meta.description,
-    thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." ~ img_fmt ~ "?title=" ~ data.meta.name,
+    thumbnail = media_abspath ~ "/" ~ item ~ "/media/header." ~ img_fmt ~ "?title=" ~ (data.meta.thumbnail_title or data.meta.name),
     visibility = data.meta.visibility,
   )
 }}
