@@ -68,3 +68,13 @@
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+
+/*
+ * Level menu tiers swap instead of wrapping, so they must keep their natural
+ * width for adaptive-overflow.js to measure (a squeezed "Level 1" used to wrap)
+ */
+.level-menu-trigger,
+.level-menu-trigger .piggy-dropdown-row-text {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}

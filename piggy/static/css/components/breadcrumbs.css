@@ -63,6 +63,7 @@
 }
 
 .site-back-button svg {
+  flex: 0 0 auto;
   width: calc(1rem * var(--piggy-font-scale));
   height: calc(1.35rem * var(--piggy-font-scale));
 }
@@ -79,4 +80,17 @@
   .site-back-button {
     max-width: calc(100vw - 6rem);
   }
+}
+
+.site-navbar[data-compact~="back"] .site-back-button {
+  max-width: calc(12rem * var(--piggy-font-scale));
+}
+
+.site-navbar[data-compact~="back-icon"] .site-back-button span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
 }

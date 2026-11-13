@@ -229,3 +229,21 @@
     white-space: nowrap;
   }
 }
+
+/*
+ * Progressive compaction for navbars that run out of room at any width,
+ * applied by js/components/adaptive-overflow.js via data-compact
+ * (back button steps live in breadcrumbs.css, language in language-selector.css)
+ */
+.site-navbar[data-compact~="actions"] .site-settings-button {
+  min-width: 0;
+}
+
+.site-navbar[data-compact~="actions"] .site-settings-button-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
