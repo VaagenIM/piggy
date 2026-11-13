@@ -20,6 +20,7 @@ from piggy import (
 from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
+from piggy.emotes import get_legacy_difficulty_icon
 from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
 from piggy.piggybank import PIGGYMAP, SHORTLINK_MAP, get_piggymap_segment_from_path, unfreeze
 from piggy.utils import (
@@ -265,6 +266,8 @@ def create_app(debug: bool = False) -> Flask:
                 query_params = {"c": name, "width": 1024, "height": 320}
                 name = name.replace("_", " ")
                 return generate_thumbnail(name, request=request.from_values(query_string=query_params))
+            if difficulty_icon := get_legacy_difficulty_icon(filename):
+                return send_file(difficulty_icon)
             return send_file("static/img/placeholders/100x100.png")
 
     @app.errorhandler(Exception)

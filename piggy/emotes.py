@@ -1,9 +1,21 @@
+import re
 from pathlib import Path
 
 from piggy.utils import get_mimetype
 
 # Any image in this folder is an emote named after the file, e.g. party.png is :party:
 EMOTES_FOLDER = Path(__file__).parent / "static" / "img" / "emotes"
+
+
+# Pages used to copy the difficulty icons into their attachments as diff1.png ... diff5.png
+LEGACY_DIFFICULTY_ATTACHMENT_RE = re.compile(r"diff([1-5])\.\w+")
+
+
+def get_legacy_difficulty_icon(filename: str) -> str | None:
+    """Return the static difficulty icon for a missing `diffN` attachment (e.g. in a not yet retranslated page)."""
+    if match := LEGACY_DIFFICULTY_ATTACHMENT_RE.fullmatch(Path(filename).name):
+        return f"static/img/difficulties/{match.group(1)}.png"
+    return None
 
 
 def get_emotes() -> dict[str, dict]:
