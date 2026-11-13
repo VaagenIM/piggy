@@ -118,6 +118,27 @@ def get_assignment_data_from_path(path: str or Path, piggymap: dict) -> dict:
     return segment
 
 
+def get_referenced_by(meta: dict, page_path: Path, piggymap: dict) -> list[tuple[str, str]]:
+    """
+    Get (folder name, url) links to the other folders whose pages list this page in their relevant pages.
+
+    Read from the `referenced_by` key of the page's .oink sidecar, each folder links to its first public page.
+    """
+    links = []
+    for folder_name, folder in meta.get("referenced_by", {}).items():
+        if PIGGYBANK_FOLDER / folder.get("path", "") == page_path.parent:
+            continue
+        for reference in folder.get("references", []):
+            page = get_assignment_data_from_path(PIGGYBANK_FOLDER / reference.get("system_path", ""), piggymap)
+            # The sidecar can outlive a moved or deleted page
+            if "shortlink_target" not in page:
+                continue
+            if Visibility.from_value(page["meta"].get("visibility")) is Visibility.PUBLIC:
+                links.append((folder_name, page["shortlink_target"]))
+                break
+    return links
+
+
 @lru_cache_wrapper
 def get_template_from_path(path: str) -> str:
     """Get the directory name from a path."""

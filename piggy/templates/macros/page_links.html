@@ -1,0 +1,50 @@
+{% from 'macros/include.html' import include_svg %}
+{% from 'macros/dropdown.html' import dropdown, dropdown_row %}
+
+{#
+  A labelled row of page links (text, url) under the assignment title,
+  collapsing into a dropdown when there are many of them.
+#}
+{% macro page_links(links, label, collapsed_label, extra_class='') %}
+  {% if links %}
+    <div
+      class="assignment-relevant-pages{{ ' ' ~ extra_class if extra_class }}"
+      data-adaptive-overflow>
+      <div
+        class="assignment-relevant-pages-shelf"
+        data-adaptive-tier="0"
+        data-adaptive-collapse-at="4"
+        data-adaptive-count-selector=".assignment-relevant-pages-pills">
+        <span class="assignment-relevant-pages-label">{{ label }}</span>
+        <div class="assignment-relevant-pages-pills">
+          {% for text, url in links %}
+            <a class="assignment-relevant-page-pill" href="{{ url }}">
+              {{ include_svg(svg='img/icons/arrow-icon.svg', class='assignment-relevant-page-icon') }}
+              <span>{{ text }}</span>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="assignment-relevant-pages-shelf" data-adaptive-tier="1">
+        <span class="assignment-relevant-pages-label"
+          >{{ collapsed_label }}</span
+        >
+        {% set trigger %}<span>{{ collapsed_label }}</span>{% endset %}
+        {%
+          call dropdown(
+            trigger=trigger,
+            style='rounded',
+            columns=1,
+            aria_label=collapsed_label,
+            wrapper_class='assignment-relevant-pages-menu'
+          )
+        %}
+          {% for text, url in links %}
+            {{ dropdown_row(href=url, left_text=text, columns=1) }}
+          {% endfor %}
+        {% endcall %}
+      </div>
+    </div>
+  {% endif %}
+{% endmacro %}
