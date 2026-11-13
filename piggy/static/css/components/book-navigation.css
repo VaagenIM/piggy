@@ -1,0 +1,167 @@
+.book-menu {
+  position: relative;
+  flex: 0 1 36rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.book-menu-trigger {
+  display: block;
+  cursor: pointer;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.book-menu-caption {
+  display: block;
+  font-size: 0.75em;
+  opacity: 0.85;
+}
+
+.book-menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  width: min(36rem, calc(100vw - 2rem));
+  max-height: min(32rem, 70vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--piggy-menu, #fff);
+  color: var(--piggy-menu-text, #161616);
+  border: 2px solid currentColor;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1.5rem #0005;
+  padding: 0.75rem;
+  z-index: 120;
+}
+
+.book-menu-title {
+  margin: 0 0 0.5rem;
+  font-weight: bold;
+}
+
+.book-menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.book-menu-list a {
+  display: block;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.25rem;
+  color: inherit;
+  text-decoration: none;
+  white-space: normal;
+}
+
+.book-menu-list a[aria-current] {
+  font-weight: bold;
+  background: var(--piggy-button-active, #ddd);
+  color: var(--piggy-level-menu-active-text, var(--piggy-text-button, inherit));
+}
+
+.book-menu a:focus-visible,
+.book-menu summary:focus-visible,
+.book-contents a:focus-visible,
+.book-pagination a:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+}
+
+.book-menu-list a:hover {
+  text-decoration: underline;
+}
+
+.book-heading,
+.book-contents,
+[data-reader-page-content] > .book-pagination {
+  width: min(100%, 61rem, var(--piggy-reader-width));
+  margin-inline: auto;
+  padding-inline: calc(0.75rem * var(--piggy-reader-space-scale));
+}
+
+.book-heading,
+.book-contents,
+.book-pagination {
+  font-size: calc(1rem * var(--piggy-reader-font-scale));
+  line-height: var(--piggy-reader-line-height);
+  letter-spacing: var(--piggy-reader-letter-spacing);
+  word-spacing: var(--piggy-reader-word-spacing);
+  overflow-wrap: anywhere;
+}
+
+.book-heading {
+  margin-block: calc(0.75rem * var(--piggy-reader-space-scale))
+    calc(1.5rem * var(--piggy-reader-space-scale));
+}
+
+.book-heading a,
+.book-contents a,
+.book-pagination a {
+  color: var(--piggy-text-hyperlink);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.book-heading a:hover,
+.book-contents a:hover,
+.book-pagination a:hover {
+  color: var(--piggy-text-hyperlink-hover);
+}
+
+.book-title {
+  font-size: 1.15em;
+  font-weight: bold;
+  margin-block: 0 calc(0.5rem * var(--piggy-reader-space-scale));
+}
+
+.book-pagination {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: calc(0.75rem * var(--piggy-reader-space-scale))
+    calc(1.5rem * var(--piggy-reader-space-scale));
+  margin-block: calc(0.75rem * var(--piggy-reader-space-scale));
+}
+
+.book-pagination a {
+  max-width: 100%;
+}
+
+.book-pagination [hidden] {
+  display: none;
+}
+
+.book-contents ol {
+  list-style: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.book-contents a {
+  display: block;
+  padding-block: calc(0.4rem * var(--piggy-reader-space-scale));
+}
+
+/* Explicit source anchors work with native fragment links, including no JS. */
+body:has([data-book-navigation]) a[id] {
+  scroll-margin-top: var(--book-scroll-offset, 8rem);
+}
+
+@media (max-width: 860px) {
+  .site-navbar-controls > .book-menu {
+    grid-column: 1;
+    width: 100%;
+  }
+
+  .book-menu-dropdown {
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    top: auto;
+    margin-top: 0.5rem;
+  }
+}

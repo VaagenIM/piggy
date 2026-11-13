@@ -6,10 +6,33 @@
 {% endblock %}
 
 {% block base %}
+  {% if book_navigation %}
+    <div class="book-heading">
+      <p class="book-title">
+        <a href="{{ book_navigation.contents.url | e }}"
+          >{{ book_navigation.title | e }}</a
+        >
+      </p>
+      {% include "partials/parts/book-pagination.html" %}
+    </div>
+  {% endif %}
   <div class="assignment-page-header">
     <h1 class="page-title assignment-heading">{{ content.heading }}</h1>
     {% include "partials/parts/relevant_pages.html" %}
   </div>
 
+  {% if book_navigation and book_navigation.current_index == 0 %}
+    <nav class="book-contents" aria-label="Innholdsfortegnelse">
+      <ol>
+        {% for chapter in book_navigation.chapters %}
+          <li><a href="{{ chapter.url | e }}">{{ chapter.label | e }}</a></li>
+        {% endfor %}
+      </ol>
+    </nav>
+  {% endif %}
+
   {{ content.body | safe }}
+  {% if book_navigation %}
+    {% include "partials/parts/book-pagination.html" %}
+  {% endif %}
 {% endblock %}

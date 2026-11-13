@@ -1,0 +1,25 @@
+<details class="book-menu" data-book-navigation>
+  <summary class="piggy-button piggy-button--m book-menu-trigger">
+    <span class="book-menu-caption">Bokkapitler</span>
+    <span data-book-current-label>{{ book_navigation.current.label | e }}</span>
+  </summary>
+  <nav
+    class="book-menu-dropdown"
+    aria-label="{{ book_navigation.title | e }} – innhold og kapitler">
+    <p class="book-menu-title">{{ book_navigation.title | e }}</p>
+    <ol class="book-menu-list">
+      {% for entry in book_navigation.entries %}
+        <li>
+          <a
+            href="{{ entry.url | e }}"
+            data-book-entry="{{ loop.index0 }}"
+            {% if loop.index0 in book_navigation.current_indexes %}data-book-local{% endif %}
+            data-book-anchor="{{ entry.anchor | e }}"
+            {% if loop.index0 == book_navigation.current_index %}aria-current="location"{% endif %}
+            >{{ entry.label | e }}</a
+          >
+        </li>
+      {% endfor %}
+    </ol>
+  </nav>
+</details>

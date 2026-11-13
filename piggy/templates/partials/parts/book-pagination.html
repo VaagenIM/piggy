@@ -1,0 +1,19 @@
+<nav class="book-pagination" aria-label="Forrige og neste kapittel">
+  <a
+    data-book-previous
+    {% if book_navigation.previous %}href="{{ book_navigation.previous.url | e }}"{% else %}hidden{% endif %}>
+    ← Forrige:
+    <span data-book-previous-label
+      >{{ (book_navigation.previous.label if book_navigation.previous else '') | e }}</span
+    >
+  </a>
+  <a
+    data-book-next
+    {% if book_navigation.next %}href="{{ book_navigation.next.url | e }}"{% else %}hidden{% endif %}>
+    Neste:
+    <span data-book-next-label
+      >{{ (book_navigation.next.label if book_navigation.next else '') | e }}</span
+    >
+    →
+  </a>
+</nav>

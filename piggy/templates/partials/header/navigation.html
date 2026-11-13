@@ -6,7 +6,11 @@
 
   <div class="site-navbar-controls">
     {% if current_language is defined and supported_languages is defined %}
-      {% include "partials/header/level-selector.html" %}
+      {% if book_navigation %}
+        {% include "partials/header/book-navigation.html" %}
+      {% else %}
+        {% include "partials/header/level-selector.html" %}
+      {% endif %}
     {% endif %}
 
     <div class="site-navbar-actions">
@@ -27,6 +31,11 @@
     defer></script>
 
   {% if current_language is defined and supported_languages is defined %}
+    {% if book_navigation %}
+      <script
+        src="{{ url_for('static', filename='js/components/book-navigation.js') }}"
+        defer></script>
+    {% endif %}
     <script
       src="{{ url_for('static', filename='js/components/language-selector.js') }}"
       defer></script>

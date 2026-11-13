@@ -7,6 +7,8 @@ import markupsafe
 import yaml
 from frozendict.cool import deepfreeze
 
+from piggy.books import build_book_index
+
 from piggy.piggy_uuid import SHORTLINK_ALPHABET, SHORTLINK_SIZE, _generate_shortlink, generate_uuid
 from piggy import (
     IMG_FMT,
@@ -347,9 +349,12 @@ def unfreeze(d):
     return d
 
 
+
+
 start_time = timeit.default_timer()
 print("Building piggymap")
 SHORTLINK_MAP = {}
 PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER, _shortlink_map=SHORTLINK_MAP))
 SHORTLINK_MAP = deepfreeze(SHORTLINK_MAP)
+BOOK_INDEX = build_book_index(PIGGYMAP, PIGGYBANK_FOLDER)
 print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")
