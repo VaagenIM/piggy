@@ -22,6 +22,7 @@ from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
 from piggy.piggybank import PIGGYMAP, SHORTLINK_MAP, get_piggymap_segment_from_path, unfreeze
+from piggy.shortlinks import split_md_link
 from piggy.utils import (
     normalize_path_to_str,
     lru_cache_wrapper,
@@ -125,8 +126,8 @@ def create_app(debug: bool = False) -> Flask:
 
     @app.template_filter("split_md_links")
     def split_md_links(md_links: list[str]) -> list[tuple[str, str]]:
-        """Split a list of markdown links into a list of tuples (text, url)."""
-        return [(link.split("](")[0][1:], link.split("](")[1][:-1]) for link in md_links if "](" in link]
+        """Split a list of markdown links (or bare shortlinks) into a list of tuples (text, url)."""
+        return [link for link in map(split_md_link, md_links) if link]
 
     @app.context_processor
     def utilities():
