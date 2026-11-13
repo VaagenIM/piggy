@@ -1,5 +1,6 @@
 import re
-from pathlib import Path
+from pathlib import Path, PurePosixPath
+from urllib.parse import unquote
 from typing import Callable, Optional
 
 from flask import Response, render_template
@@ -108,6 +109,23 @@ def inherit_frontmatter_entry(source: Path, key: str) -> Callable[[str], str]:
     return preprocess
 
 
+# A relative attachments/<file> reference in rendered html: src="...", href='...' or unquoted
+ATTACHMENT_REFERENCE_RE = re.compile(r"(?<=[\"'=])attachments/([^\"'\s<>?#]+)")
+
+
+def use_translated_attachments(body: str, attachments: Path, lang: str) -> str:
+    """Point attachment references at their `<name>.<lang>.<ext>` variant where one exists, e.g. a translated quiz."""
+
+    def translated(match: re.Match) -> str:
+        name = PurePosixPath(match.group(1))
+        variant = name.with_name(f"{name.stem}.{lang}{name.suffix}")
+        if (attachments / unquote(str(variant))).is_file():
+            return f"attachments/{variant}"
+        return match.group(0)
+
+    return ATTACHMENT_REFERENCE_RE.sub(translated, body)
+
+
 def cache_directory(
     segment: dict,
     fn: Callable[[str, Optional[str]], Response],
@@ -190,6 +208,10 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
         sections = _mdfile_to_sections_with_retry(p, preprocess)
         sections["head"] = remove_turtleconverter_stylesheets(sections["head"])
         sections["body"] = remove_unused_pyodide_assets(relabel_pyodide_editors(sections["body"]))
+        if lang:
+            sections["body"] = use_translated_attachments(
+                sections["body"], assignment_path.parent / "attachments", lang
+            )
         print("Rendering:", p)
 
     except ConversionError:
