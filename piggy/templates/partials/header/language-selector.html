@@ -53,3 +53,31 @@
     }}
   {% endfor %}
 {% endcall %}
+
+{% if github_pages %}
+  {#
+    Static pages can't read the language cookie, so jump to the language the
+    visitor picked last (stored by language-selector.js) when this page has it.
+    Explicit /lang/ URLs are left alone.
+  #}
+  <script>
+    (function () {
+      var selector = document.currentScript.previousElementSibling;
+      var language;
+      try {
+        language = localStorage.getItem('piggy:language');
+      } catch (e) {
+        return;
+      }
+      if (!language || window.location.pathname.indexOf('/lang/') !== -1) {
+        return;
+      }
+      var option = selector.querySelector(
+        '[data-lang="' + CSS.escape(language) + '"]'
+      );
+      if (option && option.pathname !== window.location.pathname) {
+        window.location.replace(option.pathname + window.location.hash);
+      }
+    })();
+  </script>
+{% endif %}
