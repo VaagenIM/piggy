@@ -13,6 +13,7 @@ from piggy import (
     PIGGYBANK_FOLDER,
     Visibility,
 )
+from piggy.emotes import EMOTES
 from piggy.exceptions import PiggyHTTPException, PiggyErrorException
 from piggy.models import LANGUAGES
 from piggy.piggybank import (
@@ -130,6 +131,7 @@ def _mdfile_to_sections_with_retry(path: Path, retries=0) -> dict:
             docs_folder=PIGGYBANK_FOLDER,
             leading_url=f"/{ASSIGNMENT_ROUTE}",
             normalize_urls=True,
+            emojis=EMOTES,
             template=(Path(__file__).parent / "templates" / "assignments" / "tconvert_assignment_base.html"),
             remove_heading=False,
             remove_heading_if_title_matches=True,

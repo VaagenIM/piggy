@@ -1,0 +1,13 @@
+/***************************\
+|*         EMOTES          *|
+\***************************/
+/*
+ * :name: emotes from piggy/emotes.py, sized to sit in a line of text
+ * (!important to win over the `.md-content img` sizing in markdown-base.css)
+ */
+.md-content img.emote {
+  display: inline-block;
+  width: auto !important;
+  height: 1.5em !important;
+  vertical-align: middle;
+}
