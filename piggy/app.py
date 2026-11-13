@@ -33,7 +33,14 @@ from piggy.utils import (
     get_version,
     get_piggybank_version,
 )
-from piggy.sitemap import get_cached_sitemap_paths, render_internal_sitemap, render_sitemap_xml
+from piggy.sitemap import (
+    get_cached_sitemap_paths,
+    get_shortlink_paths,
+    get_static_files,
+    render_internal_files,
+    render_internal_sitemap,
+    render_sitemap_xml,
+)
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
@@ -161,13 +168,21 @@ def create_app(debug: bool = False) -> Flask:
 
     @app.route("/sitemap-internal")
     def sitemap_internal():
-        """Return all page paths for the GitHub Pages scraper."""
+        """Return all page paths, and their shortlinks, for the GitHub Pages scraper."""
         if not use_github_pages:
             abort(404)
+        paths = get_cached_sitemap_paths(PIGGYMAP, include_unlisted=True)
         return Response(
-            render_internal_sitemap(get_cached_sitemap_paths(PIGGYMAP, include_unlisted=True)),
+            render_internal_sitemap(paths + get_shortlink_paths(SHORTLINK_MAP, paths)),
             mimetype="text/plain",
         )
+
+    @app.route("/sitemap-internal/files")
+    def sitemap_internal_files():
+        """Return the media and attachments the GitHub Pages scraper copies instead of downloading."""
+        if not use_github_pages:
+            abort(404)
+        return Response(render_internal_files(get_static_files(PIGGYMAP)), mimetype="text/plain")
 
     def sanitize_internal_return_path(value):
         if not value or not value.startswith("/") or value.startswith("//"):
