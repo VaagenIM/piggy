@@ -1,4 +1,11 @@
-<nav class="site-navbar piggy-navbar" aria-label="Site navigation">
+{% from 'macros/adaptive_overflow.html' import adaptive_compact_bootstrap %}
+
+{# Compacts the actions first, then the back button, when the navbar runs out of room #}
+<nav
+  class="site-navbar piggy-navbar"
+  aria-label="Site navigation"
+  data-adaptive-compact="actions back back-icon"
+  data-adaptive-key="site-navbar">
   <div class="site-navbar-main">
     {% include "partials/header/logo.html" %}
     {% include "partials/header/back-button.html" %}
@@ -32,3 +39,4 @@
       defer></script>
   {% endif %}
 </nav>
+{{ adaptive_compact_bootstrap() }}

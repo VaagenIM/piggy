@@ -44,3 +44,15 @@
     display: none;
   }
 }
+
+/* The same flag-only trigger when a wider navbar runs out of room */
+.site-navbar[data-compact~="actions"]
+  .language-selector
+  .piggy-dropdown-trigger {
+  gap: 0.3rem;
+  padding-inline: 0.6rem;
+}
+
+.site-navbar[data-compact~="actions"] .language-current {
+  display: none;
+}
