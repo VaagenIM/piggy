@@ -35,15 +35,15 @@ derived title.
 | `description` | string | Optional | Used for card descriptions and as an `og:description`/`twitter:description` fallback. |
 | `summary` | string | Optional | If omitted, auto-generated from the first ~200 characters of the rendered HTML body (`piggy/caching.py`, `generate_summary_from_mkdocs_html`). Used as a lower-priority `og:description` fallback than `description`. |
 | `oinkdata` | object | Optional, via `.oink` only | Not settable from frontmatter itself — only comes from a sibling `.oink` JSON file (see below). Only `oinkdata.summary` is currently read anywhere, as an `og:description` fallback between `description` and `summary`. |
-| `relevant_pages` | list of strings and/or objects | Optional | Paths to other piggybank pages to show as a "Relevante sider" button row under the page title. Each entry is either a plain page path string (e.g. `VG1/IM/Programmering/Generelt - 002 GitHub Desktop/GitHub Desktop Level 1 - Installasjon`, spaces are fine, optionally with a leading `/main/` as already used in in-body links), or an object `{path: ..., title: ...}` to override the button's label instead of using the target page's own title — see example below. Resolved entirely in `templates/partials/parts/relevant_pages.html` against the already-loaded piggymap (exposed to every template as `piggymap`) — no Python changes were needed for this, since the raw list is already available as `content.meta.relevant_pages` from the per-file frontmatter parse. An entry that doesn't resolve to a real page is silently skipped. Since this is read from the rendered file's own frontmatter, a translated assignment can define its own `relevant_pages` list independently of the original. |
+| `relevant_pages` | list of strings | Optional | Other pages to show as a "Relevante sider" button row under the page title. Each entry is a `[[wikilink]]` to another assignment file (resolved by turtleconverter just like links in the body; add `\|Label` to set the button text, otherwise the file name is shown) or a quoted markdown link `"[Label](/main/...)"` (unquoted, YAML reads the `[...]` as a list). Entries that don't end up as a link are skipped. Translations always show the list of their original document, see [Translations](#translations). |
 
-### `relevant_pages` title override example
+### `relevant_pages` example
 
 ```yaml
 relevant_pages:
-  - /main/VG1/IM/Programmering/Generelt_-_002_GitHub_Desktop/GitHub_Desktop_Level_1_-_Installasjon
-  - path: /main/VG1/IM/Programmering/Generelt_-_003_uv/uv_Level_1_-_Installasjon
-    title: uv (pakkehåndterer)
+  - [[GitHub Desktop Level 1 - Installasjon|GitHub Desktop]]
+  - [[uv Level 1 - Installasjon|📦️ uv (pakkehåndterer)]]
+  - "[Python 2](/main/VG1/IM/Konseptutvikling_og_Programmering/Programmering_-_Python_02)"
 ```
 
 ## `.oink` sidecar files
@@ -64,3 +64,8 @@ A translated version of an assignment can be placed at
 own independent frontmatter block, parsed the same way. If a translation has
 no `.oink` file of its own but the original does, the original's `.oink` data
 is inherited (with `oinkdata` cleared) rather than duplicated per language.
+
+`relevant_pages` is the exception to the independent frontmatter: turtletranslate
+never translates it, and a translation can lag behind its original, so a
+translated page always renders the original document's `relevant_pages`
+(`piggy/caching.py`, `inherit_frontmatter_entry`), whatever its own file says.
