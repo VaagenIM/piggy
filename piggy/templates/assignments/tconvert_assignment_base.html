@@ -29,7 +29,8 @@
       {% if first and first.level == 1 %}
         {% set toc = first.children %}
       {% endif %}
-      {% if toc %}
+      {# A table of contents needs at least two headings to navigate between #}
+      {% if toc | length > 1 or (toc | first).children %}
         <div class="toc-sidebar" data-toc-sidebar>
           <button
             type="button"
@@ -50,7 +51,7 @@
               <line x1="4" y1="12" x2="20" y2="12"></line>
               <line x1="4" y1="17" x2="20" y2="17"></line>
             </svg>
-            <span class="toc-sidebar__toggle-label">Table of Contents</span>
+            <span class="toc-sidebar__toggle-label">Innhold</span>
             <svg
               class="toc-sidebar__chevron"
               aria-hidden="true"
@@ -68,9 +69,9 @@
             class="toc-sidebar__panel"
             id="assignment-toc-panel"
             data-toc-panel
-            aria-label="Table of contents"
+            aria-label="Innholdsfortegnelse"
             hidden>
-            <p class="toc-sidebar__heading">Table of Contents</p>
+            <p class="toc-sidebar__heading">Innhold</p>
             <ul class="toc-sidebar__list">
               {% for toc_item in toc recursive %}
                 <li class="toc-sidebar__item">

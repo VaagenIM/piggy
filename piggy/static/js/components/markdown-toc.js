@@ -70,8 +70,6 @@
   }
 
   function initScrollSpy(panel) {
-    if (!("IntersectionObserver" in window)) return;
-
     const links = Array.from(panel.querySelectorAll("[data-toc-link]"));
     const targets = links
       .map((link) => {
@@ -88,31 +86,64 @@
     if (targets.length === 0) return;
 
     function setActive(activeLink) {
+      if (activeLink.classList.contains("is-active")) return;
       links.forEach((link) => {
         link.classList.toggle("is-active", link === activeLink);
       });
+      revealInPanel(activeLink);
     }
 
-    // Anchor-jumps land a heading at its `scroll-margin-top` (the sticky
-    // header clearance), so the observer's activation band has to start at
-    // or above that same offset - otherwise a just-clicked link never
-    // registers as active because its heading landed above the band.
-    const headingOffset =
-      parseFloat(getComputedStyle(targets[0].heading).scrollMarginTop) || 0;
-    const topMargin = Math.max(headingOffset - 4, 0);
+    // Keep the active entry in view in a long (scrolling) panel, without
+    // scrolling the page itself like scrollIntoView() could
+    function revealInPanel(link) {
+      const panelRect = panel.getBoundingClientRect();
+      const linkRect = link.getBoundingClientRect();
+      if (linkRect.top < panelRect.top) {
+        panel.scrollTop -= panelRect.top - linkRect.top;
+      } else if (linkRect.bottom > panelRect.bottom) {
+        panel.scrollTop += linkRect.bottom - panelRect.bottom;
+      }
+    }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const target = targets.find((t) => t.heading === entry.target);
-          if (target) setActive(target.link);
-        });
-      },
-      { rootMargin: `-${topMargin}px 0px -70% 0px`, threshold: 0 },
-    );
+    // The current section is the last heading scrolled up to its
+    // `scroll-margin-top` (the sticky header clearance), which is also where
+    // an anchor jump lands it. Watching heading visibility instead marks
+    // whichever heading entered view last, often the one after a clicked link.
+    let scheduled = false;
 
-    targets.forEach((target) => observer.observe(target.heading));
+    function updateActive() {
+      scheduled = false;
+      // Headings in collapsed blocks have no box (and would read as top 0)
+      const shown = targets.filter(
+        (target) => target.heading.getClientRects().length > 0,
+      );
+      if (shown.length === 0) return;
+
+      // The last sections can be too short to ever reach the top, so the
+      // end of the page belongs to the last heading
+      const scrolledToEnd =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 2;
+
+      let current = shown[0];
+      for (const target of shown) {
+        const offset =
+          parseFloat(getComputedStyle(target.heading).scrollMarginTop) || 0;
+        if (target.heading.getBoundingClientRect().top > offset + 1) break;
+        current = target;
+      }
+      setActive((scrolledToEnd ? shown.at(-1) : current).link);
+    }
+
+    function scheduleUpdate() {
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(updateActive);
+    }
+
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate, { passive: true });
+    updateActive();
   }
 
   function initAll() {
