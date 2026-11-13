@@ -82,6 +82,31 @@ def remove_unused_pyodide_assets(body: str) -> str:
     return PYODIDE_UNUSED_ASSETS_RE.sub("", body)
 
 
+FRONTMATTER_RE = re.compile(r"\A(---[ \t]*\n)(.*?)(^(?:---|\.\.\.)[ \t]*(?:\n|\Z))", re.DOTALL | re.MULTILINE)
+
+
+def get_frontmatter_entry(frontmatter: str, key: str) -> str:
+    """Return a top-level frontmatter key with its (indented or listed) value, exactly as written."""
+    match = re.search(rf"^{re.escape(key)}:.*\n(?:[ \t-].*\n|[ \t]*\n)*", frontmatter, re.MULTILINE)
+    return match.group(0) if match else ""
+
+
+def inherit_frontmatter_entry(source: Path, key: str) -> Callable[[str], str]:
+    """Return a markdown preprocessor that swaps the frontmatter `key` for the one in the source document."""
+    source_frontmatter = FRONTMATTER_RE.match(source.read_text(encoding="utf-8"))
+    inherited = get_frontmatter_entry(source_frontmatter.group(2), key) if source_frontmatter else ""
+
+    def preprocess(content: str) -> str:
+        frontmatter = FRONTMATTER_RE.match(content)
+        if not frontmatter:
+            return f"---\n{inherited}---\n{content}" if inherited else content
+        own = frontmatter.group(2)
+        entries = own.replace(get_frontmatter_entry(own, key), "", 1) + inherited
+        return frontmatter.group(1) + entries + frontmatter.group(3) + content[frontmatter.end() :]
+
+    return preprocess
+
+
 def cache_directory(
     segment: dict,
     fn: Callable[[str, Optional[str]], Response],
@@ -120,7 +145,7 @@ def cache_directory(
             cache_directory(value.get("data", {}), fn=fn, _path=f"{_path}/{key}")
 
 
-def _mdfile_to_sections_with_retry(path: Path, retries=0) -> dict:
+def _mdfile_to_sections_with_retry(path: Path, preprocess: Optional[Callable[[str], str]] = None, retries=0) -> dict:
     if retries > 1:
         raise PiggyErrorException(f"Could not render assignment after {retries} retries: {path}")
 
@@ -133,12 +158,13 @@ def _mdfile_to_sections_with_retry(path: Path, retries=0) -> dict:
             template=(Path(__file__).parent / "templates" / "assignments" / "tconvert_assignment_base.html"),
             remove_heading=False,
             remove_heading_if_title_matches=True,
+            preprocess=preprocess or (lambda content: content),
         )
 
     except FileNotFoundError:
         # TurtleConverter occasionally removes its temporary copy before
         # cleanup on the first render after app startup. A second build succeeds.
-        return _mdfile_to_sections_with_retry(path, retries=retries + 1)
+        return _mdfile_to_sections_with_retry(path, preprocess, retries=retries + 1)
 
 
 @lru_cache_wrapper
@@ -150,21 +176,23 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
     if not p.exists():
         raise PiggyHTTPException("Oppgave ikke funnet", status_code=404)
 
-    try:
-        sections = _mdfile_to_sections_with_retry(p)
-        sections["head"] = remove_turtleconverter_stylesheets(sections["head"])
-        sections["body"] = remove_unused_pyodide_assets(relabel_pyodide_editors(sections["body"]))
-        print("Rendering:", p)
-
-    except ConversionError:
-        raise PiggyHTTPException("Feil: Kunne ikke vise oppgave", status_code=500)
-
     lang = ""
     assignment_path = p
 
     if p.parents[1].name == "translations":
         lang = p.parent.name
         assignment_path = p.parents[2] / p.name
+
+    try:
+        # relevant_pages is never translated, so translations use the (up to date) list of their source document
+        preprocess = inherit_frontmatter_entry(assignment_path, "relevant_pages") if lang else None
+        sections = _mdfile_to_sections_with_retry(p, preprocess)
+        sections["head"] = remove_turtleconverter_stylesheets(sections["head"])
+        sections["body"] = remove_unused_pyodide_assets(relabel_pyodide_editors(sections["body"]))
+        print("Rendering:", p)
+
+    except ConversionError:
+        raise PiggyHTTPException("Feil: Kunne ikke vise oppgave", status_code=500)
 
     current_language = LANGUAGES.get(lang, "")
 
