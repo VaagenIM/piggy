@@ -87,6 +87,13 @@ own independent frontmatter block, parsed the same way. If a translation has
 no `.oink` file of its own but the original does, the original's `.oink` data
 is inherited (with `oinkdata` cleared) rather than duplicated per language.
 
+Attachments can have a version per language next to the original, named
+`<name>.<lang>.<ext>` (e.g. `attachments/quiz-html.eng.html` for
+`attachments/quiz-html.html`). A translated page links to its language's
+version wherever one exists and to the original otherwise
+(`piggy/caching.py`, `use_translated_attachments`), which is how translated
+H5P quizzes are shown.
+
 `relevant_pages` is the exception to the independent frontmatter: turtletranslate
 never translates it, and a translation can lag behind its original, so a
 translated page always renders the original document's `relevant_pages`
