@@ -66,13 +66,14 @@
 }
 
 /***** SECTIONS *****/
-.overview-section + .overview-section {
+/* Divide a section from the visible ones above it (card filters can hide sections) */
+.overview-section:not([hidden]) ~ .overview-section {
   margin-top: var(--overview-section-gap);
   padding-top: var(--overview-section-gap);
   border-top: 1px solid var(--overview-rule);
 }
 
-.overview-section--compact + .overview-section {
+.overview-section--compact:not([hidden]) + .overview-section {
   margin-top: calc(var(--overview-section-gap) * 0.6);
   padding-top: calc(var(--overview-section-gap) * 0.6);
 }

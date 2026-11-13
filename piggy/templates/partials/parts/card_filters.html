@@ -1,0 +1,69 @@
+{#
+  Tag filters for the cards of an overview page (pass the shown items as `items`).
+  Cards tagged with one of HIDDEN_TAGS stay hidden until their tag is picked.
+  Behaviour: js/components/card-filters.js
+#}
+{% set tag_filters = items | tag_filters %}
+{# Tags on a single card fold away behind "Flere" when there are more common ones #}
+{% set tag_choices = tag_filters | rejectattr('hidden') | list %}
+{% set rare_tags = tag_choices | selectattr('count', 'equalto', 1) | list %}
+{% set fold_rare = rare_tags and rare_tags | length < tag_choices | length %}
+{% if tag_filters | length > 1 or tag_filters | selectattr('hidden') | list %}
+  <div
+    class="card-filters"
+    role="group"
+    aria-label="Filtrer innholdet"
+    data-card-filters>
+    <span class="card-filters-label">Filtrer</span>
+    {% for tag_filter in tag_filters %}
+      <button
+        type="button"
+        class="card-filter{{ ' card-filter--hidden' if tag_filter.hidden }}"
+        aria-pressed="false"
+        data-filter-tag="{{ tag_filter.tag | lower }}"
+        {% if tag_filter.hidden %}
+          data-hidden-tag title="Skjult som standard, trykk for å vise"
+        {% elif fold_rare and tag_filter.count == 1 %}
+          data-rare-tag
+        {% endif %}>
+        {% if tag_filter.hidden %}
+          <svg
+            class="card-filter-icon"
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        {% endif %}
+        <span>{{ tag_filter.tag }}</span>
+        <span class="card-filter-count">{{ tag_filter.count }}</span>
+      </button>
+    {% endfor %}
+    {% if fold_rare %}
+      <button
+        type="button"
+        class="card-filters-more"
+        aria-expanded="false"
+        data-card-filters-more
+        data-more-label="Flere ({{ rare_tags | length }})"
+        data-less-label="Færre">
+        Flere ({{ rare_tags | length }})
+      </button>
+    {% endif %}
+    <button
+      type="button"
+      class="card-filters-reset"
+      data-card-filters-reset
+      hidden>
+      Nullstill
+    </button>
+  </div>
+  <script
+    src="{{ url_for('static', filename='js/components/card-filters.js') }}"
+    defer></script>
+{% endif %}

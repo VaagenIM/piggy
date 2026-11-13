@@ -38,6 +38,7 @@
 @import "./components/h5p.css";
 
 @import "./components/card-grid.css";
+@import "./components/card-filters.css";
 @import "./components/information-grid.css";
 
 @import "./components/cards/base-card.css";

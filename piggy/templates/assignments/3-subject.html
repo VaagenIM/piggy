@@ -19,7 +19,7 @@
   {% set direction = meta.class_name.name if meta.class_name is defined else '' %}
   {% set year = meta.year_level.name if meta.year_level is defined else '' %}
 
-  <div class="overview subject-overview">
+  <div class="overview subject-overview" data-card-filter-scope>
     <header class="overview-header">
       {% if year or direction %}
         <p class="overview-eyebrow">
@@ -32,10 +32,15 @@
       {% endif %}
     </header>
 
+    {% with items = shown %}
+      {% include 'partials/parts/card_filters.html' %}
+    {% endwith %}
+
     {% if informations %}
       <section
         class="overview-section overview-section--compact"
-        aria-labelledby="section-information">
+        aria-labelledby="section-information"
+        data-card-filter-section>
         <div class="overview-section-header">
           <h2 class="overview-section-title" id="section-information">
             Informasjon og ressurser
@@ -51,10 +56,15 @@
     {% endif %}
 
     {% if modules %}
-      <section class="overview-section" aria-labelledby="section-modules">
+      <section
+        class="overview-section"
+        aria-labelledby="section-modules"
+        data-card-filter-section>
         <div class="overview-section-header">
           <h2 class="overview-section-title" id="section-modules">Moduler</h2>
-          <span class="overview-section-count">{{ modules | length }}</span>
+          <span class="overview-section-count" data-card-filter-count>
+            {{- modules | length -}}
+          </span>
           <p class="overview-section-lead">Lærestoff og kapitler i faget.</p>
         </div>
         <div class="card-grid-container card-type-exercise">
@@ -66,12 +76,17 @@
     {% endif %}
 
     {% if assignments %}
-      <section class="overview-section" aria-labelledby="section-assignments">
+      <section
+        class="overview-section"
+        aria-labelledby="section-assignments"
+        data-card-filter-section>
         <div class="overview-section-header">
           <h2 class="overview-section-title" id="section-assignments">
             Innleveringsoppgaver
           </h2>
-          <span class="overview-section-count">{{ assignments | length }}</span>
+          <span class="overview-section-count" data-card-filter-count>
+            {{- assignments | length -}}
+          </span>
           <p class="overview-section-lead">
             Større oppgaver og arbeid som skal leveres.
           </p>
@@ -87,5 +102,8 @@
     {% if not shown %}
       <p class="overview-empty">Det er ikke noe innhold her ennå.</p>
     {% endif %}
+    <p class="overview-empty" data-card-filters-empty hidden>
+      Ingenting her passer med filteret.
+    </p>
   </div>
 {% endblock %}
