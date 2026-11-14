@@ -55,6 +55,11 @@ the page instead of going through the `/s/` redirect (`piggy/shortlinks.py`).
 The `https://piggy.iktim.no/s/<code>`, `/s/<code>` and `s/<code>` forms all work;
 an unknown code on its own is skipped.
 
+In the page text, links to `https://<site>.iktim.no/s/<code>` on any Piggy site
+(`piggy`, `piglet`, ...) are rewritten to `/s/<code>`, so a link copied on
+one site stays on the site the reader is using. `localhost` links are
+left alone, since assignments may link to the student's own local server.
+
 ```yaml
 relevant_pages:
   - https://piggy.iktim.no/s/KDFJtPht
