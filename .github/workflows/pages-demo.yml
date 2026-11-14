@@ -6,6 +6,12 @@ on:
   repository_dispatch:
     types: [ fill_piggybank ]
   workflow_dispatch:
+    inputs:
+      full_rebuild:
+        description: "Rebuild every page instead of only the pages the content changes affect"
+        required: false
+        default: false
+        type: boolean
   push:
     branches: [ develop ]
 
@@ -43,6 +49,16 @@ jobs:
           path: piggybank
           fetch-depth: 0
 
+      # The previous build and what it was built from, so only the pages that changed are built again
+      - name: Restore the previous build
+        uses: actions/cache/restore@v6
+        with:
+          path: |
+            .github/workflows/demo
+            .github/workflows/.demo-state.json
+          key: pages-edge-${{ github.run_id }}
+          restore-keys: pages-edge-
+
       - name: Install dependencies
         env:
           UV_LINK_MODE: copy
@@ -59,10 +75,20 @@ jobs:
           gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers "$workers" run:app &
 
       - name: Run web scraper
+        env:
+          FORCE_FULL_REBUILD: ${{ inputs.full_rebuild || false }}
         run: |
           sed -i 's/piggy.iktim.no/piglet.iktim.no/g' .github/workflows/web_scraper.py
           python .github/workflows/web_scraper.py
           echo "piglet.iktim.no" > .github/workflows/demo/CNAME
+
+      - name: Save the build for the next run
+        uses: actions/cache/save@v6
+        with:
+          path: |
+            .github/workflows/demo
+            .github/workflows/.demo-state.json
+          key: pages-edge-${{ github.run_id }}
 
       - name: Deploy to piggy-edge gh-pages
         run: |

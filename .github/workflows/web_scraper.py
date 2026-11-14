@@ -4,6 +4,9 @@ Builds the static GitHub Pages version of the site from a running piggy server (
 The server lists every page up front (/sitemap-internal) and every media/attachments file (/sitemap-internal/files),
 so all pages are fetched in a single pass and the files are copied straight from disk. Only media that doesn't exist
 as a file (generated fallback thumbnails, placeholders) is downloaded from the server.
+
+When only the content changed since the previous build (restored from the cache), only the affected pages are
+rebuilt, see incremental.py. A change to piggy itself rebuilds everything.
 """
 
 import multiprocessing
@@ -20,6 +23,8 @@ import requests
 from bs4 import BeautifulSoup as bs
 from rcssmin import cssmin
 from rjsmin import jsmin
+
+import incremental
 
 WORKERS = max(1, multiprocessing.cpu_count() - 1)
 
@@ -53,6 +58,9 @@ media_link_filetypes = [
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 root_dir = Path(__file__).resolve().parents[2]
+piggybank_dir = root_dir / "piggybank"
+# Rebuilt every time, since they list or link to pages in general
+always_rebuilt = {"/"} | extra_pages
 
 
 def unquote_path(path):
@@ -118,6 +126,22 @@ def get_internal_files() -> list[tuple[str, Path]]:
     return [(path, Path(file)) for path, file in (line.split("\t", 1) for line in response.text.splitlines() if line)]
 
 
+def get_page_sources() -> dict[str, str]:
+    """Return the markdown file or folder each page is built from, relative to the piggybank folder."""
+    response = get_with_retry(f"{url}/sitemap-internal/sources")
+    response.raise_for_status()
+    sources = {}
+    for page, source in (line.split("\t", 1) for line in response.text.splitlines() if line):
+        relative = Path(source).resolve().relative_to(piggybank_dir.resolve()).as_posix()
+        sources[page] = "" if relative == "." else relative
+    return sources
+
+
+def content_file(file: Path) -> str:
+    """A media or attachments file relative to the piggybank folder, the way git lists it."""
+    return file.resolve().relative_to(piggybank_dir.resolve()).as_posix()
+
+
 def clean_link(link, path):
     link = link.replace("&amp;", "&").replace(" ", "_")
 
@@ -163,6 +187,19 @@ def get_media_links(html, path=""):
         filtered_links.add(link)
 
     return filtered_links
+
+
+def get_page_links(html: str, link: str) -> set[str]:
+    """Return the pages a page links to, as routes."""
+    routes = set()
+    for href in re.findall(r'href="([^"]+)"', html):
+        href = href.removeprefix(cname)
+        if href.startswith("#") or re.match(r"[a-z][a-z0-9+.-]*:|//", href):
+            continue  # Anchors, other sites, mailto: ...
+        route = urlsplit(clean_link(href, link.strip("/"))).path.rstrip("/") or "/"
+        if route.startswith(("/main", "/s/")) and "." not in route.rsplit("/", 1)[-1]:
+            routes.add(route)
+    return routes
 
 
 def output_path_for_route(route: str) -> Path:
@@ -232,8 +269,8 @@ def write_html(html: str, output_path: Path):
         f.write(html.encode())
 
 
-def build_page(link: str) -> tuple[str, bool, set[str]]:
-    """Fetch, rewrite and write one page, returning whether it worked and the media it links to."""
+def build_page(link: str) -> tuple[str, bool, set[str], set[str]]:
+    """Fetch, rewrite and write one page, returning whether it worked, the media and the pages it links to."""
     page_url = f"{url}/{link.strip('/')}"
     r = get_with_retry(page_url)
 
@@ -241,7 +278,7 @@ def build_page(link: str) -> tuple[str, bool, set[str]]:
         if link == "/":
             raise Exception("Could not fetch the main page. Is the server running?")
         print(f"WARNING: Could not fetch {link} (status code: {r.status_code})")
-        return link, False, set()
+        return link, False, set(), set()
 
     # Normalize html (quoted attributes etc.) so the regexes below match
     is_html = "text/html" in r.headers.get("Content-Type", "")
@@ -250,8 +287,9 @@ def build_page(link: str) -> tuple[str, bool, set[str]]:
     # Translations share the media of the page they translate
     media_links = get_media_links(html, path=link.strip("/")) if "/lang/" not in link else set()
 
-    write_html(process_html(html, link), output_path_for_route(link))
-    return link, True, media_links
+    html = process_html(html, link)
+    write_html(html, output_path_for_route(link))
+    return link, True, media_links, get_page_links(html, link)
 
 
 def copy_file(path: str, file: Path):
@@ -356,46 +394,113 @@ def timed(step: str, started: float):
     return time.perf_counter()
 
 
+def build_pages(pool, pages: set[str]) -> tuple[dict[str, set[str]], set[str], set[str]]:
+    """Build pages, returning the pages each built page links to, the pages that failed and the media they use."""
+    built, failed, media_links = {}, set(), set()
+    for link, ok, media, page_links in pool.imap_unordered(build_page, sorted(pages), chunksize=4):
+        print(f"{'Built' if ok else 'Skipped'} \33[34m{link}\33[0m")
+        if ok:
+            built[link] = page_links
+        else:
+            failed.add(link)
+        media_links |= media
+    return built, failed, media_links
+
+
+def remove_page(page: str):
+    output_path_for_route(page).unlink(missing_ok=True)
+    if is_api_view_link(page):
+        rmtree(f"demo{api_transform(page)}", ignore_errors=True)
+
+
 def build_site():
     # Imported here, so pool workers started with spawn (Windows, macOS) don't each set up mkdocs
     from turtleconverter import generate_static_files
 
     started = time.perf_counter()
-    rmtree("demo", ignore_errors=True)
-    generate_static_files(static_folder=Path("demo/static").absolute())
-
-    pages = sorted(get_internal_sitemap() | extra_pages)
+    pages = get_internal_sitemap() | extra_pages
     files = get_internal_files()
+    sources = get_page_sources()
     started = timed(f"Listed {len(pages)} pages and {len(files)} files", started)
 
-    with multiprocessing.Pool(processes=WORKERS) as pool:
-        pool.starmap(copy_file, files)
-        started = timed(f"Copied {len(files)} files", started)
+    state = incremental.load_state()
+    fingerprint = incremental.piggy_fingerprint(root_dir)
+    revision = incremental.content_revision(piggybank_dir)
+    affected, changed, reason = incremental.plan(state, fingerprint, revision, piggybank_dir, sources, Path("demo"))
+    full = affected is None
+    previous_pages = set() if full else set(state["pages"])
+    previous_links = {} if full else state["links"]
 
-        built, media_links = [], set()
-        for link, ok, links in pool.imap_unordered(build_page, pages, chunksize=4):
-            print(f"{'Built' if ok else 'Skipped'} \33[34m{link}\33[0m")
-            if ok:
-                built.append(link)
-            media_links |= links
-        started = timed(f"Built {len(built)}/{len(pages)} pages", started)
+    if full:
+        print(f"Full build: {reason}")
+        rmtree("demo", ignore_errors=True)
+        generate_static_files(static_folder=Path("demo/static").absolute())
+        to_build, to_copy = pages, files
+    else:
+        print(f"Incremental build: {reason}")
+        missing = {page for page in pages if page not in previous_pages or not output_path_for_route(page).exists()}
+        to_build = (affected | always_rebuilt | missing) & pages
+        to_copy = [
+            (path, file)
+            for path, file in files
+            if content_file(file) in changed or not output_path_for_media(path).exists()
+        ]
+        for page in previous_pages - pages:
+            remove_page(page)
+        for path in set(state["files"]) - {path for path, _ in files}:
+            output_path_for_media(path).unlink(missing_ok=True)
+
+    with multiprocessing.Pool(processes=WORKERS) as pool:
+        pool.starmap(copy_file, to_copy)
+        started = timed(f"Copied {len(to_copy)} files", started)
+
+        built, failed, media_links = build_pages(pool, to_build)
+        # A page that started or stopped linking to another page changes that page's "Brukt i" list
+        for _ in range(0 if full else 3):
+            linked = set()
+            for page, page_links in built.items():
+                linked |= (page_links ^ set(previous_links.get(page, ()))) & pages
+            again = linked - built.keys() - failed
+            if not again:
+                break
+            more, more_failed, more_media = build_pages(pool, again)
+            built |= more
+            failed |= more_failed
+            media_links |= more_media
+        started = timed(f"Built {len(built)} of {len(pages)} pages", started)
 
         # Media that isn't a file on disk is generated by the server (e.g. fallback thumbnails). Links that only
         # differ in their query string (?title=) share one file, so only the first of them is downloaded
-        missing = {}
+        file_outputs = {output_path_for_media(path) for path, _ in files}
+        generated = {}
         for link in sorted(media_links):
-            if not output_path_for_media(link).exists():
-                missing.setdefault(output_path_for_media(link), link)
-        pool.map(download_media, missing.values())
-        started = timed(f"Downloaded {len(missing)} generated media files", started)
+            if output_path_for_media(link) not in file_outputs:
+                generated.setdefault(output_path_for_media(link), link)
+        pool.map(download_media, generated.values())
+        started = timed(f"Downloaded {len(generated)} generated media files", started)
 
         api_paths = sorted({api_transform(link) for link in built if is_api_view_link(link)} | api_links)
         pool.map(download_api, api_paths)
         started = timed(f"Downloaded {len(api_paths)} API views", started)
 
-    copytree(root_dir / "piggy" / "static", Path("demo/static").absolute(), dirs_exist_ok=True)
-    minify_folder(Path("demo/static").absolute())
-    timed("Copied and minified static files", started)
+    if full:
+        copytree(root_dir / "piggy" / "static", Path("demo/static").absolute(), dirs_exist_ok=True)
+        minify_folder(Path("demo/static").absolute())
+        timed("Copied and minified static files", started)
+
+    links = {page: page_links for page, page_links in previous_links.items() if page in pages}
+    links |= {page: sorted(page_links & pages) for page, page_links in built.items()}
+    incremental.save_state(
+        {
+            "piggy": fingerprint,
+            "piggybank": revision,
+            # A page that failed is left out, so the next build tries it again
+            "pages": sorted(((previous_pages & pages) | built.keys()) - failed),
+            "files": sorted(path for path, _ in files),
+            "sources": sources,
+            "links": links,
+        }
+    )
 
 
 if __name__ == "__main__":
