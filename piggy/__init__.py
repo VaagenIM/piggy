@@ -1,7 +1,12 @@
+import mimetypes
 import os
 import re
 from enum import Enum
 from pathlib import Path
+
+# Python 3.12 lists WebP only as a non-strict type: without this, webp files are served as
+# application/octet-stream and webp emotes are not recognised as images
+mimetypes.add_type("image/webp", ".webp")
 
 PIGGYBANK_FOLDER = Path("piggybank")
 PIGGYBANK_UUID_MAP_PATH = Path("piggybank-data") / "uuid_map.json"

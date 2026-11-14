@@ -29,7 +29,7 @@ derived title.
 | Property | Type | Required | Meaning |
 |---|---|---|---|
 | `title` | string | Effectively required | Display title. If omitted, falls back to the first `# heading` in the file, then to the filename. |
-| `difficulty` | integer (1–5 in practice) | Optional | Drives the difficulty icon (`static/img/difficulties/1.webp`…`5.webp`); values `>5` are clamped to 5, values `<=0` hide the icon. |
+| `difficulty` | integer (1–5 in practice) | Optional | Drives the difficulty icon (`static/img/emotes/diff1.webp`…`diff5.webp`); values `>5` are clamped to 5, values `<=0` hide the icon. |
 | `thumbnail` | string (relative path, no extension) | Optional | Defaults to `media/header` if omitted. Resolved to a full image URL at render time. |
 | `description` | string | Optional | Used for card descriptions and as an `og:description`/`twitter:description` fallback. |
 | `summary` | string | Optional | If omitted, auto-generated from the first ~200 characters of the rendered HTML body (`piggy/caching.py`, `generate_summary_from_mkdocs_html`). Used as a lower-priority `og:description` fallback than `description`. |
