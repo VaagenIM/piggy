@@ -1,5 +1,6 @@
 import html
 import os
+from collections import Counter
 from pathlib import Path
 from urllib.parse import quote, urlsplit
 
@@ -13,6 +14,7 @@ from piggy import (
     MEDIA_ROUTE,
     AssignmentTemplate,
     Visibility,
+    HIDDEN_TAGS,
     STATIC_FONTS_PATHS,
     IMG_FMT,
     PIGGYBANK_FOLDER,
@@ -86,6 +88,7 @@ def create_app(debug: bool = False) -> Flask:
             "piggybank_version": get_piggybank_version(),
             "AssignmentTemplate": AssignmentTemplate,
             "Visibility": Visibility,
+            "HIDDEN_TAGS": HIDDEN_TAGS,
             "themes": get_themes(),
             "debug": app.debug,
             "static_fonts_paths": STATIC_FONTS_PATHS,
@@ -109,6 +112,26 @@ def create_app(debug: bool = False) -> Flask:
         rank = {code: i for i, code in enumerate(preferred)}
         fallback_rank = len(preferred)
         return sorted(item_list, key=lambda kv: (rank.get(kv[0], fallback_rank), kv[0]))
+
+    @app.template_filter("tag_filters")
+    def tag_filters(item_list):
+        """
+        Jinja filter: given an iterable of (link, data) tuples, return the tags on their cards as
+        {tag, count, hidden} dicts, most used first and the tags hidden by default last.
+
+        A card hidden by default only counts towards its hidden tags, the others can't show it.
+        """
+        names, counts = {}, Counter()
+        for _, data in item_list:
+            tags = {tag.lower(): tag for tag in map(str, data.get("meta", {}).get("tags") or [])}
+            hidden_by = {key: tag for key, tag in tags.items() if key in HIDDEN_TAGS}
+            for key, tag in (hidden_by or tags).items():
+                names.setdefault(key, tag)
+                counts[key] += 1
+        return sorted(
+            ({"tag": names[key], "count": count, "hidden": key in HIDDEN_TAGS} for key, count in counts.items()),
+            key=lambda tag_filter: (tag_filter["hidden"], -tag_filter["count"], tag_filter["tag"].lower()),
+        )
 
     @app.template_filter("list_difference")
     def list_difference(original_list, lists):
