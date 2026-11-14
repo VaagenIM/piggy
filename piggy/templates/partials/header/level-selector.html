@@ -54,7 +54,7 @@
         {% if level_has_difficulty %}
           <img
             class="level-menu-difficulty-image"
-            src="{{ url_for('static', filename='img/difficulties/' + level_difficulty + '.png') }}"
+            src="{{ url_for('static', filename='img/emotes/diff' + level_difficulty + '.webp') }}"
             alt="" />
         {% endif %}
       {% endset %}
@@ -119,7 +119,7 @@
               <span class="level-tab-icon" aria-hidden="true">
                 <img
                   class="level-menu-difficulty-image"
-                  src="{{ url_for('static', filename='img/difficulties/' + level_difficulty + '.png') }}"
+                  src="{{ url_for('static', filename='img/emotes/diff' + level_difficulty + '.webp') }}"
                   alt="" />
               </span>
             {% endif %}
@@ -181,7 +181,7 @@
               {% if level_has_difficulty %}
                 <img
                   class="level-tab-tooltip-difficulty-image"
-                  src="{{ url_for('static', filename='img/difficulties/' + level_difficulty + '.png') }}"
+                  src="{{ url_for('static', filename='img/emotes/diff' + level_difficulty + '.webp') }}"
                   alt="" />
               {% endif %}
               <span class="level-tab-tooltip-title"
