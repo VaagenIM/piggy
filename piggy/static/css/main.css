@@ -58,6 +58,7 @@
 @import "./markdown/markdown-keys.css";
 @import "./markdown/markdown-emotes.css";
 @import "./markdown/markdown-tables.css";
+@import "./markdown/markdown-toc.css";
 
 @import "./vendor/katex.css";
 @import "./vendor/glightbox.css";
