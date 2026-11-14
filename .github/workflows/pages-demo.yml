@@ -6,12 +6,6 @@ on:
   repository_dispatch:
     types: [ fill_piggybank ]
   workflow_dispatch:
-    inputs:
-      full_rebuild:
-        description: "Invalidate the cached demo and rebuild every page"
-        required: false
-        default: true  # Temporary, currently the caching seems to be broken, so we rebuild every time
-        type: boolean
   push:
     branches: [ develop ]
 
@@ -49,16 +43,6 @@ jobs:
           path: piggybank
           fetch-depth: 0
 
-      #- name: Restore demo cache
-      #  uses: actions/cache@v6
-      #  with:
-      #    path: |
-      #      .github/workflows/demo
-      #      .github/workflows/.demo-state.json
-      #    key: pages-demo-${{ github.workflow }}-${{ github.ref_name }}-${{ github.run_id }}
-      #    restore-keys: |
-      #      pages-demo-${{ github.workflow }}-${{ github.ref_name }}-
-
       - name: Install dependencies
         env:
           UV_LINK_MODE: copy
@@ -75,8 +59,6 @@ jobs:
           gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers "$workers" run:app &
 
       - name: Run web scraper
-        env:
-          FORCE_FULL_REBUILD: ${{ inputs.full_rebuild || 'true' }}
         run: |
           sed -i 's/piggy.iktim.no/piglet.iktim.no/g' .github/workflows/web_scraper.py
           python .github/workflows/web_scraper.py

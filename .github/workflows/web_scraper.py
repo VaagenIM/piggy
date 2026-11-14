@@ -1,46 +1,34 @@
 """
-A hacky script that scrapes a website and downloads all the pages and media files.
+Builds the static GitHub Pages version of the site from a running piggy server (GITHUB_PAGES=1).
+
+The server lists every page up front (/sitemap-internal) and every media/attachments file (/sitemap-internal/files),
+so all pages are fetched in a single pass and the files are copied straight from disk. Only media that doesn't exist
+as a file (generated fallback thumbnails, placeholders) is downloaded from the server.
 """
 
 import multiprocessing
 import os
 import posixpath
 import re
-import subprocess
 import time
+from pathlib import Path
+from shutil import copyfile, copytree, rmtree
+from urllib.parse import unquote, urlunsplit, urlsplit
 
 import htmlmin
 import requests
-import json
-from hashlib import sha256
-from dataclasses import dataclass
-from pathlib import Path
-from shutil import copytree, rmtree
-from urllib.parse import unquote, urlunsplit, urlsplit
 from bs4 import BeautifulSoup as bs
-from turtleconverter import generate_static_files
-from rjsmin import jsmin
 from rcssmin import cssmin
+from rjsmin import jsmin
 
 WORKERS = max(1, multiprocessing.cpu_count() - 1)
 
-links = {"/", "/404"}
-api_links = {"/api/search-data", "/api"}
-api_view_links = set()
-visited = set()
-media_links = set()
-changed_media_links = set()
-incremental_mode = False
 url = "http://127.0.0.1:55555"  # The URL of the website we are scraping
 cname = "https://piggy.iktim.no"  # The CNAME of the website we will push the demo to
 
-
-@dataclass
-class PageResult:
-    html: str
-    links: set[str]
-    media_links: set[str]
-
+# Pages that aren't in the sitemap, and the API endpoints the site fetches itself
+extra_pages = {"/404", "/sitemap.xml"}
+api_links = {"/api/search-data", "/api"}
 
 # Media link are files that we want to download, but not parse as HTML (e.g. not write as UTF-8)
 # specifically fonts are causing issues.
@@ -64,6 +52,7 @@ media_link_filetypes = [
 
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+root_dir = Path(__file__).resolve().parents[2]
 
 
 def unquote_path(path):
@@ -82,9 +71,7 @@ def get_with_retry(url_to_fetch, *, timeout=600, max_attempts=3):
             # if we are trying to visit "404", we don't want to retry, as it will always fail
             if attempt == max_attempts:
                 raise
-            print(
-                f"WARNING: Request failed for {url_to_fetch} " f"(attempt {attempt}/{max_attempts}): {exc}. Retrying..."
-            )
+            print(f"WARNING: Request failed for {url_to_fetch} (attempt {attempt}/{max_attempts}): {exc}. Retrying...")
             time.sleep(attempt)
             continue
 
@@ -117,97 +104,18 @@ def get_with_retry(url_to_fetch, *, timeout=600, max_attempts=3):
     return last_response
 
 
-def get_internal_sitemap():
-    """Return all page paths, including pages not linked from public navigation."""
+def get_internal_sitemap() -> set[str]:
+    """Return all page paths (including pages not linked from public navigation) and their shortlinks."""
     response = get_with_retry(f"{url}/sitemap-internal")
     response.raise_for_status()
     return {line.strip() for line in response.text.splitlines() if line.strip()}
 
 
-def get_html(link) -> PageResult | None:
-    """Get the html from the given url, and append the new links to the links list."""
-
-    path = link.split("?", 1)[0].split("#", 1)[0].rstrip("/")
-
-    if path == "/s" or path.endswith("/attachments") or path.endswith("/lang"):
-        visited.add(link)
-        return None
-
-    page_url = f"{url}/{link.strip('/')}"
-    print(f"Visiting \33[34m{page_url}\33[0m")
-    r = get_with_retry(page_url)
-
-    visited.add(link)
-
-    if not r.ok and link not in ["/404"]:
-        if link == "/":
-            raise Exception("Could not fetch the main page. Is the server running?")
-        print(f"WARNING: Could not fetch {link} (status code: {r.status_code})")
-        return None
-
-    # Only prettify if mimetype is text/html
-    is_html = "text/html" in r.headers.get("Content-Type", "")
-    if is_html:
-        html = str(bs(r.text, "html.parser"))
-    else:
-        html = r.text
-
-    new_links = get_links(html, path=link.strip("/"))
-
-    # Get media links as long as we are not in the lang folder
-    new_media_links = set()
-    if "/lang/" not in link:
-        new_media_links = get_media_links(html, path=link.strip("/"))
-
-    # TODO: this is a hack. hopefully temporary.
-    html = re.sub(
-        r"""/api/generate_thumbnail/([^?"]*)(\?[^"]*)?""",
-        lambda m: f"/api/generate_thumbnail/{re.sub(r'[^A-Za-z0-9_]', '', clean_link(m.group(1), path=''))}.webp{m.group(2) or ''}",
-        html,
-    )
-    html = re.sub(r"/media/header\..+\?title=[^\"]*", r"/media/header.webp", html)
-
-    # Replace all content (og) links with the cname
-    html = re.sub(rf"content=\"({url})([^\"/]*)", rf'content="{cname}\2', html)
-    html = html.replace(url, cname)
-
-    # A hack to fix media links
-    if "/lang/" in link:
-        lang = link.split("/lang/")[1].split("/")[0]
-        html = re.sub(r'href="attachments/', 'href="../../attachments/', html)
-        html = re.sub(r'src="attachments/', 'src="../../attachments/', html)
-        html = re.sub(
-            r'(content="[^"]*?)([\\/])translations[\\/][^"\\/]+[\\/](.*?)"\s+((?:property|name)="(?:og:image|twitter:image)")',
-            r'\1\2\3" \4',
-            html,
-        )
-        html = re.sub(
-            rf"""href=\"({link.split("Level")[0].split("/")[-1]}[^/]+)\"""",
-            rf'href="../../\1/lang/{lang}"',
-            html,
-        )
-
-    # Ensure parent directories of every discovered link are also visited.
-    # Some pages (e.g. assignments) hide the parent topic directory from the
-    # breadcrumbs, so the scraper would otherwise never discover it.
-    parent_links = set()
-    for l in new_links:
-        parts = l.strip("/").split("/")
-        for i in range(1, len(parts)):
-            parent_links.add("/" + "/".join(parts[:i]))
-    new_links |= parent_links
-
-    # Remove links that are media links
-    new_links -= new_media_links
-    return PageResult(html, new_links, new_media_links)
-
-
-def is_api_view_link(link: str) -> bool:
-    """Return whether a successfully fetched page should have a static API view."""
-    path = link.split("?", 1)[0].split("#", 1)[0].strip("/")
-    if not path.startswith("main/"):
-        return False
-    return not any(segment in path.split("/") for segment in ("lang", "attachments", "media"))
+def get_internal_files() -> list[tuple[str, Path]]:
+    """Return (url path, file on disk) pairs for every media and attachments file."""
+    response = get_with_retry(f"{url}/sitemap-internal/files")
+    response.raise_for_status()
+    return [(path, Path(file)) for path, file in (line.split("\t", 1) for line in response.text.splitlines() if line)]
 
 
 def clean_link(link, path):
@@ -237,34 +145,6 @@ def clean_link(link, path):
     return urlunsplit(("", "", link_path, parsed.query, parsed.fragment))
 
 
-def _normalize_page_link(link):
-    if not link.startswith("/main/"):
-        return link
-    parts = link.split("/")
-    if "attachments" in parts or "media" in parts:
-        return link
-    link = "/".join(part.replace(".", "") for part in parts)
-    # Page routes are canonicalized without a trailing slash.
-    return link.rstrip("/")
-
-
-def get_links(html, path=""):
-    links = re.compile(r'href="((?!#|https?://)[^"]*)"').findall(html)
-    filtered_links = set()
-    for link in links:
-        if link == "javascript:void(0)":
-            continue
-        if link.startswith("/static/"):
-            continue
-        link = _normalize_page_link(clean_link(link, path))
-        filtered_links.add(link)
-
-    shortlink_paths = re.compile(r'data-shortlink-url="https?://[^/"]+(/[^"]*)"').findall(html)
-    filtered_links.update(_normalize_page_link(link) for link in shortlink_paths)
-
-    return filtered_links
-
-
 def get_media_links(html, path=""):
     media_src_regex = r'src="((?!#|https?://)[^"]+)"'
     media_href_regex = r'href="((?!#|https?://)[^"]+\.(' + "|".join(media_link_filetypes) + r'))"'
@@ -285,8 +165,61 @@ def get_media_links(html, path=""):
     return filtered_links
 
 
-def _write_html(html, path):
-    if Path(path) != Path("sitemap.xml"):
+def output_path_for_route(route: str) -> Path:
+    """Return the file a page route is written to, <route>.html unless the route has a file extension."""
+    path = route.split("?", 1)[0].split("#", 1)[0].strip("/")
+    if not path:
+        return Path("demo/index.html")
+    if "." not in path.rsplit("/", 1)[-1]:
+        path += ".html"
+    return Path("demo") / path
+
+
+def output_path_for_media(link: str) -> Path:
+    """Return the file a media link is written to (without its query string or fragment)."""
+    path = unquote_path(link.strip("/").split("#", 1)[0].split("?", 1)[0])
+    # TODO: this is a hack. hopefully temporary.
+    if "/api/generate_thumbnail/" in link:
+        path += ".webp"
+    return Path("demo") / path
+
+
+def process_html(html: str, link: str) -> str:
+    """Rewrite a fetched page for its static location."""
+    # TODO: this is a hack. hopefully temporary.
+    html = re.sub(
+        r"""/api/generate_thumbnail/([^?"]*)(\?[^"]*)?""",
+        lambda m: (
+            f"/api/generate_thumbnail/{re.sub(r'[^A-Za-z0-9_]', '', clean_link(m.group(1), path=''))}.webp{m.group(2) or ''}"
+        ),
+        html,
+    )
+    html = re.sub(r"/media/header\..+\?title=[^\"]*", r"/media/header.webp", html)
+
+    # Replace all content (og) links with the cname
+    html = re.sub(rf"content=\"({url})([^\"/]*)", rf'content="{cname}\2', html)
+    html = html.replace(url, cname)
+
+    # A hack to fix media links
+    if "/lang/" in link:
+        lang = link.split("/lang/")[1].split("/")[0]
+        html = re.sub(r'href="attachments/', 'href="../../attachments/', html)
+        html = re.sub(r'src="attachments/', 'src="../../attachments/', html)
+        html = re.sub(
+            r'(content="[^"]*?)([\\/])translations[\\/][^"\\/]+[\\/](.*?)"\s+((?:property|name)="(?:og:image|twitter:image)")',
+            r'\1\2\3" \4',
+            html,
+        )
+        html = re.sub(
+            rf"""href=\"({link.split("Level")[0].split("/")[-1]}[^/]+)\"""",
+            rf'href="../../\1/lang/{lang}"',
+            html,
+        )
+    return html
+
+
+def write_html(html: str, output_path: Path):
+    if output_path != Path("demo/sitemap.xml"):
         html = htmlmin.minify(
             html,
             remove_comments=True,
@@ -294,39 +227,53 @@ def _write_html(html, path):
             reduce_boolean_attributes=True,
         )
 
-    output_path = Path("demo") / path
-    if output_path.is_dir():
-        output_path /= "index.html"
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("wb") as f:
         f.write(html.encode())
-    print(f"Wrote {output_path} ({output_path.stat().st_size} bytes)")
 
 
-def _has_translation_route(link):
-    route = link.rstrip("/")
-    return any(candidate.startswith(f"{route}/lang/") for candidate in links)
+def build_page(link: str) -> tuple[str, bool, set[str]]:
+    """Fetch, rewrite and write one page, returning whether it worked and the media it links to."""
+    page_url = f"{url}/{link.strip('/')}"
+    r = get_with_retry(page_url)
+
+    if not r.ok and link != "/404":
+        if link == "/":
+            raise Exception("Could not fetch the main page. Is the server running?")
+        print(f"WARNING: Could not fetch {link} (status code: {r.status_code})")
+        return link, False, set()
+
+    # Normalize html (quoted attributes etc.) so the regexes below match
+    is_html = "text/html" in r.headers.get("Content-Type", "")
+    html = str(bs(r.text, "html.parser")) if is_html else r.text
+
+    # Translations share the media of the page they translate
+    media_links = get_media_links(html, path=link.strip("/")) if "/lang/" not in link else set()
+
+    write_html(process_html(html, link), output_path_for_route(link))
+    return link, True, media_links
 
 
-def _download_media(link):
+def copy_file(path: str, file: Path):
+    output_path = output_path_for_media(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    copyfile(file, output_path)
+
+
+def download_media(link: str):
     # The URL used for downloading keeps the query string.
     request_path = link.strip("/").split("#", 1)[0]
+    output_path = output_path_for_media(link)
 
-    # The filesystem path never contains query parameters or fragments.
-    path = unquote_path(request_path.split("?", 1)[0])
-
-    # TODO: this is a hack. hopefully temporary.
-    if "/api/generate_thumbnail/" in request_path:
-        path = path + ".webp"
-    output_path = Path("demo") / path
-    if incremental_mode and output_path.exists():
+    if output_path == Path("demo"):
+        print(f"WARNING: Could not download {link}: empty output path")
+        return
+    if len(output_path.name) > 255:
+        print("WARNING: Cannot download file with name longer than 255 characters")
         return
 
-    request_url = f"{url}/{request_path}"
-    print(f"Downloading \33[34m{request_url}\33[0m")
-
     try:
-        r = requests.get(request_url, allow_redirects=True, timeout=600)
+        r = requests.get(f"{url}/{request_path}", allow_redirects=True, timeout=600)
     except requests.RequestException as e:
         print(f"WARNING: Could not download {link}: {e}")
         return
@@ -335,110 +282,33 @@ def _download_media(link):
         print(f"WARNING: Could not download {link} (status code: {r.status_code})")
         return
 
-    if not path:
-        print(f"WARNING: Could not download {link}: empty output path")
-        return
-
-    if len(path.split("/")[-1]) > 255:
-        print("WARNING: Cannot download file with name longer than 255 characters")
-        return
     try:
         output_path.parent.mkdir(parents=True, exist_ok=True)
-
         with output_path.open("wb") as f:
             f.write(r.content)
     except Exception as e:
-        print(f"WARNING: Could not write file {path}: {e}")
+        print(f"WARNING: Could not write file {output_path}: {e}")
 
 
-def download_site():
-    media_tasks = set(changed_media_links)
-    with multiprocessing.Pool(processes=WORKERS) as pool:
-        while visited != links:
-            tasks = set(link for link in links if link not in visited)
-
-            for link in tasks:
-                visited.add(link)
-
-            results = pool.map(get_html, tasks)
-            write_tasks = []
-
-            for link, result in zip(tasks, results):
-                if result is None:
-                    continue
-
-                output_path = _output_path_for_route(link)
-                path = output_path.relative_to("demo")
-
-                print(f"Writing \33[34m{link}\33[0m -> demo/{path}")
-
-                write_tasks.append((result.html, str(path)))
-
-                if is_api_view_link(link):
-                    api_view_links.add(link)
-
-                if not incremental_mode:
-                    links.update(result.links)
-                media_tasks.update(result.media_links)
-            pool.starmap(_write_html, write_tasks)
-
-    # A separate pool for media tasks, as we don't want to download
-    # multiple media files at once.
-    with multiprocessing.Pool(processes=WORKERS) as pool:
-        pool.map(_download_media, media_tasks)
+def is_api_view_link(link: str) -> bool:
+    """Return whether a successfully fetched page should have a static API view."""
+    path = link.split("?", 1)[0].split("#", 1)[0].strip("/")
+    if not path.startswith("main/"):
+        return False
+    return not any(segment in path.split("/") for segment in ("lang", "attachments", "media"))
 
 
-def api_transform(link: str) -> str | None:
-    # strip query/hash
-    link = link.split("?")[0].split("#")[0]
-    link = link.strip("/")
-
-    if link == "":
-        return "/api"
-    elif not link.startswith("main/"):
-        return None
-    # Skip URLs that are translated, as they are (currently) not part of the API
-    elif "/lang/" in link:
-        return None
-
+def api_transform(link: str) -> str:
+    """Return the API path of a page, /main/<path> becomes /api/<path>."""
+    link = link.split("?")[0].split("#")[0].strip("/")
     link = link[len("main/") :]
     # remove file extensions
     link = re.sub(r"\.[a-zA-Z0-9]+$", "", link)
-
     return f"/api/{link}"
 
 
-def _download_api_view(link):
-    api_path = api_transform(link)
-
-    # skip invalid mappings (like /static or /lang/)
-    if not api_path:
-        return
-
-    print(f"Fetching API \33[34m{api_path}\33[0m")
-
-    try:
-        r = requests.get(f"{url}{api_path}", timeout=600)
-    except Exception as e:
-        print(f"WARNING: request failed for {api_path}: {e}")
-        return
-
-    if not r.ok:
-        print(f"WARNING: failed {api_path} ({r.status_code})")
-        return
-
-    full_path = f"demo{api_path}/index.json"
-    os.makedirs(os.path.dirname(full_path), exist_ok=True)
-
-    with open(full_path, "wb+") as f:
-        f.write(r.content)
-
-
-def _download_direct_api(link):
-    """Download an /api/ link directly, saving it as index.json under demo/."""
-    link = link.split("?")[0].split("#")[0]
-    api_path = "/" + link.strip("/")
-    print(f"Fetching API \33[34m{api_path}\33[0m")
+def download_api(api_path: str):
+    """Download an /api/ path, saving it as index.json under demo/."""
     try:
         r = requests.get(f"{url}{api_path}", timeout=600)
     except Exception as e:
@@ -447,16 +317,9 @@ def _download_direct_api(link):
     if not r.ok:
         print(f"WARNING: failed {api_path} ({r.status_code})")
         return
-    full_path = f"demo{api_path}/index.json"
-    os.makedirs(os.path.dirname(full_path), exist_ok=True)
-    with open(full_path, "wb+") as f:
-        f.write(r.content)
-
-
-def download_api_views():
-    with multiprocessing.Pool(processes=WORKERS) as pool:
-        pool.map(_download_api_view, api_view_links)
-        pool.map(_download_direct_api, api_links)
+    full_path = Path(f"demo{api_path}") / "index.json"
+    full_path.parent.mkdir(parents=True, exist_ok=True)
+    full_path.write_bytes(r.content)
 
 
 def _minify(path, filetype):
@@ -488,332 +351,52 @@ def minify_folder(folder):
                 _minify(p, suffix)
 
 
-def _git_revision(path: Path) -> str:
-    return subprocess.check_output(["git", "-C", str(path), "rev-parse", "HEAD"], text=True).strip()
+def timed(step: str, started: float):
+    print(f"\33[32m{step} in {time.perf_counter() - started:.1f}s\33[0m")
+    return time.perf_counter()
 
 
-def _changed_piggybank_files(
-    piggybank_path: Path, previous_revision: str, current_revision: str
-) -> list[tuple[str, str]]:
-    """Return changed files as (status, path) pairs.
+def build_site():
+    # Imported here, so pool workers started with spawn (Windows, macOS) don't each set up mkdocs
+    from turtleconverter import generate_static_files
 
-    Git reports renames as:
-        R100    old/path    new/path
+    started = time.perf_counter()
+    rmtree("demo", ignore_errors=True)
+    generate_static_files(static_folder=Path("demo/static").absolute())
 
-    Treat a rename as a deletion of the old path plus an addition of the new
-    path. This lets the incremental build remove the old generated output and
-    rebuild the new output independently.
-    """
-    outputs = [
-        subprocess.check_output(
-            [
-                "git",
-                "-c",
-                "core.quotePath=false",
-                "-C",
-                str(piggybank_path),
-                "diff",
-                "--name-status",
-                previous_revision,
-                current_revision,
-            ],
-            text=True,
-        ),
-        subprocess.check_output(
-            [
-                "git",
-                "-c",
-                "core.quotePath=false",
-                "-C",
-                str(piggybank_path),
-                "diff",
-                "--name-status",
-                current_revision,
-            ],
-            text=True,
-        ),
-    ]
-    changes = []
-    seen = set()
-    for output in outputs:
-        for line in output.splitlines():
-            if not line:
-                continue
-            # --name-status uses tabs between the status and paths.
-            fields = line.split("\t")
-            status = fields[0]
-            status_code = status[0]
-            if status_code in {"R", "C"}:
-                # Rename/copy:
-                #   R100    old/path    new/path
-                if len(fields) < 3:
-                    continue
+    pages = sorted(get_internal_sitemap() | extra_pages)
+    files = get_internal_files()
+    started = timed(f"Listed {len(pages)} pages and {len(files)} files", started)
 
-                old_path = fields[1]
-                new_path = fields[2]
-                old_path = old_path.replace("\\", "/")
-                new_path = new_path.replace("\\", "/")
+    with multiprocessing.Pool(processes=WORKERS) as pool:
+        pool.starmap(copy_file, files)
+        started = timed(f"Copied {len(files)} files", started)
 
-                if not old_path.startswith("preview/"):
-                    change = ("D", old_path)
-                    if change not in seen:
-                        changes.append(change)
-                        seen.add(change)
-                if not new_path.startswith("preview/"):
-                    change = ("A", new_path)
-                    if change not in seen:
-                        changes.append(change)
-                        seen.add(change)
-                continue
-            if len(fields) < 2:
-                continue
-            path = fields[1].replace("\\", "/")
-            if path.startswith("preview/"):
-                continue
-            change = (status_code, path)
-            if change not in seen:
-                changes.append(change)
-                seen.add(change)
-    return changes
+        built, media_links = [], set()
+        for link, ok, links in pool.imap_unordered(build_page, pages, chunksize=4):
+            print(f"{'Built' if ok else 'Skipped'} \33[34m{link}\33[0m")
+            if ok:
+                built.append(link)
+            media_links |= links
+        started = timed(f"Built {len(built)}/{len(pages)} pages", started)
 
+        # Media that isn't a file on disk is generated by the server (e.g. fallback thumbnails). Links that only
+        # differ in their query string (?title=) share one file, so only the first of them is downloaded
+        missing = {}
+        for link in sorted(media_links):
+            if not output_path_for_media(link).exists():
+                missing.setdefault(output_path_for_media(link), link)
+        pool.map(download_media, missing.values())
+        started = timed(f"Downloaded {len(missing)} generated media files", started)
 
-def _piggybank_worktree_fingerprint(piggybank_path: Path) -> str:
-    diff = subprocess.check_output(
-        ["git", "-C", str(piggybank_path), "diff", "--binary", "HEAD"], stderr=subprocess.STDOUT
-    )
-    return sha256(diff).hexdigest()
+        api_paths = sorted({api_transform(link) for link in built if is_api_view_link(link)} | api_links)
+        pool.map(download_api, api_paths)
+        started = timed(f"Downloaded {len(api_paths)} API views", started)
 
-
-def _worktree_fingerprint(repository_path: Path) -> str:
-    diff = subprocess.check_output(
-        ["git", "-C", str(repository_path), "diff", "--binary", "HEAD"], stderr=subprocess.STDOUT
-    )
-    return sha256(diff).hexdigest()
-
-
-def _route_for_path(path: str) -> tuple[set[str], set[str], bool]:
-    """Return affected HTML routes, deleted output paths, and whether a full build is required."""
-    path = path.replace("\\", "/").replace(" ", "_")
-    parts = path.split("/")
-    routes = {"/"}
-
-    if len(parts) < 2:
-        return routes, set(), False
-
-    if parts[-2] in {"attachments", "media"}:
-        source_path = Path(*parts)
-        output_prefix = "main" if parts[-2] == "attachments" else "img"
-        return routes, {Path("demo") / output_prefix / source_path}, False
-
-    translations_index = parts.index("translations") if "translations" in parts else -1
-    if translations_index >= 0:
-        language = parts[translations_index + 1] if len(parts) > translations_index + 1 else ""
-        content_parts = [part.replace(".", "") for part in parts[:translations_index]]
-        filename = parts[-1]
-        if not language or not filename:
-            return routes, set(), False
-        assignment = "/".join(content_parts + [Path(filename).stem.replace(".", "")])
-        routes.add(f"/main/{assignment}/lang/{language}")
-        routes.add(f"/main/{assignment}")
-        directory_parts = content_parts
-    elif path.endswith((".md", ".oink")):
-        directory_parts = [part.replace(".", "") for part in parts[:-1]]
-        assignment = "/".join(directory_parts + [Path(parts[-1]).stem.replace(".", "")])
-        routes.add(f"/main/{assignment}")
-    elif path.endswith("meta.json"):
-        directory_parts = [part.replace(".", "") for part in parts[:-1]]
-        if directory_parts:
-            routes.add(f"/main/{'/'.join(directory_parts)}")
-    else:
-        return routes, set(), False
-
-    for index in range(1, len(directory_parts) + 1):
-        routes.add(f"/main/{'/'.join(directory_parts[:index])}/")
-
-    return routes, set(), False
-
-
-def _level_neighbour_routes(piggybank_path: Path, path: str) -> set[str]:
-    """Return routes for all Level assignments next to a changed assignment."""
-    normalized_path = path.replace("\\", "/")
-    path_parts = normalized_path.split("/")
-    if "translations" in path_parts:
-        assignment_index = path_parts.index("translations")
-        neighbour_directory = Path(*path_parts[:assignment_index])
-    else:
-        changed_file = Path(normalized_path)
-        neighbour_directory = changed_file.parent
-
-    changed_file = Path(normalized_path)
-    if "Level" not in changed_file.name:
-        return set()
-
-    directory = piggybank_path / neighbour_directory
-    if not directory.is_dir():
-        return set()
-
-    routes = set()
-    for neighbour in directory.glob("*Level*"):
-        if neighbour.suffix not in {".md", ".oink"}:
-            continue
-
-        neighbour_path = (neighbour_directory / neighbour.name).as_posix()
-        neighbour_routes, _, _ = _route_for_path(neighbour_path)
-        routes.update(neighbour_routes)
-
-        translations_directory = neighbour.parent / "translations"
-        if not translations_directory.is_dir():
-            continue
-        for translation in translations_directory.glob(f"*/{neighbour.name}"):
-            translation_path = translation.relative_to(piggybank_path).as_posix()
-            translation_routes, _, _ = _route_for_path(translation_path)
-            routes.update(translation_routes)
-
-    return routes
-
-
-def _media_link_for_path(path: str) -> str | None:
-    parts = path.replace("\\", "/").replace(" ", "_").split("/")
-    if len(parts) < 2 or parts[-2] not in {"attachments", "media"}:
-        return None
-    prefix = "main" if parts[-2] == "attachments" else "img"
-    return f"/{prefix}/{'/'.join(parts)}"
-
-
-def _output_path_for_route(route: str) -> Path:
-    """Return the canonical filesystem path for an HTML route.
-
-    For directory-style routes, prefer an existing <path>.html file over
-    <path>/index.html so incremental builds update the existing file.
-    """
-    if route == "/":
-        return Path("demo/index.html")
-    if route == "/sitemap.xml":
-        return Path("demo/sitemap.xml")
-    # Remove query strings and fragments before mapping to the filesystem.
-    path = route.split("?", 1)[0].split("#", 1)[0].strip("/")
-    if not path:
-        return Path("demo/index.html")
-    # Routes ending in "/" represent directory/index.html pages.
-    # However, if <path>.html already exists, update that instead.
-    if route.endswith("/") and "." not in path:
-        html_path = Path("demo") / f"{path}.html"
-        if html_path.exists():
-            return html_path
-        return Path("demo") / path / "index.html"
-    # Everything else without a file extension is a normal .html page.
-    if "." not in path.rsplit("/", 1)[-1]:
-        path += ".html"
-    return Path("demo") / path
-
-
-def _remove_output_path(output_path: Path):
-    if output_path.is_dir():
-        rmtree(output_path)
-    else:
-        output_path.unlink(missing_ok=True)
-
-
-def configure_demo_build() -> tuple[str, str, bool]:
-    """Restore either a full or incremental build based on the cached demo state."""
-    global incremental_mode, links, api_links, api_view_links, changed_media_links
-
-    api_view_links.clear()
-    changed_media_links.clear()
-    root_dir = Path(__file__).resolve().parents[2]
-    piggybank_path = root_dir / "piggybank"
-    root_revision = _git_revision(root_dir)
-    root_worktree_fingerprint = _worktree_fingerprint(root_dir)
-    piggybank_revision = _git_revision(piggybank_path)
-    piggybank_worktree_fingerprint = _piggybank_worktree_fingerprint(piggybank_path)
-    state_path = Path(".demo-state.json")
-    previous_state = {}
-    if state_path.exists():
-        with state_path.open(encoding="utf-8") as file:
-            previous_state = json.load(file)
-
-    full_build = (
-        os.environ.get("FORCE_FULL_REBUILD", "").lower() == "true"
-        or not previous_state
-        or previous_state.get("root_revision") != root_revision
-        or previous_state.get("root_worktree_fingerprint") != root_worktree_fingerprint
-        or not previous_state.get("piggybank_revision")
-    )
-    changes = []
-    if not full_build and (
-        previous_state["piggybank_revision"] != piggybank_revision
-        or previous_state.get("piggybank_worktree_fingerprint") != piggybank_worktree_fingerprint
-    ):
-        changes = _changed_piggybank_files(
-            piggybank_path,
-            previous_state["piggybank_revision"],
-            piggybank_revision,
-        )
-    if full_build:
-        rmtree("demo", ignore_errors=True)
-        incremental_mode = False
-        links = {"/", "/404"}
-        api_links = {"/api/search-data", "/api"}
-    else:
-        incremental_mode = True
-        if not changes:
-            links = set()
-            api_links = set()
-            api_view_links = set()
-            visited.clear()
-            media_links.clear()
-            return root_revision, piggybank_revision, False
-        affected_routes = {"/"}
-        deleted_outputs = set()
-        for status, path in changes:
-            routes, deleted, requires_full_build = _route_for_path(path)
-            routes.update(_level_neighbour_routes(piggybank_path, path))
-            if requires_full_build:
-                rmtree("demo", ignore_errors=True)
-                incremental_mode = False
-                links = {"/", "/404"}
-                api_links = {"/api/search-data"}
-                break
-            affected_routes.update(routes)
-            deleted_outputs.update(deleted)
-            if status != "D" and (media_link := _media_link_for_path(path)):
-                changed_media_links.add(media_link)
-            if status == "D":
-                deleted_outputs.update(_output_path_for_route(route) for route in routes)
-        else:
-            links = affected_routes
-            api_links = {"/api/search-data", "/api"}
-            api_view_links = set()
-            for output_path in deleted_outputs:
-                _remove_output_path(output_path)
-
-    visited.clear()
-    media_links.clear()
-    return root_revision, piggybank_revision, True
+    copytree(root_dir / "piggy" / "static", Path("demo/static").absolute(), dirs_exist_ok=True)
+    minify_folder(Path("demo/static").absolute())
+    timed("Copied and minified static files", started)
 
 
 if __name__ == "__main__":
-    root_revision, piggybank_revision, build_required = configure_demo_build()
-    root_dir = Path(__file__).resolve().parents[2]
-    if build_required:
-        generate_static_files(static_folder=Path("demo/static").absolute())
-        links.add("/sitemap.xml")
-        if not incremental_mode:
-            links.update(get_internal_sitemap())
-        download_site()
-        download_api_views()
-        # Since we are in .github/workflows, we need to go up two directories to find the piggy folder
-        copytree(root_dir / "piggy" / "static", Path("demo/static").absolute(), dirs_exist_ok=True)
-        minify_folder(Path("demo/static").absolute())
-    else:
-        print("No demo changes detected; using cached demo.")
-    with Path(".demo-state.json").open("w", encoding="utf-8") as file:
-        json.dump(
-            {
-                "root_revision": root_revision,
-                "root_worktree_fingerprint": _worktree_fingerprint(root_dir),
-                "piggybank_revision": piggybank_revision,
-                "piggybank_worktree_fingerprint": _piggybank_worktree_fingerprint(root_dir / "piggybank"),
-            },
-            file,
-        )
+    build_site()
