@@ -70,6 +70,26 @@ def get_static_files(piggymap: dict) -> list[tuple[str, Path]]:
     return files
 
 
+def _walk_sources(segment: dict, path: str = ""):
+    for name, page in segment.items():
+        page_path = f"{path}/{name}".strip("/")
+        if "path" in page:
+            source = Path(page["path"])
+            yield page_path, source
+            for language in page.get("translation_meta", {}):
+                yield f"{page_path}/lang/{language}", source.parent / "translations" / language / source.name
+        elif "system_path" in page.get("meta", {}):
+            yield page_path, Path(page["meta"]["system_path"])
+            yield from _walk_sources(page.get("data", {}), page_path)
+
+
+def get_page_sources(piggymap: dict, root: Path) -> list[tuple[str, Path]]:
+    """Return (page path, source) pairs: the markdown file of each assignment or translation, else the folder."""
+    return [(f"/{ASSIGNMENT_ROUTE}", root)] + [
+        (f"/{ASSIGNMENT_ROUTE}/{path}", source) for path, source in _walk_sources(piggymap)
+    ]
+
+
 def render_sitemap_xml(paths: list[str], base_url: str) -> str:
     """Render paths as an XML sitemap."""
     urls = "\n".join(f"  <url><loc>{escape(base_url.rstrip('/') + path)}</loc></url>" for path in paths)
@@ -87,5 +107,5 @@ def render_internal_sitemap(paths: list[str]) -> str:
 
 
 def render_internal_files(files: list[tuple[str, Path]]) -> str:
-    """Render (url path, file) pairs as tab separated url paths and absolute file paths for the static scraper."""
+    """Render (url path, file or folder) pairs as tab separated url paths and absolute paths for the static scraper."""
     return "".join(f"{path}\t{file.resolve()}\n" for path, file in files)

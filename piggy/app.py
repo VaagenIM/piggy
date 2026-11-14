@@ -37,6 +37,7 @@ from piggy.utils import (
 )
 from piggy.sitemap import (
     get_cached_sitemap_paths,
+    get_page_sources,
     get_shortlink_paths,
     get_static_files,
     render_internal_files,
@@ -206,6 +207,13 @@ def create_app(debug: bool = False) -> Flask:
         if not use_github_pages:
             abort(404)
         return Response(render_internal_files(get_static_files(PIGGYMAP)), mimetype="text/plain")
+
+    @app.route("/sitemap-internal/sources")
+    def sitemap_internal_sources():
+        """Return the file or folder each page is built from, so the GitHub Pages scraper can rebuild what changed."""
+        if not use_github_pages:
+            abort(404)
+        return Response(render_internal_files(get_page_sources(PIGGYMAP, PIGGYBANK_FOLDER)), mimetype="text/plain")
 
     def sanitize_internal_return_path(value):
         if not value or not value.startswith("/") or value.startswith("//"):
