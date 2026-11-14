@@ -24,6 +24,7 @@ from piggy.piggybank import (
     get_assignment_data_from_path,
     get_referenced_by,
 )
+from piggy.shortlinks import relativize_shortlinks
 from piggy.utils import (
     get_supported_languages,
     generate_summary_from_mkdocs_html,
@@ -188,6 +189,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
         # relevant_pages is never translated, so translations use the (up to date) list of their source document
         preprocess = inherit_frontmatter_entry(assignment_path, "relevant_pages") if lang else None
         sections = _mdfile_to_sections_with_retry(p, preprocess)
+        sections["body"] = relativize_shortlinks(sections["body"])
         sections["head"] = remove_turtleconverter_stylesheets(sections["head"])
         sections["body"] = remove_unused_pyodide_assets(relabel_pyodide_editors(sections["body"]))
         print("Rendering:", p)
