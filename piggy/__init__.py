@@ -1,7 +1,12 @@
+import mimetypes
 import os
 import re
 from enum import Enum
 from pathlib import Path
+
+# Python 3.12 lists WebP only as a non-strict type: without this, webp files are served as
+# application/octet-stream and webp emotes are not recognised as images
+mimetypes.add_type("image/webp", ".webp")
 
 PIGGYBANK_FOLDER = Path("piggybank")
 PIGGYBANK_UUID_MAP_PATH = Path("piggybank-data") / "uuid_map.json"
@@ -20,6 +25,8 @@ IMG_FMT = "webp"
 ASSIGNMENTS_TEMPLATE_FOLDER = "assignments"
 ASSIGNMENT_FILENAME_REGEX = re.compile(r"^.*Level[ _](\d+)[ _]-[ _](.+)\.md$")
 ALLOWED_URL_CHARS_REGEX = re.compile(r"[a-zA-Z0-9\.\-\_\/æøåÆØÅ]")
+# Cards with one of these tags (in any case) stay hidden until the tag is picked in the page's filters
+HIDDEN_TAGS = frozenset({"ekstra", "skjult", "extra", "hidden"})
 # TESTING ONLY - piggybank branch is used for testing, needs a different approach than prod
 if "piggybank" in os.environ.get("PIGGYBANK_BRANCH", "test-output"):
     PIGGYBANK_FOLDER = Path("piggybank") / "piggybank"

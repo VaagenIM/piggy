@@ -26,7 +26,8 @@
     border: none !important;
   }
 
-  button#scroll-to-top-btn {
+  button#scroll-to-top-btn,
+  .toc-sidebar {
     display: none !important;
   }
 

@@ -1,5 +1,6 @@
 import re
-from pathlib import Path
+from pathlib import Path, PurePosixPath
+from urllib.parse import unquote
 from typing import Callable, Optional
 
 from flask import Response, render_template
@@ -13,6 +14,7 @@ from piggy import (
     PIGGYBANK_FOLDER,
     Visibility,
 )
+from piggy.emotes import EMOTES
 from piggy.exceptions import PiggyHTTPException, PiggyErrorException
 from piggy.models import LANGUAGES
 from piggy.piggybank import (
@@ -24,6 +26,7 @@ from piggy.piggybank import (
     get_assignment_data_from_path,
     get_referenced_by,
 )
+from piggy.shortlinks import relativize_shortlinks
 from piggy.utils import (
     get_supported_languages,
     generate_summary_from_mkdocs_html,
@@ -108,6 +111,23 @@ def inherit_frontmatter_entry(source: Path, key: str) -> Callable[[str], str]:
     return preprocess
 
 
+# A relative attachments/<file> reference in rendered html: src="...", href='...' or unquoted
+ATTACHMENT_REFERENCE_RE = re.compile(r"(?<=[\"'=])attachments/([^\"'\s<>?#]+)")
+
+
+def use_translated_attachments(body: str, attachments: Path, lang: str) -> str:
+    """Point attachment references at their `<name>.<lang>.<ext>` variant where one exists, e.g. a translated quiz."""
+
+    def translated(match: re.Match) -> str:
+        name = PurePosixPath(match.group(1))
+        variant = name.with_name(f"{name.stem}.{lang}{name.suffix}")
+        if (attachments / unquote(str(variant))).is_file():
+            return f"attachments/{variant}"
+        return match.group(0)
+
+    return ATTACHMENT_REFERENCE_RE.sub(translated, body)
+
+
 def cache_directory(
     segment: dict,
     fn: Callable[[str, Optional[str]], Response],
@@ -156,6 +176,7 @@ def _mdfile_to_sections_with_retry(path: Path, preprocess: Optional[Callable[[st
             docs_folder=PIGGYBANK_FOLDER,
             leading_url=f"/{ASSIGNMENT_ROUTE}",
             normalize_urls=True,
+            emojis=EMOTES,
             template=(Path(__file__).parent / "templates" / "assignments" / "tconvert_assignment_base.html"),
             remove_heading=False,
             remove_heading_if_title_matches=True,
@@ -188,8 +209,13 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
         # relevant_pages is never translated, so translations use the (up to date) list of their source document
         preprocess = inherit_frontmatter_entry(assignment_path, "relevant_pages") if lang else None
         sections = _mdfile_to_sections_with_retry(p, preprocess)
+        sections["body"] = relativize_shortlinks(sections["body"])
         sections["head"] = remove_turtleconverter_stylesheets(sections["head"])
         sections["body"] = remove_unused_pyodide_assets(relabel_pyodide_editors(sections["body"]))
+        if lang:
+            sections["body"] = use_translated_attachments(
+                sections["body"], assignment_path.parent / "attachments", lang
+            )
         print("Rendering:", p)
 
     except ConversionError:

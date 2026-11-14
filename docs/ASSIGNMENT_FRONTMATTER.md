@@ -29,7 +29,7 @@ derived title.
 | Property | Type | Required | Meaning |
 |---|---|---|---|
 | `title` | string | Effectively required | Display title. If omitted, falls back to the first `# heading` in the file, then to the filename. |
-| `difficulty` | integer (1–5 in practice) | Optional | Drives the difficulty icon (`static/img/difficulties/1.png`…`5.png`); values `>5` are clamped to 5, values `<=0` hide the icon. |
+| `difficulty` | integer (1–5 in practice) | Optional | Drives the difficulty icon (`static/img/emotes/diff1.webp`…`diff5.webp`); values `>5` are clamped to 5, values `<=0` hide the icon. |
 | `thumbnail` | string (relative path, no extension) | Optional | Defaults to `media/header` if omitted. Resolved to a full image URL at render time. |
 | `thumbnail_title` | string | Optional | Text drawn on the generated fallback thumbnail (used when no thumbnail image exists). Defaults to `title`, so set this to keep the page title and the thumbnail text separate. |
 | `description` | string | Optional | Used for card descriptions and as an `og:description`/`twitter:description` fallback. |
@@ -54,6 +54,11 @@ markdown link it keeps its own label. Either way the button links straight to
 the page instead of going through the `/s/` redirect (`piggy/shortlinks.py`).
 The `https://piggy.iktim.no/s/<code>`, `/s/<code>` and `s/<code>` forms all work;
 an unknown code on its own is skipped.
+
+In the page text, links to `https://<site>.iktim.no/s/<code>` on any Piggy site
+(`piggy`, `piglet`, ...) are rewritten to `/s/<code>`, so a link copied on
+one site stays on the site the reader is using. `localhost` links are
+left alone, since assignments may link to the student's own local server.
 
 ```yaml
 relevant_pages:
@@ -86,6 +91,13 @@ A translated version of an assignment can be placed at
 own independent frontmatter block, parsed the same way. If a translation has
 no `.oink` file of its own but the original does, the original's `.oink` data
 is inherited (with `oinkdata` cleared) rather than duplicated per language.
+
+Attachments can have a version per language next to the original, named
+`<name>.<lang>.<ext>` (e.g. `attachments/quiz-html.eng.html` for
+`attachments/quiz-html.html`). A translated page links to its language's
+version wherever one exists and to the original otherwise
+(`piggy/caching.py`, `use_translated_attachments`), which is how translated
+H5P quizzes are shown.
 
 `relevant_pages` is the exception to the independent frontmatter: turtletranslate
 never translates it, and a translation can lag behind its original, so a

@@ -1,0 +1,90 @@
+/************************\
+|*     CARD FILTERS     *|
+\************************/
+.card-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: calc(var(--overview-section-gap, 2.5rem) * 0.6);
+}
+
+.card-filters-label {
+  margin-right: 0.25rem;
+  font-size: calc(0.75rem * var(--piggy-font-scale));
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--piggy-text-main);
+  opacity: 0.6;
+}
+
+.card-filter,
+.card-filters-more,
+.card-filters-reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: calc(0.3rem * var(--piggy-font-scale))
+    calc(0.8rem * var(--piggy-font-scale));
+  font: inherit;
+  font-size: calc(0.88rem * var(--piggy-font-scale));
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--piggy-text-button);
+  background: color-mix(in srgb, var(--piggy-button) 42%, transparent);
+  border: 1px solid
+    var(
+      --piggy-button-border,
+      color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+    );
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+}
+
+.card-filter:hover,
+.card-filters-more:hover,
+.card-filters-reset:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--piggy-button-hover) 62%,
+    transparent
+  );
+}
+
+.card-filter[aria-pressed="true"] {
+  color: var(--piggy-level-menu-active-text, var(--piggy-text-button));
+  background: var(--piggy-level-menu-active, var(--piggy-button-active));
+  border-color: var(--piggy-button-active);
+}
+
+/* Tags hidden by default reveal cards instead of narrowing them down */
+.card-filter--hidden:not([aria-pressed="true"]) {
+  background: transparent;
+  border-style: dashed;
+}
+
+.card-filter-icon {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+}
+
+.card-filter-count {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+}
+
+.card-filters-more,
+.card-filters-reset {
+  background: transparent;
+  border-color: transparent;
+  text-decoration: underline;
+}
+
+/* Tags on a single card, shown with "Flere" (or once picked) */
+.card-filters:not(.is-expanded)
+  .card-filter[data-rare-tag]:not([aria-pressed="true"]) {
+  display: none;
+}
