@@ -9,7 +9,7 @@ EMOTES_FOLDER = Path(__file__).parent / "static" / "img" / "emotes"
 def get_emotes() -> dict[str, dict]:
     """Map piggy's `:name:` emote shortcodes to the <img> attributes they render as (on top of twemoji)."""
     emotes = {
-        f"diff{level}": {"src": f"/static/img/difficulties/{level}.png", "alt": f"Vanskelighetsgrad {level} av 5"}
+        f"diff{level}": {"src": f"/static/img/difficulties/{level}.webp", "alt": f"Vanskelighetsgrad {level} av 5"}
         for level in range(1, 6)
     }
     for image in sorted(EMOTES_FOLDER.iterdir()) if EMOTES_FOLDER.is_dir() else []:

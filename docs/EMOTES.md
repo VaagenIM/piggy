@@ -6,7 +6,7 @@ images:
 
 | Shortcode | Image |
 |---|---|
-| `:diff1:` … `:diff5:` | The difficulty icons (`piggy/static/img/difficulties/1.png` … `5.png`) |
+| `:diff1:` … `:diff5:` | The difficulty icons (`piggy/static/img/difficulties/1.webp` … `5.webp`) |
 
 So instead of copying `diff2.webp` into a topic's `attachments/` folder and
 writing `![Medium|48](attachments/diff2.webp#center)`, write `:diff2:`.
