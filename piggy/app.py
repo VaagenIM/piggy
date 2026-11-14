@@ -1,4 +1,5 @@
 import html
+import mimetypes
 import os
 from pathlib import Path
 from urllib.parse import quote, urlsplit
@@ -33,6 +34,9 @@ from piggy.utils import (
     get_piggybank_version,
 )
 from piggy.sitemap import get_cached_sitemap_paths, render_internal_sitemap, render_sitemap_xml
+
+# Python 3.12 lists WebP only as a non-strict type, so Flask would serve it as application/octet-stream
+mimetypes.add_type("image/webp", ".webp")
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
