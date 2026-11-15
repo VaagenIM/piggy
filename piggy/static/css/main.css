@@ -38,6 +38,7 @@
 @import "./components/h5p.css";
 
 @import "./components/card-grid.css";
+@import "./components/card-filters.css";
 @import "./components/information-grid.css";
 
 @import "./components/cards/base-card.css";
@@ -56,7 +57,9 @@
 @import "./markdown/markdown-tabs.css";
 @import "./markdown/markdown-math.css";
 @import "./markdown/markdown-keys.css";
+@import "./markdown/markdown-emotes.css";
 @import "./markdown/markdown-tables.css";
+@import "./markdown/markdown-toc.css";
 
 @import "./vendor/katex.css";
 @import "./vendor/glightbox.css";

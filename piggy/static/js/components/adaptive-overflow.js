@@ -2,7 +2,12 @@ function initializeAdaptiveOverflow() {
   const containers = Array.from(
     document.querySelectorAll("[data-adaptive-overflow]"),
   );
-  if (containers.length === 0) return;
+  // Compactors apply their `data-adaptive-compact` steps one by one (as
+  // `data-compact` tokens for CSS to act on) until their content fits.
+  const compactors = Array.from(
+    document.querySelectorAll("[data-adaptive-compact]"),
+  );
+  if (containers.length === 0 && compactors.length === 0) return;
 
   let scheduled = false;
   const pressedContainers = new Set();
@@ -15,12 +20,7 @@ function initializeAdaptiveOverflow() {
     );
   }
 
-  function updateContainer(container) {
-    if (pressedContainers.has(container)) return;
-
-    const tiers = getTiers(container);
-    if (tiers.length === 0) return;
-
+  function getAvailableWidth(container) {
     const reserveSelector = container.dataset.adaptiveReserveSelector;
     const reserveEl = reserveSelector
       ? container.querySelector(reserveSelector)
@@ -32,7 +32,27 @@ function initializeAdaptiveOverflow() {
       : 0;
     const containerStyle = getComputedStyle(container);
     const gap = parseFloat(containerStyle.columnGap || containerStyle.gap) || 0;
-    const availableWidth = containerRect.width - reserveWidth - gap;
+    return containerRect.width - reserveWidth - gap;
+  }
+
+  function persist(element, kind, value) {
+    const adaptiveKey = element.dataset.adaptiveKey;
+    if (!adaptiveKey) return;
+    try {
+      localStorage.setItem(`piggy:adaptive-${kind}:${adaptiveKey}`, value);
+    } catch (e) {
+      // localStorage may be unavailable (private mode, quota, etc.) --
+      // persistence is just an anti-flash nicety, safe to skip.
+    }
+  }
+
+  function updateContainer(container) {
+    if (pressedContainers.has(container)) return;
+
+    const tiers = getTiers(container);
+    if (tiers.length === 0) return;
+
+    const availableWidth = getAvailableWidth(container);
 
     let chosen = tiers[tiers.length - 1]; // guaranteed fallback: narrowest tier
     for (const tier of tiers) {
@@ -52,18 +72,7 @@ function initializeAdaptiveOverflow() {
       }
     }
 
-    const adaptiveKey = container.dataset.adaptiveKey;
-    if (adaptiveKey) {
-      try {
-        localStorage.setItem(
-          `piggy:adaptive-tier:${adaptiveKey}`,
-          String(tiers.indexOf(chosen)),
-        );
-      } catch (e) {
-        // localStorage may be unavailable (private mode, quota, etc.) --
-        // persistence is just an anti-flash nicety, safe to skip.
-      }
-    }
+    persist(container, "tier", String(tiers.indexOf(chosen)));
 
     const previousActive = tiers.find((tier) =>
       tier.classList.contains("is-active"),
@@ -86,8 +95,41 @@ function initializeAdaptiveOverflow() {
     }
   }
 
+  // Fits when nothing overflows the compactor and every adaptive container
+  // inside it has room for at least its narrowest tier.
+  function compactorFits(compactor) {
+    if (compactor.scrollWidth > compactor.clientWidth + 1) return false;
+
+    return Array.from(
+      compactor.querySelectorAll("[data-adaptive-overflow]"),
+    ).every((container) => {
+      const narrowest = getTiers(container).at(-1);
+      return (
+        !narrowest || narrowest.scrollWidth <= getAvailableWidth(container) + 1
+      );
+    });
+  }
+
+  function updateCompactor(compactor) {
+    const steps = compactor.dataset.adaptiveCompact.split(/\s+/);
+    const applied = [];
+
+    // Always start from the uncompacted layout, so a wider viewport can undo
+    // earlier steps (the layout is only measured here, never painted)
+    compactor.dataset.compact = "";
+    for (const step of steps.filter(Boolean)) {
+      if (compactorFits(compactor)) break;
+      applied.push(step);
+      compactor.dataset.compact = applied.join(" ");
+    }
+
+    persist(compactor, "compact", compactor.dataset.compact);
+  }
+
   function updateAll() {
     scheduled = false;
+    // Compacting changes the room left for the containers, so it goes first
+    compactors.forEach(updateCompactor);
     containers.forEach(updateContainer);
   }
 
@@ -114,7 +156,16 @@ function initializeAdaptiveOverflow() {
 
   if ("ResizeObserver" in window) {
     const resizeObserver = new ResizeObserver(scheduleUpdate);
-    containers.forEach((container) => resizeObserver.observe(container));
+    [...compactors, ...containers].forEach((element) =>
+      resizeObserver.observe(element),
+    );
+    // A compactor's own size rarely changes (e.g. a full-width navbar), but
+    // what it holds does, e.g. the font size or a label swapped by script
+    compactors.forEach((compactor) =>
+      Array.from(compactor.children).forEach((child) =>
+        resizeObserver.observe(child),
+      ),
+    );
   }
 
   containers.forEach((container) => {

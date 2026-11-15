@@ -1,5 +1,6 @@
 import re
-from pathlib import Path
+from pathlib import Path, PurePosixPath
+from urllib.parse import unquote
 from typing import Callable, Optional
 
 from flask import Response, render_template
@@ -13,6 +14,7 @@ from piggy import (
     PIGGYBANK_FOLDER,
     Visibility,
 )
+from piggy.emotes import EMOTES
 from piggy.exceptions import PiggyHTTPException, PiggyErrorException
 from piggy.models import LANGUAGES
 from piggy.piggybank import (
@@ -23,7 +25,9 @@ from piggy.piggybank import (
     get_template_from_path,
     get_piggymap_segment_from_path,
     get_assignment_data_from_path,
+    get_referenced_by,
 )
+from piggy.shortlinks import relativize_shortlinks
 from piggy.utils import (
     get_supported_languages,
     generate_summary_from_mkdocs_html,
@@ -83,6 +87,48 @@ def remove_unused_pyodide_assets(body: str) -> str:
     return PYODIDE_UNUSED_ASSETS_RE.sub("", body)
 
 
+FRONTMATTER_RE = re.compile(r"\A(---[ \t]*\n)(.*?)(^(?:---|\.\.\.)[ \t]*(?:\n|\Z))", re.DOTALL | re.MULTILINE)
+
+
+def get_frontmatter_entry(frontmatter: str, key: str) -> str:
+    """Return a top-level frontmatter key with its (indented or listed) value, exactly as written."""
+    match = re.search(rf"^{re.escape(key)}:.*\n(?:[ \t-].*\n|[ \t]*\n)*", frontmatter, re.MULTILINE)
+    return match.group(0) if match else ""
+
+
+def inherit_frontmatter_entry(source: Path, key: str) -> Callable[[str], str]:
+    """Return a markdown preprocessor that swaps the frontmatter `key` for the one in the source document."""
+    source_frontmatter = FRONTMATTER_RE.match(source.read_text(encoding="utf-8"))
+    inherited = get_frontmatter_entry(source_frontmatter.group(2), key) if source_frontmatter else ""
+
+    def preprocess(content: str) -> str:
+        frontmatter = FRONTMATTER_RE.match(content)
+        if not frontmatter:
+            return f"---\n{inherited}---\n{content}" if inherited else content
+        own = frontmatter.group(2)
+        entries = own.replace(get_frontmatter_entry(own, key), "", 1) + inherited
+        return frontmatter.group(1) + entries + frontmatter.group(3) + content[frontmatter.end() :]
+
+    return preprocess
+
+
+# A relative attachments/<file> reference in rendered html: src="...", href='...' or unquoted
+ATTACHMENT_REFERENCE_RE = re.compile(r"(?<=[\"'=])attachments/([^\"'\s<>?#]+)")
+
+
+def use_translated_attachments(body: str, attachments: Path, lang: str) -> str:
+    """Point attachment references at their `<name>.<lang>.<ext>` variant where one exists, e.g. a translated quiz."""
+
+    def translated(match: re.Match) -> str:
+        name = PurePosixPath(match.group(1))
+        variant = name.with_name(f"{name.stem}.{lang}{name.suffix}")
+        if (attachments / unquote(str(variant))).is_file():
+            return f"attachments/{variant}"
+        return match.group(0)
+
+    return ATTACHMENT_REFERENCE_RE.sub(translated, body)
+
+
 def cache_directory(
     segment: dict,
     fn: Callable[[str, Optional[str]], Response],
@@ -121,7 +167,7 @@ def cache_directory(
             cache_directory(value.get("data", {}), fn=fn, _path=f"{_path}/{key}")
 
 
-def _mdfile_to_sections_with_retry(path: Path, retries=0) -> dict:
+def _mdfile_to_sections_with_retry(path: Path, preprocess: Optional[Callable[[str], str]] = None, retries=0) -> dict:
     if retries > 1:
         raise PiggyErrorException(f"Could not render assignment after {retries} retries: {path}")
 
@@ -131,15 +177,17 @@ def _mdfile_to_sections_with_retry(path: Path, retries=0) -> dict:
             docs_folder=PIGGYBANK_FOLDER,
             leading_url=f"/{ASSIGNMENT_ROUTE}",
             normalize_urls=True,
+            emojis=EMOTES,
             template=(Path(__file__).parent / "templates" / "assignments" / "tconvert_assignment_base.html"),
             remove_heading=False,
             remove_heading_if_title_matches=True,
+            preprocess=preprocess or (lambda content: content),
         )
 
     except FileNotFoundError:
         # TurtleConverter occasionally removes its temporary copy before
         # cleanup on the first render after app startup. A second build succeeds.
-        return _mdfile_to_sections_with_retry(path, retries=retries + 1)
+        return _mdfile_to_sections_with_retry(path, preprocess, retries=retries + 1)
 
 
 @lru_cache_wrapper
@@ -151,21 +199,28 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
     if not p.exists():
         raise PiggyHTTPException("Oppgave ikke funnet", status_code=404)
 
-    try:
-        sections = _mdfile_to_sections_with_retry(p)
-        sections["head"] = remove_turtleconverter_stylesheets(sections["head"])
-        sections["body"] = remove_unused_pyodide_assets(relabel_pyodide_editors(sections["body"]))
-        print("Rendering:", p)
-
-    except ConversionError:
-        raise PiggyHTTPException("Feil: Kunne ikke vise oppgave", status_code=500)
-
     lang = ""
     assignment_path = p
 
     if p.parents[1].name == "translations":
         lang = p.parent.name
         assignment_path = p.parents[2] / p.name
+
+    try:
+        # relevant_pages is never translated, so translations use the (up to date) list of their source document
+        preprocess = inherit_frontmatter_entry(assignment_path, "relevant_pages") if lang else None
+        sections = _mdfile_to_sections_with_retry(p, preprocess)
+        sections["body"] = relativize_shortlinks(sections["body"])
+        sections["head"] = remove_turtleconverter_stylesheets(sections["head"])
+        sections["body"] = remove_unused_pyodide_assets(relabel_pyodide_editors(sections["body"]))
+        if lang:
+            sections["body"] = use_translated_attachments(
+                sections["body"], assignment_path.parent / "attachments", lang
+            )
+        print("Rendering:", p)
+
+    except ConversionError:
+        raise PiggyHTTPException("Feil: Kunne ikke vise oppgave", status_code=500)
 
     current_language = LANGUAGES.get(lang, "")
 
@@ -198,6 +253,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
         current_language=current_language,
         supported_languages=get_supported_languages(assignment_path=assignment_path),
         book_navigation=BOOK_INDEX.get(assignment_path.resolve().relative_to(PIGGYBANK_FOLDER.resolve()).as_posix()),
+        referenced_by=get_referenced_by(meta, assignment_path, PIGGYMAP, lang),
         media_abspath=f"/{MEDIA_ROUTE}/{p.parent}",
         abspath=f"/{ASSIGNMENT_ROUTE}/{p}",
         **assignment_data,  # Unpack the remaining assignment data from piggymap

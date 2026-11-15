@@ -45,12 +45,14 @@ piggybank/piggybank/
 | Property | Type | Required | Meaning |
 |---|---|---|---|
 | `name` | string | Optional | Display name for the folder. If omitted, falls back to the folder name with underscores replaced by spaces (`piggy/piggybank.py:20-21`). |
+| `thumbnail_title` | string | Optional | Text drawn on the generated fallback thumbnail (used when the folder has no `media/header` image). Defaults to `name`, so set this to keep the card/page title and the thumbnail text separate. |
 | `description` | string | Optional | Free-text description. Used as card description text and as the `og:description`/`twitter:description` fallback (`piggy/templates/partials/parts/og-tags.html:39`). |
-| `tags` | array of strings | Optional, topic-level | Keyword list rendered as pill badges on cards (`piggy/templates/objects/card.html:81-87`) and used for client-side search filtering. Only meaningful on topic folders in practice. |
+| `tags` | array of strings | Optional, topic-level | Keywords for the topic. They become filter buttons at the top of the subject page (`piggy/templates/partials/parts/card_filters.html`): picking tags shows only the topics with any of them. A topic tagged `Ekstra` or `Skjult` (or `Extra`/`Hidden`, in any case - `HIDDEN_TAGS` in `piggy/__init__.py`) is hidden until that tag is picked, which suits optional or extra material that shouldn't be `unlisted`. |
 | `difficulty` | integer | Optional | Only actually rendered (as a 1–5 icon, clamped at 5) for assignment *levels* under a topic - see `piggy/templates/objects/card.html:65-72`. When set directly on a folder's own `meta.json` it is **not rendered anywhere** (see [Known quirks](#known-quirks--unused-fields)). `-1` is used throughout existing content as an "unset" placeholder. |
 | `type` | string (enum) | Optional | One of `"assignment"`, `"exercise"` (default), `"information"`, `"extra"`. On a **topic** folder, buckets its children into "Informasjon" / "Innleveringsoppgaver" / "Øvingsoppgaver" sections (`piggy/templates/assignments/3-subject.html:6-19`) and sets the level-selector label ("Tema"/"Oppgave"/"Level" - `piggy/templates/partials/header/level-selector.html:10-16`). On a **subject** folder, if left unset it is auto-defaulted to `"exercise"` at build time (`piggy/piggybank.py:167-169`). |
 | `note` | string | Optional, topic-level only | Freeform note rendered as an info callout at the top of the topic page (`piggy/templates/assignments/4-topic.html:9-13`). |
 | `level_name` | string | Optional, topic-level only | Overrides the default type-based label used in the level selector (e.g. `"Del"` instead of "Level" - `piggy/templates/partials/header/level-selector.html:7-8`). |
+| `sibling_links` | boolean | Optional, topic-level only | Set to `false` to make every level a standalone page: the level selector (links to the other levels) is hidden, and the topic page becomes the way to reach the levels - the subject card opens the topic page and the back button returns to it, for every topic `type`. Defaults to `true`. |
 
 > **Do not author `system_path` manually.** It's injected into the in-memory
 > metadata at build time (`piggy/piggybank.py:166`) to point at the folder's
@@ -107,6 +109,16 @@ on the subject page.
   "tags": ["HTML", "CSS", "Web"],
   "difficulty": -1,
   "level_name": "Del"
+}
+```
+
+A topic whose levels are standalone pages (no links between the levels):
+
+```json
+{
+  "name": "YFF prosjekter",
+  "type": "assignment",
+  "sibling_links": false
 }
 ```
 

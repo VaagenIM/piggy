@@ -1,5 +1,6 @@
 import html
 import os
+from collections import Counter
 from pathlib import Path
 from urllib.parse import quote, urlsplit
 
@@ -13,6 +14,7 @@ from piggy import (
     MEDIA_ROUTE,
     AssignmentTemplate,
     Visibility,
+    HIDDEN_TAGS,
     STATIC_FONTS_PATHS,
     IMG_FMT,
     PIGGYBANK_FOLDER,
@@ -22,6 +24,7 @@ from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
 from piggy.piggybank import PIGGYMAP, SHORTLINK_MAP, get_piggymap_segment_from_path, unfreeze
+from piggy.shortlinks import split_md_link
 from piggy.utils import (
     normalize_path_to_str,
     lru_cache_wrapper,
@@ -32,7 +35,15 @@ from piggy.utils import (
     get_version,
     get_piggybank_version,
 )
-from piggy.sitemap import get_cached_sitemap_paths, render_internal_sitemap, render_sitemap_xml
+from piggy.sitemap import (
+    get_cached_sitemap_paths,
+    get_page_sources,
+    get_shortlink_paths,
+    get_static_files,
+    render_internal_files,
+    render_internal_sitemap,
+    render_sitemap_xml,
+)
 
 # Ensure the working directory is the root of the project
 os.chdir(os.path.dirname(Path(__file__).parent.absolute()))
@@ -85,6 +96,7 @@ def create_app(debug: bool = False) -> Flask:
             "piggybank_version": get_piggybank_version(),
             "AssignmentTemplate": AssignmentTemplate,
             "Visibility": Visibility,
+            "HIDDEN_TAGS": HIDDEN_TAGS,
             "themes": get_themes(),
             "debug": app.debug,
             "static_fonts_paths": STATIC_FONTS_PATHS,
@@ -109,6 +121,26 @@ def create_app(debug: bool = False) -> Flask:
         fallback_rank = len(preferred)
         return sorted(item_list, key=lambda kv: (rank.get(kv[0], fallback_rank), kv[0]))
 
+    @app.template_filter("tag_filters")
+    def tag_filters(item_list):
+        """
+        Jinja filter: given an iterable of (link, data) tuples, return the tags on their cards as
+        {tag, count, hidden} dicts, most used first and the tags hidden by default last.
+
+        A card hidden by default only counts towards its hidden tags, the others can't show it.
+        """
+        names, counts = {}, Counter()
+        for _, data in item_list:
+            tags = {tag.lower(): tag for tag in map(str, data.get("meta", {}).get("tags") or [])}
+            hidden_by = {key: tag for key, tag in tags.items() if key in HIDDEN_TAGS}
+            for key, tag in (hidden_by or tags).items():
+                names.setdefault(key, tag)
+                counts[key] += 1
+        return sorted(
+            ({"tag": names[key], "count": count, "hidden": key in HIDDEN_TAGS} for key, count in counts.items()),
+            key=lambda tag_filter: (tag_filter["hidden"], -tag_filter["count"], tag_filter["tag"].lower()),
+        )
+
     @app.template_filter("list_difference")
     def list_difference(original_list, lists):
         """
@@ -125,8 +157,8 @@ def create_app(debug: bool = False) -> Flask:
 
     @app.template_filter("split_md_links")
     def split_md_links(md_links: list[str]) -> list[tuple[str, str]]:
-        """Split a list of markdown links into a list of tuples (text, url)."""
-        return [(link.split("](")[0][1:], link.split("](")[1][:-1]) for link in md_links if "](" in link]
+        """Split a list of markdown links (or bare shortlinks) into a list of tuples (text, url)."""
+        return [link for link in map(split_md_link, md_links) if link]
 
     @app.context_processor
     def utilities():
@@ -160,13 +192,28 @@ def create_app(debug: bool = False) -> Flask:
 
     @app.route("/sitemap-internal")
     def sitemap_internal():
-        """Return all page paths for the GitHub Pages scraper."""
+        """Return all page paths, and their shortlinks, for the GitHub Pages scraper."""
         if not use_github_pages:
             abort(404)
+        paths = get_cached_sitemap_paths(PIGGYMAP, include_unlisted=True)
         return Response(
-            render_internal_sitemap(get_cached_sitemap_paths(PIGGYMAP, include_unlisted=True)),
+            render_internal_sitemap(paths + get_shortlink_paths(SHORTLINK_MAP, paths)),
             mimetype="text/plain",
         )
+
+    @app.route("/sitemap-internal/files")
+    def sitemap_internal_files():
+        """Return the media and attachments the GitHub Pages scraper copies instead of downloading."""
+        if not use_github_pages:
+            abort(404)
+        return Response(render_internal_files(get_static_files(PIGGYMAP)), mimetype="text/plain")
+
+    @app.route("/sitemap-internal/sources")
+    def sitemap_internal_sources():
+        """Return the file or folder each page is built from, so the GitHub Pages scraper can rebuild what changed."""
+        if not use_github_pages:
+            abort(404)
+        return Response(render_internal_files(get_page_sources(PIGGYMAP, PIGGYBANK_FOLDER)), mimetype="text/plain")
 
     def sanitize_internal_return_path(value):
         if not value or not value.startswith("/") or value.startswith("//"):

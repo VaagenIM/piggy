@@ -1,8 +1,10 @@
 {% from 'objects/card.html' import card with context %}
+{# Standalone levels (sibling_links: false) are listed on the topic page instead #}
+{% set standalone = data.meta.sibling_links is false and data.data|length > 1 %}
 {{
   card(
     variant = 'information',
-    href = abspath ~ "/" ~ item ~ "/" ~ (data.data.keys()|list)[0],
+    href = abspath ~ "/" ~ item ~ ("" if standalone else "/" ~ (data.data.keys()|list)[0]),
     title = data.meta.name,
     description = data.meta.description,
     action = 'Les mer',

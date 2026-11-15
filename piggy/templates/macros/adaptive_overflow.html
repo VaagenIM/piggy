@@ -30,3 +30,24 @@
     })();
   </script>
 {% endmacro %}
+
+{% macro adaptive_compact_bootstrap() %}
+  <script>
+    (function () {
+      var compactor = document.currentScript.previousElementSibling;
+      if (!compactor || !compactor.hasAttribute('data-adaptive-compact')) {
+        return;
+      }
+      var key = compactor.dataset.adaptiveKey;
+      if (!key) return;
+
+      var stored;
+      try {
+        stored = localStorage.getItem('piggy:adaptive-compact:' + key);
+      } catch (e) {
+        return;
+      }
+      if (stored) compactor.dataset.compact = stored;
+    })();
+  </script>
+{% endmacro %}

@@ -1,0 +1,405 @@
+/*********************************\
+|* MARKDOWN TABLE OF CONTENTS   *|
+\*********************************/
+/*
+ * Desktop breakpoint below is duplicated as DESKTOP_MEDIA_QUERY in
+ * js/components/markdown-toc.js - keep both in sync.
+ */
+
+:root {
+  --piggy-toc-width: calc(16.5rem * var(--piggy-reader-space-scale));
+  --piggy-toc-gap: calc(2.25rem * var(--piggy-reader-space-scale));
+  --piggy-toc-sticky-offset: calc(5rem * var(--piggy-reader-space-scale));
+  --piggy-toc-z: 400;
+  --piggy-toc-rail: calc(2.75rem * var(--piggy-reader-space-scale));
+  --piggy-toc-fold-height: calc(2.5rem * var(--piggy-reader-space-scale));
+  /* Theme neutral: every theme defines these */
+  --piggy-toc-surface: color-mix(in srgb, var(--piggy-neutral) 7%, transparent);
+  --piggy-toc-border: color-mix(in srgb, var(--piggy-neutral) 30%, transparent);
+}
+
+/* Turned off in the settings */
+:root[data-reader-toc="off"] .toc-sidebar {
+  display: none !important;
+}
+
+.toc-layout {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.toc-layout .md-content {
+  min-width: 0;
+}
+
+/* ------------------------------------------------------------- *
+ *  Sidebar shell
+ * ------------------------------------------------------------- */
+/* Small screens: a bar that sticks below the header (--piggy-toc-bar-top is
+   set by the script), tucked away while scrolling down */
+.toc-sidebar {
+  position: sticky;
+  top: var(--piggy-toc-bar-top, 0.5rem);
+  z-index: var(--piggy-toc-z);
+  margin-bottom: calc(1.25rem * var(--piggy-reader-space-scale));
+  transition: transform 0.22s ease;
+}
+
+.toc-sidebar.is-tucked {
+  transform: translateY(calc(-100% - var(--piggy-toc-bar-top, 0.5rem) - 1rem));
+}
+
+.toc-sidebar__toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: calc(0.55rem * var(--piggy-reader-space-scale))
+    calc(0.9rem * var(--piggy-reader-space-scale));
+  color: var(--piggy-text-button);
+  /* Solid, since the text scrolls underneath it */
+  background: color-mix(in srgb, var(--piggy-button) 42%, var(--piggy-menu));
+  border: 1px solid
+    var(
+      --piggy-button-border,
+      color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+    );
+  border-radius: calc(0.9rem * var(--piggy-reader-space-scale));
+  box-shadow: 0 2px 8px var(--piggy-shadow-box);
+  font: inherit;
+  font-weight: 700;
+  font-size: calc(0.92rem * var(--piggy-reader-font-scale));
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  transition: background-color 0.18s ease;
+}
+
+.toc-sidebar__toggle:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--piggy-button-hover) 62%,
+    var(--piggy-menu)
+  );
+}
+
+.toc-sidebar__toggle:focus-visible {
+  outline: 3px solid
+    var(
+      --piggy-button-focus,
+      color-mix(in srgb, var(--piggy-button-active) 58%, transparent)
+    );
+  outline-offset: 2px;
+}
+
+.toc-sidebar__toggle-icon {
+  flex: 0 0 auto;
+  width: calc(1.1rem * var(--piggy-reader-font-scale));
+  height: calc(1.1rem * var(--piggy-reader-font-scale));
+}
+
+.toc-sidebar__toggle-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.toc-sidebar__chevron {
+  flex: 0 0 auto;
+  width: calc(0.85rem * var(--piggy-reader-font-scale));
+  height: calc(0.85rem * var(--piggy-reader-font-scale));
+  transition: transform 0.18s ease;
+}
+
+.toc-sidebar__toggle[aria-expanded="true"] .toc-sidebar__chevron {
+  transform: rotate(180deg);
+}
+
+/* ------------------------------------------------------------- *
+ *  Small screens: the list folds out under the bar
+ * ------------------------------------------------------------- */
+.toc-sidebar__panel {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  right: 0;
+  max-height: min(60vh, 30rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  box-sizing: border-box;
+  padding: calc(0.9rem * var(--piggy-reader-space-scale));
+  background-color: var(--piggy-menu);
+  color: var(--piggy-menu-text);
+  border: 1px solid color-mix(in srgb, var(--piggy-neutral) 38%, transparent);
+  border-radius: calc(1rem * var(--piggy-reader-space-scale));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+.toc-sidebar__panel[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .toc-sidebar__panel:not([hidden]) {
+    animation: piggy-toc-panel-in 0.18s ease;
+  }
+}
+
+@keyframes piggy-toc-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.35rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.toc-sidebar__heading {
+  display: none;
+  margin: 0 0 calc(0.6rem * var(--piggy-reader-space-scale));
+  font-size: calc(0.75rem * var(--piggy-reader-font-scale));
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--piggy-text-main);
+  opacity: 0.6;
+}
+
+.toc-sidebar__panel .toc-sidebar__heading {
+  display: block;
+}
+
+/* Only on wide screens, where the sidebar sits beside the content */
+.toc-sidebar__fold {
+  display: none;
+}
+
+/* ------------------------------------------------------------- *
+ *  List / links (shared across breakpoints)
+ * ------------------------------------------------------------- */
+.toc-sidebar__list {
+  display: flex;
+  flex-direction: column;
+  gap: calc(0.15rem * var(--piggy-reader-space-scale));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.toc-sidebar__list--nested {
+  margin-top: calc(0.15rem * var(--piggy-reader-space-scale));
+  padding-left: calc(0.85rem * var(--piggy-reader-space-scale));
+  border-left: 1px solid
+    color-mix(in srgb, var(--piggy-neutral) 28%, transparent);
+}
+
+.toc-sidebar__item {
+  min-width: 0;
+}
+
+.toc-sidebar__link {
+  display: block;
+  padding: calc(0.32rem * var(--piggy-reader-space-scale))
+    calc(0.6rem * var(--piggy-reader-space-scale));
+  border-left: 2px solid transparent;
+  border-radius: 0 calc(0.55rem * var(--piggy-reader-space-scale))
+    calc(0.55rem * var(--piggy-reader-space-scale)) 0;
+  color: color-mix(in srgb, var(--piggy-text-main) 75%, transparent);
+  font-size: calc(0.88rem * var(--piggy-reader-font-scale));
+  line-height: 1.4;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.toc-sidebar__list--nested .toc-sidebar__link {
+  font-size: calc(0.82rem * var(--piggy-reader-font-scale));
+}
+
+.toc-sidebar__link:hover {
+  background-color: color-mix(in srgb, var(--piggy-button) 30%, transparent);
+  color: var(--piggy-text-main);
+}
+
+.toc-sidebar__link:focus-visible {
+  outline: 3px solid
+    var(
+      --piggy-button-focus,
+      color-mix(in srgb, var(--piggy-button-active) 58%, transparent)
+    );
+  outline-offset: -1px;
+}
+
+.toc-sidebar__link.is-active {
+  border-left-color: var(--piggy-button-active);
+  background-color: color-mix(
+    in srgb,
+    var(--piggy-button-active) 22%,
+    transparent
+  );
+  color: var(--piggy-text-main);
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------- *
+ *  Desktop: docked, sticky sidebar
+ * ------------------------------------------------------------- */
+@media (min-width: 1220px) {
+  :root:not([data-reader-toc="off"]) .md-grid:has(.toc-sidebar) {
+    max-width: 78rem;
+  }
+
+  .toc-layout {
+    display: flex;
+    /* stretch (default) so .toc-sidebar is as tall as the article column -
+       the sticky panel needs that full height to travel/stick within. */
+    align-items: stretch;
+    gap: var(--piggy-toc-gap);
+  }
+
+  .toc-layout > .md-content {
+    flex: 1 1 auto;
+  }
+
+  /* Beside the content on the right; first in the markup, so it stays on top on small screens */
+  .toc-sidebar {
+    position: relative;
+    top: auto;
+    z-index: auto;
+    transform: none !important;
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    gap: calc(0.5rem * var(--piggy-reader-space-scale));
+    flex: 0 0 var(--piggy-toc-width);
+    width: var(--piggy-toc-width);
+    margin-bottom: 0;
+    transition:
+      flex-basis 0.2s ease,
+      width 0.2s ease;
+  }
+
+  .toc-sidebar[data-toc-folded] {
+    flex-basis: var(--piggy-toc-rail);
+    width: var(--piggy-toc-rail);
+  }
+
+  .toc-sidebar__toggle {
+    display: none !important;
+  }
+
+  .toc-sidebar__fold {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    position: sticky;
+    top: var(--piggy-toc-sticky-offset);
+    z-index: 1;
+    box-sizing: border-box;
+    width: 100%;
+    height: var(--piggy-toc-fold-height);
+    padding: 0 calc(0.75rem * var(--piggy-reader-space-scale));
+    color: var(--piggy-text-main);
+    background-color: var(--piggy-toc-surface);
+    border: 1px solid var(--piggy-toc-border);
+    border-radius: calc(0.9rem * var(--piggy-reader-space-scale));
+    font: inherit;
+    font-size: calc(0.75rem * var(--piggy-reader-font-scale));
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    appearance: none;
+    transition: background-color 0.15s ease;
+  }
+
+  .toc-sidebar__fold:hover {
+    background-color: color-mix(in srgb, var(--piggy-button) 30%, transparent);
+  }
+
+  .toc-sidebar__fold:focus-visible {
+    outline: 3px solid
+      var(
+        --piggy-button-focus,
+        color-mix(in srgb, var(--piggy-button-active) 58%, transparent)
+      );
+    outline-offset: 2px;
+  }
+
+  .toc-sidebar__fold-label {
+    opacity: 0.75;
+  }
+
+  .toc-sidebar__fold-icon {
+    flex: 0 0 auto;
+    width: calc(1rem * var(--piggy-reader-font-scale));
+    height: calc(1rem * var(--piggy-reader-font-scale));
+    transition: transform 0.2s ease;
+  }
+
+  .toc-sidebar[data-toc-folded] .toc-sidebar__fold {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .toc-sidebar[data-toc-folded] .toc-sidebar__fold-label {
+    display: none;
+  }
+
+  .toc-sidebar[data-toc-folded] .toc-sidebar__fold-icon {
+    transform: rotate(180deg);
+  }
+
+  .toc-sidebar__panel {
+    display: block !important;
+    position: sticky;
+    top: calc(
+      var(--piggy-toc-sticky-offset) + var(--piggy-toc-fold-height) + 0.5rem *
+        var(--piggy-reader-space-scale)
+    );
+    left: auto;
+    right: auto;
+    margin-inline: 0;
+    width: 100%;
+    max-width: none;
+    max-height: calc(
+      100vh - var(--piggy-toc-sticky-offset) - var(--piggy-toc-fold-height) -
+        2.5rem
+    );
+    color: var(--piggy-text-main);
+    background-color: var(--piggy-toc-surface);
+    border: 1px solid var(--piggy-toc-border);
+    box-shadow: none;
+    animation: none !important;
+  }
+
+  .toc-sidebar[data-toc-folded] .toc-sidebar__panel {
+    display: none !important;
+  }
+
+  /* The fold button names the panel already */
+  .toc-sidebar__panel .toc-sidebar__heading {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toc-sidebar,
+  .toc-sidebar__fold-icon,
+  .toc-sidebar__toggle-chevron,
+  .toc-sidebar__panel,
+  .toc-sidebar__link {
+    animation: none !important;
+    transition: none !important;
+  }
+}

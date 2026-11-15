@@ -40,7 +40,18 @@
   {% endif %}
 
   {{ content.body | safe }}
+  {# Where else the page is used is a footnote, so it comes after the content #}
+  {% if referenced_by %}
+    <footer class="assignment-page-footer">
+      {% include "partials/parts/referenced_by.html" %}
+    </footer>
+  {% endif %}
+
   {% if book_navigation %}
     {% include "partials/parts/book-pagination.html" %}
   {% endif %}
+
+  <script
+    src="{{ url_for('static', filename='js/components/markdown-toc.js') }}"
+    defer></script>
 {% endblock %}
