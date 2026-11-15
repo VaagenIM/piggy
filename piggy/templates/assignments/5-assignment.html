@@ -6,18 +6,49 @@
 {% endblock %}
 
 {% block base %}
+  {% if book_navigation %}
+    {% set contents_url = book_navigation.contents.url %}
+    {% if github_pages and current_language is defined and current_language.key and current_language.key in book_navigation.contents.language_urls %}
+      {% set contents_url = book_navigation.contents.language_urls[current_language.key] %}
+    {% endif %}
+    <div class="book-heading">
+      <p class="book-title">
+        <a href="{{ contents_url | e }}"
+          >{{ book_navigation.title | e }}</a
+        >
+      </p>
+      {% include "partials/parts/book-pagination.html" %}
+    </div>
+  {% endif %}
   <div class="assignment-page-header">
     <h1 class="page-title assignment-heading">{{ content.heading }}</h1>
     {% include "partials/parts/relevant_pages.html" %}
   </div>
 
-  {{ content.body | safe }}
+  {% if book_navigation and book_navigation.current_index == 0 %}
+    <nav class="book-contents" aria-label="Innholdsfortegnelse">
+      <ol>
+        {% for chapter in book_navigation.chapters %}
+          {% set chapter_url = chapter.url %}
+          {% if github_pages and current_language is defined and current_language.key and current_language.key in chapter.language_urls %}
+            {% set chapter_url = chapter.language_urls[current_language.key] %}
+          {% endif %}
+          <li><a href="{{ chapter_url | e }}">{{ chapter.label | e }}</a></li>
+        {% endfor %}
+      </ol>
+    </nav>
+  {% endif %}
 
+  {{ content.body | safe }}
   {# Where else the page is used is a footnote, so it comes after the content #}
   {% if referenced_by %}
     <footer class="assignment-page-footer">
       {% include "partials/parts/referenced_by.html" %}
     </footer>
+  {% endif %}
+
+  {% if book_navigation %}
+    {% include "partials/parts/book-pagination.html" %}
   {% endif %}
 
   <script

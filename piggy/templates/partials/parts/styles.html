@@ -2,6 +2,12 @@
   href="{{ url_for('static', filename='css/main.css') }}"
   rel="stylesheet" />
 
+{% if book_navigation %}
+  <link
+    href="{{ url_for('static', filename='css/components/book-navigation.css') }}"
+    rel="stylesheet" />
+{% endif %}
+
 {% for theme_file in themes %}
   <link
     href="{{ url_for('static', filename='css/themes/' + theme_file.path + '.css') }}"
