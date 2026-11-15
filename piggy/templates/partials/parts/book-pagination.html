@@ -1,7 +1,15 @@
+{% set previous_url = book_navigation.previous.url if book_navigation.previous else '' %}
+{% if book_navigation.previous and github_pages and current_language is defined and current_language.key and current_language.key in book_navigation.previous.language_urls %}
+  {% set previous_url = book_navigation.previous.language_urls[current_language.key] %}
+{% endif %}
+{% set next_url = book_navigation.next.url if book_navigation.next else '' %}
+{% if book_navigation.next and github_pages and current_language is defined and current_language.key and current_language.key in book_navigation.next.language_urls %}
+  {% set next_url = book_navigation.next.language_urls[current_language.key] %}
+{% endif %}
 <nav class="book-pagination" aria-label="Forrige og neste kapittel">
   <a
     data-book-previous
-    {% if book_navigation.previous %}href="{{ book_navigation.previous.url | e }}"{% else %}hidden{% endif %}>
+    {% if book_navigation.previous %}href="{{ previous_url | e }}"{% else %}hidden{% endif %}>
     ← Forrige:
     <span data-book-previous-label
       >{{ (book_navigation.previous.label if book_navigation.previous else '') | e }}</span
@@ -9,7 +17,7 @@
   </a>
   <a
     data-book-next
-    {% if book_navigation.next %}href="{{ book_navigation.next.url | e }}"{% else %}hidden{% endif %}>
+    {% if book_navigation.next %}href="{{ next_url | e }}"{% else %}hidden{% endif %}>
     Neste:
     <span data-book-next-label
       >{{ (book_navigation.next.label if book_navigation.next else '') | e }}</span

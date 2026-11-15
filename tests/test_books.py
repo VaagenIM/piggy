@@ -44,7 +44,12 @@ class BooksTest(unittest.TestCase):
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text("# A page\n", encoding="utf-8")
             node = architecture if page == self.architecture else self.topic
-            node["data"][target.stem.replace(" ", "_")] = {"path": target, "meta": {"visibility": "public"}}
+            translations = {"eng": {}} if page in (self.contents, self.architecture, self.protocols[0]) else {}
+            node["data"][target.stem.replace(" ", "_")] = {
+                "path": target,
+                "meta": {"visibility": "public"},
+                "translation_meta": translations,
+            }
         chapter_pages = [
             self.architecture,
             self.protocols[0],
@@ -78,8 +83,13 @@ class BooksTest(unittest.TestCase):
         self.assertEqual(
             navigation["chapters"][0]["url"], "/main/VG2/IT/Drift/Arkitektur/Page_Level_1_-_Arkitektur#kapittel-1"
         )
+        self.assertEqual(
+            navigation["chapters"][0]["language_urls"]["eng"],
+            "/main/VG2/IT/Drift/Arkitektur/Page_Level_1_-_Arkitektur/lang/eng#kapittel-1",
+        )
         self.assertEqual(navigation["chapters"][2]["url"].split("#")[0], navigation["chapters"][1]["url"].split("#")[0])
         self.assertNotEqual(navigation["chapters"][2]["url"], navigation["chapters"][1]["url"])
+        self.assertNotIn("eng", navigation["chapters"][3]["language_urls"])
         self.assertEqual(navigation["previous"]["number"], 1)
         self.assertEqual(navigation["next"]["number"], 3)
         self.assertIsNone(index[self.contents]["previous"])

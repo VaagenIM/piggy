@@ -133,13 +133,25 @@ def build_book_index(piggymap: Mapping, root: Path, *, route="main", check_ancho
                 except ValueError:
                     continue
                 url = "/" + route + "/" + "/".join(quote(part, safe="-._~") for part in current)
-                pages[relative] = {"url": url, "public": visible}
+                pages[relative] = {
+                    "url": url,
+                    "public": visible,
+                    "translations": tuple(node.get("translation_meta", {})),
+                }
             if "data" in node:
                 walk(node["data"], current, visible)
 
     walk(piggymap)
     index = {}
     anchors = {}
+
+    def language_urls(page, anchor=""):
+        fragment = f"#{anchor}" if anchor else ""
+        return {
+            lang: f"{pages[page]['url']}/lang/{quote(lang, safe='-._~')}{fragment}"
+            for lang in pages[page]["translations"]
+        }
+
     for context, definition in definitions:
         contents_page = definition["contents"]
         members = {contents_page, *(chapter["page"] for chapter in definition["chapters"])}
@@ -151,7 +163,13 @@ def build_book_index(piggymap: Mapping, root: Path, *, route="main", check_ancho
                 raise BookValidationError(f"{context}: page is not a public assignment: {page}")
             if page in index:
                 raise BookValidationError(f"{context}: page already belongs to another book: {page}")
-        contents = {"page": contents_page, "url": pages[contents_page]["url"], "label": "Innhold", "anchor": ""}
+        contents = {
+            "page": contents_page,
+            "url": pages[contents_page]["url"],
+            "language_urls": language_urls(contents_page),
+            "label": "Innhold",
+            "anchor": "",
+        }
         chapters = []
         for number, chapter in enumerate(definition["chapters"], 1):
             page, anchor = chapter["page"], chapter["anchor"]
@@ -166,6 +184,7 @@ def build_book_index(piggymap: Mapping, root: Path, *, route="main", check_ancho
                     "number": number,
                     "label": f"Kapittel {number} – {chapter['title']}",
                     "url": f"{pages[page]['url']}#{anchor}",
+                    "language_urls": language_urls(page, anchor),
                 }
             )
         entries = [contents, *chapters]

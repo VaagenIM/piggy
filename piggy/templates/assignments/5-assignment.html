@@ -7,9 +7,13 @@
 
 {% block base %}
   {% if book_navigation %}
+    {% set contents_url = book_navigation.contents.url %}
+    {% if github_pages and current_language is defined and current_language.key and current_language.key in book_navigation.contents.language_urls %}
+      {% set contents_url = book_navigation.contents.language_urls[current_language.key] %}
+    {% endif %}
     <div class="book-heading">
       <p class="book-title">
-        <a href="{{ book_navigation.contents.url | e }}"
+        <a href="{{ contents_url | e }}"
           >{{ book_navigation.title | e }}</a
         >
       </p>
@@ -25,7 +29,11 @@
     <nav class="book-contents" aria-label="Innholdsfortegnelse">
       <ol>
         {% for chapter in book_navigation.chapters %}
-          <li><a href="{{ chapter.url | e }}">{{ chapter.label | e }}</a></li>
+          {% set chapter_url = chapter.url %}
+          {% if github_pages and current_language is defined and current_language.key and current_language.key in chapter.language_urls %}
+            {% set chapter_url = chapter.language_urls[current_language.key] %}
+          {% endif %}
+          <li><a href="{{ chapter_url | e }}">{{ chapter.label | e }}</a></li>
         {% endfor %}
       </ol>
     </nav>

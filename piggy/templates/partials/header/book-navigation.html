@@ -9,9 +9,13 @@
     <p class="book-menu-title">{{ book_navigation.title | e }}</p>
     <ol class="book-menu-list">
       {% for entry in book_navigation.entries %}
+        {% set entry_url = entry.url %}
+        {% if github_pages and current_language is defined and current_language.key and current_language.key in entry.language_urls %}
+          {% set entry_url = entry.language_urls[current_language.key] %}
+        {% endif %}
         <li>
           <a
-            href="{{ entry.url | e }}"
+            href="{{ entry_url | e }}"
             data-book-entry="{{ loop.index0 }}"
             {% if loop.index0 in book_navigation.current_indexes %}data-book-local{% endif %}
             data-book-anchor="{{ entry.anchor | e }}"

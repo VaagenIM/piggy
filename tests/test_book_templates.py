@@ -53,6 +53,28 @@ class BookTemplatesTest(unittest.TestCase):
             content={"heading": "Page", "body": "<p>Page content</p>"},
         )
 
+    def render_github_pages_article(self, navigation):
+        from jinja2 import ChoiceLoader, DictLoader
+
+        self.env.loader = ChoiceLoader(
+            [
+                DictLoader(
+                    {
+                        "layout.html": "{% block base %}{% endblock %}",
+                        "partials/parts/relevant_pages.html": "",
+                    }
+                ),
+                self.env.loader,
+            ]
+        )
+        return self.render(
+            "assignments/5-assignment.html",
+            book_navigation=navigation,
+            content={"heading": "Page", "body": "<p>Page content</p>"},
+            github_pages=True,
+            current_language={"key": "eng"},
+        )
+
     def test_all_six_chapters_are_native_links_even_on_contents_page(self):
         rendered = self.render(
             "partials/header/book-navigation.html", book_navigation=self.index[self.fixture.contents]
@@ -141,6 +163,57 @@ class BookTemplatesTest(unittest.TestCase):
         for number in range(1, 7):
             self.assertTrue(any(link["href"].endswith(f"#kapittel-{number}") for link in chapter_links))
         self.assertNotIn('class="book-contents"', self.render_article(self.index[self.fixture.protocols[0]]))
+
+    def test_static_book_links_preserve_language_only_for_translated_targets(self):
+        navigation = self.index[self.fixture.protocols[0]]
+        menu = self.render(
+            "partials/header/book-navigation.html",
+            book_navigation=navigation,
+            github_pages=True,
+            current_language={"key": "eng"},
+        )
+        self.assertIn(
+            'href="/main/VG2/IT/Drift/Nettverk/Page_Level_1_-_Protokoller/lang/eng#kapittel-2"',
+            menu,
+        )
+        self.assertIn(
+            'href="/main/VG2/IT/Drift/Nettverk/Page_Level_3_-_Protokoller#kapittel-4"',
+            menu,
+        )
+        dynamic_menu = self.render(
+            "partials/header/book-navigation.html",
+            book_navigation=navigation,
+            github_pages=False,
+            current_language={"key": "eng"},
+        )
+        self.assertIn(
+            'href="/main/VG2/IT/Drift/Nettverk/Page_Level_1_-_Protokoller#kapittel-2"',
+            dynamic_menu,
+        )
+
+        rendered = self.render_github_pages_article(navigation)
+        self.assertIn(
+            'href="/main/VG2/IT/Drift/Nettverk/Page_Level_0_-_Innhold/lang/eng"',
+            rendered,
+        )
+        self.assertIn(
+            'href="/main/VG2/IT/Drift/Arkitektur/Page_Level_1_-_Arkitektur/lang/eng#kapittel-1"',
+            rendered,
+        )
+        self.assertIn(
+            'href="/main/VG2/IT/Drift/Nettverk/Page_Level_1_-_Protokoller/lang/eng#kapittel-3"',
+            rendered,
+        )
+
+        contents = self.render_github_pages_article(self.index[self.fixture.contents])
+        self.assertIn(
+            'href="/main/VG2/IT/Drift/Arkitektur/Page_Level_1_-_Arkitektur/lang/eng#kapittel-1"',
+            contents,
+        )
+        self.assertIn(
+            'href="/main/VG2/IT/Drift/Nettverk/Page_Level_3_-_Protokoller#kapittel-4"',
+            contents,
+        )
 
 
 if __name__ == "__main__":
