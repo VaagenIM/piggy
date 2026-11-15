@@ -1,0 +1,15 @@
+{% from 'objects/card.html' import card with context %}
+{% set language = current_language.key if current_language is defined and current_language else '' %}
+{{
+  card(
+    variant = 'information',
+    href = abspath ~ "/" ~ item,
+    title = data.meta.glossary.term,
+    description = data.meta.description,
+    eyebrow = data.meta.page_type|page_type_label(language),
+    action = 'Slå opp',
+    visibility = data.meta.visibility,
+    title_tag = 'h3',
+    search_text = glossary_terms_text(data.meta),
+  )
+}}

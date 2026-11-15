@@ -6,8 +6,14 @@
   {% set levels_data = meta.get(AssignmentTemplate.LEVELS_DATA.name) %}
 {% endif %}
 
-{# Topics with "sibling_links": false are standalone pages without links to the other levels #}
-{% if levels_data and levels_data.meta.sibling_links is not false %}
+{% set has_numbered_levels = false %}
+{% if levels_data and levels_data.data %}
+  {% set has_numbered_levels = levels_data.data.values() | selectattr('level') | list | length == levels_data.data|length %}
+{% endif %}
+
+{# Topics with "sibling_links": false are standalone pages without links to the other levels.
+   Glossary entries have no level number and never get a level selector. #}
+{% if levels_data and levels_data.meta.sibling_links is not false and has_numbered_levels %}
   {% if levels_data.meta.level_name %}
     {% set level_text = levels_data.meta.level_name %}
   {% else %}

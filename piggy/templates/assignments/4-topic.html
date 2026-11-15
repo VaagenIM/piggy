@@ -13,3 +13,39 @@
     </div>
   {% endif %}
 {% endblock %}
+
+{% block assignment_base %}
+  {% set pages = segment.items() | list %}
+  {% set glossary_entries = pages | selectattr('1.meta.reference_kind', 'equalto', 'glossary') | list | sort_by_glossary_term %}
+  {% set other_pages = pages | list_difference([glossary_entries]) %}
+
+  {% if glossary_entries %}
+    <section class="overview-section" aria-labelledby="glossary-index-title">
+      <div class="overview-section-header">
+        <h2 class="overview-section-title" id="glossary-index-title">
+          Begreper A–Å
+        </h2>
+        <span class="overview-section-count"
+          >{{ glossary_entries | length }}</span
+        >
+      </div>
+      <div class="card-grid-container card-type-information">
+        {% for item, data in glossary_entries %}
+          {% include 'objects/card-glossary.html' %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+  {% if other_pages %}
+    <div class="card-grid-wrapper">
+      <div class="card-grid-container">
+        {% for item, data in other_pages %}
+          {% include 'objects/card-level.html' %}
+        {% endfor %}
+      </div>
+    </div>
+  {% elif not glossary_entries %}
+    <p class="overview-empty">Det er ikke noe innhold her ennå.</p>
+  {% endif %}
+{% endblock %}

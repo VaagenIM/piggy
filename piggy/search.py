@@ -1,5 +1,7 @@
 import re
 from collections import Counter
+from collections.abc import Mapping
+from html import unescape
 
 # Norwegian + English stopwords — removed before counting so they don't
 # inflate frequencies or waste slots in the top-60 list
@@ -120,6 +122,22 @@ def build_search_index(piggymap: dict) -> list[dict]:
                 file_path = value.get("path", "")
                 snippet, body = parse_body(str(file_path)) if file_path else ("", "")
                 title = value.get("level_name") or value.get("heading") or key
+                metadata = value.get("meta", {})
+                glossary_terms = []
+                language_metadata = [metadata, *value.get("translation_meta", {}).values()]
+                for localized_metadata in language_metadata:
+                    glossary = localized_metadata.get("glossary", {})
+                    if not isinstance(glossary, Mapping):
+                        continue
+                    glossary_terms.extend(
+                        unescape(term)
+                        for term in [
+                            glossary.get("term", ""),
+                            glossary.get("english", ""),
+                            *glossary.get("admitted", []),
+                        ]
+                        if isinstance(term, str) and term
+                    )
                 # Build breadcrumb as a flat label array — JS reconstructs URLs from the id
                 results.append(
                     {
@@ -128,6 +146,7 @@ def build_search_index(piggymap: dict) -> list[dict]:
                         "breadcrumb": label_parts,
                         "content": snippet,
                         "body": body,
+                        "glossary_terms": " ".join(dict.fromkeys(glossary_terms)),
                     }
                 )
             else:

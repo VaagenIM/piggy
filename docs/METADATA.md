@@ -11,14 +11,13 @@ For metadata on individual assignment files (`Level N - Title.md`), see
 separate mechanism (YAML frontmatter + optional `.oink` sidecar), not
 `meta.json`.
 
-There is **no schema validation** for `meta.json`. It's loaded with a plain
+There is no full schema validation for `meta.json`. It's loaded with
 `json.load()` (`piggy/piggybank.py`, `load_meta_json`), and the whole content
 tree (`PIGGYMAP`) is built once at app startup. A missing `meta.json` is
-treated as `{}` (no error), but a `meta.json` with invalid JSON syntax will
-crash the app on startup. Fields are read defensively everywhere else (via
-Jinja's `meta.x`, which is falsy when absent), so unknown/extra keys are
-simply ignored - but a typo'd key name (e.g. `discription`) will silently do
-nothing rather than error.
+treated as `{}` (no error), but invalid JSON syntax will crash the app on
+startup. Unknown topic `type` values produce a startup warning and otherwise
+fall back to the existing module presentation; other unknown/extra keys are
+ignored. A typo'd key name (e.g. `discription`) therefore still does nothing.
 
 ## Folder hierarchy
 
@@ -49,7 +48,7 @@ piggybank/piggybank/
 | `description` | string | Optional | Free-text description. Used as card description text and as the `og:description`/`twitter:description` fallback (`piggy/templates/partials/parts/og-tags.html:39`). |
 | `tags` | array of strings | Optional, topic-level | Keywords for the topic. They become filter buttons at the top of the subject page (`piggy/templates/partials/parts/card_filters.html`): picking tags shows only the topics with any of them. A topic tagged `Ekstra` or `Skjult` (or `Extra`/`Hidden`, in any case - `HIDDEN_TAGS` in `piggy/__init__.py`) is hidden until that tag is picked, which suits optional or extra material that shouldn't be `unlisted`. |
 | `difficulty` | integer | Optional | Only actually rendered (as a 1–5 icon, clamped at 5) for assignment *levels* under a topic - see `piggy/templates/objects/card.html:65-72`. When set directly on a folder's own `meta.json` it is **not rendered anywhere** (see [Known quirks](#known-quirks--unused-fields)). `-1` is used throughout existing content as an "unset" placeholder. |
-| `type` | string (enum) | Optional | One of `"assignment"`, `"exercise"` (default), `"information"`, `"extra"`. On a **topic** folder, buckets its children into "Informasjon" / "Innleveringsoppgaver" / "Øvingsoppgaver" sections (`piggy/templates/assignments/3-subject.html:6-19`) and sets the level-selector label ("Tema"/"Oppgave"/"Level" - `piggy/templates/partials/header/level-selector.html:10-16`). On a **subject** folder, if left unset it is auto-defaulted to `"exercise"` at build time (`piggy/piggybank.py:167-169`). |
+| `type` | string (enum) | Optional | One of `"assignment"`, `"exercise"` (default), `"information"`, `"extra"`. Groups a **topic** on the subject page; topics default to `"exercise"` at build time. `"extra"` currently shares the module presentation. It also sets the level-selector label ("Tema"/"Oppgave"/"Level"). Unknown values warn and fall back. |
 | `note` | string | Optional, topic-level only | Freeform note rendered as an info callout at the top of the topic page (`piggy/templates/assignments/4-topic.html:9-13`). |
 | `level_name` | string | Optional, topic-level only | Overrides the default type-based label used in the level selector (e.g. `"Del"` instead of "Level" - `piggy/templates/partials/header/level-selector.html:7-8`). |
 | `sibling_links` | boolean | Optional, topic-level only | Set to `false` to make every level a standalone page: the level selector (links to the other levels) is hidden, and the topic page becomes the way to reach the levels - the subject card opens the topic page and the back button returns to it, for every topic `type`. Defaults to `true`. |
@@ -85,8 +84,8 @@ Typically just a `description`. `name` is rarely set since the folder name
 
 ### Subject (e.g. `VG1/IM/Programmering/meta.json`)
 
-`name` and `description`. `type` doesn't need to be set here - it auto-defaults
-to `"exercise"` if absent.
+`name` and `description`. The topic folders beneath this folder default to
+`type: "exercise"` if they do not specify a type.
 
 ```json
 {
@@ -98,9 +97,9 @@ to `"exercise"` if absent.
 ### Topic (e.g. `VG1/IM/Programmering/Web - Web 1/meta.json`)
 
 The richest level - this is where `tags`, `note`, and `level_name` actually
-matter, and where `type` controls which section (Informasjon /
-Innleveringsoppgaver / Øvingsoppgaver) the topic's children are grouped into
-on the subject page.
+matter, and where `type` controls which section (Informasjon og ressurser /
+Moduler / Innleveringsoppgaver) the topic is grouped into on the subject page.
+A topic with glossary entries is shown under Begreper instead.
 
 ```json
 {
@@ -122,7 +121,7 @@ A topic whose levels are standalone pages (no links between the levels):
 }
 ```
 
-An "information" topic (grouped under "Informasjon" instead of exercises):
+An "information" topic (grouped under "Informasjon og ressurser" instead of modules):
 
 ```json
 {
@@ -145,6 +144,6 @@ An "information" topic (grouped under "Informasjon" instead of exercises):
   `piggy/templates/objects/card-level.html:12` (`'card-special-condition' if
   'special_condition' in data else ''`) but nothing in the codebase ever sets
   this key - it's dead/unimplemented. Don't rely on it.
-- **Unrecognized `type` values** (anything other than `"assignment"`,
-  `"exercise"`, or `"information"`, e.g. a stray `"extra"`) simply fall
-  through to the default "Øvingsoppgaver" (exercise) bucket.
+- **`extra` and unknown `type` values** do not have a dedicated subject-page
+  section and currently share the module presentation. Unknown values also
+  produce a warning so a typo is not silent.

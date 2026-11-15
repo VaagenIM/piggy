@@ -1,9 +1,11 @@
 # Assignment frontmatter reference
 
-Individual assignment files (`Level N - Title.md`, matched by
+Assignment files (`Level N - Title.md`, matched by
 `ASSIGNMENT_FILENAME_REGEX` in `piggy/__init__.py`) carry their own metadata
 as a YAML frontmatter block at the top of the file, optionally extended by a
-sibling `.oink` file. This is a separate mechanism from folder-level
+sibling `.oink` file. Glossary reference pages are the exception: a Markdown
+file with `page_type: reference` and `reference_kind: glossary` is recognized
+without a level-numbered filename. This is separate from folder-level
 `meta.json` — see [METADATA.md](METADATA.md) for that.
 
 ```markdown
@@ -19,10 +21,13 @@ description: En kort beskrivelse av oppgaven.
 Oppgavetekst her...
 ```
 
-There is no schema validation. Frontmatter is parsed with `yaml.unsafe_load`
-(`piggy/piggybank.py`, `get_frontmatter_from_file`); invalid YAML is caught
-and logged, and the file falls back to an empty frontmatter dict plus a
-derived title.
+Frontmatter is parsed with `yaml.safe_load`
+(`piggy/piggybank.py`, `get_frontmatter_from_file`), preserving structured
+lists, objects, numbers and booleans. Invalid YAML is logged, and the file
+falls back to an empty frontmatter dict plus a derived title. An unknown
+`page_type` produces a startup warning. Glossary entries and their
+relationships are validated when the app builds its index; invalid glossary
+data prevents startup.
 
 ## Property reference
 
@@ -34,6 +39,10 @@ derived title.
 | `thumbnail_title` | string | Optional | Text drawn on the generated fallback thumbnail (used when no thumbnail image exists). Defaults to `title`, so set this to keep the page title and the thumbnail text separate. |
 | `description` | string | Optional | Used for card descriptions and as an `og:description`/`twitter:description` fallback. |
 | `summary` | string | Optional | If omitted, auto-generated from the first ~200 characters of the rendered HTML body (`piggy/caching.py`, `generate_summary_from_mkdocs_html`). Used as a lower-priority `og:description` fallback than `description`. |
+| `page_type` | string | Optional | Reader-facing type: `tutorial`, `how-to`, `explanation`, `reference` or `assignment`. It is separate from `meta.json.type`; see the glossary contract below. |
+| `concepts` | list of IDs | Optional | Glossary IDs that this page explains or uses. Assignments are shown as "Brukes i"; other pages as "Forklares i". |
+| `reference_kind` | string | Glossary pages | Set to `glossary` together with `page_type: reference` to identify a glossary entry and allow filenames without a level number. |
+| `glossary` | object | Glossary pages | Structured entry metadata: stable `id`, `term`, optional `english`, `admitted` synonyms, relation lists (`is_a`, `part_of`, `uses`, `related`), optional `disambiguation` and `legacy_paths`. Relation values are glossary IDs. |
 | `oinkdata` | object | Optional, via `.oink` only | Not settable from frontmatter itself — only comes from a sibling `.oink` JSON file (see below). Only `oinkdata.summary` is currently read anywhere, as an `og:description` fallback between `description` and `summary`. |
 | `relevant_pages` | list of strings | Optional | Other pages to show as a "Relevante sider" button row under the page title. Each entry is a `[[wikilink]]` to another assignment file (resolved by turtleconverter just like links in the body; add `\|Label` to set the button text, otherwise the file name is shown) or a quoted markdown link `"[Label](/main/...)"` (unquoted, YAML reads the `[...]` as a list). Entries that don't end up as a link are skipped. Translations always show the list of their original document, see [Translations](#translations). |
 
@@ -65,6 +74,14 @@ relevant_pages:
   - https://piggy.iktim.no/s/KDFJtPht
   - "[YFF-prosjektene](s/KDFJtPht)"
 ```
+
+Glossary pages use the Diátaxis reader-purpose types. `assignment` is a Piggy
+page type for a complete work assignment; troubleshooting belongs to `how-to`.
+DITA is only a terminology reference here: do not introduce DITA learning
+specializations, XML or maps. `legacy_paths` are old routes relative to
+`piggybank/`; they keep links working after a glossary page is renamed.
+Translations keep the same glossary ID, and any repeated relation lists must
+match the original.
 
 ## `.oink` sidecar files
 
