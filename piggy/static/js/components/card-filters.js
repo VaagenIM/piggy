@@ -2,22 +2,33 @@ function initializeCardFilters() {
   document.querySelectorAll("[data-card-filters]").forEach((bar) => {
     const scope = bar.closest("[data-card-filter-scope]") || document.body;
     const cards = Array.from(scope.querySelectorAll(".piggy-card[data-tags]"));
-    const chips = Array.from(bar.querySelectorAll("[data-filter-tag]"));
+    const options = Array.from(bar.querySelectorAll("[data-filter-tag]"));
+    const toggle = bar.querySelector("[data-card-filters-toggle]");
+    const panel = bar.querySelector("[data-card-filters-panel]");
+    const search = bar.querySelector("[data-card-filters-search]");
+    const none = bar.querySelector("[data-card-filters-none]");
+    const group = bar.querySelector("[data-card-filters-group]");
+    const active = bar.querySelector("[data-card-filters-active]");
+    const badge = bar.querySelector("[data-card-filters-badge]");
     const reset = bar.querySelector("[data-card-filters-reset]");
-    const more = bar.querySelector("[data-card-filters-more]");
     const empty = scope.querySelector("[data-card-filters-empty]");
+    const labels = new Map(
+      options.map((option) => [
+        option.dataset.filterTag,
+        option.dataset.filterLabel,
+      ]),
+    );
     const hiddenTags = new Set(
-      chips
-        .filter((chip) => chip.hasAttribute("data-hidden-tag"))
-        .map((chip) => chip.dataset.filterTag),
+      options
+        .filter((option) => option.hasAttribute("data-hidden-tag"))
+        .map((option) => option.dataset.filterTag),
     );
 
     // Kept for the tab session, so going back to the page keeps the filters
     const storageKey = `piggy:card-filters:${window.location.pathname}`;
-    const known = new Set(chips.map((chip) => chip.dataset.filterTag));
     const stored = window.PiggyStorage?.readSessionValue(storageKey);
     const selected = new Set(
-      (Array.isArray(stored) ? stored : []).filter((tag) => known.has(tag)),
+      (Array.isArray(stored) ? stored : []).filter((tag) => labels.has(tag)),
     );
 
     // Hidden tags hide a card until one of them is picked, the other tags
@@ -29,6 +40,27 @@ function initializeCardFilters() {
       }
       const picked = [...selected].filter((tag) => !hiddenTags.has(tag));
       return picked.length === 0 || tags.some((tag) => picked.includes(tag));
+    }
+
+    function renderActive() {
+      active.replaceChildren(
+        ...[...selected].map((tag) => {
+          const chip = document.createElement("button");
+          chip.type = "button";
+          chip.className = "card-filters-chip";
+          chip.textContent = labels.get(tag);
+          chip.title = "Fjern filteret";
+          chip.setAttribute("aria-label", `Fjern ${labels.get(tag)}`);
+          chip.addEventListener("click", () => {
+            selected.delete(tag);
+            apply();
+          });
+          return chip;
+        }),
+      );
+      badge.textContent = selected.size;
+      badge.hidden = selected.size === 0;
+      reset.hidden = selected.size === 0;
     }
 
     function apply() {
@@ -46,36 +78,83 @@ function initializeCardFilters() {
         });
 
       if (empty) empty.hidden = cards.some((card) => !card.hidden);
-      chips.forEach((chip) =>
-        chip.setAttribute(
+      options.forEach((option) =>
+        option.setAttribute(
           "aria-pressed",
-          String(selected.has(chip.dataset.filterTag)),
+          String(selected.has(option.dataset.filterTag)),
         ),
       );
-      if (reset) reset.hidden = selected.size === 0;
+      renderActive();
       window.PiggyStorage?.writeSessionValue(storageKey, [...selected]);
     }
 
-    chips.forEach((chip) => {
-      chip.addEventListener("click", () => {
-        const tag = chip.dataset.filterTag;
+    function filterOptions() {
+      const query = search.value.trim().toLowerCase();
+      let shown = 0;
+      let shownHidden = 0;
+      options.forEach((option) => {
+        const match = option.dataset.filterLabel.toLowerCase().includes(query);
+        option.hidden = !match;
+        if (match) {
+          shown += 1;
+          if (option.hasAttribute("data-hidden-tag")) shownHidden += 1;
+        }
+      });
+      if (group) group.hidden = shownHidden === 0;
+      none.hidden = shown > 0;
+    }
+
+    function isOpen() {
+      return !panel.hidden;
+    }
+
+    function open() {
+      panel.hidden = false;
+      toggle.setAttribute("aria-expanded", "true");
+      search.focus();
+    }
+
+    function close({ focusToggle = false } = {}) {
+      if (!isOpen()) return;
+      panel.hidden = true;
+      toggle.setAttribute("aria-expanded", "false");
+      search.value = "";
+      filterOptions();
+      if (focusToggle) toggle.focus();
+    }
+
+    toggle.addEventListener("click", () => (isOpen() ? close() : open()));
+
+    options.forEach((option) => {
+      option.addEventListener("click", () => {
+        const tag = option.dataset.filterTag;
         if (!selected.delete(tag)) selected.add(tag);
         apply();
       });
     });
 
-    more?.addEventListener("click", () => {
-      const expanded = bar.classList.toggle("is-expanded");
-      more.setAttribute("aria-expanded", String(expanded));
-      more.textContent = expanded
-        ? more.dataset.lessLabel
-        : more.dataset.moreLabel;
+    search.addEventListener("input", filterOptions);
+    // Enter picks the first tag that matches the search
+    search.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter") return;
+      event.preventDefault();
+      options.find((option) => !option.hidden)?.click();
     });
 
-    reset?.addEventListener("click", () => {
+    document.addEventListener("click", (event) => {
+      if (isOpen() && !bar.contains(event.target)) close();
+    });
+    bar.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && isOpen()) {
+        event.stopPropagation();
+        close({ focusToggle: true });
+      }
+    });
+
+    reset.addEventListener("click", () => {
       selected.clear();
       apply();
-      chips[0]?.focus();
+      toggle.focus();
     });
 
     apply();
