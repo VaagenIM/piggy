@@ -1,0 +1,11 @@
+{% from 'macros/page_links.html' import page_links %}
+
+{# Other topics listing this page among their relevant pages (from the .oink sidecar) #}
+{{
+  page_links(
+    referenced_by,
+    label='Brukt i',
+    collapsed_label='Brukt i flere emner',
+    extra_class='assignment-referenced-by'
+  )
+}}

@@ -1,0 +1,261 @@
+/************************\
+|*     CARD FILTERS     *|
+\************************/
+.card-filters {
+  position: relative;
+  margin-bottom: calc(var(--overview-section-gap, 2.5rem) * 0.6);
+}
+
+/* The filters belong to the header, so it doesn't need its full gap */
+.overview-header:has(+ .card-filters) {
+  margin-bottom: calc(var(--overview-section-gap, 2.5rem) * 0.4);
+}
+
+.card-filters-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.card-filters-toggle,
+.card-filters-chip,
+.card-filters-reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: calc(0.3rem * var(--piggy-font-scale))
+    calc(0.8rem * var(--piggy-font-scale));
+  font: inherit;
+  font-size: calc(0.88rem * var(--piggy-font-scale));
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--piggy-text-button);
+  background: color-mix(in srgb, var(--piggy-button) 42%, transparent);
+  border: 1px solid
+    var(
+      --piggy-button-border,
+      color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
+    );
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+}
+
+.card-filters-toggle:hover,
+.card-filters-chip:hover,
+.card-filters-reset:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--piggy-button-hover) 62%,
+    transparent
+  );
+}
+
+.card-filters-toggle[aria-expanded="true"] {
+  border-color: var(--piggy-button-active);
+}
+
+.card-filters-toggle-icon {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+}
+
+.card-filters-badge {
+  min-width: 1.35em;
+  padding: 0 0.35em;
+  border-radius: 999px;
+  color: var(--piggy-level-menu-active-text, var(--piggy-text-button));
+  background: var(--piggy-level-menu-active, var(--piggy-button-active));
+  font-size: 0.85em;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.card-filters-active {
+  display: contents;
+}
+
+.card-filters-chip {
+  color: var(--piggy-level-menu-active-text, var(--piggy-text-button));
+  background: var(--piggy-level-menu-active, var(--piggy-button-active));
+  border-color: var(--piggy-button-active);
+}
+
+/* A cross, drawn so it follows the text colour */
+.card-filters-chip::after {
+  content: "×";
+  font-size: 1.15em;
+  line-height: 1;
+  opacity: 0.8;
+}
+
+/* On the page itself, not a button: use the page's text colour */
+.card-filters-reset {
+  color: var(--piggy-text-main);
+  background: transparent;
+  border-color: transparent;
+  text-decoration: underline;
+}
+
+/***** PANEL *****/
+.card-filters-panel {
+  position: absolute;
+  z-index: 300;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-sizing: border-box;
+  width: min(22rem, 100%);
+  padding: 0.6rem;
+  color: var(--piggy-menu-text, var(--piggy-text-main));
+  background-color: var(--piggy-menu);
+  border: 1px solid color-mix(in srgb, var(--piggy-neutral) 38%, transparent);
+  border-radius: 1rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+}
+
+.card-filters-panel[hidden] {
+  display: none;
+}
+
+.card-filters-search {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  font-size: calc(0.92rem * var(--piggy-font-scale));
+  color: inherit;
+  background: color-mix(in srgb, var(--piggy-neutral) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--piggy-neutral) 38%, transparent);
+  border-radius: 0.7rem;
+}
+
+.card-filters-search:focus-visible {
+  outline: 3px solid
+    var(
+      --piggy-button-focus,
+      color-mix(in srgb, var(--piggy-button-active) 58%, transparent)
+    );
+  outline-offset: 1px;
+}
+
+.card-filters-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  max-height: min(20rem, 55vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.card-filter-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  font: inherit;
+  font-size: calc(0.92rem * var(--piggy-font-scale));
+  color: inherit;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 0.6rem;
+  cursor: pointer;
+}
+
+.card-filter-option[hidden] {
+  display: none;
+}
+
+.card-filter-option:hover,
+.card-filter-option:focus-visible {
+  background-color: color-mix(in srgb, var(--piggy-button) 35%, transparent);
+}
+
+.card-filter-option:focus-visible {
+  outline: 2px solid var(--piggy-button-active);
+  outline-offset: -2px;
+}
+
+.card-filter-check {
+  flex: 0 0 auto;
+  width: 1rem;
+  height: 1rem;
+  box-sizing: border-box;
+  border: 2px solid color-mix(in srgb, currentColor 55%, transparent);
+  border-radius: 0.3rem;
+}
+
+/* The same colour pair as the picked chips, so the tick reads on every theme */
+.card-filter-option[aria-pressed="true"] .card-filter-check {
+  position: relative;
+  background: var(--piggy-level-menu-active, var(--piggy-button-active));
+  border-color: var(--piggy-level-menu-active, var(--piggy-button-active));
+}
+
+.card-filter-option[aria-pressed="true"] .card-filter-check::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--piggy-level-menu-active-text, var(--piggy-text-button));
+  mask: center / 80% no-repeat
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 12 10 18 20 6'/%3E%3C/svg%3E");
+}
+
+/* Tags hidden by default reveal cards instead of narrowing them down */
+.card-filter-option--hidden .card-filter-check {
+  border-style: dashed;
+}
+
+.card-filter-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.card-filter-count {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+}
+
+.card-filters-group,
+.card-filters-none {
+  margin: 0.4rem 0.6rem 0.1rem;
+  font-size: calc(0.75rem * var(--piggy-font-scale));
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.card-filters-group[hidden],
+.card-filters-none[hidden] {
+  display: none;
+}
+
+.card-filters-none {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+@media (max-width: 640px) {
+  .card-filters-panel {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-filters-toggle,
+  .card-filters-chip,
+  .card-filters-reset {
+    transition: none;
+  }
+}

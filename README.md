@@ -17,6 +17,7 @@ Or just run the `install.sh` script
 
 - [Folder `meta.json` reference](docs/METADATA.md)
 - [Assignment frontmatter reference](docs/ASSIGNMENT_FRONTMATTER.md)
+- [Emotes (`:name:` shortcodes)](docs/EMOTES.md)
 
 🚧 Construction in progress. 🚧
 

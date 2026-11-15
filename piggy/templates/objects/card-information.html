@@ -1,4 +1,5 @@
 {% from 'objects/card.html' import card with context %}
+{# Standalone levels (sibling_links: false) are listed on the topic page instead #}
 {% set standalone = data.meta.sibling_links is false and data.data|length > 1 %}
 {{
   card(

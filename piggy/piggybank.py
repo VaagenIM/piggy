@@ -129,6 +129,32 @@ def get_assignment_data_from_path(path: str or Path, piggymap: dict) -> dict:
     return segment
 
 
+def get_referenced_by(meta: dict, page_path: Path, piggymap: dict, lang: str = "") -> list[tuple[str, str]]:
+    """
+    Get (folder name, url) links to the other folders whose pages list this page in their relevant pages.
+
+    Read from the `referenced_by` key of the page's .oink sidecar, each folder links to its first public page.
+    On a translated page (`lang`), a page that has that translation links to it instead, titled after it.
+    """
+    links = []
+    for folder_name, folder in meta.get("referenced_by", {}).items():
+        if PIGGYBANK_FOLDER / folder.get("path", "") == page_path.parent:
+            continue
+        for reference in folder.get("references", []):
+            page = get_assignment_data_from_path(PIGGYBANK_FOLDER / reference.get("system_path", ""), piggymap)
+            # The sidecar can outlive a moved or deleted page
+            if "shortlink_target" not in page:
+                continue
+            if Visibility.from_value(page["meta"].get("visibility")) is Visibility.PUBLIC:
+                translation = page.get("translation_meta", {}).get(lang, {}) if lang else {}
+                if translation and Visibility.from_value(translation.get("visibility")) is Visibility.PUBLIC:
+                    links.append((translation.get("title") or folder_name, f"{page['shortlink_target']}/lang/{lang}"))
+                else:
+                    links.append((folder_name, page["shortlink_target"]))
+                break
+    return links
+
+
 @lru_cache_wrapper
 def get_template_from_path(path: str) -> str:
     """Get the directory name from a path."""
@@ -218,11 +244,12 @@ def _register_shortlink(shortlink_map: dict, meta: dict, fallback_path: Path, ta
     )
     description = meta.get("description") or meta.get("oinkdata", {}).get("summary") or meta.get("summary", "")
     thumb_path = meta.get("thumbnail", "media/header") if not meta.get("_use_fallback") else "media/header"
+    thumb_title = meta.get("thumbnail_title") or title
     shortlink_map[shortlink] = {
         "target": target,
         "title": title,
         "description": description,
-        "image": f"/{MEDIA_ROUTE}/{media_path}/{thumb_path}.{IMG_FMT}?title={title}",
+        "image": f"/{MEDIA_ROUTE}/{media_path}/{thumb_path}.{IMG_FMT}?title={thumb_title}",
     }
     return shortlink
 

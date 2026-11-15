@@ -11,6 +11,8 @@
   {% set has_numbered_levels = levels_data.data.values() | selectattr('level') | list | length == levels_data.data|length %}
 {% endif %}
 
+{# Topics with "sibling_links": false are standalone pages without links to the other levels.
+   Glossary entries have no level number and never get a level selector. #}
 {% if levels_data and levels_data.meta.sibling_links is not false and has_numbered_levels %}
   {% if levels_data.meta.level_name %}
     {% set level_text = levels_data.meta.level_name %}
@@ -58,7 +60,7 @@
         {% if level_has_difficulty %}
           <img
             class="level-menu-difficulty-image"
-            src="{{ url_for('static', filename='img/difficulties/' + level_difficulty + '.png') }}"
+            src="{{ url_for('static', filename='img/emotes/diff' + level_difficulty + '.webp') }}"
             alt="" />
         {% endif %}
       {% endset %}
@@ -123,7 +125,7 @@
               <span class="level-tab-icon" aria-hidden="true">
                 <img
                   class="level-menu-difficulty-image"
-                  src="{{ url_for('static', filename='img/difficulties/' + level_difficulty + '.png') }}"
+                  src="{{ url_for('static', filename='img/emotes/diff' + level_difficulty + '.webp') }}"
                   alt="" />
               </span>
             {% endif %}
@@ -185,7 +187,7 @@
               {% if level_has_difficulty %}
                 <img
                   class="level-tab-tooltip-difficulty-image"
-                  src="{{ url_for('static', filename='img/difficulties/' + level_difficulty + '.png') }}"
+                  src="{{ url_for('static', filename='img/emotes/diff' + level_difficulty + '.webp') }}"
                   alt="" />
               {% endif %}
               <span class="level-tab-tooltip-title"
