@@ -20,6 +20,7 @@ from piggy.models import LANGUAGES
 from piggy.piggybank import (
     get_all_meta_from_path,
     PIGGYMAP,
+    BOOK_INDEX,
     get_piggymap_page_from_path,
     get_template_from_path,
     get_piggymap_segment_from_path,
@@ -252,6 +253,9 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
         current_language=current_language,
         supported_languages=get_supported_languages(assignment_path=assignment_path),
         referenced_by=get_referenced_by(meta, assignment_path, PIGGYMAP, lang),
+        book_navigation=BOOK_INDEX.get(
+            assignment_path.resolve().relative_to(PIGGYBANK_FOLDER.resolve()).as_posix()
+        ),
         media_abspath=f"/{MEDIA_ROUTE}/{p.parent}",
         abspath=f"/{ASSIGNMENT_ROUTE}/{p}",
         **assignment_data,  # Unpack the remaining assignment data from piggymap

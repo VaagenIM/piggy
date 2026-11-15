@@ -19,6 +19,7 @@ from piggy import (
     Visibility,
 )
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper, resolve_image_filename
+from piggy.books import build_book_index
 
 
 def load_meta_json(path: Path):
@@ -379,4 +380,5 @@ print("Building piggymap")
 SHORTLINK_MAP = {}
 PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER, _shortlink_map=SHORTLINK_MAP))
 SHORTLINK_MAP = deepfreeze(SHORTLINK_MAP)
+BOOK_INDEX = build_book_index(PIGGYMAP or {}, PIGGYBANK_FOLDER)
 print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")

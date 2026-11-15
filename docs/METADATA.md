@@ -53,6 +53,7 @@ piggybank/piggybank/
 | `note` | string | Optional, topic-level only | Freeform note rendered as an info callout at the top of the topic page (`piggy/templates/assignments/4-topic.html:9-13`). |
 | `level_name` | string | Optional, topic-level only | Overrides the default type-based label used in the level selector (e.g. `"Del"` instead of "Level" - `piggy/templates/partials/header/level-selector.html:7-8`). |
 | `sibling_links` | boolean | Optional, topic-level only | Set to `false` to make every level a standalone page: the level selector (links to the other levels) is hidden, and the topic page becomes the way to reach the levels - the subject card opens the topic page and the back button returns to it, for every topic `type`. Defaults to `true`. |
+| `book` | object | Optional, topic-level only | Defines a book's contents page and ordered chapters. All referenced assignments must be public, and each chapter anchor must occur exactly once as an explicit `<a id="...">` in its Markdown page. |
 
 > **Do not author `system_path` manually.** It's injected into the in-memory
 > metadata at build time (`piggy/piggybank.py:166`) to point at the folder's
@@ -133,6 +134,39 @@ An "information" topic (grouped under "Informasjon" instead of exercises):
   "type": "information"
 }
 ```
+
+A topic that groups assignments into a book:
+
+```json
+{
+  "name": "Grunnbok",
+  "book": {
+    "title": "Grunnbok i faget",
+    "contents": "Level 1 - Innhold.md",
+    "chapters": [
+      {
+        "title": "Introduksjon",
+        "page": "Level 2 - Introduksjon.md",
+        "anchor": "introduksjon"
+      },
+      {
+        "title": "Neste steg",
+        "page": "Level 3 - Neste steg.md",
+        "anchor": "neste-steg"
+      }
+    ]
+  }
+}
+```
+
+`contents` and each chapter's `page` are root-relative Markdown filenames in
+the content tree. Chapters are shown in the listed order. Each `anchor` must
+match one explicit `<a id="introduksjon"></a>` (or equivalent) in its page;
+the startup check ignores code blocks. The contents page's translated title
+becomes the translated book title, and each chapter page's translated title
+becomes its translated navigation label. If a translation is missing, the
+book and chapter titles from `meta.json` are used. Only public assignments
+can be included.
 
 ## Known quirks / unused fields
 
