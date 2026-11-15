@@ -1,6 +1,7 @@
 import json
 import os
 import timeit
+import warnings
 from pathlib import Path
 
 import markupsafe
@@ -20,6 +21,8 @@ from piggy import (
     PIGGYBANK_UUID_MAP_PATH,
     Visibility,
 )
+from piggy.glossary import build_glossary_index
+from piggy.page_types import PAGE_TYPES, TOPIC_TYPES
 from piggy.utils import normalize_path_to_str, lru_cache_wrapper, resolve_image_filename
 
 
@@ -32,6 +35,12 @@ def load_meta_json(path: Path):
     data["oinkdata"] = load_oink_file(path)
     if "name" not in data:
         data["name"] = path.parent.name.replace("_", " ")
+    if "type" in data and (not isinstance(data["type"], str) or data["type"] not in TOPIC_TYPES):
+        warnings.warn(
+            f"Unknown topic type {data['type']!r} in {path}; expected one of {sorted(TOPIC_TYPES)}",
+            UserWarning,
+            stacklevel=2,
+        )
     return data
 
 
@@ -166,9 +175,29 @@ def get_frontmatter_from_file(path: Path) -> dict:
 
     if not frontmatter:
         frontmatter = {}
+    if not isinstance(frontmatter, dict):
+        warnings.warn(f"Frontmatter in {path} must be a YAML object", UserWarning, stacklevel=2)
+        frontmatter = {}
 
     frontmatter["title"] = frontmatter.get("title", fallback_title)
-    return {k: str(markupsafe.escape(v)) for k, v in frontmatter.items()}
+    page_type = frontmatter.get("page_type")
+    if page_type is not None and (not isinstance(page_type, str) or page_type not in PAGE_TYPES):
+        warnings.warn(
+            f"Unknown page_type {page_type!r} in {path}; expected one of {sorted(PAGE_TYPES)}",
+            UserWarning,
+            stacklevel=2,
+        )
+    return {key: _escape_frontmatter_value(value) for key, value in frontmatter.items()}
+
+
+def _escape_frontmatter_value(value):
+    if isinstance(value, str):
+        return str(markupsafe.escape(value))
+    if isinstance(value, list):
+        return [_escape_frontmatter_value(item) for item in value]
+    if isinstance(value, dict):
+        return {key: _escape_frontmatter_value(item) for key, item in value.items()}
+    return value
 
 
 def _register_shortlink(shortlink_map: dict, meta: dict, fallback_path: Path, target: str, title: str):
@@ -254,19 +283,24 @@ def generate_piggymap(
                     f"/main/{page_url}",
                     piggymap[i]["meta"]["name"],
                 )
-            # Subjects should have their type set to exercise by default
+            # Topics should have their type set to exercise by default
             if _current_level == AssignmentTemplate.TOPIC.index - 1 and i in piggymap:
                 piggymap[i]["meta"]["type"] = piggymap[i]["meta"].get("type", "exercise")
             continue
 
-        # If the item is a file, we want to check if it's a valid assignment file
-        match = ASSIGNMENT_FILENAME_REGEX.match(item)
-        if not match:
+        # If the item is a file, we want to check if it's a valid assignment or glossary page
+        if Path(item).suffix.lower() != ".md":
             continue
+        match = ASSIGNMENT_FILENAME_REGEX.match(item)
         assignment_path = Path(f"{path}/{item}")
+        frontmatter = get_frontmatter_from_file(assignment_path)
+        is_glossary_entry = (
+            frontmatter.get("page_type") == "reference" and frontmatter.get("reference_kind") == "glossary"
+        )
+        if not match and not is_glossary_entry:
+            continue
         assignment_key = normalize_path_to_str(item, normalize_page_path=True, normalize_url=True, remove_ext=True)
 
-        frontmatter = get_frontmatter_from_file(assignment_path)
         assignment_oink = load_oink_file(assignment_path)
         frontmatter.update(assignment_oink)
         assignment_visibility = _get_effective_visibility(frontmatter.get("visibility"), _inherited_visibility)
@@ -303,7 +337,7 @@ def generate_piggymap(
         shortlink_target = f"/main/{assignment_url}"
         piggymap[assignment_key] = {
             "path": assignment_path,
-            "level": match.group(1).strip(),
+            "level": match.group(1).strip() if match else None,
             "level_name": frontmatter["title"],
             "heading": frontmatter["title"],
             "shortlink": _register_shortlink(
@@ -355,6 +389,7 @@ start_time = timeit.default_timer()
 print("Building piggymap")
 SHORTLINK_MAP = {}
 PIGGYMAP = deepfreeze(generate_piggymap(PIGGYBANK_FOLDER, _shortlink_map=SHORTLINK_MAP))
+GLOSSARY_INDEX = deepfreeze(build_glossary_index(PIGGYMAP))
 SHORTLINK_MAP = deepfreeze(SHORTLINK_MAP)
 BOOK_INDEX = build_book_index(PIGGYMAP, PIGGYBANK_FOLDER)
 print(f"Piggymap built in {timeit.default_timer() - start_time:.2f} seconds")

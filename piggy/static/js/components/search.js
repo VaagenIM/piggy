@@ -77,6 +77,7 @@
         lunrIndex = window.lunr(function () {
           this.ref("id");
           this.field("title", { boost: 10 });
+          this.field("glossary_terms", { boost: 6 });
           this.field("content", { boost: 2 });
           this.field("body", { boost: 1 });
           docs.forEach((doc) => this.add(doc));

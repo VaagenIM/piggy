@@ -28,17 +28,28 @@ def _walk_pages(segment: dict, path: str = "", include_unlisted: bool = False):
             yield from _walk_pages(data, page_path, include_unlisted)
 
 
-def get_sitemap_paths(piggymap: dict, *, include_unlisted: bool = False) -> list[str]:
+def get_sitemap_paths(
+    piggymap: dict,
+    *,
+    include_unlisted: bool = False,
+    extra_paths: tuple[str, ...] = (),
+) -> list[str]:
     """Return sorted application paths represented by the piggymap."""
     paths = {"/", f"/{ASSIGNMENT_ROUTE}"}
     paths.update(f"/{ASSIGNMENT_ROUTE}/{path}" for path in _walk_pages(piggymap, include_unlisted=include_unlisted))
+    paths.update(extra_paths)
     return sorted(paths)
 
 
 @lru_cache_wrapper
-def get_cached_sitemap_paths(piggymap: dict, *, include_unlisted: bool = False) -> list[str]:
+def get_cached_sitemap_paths(
+    piggymap: dict,
+    *,
+    include_unlisted: bool = False,
+    extra_paths: tuple[str, ...] = (),
+) -> list[str]:
     """Return cached sitemap paths for an immutable piggymap."""
-    return get_sitemap_paths(piggymap, include_unlisted=include_unlisted)
+    return get_sitemap_paths(piggymap, include_unlisted=include_unlisted, extra_paths=extra_paths)
 
 
 def render_sitemap_xml(paths: list[str], base_url: str) -> str:

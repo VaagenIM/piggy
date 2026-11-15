@@ -1,0 +1,51 @@
+{% macro glossary_links(label, identifiers, index) %}
+  {% if identifiers %}
+    {% set language_key = current_language.key if current_language is defined and current_language else '' %}
+    <section class="glossary-relations-group">
+      <h2>{{ label }}</h2>
+      <ul>
+        {% for identifier in identifiers %}
+          {% set entry = index.by_id[identifier] %}
+          {% set target_url = entry.url %}
+          {% if github_pages and language_key and language_key in entry.language_urls %}
+            {% set target_url = entry.language_urls[language_key] %}
+          {% endif %}
+          <li><a href="{{ target_url }}">{{ entry.localized_terms.get(language_key, entry.term) }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+{% endmacro %}
+
+{% macro page_links(label, pages) %}
+  {% if pages %}
+    {% set language_key = current_language.key if current_language is defined and current_language else '' %}
+    <section class="glossary-relations-group">
+      <h2>{{ label }}</h2>
+      <ul>
+        {% for page in pages %}
+          {% set target_url = page.url %}
+          {% if github_pages and language_key and language_key in page.language_urls %}
+            {% set target_url = page.language_urls[language_key] %}
+          {% endif %}
+          <li><a href="{{ target_url }}">{{ page.localized_titles.get(language_key, page.title) }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+{% endmacro %}
+
+{% if meta is defined and glossary_index is defined and meta.reference_kind == 'glossary' and meta.glossary.id in glossary_index.by_id %}
+  {% set entry = glossary_index.by_id[meta.glossary.id] %}
+  <section class="glossary-relations" aria-label="Begrepssammenhenger">
+    {{ glossary_links('Er en type', entry.relations.is_a, glossary_index) }}
+    {{ glossary_links('Typer', entry.types, glossary_index) }}
+    {{ glossary_links('Del av', entry.relations.part_of, glossary_index) }}
+    {{ glossary_links('Deler', entry.parts, glossary_index) }}
+    {{ glossary_links('Bruker', entry.relations.uses, glossary_index) }}
+    {{ glossary_links('Brukes av', entry.used_by, glossary_index) }}
+    {{ glossary_links('Beslektet med', entry.related, glossary_index) }}
+    {{ page_links('Forklares i', entry.explained_in) }}
+    {{ page_links('Brukes i', entry.used_in) }}
+  </section>
+{% endif %}

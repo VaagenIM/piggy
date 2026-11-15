@@ -24,6 +24,7 @@
     <h1 class="page-title assignment-heading">{{ content.heading }}</h1>
     {% include "partials/parts/relevant_pages.html" %}
   </div>
+  {% include "partials/parts/glossary-relations.html" %}
 
   {% if book_navigation and book_navigation.current_index == 0 %}
     <nav class="book-contents" aria-label="Innholdsfortegnelse">

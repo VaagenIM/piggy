@@ -21,7 +21,16 @@ from piggy.api import api_routes
 from piggy.api import generate_thumbnail
 from piggy.caching import cache_directory, _render_assignment_wildcard
 from piggy.exceptions import PiggyHTTPException, normalize_http_exception, ERROR_MESSAGE_DESCRIPTIONS
-from piggy.piggybank import PIGGYMAP, SHORTLINK_MAP, get_piggymap_segment_from_path, unfreeze
+from piggy.piggybank import (
+    GLOSSARY_INDEX,
+    PIGGYMAP,
+    SHORTLINK_MAP,
+    get_piggymap_page_from_path,
+    get_piggymap_segment_from_path,
+    unfreeze,
+)
+from piggy.glossary import norwegian_sort_key
+from piggy.page_types import page_type_label
 from piggy.utils import (
     normalize_path_to_str,
     lru_cache_wrapper,
@@ -79,6 +88,7 @@ def create_app(debug: bool = False) -> Flask:
             "MEDIA_URL_PREFIX": MEDIA_ROUTE,
             "PIGGYBANK_FOLDER": PIGGYBANK_FOLDER.as_posix(),
             "piggymap": PIGGYMAP,
+            "glossary_index": GLOSSARY_INDEX,
             "img_fmt": IMG_FMT,
             "github_pages": use_github_pages,  # Used to determine if we should use lang in URL
             "version": get_version(),
@@ -97,6 +107,20 @@ def create_app(debug: bool = False) -> Flask:
         return it sorted by int(assignment.level).
         """
         return sorted(item_list, key=lambda kv: int(kv[1]["level"]))
+
+    @app.template_filter("sort_by_glossary_term")
+    def sort_by_glossary_term(item_list):
+        return sorted(
+            item_list,
+            key=lambda kv: norwegian_sort_key(
+                kv[1].get("meta", {}).get("glossary", {}).get("term")
+                or kv[1].get("meta", {}).get("title", "")
+            ),
+        )
+
+    @app.template_filter("page_type_label")
+    def get_page_type_label(value, language=""):
+        return page_type_label(value, language)
 
     @app.template_filter("sort_by_language_preference")
     def sort_by_language_preference(item_list):
@@ -131,9 +155,23 @@ def create_app(debug: bool = False) -> Flask:
     @app.context_processor
     def utilities():
         """Add utility functions to the context."""
+        def has_glossary_entries(topic):
+            return any(
+                page.get("meta", {}).get("reference_kind") == "glossary"
+                for page in topic.get("data", {}).values()
+            )
+
+        def glossary_terms_text(meta):
+            glossary = meta.get("glossary", {})
+            terms = [glossary.get("term", ""), glossary.get("english", "")]
+            terms.extend(glossary.get("admitted", []))
+            return " ".join(term for term in terms if isinstance(term, str))
+
         return {
             "unfreeze": unfreeze,
             "split_md_links": split_md_links,
+            "has_glossary_entries": has_glossary_entries,
+            "glossary_terms_text": glossary_terms_text,
         }
 
     @app.template_global()
@@ -163,8 +201,23 @@ def create_app(debug: bool = False) -> Flask:
         """Return all page paths for the GitHub Pages scraper."""
         if not use_github_pages:
             abort(404)
+        legacy_paths = tuple(
+            path
+            for alias, target in GLOSSARY_INDEX["legacy_routes"].items()
+            for path in (
+                f"/{ASSIGNMENT_ROUTE}/{alias}",
+                *(
+                    f"/{ASSIGNMENT_ROUTE}/{alias}/lang/{language}"
+                    for language in get_piggymap_page_from_path(target, PIGGYMAP).get(
+                        "translation_meta", {}
+                    )
+                ),
+            )
+        )
         return Response(
-            render_internal_sitemap(get_cached_sitemap_paths(PIGGYMAP, include_unlisted=True)),
+            render_internal_sitemap(
+                get_cached_sitemap_paths(PIGGYMAP, include_unlisted=True, extra_paths=legacy_paths)
+            ),
             mimetype="text/plain",
         )
 
@@ -208,7 +261,8 @@ def create_app(debug: bool = False) -> Flask:
     @assignment_routes.route("/")
     def get_assignment_wildcard(path="", lang=""):
         path = path.strip("/")
-        path = normalize_path_to_str(path, normalize_page_path=True)
+        path = normalize_path_to_str(path, normalize_page_path=True, normalize_url=True)
+        path = GLOSSARY_INDEX["legacy_routes"].get(path, path)
 
         # If we are over the final level (assignment), raise a 404
         if len(path.split("/")) > AssignmentTemplate.ASSIGNMENT.index:

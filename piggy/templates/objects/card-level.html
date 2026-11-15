@@ -3,6 +3,9 @@
 #}
 {% from 'objects/card.html' import card with context %}
 {% set level_number = data.level|int(-1) %}
+{% set language = current_language.key if current_language is defined and current_language else '' %}
+{% set page_type = data.meta.page_type|page_type_label(language) %}
+{% set eyebrow = (page_type ~ (' · Level ' ~ level_number if data.level else '')) if page_type else (('Level ' ~ (level_number if level_number >= 0 else data.level)) if data.level else '') %}
 {{
   card(
     variant = 'level',
@@ -10,11 +13,11 @@
     title = data.meta.title,
     description = data.meta.description,
     thumbnail = media_abspath ~ "/" ~ data.meta.thumbnail ~ "." ~ img_fmt ~ "?title=" ~ data.meta.title,
-    eyebrow = ('Level ' ~ (level_number if level_number >= 0 else data.level)) if data.level else '',
+    eyebrow = eyebrow,
     action = 'Åpne',
     difficulty = data.meta.difficulty,
     visibility = data.meta.visibility,
     extra_classes = 'card-special-condition' if 'special_condition' in data else '',
-    search_text = 'Level ' ~ data.level ~ ' - ' ~ data.level_name if data.level else '',
+    search_text = ('Level ' ~ data.level ~ ' - ' ~ data.level_name if data.level else '') ~ ' ' ~ glossary_terms_text(data.meta),
   )
 }}

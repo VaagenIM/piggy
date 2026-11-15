@@ -11,10 +11,22 @@
   {% set hidden = [Visibility.UNLISTED.value, Visibility.PRIVATE.value] %}
   {% set shown = segment.items() | list if debug else segment.items() | rejectattr('1.meta.visibility', 'in', hidden) | list %}
 
-  {% set informations = shown | selectattr('1.meta.type', 'equalto', 'information') | list %}
-  {% set assignments = shown | selectattr('1.meta.type', 'equalto', 'assignment') | list %}
-  {# everything without a type is a module (legacy default type `exercise`) #}
-  {% set modules = shown | list_difference([assignments] + [informations]) %}
+  {% set ns = namespace(glossaries=[], informations=[], assignments=[], modules=[]) %}
+  {% for item, data in shown %}
+    {% if has_glossary_entries(data) %}
+      {% set ns.glossaries = ns.glossaries + [(item, data)] %}
+    {% elif data.meta.type == 'information' %}
+      {% set ns.informations = ns.informations + [(item, data)] %}
+    {% elif data.meta.type == 'assignment' %}
+      {% set ns.assignments = ns.assignments + [(item, data)] %}
+    {% else %}
+      {% set ns.modules = ns.modules + [(item, data)] %}
+    {% endif %}
+  {% endfor %}
+  {% set glossaries = ns.glossaries %}
+  {% set informations = ns.informations %}
+  {% set assignments = ns.assignments %}
+  {% set modules = ns.modules %}
 
   {% set direction = meta.class_name.name if meta.class_name is defined else '' %}
   {% set year = meta.year_level.name if meta.year_level is defined else '' %}
@@ -31,6 +43,19 @@
         <p class="overview-lead">{{ meta.description }}</p>
       {% endif %}
     </header>
+
+    {% if glossaries %}
+      <section class="overview-section overview-section--compact" aria-labelledby="section-glossary">
+        <div class="overview-section-header">
+          <h2 class="overview-section-title" id="section-glossary">Begreper</h2>
+        </div>
+        <div class="card-grid-container card-type-information">
+          {% for item, data in glossaries %}
+            {% include 'objects/card-glossary-topic.html' %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
 
     {% if informations %}
       <section
