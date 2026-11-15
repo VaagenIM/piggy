@@ -3,7 +3,7 @@ TOPIC_TYPES = frozenset({"assignment", "exercise", "information", "extra"})
 
 _LABELS = {
     "": {
-        "tutorial": "Veiledning",
+        "tutorial": "Opplæring",
         "how-to": "Framgangsmåte",
         "explanation": "Forklaring",
         "reference": "Oppslag",
