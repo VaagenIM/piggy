@@ -29,17 +29,28 @@ def _walk_pages(segment: dict, path: str = "", include_unlisted: bool = False):
             yield from _walk_pages(data, page_path, include_unlisted)
 
 
-def get_sitemap_paths(piggymap: dict, *, include_unlisted: bool = False) -> list[str]:
+def get_sitemap_paths(
+    piggymap: dict,
+    *,
+    include_unlisted: bool = False,
+    extra_paths: tuple[str, ...] = (),
+) -> list[str]:
     """Return sorted application paths represented by the piggymap."""
     paths = {"/", f"/{ASSIGNMENT_ROUTE}"}
     paths.update(f"/{ASSIGNMENT_ROUTE}/{path}" for path in _walk_pages(piggymap, include_unlisted=include_unlisted))
+    paths.update(extra_paths)
     return sorted(paths)
 
 
 @lru_cache_wrapper
-def get_cached_sitemap_paths(piggymap: dict, *, include_unlisted: bool = False) -> list[str]:
+def get_cached_sitemap_paths(
+    piggymap: dict,
+    *,
+    include_unlisted: bool = False,
+    extra_paths: tuple[str, ...] = (),
+) -> list[str]:
     """Return cached sitemap paths for an immutable piggymap."""
-    return get_sitemap_paths(piggymap, include_unlisted=include_unlisted)
+    return get_sitemap_paths(piggymap, include_unlisted=include_unlisted, extra_paths=extra_paths)
 
 
 def get_shortlink_paths(shortlink_map: dict, paths: list[str]) -> list[str]:
@@ -88,6 +99,18 @@ def get_page_sources(piggymap: dict, root: Path) -> list[tuple[str, Path]]:
     return [(f"/{ASSIGNMENT_ROUTE}", root)] + [
         (f"/{ASSIGNMENT_ROUTE}/{path}", source) for path, source in _walk_sources(piggymap)
     ]
+
+
+def get_legacy_sources(sources: list[tuple[str, Path]], legacy_routes: dict) -> list[tuple[str, Path]]:
+    """Return (old page path, source) pairs for renamed pages, so a change to the source also rebuilds the old path."""
+    by_page = dict(sources)
+    pairs = []
+    for alias, target in legacy_routes.items():
+        prefix = f"/{ASSIGNMENT_ROUTE}/{target}"
+        for page, source in by_page.items():
+            if page == prefix or page.startswith(f"{prefix}/lang/"):
+                pairs.append((f"/{ASSIGNMENT_ROUTE}/{alias}{page[len(prefix):]}", source))
+    return pairs
 
 
 def render_sitemap_xml(paths: list[str], base_url: str) -> str:

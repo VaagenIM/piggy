@@ -1,0 +1,14 @@
+{% from 'objects/card.html' import card with context %}
+{% set standalone = data.meta.sibling_links is false and data.data|length > 1 %}
+{{
+  card(
+    variant = 'information',
+    href = abspath ~ "/" ~ item ~ ("" if standalone else "/" ~ (data.data.keys()|list)[0]),
+    title = data.meta.name,
+    description = data.meta.description,
+    action = 'Slå opp',
+    tags = data.meta.tags,
+    visibility = data.meta.visibility,
+    title_tag = 'h3',
+  )
+}}
