@@ -10,7 +10,11 @@
           {% if github_pages and language_key and language_key in entry.language_urls %}
             {% set target_url = entry.language_urls[language_key] %}
           {% endif %}
-          <li><a href="{{ target_url }}">{{ entry.localized_terms.get(language_key, entry.term) }}</a></li>
+          <li>
+            <a href="{{ target_url }}"
+              >{{ entry.localized_terms.get(language_key, entry.term) }}</a
+            >
+          </li>
         {% endfor %}
       </ul>
     </section>
@@ -28,7 +32,11 @@
           {% if github_pages and language_key and language_key in page.language_urls %}
             {% set target_url = page.language_urls[language_key] %}
           {% endif %}
-          <li><a href="{{ target_url }}">{{ page.localized_titles.get(language_key, page.title) }}</a></li>
+          <li>
+            <a href="{{ target_url }}"
+              >{{ page.localized_titles.get(language_key, page.title) }}</a
+            >
+          </li>
         {% endfor %}
       </ul>
     </section>

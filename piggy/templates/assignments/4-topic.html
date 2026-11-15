@@ -22,8 +22,12 @@
   {% if glossary_entries %}
     <section class="overview-section" aria-labelledby="glossary-index-title">
       <div class="overview-section-header">
-        <h2 class="overview-section-title" id="glossary-index-title">Begreper A–Å</h2>
-        <span class="overview-section-count">{{ glossary_entries | length }}</span>
+        <h2 class="overview-section-title" id="glossary-index-title">
+          Begreper A–Å
+        </h2>
+        <span class="overview-section-count"
+          >{{ glossary_entries | length }}</span
+        >
       </div>
       <div class="card-grid-container card-type-information">
         {% for item, data in glossary_entries %}
