@@ -13,9 +13,7 @@
     {% endif %}
     <div class="book-heading">
       <p class="book-title">
-        <a href="{{ contents_url | e }}"
-          >{{ book_navigation.title | e }}</a
-        >
+        <a href="{{ contents_url | e }}">{{ book_navigation.title | e }}</a>
       </p>
       {% include "partials/parts/book-pagination.html" %}
     </div>
