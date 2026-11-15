@@ -162,7 +162,11 @@ def build_glossary_index(piggymap: Mapping) -> dict:
                 if translated_glossary.get("id") != glossary_id:
                     errors.append(f"{route}: translation {language} must keep glossary.id {glossary_id}")
                 for relation in GLOSSARY_RELATIONS:
-                    if relation in translated_glossary and translated_glossary[relation] != relations[relation]:
+                    # A frozen piggymap stores lists as tuples; compare the values, not the container type
+                    translated_relation = translated_glossary.get(relation)
+                    if isinstance(translated_relation, (list, tuple)):
+                        translated_relation = list(translated_relation)
+                    if relation in translated_glossary and translated_relation != relations[relation]:
                         errors.append(f"{route}: translation {language} must keep glossary.{relation}")
                 translated_term = translated_glossary.get("term")
                 if translated_term is not None and (

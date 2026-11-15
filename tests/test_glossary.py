@@ -87,6 +87,21 @@ class GlossaryTest(unittest.TestCase):
         self.assertEqual(index["by_id"]["nettverksenhet"]["types"], ["ruter", "svitsj"])
         self.assertEqual(index["by_id"]["ruter"]["used_in"][0]["title"], "Lokalnett")
 
+    def test_translation_may_repeat_relations_in_a_deep_frozen_piggymap(self):
+        # The translation pipeline copies the whole glossary block, relations included
+        self.pages["ruter"]["translation_meta"]["eng"]["glossary"].update(
+            {"is_a": ["nettverksenhet"], "related": ["svitsj"], "part_of": [], "uses": []}
+        )
+        index = build_glossary_index(deepfreeze(self.piggymap))
+
+        self.assertEqual(index["by_id"]["ruter"]["localized_terms"]["eng"], "Router")
+
+    def test_translation_with_changed_relations_is_rejected(self):
+        self.pages["ruter"]["translation_meta"]["eng"]["glossary"]["is_a"] = ["svitsj"]
+
+        with self.assertRaisesRegex(GlossaryValidationError, "must keep glossary.is_a"):
+            build_glossary_index(deepfreeze(self.piggymap))
+
     def test_legacy_paths_share_the_source_of_the_renamed_page(self):
         sources = [
             ("/main/Topic/ruter", Path("Topic/Ruter.md")),
