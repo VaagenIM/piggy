@@ -38,12 +38,13 @@ def _iter_pages(node: Mapping, path_parts: tuple[str, ...] = ()):
 def _string_list(value, field: str, owner: str, errors: list[str]) -> list[str]:
     if value is None:
         return []
-    if not isinstance(value, list) or any(not isinstance(item, str) or not item.strip() for item in value):
+    # The piggymap is deep-frozen before the index is built, which turns YAML lists into tuples
+    if not isinstance(value, (list, tuple)) or any(not isinstance(item, str) or not item.strip() for item in value):
         errors.append(f"{owner}: {field} must be a list of non-empty strings")
         return []
     if len(set(value)) != len(value):
         errors.append(f"{owner}: {field} contains duplicate values")
-    return value
+    return list(value)
 
 
 def _page_link(route: str, title: str, page_type: str | None) -> dict:

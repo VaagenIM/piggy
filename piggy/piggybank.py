@@ -213,7 +213,15 @@ def get_frontmatter_from_file(path: Path) -> dict:
             UserWarning,
             stacklevel=2,
         )
-    return {key: _escape_frontmatter_value(value) for key, value in frontmatter.items()}
+    return {
+        key: _escape_frontmatter_value(value) if key in STRUCTURED_FRONTMATTER_KEYS else str(markupsafe.escape(value))
+        for key, value in frontmatter.items()
+    }
+
+
+# Only these keys keep their YAML structure. Every other value stays a string, as the templates expect
+# (for example `difficulty`, which is concatenated into a file name).
+STRUCTURED_FRONTMATTER_KEYS = frozenset({"glossary", "concepts"})
 
 
 def _escape_frontmatter_value(value):

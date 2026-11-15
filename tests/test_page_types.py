@@ -44,6 +44,11 @@ class PageTypesTest(unittest.TestCase):
             self.assertIs(metadata["glossary"]["enabled"], True)
             self.assertEqual(metadata["glossary"]["term"], "&lt;Term &amp; example&gt;")
 
+            path.write_text("---\ndifficulty: 3\ntags: [a, b]\n---\n", encoding="utf-8")
+            legacy = get_frontmatter_from_file(path)
+            self.assertEqual(legacy["difficulty"], "3")
+            self.assertIsInstance(legacy["tags"], str)
+
             for page_type in PAGE_TYPES:
                 path.write_text(f"---\npage_type: {page_type}\n---\n", encoding="utf-8")
                 with warnings.catch_warnings(record=True) as caught:

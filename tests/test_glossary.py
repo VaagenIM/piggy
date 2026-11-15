@@ -2,6 +2,7 @@ import unittest
 from pathlib import Path
 from types import SimpleNamespace
 
+from frozendict.cool import deepfreeze
 from jinja2 import Environment, FileSystemLoader
 
 from piggy.glossary import (
@@ -77,6 +78,13 @@ class GlossaryTest(unittest.TestCase):
         self.assertEqual(router["localized_terms"]["eng"], "Router")
         self.assertEqual(router["language_urls"]["eng"], "/main/Topic/ruter/lang/eng")
         self.assertEqual(index["legacy_routes"]["Old/Level_1_-_Router"], "Topic/ruter")
+
+    def test_builds_index_from_a_deep_frozen_piggymap(self):
+        # The app freezes the piggymap before indexing it, so lists arrive as tuples
+        index = build_glossary_index(deepfreeze(self.piggymap))
+
+        self.assertEqual(index["by_id"]["nettverksenhet"]["types"], ["ruter", "svitsj"])
+        self.assertEqual(index["by_id"]["ruter"]["used_in"][0]["title"], "Lokalnett")
 
     def test_rejects_missing_relationship_targets_and_cycles(self):
         self.pages["ruter"]["meta"]["glossary"]["is_a"] = ["missing"]
