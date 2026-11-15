@@ -2,6 +2,75 @@
   // Keep in sync with the `min-width` used for the desktop layout in
   // css/markdown/markdown-toc.css.
   const DESKTOP_MEDIA_QUERY = "(min-width: 1220px)";
+  const FOLDED_KEY = "piggy:toc-folded";
+
+  function headingFor(link) {
+    const hash = link.getAttribute("href") || "";
+    if (!hash.startsWith("#") || hash.length < 2) return null;
+    return document.getElementById(decodeURIComponent(hash.slice(1)));
+  }
+
+  // A heading in an inactive content tab or a closed <details> has no box, so
+  // an anchor jump to it does nothing: open what hides it first
+  function revealHeading(heading) {
+    for (let node = heading.parentElement; node; node = node.parentElement) {
+      if (node.tagName === "DETAILS") node.open = true;
+      if (node.classList.contains("tabbed-block")) {
+        const index = Array.from(node.parentElement.children).indexOf(node);
+        const input = node
+          .closest(".tabbed-set")
+          ?.querySelectorAll(":scope > input")[index];
+        if (input && !input.checked) input.click();
+      }
+    }
+  }
+
+  function isHidden(element) {
+    return element.getClientRects().length === 0;
+  }
+
+  // Only the open tab's headings are listed: the others aren't on the page
+  function syncTabbedEntries(panel) {
+    panel.querySelectorAll("[data-toc-link]").forEach((link) => {
+      const heading = headingFor(link);
+      const item = link.closest(".toc-sidebar__item");
+      if (heading && item) {
+        item.hidden =
+          Boolean(heading.closest(".tabbed-block")) && isHidden(heading);
+      }
+    });
+  }
+
+  function revealLocationHash() {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    const heading = id ? document.getElementById(id) : null;
+    if (heading && isHidden(heading)) {
+      revealHeading(heading);
+      heading.scrollIntoView();
+    }
+  }
+
+  function initFold(sidebar) {
+    const fold = sidebar.querySelector("[data-toc-fold]");
+    if (!fold) return;
+
+    function setFolded(folded) {
+      sidebar.toggleAttribute("data-toc-folded", folded);
+      fold.setAttribute("aria-expanded", String(!folded));
+      fold.title = folded
+        ? "Vis innholdsfortegnelsen"
+        : "Skjul innholdsfortegnelsen";
+    }
+
+    setFolded(
+      window.PiggyStorage?.readJson("localStorage", FOLDED_KEY, false) === true,
+    );
+    fold.addEventListener("click", () => {
+      const folded = !sidebar.hasAttribute("data-toc-folded");
+      setFolded(folded);
+      window.PiggyStorage?.writeJson("localStorage", FOLDED_KEY, folded);
+    });
+  }
 
   function initToc(sidebar) {
     const toggle = sidebar.querySelector("[data-toc-toggle]");
@@ -41,9 +110,17 @@
     }
 
     panel.addEventListener("click", (event) => {
-      if (event.target.closest("[data-toc-link]")) {
-        closePanel();
+      const link = event.target.closest("[data-toc-link]");
+      if (!link) return;
+
+      const heading = headingFor(link);
+      if (heading && isHidden(heading)) {
+        event.preventDefault();
+        revealHeading(heading);
+        window.history.pushState(null, "", link.getAttribute("href"));
+        heading.scrollIntoView();
       }
+      closePanel();
     });
 
     document.addEventListener("keydown", (event) => {
@@ -66,19 +143,25 @@
       }
     }
 
+    initFold(sidebar);
     initScrollSpy(panel);
+
+    // Linked tabs switch other tab sets too, so sync after any tab change
+    const sync = () => requestAnimationFrame(() => syncTabbedEntries(panel));
+    document.addEventListener("change", (event) => {
+      if (event.target.closest(".tabbed-set")) sync();
+    });
+    document.addEventListener("click", (event) => {
+      if (event.target.closest(".tabbed-labels")) sync();
+    });
+    syncTabbedEntries(panel);
   }
 
   function initScrollSpy(panel) {
     const links = Array.from(panel.querySelectorAll("[data-toc-link]"));
     const targets = links
       .map((link) => {
-        const hash = link.getAttribute("href") || "";
-        if (!hash.startsWith("#") || hash.length < 2) return null;
-
-        const heading = document.getElementById(
-          decodeURIComponent(hash.slice(1)),
-        );
+        const heading = headingFor(link);
         return heading ? { link, heading } : null;
       })
       .filter(Boolean);
@@ -150,6 +233,9 @@
     document
       .querySelectorAll("[data-toc-sidebar]")
       .forEach((sidebar) => initToc(sidebar));
+    // Links to a heading in a hidden tab (from the TOC, or shared) work too
+    revealLocationHash();
+    window.addEventListener("hashchange", revealLocationHash);
   }
 
   if (document.readyState === "loading") {

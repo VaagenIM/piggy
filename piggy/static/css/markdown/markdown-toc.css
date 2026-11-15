@@ -11,6 +11,16 @@
   --piggy-toc-gap: calc(2.25rem * var(--piggy-reader-space-scale));
   --piggy-toc-sticky-offset: calc(5rem * var(--piggy-reader-space-scale));
   --piggy-toc-z: 400;
+  --piggy-toc-rail: calc(2.75rem * var(--piggy-reader-space-scale));
+  --piggy-toc-fold-height: calc(2.5rem * var(--piggy-reader-space-scale));
+  /* Theme neutral: every theme defines these */
+  --piggy-toc-surface: color-mix(in srgb, var(--piggy-neutral) 7%, transparent);
+  --piggy-toc-border: color-mix(in srgb, var(--piggy-neutral) 30%, transparent);
+}
+
+/* Turned off in the settings */
+:root[data-reader-toc="off"] .toc-sidebar {
+  display: none !important;
 }
 
 .toc-layout {
@@ -184,6 +194,11 @@
   display: block;
 }
 
+/* Only on wide screens, where the sidebar sits beside the content */
+.toc-sidebar__fold {
+  display: none;
+}
+
 /* ------------------------------------------------------------- *
  *  List / links (shared across breakpoints)
  * ------------------------------------------------------------- */
@@ -258,7 +273,7 @@
  *  Desktop: docked, sticky sidebar
  * ------------------------------------------------------------- */
 @media (min-width: 1220px) {
-  .md-grid:has(.toc-sidebar) {
+  :root:not([data-reader-toc="off"]) .md-grid:has(.toc-sidebar) {
     max-width: 78rem;
   }
 
@@ -274,10 +289,23 @@
     flex: 1 1 auto;
   }
 
+  /* Beside the content on the right; first in the markup, so it stays on top on small screens */
   .toc-sidebar {
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    gap: calc(0.5rem * var(--piggy-reader-space-scale));
     flex: 0 0 var(--piggy-toc-width);
     width: var(--piggy-toc-width);
     margin-bottom: 0;
+    transition:
+      flex-basis 0.2s ease,
+      width 0.2s ease;
+  }
+
+  .toc-sidebar[data-toc-folded] {
+    flex-basis: var(--piggy-toc-rail);
+    width: var(--piggy-toc-rail);
   }
 
   .toc-sidebar__toggle,
@@ -285,24 +313,105 @@
     display: none !important;
   }
 
+  .toc-sidebar__fold {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    position: sticky;
+    top: var(--piggy-toc-sticky-offset);
+    z-index: 1;
+    box-sizing: border-box;
+    width: 100%;
+    height: var(--piggy-toc-fold-height);
+    padding: 0 calc(0.75rem * var(--piggy-reader-space-scale));
+    color: var(--piggy-text-main);
+    background-color: var(--piggy-toc-surface);
+    border: 1px solid var(--piggy-toc-border);
+    border-radius: calc(0.9rem * var(--piggy-reader-space-scale));
+    font: inherit;
+    font-size: calc(0.75rem * var(--piggy-reader-font-scale));
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    appearance: none;
+    transition: background-color 0.15s ease;
+  }
+
+  .toc-sidebar__fold:hover {
+    background-color: color-mix(in srgb, var(--piggy-button) 30%, transparent);
+  }
+
+  .toc-sidebar__fold:focus-visible {
+    outline: 3px solid
+      var(
+        --piggy-button-focus,
+        color-mix(in srgb, var(--piggy-button-active) 58%, transparent)
+      );
+    outline-offset: 2px;
+  }
+
+  .toc-sidebar__fold-label {
+    opacity: 0.75;
+  }
+
+  .toc-sidebar__fold-icon {
+    flex: 0 0 auto;
+    width: calc(1rem * var(--piggy-reader-font-scale));
+    height: calc(1rem * var(--piggy-reader-font-scale));
+    transition: transform 0.2s ease;
+  }
+
+  .toc-sidebar[data-toc-folded] .toc-sidebar__fold {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .toc-sidebar[data-toc-folded] .toc-sidebar__fold-label {
+    display: none;
+  }
+
+  .toc-sidebar[data-toc-folded] .toc-sidebar__fold-icon {
+    transform: rotate(180deg);
+  }
+
   .toc-sidebar__panel {
     display: block !important;
     position: sticky;
-    top: var(--piggy-toc-sticky-offset);
+    top: calc(
+      var(--piggy-toc-sticky-offset) + var(--piggy-toc-fold-height) + 0.5rem *
+        var(--piggy-reader-space-scale)
+    );
     left: auto;
     right: auto;
     margin-inline: 0;
     width: 100%;
     max-width: none;
-    max-height: calc(100vh - var(--piggy-toc-sticky-offset) - 2rem);
-    background-color: color-mix(in srgb, var(--piggy-light) 60%, transparent);
-    border: 1px solid color-mix(in srgb, var(--piggy-neutral) 28%, transparent);
+    max-height: calc(
+      100vh - var(--piggy-toc-sticky-offset) - var(--piggy-toc-fold-height) -
+        2.5rem
+    );
+    color: var(--piggy-text-main);
+    background-color: var(--piggy-toc-surface);
+    border: 1px solid var(--piggy-toc-border);
     box-shadow: none;
     animation: none !important;
+  }
+
+  .toc-sidebar[data-toc-folded] .toc-sidebar__panel {
+    display: none !important;
+  }
+
+  /* The fold button names the panel already */
+  .toc-sidebar__panel .toc-sidebar__heading {
+    display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .toc-sidebar,
+  .toc-sidebar__fold-icon,
   .toc-sidebar__toggle-chevron,
   .toc-sidebar__backdrop,
   .toc-sidebar__panel,

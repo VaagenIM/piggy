@@ -16,6 +16,7 @@
     reduceMotion: "Bevegelse og effekter",
     rememberPosition: "Husk posisjon",
     codeWrap: "Radbryting i kode",
+    tableOfContents: "Innholdsfortegnelse",
   };
 
   const THEME_ACCENT_LABELS = {
@@ -37,6 +38,7 @@
     iconClarity: "Tydeligere ikoner og farger",
     rememberPosition: "Husk hvor du stopte å lese",
     codeWrap: "Bryt lange kodelinjer",
+    tableOfContents: "Vis innholdsfortegnelse på sidene",
   };
 
   const THEME_GROUP_ORDER = ["regular", "colored", "animated"];
@@ -163,6 +165,7 @@
       getRenderTarget("fontSizeAffectsUi"),
     );
     renderToggleControl("codeWrap", getRenderTarget("codeWrap"));
+    renderToggleControl("tableOfContents", getRenderTarget("tableOfContents"));
 
     renderSegmentedControl(
       "readerLineHeight",
