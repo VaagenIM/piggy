@@ -11,7 +11,7 @@ EMOTE_ALT_TEXT = {f"diff{level}": f"Vanskelighetsgrad {level} av 5" for level in
 def get_emotes() -> dict[str, dict]:
     """Map piggy's `:name:` emote shortcodes to the <img> attributes they render as (on top of twemoji)."""
     images = sorted(EMOTES_FOLDER.iterdir()) if EMOTES_FOLDER.is_dir() else []
-    return {
+    emotes = {
         image.stem: {
             "src": f"/static/img/emotes/{image.name}",
             "alt": EMOTE_ALT_TEXT.get(image.stem, image.stem.replace("_", " ")),
@@ -21,6 +21,10 @@ def get_emotes() -> dict[str, dict]:
         for image in images
         if (get_mimetype(image.name) or "").startswith("image/")
     }
+    # The shortcode (:diff2:) as a hover text means nothing to a reader, so the difficulty icons get none
+    for name in EMOTE_ALT_TEXT.keys() & emotes.keys():
+        emotes[name]["title"] = ""
+    return emotes
 
 
 EMOTES = get_emotes()
