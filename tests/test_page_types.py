@@ -16,7 +16,7 @@ class PageTypesTest(unittest.TestCase):
             {"tutorial", "how-to", "explanation", "reference", "assignment"},
         )
         self.assertTrue({"assignment", "exercise", "information", "extra"} <= TOPIC_TYPES)
-        self.assertEqual(page_type_label("tutorial"), "Veiledning")
+        self.assertEqual(page_type_label("tutorial"), "Opplæring")
         self.assertEqual(page_type_label("tutorial", "eng"), "Tutorial")
         self.assertEqual(page_type_label("reference", "ukr"), "Довідка")
         self.assertEqual(page_type_label("assignment"), "Oppdrag")
