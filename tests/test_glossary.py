@@ -5,6 +5,7 @@ from types import SimpleNamespace
 from frozendict.cool import deepfreeze
 from jinja2 import Environment, FileSystemLoader
 
+from piggy.sitemap import get_legacy_sources
 from piggy.glossary import (
     GlossaryValidationError,
     build_glossary_index,
@@ -85,6 +86,21 @@ class GlossaryTest(unittest.TestCase):
 
         self.assertEqual(index["by_id"]["nettverksenhet"]["types"], ["ruter", "svitsj"])
         self.assertEqual(index["by_id"]["ruter"]["used_in"][0]["title"], "Lokalnett")
+
+    def test_legacy_paths_share_the_source_of_the_renamed_page(self):
+        sources = [
+            ("/main/Topic/ruter", Path("Topic/Ruter.md")),
+            ("/main/Topic/ruter/lang/eng", Path("Topic/translations/eng/Ruter.md")),
+            ("/main/Topic/svitsj", Path("Topic/Svitsj.md")),
+        ]
+
+        self.assertEqual(
+            get_legacy_sources(sources, {"Old/Level_1_-_Router": "Topic/ruter"}),
+            [
+                ("/main/Old/Level_1_-_Router", Path("Topic/Ruter.md")),
+                ("/main/Old/Level_1_-_Router/lang/eng", Path("Topic/translations/eng/Ruter.md")),
+            ],
+        )
 
     def test_rejects_missing_relationship_targets_and_cycles(self):
         self.pages["ruter"]["meta"]["glossary"]["is_a"] = ["missing"]

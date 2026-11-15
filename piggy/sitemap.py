@@ -101,6 +101,18 @@ def get_page_sources(piggymap: dict, root: Path) -> list[tuple[str, Path]]:
     ]
 
 
+def get_legacy_sources(sources: list[tuple[str, Path]], legacy_routes: dict) -> list[tuple[str, Path]]:
+    """Return (old page path, source) pairs for renamed pages, so a change to the source also rebuilds the old path."""
+    by_page = dict(sources)
+    pairs = []
+    for alias, target in legacy_routes.items():
+        prefix = f"/{ASSIGNMENT_ROUTE}/{target}"
+        for page, source in by_page.items():
+            if page == prefix or page.startswith(f"{prefix}/lang/"):
+                pairs.append((f"/{ASSIGNMENT_ROUTE}/{alias}{page[len(prefix):]}", source))
+    return pairs
+
+
 def render_sitemap_xml(paths: list[str], base_url: str) -> str:
     """Render paths as an XML sitemap."""
     urls = "\n".join(f"  <url><loc>{escape(base_url.rstrip('/') + path)}</loc></url>" for path in paths)
