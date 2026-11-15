@@ -36,8 +36,18 @@
 /* ------------------------------------------------------------- *
  *  Sidebar shell
  * ------------------------------------------------------------- */
+/* Small screens: a bar that sticks below the header (--piggy-toc-bar-top is
+   set by the script), tucked away while scrolling down */
 .toc-sidebar {
+  position: sticky;
+  top: var(--piggy-toc-bar-top, 0.5rem);
+  z-index: var(--piggy-toc-z);
   margin-bottom: calc(1.25rem * var(--piggy-reader-space-scale));
+  transition: transform 0.22s ease;
+}
+
+.toc-sidebar.is-tucked {
+  transform: translateY(calc(-100% - var(--piggy-toc-bar-top, 0.5rem) - 1rem));
 }
 
 .toc-sidebar__toggle {
@@ -49,14 +59,15 @@
   padding: calc(0.55rem * var(--piggy-reader-space-scale))
     calc(0.9rem * var(--piggy-reader-space-scale));
   color: var(--piggy-text-button);
-  background: color-mix(in srgb, var(--piggy-button) 42%, transparent);
+  /* Solid, since the text scrolls underneath it */
+  background: color-mix(in srgb, var(--piggy-button) 42%, var(--piggy-menu));
   border: 1px solid
     var(
       --piggy-button-border,
       color-mix(in srgb, var(--piggy-button-active) 34%, transparent)
     );
   border-radius: calc(0.9rem * var(--piggy-reader-space-scale));
-  box-shadow: 0 1px 2px var(--piggy-shadow-box);
+  box-shadow: 0 2px 8px var(--piggy-shadow-box);
   font: inherit;
   font-weight: 700;
   font-size: calc(0.92rem * var(--piggy-reader-font-scale));
@@ -70,7 +81,7 @@
   background-color: color-mix(
     in srgb,
     var(--piggy-button-hover) 62%,
-    transparent
+    var(--piggy-menu)
   );
 }
 
@@ -107,30 +118,14 @@
 }
 
 /* ------------------------------------------------------------- *
- *  Mobile / collapsed panel (overlay)
+ *  Small screens: the list folds out under the bar
  * ------------------------------------------------------------- */
-.toc-sidebar__backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: var(--piggy-toc-z);
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(2px);
-}
-
-.toc-sidebar__backdrop[hidden] {
-  display: none;
-}
-
 .toc-sidebar__panel {
-  position: fixed;
-  z-index: calc(var(--piggy-toc-z) + 1);
-  top: 8vh;
-  left: 1rem;
-  right: 1rem;
-  margin-inline: auto;
-  width: auto;
-  max-width: 26rem;
-  max-height: 76vh;
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  right: 0;
+  max-height: min(60vh, 30rem);
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
@@ -140,7 +135,7 @@
   color: var(--piggy-menu-text);
   border: 1px solid color-mix(in srgb, var(--piggy-neutral) 38%, transparent);
   border-radius: calc(1rem * var(--piggy-reader-space-scale));
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
 }
 
 .toc-sidebar__panel[hidden] {
@@ -148,34 +143,20 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .toc-sidebar__backdrop:not([hidden]) {
-    animation: piggy-toc-fade-in 0.18s ease;
-  }
-
   .toc-sidebar__panel:not([hidden]) {
     animation: piggy-toc-panel-in 0.18s ease;
-  }
-}
-
-@keyframes piggy-toc-fade-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
   }
 }
 
 @keyframes piggy-toc-panel-in {
   from {
     opacity: 0;
-    transform: translateY(-0.5rem) scale(0.98);
+    transform: translateY(-0.35rem);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
@@ -291,6 +272,10 @@
 
   /* Beside the content on the right; first in the markup, so it stays on top on small screens */
   .toc-sidebar {
+    position: relative;
+    top: auto;
+    z-index: auto;
+    transform: none !important;
     order: 2;
     display: flex;
     flex-direction: column;
@@ -308,8 +293,7 @@
     width: var(--piggy-toc-rail);
   }
 
-  .toc-sidebar__toggle,
-  .toc-sidebar__backdrop {
+  .toc-sidebar__toggle {
     display: none !important;
   }
 
@@ -413,15 +397,9 @@
   .toc-sidebar,
   .toc-sidebar__fold-icon,
   .toc-sidebar__toggle-chevron,
-  .toc-sidebar__backdrop,
   .toc-sidebar__panel,
   .toc-sidebar__link {
     animation: none !important;
     transition: none !important;
   }
-}
-
-/* Body scroll lock while the mobile panel is open */
-html.toc-scroll-lock {
-  overflow: hidden;
 }

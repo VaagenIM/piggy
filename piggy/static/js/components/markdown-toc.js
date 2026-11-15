@@ -50,6 +50,40 @@
     }
   }
 
+  // Small screens: the bar sticks below the header (sticky from 800px up),
+  // and tucks away while scrolling down, like a browser's address bar
+  function initStickyBar(sidebar, isOpen) {
+    const desktop = window.matchMedia(DESKTOP_MEDIA_QUERY);
+    const header = document.querySelector(".site-header");
+    let lastY = window.scrollY;
+
+    function placeBar() {
+      const sticky = header && getComputedStyle(header).position === "sticky";
+      const below = sticky ? header.getBoundingClientRect().height : 0;
+      sidebar.style.setProperty("--piggy-toc-bar-top", `${below + 8}px`);
+    }
+
+    function onScroll() {
+      const y = window.scrollY;
+      if (Math.abs(y - lastY) < 6) return;
+      const down = y > lastY;
+      lastY = y;
+
+      const top = parseFloat(
+        sidebar.style.getPropertyValue("--piggy-toc-bar-top"),
+      );
+      const stuck = sidebar.getBoundingClientRect().top <= top + 1;
+      sidebar.classList.toggle(
+        "is-tucked",
+        down && stuck && !isOpen() && !desktop.matches,
+      );
+    }
+
+    placeBar();
+    window.addEventListener("resize", placeBar, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
   function initFold(sidebar) {
     const fold = sidebar.querySelector("[data-toc-fold]");
     if (!fold) return;
@@ -75,7 +109,6 @@
   function initToc(sidebar) {
     const toggle = sidebar.querySelector("[data-toc-toggle]");
     const panel = sidebar.querySelector("[data-toc-panel]");
-    const backdrop = sidebar.querySelector("[data-toc-backdrop]");
 
     if (!toggle || !panel) return;
 
@@ -85,16 +118,13 @@
 
     function openPanel() {
       panel.hidden = false;
-      if (backdrop) backdrop.hidden = false;
       toggle.setAttribute("aria-expanded", "true");
-      document.documentElement.classList.add("toc-scroll-lock");
+      sidebar.classList.remove("is-tucked");
     }
 
     function closePanel() {
       panel.hidden = true;
-      if (backdrop) backdrop.hidden = true;
       toggle.setAttribute("aria-expanded", "false");
-      document.documentElement.classList.remove("toc-scroll-lock");
     }
 
     toggle.addEventListener("click", () => {
@@ -105,9 +135,10 @@
       }
     });
 
-    if (backdrop) {
-      backdrop.addEventListener("click", closePanel);
-    }
+    // The list folds out over the text, so a tap beside it closes it
+    document.addEventListener("click", (event) => {
+      if (isOpen() && !sidebar.contains(event.target)) closePanel();
+    });
 
     panel.addEventListener("click", (event) => {
       const link = event.target.closest("[data-toc-link]");
@@ -144,6 +175,7 @@
     }
 
     initFold(sidebar);
+    initStickyBar(sidebar, isOpen);
     initScrollSpy(panel);
 
     // Linked tabs switch other tab sets too, so sync after any tab change
