@@ -64,7 +64,27 @@
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
           </button>
-          <div class="toc-sidebar__backdrop" data-toc-backdrop hidden></div>
+          {# Wide screens: folds the sidebar into a narrow rail, and back #}
+          <button
+            type="button"
+            class="toc-sidebar__fold"
+            data-toc-fold
+            aria-expanded="true"
+            aria-controls="assignment-toc-panel"
+            title="Skjul innholdsfortegnelsen">
+            <span class="toc-sidebar__fold-label">Innhold</span>
+            <svg
+              class="toc-sidebar__fold-icon"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="9 6 15 12 9 18"></polyline>
+            </svg>
+          </button>
           <nav
             class="toc-sidebar__panel"
             id="assignment-toc-panel"

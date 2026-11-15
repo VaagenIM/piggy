@@ -251,7 +251,7 @@ def _render_assignment(p: Path, extra_metadata=None) -> Response:
         meta=all_metadata,
         current_language=current_language,
         supported_languages=get_supported_languages(assignment_path=assignment_path),
-        referenced_by=get_referenced_by(meta, assignment_path, PIGGYMAP),
+        referenced_by=get_referenced_by(meta, assignment_path, PIGGYMAP, lang),
         media_abspath=f"/{MEDIA_ROUTE}/{p.parent}",
         abspath=f"/{ASSIGNMENT_ROUTE}/{p}",
         **assignment_data,  # Unpack the remaining assignment data from piggymap

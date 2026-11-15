@@ -231,6 +231,10 @@
       { value: "off", label: "Av" },
       { value: "on", label: "På" },
     ],
+    tableOfContents: [
+      { value: "off", label: "Av" },
+      { value: "on", label: "På" },
+    ],
   };
 
   function getReadableTextColor(hex) {
@@ -385,6 +389,11 @@
       defaultValue: "on",
       attribute: "data-reader-code-wrap",
       options: VALUE_OPTIONS.codeWrap,
+    },
+    tableOfContents: {
+      defaultValue: "on",
+      attribute: "data-reader-toc",
+      options: VALUE_OPTIONS.tableOfContents,
     },
   };
 
