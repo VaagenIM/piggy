@@ -79,7 +79,8 @@ jobs:
 
       - name: Start Piggy server
         run: |
-          workers=$(nproc --ignore=1)
+          # The container's CPU limit, not the host's cores (piggyvisor#31); one CPU is left for the scraper.
+          workers=$(( $(python .github/workflows/cpus.py) - 1 ))
           workers=$((workers < 1 ? 1 : workers))
           gunicorn --bind 0.0.0.0:55555 -t 60 --preload --workers "$workers" run:app &
 
