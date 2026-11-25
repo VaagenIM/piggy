@@ -25,8 +25,10 @@ from rcssmin import cssmin
 from rjsmin import jsmin
 
 import incremental
+from cpus import available_cpus
 
-WORKERS = max(1, multiprocessing.cpu_count() - 1)
+# One CPU is left for the server; the container's CPU limit counts, not the host's cores (piggyvisor#31).
+WORKERS = max(1, available_cpus() - 1)
 
 url = "http://127.0.0.1:55555"  # The URL of the website we are scraping
 cname = "https://piggy.iktim.no"  # The CNAME of the website we will push the demo to
