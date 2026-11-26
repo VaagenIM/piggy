@@ -84,7 +84,7 @@ html.h5p-iframe {
   --q-pad-x: 1.25em;
   --q-pad-y: 1.1em;
   --q-bar-height: 2.6rem;
-  --q-focus-ring: 0 0 0 3px color-mix(in srgb, var(--q-accent) 40%, transparent);
+  --q-focus-ring: 0 0 0 3px var(--q-text);
 
   --q-icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
   --q-icon-x: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E");
@@ -133,6 +133,16 @@ html.h5p-iframe .h5p-content {
 .h5p-content input,
 .h5p-content textarea {
   font-family: var(--q-font) !important;
+}
+
+/* CategoryTask otherwise uses --piggy-light as its background, even in dark themes. */
+.h5p-content .h5p-category-task {
+  --color-background: var(--piggy-main);
+}
+
+.h5p-content .h5p-category-task .h5p-category-task-argument-actions {
+  color: var(--q-text) !important;
+  background: var(--q-raised) !important;
 }
 
 .h5p-content :focus-visible {
