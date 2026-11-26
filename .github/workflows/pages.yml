@@ -4,7 +4,7 @@ name: Pages
 
 on:
   repository_dispatch:
-    types: [ fill_piggybank ]
+    types: [fill_piggybank]
   workflow_dispatch:
     inputs:
       full_rebuild:
@@ -13,7 +13,10 @@ on:
         default: false
         type: boolean
   push:
-    branches: [ main ]
+    branches: [main]
+
+permissions:
+  contents: read
 
 concurrency:
   group: "pages"
@@ -22,13 +25,9 @@ concurrency:
 jobs:
   build:
     runs-on: self-hosted
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    permissions:
-      contents: write
-      pages: write
-      id-token: write
+    outputs:
+      artifact_name: ${{ steps.artifact-name.outputs.name }}
+      artifact_id: ${{ steps.upload.outputs.artifact_id }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -97,12 +96,61 @@ jobs:
             .github/workflows/.demo-state.json
           key: pages-main-${{ github.run_id }}
 
+      - name: Name artifact for this build attempt
+        id: artifact-name
+        run: echo "name=github-pages-${{ github.run_id }}-${{ github.run_attempt }}" >> "$GITHUB_OUTPUT"
+
       - name: Upload artifact
+        id: upload
         uses: actions/upload-pages-artifact@v5
         with:
-          name: github-pages
+          name: ${{ steps.artifact-name.outputs.name }}
           path: ./.github/workflows/demo
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      actions: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Wait for the uploaded artifact to be discoverable
+        uses: actions/github-script@v8
+        env:
+          ARTIFACT_ID: ${{ needs.build.outputs.artifact_id }}
+          ARTIFACT_NAME: ${{ needs.build.outputs.artifact_name }}
+        with:
+          script: |
+            const artifactId = Number(process.env.ARTIFACT_ID);
+            const artifactName = process.env.ARTIFACT_NAME;
+            if (!Number.isSafeInteger(artifactId) || artifactId <= 0 || !artifactName) {
+              throw new Error('The build did not return an artifact ID and name');
+            }
+            for (let attempt = 0; attempt < 12; attempt++) {
+              const artifacts = await github.paginate(github.rest.actions.listWorkflowRunArtifacts, {
+                ...context.repo,
+                run_id: context.runId,
+                per_page: 100
+              });
+              const matches = artifacts.filter(a => a.name === artifactName && !a.expired);
+              if (matches.length > 1) {
+                throw new Error(`Multiple artifacts named ${artifactName}`);
+              }
+              if (matches.length === 1 && matches[0].id === artifactId) {
+                core.info(`Artifact ${artifactName} (${artifactId}) is available`);
+                return;
+              }
+              core.info(`Waiting for artifact ${artifactName} (${attempt + 1}/12)`);
+              if (attempt < 11) await new Promise(resolve => setTimeout(resolve, 5000));
+            }
+            throw new Error(`Artifact ${artifactName} (${artifactId}) was not discoverable`);
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+        with:
+          artifact_name: ${{ needs.build.outputs.artifact_name }}
