@@ -3,7 +3,8 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from frozendict.cool import deepfreeze
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import ChoiceLoader, DictLoader, Environment, FileSystemLoader
+from bs4 import BeautifulSoup
 
 from piggy.sitemap import get_legacy_sources
 from piggy.glossary import (
@@ -139,6 +140,63 @@ class GlossaryTest(unittest.TestCase):
             sorted(terms, key=norwegian_sort_key),
             ["Zebra", "Ære", "Øye", "Ål"],
         )
+
+    def render_article(self, meta):
+        templates = Path(__file__).resolve().parents[1] / "piggy" / "templates"
+        environment = Environment(
+            loader=ChoiceLoader(
+                [
+                    DictLoader(
+                        {
+                            "layout.html": "{% block head %}{% endblock %}{% block base %}{% endblock %}",
+                            "partials/parts/relevant_pages.html": "",
+                        }
+                    ),
+                    FileSystemLoader(templates),
+                ]
+            ),
+            autoescape=False,
+        )
+        return BeautifulSoup(
+            environment.get_template("assignments/5-assignment.html").render(
+                meta=meta,
+                glossary_index=build_glossary_index(self.piggymap),
+                content={
+                    "heading": "Ruter",
+                    "head": "",
+                    "body": '<article id="definition"><p>Forklaring og eksempel</p></article>',
+                },
+                url_for=lambda endpoint, filename: "/static/" + filename,
+            ),
+            "html.parser",
+        )
+
+    def test_glossary_article_puts_explanation_before_compact_relations(self):
+        article = self.render_article(self.pages["ruter"]["meta"])
+        page = article.select_one(".glossary-page")
+        self.assertIsNotNone(page)
+        self.assertIsNotNone(article.select_one('link[href$="glossary-page.css"]'))
+        self.assertEqual([node.name for node in page.find_all(recursive=False)], ["div", "article", "section"])
+        relations = page.select_one(".glossary-relations")
+        self.assertEqual(relations.h2.get_text(), "Sammenhenger")
+        self.assertEqual(relations.select_one(".glossary-relations-group").h3.get_text(), "Er en type")
+        self.assertEqual(relations.select_one("a")["href"], "/main/Topic/nettverksenhet")
+
+    def test_other_page_types_do_not_load_glossary_layout_or_relations(self):
+        for meta in (self.pages["oppgave"]["meta"], {"page_type": "reference"}):
+            with self.subTest(meta=meta):
+                article = self.render_article(meta)
+                self.assertIsNotNone(article.select_one("#definition"))
+                self.assertIsNone(article.select_one(".glossary-page, .glossary-relations"))
+                self.assertIsNone(article.select_one('link[href$="glossary-page.css"]'))
+
+    def test_glossary_without_relations_omits_empty_section(self):
+        self.piggymap["Topic"]["data"] = {
+            "ruter": _page("Ruter", "reference", reference_kind="glossary", glossary={"id": "ruter", "term": "Ruter"})
+        }
+        article = self.render_article(self.piggymap["Topic"]["data"]["ruter"]["meta"])
+        self.assertIsNotNone(article.select_one(".glossary-page"))
+        self.assertIsNone(article.select_one(".glossary-relations"))
 
     def test_relation_partial_renders_glossary_and_concept_links(self):
         index = build_glossary_index(self.piggymap)
